@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a><p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="row col-md-12">
+                            <h2 class="info">
+                                Información Registro
+                            </h2>
+                            <p>
+                                Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                            </p>
+                            <p>
+                                Este registro es unicamente para proveedores.
+                            </p>
+                        </div>
+
+                        <div class="col-md-12 row">
+                            <fieldset>
+                                <legend class="text-info">Datos Personales</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Nombre Proveedor*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesProveedor.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesProveedor.validarNombreProveedor()}" execute="editarNombre" render="editarNombre msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="NIT Proveedor*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesProveedor.editarNIT}" required="true" class="form-control" id="editarNIT" requiredMessage="El campo NIT es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesProveedor.validarNITProveedor()}" execute="editarNIT" render="editarNIT msnNIT" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNIT" for="editarNIT" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Direccion*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesProveedor.editarDireccion}" required="true" class="form-control" id="editarDireccion" requiredMessage="El campo Dirección es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesProveedor.validarDireccionProveedor()}" execute="editarDireccion" render="editarDireccion msnDireccion" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnDireccion" for="editarDireccion" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Telefono*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesProveedor.editarTelefono}" required="true" class="form-control" id="editarTelefono" requiredMessage="El campo Telefono es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesProveedor.validarTelefonoProveedor()}" execute="editarTelefono" render="editarTelefono msnTelefono" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnTelefono" for="editarTelefono" style="color: red"/></h6>
+                                </div>
+                                <fieldset>
+                                    <legend class="h5 text-info">Datos Opcionales</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Nombre Vendedor"/></strong>
+                                        <h:inputText maxlength="45" value="#{controllerDetallesProveedor.editarVendedor}"  class="form-control" id="editarVendedor" >
+                                            <f:ajax event="blur" listener="#{controllerDetallesProveedor.validarDatosOpcionales(1)}" execute="editarVendedor" render="editarVendedor msnVendedor" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnVendedor" for="editarVendedor" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Telefono Vendedor"/></strong>
+                                        <h:inputText maxlength="45" value="#{controllerDetallesProveedor.editarTelVendedor}"  class="form-control" id="editarTelVendedor" >
+                                            <f:ajax event="blur" listener="#{controllerDetallesProveedor.validarDatosOpcionales(2)}" execute="editarTelVendedor" render="editarTelVendedor msnTelVendedor" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnTelVendedor" for="editarTelVendedor" style="color: red"/></h6>
+                                    </div>
+                                </fieldset>
+                            </fieldset>
+                            <div class="left pull-left">
+                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesProveedor.mensajeFormulario}"/></strong>
+                            </div>
+                            <div class="right pull-right">
+                                <h:commandButton value="Registrar" actionListener="#{controllerDetallesProveedor.registrarModificacionesProveedor()}" class="btn btn-success" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_proveedores" actionListener="#{controllerDetallesProveedor.restaurarInformacionProveedor()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

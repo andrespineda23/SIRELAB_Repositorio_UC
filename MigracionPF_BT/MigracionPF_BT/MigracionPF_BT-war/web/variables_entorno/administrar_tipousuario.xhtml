@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="formularioGeneral">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                                <p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br> 
+                </div>
+                <div class="row col-md-12">
+                    <div class="container">
+                        <div id="resultadosBusqueda" class="row clearfix">
+                            <fieldset style="border: black;border-radius: 10px;">
+                                <h3><legend style="color: darkblue"><strong>TIPOS USUARIOS REGISTRADOS</strong></legend></h3>
+                                <div class="row">
+                                    <h:dataTable id="dataTable" var="item" 
+                                                 styleClass="table table-striped table-hover table-responsive" 
+                                                 value="#{controllerAdministrarTipoUsuario.listaTiposUsuario}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.nombretipousuario}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalles"/>
+                                            </f:facet>
+                                            <h:commandLink value="Ver" actionListener="#{controllerAdministrarTipoUsuario.recibirIDTipoUsuarioEditar(item.nombretipousuario)}">
+                                                <f:ajax execute="@form" render="formularioGeneral:formEditar" />
+                                            </h:commandLink>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div><!--/.row-->
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-12">
+                    <h:form id="formRegistrar">
+                        <fieldset style="border: black;border-radius: 10px;">
+                            <h4><legend style="color: darkblue">Registrar Tipo Usuario</legend></h4>
+                            <div class="form-group">
+                                <h:outputText value="Nombre Nuevo Tipo Usuario*"/>
+                                <h:inputText id="inputNombre" class="form-control" maxlength="45" value="#{controllerAdministrarTipoUsuario.inputNombre}" required="true" requiredMessage="El campo Nombre es obligatorio.">
+
+                                    <f:ajax event="blur" listener="#{controllerAdministrarTipoUsuario.validarNombreNuevo()}" execute="inputNombre" render="inputNombre msnNombre" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
+                            </div>
+                            <h:commandButton value="Registrar" class="btn btn-success" actionListener="#{controllerAdministrarTipoUsuario.registrarNuevoTipoUsuario()}">
+                                <f:ajax execute="@form" render="formRegistrar" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Cancelar" class="btn btn-danger" actionListener="#{controllerAdministrarTipoUsuario.cancelarNuevoRegistro()}" immediate="true">
+                                <f:ajax execute="@form" render="formRegistrar" />
+                            </h:commandButton>
+                        </fieldset>
+                    </h:form>
+                </div>
+                <br></br>
+                <h:form id="formEditar">
+                    <div class="row col-md-12" style="visibility: #{controllerAdministrarTipoUsuario.visibleEditar}}">
+                        <fieldset style="border: black;border-radius: 10px;">
+                            <h4><legend style="color: darkblue">Editar Tipo Usuario</legend></h4>
+                            <div class="form-group">
+                                <h:outputText value="Nombre Tipo Usuario*"/>
+                                <h:inputText id="nombreEditar" class="form-control" maxlength="45" value="#{controllerAdministrarTipoUsuario.nombreEditar}" required="true" requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerAdministrarTipoUsuario.validarNombreEditar()}" execute="nombreEditar" render="nombreEditar msnNombreE" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombreE" for="nombreEditar" style="color: red"></h:message></h6>
+                            </div>
+                            <h:commandButton value="Registrar" class="btn btn-success" actionListener="#{controllerAdministrarTipoUsuario.registrarModificacionTipoUsuario()}">
+                                <f:ajax execute="@form" render="formEditar" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Cancelar" class="btn btn-danger" actionListener="#{controllerAdministrarTipoUsuario.cancelarModificarRegistro()}" immediate="true">
+                                <f:ajax execute="@form" render="formEditar" />
+                            </h:commandButton>
+                        </fieldset>>
+                    </div>
+                </h:form>
+                <div class="row">
+                    <div class="col-md-11"></div>
+                    <div class="col-md-1">
+                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarTipoUsuario.limpiarProcesoPagina()}" class="btn btn-primary" immediate="true">
+                            <f:ajax execute="@form" render="formularioGeneral" />
+                        </h:commandButton>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

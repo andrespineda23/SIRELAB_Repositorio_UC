@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="formularioGeneral">
+            
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                                <p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br> 
+                </div>
+                <div class="row">
+                    <div class="col-md-12"> 
+                        <div class="container">
+                            <div class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px">
+                                    <h3><legend style="color: darkblue"><strong>INFORMACIÓN MODULOS/BANCOS DE TRABAJO</strong></legend></h3>
+                                    <div class="row col-md-12">
+                                        <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                            <legend class="h5">I. Basica</legend>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="parametroDetalle">
+                                                        Detalle Modulo
+                                                    </label>
+                                                    <h:inputText maxlength="45" value="#{controllerAdministrarModulos.parametroDetalle}" class="form-control" id="parametroDetalle" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="parametroCodigo">
+                                                        Codigo Modulo
+                                                    </label>
+                                                    <h:inputText maxlength="20" value="#{controllerAdministrarModulos.parametroCodigo}" class="form-control" id="parametroCodigo" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="parametroEstado">
+                                                        Estado Modulo
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarModulos.parametroEstado}"
+                                                                     class="form-control"
+                                                                     id="parametroEstado">
+                                                        <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                        <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                        <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div> 
+                                    <div class="row col-md-12">
+                                        <div class="col-md-6">
+                                            <label for="parametroLaboratorioPorArea">
+                                                Laboratorios Por Area Profundización
+                                            </label>
+                                            <h:selectOneMenu value="#{controllerAdministrarModulos.parametroLaboratorioPorArea}"
+                                                             class="form-control" 
+                                                             id="parametroLaboratorioPorArea">
+                                                <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                                <f:selectItems value="#{controllerAdministrarModulos.listaLaboratoriosPorAreas}" var="area"
+                                                               itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerAdministrarModulos.actualizarLaboratoriosAreasProfundizacion()}" execute="parametroLaboratorioPorArea" render="@this parametroSalaLaboratorio"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="parametroSalaLaboratorio">
+                                                Sala de Laboratorio
+                                            </label>
+                                            <h:selectOneMenu value="#{controllerAdministrarModulos.parametroSalaLaboratorio}"
+                                                             class="form-control" disabled="#{controllerAdministrarModulos.activarSala}"
+                                                             id="parametroSalaLaboratorio">
+                                                <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
+                                                <f:selectItems value="#{controllerAdministrarModulos.listaSalasLaboratorios}" var="sala"
+                                                               itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <br></br>
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                    </div> 
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarModulos.buscarModulosLaboratorioPorParametros()}">
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarModulos.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <br></br>
+                            <div id="resultadosBusqueda" class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px;">
+                                    <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                    <div class="row">
+                                        <h:dataTable id="dataTable" var="item" 
+                                                     styleClass="table table-striped table-hover table-responsive" 
+                                                     value="#{controllerAdministrarModulos.listaModulosLaboratorios}">
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Detalle"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.detallemodulo}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Codigo"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codigomodulo}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Estado"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.strEstado}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Laboratorio"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.salalaboratorio.laboratoriosporareas.laboratorio.departamento.nombredepartamento}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Area Profundización"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.salalaboratorio.laboratoriosporareas.areaprofundizacion.nombrearea}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Sala de Laboratorio"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.salalaboratorio.nombresala}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Detalles"/>
+                                                </f:facet>
+                                                <h:commandLink value="Ver" action="#{controllerAdministrarModulos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesModulo.recibirIDModuloLaboratorioDetalles(item.idmodulolaboratorio)}"/>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div><!--/.row-->
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <div class="row">
+                    <div class="col-md-1">
+                        <h:commandButton value="Nuevo Modulo" action="registrar_modulo" actionListener="#{controllerAdministrarModulos.limpiarProcesoBusqueda()}" class="btn btn-success"/>
+                    </div>
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1">
+                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarModulos.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

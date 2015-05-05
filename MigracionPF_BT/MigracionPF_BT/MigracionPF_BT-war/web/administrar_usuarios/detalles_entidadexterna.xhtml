@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a><p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <h2 class="info">
+                            Información Registro
+                        </h2>
+                        <p>
+                            Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                        </p>
+                        <p>
+                            Este registro es unicamente para entidades externas. 
+                        </p>
+                    </div>
+                    <div class="col-md-12 row">
+                        <fieldset>
+                            <legend class="text-info">Datos Personales</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Nombre Inicial Entidad*"/></strong>
+                                <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.nombreEntidadExterna}" required="true" class="form-control" id="nombreEntidadExterna" requiredMessage="El campo Nombre Inicial es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarNombreEntidadExterna()}" execute="nombreEntidadExterna" render="nombreEntidadExterna msnNombre" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombre" for="nombreEntidadExterna" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Nombre Secundario Entidad*"/></strong>
+                                <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.apellidoEntidadExterna}" required="true" class="form-control" id="apellidoEntidadExterna" requiredMessage="El campo Nombre Secundario es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarApellidoEntidadExterna()}" execute="apellidoEntidadExterna" render="apellidoEntidadExterna msnApellido" />
+                                </h:inputText>
+                                <h6><h:message id="msnApellido" for="apellidoEntidadExterna" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Número Identificación*"/></strong>
+                                <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.identificacionEntidadExterna}" required="true" class="form-control" id="identificacionEntidadExterna" requiredMessage="El campo Identificación es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarIdentificacionEntidadExterna()}" execute="identificacionEntidadExterna" render="identificacionEntidadExterna msnID" />
+                                </h:inputText>
+                                <h6><h:message id="msnID" for="identificacionEntidadExterna" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Correo Contacto*"/></strong>
+                                <div class="input-group">
+                                    <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.correoEntidadExterna}" required="true" class="form-control" id="correoEntidadExterna" requiredMessage="El campo Correo es olbigatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarCorreoEntidadExterna()}" execute="correoEntidadExterna" render="correoEntidadExterna msnEmail" />
+                                    </h:inputText>
+                                    <span class="input-group-addon">@</span>
+                                </div>
+                                <h6><h:message id="msnEmail" for="correoEntidadExterna" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Estado Usuario*"/></strong>
+                                <h:inputText readonly="true" value="#{controllerDetallesEntidadExterna.entidadExternaDetalles.persona.usuario.strEstado}" class="form-control" id="estadoEntidad" />
+                            </div>    
+                            <fieldset>
+                                <legend class="h5 text-info">Datos Opcionales</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Número Telefonico 1"/></strong>
+                                    <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}"  class="form-control" id="telefono1EntidadExterna" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(1)}" execute="telefono1EntidadExterna" render="telefono1EntidadExterna msnTelefono1" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnTelefono1" for="telefono1EntidadExterna" style="color: red"></h:message></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Número Telefonico 2"/></strong>
+                                    <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono2EntidadExterna}"  class="form-control" id="telefono2EntidadExterna" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(2)}" execute="telefono2EntidadExterna" render="telefono2EntidadExterna msnTelefono2" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnTelefono2" for="telefono2EntidadExterna" style="color: red"></h:message></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Dirección Residencia"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.direccionEntidadExterna}"  class="form-control" id="direccionEntidadExterna" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDireccionEntidadExterna()}" execute="direccionEntidadExterna" render="direccionEntidadExterna msnDireccion" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnDireccion" for="direccionEntidadExterna" style="color: red"></h:message></h6>
+                                </div>
+                            </fieldset>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-info">Información Entidad Externa</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="ID Entidad Externa*"/></strong>
+                                <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.idUnicoEntidadExterna}" required="true" class="form-control" id="idUnicoEntidadExterna" requiredMessage="El campo ID Entidad Externa es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosEntidadExterna(1)}" execute="idUnicoEntidadExterna" render="idUnicoEntidadExterna msnIDEntidad" />
+                                </h:inputText>
+                                <h6><h:message id="msnIDEntidad" for="idUnicoEntidadExterna" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Nombre Contacto"/></strong>
+                                <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.nombreUnicoEntidadExterna}"  class="form-control" id="nombreUnicoEntidadExterna" >
+                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosEntidadExterna(2)}" execute="nombreUnicoEntidadExterna" render="nombreUnicoEntidadExterna msnNombreEntidad" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombreEntidad" for="nombreUnicoEntidadExterna" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Email Contacto"/></strong>
+                                <div class="input-group">
+                                    <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.emailUnicoEntidadExterna}"  class="form-control" id="emailUnicoEntidadExterna" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosEntidadExterna(3)}" execute="emailUnicoEntidadExterna" render="emailUnicoEntidadExterna msnEmailEntidad" />
+                                    </h:inputText>
+                                    <span class="input-group-addon">@</span>
+                                </div>
+                                <h6><h:message id="msnEmailEntidad" for="emailUnicoEntidadExterna" style="color: red"></h:message></h6>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row col-md-12">
+                        <div class="left pull-left">
+                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEntidadExterna.mensajeFormulario}"/></strong>
+                        </div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonActivar" disabled="#{controllerDetallesEntidadExterna.disabledActivar}" value="ACTIVAR" actionListener="#{controllerDetallesEntidadExterna.activarEntidadExterna()}" class="btn btn-primary right" >
+                                <f:ajax execute="@form" render="formularioGeneral" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonInactivar" disabled="#{controllerDetallesEntidadExterna.disabledInactivar}" value="INACTIVAR" actionListener="#{controllerDetallesEntidadExterna.inactivarEntidadExterna()}" class="btn btn-default right" >
+                                <f:ajax execute="@form" render="formularioGeneral" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonEditar" disabled="#{controllerDetallesEntidadExterna.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesEntidadExterna.activarEditarRegistro()}" class="btn btn-primary right" >
+                                <f:ajax execute="@form" render="formularioGeneral" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesEntidadExterna.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" class="btn btn-default right" >
+                                <f:ajax execute="@form" render="formularioGeneral" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonGuardar" rendered="#{controllerDetallesEntidadExterna.visibleGuardar}" value="GUARDAR" actionListener="#{controllerDetallesEntidadExterna.almacenarModificacionesEntidadExterna()}" class="btn btn-primary right" >
+                                <f:ajax execute="@form" render="formularioGeneral" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-11"></div>
+                        <div class="col-md-1">
+                            <h:commandButton value="Atras" action="administrar_entidadesxternas" actionListener="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

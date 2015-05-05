@@ -1,0 +1,1194 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+   
+   
+    <navigation-rule>
+        <from-view-id>/variables_entorno/administrar_estadoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_estadoequipo</from-outcome>
+            <to-view-id>/variables_entorno/administrar_estadoequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/administrar_tipoperfil.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_tipoperfil</from-outcome>
+            <to-view-id>/variables_entorno/administrar_tipoperfil.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/administrar_tipousuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_tipousuario</from-outcome>
+            <to-view-id>/variables_entorno/administrar_tipousuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/administrar_tipoactivo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_tipoactivo</from-outcome>
+            <to-view-id>/variables_entorno/administrar_tipoactivo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/administrar_administradores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_administradores</from-outcome>
+            <to-view-id>/paginas_administrador/administrar_administradores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_encargadoslaboratorios</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_entidadesexternas</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_docentes</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_docentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_docentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_estudiantes</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_estudiantes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_estudiantes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratorios</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratoriosporareas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_salas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_salas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_salas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_modulos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_modulos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_modulos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_equipos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_equipos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_equipos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_sedes</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_sedes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_sedes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_edificios</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_edificios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_edificios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_facultades</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_facultades.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_facultades.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_departamentos</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_departamentos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_departamentos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_carreras</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_carreras.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_carreras.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_planesestudio</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_planesestudio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_planesestudio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_asignaturas</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_asignaturas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_asignaturas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_proveedores</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_insumos</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_insumos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_insumos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_areasprofundizacion</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/registrarestudiante.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_estudiante</from-outcome>
+            <to-view-id>/registrarestudiante.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_estudiantes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_estudiante</from-outcome>
+            <to-view-id>/administrar_usuarios/detalles_estudiante.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/detalles_estudiante.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_estudiantes</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_estudiantes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_docentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_docente</from-outcome>
+            <to-view-id>/administrar_usuarios/registrar_docente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/registrar_docente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_docentes</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_docentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/administrar_administradores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/registrar_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/registrar_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_administradores</from-outcome>
+            <to-view-id>/paginas_administrador/administrar_administradores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/administrar_administradores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/detalles_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/detalles_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_administradores</from-outcome>
+            <to-view-id>/paginas_administrador/administrar_administradores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_laboratorio</from-outcome>
+            <to-view-id>/estructura_laboratorio/registrar_laboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/registrar_laboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratorios</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_laboratorioporarea</from-outcome>
+            <to-view-id>/estructura_laboratorio/registrar_laboratorioporarea.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/registrar_laboratorioporarea.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratoriosporareas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_laboratorioporarea</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_laboratorioporarea.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_laboratorioporarea.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratoriosporareas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_laboratorio</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_laboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_laboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratorios</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_areaprofundizacion</from-outcome>
+            <to-view-id>/recursos_laboratorio/registrar_areaprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/registrar_areaprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_areasprofundizacion</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_areaprofundizacion</from-outcome>
+            <to-view-id>/recursos_laboratorio/detalles_areaprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/detalles_areaprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_areasprofundizacion</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_proveedor</from-outcome>
+            <to-view-id>/recursos_laboratorio/registrar_proveedor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/registrar_proveedor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_proveedores</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_proveedor</from-outcome>
+            <to-view-id>/recursos_laboratorio/detalles_proveedor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/detalles_proveedor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_proveedores</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_insumos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_insumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/registrar_insumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/registrar_insumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_insumos</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_insumos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_insumos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_insumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/detalles_insumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/detalles_insumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_insumos</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_insumos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_docentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_docente</from-outcome>
+            <to-view-id>/administrar_usuarios/detalles_docente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/detalles_docente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_docentes</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_docentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_entidadexterna</from-outcome>
+            <to-view-id>/administrar_usuarios/registrar_entidadexterna.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/registrar_entidadexterna.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_entidadesxternas</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_entidadexterna</from-outcome>
+            <to-view-id>/administrar_usuarios/detalles_entidadexterna.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/detalles_entidadexterna.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_entidadesxternas</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_encargadolaboratorio</from-outcome>
+            <to-view-id>/administrar_usuarios/registrar_encargadolaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/registrar_encargadolaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_encargadoslaboratorios</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_sedes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_sede</from-outcome>
+            <to-view-id>/estructura_universidad/registrar_sede.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/registrar_sede.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_sedes</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_sedes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_sedes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_sede</from-outcome>
+            <to-view-id>/estructura_universidad/detalles_sede.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/detalles_sede.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_sedes</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_sedes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_facultades.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_facultad</from-outcome>
+            <to-view-id>/estructura_universidad/registrar_facultad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/registrar_facultad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_facultades</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_facultades.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_facultades.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_facultad</from-outcome>
+            <to-view-id>/estructura_universidad/detalles_facultad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/detalles_facultad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_facultades</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_facultades.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_edificios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_edificio</from-outcome>
+            <to-view-id>/estructura_universidad/registrar_edificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/registrar_edificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_edificios</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_edificios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_edificios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_edificio</from-outcome>
+            <to-view-id>/estructura_universidad/detalles_edificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/detalles_edificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_edificios</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_edificios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_departamentos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_departamento</from-outcome>
+            <to-view-id>/estructura_universidad/registrar_departamento.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/registrar_departamento.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_departamentos</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_departamentos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_departamentos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_departamento</from-outcome>
+            <to-view-id>/estructura_universidad/detalles_departamento.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/detalles_departamento.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_departamentos</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_departamentos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_carreras.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_carrera</from-outcome>
+            <to-view-id>/estructura_universidad/registrar_carrera.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/registrar_carrera.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_carreras</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_carreras.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_carreras.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_carrera</from-outcome>
+            <to-view-id>/estructura_universidad/detalles_carrera.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/detalles_carrera.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_carreras</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_carreras.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_planesestudio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_planestudio</from-outcome>
+            <to-view-id>/estructura_universidad/registrar_planestudio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/registrar_planestudio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_planesestudio</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_planesestudio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_planesestudio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_planestudio</from-outcome>
+            <to-view-id>/estructura_universidad/detalles_planestudio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/detalles_planestudio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_planesestudio</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_planesestudio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_asignaturas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_asignatura</from-outcome>
+            <to-view-id>/estructura_universidad/registrar_asignatura.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/registrar_asignatura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_asignaturas</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_asignaturas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/administrar_asignaturas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_asignatura</from-outcome>
+            <to-view-id>/estructura_universidad/detalles_asignatura.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_universidad/detalles_asignatura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_asignaturas</from-outcome>
+            <to-view-id>/estructura_universidad/administrar_asignaturas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_encargadolaboratorio</from-outcome>
+            <to-view-id>/administrar_usuarios/detalles_encargadolaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/detalles_encargadolaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_encargadoslaboratorios</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_salas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_sala</from-outcome>
+            <to-view-id>/estructura_laboratorio/registrar_sala.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/registrar_sala.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_salas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_salas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_salas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_sala</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_sala.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_sala.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_salas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_salas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_salas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_sala</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_sala.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_sala.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_salas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_salas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_modulos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_modulo</from-outcome>
+            <to-view-id>/estructura_laboratorio/registrar_modulo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/registrar_modulo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_modulos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_modulos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_modulos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_modulo</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_modulo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_modulo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_modulos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_modulos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_equipos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_equipo</from-outcome>
+            <to-view-id>/estructura_laboratorio/registrar_equipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/registrar_equipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_equipos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_equipos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_equipos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_equipo</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_equipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_equipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_equipos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_equipos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+</faces-config>
