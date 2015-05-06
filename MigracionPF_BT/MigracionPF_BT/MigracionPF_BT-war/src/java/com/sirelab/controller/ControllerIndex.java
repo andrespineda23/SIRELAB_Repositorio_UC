@@ -26,6 +26,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador : ControllerIndex Este controlador es el encargado del index/home
@@ -47,14 +49,19 @@ public class ControllerIndex implements Serializable {
     private String paginaSiguiente;
     //
     private UsuarioLogin usuarioLoginSistema;
+    
+    private Logger logger = Logger.getLogger("ControllerIndex");
 
     public ControllerIndex() {
     }
 
     @PostConstruct
     public void init() {
+        BasicConfigurator.configure();
         usuarioLogin = null;
         passwordLogin = null;
+        logger.info("Mensaje Info");
+        logger.warn("Mensaje Warn");
     }
 
     /**

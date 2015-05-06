@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a><p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <h2 class="info">
+                            Información Registro
+                        </h2>
+                        <p>
+                            Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                        </p>
+                        <p>
+                            Este registro es unicamente para perfiles por encargado.
+                        </p>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="form-group">
+                            <strong><h:outputText value="Tipo de Perfil*"/></strong>
+                            <h:selectOneMenu value="#{controllerRegistrarPerfilPorEncargado.tipoPerfilSeleccionado}"
+                                             class="form-control"
+                                             id="tipoPerfilSeleccionado">
+                                <f:selectItem itemLabel="Seleccione Tipo Perfil" itemValue="null" />
+                                <f:selectItems value="#{controllerRegistrarPerfilPorEncargado.listaTiposPerfiles}" var="tipo"
+                                               itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <f:ajax event="change" listener="#{controllerRegistrarPerfilPorEncargado.actualizarTipoPerfil()}" execute="tipoPerfilSeleccionado" render="@this departamentoSeleccionado laboratorioSeleccionado msnTipoPerfil"/>
+                            </h:selectOneMenu>
+                            <h6><h:message id="msnTipoPerfil" for="tipoPerfilSeleccionado" style="color: red"></h:message></h6>
+                        </div>
+                        <div class="form-group">
+                            <strong><h:outputText value="Departamento*"/></strong>
+                            <h:selectOneMenu value="#{controllerRegistrarPerfilPorEncargado.departamentoSeleccionado}"
+                                             class="form-control"
+                                             id="departamentoSeleccionado">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerRegistrarPerfilPorEncargado.listaDepartamentos}" var="departamento"
+                                               itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <f:ajax event="change" listener="#{controllerRegistrarPerfilPorEncargado.actualizarDepartamento()}" execute="departamentoSeleccionado" render="@this msnDepartamento"/>
+                            </h:selectOneMenu>
+                            <h6><h:message id="msnDepartamento" for="departamentoSeleccionado" style="color: red"></h:message></h6>
+                        </div>
+                        <div class="form-group">
+                            <strong><h:outputText value="Laboratorio*"/></strong>
+                            <h:selectOneMenu value="#{controllerRegistrarPerfilPorEncargado.laboratorioSeleccionado}"
+                                             class="form-control"
+                                             id="laboratorioSeleccionado">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerRegistrarPerfilPorEncargado.listaLaboratorios}" var="laboratorio"
+                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <f:ajax event="change" listener="#{controllerRegistrarPerfilPorEncargado.actualizarLaboratorio()}" execute="inputFacultad" render="@this msnLaboratorio"/>
+                            </h:selectOneMenu>
+                            <h6><h:message id="msnLaboratorio" for="laboratorioSeleccionado" style="color: red"></h:message></h6>
+                        </div>
+                        <div class="left pull-left">
+                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPerfilPorEncargado.mensajeFormulario}"/></strong>
+                        </div>
+                        <div class="right pull-right">
+                            <h:commandButton value="Registrar" actionListener="#{controllerRegistrarPerfilPorEncargado.registrarNuevoPerfilPorEncargado()}" class="btn btn-success">
+                                <f:ajax execute="@this" render="mensajeFormulario" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_perfilesporencargado" actionListener="#{controllerRegistrarPerfilPorEncargado.cancelarRegistroPerfilPorEncargado()}" immediate="true">
+                                <f:ajax execute="@this" render="mensajeFormulario" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

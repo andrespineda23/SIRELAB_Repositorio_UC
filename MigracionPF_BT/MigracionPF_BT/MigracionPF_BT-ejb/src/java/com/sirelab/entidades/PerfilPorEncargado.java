@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PerfilPorEncargado.findByIdperfilporencargado", query = "SELECT p FROM PerfilPorEncargado p WHERE p.idperfilporencargado = :idperfilporencargado"),
     @NamedQuery(name = "PerfilPorEncargado.findByIndicetabla", query = "SELECT p FROM PerfilPorEncargado p WHERE p.indicetabla = :indicetabla")})
 public class PerfilPorEncargado implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfilporencargado")
     private Collection<EncargadoLaboratorio> encargadoLaboratorioCollection;
     private static final long serialVersionUID = 1L;
@@ -48,10 +50,14 @@ public class PerfilPorEncargado implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "indicetabla")
-    private int indicetabla;
+    private BigInteger indicetabla;
     @JoinColumn(name = "tipoperfil", referencedColumnName = "idtipoperfil")
     @ManyToOne(optional = false)
     private TipoPerfil tipoperfil;
+    @Transient
+    private String nombreRegistro;
+    @Transient
+    private String informacionPerfil;
 
     public PerfilPorEncargado() {
     }
@@ -60,7 +66,7 @@ public class PerfilPorEncargado implements Serializable {
         this.idperfilporencargado = idperfilporencargado;
     }
 
-    public PerfilPorEncargado(BigInteger idperfilporencargado, int indicetabla) {
+    public PerfilPorEncargado(BigInteger idperfilporencargado, BigInteger indicetabla) {
         this.idperfilporencargado = idperfilporencargado;
         this.indicetabla = indicetabla;
     }
@@ -73,11 +79,11 @@ public class PerfilPorEncargado implements Serializable {
         this.idperfilporencargado = idperfilporencargado;
     }
 
-    public int getIndicetabla() {
+    public BigInteger getIndicetabla() {
         return indicetabla;
     }
 
-    public void setIndicetabla(int indicetabla) {
+    public void setIndicetabla(BigInteger indicetabla) {
         this.indicetabla = indicetabla;
     }
 
@@ -87,6 +93,29 @@ public class PerfilPorEncargado implements Serializable {
 
     public void setTipoperfil(TipoPerfil tipoperfil) {
         this.tipoperfil = tipoperfil;
+    }
+
+    public String getNombreRegistro() {
+        return nombreRegistro;
+    }
+
+    public void setNombreRegistro(String nombreRegistro) {
+        this.nombreRegistro = nombreRegistro;
+    }
+
+    public String getInformacionPerfil() {
+        getNombreRegistro();
+        getTipoperfil();
+        if (null != nombreRegistro && null != tipoperfil) {
+            informacionPerfil = nombreRegistro + " - " + tipoperfil.getNombre();
+        } else {
+            informacionPerfil = "";
+        }
+        return informacionPerfil;
+    }
+
+    public void setInformacionPerfil(String informacionPerfil) {
+        this.informacionPerfil = informacionPerfil;
     }
 
     @Override
@@ -122,5 +151,5 @@ public class PerfilPorEncargado implements Serializable {
     public void setEncargadoLaboratorioCollection(Collection<EncargadoLaboratorio> encargadoLaboratorioCollection) {
         this.encargadoLaboratorioCollection = encargadoLaboratorioCollection;
     }
-    
+
 }

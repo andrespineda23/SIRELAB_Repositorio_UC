@@ -72,6 +72,21 @@ public class PerfilPorEncargadoDAO implements PerfilPorEncargadoDAOInterface {
     }
 
     @Override
+    public List<PerfilPorEncargado> consultarPerfilesPorEncargadoPorTipoPerfil(BigInteger perfil) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PerfilPorEncargado p WHERE p.tipoperfil.idtipoperfil=:perfil");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("perfil", perfil);
+            List<PerfilPorEncargado> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarPerfilesPorEncargadoPorTipoPerfil PerfilPorEncargadoDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
     public PerfilPorEncargado buscarPerfilPorEncargadoPorID(BigInteger idRegistro) {
         try {
             em.clear();

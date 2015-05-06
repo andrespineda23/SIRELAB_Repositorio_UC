@@ -185,7 +185,7 @@
                                                  id="inputPerfil">
                                     <f:selectItem itemLabel="Seleccione Perfil Por Encargado" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaPerfilesPorEncargado}" var="perfil"
-                                                   itemLabel="#{perfil.tipoperfil.nombre}" itemValue="#{perfil}"/>
+                                                   itemLabel="#{perfil.informacionPerfil}" itemValue="#{perfil}"/>
                                     <f:converter converterId="ConverterGenerico" />
                                     <f:ajax event="change" listener="#{controllerRegistrarEncargadoLaboratorio.actualizarPerfilPorEncargado()}" execute="inputPerfil" render="msnPerfil"/>
                                 </h:selectOneMenu>

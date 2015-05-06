@@ -51,11 +51,39 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     public List<PerfilPorEncargado> consultarPerfilesPorEncargadoRegistrados() {
         try {
             List<PerfilPorEncargado> lista = perfilPorEncargadoDAO.consultarPerfilesPorEncargado();
-            return lista;
+            List<PerfilPorEncargado> listaRetorno = null;
+            if (null != lista) {
+                listaRetorno = cargarDatosStringPerfilPorEncargado(lista);
+            }
+            return listaRetorno;
         } catch (Exception e) {
             System.out.println("Error AdministrarEncargadosLaboratoriosBO consultarPerfilesPorEncargadoRegistrados : " + e.toString());
             return null;
         }
+    }
+
+    private List<PerfilPorEncargado> cargarDatosStringPerfilPorEncargado(List<PerfilPorEncargado> lista) {
+        List<PerfilPorEncargado> registro = lista;
+        for (int i = 0; i < lista.size(); i++) {
+            if ("DEPARTAMENTO".equalsIgnoreCase(lista.get(i).getTipoperfil().getNombre())) {
+                Departamento departamento = departamentoDAO.buscarDepartamentoPorID(lista.get(i).getIndicetabla());
+                if (null != departamento) {
+                    lista.get(i).setNombreRegistro(departamento.getNombredepartamento());
+                } else {
+                    lista.get(i).setNombreRegistro("");
+                }
+            } else {
+                if ("LABORATORIO".equalsIgnoreCase(lista.get(i).getTipoperfil().getNombre())) {
+                    Laboratorio laboratorio = laboratorioDAO.buscarLaboratorioPorID(lista.get(i).getIndicetabla());
+                    if (null != laboratorio) {
+                        lista.get(i).setNombreRegistro(laboratorio.getNombrelaboratorio());
+                    } else {
+                        lista.get(i).setNombreRegistro("");
+                    }
+                }
+            }
+        }
+        return registro;
     }
 
     @Override

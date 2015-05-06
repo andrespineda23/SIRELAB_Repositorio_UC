@@ -176,7 +176,7 @@
                                                  class="form-control"
                                                  id="perfilEncargadoLaboratorio">
                                     <f:selectItems value="#{controllerDetallesEncargadoLaboratorio.listaPerfilesPorEncargado}" var="perfil"
-                                                   itemLabel="#{perfil.tipoperfil.nombre}" itemValue="#{perfil}"/>
+                                                   itemLabel="#{perfil.informacionPerfil}" itemValue="#{perfil}"/>
                                     <f:converter converterId="ConverterGenerico" />
                                     <f:ajax event="change" listener="#{controllerDetallesEncargadoLaboratorio.actualizarPerfilPorEncargado()}" execute="perfilEncargadoLaboratorio" render="msnPerfil"/>
                                 </h:selectOneMenu>

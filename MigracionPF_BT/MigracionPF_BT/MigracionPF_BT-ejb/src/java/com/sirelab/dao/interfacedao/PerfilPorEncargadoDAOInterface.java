@@ -22,6 +22,8 @@ public interface PerfilPorEncargadoDAOInterface {
     public void eliminarPerfilPorEncargado(PerfilPorEncargado perfil);
 
     public List<PerfilPorEncargado> consultarPerfilesPorEncargado();
+    
+    public List<PerfilPorEncargado> consultarPerfilesPorEncargadoPorTipoPerfil(BigInteger perfil);
 
     public PerfilPorEncargado buscarPerfilPorEncargadoPorID(BigInteger idRegistro);
 }

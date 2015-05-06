@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.*;
 
 /**
  *
@@ -24,10 +25,14 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
     @PersistenceContext(unitName = "SIRELAB-UC-ejbPU")
     private EntityManager em;
 
+    private Logger logger = Logger.getLogger(getClass().getName());
+    
     @Override
     public void crearAreaProfundizacion(AreaProfundizacion areaprofundizacion) {
         try {
+            BasicConfigurator.configure();
             em.persist(areaprofundizacion);
+            logger.info("Mensaje Info");
         } catch (Exception e) {
             System.out.println("Error crearAreaProfundizacion AreaProfundizacionDAO : " + e.toString());
         }
