@@ -69,61 +69,71 @@
                             <legend class="text-info">Datos Personales</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="Nombre(s) Estudiante*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerDetallesEstudiante.nombreEstudiante}" required="true" class="form-control" id="nombreEstudiante" requiredMessage="El campo Nombre es obligatorio." readonly="#{controllerDetallesEstudiante.activarEditar}">
-                                    <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarNombreEstudiante()}" execute="nombreEstudiante" render="nombreEstudiante msnNombre" />
+                                <h:inputText maxlength="45" value="#{controllerRegistrarEstudiante.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio." >
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarNombreEstudiante()}" execute="inputNombre" render="inputNombre msnNombre" />
                                 </h:inputText>
-                                <h6><h:message id="msnNombre" for="nombreEstudiante" style="color: red"></h:message></h6>
+                                <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Apellido(s) Estudiante*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerDetallesEstudiante.apellidoEstudiante}" required="true" class="form-control" id="apellidoEstudiante" requiredMessage="El campo Apellido es obligatorio."  readonly="#{controllerDetallesEstudiante.activarEditar}">
-                                    <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarApellidoEstudiante()}" execute="apellidoEstudiante" render="apellidoEstudiante msnApellido"/>
+                                <h:inputText maxlength="45"  value="#{controllerRegistrarEstudiante.inputApellido}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio."  >
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarApellidoEstudiante()}" execute="inputApellido" render="inputApellido msnApellido"/>
                                 </h:inputText>
-                                <h6><h:message id="msnApellido" for="apellidoEstudiante" style="color: red"></h:message></h6>
+                                <h6><h:message id="msnApellido" for="inputApellido" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Número Identificación*"/></strong>
-                                <h:inputText maxlength="20"  value="#{controllerDetallesEstudiante.identificacionEstudiante}" required="true" class="form-control" id="identificacionEstudiante" requiredMessage="El campo Documento es obligatorio." readonly="#{controllerDetallesEstudiante.activarEditar}">
-                                    <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarIdentificacionEstudiante()}" execute="identificacionEstudiante" render="identificacionEstudiante msnID"/>
+                                <h:inputText maxlength="20"  value="#{controllerRegistrarEstudiante.inputID}" required="true" class="form-control" id="inputID" requiredMessage="El campo Documento es obligatorio." >
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarIdentificacionEstudiante()}" execute="inputID" render="inputID msnID"/>
                                 </h:inputText>
                                 <h6><h:message id="msnID" for="inputID" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Correo Institucional*"/></strong>
                                 <div class="input-group">
-                                    <h:inputText maxlength="29"  value="#{controllerDetallesEstudiante.correoEstudiante}" required="true" class="form-control" id="correoEstudiante" requiredMessage="El campo Correo es obligatorio." readonly="#{controllerDetallesEstudiante.activarEditar}">
-                                        <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarCorreoEstudiante()}" execute="correoEstudiante" render="correoEstudiante msnEmail"/>
+                                    <h:inputText maxlength="29"  value="#{controllerRegistrarEstudiante.inputEmail}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio." >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarCorreoEstudiante()}" execute="inputEmail" render="inputEmail msnEmail"/>
                                     </h:inputText>
                                     <span class="input-group-addon">@ucentral.edu.co</span>
                                 </div>
-                                <h6><h:message id="msnEmail" for="correoEstudiante" style="color: red"/></h6>
+                                <h6><h:message id="msnEmail" for="inputEmail" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
-                                <strong><h:outputText value="Estado Usuario*"/></strong>
-                                <h:inputText readonly="true" value="#{controllerDetallesEstudiante.estudianteDetalles.persona.usuario.strEstado}" class="form-control" id="estadoEstudiante" />
+                                <strong><h:outputText value="Contraseña*"/></strong>
+                                <h:inputSecret maxlength="45" value="#{controllerRegistrarEstudiante.inputContrasenia}" required="true" class="form-control" id="inputContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarContraseniaEstudiante()}" execute="inputContrasenia" render="inputContrasenia msnContrasenia" />
+                                </h:inputSecret>
+                                <h6><h:message id="msnContrasenia" for="inputContrasenia" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Confirmar Contraseña*"/></strong>
+                                <h:inputSecret maxlength="45" value="#{controllerRegistrarEstudiante.inputContraseniaConfirma}" required="true" class="form-control" id="inputContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarContraseniaConfirmaEstudiante()}" execute="inputContraseniaConfirma" render="inputContraseniaConfirma msnContraseniaConfirma" />
+                                </h:inputSecret>
+                                <h6><h:message id="msnContraseniaConfirma" for="inputContraseniaConfirma" style="color: red"/></h6>
                             </div>
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Número Telefonico 1"/></strong>
-                                    <h:inputText maxlength="20"  value="#{controllerDetallesEstudiante.telefono1Estudiante}"  class="form-control" id="telefono1Estudiante"  readonly="#{controllerDetallesEstudiante.activarEditar}">
-                                        <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarDatosNumericosEstudiante(1)}" execute="telefono1Estudiante" render="telefono1Estudiante msnTelefono1"/>
+                                    <h:inputText maxlength="20"  value="#{controllerRegistrarEstudiante.inputTelefono1}"  class="form-control" id="inputTelefono1"  >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarDatosNumericosEstudiante(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1"/>
                                     </h:inputText>
-                                    <h6><h:message id="msnTelefono1" for="telefono1Estudiante" style="color: red"/></h6>
+                                    <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Número Telefonico 2"/></strong>
-                                    <h:inputText maxlength="20"  value="#{controllerDetallesEstudiante.telefono2Estudiante}"  class="form-control" id="telefono2Estudiante" readonly="#{controllerDetallesEstudiante.activarEditar}">
-                                        <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarDatosNumericosEstudiante(2)}" execute="telefono2Estudiante" render="telefono2Estudiante msnTelefono2"/>
+                                    <h:inputText maxlength="20"  value="#{controllerRegistrarEstudiante.inputTelefono2}"  class="form-control" id="inputTelefono2" >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarDatosNumericosEstudiante(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2"/>
                                     </h:inputText>
-                                    <h6><h:message id="msnTelefono2" for="telefono2Estudiante" style="color: red"/></h6>
+                                    <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Dirección Residencia"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerDetallesEstudiante.direccionEstudiante}"  class="form-control" id="direccionEstudiante" readonly="#{controllerDetallesEstudiante.activarEditar}">
-                                        <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarDireccionEstudiante()}" execute="direccionEstudiante" render="direccionEstudiante msnDireccion"/>
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEstudiante.inputDireccion}"  class="form-control" id="inputDireccion" >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarDireccionEstudiante()}" execute="inputDireccion" render="inputDireccion msnDireccion"/>
                                     </h:inputText>
-                                    <h6><h:message id="msnDireccion" for="direccionEstudiante" style="color: red"/></h6>
+                                    <h6><h:message id="msnDireccion" for="inputDireccion" style="color: red"/></h6>
                                 </div>
                             </fieldset>
                         </fieldset>
@@ -131,18 +141,18 @@
                             <legend class="text-info">Información Universidad</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="Tipo Estudiante*"/></strong>
-                                <h:selectOneMenu value="#{controllerDetallesEstudiante.tipoEstudiante}"
-                                                 class="form-control" readonly="#{controllerDetallesEstudiante.activarEditar}"
+                                <h:selectOneMenu value="#{controllerRegistrarEstudiante.inputTipo}"
+                                                 class="form-control" 
                                                  id="tipoEstudiante">
                                     <f:selectItem itemLabel="ESTUDIANTE" itemValue="1" />
                                     <f:selectItem itemLabel="EGRESADO" itemValue="2" />
-                                    <f:ajax event="change" listener="#{controllerDetallesEstudiante.actualizarTipoUsuarioSeleccionado()}" execute="@this" render="semestreEstudiante"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEstudiante.actualizarTipoUsuarioSeleccionado()}" execute="@this" render="inputSemestre"/>
                                 </h:selectOneMenu>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Número Semestre*"/></strong>
-                                <h:selectOneMenu value="#{controllerDetallesEstudiante.semestreEstudiante}" readonly="#{controllerDetallesEstudiante.activarEditar}"
-                                                 class="form-control" disabled="#{controllerDetallesEstudiante.activarNumSemestre}"
+                                <h:selectOneMenu value="#{controllerRegistrarEstudiante.inputSemestre}" 
+                                                 class="form-control" disabled="#{controllerRegistrarEstudiante.activarNumSemestre}"
                                                  id="semestreEstudiante">
                                     <f:selectItem itemLabel="1" itemValue="1" />
                                     <f:selectItem itemLabel="2" itemValue="2" />
@@ -154,71 +164,51 @@
                                     <f:selectItem itemLabel="8" itemValue="8" />
                                     <f:selectItem itemLabel="9" itemValue="9" />
                                     <f:selectItem itemLabel="10" itemValue="10" />
-                                    <f:ajax event="change" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}" execute="@this" />
                                 </h:selectOneMenu>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Carrera*"/></strong>
-                                <h:selectOneMenu value="#{controllerDetallesEstudiante.carreraEstudiante}"
-                                                 class="form-control" readonly="#{controllerDetallesEstudiante.activarEditar}"
-                                                 id="carreraEstudiante">
+                                <h:selectOneMenu value="#{controllerRegistrarEstudiante.inputCarrera}"
+                                                 class="form-control" 
+                                                 id="inputCarrera">
                                     <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
-                                    <f:selectItems value="#{controllerDetallesEstudiante.listaCarrera}" var="carrera"
+                                    <f:selectItems value="#{controllerRegistrarEstudiante.listaCarreras}" var="carrera"
                                                    itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesEstudiante.actualizarCarreras()}" execute="carreraEstudiante" render="@this planEstudioEstudiante msnCarrera"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEstudiante.actualizarCarreras()}" execute="inputCarrera" render="@this inputPlanEstudio msnCarrera"/>
                                 </h:selectOneMenu>
-                                <h6><h:message id="msnCarrera" for="carreraEstudiante" style="color: red"/></h6>
+                                <h6><h:message id="msnCarrera" for="inputCarrera" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Plan de Estudio*"/></strong>
-                                <h:selectOneMenu disabled="#{controllerDetallesEstudiante.activoPlanEstudio}" 
-                                                 value="#{controllerDetallesEstudiante.planEstudioEstudiante}"
+                                <h:selectOneMenu disabled="#{controllerRegistrarEstudiante.activarPlanEstudio}" 
+                                                 value="#{controllerRegistrarEstudiante.inputPlanEstudio}"
                                                  class="form-control"
-                                                 id="planEstudioEstudiante">
+                                                 id="inputPlanEstudio">
                                     <f:selectItem itemLabel="Seleccione Plan de Estudio" itemValue="null" />
-                                    <f:selectItems value="#{controllerDetallesEstudiante.listaPlanEstudios}" var="plan"
+                                    <f:selectItems value="#{controllerRegistrarEstudiante.listaPlanesEstudios}" var="plan"
                                                    itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesEstudiante.actualizarPlanEstudio()}" execute="planEstudioEstudiante" render="planEstudioEstudiante msnPlanEstudio"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEstudiante.actualizarPlanEstudio()}" execute="planEstudioEstudiante" render="planEstudioEstudiante msnPlanEstudio"/>
                                 </h:selectOneMenu>
-                                <h6><h:message id="msnPlanEstudio" for="planEstudioEstudiante" style="color: red"/></h6>
+                                <h6><h:message id="msnPlanEstudio" for="inputPlanEstudio" style="color: red"/></h6>
                             </div>
                         </fieldset>
                     </div>
                     <div class="row col-md-12">
                         <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEstudiante.mensajeFormulario}"/></strong>
+                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEstudiante.mensajeFormulario}"/></strong>
                         </div>
                     </div>
-                    <div class="row col-md-12">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-2">
-                            <h:commandButton id="buttonActivar" disabled="#{controllerDetallesEstudiante.disabledActivar}" value="ACTIVAR" actionListener="#{controllerDetallesEstudiante.activarEstudiante()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
-                            </h:commandButton>
-                        </div>
-                        <div class="col-md-2">
-                            <h:commandButton id="buttonInactivar" disabled="#{controllerDetallesEstudiante.disabledInactivar}" value="INACTIVAR" actionListener="#{controllerDetallesEstudiante.inactivarEstudiante()}" class="btn btn-default right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
-                            </h:commandButton>
-                        </div>
-                        <div class="col-md-2">
-                            <h:commandButton id="buttonEditar" disabled="#{controllerDetallesEstudiante.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesEstudiante.activarEditarRegistro()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
-                            </h:commandButton>
-                        </div>
-                        <div class="col-md-2">
-                            <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesEstudiante.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesEstudiante.restaurarInformacionEstudiante()}" class="btn btn-default right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
-                            </h:commandButton>
-                        </div>
-                        <div class="col-md-2">
-                            <h:commandButton id="buttonGuardar" rendered="#{controllerDetallesEstudiante.visibleGuardar}" value="GUARDAR" actionListener="#{controllerDetallesEstudiante.almacenarModificacionesEstudiante()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
-                            </h:commandButton>
-                        </div>
-                        <div class="col-md-1"></div>
+                    <div class="right pull-right">
+                        <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEstudiante.registrarNuevoEstudiante()}" class="btn btn-success" >
+                            <f:ajax execute="@form" render="form" />
+                        </h:commandButton>
+                        <span></span>
+                        <span></span>
+                        <h:commandButton value="Cancelar" class="btn btn-danger" action="index" actionListener="#{controllerRegistrarEstudiante.cancelarRegistroEstudiante()}" immediate="true">
+                            <f:ajax execute="@form" render="form" />
+                        </h:commandButton>
                     </div>
                 </div>
             </div>

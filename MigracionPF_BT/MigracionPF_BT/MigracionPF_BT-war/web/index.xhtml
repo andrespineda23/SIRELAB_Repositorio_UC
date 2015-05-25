@@ -9,7 +9,7 @@
         <meta name="description" content=""/>
         <meta name="author" content=""/>
 
-        
+
         <title>Sistema de Información de Recursos de Laboratorios</title>
 
         <!-- Bootstrap Core CSS -->
@@ -34,7 +34,7 @@
     </h:head>
     <h:body>
         <h:form >
-            
+
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
                 <div class="container topnav">
@@ -80,15 +80,16 @@
                                 <h3>Universidad Central</h3>
                                 <hr class="intro-divider"/>
                                 <ul class="list-inline intro-social-buttons">
+
                                     <li>
-                                        <a href="#modal-login" class="btn btn-primary btn-lg" data-toggle="modal">
-                                            <span class="network-name">
-                                                Ingresar
-                                            </span>
-                                        </a>
+                                        <h:commandButton action="login" value="Ingresar"  class="btn btn-primary btn-lg">
+                                            <span class="network-name"></span>
+                                        </h:commandButton>
                                     </li>
                                     <li>
-                                        <a href="faces/registrarestudiante.xhtml" class="btn btn-default btn-lg"><span class="network-name">Registrarse</span></a>
+                                        <h:commandButton action="registrar_estudiante" value="Registrarse"  class="btn btn-default btn-lg">
+                                            <span class="network-name"></span>
+                                        </h:commandButton>
                                     </li>
                                 </ul>
                             </div>
@@ -97,44 +98,9 @@
 
                 </div>
                 <!-- /.container -->
-
             </div>
             <!-- /.intro-header -->
 
-            <!-- Page Content -->
-            <div class="modal fade" id="modal-login" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                Login SIRELAB
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <label for="inputEmail">
-                                Correo Institucional
-                            </label>
-                            <h:inputText maxlength="45" value="#{controllerIndex.usuarioLogin}" required="true" class="form-control" id="inputEmail" >
-                            </h:inputText>
-                            <br></br>
-                            <label for="inputContrasenia">
-                                Contraseña
-                            </label>
-                            <h:inputSecret maxlength="45" value="#{controllerIndex.passwordLogin}" required="true" class="form-control" id="inputContrasenia" ></h:inputSecret>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="forgot" href="#">¿Olvidaste tu contraseña?</a>
-                            <span></span>
-                            <span class="separator">---</span>
-                            <span></span>
-                            <h:commandButton value="Ingresar" class="btn btn-success right" action="#{controllerIndex.retornarPaginaSiguiente()}"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page Content -->
 
             <a  name="servicio"></a>
             <div class="content-section-a">
@@ -147,6 +113,7 @@
                             <h2 class="section-heading">¿Qué es SIRELAB?</h2>
                             <p class="lead">Es una herramienta que permite administrar las funciones de los laboratorios de ingenieria de la Universidad, administrando los procesos de usuarios, recursos, prestamos e indicadores.</p>
                         </div>
+
                         <div class="col-lg-5 col-lg-offset-2 col-sm-6">
                             <img class="img-responsive" src="img/ipad.png" alt=""/>
                         </div>

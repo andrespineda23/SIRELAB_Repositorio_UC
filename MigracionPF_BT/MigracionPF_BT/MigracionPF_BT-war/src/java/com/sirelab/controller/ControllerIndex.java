@@ -28,6 +28,7 @@ import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * Controlador : ControllerIndex Este controlador es el encargado del index/home
@@ -39,7 +40,7 @@ import org.apache.log4j.Logger;
 @ManagedBean
 @SessionScoped
 public class ControllerIndex implements Serializable {
-    
+
     //
     @EJB
     GestionarLoginSistemaBOInterface gestionarLoginSistemaBO;
@@ -49,19 +50,41 @@ public class ControllerIndex implements Serializable {
     private String paginaSiguiente;
     //
     private UsuarioLogin usuarioLoginSistema;
-    
+
     private Logger logger = Logger.getLogger("ControllerIndex");
+    private boolean validacionesUsuario, validacionesContrasenia;
+    private String mensajeFormulario;
+    private boolean validacionesCorreo, validacionesID;
+    private String mensajeFormularioRecupera;
+    private String paginaRecuperacion;
 
     public ControllerIndex() {
     }
 
     @PostConstruct
     public void init() {
-        BasicConfigurator.configure();
+        validacionesUsuario = false;
+        validacionesContrasenia = false;
+        mensajeFormulario = "";
+        validacionesCorreo = false;
+        validacionesID = false;
+        mensajeFormularioRecupera = "";
         usuarioLogin = null;
         passwordLogin = null;
-        logger.info("Mensaje Info");
-        logger.warn("Mensaje Warn");
+        correoRecuperacion = null;
+        identificacionRecuperacion = null;
+        paginaRecuperacion = "";
+    }
+
+    public boolean validarProcesoRecuperacion() {
+        boolean retorno = true;
+        if (validacionesCorreo == false) {
+            retorno = false;
+        }
+        if (validacionesID == false) {
+            retorno = false;
+        }
+        return retorno;
     }
 
     /**
@@ -69,43 +92,33 @@ public class ControllerIndex implements Serializable {
      * el sistema de información
      */
     public void recuperarContraseñaUsuario() {
-        //RequestContext context = RequestContext.getCurrentInstance();
         try {
-            if ((correoRecuperacion != null && (!correoRecuperacion.isEmpty())) && (identificacionRecuperacion != null && (!identificacionRecuperacion.isEmpty()))) {
-                boolean validarCorreo = Utilidades.validarCorreoElectronico(correoRecuperacion);
-                if (validarCorreo == true) {
-                    Persona recuperar = gestionarLoginSistemaBO.obtenerPersonaRecuperarContrasenia(correoRecuperacion, identificacionRecuperacion);
-                    correoRecuperacion = null;
-                    identificacionRecuperacion = null;
-                    //context.execute("recuperarContrasenia.hide()");
-                    if (recuperar != null) {
-                        Persona personaRecuperada = gestionarLoginSistemaBO.configurarContraseñaPersona(recuperar);
-                        enviarCorreoRecuperacion(personaRecuperada);
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El cambio de contraseña se ha realizado con exito.", "Proceso de Recuperacion Contraseña");
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        context.addMessage("message", message);
-                        //context.execute("cambioContraseniaOK.show()");
-                    } else {
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "El usuario ingresado no existe.", "Proceso de Recuperacion Contraseña");
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        context.addMessage("message", message);
-                        //context.execute("errorUsuarioNoExiste.show()");
-                    }
+            if (validarProcesoRecuperacion() == true) {
+                Persona recuperar = gestionarLoginSistemaBO.obtenerPersonaRecuperarContrasenia(correoRecuperacion + "@ucentral.edu.co", identificacionRecuperacion);
+                correoRecuperacion = null;
+                identificacionRecuperacion = null;
+                if (recuperar != null) {
+                    Persona personaRecuperada = gestionarLoginSistemaBO.configurarContraseñaPersona(recuperar);
+                    enviarCorreoRecuperacion(personaRecuperada);
+                    mensajeFormularioRecupera = "Contraseña recuperada.";
+                    paginaRecuperacion = "recuperacionexitosa";
                 } else {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "El correo ingresado se encuentra erroneo.", "Proceso de Recuperacion Contraseña");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
-                    //context.execute("errorEmailEstudiante.show()");
+                    mensajeFormularioRecupera = "El usuario ingresado no existe.";
+                    paginaRecuperacion = "";
                 }
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las credenciales se encuentran erroneas.", "Proceso de Recuperacion Contraseña");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
-                //context.execute("errorDatosRecuperacion.show()");
+                mensajeFormularioRecupera = "Existen errores en el proceso de recuperación.";
+                paginaRecuperacion = "";
             }
         } catch (Exception e) {
             System.out.println("Error recuperarContraseñaUsuario ControllerIndex : " + e.toString());
+            paginaRecuperacion = "";
         }
+    }
+
+    public String retornarPaginaRecuperacion() {
+        recuperarContraseñaUsuario();
+        return paginaRecuperacion;
     }
 
     /**
@@ -153,6 +166,55 @@ public class ControllerIndex implements Serializable {
         identificacionRecuperacion = null;
     }
 
+    public void validarCorreoRecuperacion() {
+        if ((Utilidades.validarNulo(correoRecuperacion)) && (!correoRecuperacion.isEmpty())) {
+            String correo = correoRecuperacion + "@ucentral.edu.co";
+            if (Utilidades.validarCorreoElectronico(correo) == false) {
+                validacionesCorreo = false;
+                FacesContext.getCurrentInstance().addMessage("form:formRecuperacion:correoRecuperacion", new FacesMessage("El correo esta incorrecto."));
+            } else {
+                validacionesCorreo = true;
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form:formRecuperacion:correoRecuperacion", new FacesMessage("El correo es obligatorio."));
+            validacionesCorreo = false;
+        }
+    }
+
+    public void validarIDRecuperacion() {
+        if ((Utilidades.validarNulo(identificacionRecuperacion)) && (!identificacionRecuperacion.isEmpty())) {
+            if (Utilidades.validarCaracteresAlfaNumericos(identificacionRecuperacion) == false) {
+                validacionesID = false;
+                FacesContext.getCurrentInstance().addMessage("form:formRecuperacion:identificacionRecuperacion", new FacesMessage("La identificación ingresada es incorrecta."));
+            } else {
+                validacionesID = true;
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form:formRecuperacion:identificacionRecuperacion", new FacesMessage("La identificación es obligatoria."));
+            validacionesID = false;
+        }
+    }
+
+    public boolean validarProcesoLogin() {
+        boolean retorno = true;
+        if (validacionesContrasenia == false) {
+            retorno = false;
+        }
+        if (validacionesUsuario == false) {
+            retorno = false;
+        }
+        return retorno;
+    }
+
+    public void ingresarAlSistema() {
+        if (validarProcesoLogin() == true) {
+            loginUsuario();
+        } else {
+            mensajeFormulario = "Existen errores en el proceso de ingreso.";
+            paginaSiguiente = "";
+        }
+    }
+
     /**
      * Metodo encargado del login al sistema de información
      */
@@ -161,18 +223,13 @@ public class ControllerIndex implements Serializable {
         try {
             Persona personaLogin = null;
             if ((usuarioLogin != null && (!usuarioLogin.isEmpty())) && (passwordLogin != null && (!passwordLogin.isEmpty()))) {
-                System.out.println("usuarioLogin : " + usuarioLogin);
-                System.out.println("passwordLogin : " + passwordLogin);
                 personaLogin = gestionarLoginSistemaBO.obtenerPersonaLogin(usuarioLogin, passwordLogin);
                 usuarioLogin = null;
                 passwordLogin = null;
-                System.out.println("personaLogin : " + personaLogin);
                 if (personaLogin != null) {
                     String nombreTipoUsuario = personaLogin.getUsuario().getTipousuario().getNombretipousuario();
                     usuarioLoginSistema = new UsuarioLogin();
-                    System.out.println("nombreTipoUsuario : " + nombreTipoUsuario);
                     if ("ADMINISTRADOR".equals(nombreTipoUsuario)) {
-                        System.out.println("Administrador");
                         usuarioLoginSistema.setNombreTipoUsuario(nombreTipoUsuario);
                         usuarioLoginSistema.setIdUsuarioLogin(personaLogin.getIdpersona());
                         usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getNombreusuario());
@@ -212,24 +269,10 @@ public class ControllerIndex implements Serializable {
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionUsuario", usuarioLoginSistema);
                     //httpServletRequest.getSession().setAttribute("sessionUsuario", usuarioLoginSistema);
                 } else {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "El usuario ingresado no existe.", "Error de Ingreso");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
-                    //context.execute("errorUsuarioNoExiste.show();");
+                    mensajeFormulario = "El usuario ingresado no existe.";
                 }
-
-            } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las credenciales de ingreso estan vacias.", "Error de Ingreso");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
-                //context.execute("errorCredencialesLogin.show();");
             }
         } catch (NoResultException nre) {
-            //context.execute("NuevoRegistroEstudiante.hide();");
-            //context.execute("errorUsuarioNoExiste.show();");
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "El usuario ingresado no existe.", "Error de Ingreso");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("message", message);
             System.out.println("NoResultException loginUsuario ControllerIndex : " + nre.toString());
         } catch (Exception e) {
             System.out.println("Exception loginUsuario ControllerIndex : " + e.toString());
@@ -243,13 +286,43 @@ public class ControllerIndex implements Serializable {
      * @return
      */
     public String retornarPaginaSiguiente() {
-        loginUsuario();
-        System.out.println("paginaSiguiente : "+paginaSiguiente);
-        if (usuarioLoginSistema == null) {
-            paginaSiguiente = null;
+        ingresarAlSistema();
+        if (null == usuarioLoginSistema) {
+            paginaSiguiente = "";
             return paginaSiguiente;
         }
         return paginaSiguiente;
+    }
+
+    public void limpiarProcesoControlador() {
+        usuarioLogin = null;
+        passwordLogin = null;
+        correoRecuperacion = null;
+        identificacionRecuperacion = null;
+        validacionesUsuario = false;
+        validacionesContrasenia = false;
+        mensajeFormulario = "";
+        validacionesCorreo = false;
+        validacionesID = false;
+        mensajeFormularioRecupera = "";
+    }
+
+    public void validarUsuarioLogin() {
+        if ((Utilidades.validarNulo(usuarioLogin)) && (!usuarioLogin.isEmpty())) {
+            validacionesUsuario = true;
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form:formLogin:usuarioLogin", new FacesMessage("El usuario es obligatorio."));
+            validacionesUsuario = false;
+        }
+    }
+
+    public void validarPasswordLogin() {
+        if ((Utilidades.validarNulo(passwordLogin)) && (!passwordLogin.isEmpty())) {
+            validacionesContrasenia = true;
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form:formLogin:inputContrasenia", new FacesMessage("La contraseña es obligatoria."));
+            validacionesContrasenia = false;
+        }
     }
 
     //GET-SET
@@ -299,6 +372,22 @@ public class ControllerIndex implements Serializable {
 
     public void setUsuarioLoginSistema(UsuarioLogin usuarioLoginSistema) {
         this.usuarioLoginSistema = usuarioLoginSistema;
+    }
+
+    public String getMensajeFormulario() {
+        return mensajeFormulario;
+    }
+
+    public void setMensajeFormulario(String mensajeFormulario) {
+        this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getMensajeFormularioRecupera() {
+        return mensajeFormularioRecupera;
+    }
+
+    public void setMensajeFormularioRecupera(String mensajeFormularioRecupera) {
+        this.mensajeFormularioRecupera = mensajeFormularioRecupera;
     }
 
 }
