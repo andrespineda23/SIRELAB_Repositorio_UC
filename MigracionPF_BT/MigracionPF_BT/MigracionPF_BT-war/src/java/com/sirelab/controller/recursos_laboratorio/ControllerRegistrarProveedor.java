@@ -71,7 +71,7 @@ public class ControllerRegistrarProveedor implements Serializable {
 
     public void validarNITProveedor() {
         if (Utilidades.validarNulo(nuevoNIT) && (!nuevoNIT.isEmpty())) {
-            if (Utilidades.validarCaracterString(nuevoNIT)) {
+            if (Utilidades.validarCaracteresAlfaNumericos(nuevoNIT)) {
                 Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(nuevoVendedor);
                 if (registro == null) {
                     validacionesNIT = true;

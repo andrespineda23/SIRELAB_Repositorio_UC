@@ -52,7 +52,6 @@ public class ControllerRegistrarAsignatura implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
         activarNuevoCarrera = true;
         activarNuevoPlanEstudio = true;
         nuevoCarrera = null;
@@ -131,7 +130,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
 
     public void validarCodigoAsignatura() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
-            if (!Utilidades.validarCaracterString(nuevoCodigo)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             } else {
@@ -145,11 +144,11 @@ public class ControllerRegistrarAsignatura implements Serializable {
 
     public void validarCreditosAsignatura() {
         if (Utilidades.validarNulo(nuevoCredito) && (!nuevoCredito.isEmpty())) {
-            if (!Utilidades.isNumber(nuevoCredito)) {
-                validacionesCredito = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCredito", new FacesMessage("El credito ingresado es incorrecto."));
-            } else {
+            if (Utilidades.isNumber(nuevoCredito) == true) {
                 validacionesCredito = true;
+            } else {
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCredito", new FacesMessage("El credito ingresado es incorrecto."));
+                validacionesCredito = false;
             }
         } else {
             validacionesCredito = false;
@@ -206,6 +205,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
         try {
             Asignatura asignaturaNueva = new Asignatura();
             asignaturaNueva.setNombreasignatura(nuevoNombre);
+            asignaturaNueva.setCodigoasignatura(nuevoCodigo);
             Integer creditos = Integer.valueOf(nuevoCredito);
             asignaturaNueva.setNumerocreditos(creditos.intValue());
             asignaturaNueva.setPlanestudios(nuevoPlanEstudio);
@@ -238,6 +238,9 @@ public class ControllerRegistrarAsignatura implements Serializable {
 
     //GET-SET
     public List<Departamento> getListaDepartamentos() {
+        if (listaDepartamentos == null) {
+            listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
+        }
         return listaDepartamentos;
     }
 

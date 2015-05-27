@@ -107,14 +107,14 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Contraseña*"/></strong>
                                     <h:inputSecret maxlength="45" value="#{controllerRegistrarDocente.inputContrasenia}" required="true" class="form-control" id="inputContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarContraseniaDocente()}" execute="inputContrasenia" render="inputContrasenia msnContrasenia" />
+                                        <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarContraseniaDocente()}" execute="inputContrasenia" render="msnContrasenia" />
                                     </h:inputSecret>
                                     <h6><h:message id="msnContrasenia" for="inputContrasenia" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Confirmar Contraseña*"/></strong>
                                     <h:inputSecret maxlength="45" value="#{controllerRegistrarDocente.inputContraseniaConfirma}" required="true" class="form-control" id="inputContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarContraseniaConfirmaDocente()}" execute="inputContraseniaConfirma" render="inputContraseniaConfirma msnContraseniaConfirma" />
+                                        <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarContraseniaConfirmaDocente()}" execute="inputContraseniaConfirma" render="msnContraseniaConfirma" />
                                     </h:inputSecret>
                                     <h6><h:message id="msnContraseniaConfirma" for="inputContraseniaConfirma" style="color: red"/></h6>
                                 </div>

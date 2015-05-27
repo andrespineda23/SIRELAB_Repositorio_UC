@@ -112,7 +112,7 @@
                                                     Departamento
                                                 </label>
                                                 <h:selectOneMenu value="#{controllerAdministrarPlanesEstudio.parametroDepartamento}"
-                                                                 class="form-control"
+                                                                 class="form-control" disabled="#{controllerAdministrarPlanesEstudio.activarDepartamento}"
                                                                  id="parametroDepartamento">
                                                     <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                                     <f:selectItems value="#{controllerAdministrarPlanesEstudio.listaDepartamentos}" var="departamento"
@@ -129,7 +129,7 @@
                                                 Carrera
                                             </label>
                                             <h:selectOneMenu value="#{controllerAdministrarPlanesEstudio.parametroCarrera}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerAdministrarPlanesEstudio.activarCarrera}"
                                                              id="parametroCarrera">
                                                 <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
                                                 <f:selectItems value="#{controllerAdministrarPlanesEstudio.listaCarreras}" var="carrera"

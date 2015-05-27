@@ -79,7 +79,6 @@ public class ControllerRegistrarEstudiante implements Serializable {
         inputPlanEstudio = null;
         inputSemestre = 1;
         inputTipo = 1;
-        listaCarreras = gestionarLoginSistemaBO.obtenerListasCarreras();
         listaPlanesEstudios = null;
     }
 
@@ -459,6 +458,9 @@ public class ControllerRegistrarEstudiante implements Serializable {
     }
 
     public List<Carrera> getListaCarreras() {
+        if (listaCarreras == null) {
+            listaCarreras = gestionarLoginSistemaBO.obtenerListasCarreras();
+        }
         return listaCarreras;
     }
 

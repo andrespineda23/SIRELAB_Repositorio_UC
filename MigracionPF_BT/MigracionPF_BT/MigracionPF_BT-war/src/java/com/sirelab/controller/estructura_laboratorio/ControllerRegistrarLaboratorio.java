@@ -47,7 +47,6 @@ public class ControllerRegistrarLaboratorio implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
         activarNuevoDepartamento = true;
         nuevoCodigo = null;
         nuevoDepartamento = null;
@@ -180,6 +179,9 @@ public class ControllerRegistrarLaboratorio implements Serializable {
 
     //GET-SET
     public List<Facultad> getListaFacultades() {
+        if(listaFacultades == null){
+            listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
+        }
         return listaFacultades;
     }
 

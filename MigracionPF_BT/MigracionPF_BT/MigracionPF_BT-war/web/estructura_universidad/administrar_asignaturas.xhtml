@@ -24,7 +24,7 @@
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
         <h:form id="formularioGeneral">
-            
+
             <div class="container">
                 <div class="row">
                     <!-- Navigation -->
@@ -115,7 +115,7 @@
                                                 Carrera
                                             </label>
                                             <h:selectOneMenu value="#{controllerAdministrarAsignaturas.parametroCarrera}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerAdministrarAsignaturas.activarCarrera}"
                                                              id="parametroCarrera">
                                                 <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
                                                 <f:selectItems value="#{controllerAdministrarAsignaturas.listaCarreras}" var="carrera"
@@ -129,7 +129,7 @@
                                                 Plan de Estudio
                                             </label>
                                             <h:selectOneMenu value="#{controllerAdministrarAsignaturas.parametroPlanEstudio}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerAdministrarAsignaturas.activarPlanEstudio}"
                                                              id="parametroPlanEstudio">
                                                 <f:selectItem itemLabel="Seleccione Plan de Estudio" itemValue="null" />
                                                 <f:selectItems value="#{controllerAdministrarAsignaturas.listaPlanesEstudios}" var="plan"

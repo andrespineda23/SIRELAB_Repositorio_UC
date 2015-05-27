@@ -59,7 +59,6 @@ public class ControllerAdministrarDocentes implements Serializable {
         parametroCorreo = null;
         parametroCargo = null;
         parametroDepartamento = null;
-        listaFacultades = administrarDocentesBO.obtenerListaFacultades();
         inicializarFiltros();
         listaDocentes = null;
         filtrarListaDocentes = null;
@@ -105,11 +104,15 @@ public class ControllerAdministrarDocentes implements Serializable {
                 filtros.put("parametroEstado", "false");
             }
         }
-        if (null != parametroDepartamento) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento) == true) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
-        if (null != parametroFacultad) {
-            filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+        if (Utilidades.validarNulo(parametroFacultad) == true) {
+            if (parametroFacultad.getIdfacultad() != null) {
+                filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+            }
         }
         if ((Utilidades.validarNulo(parametroCargo)) && (!parametroCargo.isEmpty())) {
             filtros.put("parametroCargo", parametroCargo);
@@ -258,6 +261,9 @@ public class ControllerAdministrarDocentes implements Serializable {
     }
 
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = administrarDocentesBO.obtenerListaFacultades();
+        }
         return listaFacultades;
     }
 

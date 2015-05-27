@@ -823,7 +823,7 @@
     
     
     <navigation-rule>
-        <from-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</from-view-id>
+        <from-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrar_entidadexterna</from-outcome>
             <to-view-id>/administrar_usuarios/registrar_entidadexterna.xhtml</to-view-id>
@@ -834,14 +834,14 @@
         <from-view-id>/administrar_usuarios/registrar_entidadexterna.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_entidadesxternas</from-outcome>
-            <to-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</to-view-id>
+            <to-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     
     
     <navigation-rule>
-        <from-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</from-view-id>
+        <from-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>detalles_entidadexterna</from-outcome>
             <to-view-id>/administrar_usuarios/detalles_entidadexterna.xhtml</to-view-id>
@@ -852,7 +852,7 @@
         <from-view-id>/administrar_usuarios/detalles_entidadexterna.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_entidadesxternas</from-outcome>
-            <to-view-id>/administrar_usuarios/administrar_entidadesxternas.xhtml</to-view-id>
+            <to-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

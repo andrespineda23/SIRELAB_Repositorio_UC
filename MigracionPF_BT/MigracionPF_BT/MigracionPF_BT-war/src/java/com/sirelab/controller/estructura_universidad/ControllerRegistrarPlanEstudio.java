@@ -49,7 +49,6 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesRegistradas();
         activarNuevoCarrera = true;
         activarNuevoDepartamento = true;
         nuevoCarrera = null;
@@ -128,7 +127,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
     public void validarCodigoPlanEstudio() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
-            if (!Utilidades.validarCaracterString(nuevoCodigo)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             } else {
@@ -212,6 +211,9 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
     //GET-SET
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesRegistradas();
+        }
         return listaFacultades;
     }
 

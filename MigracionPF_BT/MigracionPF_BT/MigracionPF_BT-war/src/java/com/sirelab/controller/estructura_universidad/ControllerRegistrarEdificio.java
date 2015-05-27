@@ -41,7 +41,6 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaSedes = gestionarEdificiosBO.consultarSedesRegistradas();
         nuevoDescripcion = null;
         nuevoDireccion = null;
         nuevoSede = null;
@@ -111,8 +110,8 @@ public class ControllerRegistrarEdificio implements Serializable {
     private void almacenarNuevoEdificioEnSistema() {
         try {
             Edificio edificioNuevo = new Edificio();
-            edificioNuevo.setDescripcionedificio(nuevoDireccion);
-            edificioNuevo.setDireccion(nuevoDescripcion);
+            edificioNuevo.setDescripcionedificio(nuevoDescripcion);
+            edificioNuevo.setDireccion(nuevoDireccion);
             edificioNuevo.setSede(nuevoSede);
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
         } catch (Exception e) {
@@ -165,6 +164,9 @@ public class ControllerRegistrarEdificio implements Serializable {
     }
 
     public List<Sede> getListaSedes() {
+        if (listaSedes == null) {
+            listaSedes = gestionarEdificiosBO.consultarSedesRegistradas();
+        }
         return listaSedes;
     }
 

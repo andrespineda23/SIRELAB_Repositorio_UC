@@ -351,25 +351,39 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             usuarioNuevo.setPasswordusuario(inputContrasenia);
             Persona personaNueva = new Persona();
             personaNueva.setApellidospersona(inputApellido);
-            personaNueva.setDireccionpersona(inputDireccion);
             personaNueva.setEmailpersona(inputEmail);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
-            personaNueva.setTelefono1persona(inputTelefono1);
-            personaNueva.setTelefono2persona(inputTelefono2);
+            if ((Utilidades.validarNulo(inputTelefono1)) && (!inputTelefono1.isEmpty())) {
+                personaNueva.setTelefono1persona(inputTelefono1);
+            } else {
+                personaNueva.setTelefono1persona("");
+            }
+            if ((Utilidades.validarNulo(inputTelefono2)) && (!inputTelefono2.isEmpty())) {
+                personaNueva.setTelefono2persona(inputTelefono2);
+            } else {
+                personaNueva.setTelefono2persona("");
+            }
+            if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
+                personaNueva.setDireccionpersona(inputDireccion);
+            } else {
+                personaNueva.setDireccionpersona("");
+            }
             EntidadExterna entidadexternaNueva = new EntidadExterna();
-            entidadexternaNueva.setEmailentidad(inputEmailEntidad);
+            if ((Utilidades.validarNulo(inputEmailEntidad)) && (!inputEmailEntidad.isEmpty())) {
+                entidadexternaNueva.setEmailentidad(inputEmailEntidad);
+            } else {
+                entidadexternaNueva.setEmailentidad("");
+            }
             entidadexternaNueva.setIdentificacionentidad(inputIDEntidad);
-            entidadexternaNueva.setNombreentidad(inputNombreEntidad);
+            if ((Utilidades.validarNulo(inputNombreEntidad)) && (!inputNombreEntidad.isEmpty())) {
+                entidadexternaNueva.setNombreentidad(inputNombreEntidad);
+            } else {
+                entidadexternaNueva.setNombreentidad("");
+            }
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(usuarioNuevo, personaNueva, entidadexternaNueva);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El nuevo registro de entidad ha sido almacenado con exito.", "Registro Nueva Entidad");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("message", message);
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ha ocurrido un error en el almacenamiento del registro entidad.", "Registro Nueva Entidad");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("message", message);
         }
     }
 

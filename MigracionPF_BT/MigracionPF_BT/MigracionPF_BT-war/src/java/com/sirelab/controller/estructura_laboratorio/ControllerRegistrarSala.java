@@ -73,8 +73,6 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoInversionSala = null;
         nuevoSedeSala = null;
         nuevoEdificioSala = null;
-        listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasRegistradas();
-        listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
         listaEdificios = null;
     }
 
@@ -404,6 +402,9 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
+        if (listaLaboratoriosPorAreas == null) {
+            listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasRegistradas();
+        }
         return listaLaboratoriosPorAreas;
     }
 
@@ -412,6 +413,9 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public List<Sede> getListaSedes() {
+        if (listaSedes == null) {
+            listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
+        }
         return listaSedes;
     }
 

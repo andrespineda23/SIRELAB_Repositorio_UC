@@ -58,7 +58,6 @@ public class ControllerAdministrarCarreras implements Serializable {
         parametroCodigo = null;
         parametroFacultad = new Facultad();
         parametroDepartamento = new Departamento();
-        listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
         altoTabla = "150";
         inicializarFiltros();
         listaCarreras = null;
@@ -82,17 +81,20 @@ public class ControllerAdministrarCarreras implements Serializable {
         if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if (parametroFacultad.getIdfacultad() != null) {
-            filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+        if (Utilidades.validarNulo(parametroFacultad) == true) {
+            if (parametroFacultad.getIdfacultad() != null) {
+                filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+            }
         }
-        if (parametroDepartamento.getIddepartamento() != null) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento) == true) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
     }
 
     public void buscarCarrerasPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaCarreras = null;
             listaCarreras = gestionarCarrerasBO.consultarCarrerasPorParametro(filtros);
@@ -101,15 +103,8 @@ public class ControllerAdministrarCarreras implements Serializable {
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                //context.execute("consultaSinDatos.show()");
             }
-            //context.update("form:datosBusqueda");
-            //context.update("form:exportarXLS");
-            //context.update("form:exportarXML");
-            //context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString());
         }
@@ -125,11 +120,9 @@ public class ControllerAdministrarCarreras implements Serializable {
         inicializarFiltros();
         listaCarreras = null;
         listaDepartamentos = null;
-        //RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
 
     public void actualizarFacultades() {
-        //RequestContext context = RequestContext.getCurrentInstance();
         if (Utilidades.validarNulo(parametroFacultad)) {
             parametroDepartamento = new Departamento();
             listaDepartamentos = gestionarCarrerasBO.consultarDepartamentosPorIDFacultad(parametroFacultad.getIdfacultad());
@@ -139,7 +132,6 @@ public class ControllerAdministrarCarreras implements Serializable {
             listaDepartamentos = null;
             activarDepartamento = true;
         }
-        //context.update("formT:form:parametroDepartamento");
     }
 
     /*
@@ -178,6 +170,9 @@ public class ControllerAdministrarCarreras implements Serializable {
     }
 
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
+        }
         return listaFacultades;
     }
 

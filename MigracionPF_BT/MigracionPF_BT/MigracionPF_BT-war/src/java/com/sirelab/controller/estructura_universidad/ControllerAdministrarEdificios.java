@@ -74,14 +74,15 @@ public class ControllerAdministrarEdificios implements Serializable {
         if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())) {
             filtros.put("parametroDireccion", parametroDireccion.toString());
         }
-        if (parametroSede.getIdsede() != null) {
-            filtros.put("parametroSede", parametroSede.getIdsede().toString());
+        if (Utilidades.validarNulo(parametroSede) == true) {
+            if (parametroSede.getIdsede() != null) {
+                filtros.put("parametroSede", parametroSede.getIdsede().toString());
+            }
         }
     }
 
     public void buscarEdificiosPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaEdificios = null;
             listaEdificios = gestionarEdificiosBO.consultarEdificiosPorParametro(filtros);
@@ -90,15 +91,8 @@ public class ControllerAdministrarEdificios implements Serializable {
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //      context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                //context.execute("consultaSinDatos.show()");
             }
-            //context.update("form:datosBusqueda");
-            //context.update("form:exportarXLS");
-            //context.update("form:exportarXML");
-            //context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarEdificios buscarEdificiosPorParametros : " + e.toString());
         }

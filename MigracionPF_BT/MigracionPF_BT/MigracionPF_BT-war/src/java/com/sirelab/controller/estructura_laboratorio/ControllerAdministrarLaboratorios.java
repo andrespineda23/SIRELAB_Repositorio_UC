@@ -58,7 +58,6 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         parametroCodigo = null;
         parametroFacultad = new Facultad();
         parametroDepartamento = new Departamento();
-        listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
         altoTabla = "150";
         inicializarFiltros();
         listaLaboratorios = null;
@@ -82,11 +81,15 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if (parametroFacultad.getIdfacultad() != null) {
-            filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+        if (Utilidades.validarNulo(parametroFacultad) == true) {
+            if (parametroFacultad.getIdfacultad() != null) {
+                filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+            }
         }
-        if (parametroDepartamento.getIddepartamento() != null) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento) == true) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
     }
 
@@ -158,6 +161,9 @@ public class ControllerAdministrarLaboratorios implements Serializable {
     }
 
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
+        }
         return listaFacultades;
     }
 

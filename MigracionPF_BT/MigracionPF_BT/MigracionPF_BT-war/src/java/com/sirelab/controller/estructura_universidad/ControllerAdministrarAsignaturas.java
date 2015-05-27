@@ -67,7 +67,6 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         parametroDepartamento = new Departamento();
         parametroCarrera = new Carrera();
         parametroPlanEstudio = new PlanEstudios();
-        listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
         altoTabla = "150";
         inicializarFiltros();
         listaPlanesEstudios = null;
@@ -98,20 +97,25 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         if ((Utilidades.validarNulo(parametroCreditos) == true) && (!parametroCreditos.isEmpty())) {
             filtros.put("parametroCreditos", parametroCreditos.toString());
         }
-        if (parametroDepartamento.getIddepartamento() != null) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento) == true) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
-        if (parametroCarrera.getIdcarrera() != null) {
-            filtros.put("parametroCarrera", parametroCarrera.getIdcarrera().toString());
+        if (Utilidades.validarNulo(parametroCarrera) == true) {
+            if (parametroCarrera.getIdcarrera() != null) {
+                filtros.put("parametroCarrera", parametroCarrera.getIdcarrera().toString());
+            }
         }
-        if (parametroPlanEstudio.getIdplanestudios() != null) {
-            filtros.put("parametroPlanEstudio", parametroPlanEstudio.getIdplanestudios().toString());
+        if (Utilidades.validarNulo(parametroPlanEstudio) == true) {
+            if (parametroPlanEstudio.getIdplanestudios() != null) {
+                filtros.put("parametroPlanEstudio", parametroPlanEstudio.getIdplanestudios().toString());
+            }
         }
     }
 
     public void buscarAsignaturasPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaAsignaturas = null;
             listaAsignaturas = gestionarAsignaturasBO.consultarAsignaturasPorParametro(filtros);
@@ -120,7 +124,6 @@ public class ControllerAdministrarAsignaturas implements Serializable {
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //context.execute("consultaSinDatos.show();");
                 }
             }
         } catch (Exception e) {
@@ -220,6 +223,9 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     }
 
     public List<Departamento> getListaDepartamentos() {
+        if (listaDepartamentos == null) {
+            listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
+        }
         return listaDepartamentos;
     }
 

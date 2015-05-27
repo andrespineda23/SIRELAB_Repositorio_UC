@@ -24,7 +24,7 @@
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
         <h:form id="formularioGeneral">
-            
+
             <div class="container">
                 <div class="row">
                     <!-- Navigation -->
@@ -112,7 +112,7 @@
                                                     Departamento
                                                 </label>
                                                 <h:selectOneMenu value="#{controllerAdministrarCarreras.parametroDepartamento}"
-                                                                 class="form-control"
+                                                                 class="form-control" disabled="#{controllerAdministrarCarreras.activarDepartamento}"
                                                                  id="parametroDepartamento">
                                                     <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                                     <f:selectItems value="#{controllerAdministrarCarreras.listaDepartamentos}" var="departamento"

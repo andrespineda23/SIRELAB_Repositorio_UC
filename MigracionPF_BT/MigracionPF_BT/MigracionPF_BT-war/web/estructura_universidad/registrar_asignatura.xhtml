@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Creditos Asignatura*"/></strong>
                                     <h:inputText maxlength="1" value="#{controllerRegistrarAsignatura.nuevoCredito}" class="form-control" id="nuevoCredito" required="true" requiredMessage="El campo Credito es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarAsignatura.validarCodigoAsignatura()}" execute="nuevoCredito" render="nuevoCredito msnCredito" />
+                                        <f:ajax event="blur" listener="#{controllerRegistrarAsignatura.validarCreditosAsignatura()}" execute="nuevoCredito" render="nuevoCredito msnCredito" />
                                     </h:inputText>
                                     <h6><h:message id="msnCredito" for="nuevoCredito" style="color: red"/></h6>
                                 </div>

@@ -46,7 +46,6 @@ public class ControllerRegistrarDepartamento implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "";
-        listaFacultades = gestionarDepartamentosBO.consultarFacultadesRegistradas();
     }
 
     public void validarNombreDepartamento() {
@@ -109,6 +108,7 @@ public class ControllerRegistrarDepartamento implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "";
+        listaFacultades = null;
     }
 
     //GET-SET
@@ -121,6 +121,9 @@ public class ControllerRegistrarDepartamento implements Serializable {
     }
 
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = gestionarDepartamentosBO.consultarFacultadesRegistradas();
+        }
         return listaFacultades;
     }
 

@@ -63,7 +63,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesMarca = true;
         validacionesModelo = true;
         mensajeFormulario = "";
-        listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
     }
 
     public void validarProveedorInsumo() {
@@ -77,7 +76,7 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void validarNombreInsumo() {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())) {
-            if (!Utilidades.validarCaracterString(nuevoNombre)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
             } else {
@@ -91,7 +90,7 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void validarCodigoInsumo() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
-            if (Utilidades.validarCaracterString(nuevoCodigo)) {
+            if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 validacionesCodigo = true;
             } else {
                 validacionesCodigo = false;
@@ -254,6 +253,9 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     //GET-SET
     public List<Proveedor> getListaProveedores() {
+        if (listaProveedores == null) {
+            listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
+        }
         return listaProveedores;
     }
 

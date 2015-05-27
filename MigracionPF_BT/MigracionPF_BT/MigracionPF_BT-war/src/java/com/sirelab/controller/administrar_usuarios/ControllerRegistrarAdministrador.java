@@ -47,10 +47,10 @@ public class ControllerRegistrarAdministrador implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = true;
+        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
-        validacionesDireccion = false;
+        validacionesDireccion = true;
         validacionesPassw2 = false;
         mensajeFormulario = "";
         nuevoApellido = null;
@@ -285,10 +285,10 @@ public class ControllerRegistrarAdministrador implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = true;
+        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
-        validacionesDireccion = false;
+        validacionesDireccion = true;
         validacionesPassw2 = false;
         mensajeFormulario = "";
         nuevoApellido = null;

@@ -68,7 +68,6 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         parametroFacultad = new Facultad();
         parametroDepartamento = new Departamento();
         parametroCarrera = new Carrera();
-        listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesRegistradas();
         altoTabla = "150";
         inicializarFiltros();
         listaPlanesEstudios = null;
@@ -94,20 +93,25 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if (parametroFacultad.getIdfacultad() != null) {
-            filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+        if (Utilidades.validarNulo(parametroFacultad)) {
+            if (parametroFacultad.getIdfacultad() != null) {
+                filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+            }
         }
-        if (parametroDepartamento.getIddepartamento() != null) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento)) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
-        if (parametroCarrera.getIdcarrera() != null) {
-            filtros.put("parametroCarrera", parametroCarrera.getIdcarrera().toString());
+        if (Utilidades.validarNulo(parametroCarrera)) {
+            if (parametroCarrera.getIdcarrera() != null) {
+                filtros.put("parametroCarrera", parametroCarrera.getIdcarrera().toString());
+            }
         }
     }
 
     public void buscarPlanesEstudiosPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaPlanesEstudios = null;
             listaPlanesEstudios = gestionarPlanesEstudiosBO.consultarPlanesEstudiosPorParametro(filtros);
@@ -116,15 +120,8 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                //context.execute("consultaSinDatos.show()");
             }
-            //context.update("form:datosBusqueda");
-            //context.update("form:exportarXLS");
-            //context.update("form:exportarXML");
-            //context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString());
         }
@@ -143,11 +140,9 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         listaPlanesEstudios = null;
         listaDepartamentos = null;
         listaCarreras = null;
-        //RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
 
     public void actualizarFacultades() {
-        //RequestContext context = RequestContext.getCurrentInstance();
         if (Utilidades.validarNulo(parametroFacultad)) {
             parametroDepartamento = new Departamento();
             listaDepartamentos = gestionarPlanesEstudiosBO.consultarDepartamentosPorIDFacultad(parametroFacultad.getIdfacultad());
@@ -163,12 +158,9 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
             listaCarreras = null;
             parametroCarrera = new Carrera();
         }
-        //context.update("formT:form:parametroDepartamento");
-        //context.update("formT:form:parametroCarrera");
     }
 
     public void actualizarDepartamentos() {
-        //RequestContext context = RequestContext.getCurrentInstance();
         if (Utilidades.validarNulo(parametroDepartamento)) {
             parametroCarrera = new Carrera();
             listaCarreras = gestionarPlanesEstudiosBO.consultarCarrerasPorIDDepartamento(parametroDepartamento.getIddepartamento());
@@ -179,7 +171,6 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
             listaCarreras = null;
             parametroCarrera = new Carrera();
         }
-        //context.update("formT:form:parametroCarrera");
     }
 
     /*
@@ -218,6 +209,9 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
     }
 
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesRegistradas();
+        }
         return listaFacultades;
     }
 

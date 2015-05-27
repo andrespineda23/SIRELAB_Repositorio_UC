@@ -47,8 +47,6 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaAreasProfundizacion = gestionarPlantaLaboratoriosPorAreasBO.consultarAreasProfundizacionRegistradas();
-        listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosRegistrados();
         nuevoArea = null;
         nuevoDepartamento = null;
         nuevoLaboratorio = null;
@@ -157,6 +155,9 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
 
     //GET-SET
     public List<Departamento> getListaDepartamentos() {
+        if (listaDepartamentos == null) {
+            listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosRegistrados();
+        }
         return listaDepartamentos;
     }
 
@@ -197,6 +198,9 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     }
 
     public List<AreaProfundizacion> getListaAreasProfundizacion() {
+        if (listaAreasProfundizacion == null) {
+            listaAreasProfundizacion = gestionarPlantaLaboratoriosPorAreasBO.consultarAreasProfundizacionRegistradas();
+        }
         return listaAreasProfundizacion;
     }
 

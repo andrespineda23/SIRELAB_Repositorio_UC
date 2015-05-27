@@ -57,7 +57,6 @@ public class ControllerAdministrarInsumos implements Serializable {
         listaInsumos = null;
         filtrarListaInsumos = null;
         activarExport = true;
-        listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
     }
 
     private void inicializarFiltros() {
@@ -84,13 +83,14 @@ public class ControllerAdministrarInsumos implements Serializable {
             filtros.put("parametroModelo", parametroModelo.toString());
         }
         if ((Utilidades.validarNulo(parametroProveedor) == true)) {
-            filtros.put("parametroProveedor", parametroProveedor.getIdproveedor().toString());
+            if (parametroProveedor.getIdproveedor() != null) {
+                filtros.put("parametroProveedor", parametroProveedor.getIdproveedor().toString());
+            }
         }
     }
 
     public void buscarInsumosPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaInsumos = null;
             listaInsumos = gestionarRecursoInsumosBO.consultarInsumosPorParametro(filtros);
@@ -99,16 +99,8 @@ public class ControllerAdministrarInsumos implements Serializable {
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //      context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                activarExport = true;
-//                context.execute("consultaSinDatos.show();");
             }
-            //          context.update("form:datosBusqueda");
-            //        context.update("form:exportarXLS");
-            //      context.update("form:exportarXML");
-            //    context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString());
         }
@@ -123,7 +115,6 @@ public class ControllerAdministrarInsumos implements Serializable {
         parametroProveedor = null;
         inicializarFiltros();
         listaInsumos = null;
-        //RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
 
     /*
@@ -185,6 +176,9 @@ public class ControllerAdministrarInsumos implements Serializable {
     }
 
     public List<Proveedor> getListaProveedores() {
+        if (listaProveedores == null) {
+            listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
+        }
         return listaProveedores;
     }
 

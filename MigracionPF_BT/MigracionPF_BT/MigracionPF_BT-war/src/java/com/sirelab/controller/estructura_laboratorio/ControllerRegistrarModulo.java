@@ -47,7 +47,6 @@ public class ControllerRegistrarModulo implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
         validacionesDetalle = false;
         validacionesCodigo = false;
         validacionesLaboratorio = false;
@@ -245,6 +244,9 @@ public class ControllerRegistrarModulo implements Serializable {
 
     //GET-SET
     public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
+        if(listaLaboratoriosPorAreas == null){
+            listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
+        }
         return listaLaboratoriosPorAreas;
     }
 

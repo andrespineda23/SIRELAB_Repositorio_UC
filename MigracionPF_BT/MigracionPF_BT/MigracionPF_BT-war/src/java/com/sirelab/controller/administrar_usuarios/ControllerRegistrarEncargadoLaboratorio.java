@@ -88,8 +88,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         inputPerfil = null;
         inputNombre = null;
         inputDepartamento = null;
-        listaFacultades = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
-        listaPerfilesPorEncargado = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
         listaDepartamentos = null;
         listaLaboratorios = null;
     }
@@ -485,6 +483,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
+        }
         return listaFacultades;
     }
 
@@ -565,6 +566,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public List<PerfilPorEncargado> getListaPerfilesPorEncargado() {
+        if (listaPerfilesPorEncargado == null) {
+            listaPerfilesPorEncargado = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
+        }
         return listaPerfilesPorEncargado;
     }
 

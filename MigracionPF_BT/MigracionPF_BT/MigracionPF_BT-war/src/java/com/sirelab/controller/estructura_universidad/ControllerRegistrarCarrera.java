@@ -45,7 +45,6 @@ public class ControllerRegistrarCarrera implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
         activarNuevoDepartamento = true;
         validacionesCodigo = false;
         validacionesDepartamento = false;
@@ -74,7 +73,7 @@ public class ControllerRegistrarCarrera implements Serializable {
 
     public void validarCodigoCarrera() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
-            if (!Utilidades.validarCaracterString(nuevoCodigo)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             } else {
@@ -178,6 +177,9 @@ public class ControllerRegistrarCarrera implements Serializable {
 
     //GET-SET
     public List<Facultad> getListaFacultades() {
+        if (listaFacultades == null) {
+            listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
+        }
         return listaFacultades;
     }
 
