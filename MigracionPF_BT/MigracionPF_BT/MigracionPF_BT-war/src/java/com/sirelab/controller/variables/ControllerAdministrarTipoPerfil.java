@@ -30,29 +30,32 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
     GestionarVariableTiposPerfilesBOInterface gestionarVariableTiposPerfilesBO;
 
     private List<TipoPerfil> listaTiposPerfiles;
-    private String inputNombre, inputCodigo;
+    private String inputNombre, inputCodigo, inputNombreRegistro, inputCodigoRegistro;
     private TipoPerfil tipoPerfilEditar;
     private BigInteger idTipoPerfil;
-    private String nombreEditar, codigoEditar;
+    private String nombreEditar, codigoEditar, nombreRegistroEditar, codigoRegistroEditar;
     private boolean validacionesNombreNuevo, validacionesNombreEditar;
     private boolean validacionesCodigoNuevo, validacionesCodigoEditar;
+    private boolean validacionesNombreRegistroNuevo, validacionesNombreRegistroEditar;
+    private boolean validacionesCodigoRegistroNuevo, validacionesCodigoRegistroEditar;
     private String mensajeFormularioNuevo, mensajeFormularioEditar;
-    private String visibleEditar;
+    private boolean visibleEditar;
 
     public ControllerAdministrarTipoPerfil() {
     }
 
     @PostConstruct
     public void init() {
-        listaTiposPerfiles = gestionarVariableTiposPerfilesBO.consultarTiposPerfilesRegistrados();
         inputNombre = null;
         inputCodigo = null;
+        inputNombreRegistro = null;
+        inputCodigoRegistro = null;
         tipoPerfilEditar = null;
         nombreEditar = null;
         codigoEditar = null;
         validacionesNombreEditar = false;
         validacionesNombreNuevo = false;
-        visibleEditar = "hidden";
+        visibleEditar = true;
     }
 
     public void validarNombreNuevo() {
@@ -66,6 +69,20 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         } else {
             validacionesNombreNuevo = false;
             FacesContext.getCurrentInstance().addMessage("formularioGeneral:formRegistrar:inputNombre", new FacesMessage("El campo Nombre es obligatorio."));
+        }
+    }
+
+    public void validarNombreRegistroNuevo() {
+        if (Utilidades.validarNulo(inputNombreRegistro) && (!inputNombreRegistro.isEmpty())) {
+            if (Utilidades.validarCaracterString(inputNombreRegistro)) {
+                validacionesNombreRegistroNuevo = true;
+            } else {
+                validacionesNombreRegistroNuevo = false;
+                FacesContext.getCurrentInstance().addMessage("formularioGeneral:formRegistrar:inputNombreRegistro", new FacesMessage("El nombre se encuentra incorrecto."));
+            }
+        } else {
+            validacionesNombreRegistroNuevo = false;
+            FacesContext.getCurrentInstance().addMessage("formularioGeneral:formRegistrar:inputNombreRegistro", new FacesMessage("El campo Nombre es obligatorio."));
         }
     }
 
@@ -89,6 +106,20 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         }
     }
 
+    public void validarCodigoRegistroNuevo() {
+        if (Utilidades.validarNulo(inputCodigoRegistro) && (!inputCodigoRegistro.isEmpty())) {
+            if (Utilidades.validarCaracteresAlfaNumericos(inputCodigoRegistro)) {
+                validacionesCodigoRegistroNuevo = true;
+            } else {
+                validacionesCodigoRegistroNuevo = false;
+                FacesContext.getCurrentInstance().addMessage("formularioGeneral:formRegistrar:inputCodigoRegistro", new FacesMessage("El codigo se encuentra incorrecto."));
+            }
+        } else {
+            validacionesCodigoRegistroNuevo = false;
+            FacesContext.getCurrentInstance().addMessage("formularioGeneral:formRegistrar:inputCodigoRegistro", new FacesMessage("El campo Codigo es obligatorio."));
+        }
+    }
+
     public void validarNombreEditar() {
         if (Utilidades.validarNulo(nombreEditar) && (!nombreEditar.isEmpty())) {
             if (Utilidades.validarCaracterString(nombreEditar)) {
@@ -100,6 +131,20 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         } else {
             validacionesNombreEditar = false;
             FacesContext.getCurrentInstance().addMessage("formularioGeneral:formEditar:nombreEditar", new FacesMessage("El campo Nombre es obligatorio."));
+        }
+    }
+
+    public void validarNombreRegistroEditar() {
+        if (Utilidades.validarNulo(nombreRegistroEditar) && (!nombreRegistroEditar.isEmpty())) {
+            if (Utilidades.validarCaracterString(nombreRegistroEditar)) {
+                validacionesNombreRegistroEditar = true;
+            } else {
+                validacionesNombreRegistroEditar = false;
+                FacesContext.getCurrentInstance().addMessage("formularioGeneral:formEditar:nombreRegistroEditar", new FacesMessage("El nombre se encuentra incorrecto."));
+            }
+        } else {
+            validacionesNombreRegistroEditar = false;
+            FacesContext.getCurrentInstance().addMessage("formularioGeneral:formEditar:nombreRegistroEditar", new FacesMessage("El campo Nombre es obligatorio."));
         }
     }
 
@@ -127,6 +172,20 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         }
     }
 
+    public void validarCodigoRegistroEditar() {
+        if (Utilidades.validarNulo(codigoRegistroEditar) && (!codigoRegistroEditar.isEmpty())) {
+            if (Utilidades.validarCaracterString(codigoRegistroEditar)) {
+                validacionesCodigoRegistroEditar = true;
+            } else {
+                validacionesCodigoRegistroEditar = false;
+                FacesContext.getCurrentInstance().addMessage("formularioGeneral:formEditar:codigoRegistroEditar", new FacesMessage("El codigo se encuentra incorrecto."));
+            }
+        } else {
+            validacionesCodigoRegistroEditar = false;
+            FacesContext.getCurrentInstance().addMessage("formularioGeneral:formEditar:codigoRegistroEditar", new FacesMessage("El campo Codigo es obligatorio."));
+        }
+    }
+
     private boolean validarResultadosValidacion(int tipoR) {
         boolean retorno = true;
         if (tipoR == 1) {
@@ -136,11 +195,23 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
             if (validacionesCodigoNuevo == false) {
                 retorno = false;
             }
+            if (validacionesNombreRegistroNuevo == false) {
+                retorno = false;
+            }
+            if (validacionesCodigoRegistroNuevo == false) {
+                retorno = false;
+            }
         } else {
             if (validacionesNombreEditar == false) {
                 retorno = false;
             }
             if (validacionesCodigoEditar == false) {
+                retorno = false;
+            }
+            if (validacionesNombreRegistroEditar == false) {
+                retorno = false;
+            }
+            if (validacionesCodigoRegistroEditar == false) {
                 retorno = false;
             }
         }
@@ -160,6 +231,8 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         TipoPerfil nuevo = new TipoPerfil();
         nuevo.setCodigo(inputCodigo);
         nuevo.setNombre(inputNombre);
+        nuevo.setCodigoregistro(inputCodigoRegistro);
+        nuevo.setNombreregistro(inputNombreRegistro);
         gestionarVariableTiposPerfilesBO.crearTipoPerfil(nuevo);
         cancelarNuevoRegistro();
     }
@@ -169,6 +242,10 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         validacionesCodigoNuevo = false;
         inputNombre = null;
         inputCodigo = null;
+        validacionesNombreRegistroNuevo = false;
+        validacionesCodigoRegistroNuevo = false;
+        inputNombreRegistro = null;
+        inputCodigoRegistro = null;
     }
 
     public void registrarModificacionTipoPerfil() {
@@ -181,35 +258,40 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
     }
 
     public void recibirIDTipoPerfilEditar(BigInteger idRegistro) {
+        visibleEditar = false;
         idTipoPerfil = idRegistro;
         tipoPerfilEditar = gestionarVariableTiposPerfilesBO.consultarTipoPerfilPorID(idRegistro);
         nombreEditar = tipoPerfilEditar.getNombre();
         codigoEditar = tipoPerfilEditar.getCodigo();
+        nombreRegistroEditar = tipoPerfilEditar.getNombreregistro();
+        codigoRegistroEditar = tipoPerfilEditar.getCodigoregistro();
         validacionesNombreEditar = true;
         validacionesCodigoEditar = true;
-        visibleEditar = "visible";
+        validacionesNombreRegistroEditar = true;
+        validacionesCodigoRegistroEditar = true;
     }
 
     private void almacenarModificacionTipoPerfil() {
         tipoPerfilEditar.setNombre(nombreEditar);
         tipoPerfilEditar.setCodigo(codigoEditar);
+        tipoPerfilEditar.setCodigoregistro(codigoRegistroEditar);
+        tipoPerfilEditar.setNombreregistro(nombreRegistroEditar);
         gestionarVariableTiposPerfilesBO.editarTipoPerfil(tipoPerfilEditar);
-        tipoPerfilEditar = null;
-        idTipoPerfil = null;
-        validacionesNombreEditar = false;
-        validacionesCodigoEditar = false;
-        codigoEditar = null;
-        nombreEditar = null;
+        cancelarModificarRegistro();
     }
 
     public void cancelarModificarRegistro() {
-        visibleEditar = "hidden";
+        visibleEditar = true;
         tipoPerfilEditar = null;
         idTipoPerfil = null;
         validacionesNombreEditar = false;
         validacionesCodigoEditar = false;
         codigoEditar = null;
         nombreEditar = null;
+        validacionesNombreRegistroEditar = false;
+        validacionesCodigoRegistroEditar = false;
+        codigoRegistroEditar = null;
+        nombreRegistroEditar = null;
     }
 
     public void limpiarProcesoPagina() {
@@ -220,6 +302,9 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
 
     //GET-SET
     public List<TipoPerfil> getListaTiposPerfiles() {
+        if (listaTiposPerfiles == null) {
+            listaTiposPerfiles = gestionarVariableTiposPerfilesBO.consultarTiposPerfilesRegistrados();
+        }
         return listaTiposPerfiles;
     }
 
@@ -291,12 +376,44 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         this.mensajeFormularioEditar = mensajeFormularioEditar;
     }
 
-    public String getVisibleEditar() {
+    public boolean isVisibleEditar() {
         return visibleEditar;
     }
 
-    public void setVisibleEditar(String visibleEditar) {
+    public void setVisibleEditar(boolean visibleEditar) {
         this.visibleEditar = visibleEditar;
+    }
+
+    public String getInputNombreRegistro() {
+        return inputNombreRegistro;
+    }
+
+    public void setInputNombreRegistro(String inputNombreRegistro) {
+        this.inputNombreRegistro = inputNombreRegistro;
+    }
+
+    public String getInputCodigoRegistro() {
+        return inputCodigoRegistro;
+    }
+
+    public void setInputCodigoRegistro(String inputCodigoRegistro) {
+        this.inputCodigoRegistro = inputCodigoRegistro;
+    }
+
+    public String getNombreRegistroEditar() {
+        return nombreRegistroEditar;
+    }
+
+    public void setNombreRegistroEditar(String nombreRegistroEditar) {
+        this.nombreRegistroEditar = nombreRegistroEditar;
+    }
+
+    public String getCodigoRegistroEditar() {
+        return codigoRegistroEditar;
+    }
+
+    public void setCodigoRegistroEditar(String codigoRegistroEditar) {
+        this.codigoRegistroEditar = codigoRegistroEditar;
     }
 
 }

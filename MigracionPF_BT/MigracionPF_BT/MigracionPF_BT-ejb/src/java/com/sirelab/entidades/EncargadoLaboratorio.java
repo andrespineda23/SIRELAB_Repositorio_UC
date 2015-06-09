@@ -31,19 +31,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EncargadoLaboratorio.findAll", query = "SELECT e FROM EncargadoLaboratorio e"),
     @NamedQuery(name = "EncargadoLaboratorio.findByIdencargadolaboratorio", query = "SELECT e FROM EncargadoLaboratorio e WHERE e.idencargadolaboratorio = :idencargadolaboratorio")})
 public class EncargadoLaboratorio implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idencargadolaboratorio")
     private BigInteger idencargadolaboratorio;
+    @JoinColumn(name = "tipoperfil", referencedColumnName = "idtipoperfil")
+    @ManyToOne(optional = false)
+    private TipoPerfil tipoperfil;
     @JoinColumn(name = "persona", referencedColumnName = "idpersona")
     @ManyToOne(optional = false)
     private Persona persona;
-    @JoinColumn(name = "perfilporencargado", referencedColumnName = "idperfilporencargado")
-    @ManyToOne(optional = false)
-    private PerfilPorEncargado perfilporencargado;
     @JoinColumn(name = "laboratorio", referencedColumnName = "idlaboratorio")
     @ManyToOne(optional = false)
     private Laboratorio laboratorio;
@@ -63,20 +62,20 @@ public class EncargadoLaboratorio implements Serializable {
         this.idencargadolaboratorio = idencargadolaboratorio;
     }
 
+    public TipoPerfil getTipoperfil() {
+        return tipoperfil;
+    }
+
+    public void setTipoperfil(TipoPerfil tipoperfil) {
+        this.tipoperfil = tipoperfil;
+    }
+
     public Persona getPersona() {
         return persona;
     }
 
     public void setPersona(Persona persona) {
         this.persona = persona;
-    }
-
-    public PerfilPorEncargado getPerfilporencargado() {
-        return perfilporencargado;
-    }
-
-    public void setPerfilporencargado(PerfilPorEncargado perfilporencargado) {
-        this.perfilporencargado = perfilporencargado;
     }
 
     public Laboratorio getLaboratorio() {
@@ -111,5 +110,5 @@ public class EncargadoLaboratorio implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.EncargadoLaboratorio[ idencargadolaboratorio=" + idencargadolaboratorio + " ]";
     }
-
+    
 }

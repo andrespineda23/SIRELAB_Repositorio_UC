@@ -11,7 +11,7 @@ import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.PerfilPorEncargado;
+import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -48,8 +48,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     private List<Laboratorio> listaLaboratorios;
     private Laboratorio inputLaboratorio;
     private boolean activarLaboratorio;
-    private List<PerfilPorEncargado> listaPerfilesPorEncargado;
-    private PerfilPorEncargado inputPerfil;
+    private List<TipoPerfil> listaTiposPerfiles;
+    private TipoPerfil inputPerfil;
     private String paginaAnterior;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
     private boolean validacionesID, validacionesPassw, validacionesTel1, validacionesTel2, validacionesPerfil;
@@ -156,7 +156,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         }
     }
 
-    public void actualizarPerfilPorEncargado() {
+    public void actualizarTipoPerfil() {
         if (Utilidades.validarNulo(inputPerfil)) {
             validacionesPerfil = true;
         } else {
@@ -367,7 +367,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         listaFacultades = null;
         listaDepartamentos = null;
         listaLaboratorios = null;
-        listaPerfilesPorEncargado = null;
+        listaTiposPerfiles = null;
         inputPerfil = null;
     }
 
@@ -391,7 +391,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             personaNueva.setTelefono2persona(inputTelefono2);
             EncargadoLaboratorio encargadoNueva = new EncargadoLaboratorio();
             encargadoNueva.setLaboratorio(inputLaboratorio);
-            encargadoNueva.setPerfilporencargado(inputPerfil);
+            encargadoNueva.setTipoperfil(inputPerfil);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
@@ -565,22 +565,22 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-    public List<PerfilPorEncargado> getListaPerfilesPorEncargado() {
-        if (listaPerfilesPorEncargado == null) {
-            listaPerfilesPorEncargado = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
+    public List<TipoPerfil> getListaTiposPerfiles() {
+        if (listaTiposPerfiles == null) {
+            listaTiposPerfiles = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
         }
-        return listaPerfilesPorEncargado;
+        return listaTiposPerfiles;
     }
 
-    public void setListaPerfilesPorEncargado(List<PerfilPorEncargado> listaPerfilesPorEncargado) {
-        this.listaPerfilesPorEncargado = listaPerfilesPorEncargado;
+    public void setListaTiposPerfiles(List<TipoPerfil> listaTiposPerfiles) {
+        this.listaTiposPerfiles = listaTiposPerfiles;
     }
 
-    public PerfilPorEncargado getInputPerfil() {
+    public TipoPerfil getInputPerfil() {
         return inputPerfil;
     }
 
-    public void setInputPerfil(PerfilPorEncargado inputPerfil) {
+    public void setInputPerfil(TipoPerfil inputPerfil) {
         this.inputPerfil = inputPerfil;
     }
 

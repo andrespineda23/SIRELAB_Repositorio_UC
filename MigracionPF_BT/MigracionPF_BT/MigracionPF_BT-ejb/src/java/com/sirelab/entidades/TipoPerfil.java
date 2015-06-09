@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,8 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoPerfil.findAll", query = "SELECT t FROM TipoPerfil t"),
     @NamedQuery(name = "TipoPerfil.findByIdtipoperfil", query = "SELECT t FROM TipoPerfil t WHERE t.idtipoperfil = :idtipoperfil"),
     @NamedQuery(name = "TipoPerfil.findByNombre", query = "SELECT t FROM TipoPerfil t WHERE t.nombre = :nombre"),
-    @NamedQuery(name = "TipoPerfil.findByCodigo", query = "SELECT t FROM TipoPerfil t WHERE t.codigo = :codigo")})
+    @NamedQuery(name = "TipoPerfil.findByCodigo", query = "SELECT t FROM TipoPerfil t WHERE t.codigo = :codigo"),
+    @NamedQuery(name = "TipoPerfil.findByNombreregistro", query = "SELECT t FROM TipoPerfil t WHERE t.nombreregistro = :nombreregistro"),
+    @NamedQuery(name = "TipoPerfil.findByCodigoregistro", query = "SELECT t FROM TipoPerfil t WHERE t.codigoregistro = :codigoregistro")})
 public class TipoPerfil implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,8 +57,20 @@ public class TipoPerfil implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "codigo")
     private String codigo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nombreregistro")
+    private String nombreregistro;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "codigoregistro")
+    private String codigoregistro;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoperfil")
-    private Collection<PerfilPorEncargado> perfilPorEncargadoCollection;
+    private Collection<EncargadoLaboratorio> encargadoLaboratorioCollection;
+    @Transient
+    private String informacionPerfil;
 
     public TipoPerfil() {
     }
@@ -63,10 +79,27 @@ public class TipoPerfil implements Serializable {
         this.idtipoperfil = idtipoperfil;
     }
 
-    public TipoPerfil(BigInteger idtipoperfil, String nombre, String codigo) {
+    public TipoPerfil(BigInteger idtipoperfil, String nombre, String codigo, String nombreregistro, String codigoregistro) {
         this.idtipoperfil = idtipoperfil;
         this.nombre = nombre;
         this.codigo = codigo;
+        this.nombreregistro = nombreregistro;
+        this.codigoregistro = codigoregistro;
+    }
+
+    public String getInformacionPerfil() {
+        getNombre();
+        getNombreregistro();
+        if (null != nombre && null != nombreregistro) {
+            informacionPerfil = nombre + " - " + nombreregistro;
+        } else {
+            informacionPerfil = "";
+        }
+        return informacionPerfil;
+    }
+
+    public void setInformacionPerfil(String informacionPerfil) {
+        this.informacionPerfil = informacionPerfil;
     }
 
     public BigInteger getIdtipoperfil() {
@@ -93,13 +126,29 @@ public class TipoPerfil implements Serializable {
         this.codigo = codigo;
     }
 
-    @XmlTransient
-    public Collection<PerfilPorEncargado> getPerfilPorEncargadoCollection() {
-        return perfilPorEncargadoCollection;
+    public String getNombreregistro() {
+        return nombreregistro;
     }
 
-    public void setPerfilPorEncargadoCollection(Collection<PerfilPorEncargado> perfilPorEncargadoCollection) {
-        this.perfilPorEncargadoCollection = perfilPorEncargadoCollection;
+    public void setNombreregistro(String nombreregistro) {
+        this.nombreregistro = nombreregistro;
+    }
+
+    public String getCodigoregistro() {
+        return codigoregistro;
+    }
+
+    public void setCodigoregistro(String codigoregistro) {
+        this.codigoregistro = codigoregistro;
+    }
+
+    @XmlTransient
+    public Collection<EncargadoLaboratorio> getEncargadoLaboratorioCollection() {
+        return encargadoLaboratorioCollection;
+    }
+
+    public void setEncargadoLaboratorioCollection(Collection<EncargadoLaboratorio> encargadoLaboratorioCollection) {
+        this.encargadoLaboratorioCollection = encargadoLaboratorioCollection;
     }
 
     @Override
@@ -126,5 +175,5 @@ public class TipoPerfil implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.TipoPerfil[ idtipoperfil=" + idtipoperfil + " ]";
     }
-    
+
 }

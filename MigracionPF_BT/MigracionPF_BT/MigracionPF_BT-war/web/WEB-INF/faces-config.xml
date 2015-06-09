@@ -64,6 +64,24 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/configurarusuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>paginainicio</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>configurarusuario</from-outcome>
+            <to-view-id>/configurarusuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
    
    
     <navigation-rule>

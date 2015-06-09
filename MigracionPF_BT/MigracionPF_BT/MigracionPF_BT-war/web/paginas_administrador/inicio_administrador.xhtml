@@ -49,10 +49,10 @@
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav navbar-right">
                                     <li>
-                                        <a href="#">Configurar Usuario</a>
+                                        <h:commandLink id="confifButton" value="Configurar Cuenta" action="configurarusuario" actionListener="#{controllerConfigurarUsuario.recibirUsuarioLogin()}"/>
                                     </li>
                                     <li>
-                                        <h:commandLink value="Cerrar Sesion" action="#{controllerPaginasIniciales.cerrarSession()}"/>
+                                        <h:commandLink id="sessionButton" value="Cerrar Sesion" action="#{controllerPaginasIniciales.cerrarSession()}"/>
                                     </li>
                                 </ul>
                             </div>

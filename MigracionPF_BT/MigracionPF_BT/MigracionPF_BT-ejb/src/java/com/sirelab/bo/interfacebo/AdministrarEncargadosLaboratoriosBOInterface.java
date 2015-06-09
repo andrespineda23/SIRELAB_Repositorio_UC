@@ -4,8 +4,8 @@ import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.PerfilPorEncargado;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public interface AdministrarEncargadosLaboratoriosBOInterface {
 
-    public List<PerfilPorEncargado> consultarPerfilesPorEncargadoRegistrados();
+    public List<TipoPerfil> consultarPerfilesPorEncargadoRegistrados();
 
     public List<EncargadoLaboratorio> consultarEncargadoLaboratoriosPorParametro(Map<String, String> filtros);
 

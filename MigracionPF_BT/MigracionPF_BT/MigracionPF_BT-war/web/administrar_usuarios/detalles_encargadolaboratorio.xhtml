@@ -170,15 +170,15 @@
                                 <h6><h:message id="msnLaboratorio" for="laboratorioEncargadoLaboratorio" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
-                                <strong><h:outputText value="Perfil Por Encargado*"/></strong>
+                                <strong><h:outputText value="Tipo Perfil*"/></strong>
                                 <h:selectOneMenu readonly="#{controllerDetallesEncargadoLaboratorio.activarEditar}"
                                                  value="#{controllerDetallesEncargadoLaboratorio.perfilEncargadoLaboratorio}"
                                                  class="form-control"
                                                  id="perfilEncargadoLaboratorio">
-                                    <f:selectItems value="#{controllerDetallesEncargadoLaboratorio.listaPerfilesPorEncargado}" var="perfil"
+                                    <f:selectItems value="#{controllerDetallesEncargadoLaboratorio.listaTiposPerfiles}" var="perfil"
                                                    itemLabel="#{perfil.informacionPerfil}" itemValue="#{perfil}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesEncargadoLaboratorio.actualizarPerfilPorEncargado()}" execute="perfilEncargadoLaboratorio" render="msnPerfil"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesEncargadoLaboratorio.actualizarTipoPerfil()}" execute="perfilEncargadoLaboratorio" render="msnPerfil"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnPerfil" for="perfilEncargadoLaboratorio" style="color: red"></h:message></h6>
                             </div>

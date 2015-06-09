@@ -5,16 +5,16 @@ import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
-import com.sirelab.dao.interfacedao.PerfilPorEncargadoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
+import com.sirelab.dao.interfacedao.TipoPerfilDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.PerfilPorEncargado;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
@@ -45,45 +45,17 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     @EJB
     LaboratorioDAOInterface laboratorioDAO;
     @EJB
-    PerfilPorEncargadoDAOInterface perfilPorEncargadoDAO;
+    TipoPerfilDAOInterface TipoPerfilDAO;
 
     @Override
-    public List<PerfilPorEncargado> consultarPerfilesPorEncargadoRegistrados() {
+    public List<TipoPerfil> consultarPerfilesPorEncargadoRegistrados() {
         try {
-            List<PerfilPorEncargado> lista = perfilPorEncargadoDAO.consultarPerfilesPorEncargado();
-            List<PerfilPorEncargado> listaRetorno = null;
-            if (null != lista) {
-                listaRetorno = cargarDatosStringPerfilPorEncargado(lista);
-            }
-            return listaRetorno;
+            List<TipoPerfil> lista = TipoPerfilDAO.consultarTiposPerfiles();
+            return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarEncargadosLaboratoriosBO consultarPerfilesPorEncargadoRegistrados : " + e.toString());
             return null;
         }
-    }
-
-    private List<PerfilPorEncargado> cargarDatosStringPerfilPorEncargado(List<PerfilPorEncargado> lista) {
-        List<PerfilPorEncargado> registro = lista;
-        for (int i = 0; i < lista.size(); i++) {
-            if ("DEPARTAMENTO".equalsIgnoreCase(lista.get(i).getTipoperfil().getNombre())) {
-                Departamento departamento = departamentoDAO.buscarDepartamentoPorID(lista.get(i).getIndicetabla());
-                if (null != departamento) {
-                    lista.get(i).setNombreRegistro(departamento.getNombredepartamento());
-                } else {
-                    lista.get(i).setNombreRegistro("");
-                }
-            } else {
-                if ("LABORATORIO".equalsIgnoreCase(lista.get(i).getTipoperfil().getNombre())) {
-                    Laboratorio laboratorio = laboratorioDAO.buscarLaboratorioPorID(lista.get(i).getIndicetabla());
-                    if (null != laboratorio) {
-                        lista.get(i).setNombreRegistro(laboratorio.getNombrelaboratorio());
-                    } else {
-                        lista.get(i).setNombreRegistro("");
-                    }
-                }
-            }
-        }
-        return registro;
     }
 
     @Override

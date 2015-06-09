@@ -10,7 +10,7 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
-import com.sirelab.entidades.PerfilPorEncargado;
+import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -52,8 +52,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     private List<Laboratorio> listaLaboratorio;
     private Laboratorio laboratorioEncargadoLaboratorio;
     private boolean activoLaboratorio;
-    private List<PerfilPorEncargado> listaPerfilesPorEncargado;
-    private PerfilPorEncargado perfilEncargadoLaboratorio;
+    private List<TipoPerfil> listaTiposPerfiles;
+    private TipoPerfil perfilEncargadoLaboratorio;
     private String nombreEncargadoLaboratorio, apellidoEncargadoLaboratorio, correoEncargadoLaboratorio, identificacionEncargadoLaboratorio;
     private String telefono1EncargadoLaboratorio, telefono2EncargadoLaboratorio, direccionEncargadoLaboratorio;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
@@ -108,7 +108,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         facultadEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio().getDepartamento().getFacultad();
         departamentoEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio().getDepartamento();
         laboratorioEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio();
-        perfilEncargadoLaboratorio = encargadoLaboratorioDetalles.getPerfilporencargado();
+        perfilEncargadoLaboratorio = encargadoLaboratorioDetalles.getTipoperfil();
     }
 
     /**
@@ -139,7 +139,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         modificacionRegistro = false;
         visibleGuardar = true;
         listaFacultad = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
-        listaPerfilesPorEncargado = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
+        listaTiposPerfiles = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
     }
 
     /**
@@ -246,7 +246,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         modificacionesRegistroEncargadoLaboratorio();
     }
 
-    public void actualizarPerfilPorEncargado() {
+    public void actualizarTipoPerfil() {
         if (Utilidades.validarNulo(perfilEncargadoLaboratorio)) {
             validacionesPerfil = true;
         } else {
@@ -436,7 +436,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             encargadoLaboratorioDetalles.getPersona().setNombrespersona(nombreEncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setTelefono1persona(telefono1EncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setTelefono2persona(telefono2EncargadoLaboratorio);
-            encargadoLaboratorioDetalles.setPerfilporencargado(perfilEncargadoLaboratorio);
+            encargadoLaboratorioDetalles.setTipoperfil(perfilEncargadoLaboratorio);
             encargadoLaboratorioDetalles.setLaboratorio(laboratorioEncargadoLaboratorio);
             administrarEncargadosLaboratoriosBO.actualizarInformacionPersona(encargadoLaboratorioDetalles.getPersona());
             administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
@@ -688,19 +688,19 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-    public List<PerfilPorEncargado> getListaPerfilesPorEncargado() {
-        return listaPerfilesPorEncargado;
+    public List<TipoPerfil> getListaTiposPerfiles() {
+        return listaTiposPerfiles;
     }
 
-    public void setListaPerfilesPorEncargado(List<PerfilPorEncargado> listaPerfilesPorEncargado) {
-        this.listaPerfilesPorEncargado = listaPerfilesPorEncargado;
+    public void setListaTiposPerfiles(List<TipoPerfil> listaTiposPerfiles) {
+        this.listaTiposPerfiles = listaTiposPerfiles;
     }
 
-    public PerfilPorEncargado getPerfilEncargadoLaboratorio() {
+    public TipoPerfil getPerfilEncargadoLaboratorio() {
         return perfilEncargadoLaboratorio;
     }
 
-    public void setPerfilEncargadoLaboratorio(PerfilPorEncargado perfilEncargadoLaboratorio) {
+    public void setPerfilEncargadoLaboratorio(TipoPerfil perfilEncargadoLaboratorio) {
         this.perfilEncargadoLaboratorio = perfilEncargadoLaboratorio;
     }
 

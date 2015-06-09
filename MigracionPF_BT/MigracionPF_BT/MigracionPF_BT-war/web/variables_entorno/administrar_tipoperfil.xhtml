@@ -79,6 +79,18 @@
                                         </h:column>  
                                         <h:column>
                                             <f:facet name="header">
+                                                <h:outputText value="Nombre Registro"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.nombreregistro}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Codigo Registro"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.codigoregistro}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
                                                 <h:outputText value="Detalles"/>
                                             </f:facet>
                                             <h:commandLink value="Ver" actionListener="#{controllerAdministrarTipoPerfil.recibirIDTipoPerfilEditar(item.idtipoperfil)}">
@@ -109,6 +121,20 @@
                                 </h:inputText>
                                 <h6><h:message id="msnCodigo" for="inputCodigo" style="color: red"></h:message></h6>
                             </div>
+                            <div class="form-group">
+                                <h:outputText value="Nombre Registro Nuevo Tipo Perfil*"/>
+                                <h:inputText id="inputNombre" class="form-control" maxlength="45" value="#{controllerAdministrarTipoPerfil.inputNombreRegistro}" required="true" requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarNombreRegistroNuevo()}" execute="inputNombreRegistro" render="inputNombreRegistro msnNombre" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombre2" for="inputNombreRegistro" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <h:outputText value="Codigo Registro Nuevo Tipo Perfil*"/>
+                                <h:inputText id="inputCodigo" class="form-control" maxlength="45" value="#{controllerAdministrarTipoPerfil.inputCodigoRegistro}" required="true" requiredMessage="El campo Codigo es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarCodigoRegistroNuevo()}" execute="inputCodigoRegistro" render="inputCodigoRegistro msnCodigo" />
+                                </h:inputText>
+                                <h6><h:message id="msnCodigo2" for="inputCodigoRegistro" style="color: red"></h:message></h6>
+                            </div>
                             <h:commandButton value="Registrar" class="btn btn-success" actionListener="#{controllerAdministrarTipoPerfil.registrarNuevoTipoPerfil()}">
                                 <f:ajax execute="@form" render="formRegistrar" />
                             </h:commandButton>
@@ -122,22 +148,36 @@
                 </div>
                 <br></br>
                 <h:form id="formEditar">
-                    <div class="row col-md-12" style="visibility: #{controllerAdministrarTipoPerfil.visibleEditar}}">
+                    <div class="row col-md-12">
                         <fieldset style="border: black;border-radius: 10px;">
                             <h4><legend style="color: darkblue">Editar Tipo Perfil</legend></h4>
                             <div class="form-group">
                                 <h:outputText value="Nombre Tipo Perfil*"/>
-                                <h:inputText id="nombreEditar" class="form-control" maxlength="45" value="#{controllerAdministrarTipoPerfil.nombreEditar}" required="true" requiredMessage="El campo Nombre es obligatorio.">
+                                <h:inputText id="nombreEditar" class="form-control" maxlength="45" disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.nombreEditar}" required="true" requiredMessage="El campo Nombre es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarNombreEditar()}" execute="nombreEditar" render="nombreEditar msnNombreE" />
                                 </h:inputText>
                                 <h6><h:message id="msnNombreE" for="nombreEditar" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <h:outputText value="Codigo Tipo Perfil*"/>
-                                <h:inputText id="codigoEditar" class="form-control" maxlength="45" value="#{controllerAdministrarTipoPerfil.codigoEditar}" required="true" requiredMessage="El campo Codigo es obligatorio.">
+                                <h:inputText id="codigoEditar" class="form-control" maxlength="45"  disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.codigoEditar}" required="true" requiredMessage="El campo Codigo es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarCodigoEditar()}" execute="codigoEditar" render="codigoEditar msnCodigoE" />
                                 </h:inputText>
                                 <h6><h:message id="msnCodigoE" for="codigoEditar" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <h:outputText value="Nombre Registro Tipo Perfil*"/>
+                                <h:inputText id="nombreRegistroEditar" class="form-control" maxlength="45" disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.nombreRegistroEditar}" required="true" requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarNombreRegistroEditar()}" execute="nombreRegistroEditar" render="nombreRegistroEditar msnNombreE" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombreE2" for="nombreRegistroEditar" style="color: red"></h:message></h6>
+                            </div>
+                            <div class="form-group">
+                                <h:outputText value="Codigo Registro Tipo Perfil*"/>
+                                <h:inputText id="codigoRegistroEditar" class="form-control" maxlength="45"  disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.codigoRegistroEditar}" required="true" requiredMessage="El campo Codigo es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarCodigoRegistroEditar()}" execute="codigoRegistroEditar" render="codigoRegistroEditar msnCodigoE" />
+                                </h:inputText>
+                                <h6><h:message id="msnCodigoE2" for="codigoEditar" style="color: red"></h:message></h6>
                             </div>
                             <h:commandButton value="Registrar" class="btn btn-success" actionListener="#{controllerAdministrarTipoPerfil.registrarModificacionTipoPerfil()}">
                                 <f:ajax execute="@form" render="formEditar" />
