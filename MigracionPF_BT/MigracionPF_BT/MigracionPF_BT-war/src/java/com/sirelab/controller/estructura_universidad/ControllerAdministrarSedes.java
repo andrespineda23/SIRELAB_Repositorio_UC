@@ -79,26 +79,16 @@ public class ControllerAdministrarSedes implements Serializable {
 
     public void buscarSedesPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaSedes = null;
             listaSedes = gestionarSedeBO.consultarSedesPorParametro(filtros);
             if (listaSedes != null) {
                 if (listaSedes.size() > 0) {
-                    //activarFiltrosTabla();
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                activarExport = true;
-                //context.execute("consultaSinDatos.show();");
-            }
-            //context.update("form:datosBusqueda");
-            //context.update("form:exportarXLS");
-            //context.update("form:exportarXML");
-            //context.update("form:exportarPDF");
+            } 
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString());
         }
@@ -111,7 +101,6 @@ public class ControllerAdministrarSedes implements Serializable {
         parametroTelefono = null;
         inicializarFiltros();
         listaSedes = null;
-        //RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
 
     public void dispararDialogoEditarSede(BigInteger idSede) {

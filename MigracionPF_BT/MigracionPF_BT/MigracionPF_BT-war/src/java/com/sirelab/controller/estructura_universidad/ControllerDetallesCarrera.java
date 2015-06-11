@@ -48,7 +48,6 @@ public class ControllerDetallesCarrera implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
         activarModificacionDepartamento = true;
         validacionesCodigo = true;
         validacionesDepartamento = true;
@@ -69,10 +68,15 @@ public class ControllerDetallesCarrera implements Serializable {
     }
 
     public void asignarValoresVariablesCarrera() {
-        editarCodigo = null;
-        editarDepartamento = null;
-        editarFacultad = null;
-        editarNombre = null;
+        editarCodigo = carreraDetalles.getCodigocarrera();
+        editarDepartamento = carreraDetalles.getDepartamento();
+        editarFacultad = carreraDetalles.getDepartamento().getFacultad();
+        editarNombre = carreraDetalles.getNombrecarrera();
+        activarModificacionDepartamento = false;
+       listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
+        if (Utilidades.validarNulo(editarFacultad)) {
+            listaDepartamentos = gestionarCarrerasBO.consultarDepartamentosPorIDFacultad(editarFacultad.getIdfacultad());
+        }
     }
 
     public void recibirIDCarrerasDetalles(BigInteger idRegistro) {
@@ -163,11 +167,16 @@ public class ControllerDetallesCarrera implements Serializable {
 
     public void registrarModificacionCarrera() {
         if (validarResultadosValidacion() == true) {
-            if (validarCodigoRepetido() == true) {
-                almacenarModificacionCarreraEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            if (Utilidades.validarNulo(editarDepartamento)) {
+                if (validarCodigoRepetido() == true) {
+                    almacenarModificacionCarreraEnSistema();
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    recibirIDCarrerasDetalles(this.idCarrera);
+                } else {
+                    mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el departamento seleccionado.";
+                }
             } else {
-                mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el departamento seleccionado.";
+                mensajeFormulario = "Seleccione un departamento para continuar con el proceso.";
             }
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";

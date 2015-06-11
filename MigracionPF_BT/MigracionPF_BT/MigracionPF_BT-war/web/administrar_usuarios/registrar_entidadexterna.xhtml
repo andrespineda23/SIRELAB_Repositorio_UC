@@ -169,12 +169,12 @@
                         </div>
                         <div class="right pull-right">
                             <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEntidadExterna.registrarNuevoEntidadExterna()}" class="btn btn-success" >
-                                <f:ajax execute="@this" render="mensajeFormulario" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>
                             <span></span>
                             <h:commandButton value="Cancelar" action="administrar_entidadesxternas" class="btn btn-danger" actionListener="#{controllerRegistrarEntidadExterna.cancelarRegistroEntidadExterna()}" immediate="true"> 
-                                <f:ajax execute="@this" render="mensajeFormulario" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                     </div>

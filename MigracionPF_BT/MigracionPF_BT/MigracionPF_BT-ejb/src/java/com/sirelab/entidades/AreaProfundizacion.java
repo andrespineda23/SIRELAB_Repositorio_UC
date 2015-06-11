@@ -78,11 +78,11 @@ public class AreaProfundizacion implements Serializable {
     }
 
     public String getNombrearea() {
-        return nombrearea;
+        return nombrearea.toUpperCase();
     }
 
     public void setNombrearea(String nombrearea) {
-        this.nombrearea = nombrearea;
+        this.nombrearea = nombrearea.toUpperCase();
     }
 
     public String getCodigoarea() {

@@ -81,26 +81,16 @@ public class ControllerAdministrarProveedores implements Serializable {
 
     public void buscarProveedoresPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaProveedores = null;
             listaProveedores = gestionarRecursoProveedoresBO.consultarProveedoresPorParametro(filtros);
             if (listaProveedores != null) {
                 if (listaProveedores.size() > 0) {
-                    //activarFiltrosTabla();
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                activarExport = true;
-                //context.execute("consultaSinDatos.show();");
             }
-            //context.update("form:datosBusqueda");
-            //context.update("form:exportarXLS");
-            //context.update("form:exportarXML");
-            //context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString());
         }
@@ -108,9 +98,6 @@ public class ControllerAdministrarProveedores implements Serializable {
 
     public void limpiarProcesoBusqueda() {
         activarExport = true;
-        if (null != listaProveedores) {
-            //desactivarFiltrosTabla();
-        }
         parametroNombre = null;
         parametroNIT = null;
         parametroDireccion = null;

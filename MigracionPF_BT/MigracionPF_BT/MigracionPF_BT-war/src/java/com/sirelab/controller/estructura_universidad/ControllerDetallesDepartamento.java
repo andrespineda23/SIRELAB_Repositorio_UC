@@ -47,7 +47,6 @@ public class ControllerDetallesDepartamento implements Serializable {
         validacionesFacultad = true;
         validacionesNombre = true;
         mensajeFormulario = "";
-        listaFacultades = gestionarDepartamentosBO.consultarFacultadesRegistradas();
     }
 
     public void restaurarInformacionDepartamento() {
@@ -59,8 +58,9 @@ public class ControllerDetallesDepartamento implements Serializable {
     }
 
     public void asignarValoresVariablesDepartamento() {
-        editarFacultad = null;
-        editarNombre = null;
+        editarFacultad = departamentoDetalles.getFacultad();
+        editarNombre = departamentoDetalles.getNombredepartamento();
+        listaFacultades = gestionarDepartamentosBO.consultarFacultadesRegistradas();
     }
 
     public void recibirIDDepartamentosDetalles(BigInteger idDetalle) {
@@ -107,6 +107,7 @@ public class ControllerDetallesDepartamento implements Serializable {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionDepartamentoEnSistema();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            recibirIDDepartamentosDetalles(this.idDepartamento);
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }

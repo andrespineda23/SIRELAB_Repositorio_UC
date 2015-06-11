@@ -410,7 +410,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 entidadExternaDetalles.getPersona().getUsuario().setEstado(bool);
                 administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
                 restaurarInformacionEntidadExterna();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha activado la entidad/convenio.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
@@ -430,7 +430,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
                 entidadExternaDetalles = new EntidadExterna();
                 restaurarInformacionEntidadExterna();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha inactivado la entidad/convenio.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }

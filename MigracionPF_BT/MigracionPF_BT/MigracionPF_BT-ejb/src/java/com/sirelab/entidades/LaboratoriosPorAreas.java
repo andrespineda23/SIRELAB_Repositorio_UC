@@ -98,7 +98,7 @@ public class LaboratoriosPorAreas implements Serializable {
         getAreaprofundizacion();
         getLaboratorio();
         if (null != areaprofundizacion && null != laboratorio) {
-            informacionRegistro = laboratorio.getCodigolaboratorio() + " - " + areaprofundizacion.getNombrearea();
+            informacionRegistro = laboratorio.getNombrelaboratorio()+ " - " + areaprofundizacion.getNombrearea();
         } else {
             informacionRegistro = "";
         }

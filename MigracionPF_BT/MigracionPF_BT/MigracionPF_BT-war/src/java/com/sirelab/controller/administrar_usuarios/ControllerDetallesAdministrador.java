@@ -335,7 +335,7 @@ public class ControllerDetallesAdministrador implements Serializable {
                 administradorDetalles.getUsuario().setEstado(bool);
                 administrarAdministradoresBO.actualizarInformacionUsuario(administradorDetalles.getUsuario());
                 restaurarInformacionAdministrador();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha activado el administrador.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
@@ -355,7 +355,7 @@ public class ControllerDetallesAdministrador implements Serializable {
                 administrarAdministradoresBO.actualizarInformacionUsuario(administradorDetalles.getUsuario());
                 administradorDetalles = new Persona();
                 restaurarInformacionAdministrador();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha inactivado el administrador.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }

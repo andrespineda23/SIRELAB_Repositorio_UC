@@ -257,51 +257,39 @@ public class ControllerRegistrarDocente implements Serializable {
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesApellido == false) {
-            System.out.println("1");
             retorno = false;
         }
         if (validacionesDepartamento == false) {
-            System.out.println("2");
             retorno = false;
         }
         if (validacionesCorreo == false) {
-            System.out.println("3");
             retorno = false;
         }
         if (validacionesDireccion == false) {
-            System.out.println("4");
             retorno = false;
         }
         if (validacionesID == false) {
-            System.out.println("5");
             retorno = false;
         }
         if (validacionesNombre == false) {
-            System.out.println("6");
             retorno = false;
         }
         if (validacionesPassw == false) {
-            System.out.println("7");
             retorno = false;
         }
         if (validacionesPassw2 == false) {
-            System.out.println("8");
             retorno = false;
         }
         if (validacionesFacultad == false) {
-            System.out.println("9");
             retorno = false;
         }
         if (validacionesCargo == false) {
-            System.out.println("10");
             retorno = false;
         }
         if (validacionesTel1 == false) {
-            System.out.println("11");
             retorno = false;
         }
         if (validacionesTel2 == false) {
-            System.out.println("12");
             retorno = false;
         }
         return retorno;
@@ -353,6 +341,33 @@ public class ControllerRegistrarDocente implements Serializable {
         listaDepartamentos = null;
     }
 
+    public void limpiarFormulario() {
+        validacionesNombre = false;
+        validacionesApellido = false;
+        validacionesCorreo = false;
+        validacionesID = false;
+        validacionesPassw = false;
+        validacionesTel1 = true;
+        validacionesTel2 = true;
+        validacionesDireccion = true;
+        validacionesPassw2 = false;
+        validacionesCargo = false;
+        validacionesFacultad = false;
+        validacionesDepartamento = false;
+        //
+        activarDepartamento = true;
+        inputApellido = null;
+        inputFacultad = null;
+        inputContrasenia = null;
+        inputContraseniaConfirma = null;
+        inputDireccion = null;
+        inputEmail = null;
+        inputID = null;
+        inputNombre = null;
+        inputDepartamento = null;
+        inputCargo = null;
+    }
+
     /**
      * Metodo encargado de almacenar dentro del sistema de información el nuevo
      * docente
@@ -375,14 +390,9 @@ public class ControllerRegistrarDocente implements Serializable {
             docenteNueva.setDepartamento(inputDepartamento);
             docenteNueva.setCargodocente(inputCargo);
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El nuevo docente ha sido registrado con exito.", "Registro Nuevo Docente");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("message", message);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString());
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ha ocurrido un error en el almacenamiento del registro docente.", "Registro Nuevo Docente");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("message", message);
         }
     }
 

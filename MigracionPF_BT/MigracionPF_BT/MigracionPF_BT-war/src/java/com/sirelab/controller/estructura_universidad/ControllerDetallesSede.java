@@ -24,20 +24,20 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class ControllerDetallesSede implements Serializable {
-
+    
     @EJB
     GestionarSedeBOInterface gestionarSedeBO;
-
+    
     private Sede sedeDetalles;
     private BigInteger idSede;
     private String editarNombre, editarDireccion, editarTelefono;
     //
     private boolean validacionesNombre, validacionesDireccion, validacionesTelefono;
     private String mensajeFormulario;
-
+    
     public ControllerDetallesSede() {
     }
-
+    
     @PostConstruct
     public void init() {
         validacionesDireccion = true;
@@ -45,7 +45,7 @@ public class ControllerDetallesSede implements Serializable {
         validacionesTelefono = true;
         mensajeFormulario = "";
     }
-
+    
     public void restaurarInformacionSede() {
         validacionesDireccion = true;
         validacionesNombre = true;
@@ -54,19 +54,19 @@ public class ControllerDetallesSede implements Serializable {
         sedeDetalles = new Sede();
         recibirIDSedesDetalles(idSede);
     }
-
+    
     public void asignarValoresVariablesSede() {
         editarDireccion = sedeDetalles.getDireccionsede();
         editarNombre = sedeDetalles.getNombresede();
         editarTelefono = sedeDetalles.getTelefonosede();
     }
-
+    
     public void recibirIDSedesDetalles(BigInteger idDetalle) {
         this.idSede = idDetalle;
         sedeDetalles = gestionarSedeBO.obtenerSedePorIDSede(idSede);
         asignarValoresVariablesSede();
     }
-
+    
     public void validarNombreSede() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
@@ -79,9 +79,9 @@ public class ControllerDetallesSede implements Serializable {
             validacionesNombre = false;
             FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio."));
         }
-
+        
     }
-
+    
     public void validarDireccionSede() {
         if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty())) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarDireccion)) {
@@ -95,7 +95,7 @@ public class ControllerDetallesSede implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección es obligatoria."));
         }
     }
-
+    
     public void validarTelefonoSede() {
         if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty())) {
             if (!Utilidades.isNumber(editarTelefono)) {
@@ -109,13 +109,13 @@ public class ControllerDetallesSede implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono es obligatorio."));
         }
     }
-
+    
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesDireccion == false) {
             retorno = false;
         }
-
+        
         if (validacionesNombre == false) {
             retorno = false;
         }
@@ -124,16 +124,17 @@ public class ControllerDetallesSede implements Serializable {
         }
         return retorno;
     }
-
+    
     public void registrarModificacionSede() {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionSedeEnSistema();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            recibirIDSedesDetalles(this.idSede);
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
-
+    
     private void almacenarModificacionSedeEnSistema() {
         try {
             sedeDetalles.setDireccionsede(editarDireccion);
@@ -149,49 +150,49 @@ public class ControllerDetallesSede implements Serializable {
     public Sede getSedeDetalles() {
         return sedeDetalles;
     }
-
+    
     public void setSedeDetalles(Sede sedeDetalles) {
         this.sedeDetalles = sedeDetalles;
     }
-
+    
     public BigInteger getIdSede() {
         return idSede;
     }
-
+    
     public void setIdSede(BigInteger idSede) {
         this.idSede = idSede;
     }
-
+    
     public String getEditarNombre() {
         return editarNombre;
     }
-
+    
     public void setEditarNombre(String editarNombre) {
         this.editarNombre = editarNombre;
     }
-
+    
     public String getEditarDireccion() {
         return editarDireccion;
     }
-
+    
     public void setEditarDireccion(String editarDireccion) {
         this.editarDireccion = editarDireccion;
     }
-
+    
     public String getEditarTelefono() {
         return editarTelefono;
     }
-
+    
     public void setEditarTelefono(String editarTelefono) {
         this.editarTelefono = editarTelefono;
     }
-
+    
     public String getMensajeFormulario() {
         return mensajeFormulario;
     }
-
+    
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
     }
-
+    
 }

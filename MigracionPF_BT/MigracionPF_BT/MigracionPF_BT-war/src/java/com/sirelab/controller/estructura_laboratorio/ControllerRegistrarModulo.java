@@ -236,15 +236,34 @@ public class ControllerRegistrarModulo implements Serializable {
             salaNuevo.setEstadomodulo(true);
             salaNuevo.setSalalaboratorio(nuevoSalaLaboratorioModulo);
             gestionarPlantaModulosBO.crearNuevoModuloLaboratorio(salaNuevo);
-            System.out.println("Finish !");
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString());
         }
     }
 
+    public void limpiarFormulario() {
+        validacionesDetalle = false;
+        validacionesCodigo = false;
+        validacionesLaboratorio = false;
+        validacionesSala = false;
+        validacionesCapacidad = true;
+        validacionesCosto = true;
+        validacionesInversion = true;
+        mensajeFormulario = "";
+        activarNuevoSala = true;
+        nuevoCodigoModulo = null;
+        nuevoDetalleModulo = null;
+        nuevoCostoModulo = null;
+        nuevoCapacidadModulo = null;
+        nuevoInversionModulo = null;
+        nuevoSalaLaboratorioModulo = null;
+        nuevoLaboratorioPorAreaModulo = null;
+    }
+
     //GET-SET
     public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
-        if(listaLaboratoriosPorAreas == null){
+        if (listaLaboratoriosPorAreas == null) {
             listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
         }
         return listaLaboratoriosPorAreas;

@@ -90,7 +90,7 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         if (Utilidades.validarNulo(inputCodigo) && (!inputCodigo.isEmpty())) {
             if (Utilidades.validarCaracteresAlfaNumericos(inputCodigo)) {
                 TipoPerfil registro = gestionarVariableTiposPerfilesBO.consultarTipoPerfilPorCodigo(inputCodigo);
-                if (null != registro) {
+                if (null == registro) {
                     validacionesCodigoNuevo = true;
                 } else {
                     validacionesCodigoNuevo = false;
@@ -235,17 +235,21 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         nuevo.setNombreregistro(inputNombreRegistro);
         gestionarVariableTiposPerfilesBO.crearTipoPerfil(nuevo);
         cancelarNuevoRegistro();
+        listaTiposPerfiles = null;
+        getListaTiposPerfiles();
     }
 
     public void cancelarNuevoRegistro() {
-        validacionesNombreNuevo = false;
-        validacionesCodigoNuevo = false;
+        visibleEditar = true; 
         inputNombre = null;
         inputCodigo = null;
-        validacionesNombreRegistroNuevo = false;
-        validacionesCodigoRegistroNuevo = false;
         inputNombreRegistro = null;
         inputCodigoRegistro = null;
+        validacionesNombreRegistroNuevo = false;
+        validacionesCodigoRegistroNuevo = false;
+        validacionesNombreNuevo = false;
+        validacionesCodigoNuevo = false;
+        mensajeFormularioNuevo = "";
     }
 
     public void registrarModificacionTipoPerfil() {
@@ -278,6 +282,8 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         tipoPerfilEditar.setNombreregistro(nombreRegistroEditar);
         gestionarVariableTiposPerfilesBO.editarTipoPerfil(tipoPerfilEditar);
         cancelarModificarRegistro();
+        listaTiposPerfiles = null;
+        getListaTiposPerfiles();
     }
 
     public void cancelarModificarRegistro() {
@@ -292,6 +298,7 @@ public class ControllerAdministrarTipoPerfil implements Serializable {
         validacionesCodigoRegistroEditar = false;
         codigoRegistroEditar = null;
         nombreRegistroEditar = null;
+        mensajeFormularioEditar = "";
     }
 
     public void limpiarProcesoPagina() {

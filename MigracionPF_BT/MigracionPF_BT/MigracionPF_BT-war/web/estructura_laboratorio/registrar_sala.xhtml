@@ -133,7 +133,7 @@
                                 <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioPorArea}"
                                                  class="form-control"
                                                  id="nuevoLaboratorioPorArea">
-                                    <f:selectItem itemLabel="Seleccione Regisro" itemValue="null" />
+                                    <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarSala.listaLaboratoriosPorAreas}" var="laboratorio"
                                                    itemLabel="#{laboratorio.informacionRegistro}" itemValue="#{laboratorio}"/>
                                     <f:converter converterId="ConverterGenerico" />
@@ -163,7 +163,7 @@
                                     <f:selectItems value="#{controllerRegistrarSala.listaEdificios}" var="edificio"
                                                    itemLabel="#{edificio.descripcionedificio}" itemValue="#{edificio}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarNuevoSede()}" execute="nuevoSedeSala" render="@this msnEdificioSala"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarEdificios()}" execute="nuevoSedeSala" render="@this msnEdificioSala"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="nuevoEdificioSala" style="color: red"/></h6>
                             </div>
@@ -177,7 +177,7 @@
                             </h:commandButton>
                             <span></span>
                             <span></span>
-                            <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_salas" actionListener="#{controllerRegistrarSala.limpiarRegistroSalaLaboratorio()}">
+                            <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_salas" actionListener="#{controllerRegistrarSala.limpiarRegistroSalaLaboratorio()}" immediate="true">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

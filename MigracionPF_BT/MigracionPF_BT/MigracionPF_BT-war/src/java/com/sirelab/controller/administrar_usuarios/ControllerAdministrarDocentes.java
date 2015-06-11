@@ -133,15 +133,8 @@ public class ControllerAdministrarDocentes implements Serializable {
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Docentes");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
                 }
-            } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Docentes");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
-            }
+            } 
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
         }

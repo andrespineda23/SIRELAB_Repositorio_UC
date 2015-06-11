@@ -110,6 +110,7 @@ public class ControllerDetallesSala implements Serializable {
         edificioSalaLaboratorio = salaLaboratorioDetalles.getEdificio();
         sedeSalaLaboratorio = salaLaboratorioDetalles.getEdificio().getSede();
         laboratorioPorAreaSalaLaboratorio = salaLaboratorioDetalles.getLaboratoriosporareas();
+        System.out.println("laboratorioPorAreaSalaLaboratorio : " + laboratorioPorAreaSalaLaboratorio.getInformacionRegistro());
     }
 
     public void activarEditarRegistro() {
@@ -118,6 +119,8 @@ public class ControllerDetallesSala implements Serializable {
         modificacionRegistro = false;
         visibleGuardar = true;
         listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
+        listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasRegistradas();
+        System.out.println("laboratorioPorAreaSalaLaboratorio : " + laboratorioPorAreaSalaLaboratorio.getInformacionRegistro());
     }
 
     public void restaurarInformacionSalaLaboratorio() {
@@ -349,6 +352,7 @@ public class ControllerDetallesSala implements Serializable {
             if (validarCodigoRepetido() == true) {
                 almacenaModificacionSalaEnSistema();
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                recibirIDSalasLaboratorioDetalles(this.idSalaLaboratorio);
             } else {
                 mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
             }
@@ -387,7 +391,7 @@ public class ControllerDetallesSala implements Serializable {
                 salaLaboratorioDetalles.setEstadosala(bool);
                 gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
                 restaurarInformacionSalaLaboratorio();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha activado la sala.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
@@ -404,7 +408,7 @@ public class ControllerDetallesSala implements Serializable {
                 gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
                 salaLaboratorioDetalles = new SalaLaboratorio();
                 restaurarInformacionSalaLaboratorio();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha inactivado la sala.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }

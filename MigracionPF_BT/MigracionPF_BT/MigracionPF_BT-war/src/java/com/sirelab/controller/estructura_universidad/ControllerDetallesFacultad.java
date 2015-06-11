@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -22,28 +22,28 @@ import javax.faces.context.FacesContext;
  * @author AndresPineda
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ControllerDetallesFacultad implements Serializable {
-
+    
     @EJB
     GestionarFacultadesBOInterface gestionarFacultadBO;
-
+    
     private Facultad facultadDetalles;
     private BigInteger idFacultad;
     private String editarNombre, editarCodigo;
     private boolean validacionesNombre, validacionesCodigo;
     private String mensajeFormulario;
-
+    
     public ControllerDetallesFacultad() {
     }
-
+    
     @PostConstruct
     public void init() {
         validacionesCodigo = true;
         validacionesNombre = true;
         mensajeFormulario = "";
     }
-
+    
     public void restaurarInformacionFacultad() {
         validacionesCodigo = true;
         validacionesNombre = true;
@@ -51,18 +51,18 @@ public class ControllerDetallesFacultad implements Serializable {
         facultadDetalles = new Facultad();
         recibirIDFacultadesDetalles(idFacultad);
     }
-
+    
     public void asignarValoresVariablesFacultad() {
         editarCodigo = facultadDetalles.getCodigofacultad();
         editarNombre = facultadDetalles.getNombrefacultad();
     }
-
-    public void recibirIDFacultadesDetalles(BigInteger idArea) {
-        this.idFacultad = idArea;
-        facultadDetalles = gestionarFacultadBO.obtenerFacultadPorIDCodigo(editarCodigo);
+    
+    public void recibirIDFacultadesDetalles(BigInteger idFacultadDetalle) {
+        this.idFacultad = idFacultadDetalle;
+        facultadDetalles = gestionarFacultadBO.obtenerFacultadPorIDFacultad(idFacultadDetalle);
         asignarValoresVariablesFacultad();
     }
-
+    
     public void validarNombreFacultad() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
@@ -75,9 +75,9 @@ public class ControllerDetallesFacultad implements Serializable {
             validacionesNombre = false;
             FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio."));
         }
-
+        
     }
-
+    
     public void validarCodigoFacultad() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
             if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
@@ -101,7 +101,7 @@ public class ControllerDetallesFacultad implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio."));
         }
     }
-
+    
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
@@ -112,22 +112,22 @@ public class ControllerDetallesFacultad implements Serializable {
         }
         return retorno;
     }
-
+    
     public void registrarModificacionFacultad() {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionFacultadEnSistema();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            recibirIDFacultadesDetalles(this.idFacultad);
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
-
+    
     private void almacenarModificacionFacultadEnSistema() {
         try {
-            Facultad editarRegistro = new Facultad();
-            editarRegistro.setCodigofacultad(editarCodigo);
-            editarRegistro.setNombrefacultad(editarNombre);
-            gestionarFacultadBO.modificarInformacionFacultad(editarRegistro);
+            facultadDetalles.setCodigofacultad(editarCodigo);
+            facultadDetalles.setNombrefacultad(editarNombre);
+            gestionarFacultadBO.modificarInformacionFacultad(facultadDetalles);
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarFacultades almacenarNuevoFacultadEnSistema : " + e.toString());
         }
@@ -137,33 +137,33 @@ public class ControllerDetallesFacultad implements Serializable {
     public Facultad getFacultadDetalles() {
         return facultadDetalles;
     }
-
+    
     public void setFacultadDetalles(Facultad facultadDetalles) {
         this.facultadDetalles = facultadDetalles;
     }
-
+    
     public String getEditarNombre() {
         return editarNombre;
     }
-
+    
     public void setEditarNombre(String editarNombre) {
         this.editarNombre = editarNombre;
     }
-
+    
     public String getEditarCodigo() {
         return editarCodigo;
     }
-
+    
     public void setEditarCodigo(String editarCodigo) {
         this.editarCodigo = editarCodigo;
     }
-
+    
     public String getMensajeFormulario() {
         return mensajeFormulario;
     }
-
+    
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
     }
-
+    
 }

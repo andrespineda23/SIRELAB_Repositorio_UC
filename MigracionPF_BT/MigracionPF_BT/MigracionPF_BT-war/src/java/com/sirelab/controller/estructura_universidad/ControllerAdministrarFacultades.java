@@ -66,26 +66,16 @@ public class ControllerAdministrarFacultades implements Serializable {
 
     public void buscarFacultadesPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaFacultades = null;
             listaFacultades = gestionarFacultadBO.consultarFacultadesPorParametro(filtros);
             if (listaFacultades != null) {
                 if (listaFacultades.size() > 0) {
-                    //activarFiltrosTabla();
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    //context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                activarExport = true;
-                //context.execute("consultaSinDatos.show();");
-            }
-            // context.update("form:datosBusqueda");
-            //context.update("form:exportarXLS");
-            //context.update("form:exportarXML");
-            //context.update("form:exportarPDF");
+            } 
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString());
         }
@@ -93,14 +83,10 @@ public class ControllerAdministrarFacultades implements Serializable {
 
     public void limpiarProcesoBusqueda() {
         activarExport = true;
-        if (null != listaFacultades) {
-            //desactivarFiltrosTabla();
-        }
         parametroNombre = null;
         parametroCodigo = null;
         inicializarFiltros();
         listaFacultades = null;
-        //RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
 
     /*

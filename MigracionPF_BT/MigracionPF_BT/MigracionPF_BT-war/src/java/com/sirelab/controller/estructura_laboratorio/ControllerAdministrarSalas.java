@@ -118,20 +118,30 @@ public class ControllerAdministrarSalas implements Serializable {
         if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if (parametroDepartamento.getIddepartamento() != null) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento)) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
-        if (parametroLaboratorio.getIdlaboratorio() != null) {
-            filtros.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
+        if (Utilidades.validarNulo(parametroLaboratorio)) {
+            if (parametroLaboratorio.getIdlaboratorio() != null) {
+                filtros.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
+            }
         }
-        if (parametroEdificio.getIdedificio() != null) {
-            filtros.put("parametroEdificio", parametroEdificio.getIdedificio().toString());
+        if (Utilidades.validarNulo(parametroEdificio)) {
+            if (parametroEdificio.getIdedificio() != null) {
+                filtros.put("parametroEdificio", parametroEdificio.getIdedificio().toString());
+            }
         }
-        if (parametroSede.getIdsede() != null) {
-            filtros.put("parametroSede", parametroSede.getIdsede().toString());
+        if (Utilidades.validarNulo(parametroSede)) {
+            if (parametroSede.getIdsede() != null) {
+                filtros.put("parametroSede", parametroSede.getIdsede().toString());
+            }
         }
-        if (parametroAreaProfundizacion.getIdareaprofundizacion() != null) {
-            filtros.put("parametroAreaProfundizacion", parametroAreaProfundizacion.getIdareaprofundizacion().toString());
+        if (Utilidades.validarNulo(parametroAreaProfundizacion)) {
+            if (parametroAreaProfundizacion.getIdareaprofundizacion() != null) {
+                filtros.put("parametroAreaProfundizacion", parametroAreaProfundizacion.getIdareaprofundizacion().toString());
+            }
         }
     }
 
@@ -153,6 +163,7 @@ public class ControllerAdministrarSalas implements Serializable {
     }
 
     public void limpiarProcesoBusqueda() {
+        listaSalasLaboratorios = null;
         activarEdificio = true;
         activarLaboratorio = true;
         parametroEstado = 1;

@@ -82,14 +82,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
                     activarExport = false;
                 } else {
                     activarExport = true;
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha obtenido resultados de busqueda.", "Consulta de Areas");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
                 }
-            } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha obtenido resultados de busqueda.", "Consulta de Areas");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
             }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros : " + e.toString());

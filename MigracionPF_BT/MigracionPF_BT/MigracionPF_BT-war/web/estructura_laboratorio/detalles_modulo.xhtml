@@ -81,6 +81,10 @@
                                 </h:inputText>
                                 <h6><h:message id="msnCodigoModulo" for="codigoModuloLaboratorio" style="color: red"/></h6>
                             </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Estado*"/></strong>
+                                <h:inputText readonly="true" value="#{controllerDetallesModulo.moduloLaboratorioDetalles.strEstado}" required="true" class="form-control" id="estadoModuloLaboratorio" />
+                            </div>
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">

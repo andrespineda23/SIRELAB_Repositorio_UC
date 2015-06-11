@@ -55,7 +55,6 @@ public class ControllerDetallesAsignatura implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
         activarModificacionCarrera = true;
         activarModificacionPlanEstudio = true;
         mensajeFormulario = "";
@@ -80,6 +79,16 @@ public class ControllerDetallesAsignatura implements Serializable {
         editarDepartamento = asignaturaDetalles.getPlanestudios().getCarrera().getDepartamento();
         editarNombre = asignaturaDetalles.getNombreasignatura();
         editarPlanEstudio = asignaturaDetalles.getPlanestudios();
+        listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
+        getListaDepartamentos();
+        activarModificacionCarrera = false;
+        if (Utilidades.validarNulo(editarDepartamento)) {
+            listaCarreras = gestionarAsignaturasBO.consultarCarrerasPorIDDepartamento(editarDepartamento.getIddepartamento());
+        }
+        activarModificacionPlanEstudio = false;
+        if (Utilidades.validarNulo(editarCarrera)) {
+            listaPlanesEstudios = gestionarAsignaturasBO.consultarPlanesEstudiosPorIDCarrera(editarCarrera.getIdcarrera());
+        }
     }
 
     public void recibirIDAsignaturasDetalles(BigInteger idDetalle) {
@@ -149,7 +158,7 @@ public class ControllerDetallesAsignatura implements Serializable {
 
     public void validarCodigoAsignatura() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
-            if (!Utilidades.validarCaracterString(editarCodigo)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             } else {
@@ -214,6 +223,7 @@ public class ControllerDetallesAsignatura implements Serializable {
             if (validarCodigoRepetido() == true) {
                 almacenarModificacionAsignaturaEnSistema();
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                recibirIDAsignaturasDetalles(this.idAsignatura);
             } else {
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el plan de estudio seleccionado.";
             }

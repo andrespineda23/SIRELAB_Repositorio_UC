@@ -188,9 +188,26 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             planNuevo.setCodigoplanestudio(nuevoCodigo);
             planNuevo.setCarrera(nuevoCarrera);
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlanesEstudios almacenarNuevoPlanEstudioEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        activarNuevoCarrera = true;
+        activarNuevoDepartamento = true;
+        nuevoCarrera = null;
+        nuevoCodigo = null;
+        nuevoDepartamento = null;
+        nuevoFacultad = null;
+        nuevoNombre = null;
+        validacionesCarrera = false;
+        validacionesCodigo = false;
+        validacionesDepartamento = false;
+        validacionesFacultad = false;
+        validacionesNombre = false;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroPlanEstudio() {
@@ -207,6 +224,9 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "";
+        listaCarreras = null;
+        listaDepartamentos = null;
+        listaFacultades = null;
     }
 
     //GET-SET

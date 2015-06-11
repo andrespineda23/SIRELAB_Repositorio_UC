@@ -116,14 +116,20 @@ public class ControllerAdministrarEstudiantes implements Serializable {
         if (parametroTipo == 1 || parametroTipo == 2) {
             filtros.put("parametroTipo", String.valueOf(parametroTipo));
         }
-        if (null != parametroDepartamento) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento)) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
-        if (null != parametroCarrera) {
-            filtros.put("parametroCarrera", parametroCarrera.getIdcarrera().toString());
+        if (Utilidades.validarNulo(parametroCarrera)) {
+            if (parametroCarrera.getIdcarrera() != null) {
+                filtros.put("parametroCarrera", parametroCarrera.getIdcarrera().toString());
+            }
         }
-        if (null != parametroPlanEst) {
-            filtros.put("parametroPlanEst", parametroPlanEst.getIdplanestudios().toString());
+        if (Utilidades.validarNulo(parametroPlanEst)) {
+            if (parametroPlanEst.getIdplanestudios() != null) {
+                filtros.put("parametroPlanEst", parametroPlanEst.getIdplanestudios().toString());
+            }
         }
         if ((Utilidades.validarNulo(parametroSemestre)) && (!parametroSemestre.isEmpty())) {
             filtros.put("parametroSemestre", String.valueOf(parametroSemestre));

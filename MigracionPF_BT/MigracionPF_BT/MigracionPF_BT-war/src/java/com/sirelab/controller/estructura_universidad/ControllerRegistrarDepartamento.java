@@ -97,9 +97,18 @@ public class ControllerRegistrarDepartamento implements Serializable {
             departamentoNuevo.setNombredepartamento(nuevoNombre);
             departamentoNuevo.setFacultad(nuevoFacultad);
             gestionarDepartamentosBO.crearNuevaDepartamento(departamentoNuevo);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error almacenarNuevoDepartamentoEnSistema almacenarNuevoDepartamentoEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        nuevoFacultad = null;
+        nuevoNombre = null;
+        validacionesFacultad = false;
+        validacionesNombre = false;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroDepartamento() {

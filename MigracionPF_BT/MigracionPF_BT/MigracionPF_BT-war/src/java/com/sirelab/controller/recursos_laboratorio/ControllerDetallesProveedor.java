@@ -94,8 +94,8 @@ public class ControllerDetallesProveedor implements Serializable {
 
     public void validarNITProveedor() {
         if (Utilidades.validarNulo(editarNIT) && (!editarNIT.isEmpty())) {
-            if (Utilidades.validarCaracterString(editarNIT)) {
-                Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(editarVendedor);
+            if (Utilidades.validarCaracteresAlfaNumericos(editarNIT)) {
+                Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(editarNIT);
                 if (registro == null) {
                     validacionesNIT = true;
                 } else {
@@ -174,7 +174,7 @@ public class ControllerDetallesProveedor implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesTelefono == false) {
+        if (validacionesVendedor == false) {
             retorno = false;
         }
         if (validacionesTelefono == false) {
@@ -190,6 +190,7 @@ public class ControllerDetallesProveedor implements Serializable {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionesProveedorEnSistema();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            recibirIDProveedoresDetalles(this.idProveedor);
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }

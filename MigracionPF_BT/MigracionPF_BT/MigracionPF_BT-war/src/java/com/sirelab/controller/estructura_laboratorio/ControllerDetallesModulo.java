@@ -314,7 +314,7 @@ public class ControllerDetallesModulo implements Serializable {
                 moduloLaboratorioDetalles.setEstadomodulo(bool);
                 gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
                 restaurarInformacionModuloLaboratorio();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha activado el modulo/banco de trabajo.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
@@ -331,7 +331,7 @@ public class ControllerDetallesModulo implements Serializable {
                 gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
                 moduloLaboratorioDetalles = new ModuloLaboratorio();
                 restaurarInformacionModuloLaboratorio();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha inactivado el modulo/banco de trabajo.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }

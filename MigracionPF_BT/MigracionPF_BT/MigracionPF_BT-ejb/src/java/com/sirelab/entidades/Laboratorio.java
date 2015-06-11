@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Laboratorio.findByNombrelaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.nombrelaboratorio = :nombrelaboratorio"),
     @NamedQuery(name = "Laboratorio.findByCodigolaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.codigolaboratorio = :codigolaboratorio")})
 public class Laboratorio implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorio")
     private Collection<EncargadoLaboratorio> encargadoLaboratorioCollection;
     private static final long serialVersionUID = 1L;
@@ -85,11 +86,11 @@ public class Laboratorio implements Serializable {
     }
 
     public String getNombrelaboratorio() {
-        return nombrelaboratorio;
+        return nombrelaboratorio.toUpperCase();
     }
 
     public void setNombrelaboratorio(String nombrelaboratorio) {
-        this.nombrelaboratorio = nombrelaboratorio;
+        this.nombrelaboratorio = nombrelaboratorio.toUpperCase();
     }
 
     public String getCodigolaboratorio() {
@@ -150,5 +151,5 @@ public class Laboratorio implements Serializable {
     public void setEncargadoLaboratorioCollection(Collection<EncargadoLaboratorio> encargadoLaboratorioCollection) {
         this.encargadoLaboratorioCollection = encargadoLaboratorioCollection;
     }
-    
+
 }

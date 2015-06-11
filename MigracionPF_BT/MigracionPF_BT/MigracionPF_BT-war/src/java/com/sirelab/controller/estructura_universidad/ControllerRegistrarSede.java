@@ -120,6 +120,7 @@ public class ControllerRegistrarSede implements Serializable {
             nuevaSede.setNombresede(nuevoNombre);
             nuevaSede.setTelefonosede(nuevoTelefono);
             gestionarSedeBO.crearNuevaSede(nuevaSede);
+            cancelarRegistroSede();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarSedes almacenarNuevoSedeEnSistema : " + e.toString());
         }

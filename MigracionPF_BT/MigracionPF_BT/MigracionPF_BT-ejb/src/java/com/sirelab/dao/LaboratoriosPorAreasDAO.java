@@ -89,7 +89,7 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
     public LaboratoriosPorAreas buscarLaboratoriosPorAreasPorLabYArea(BigInteger laboratorio, BigInteger area) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM LaboratoriosPorAreas p WHERE p.laboratorio.idlaboratoriosporareas=:laboratorio AND p.areaprofundizacion.idlaboratoriosporareas=:area");
+            Query query = em.createQuery("SELECT p FROM LaboratoriosPorAreas p WHERE p.laboratorio.idlaboratorio=:laboratorio AND p.areaprofundizacion.idareaprofundizacion=:area");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("area", area);
             query.setParameter("laboratorio", laboratorio);

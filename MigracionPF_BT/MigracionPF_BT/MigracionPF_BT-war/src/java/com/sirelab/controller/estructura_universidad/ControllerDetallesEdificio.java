@@ -44,7 +44,6 @@ public class ControllerDetallesEdificio implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaSedes = gestionarEdificiosBO.consultarSedesRegistradas();
         validacionesDescripcion = true;
         validacionesDireccion = true;
         validacionesSede = true;
@@ -64,6 +63,7 @@ public class ControllerDetallesEdificio implements Serializable {
         editarDescripcion = edificioDetalles.getDescripcionedificio();
         editarDireccion = edificioDetalles.getDireccion();
         editarSede = edificioDetalles.getSede();
+        listaSedes = gestionarEdificiosBO.consultarSedesRegistradas();
     }
 
     public void recibirIDEdificiosDetalles(BigInteger idRegistro) {
@@ -124,6 +124,7 @@ public class ControllerDetallesEdificio implements Serializable {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionEdificioEnSistema();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            recibirIDEdificiosDetalles(this.idEdificio);
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }

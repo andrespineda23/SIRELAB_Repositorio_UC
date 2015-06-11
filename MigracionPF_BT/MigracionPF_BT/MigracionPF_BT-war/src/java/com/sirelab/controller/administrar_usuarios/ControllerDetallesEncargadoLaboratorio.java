@@ -466,7 +466,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 encargadoLaboratorioDetalles.getPersona().getUsuario().setEstado(bool);
                 administrarEncargadosLaboratoriosBO.actualizarInformacionUsuario(encargadoLaboratorioDetalles.getPersona().getUsuario());
                 restaurarInformacionEncargadoLaboratorio();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha activado el personal de laboratorio.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
@@ -486,7 +486,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 administrarEncargadosLaboratoriosBO.actualizarInformacionUsuario(encargadoLaboratorioDetalles.getPersona().getUsuario());
                 encargadoLaboratorioDetalles = new EncargadoLaboratorio();
                 restaurarInformacionEncargadoLaboratorio();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha inactivado el personal de laboratorio.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }

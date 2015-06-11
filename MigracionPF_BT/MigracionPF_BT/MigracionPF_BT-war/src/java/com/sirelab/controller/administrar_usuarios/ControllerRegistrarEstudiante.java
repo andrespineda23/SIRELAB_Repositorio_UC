@@ -326,6 +326,8 @@ public class ControllerRegistrarEstudiante implements Serializable {
         inputID = null;
         inputNombre = null;
         inputPlanEstudio = null;
+        inputTelefono1 = null;
+        inputTelefono2 = null;
         inputSemestre = 1;
         inputTipo = 1;
         listaCarreras = null;
@@ -359,10 +361,40 @@ public class ControllerRegistrarEstudiante implements Serializable {
             }
             estudianteNueva.setTipoestudiante(inputTipo);
             gestionarLoginSistemaBO.almacenarNuevoEstudianteEnSistema(usuarioNuevo, personaNueva, estudianteNueva);
-            cancelarRegistroEstudiante();
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        mensajeFormulario = "";
+        validacionesCarrera = false;
+        validacionesPlanEstudio = false;
+        validacionesPassw2 = false;
+        validacionesNombre = false;
+        validacionesApellido = false;
+        validacionesCorreo = false;
+        validacionesID = false;
+        validacionesPassw = false;
+        validacionesTel1 = true;
+        validacionesTel2 = true;
+        validacionesDireccion = true;
+        //
+        activarPlanEstudio = true;
+        inputApellido = null;
+        inputCarrera = null;
+        inputContrasenia = null;
+        inputContraseniaConfirma = null;
+        inputDireccion = null;
+        inputEmail = null;
+        inputID = null;
+        inputNombre = null;
+        inputPlanEstudio = null;
+        inputTelefono1 = null;
+        inputTelefono2 = null;
+        inputSemestre = 1;
+        inputTipo = 1;
     }
 
     public void recibirPaginaAnterior(String page) {

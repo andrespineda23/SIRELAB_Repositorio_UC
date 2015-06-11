@@ -127,27 +127,27 @@ public class SalaLaboratorio implements Serializable {
     }
 
     public String getNombresala() {
-        return nombresala;
+        return nombresala.toUpperCase();
     }
 
     public void setNombresala(String nombresala) {
-        this.nombresala = nombresala;
+        this.nombresala = nombresala.toUpperCase();
     }
 
     public String getPisoubicacion() {
-        return pisoubicacion;
+        return pisoubicacion.toUpperCase();
     }
 
     public void setPisoubicacion(String pisoubicacion) {
-        this.pisoubicacion = pisoubicacion;
+        this.pisoubicacion = pisoubicacion.toUpperCase();
     }
 
     public String getDescripcionsala() {
-        return descripcionsala;
+        return descripcionsala.toUpperCase();
     }
 
     public void setDescripcionsala(String descripcionsala) {
-        this.descripcionsala = descripcionsala;
+        this.descripcionsala = descripcionsala.toUpperCase();
     }
 
     public long getCostoalquiler() {

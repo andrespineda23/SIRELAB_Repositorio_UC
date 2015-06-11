@@ -210,9 +210,28 @@ public class ControllerRegistrarAsignatura implements Serializable {
             asignaturaNueva.setNumerocreditos(creditos.intValue());
             asignaturaNueva.setPlanestudios(nuevoPlanEstudio);
             gestionarAsignaturasBO.crearNuevoAsignatura(asignaturaNueva);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarAsignaturas almacenarNuevoAsignaturaEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        activarNuevoCarrera = true;
+        activarNuevoPlanEstudio = true;
+        nuevoCarrera = null;
+        nuevoCodigo = null;
+        nuevoCredito = null;
+        nuevoDepartamento = null;
+        nuevoNombre = null;
+        nuevoPlanEstudio = null;
+        validacionesCarrera = false;
+        validacionesCodigo = false;
+        validacionesCredito = false;
+        validacionesDepartamento = false;
+        validacionesNombre = false;
+        validacionesPlanEstudio = false;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroPlanEstudio() {

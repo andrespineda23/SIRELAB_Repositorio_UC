@@ -50,8 +50,6 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaAreasProfundizacion = gestionarPlantaLaboratoriosPorAreasBO.consultarAreasProfundizacionRegistradas();
-        listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosRegistrados();
         activarLaboratorio = true;
         //
         validacionesArea = true;
@@ -66,13 +64,19 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
         validacionesLaboratorio = true;
         mensajeFormulario = "";
         laboratorioPorAreaDetalles = new LaboratoriosPorAreas();
-        recibirIDLaboratoriosPorAreasDetalles(idLaboratorioPorArea);
+        recibirIDLaboratoriosPorAreasDetalles(this.idLaboratorioPorArea);
     }
 
     public void asignarValoresVariablesLaboratoriosPorAreas() {
         editarArea = laboratorioPorAreaDetalles.getAreaprofundizacion();
         editarDepartamento = laboratorioPorAreaDetalles.getLaboratorio().getDepartamento();
         editarLaboratorio = laboratorioPorAreaDetalles.getLaboratorio();
+        activarLaboratorio = false;
+        listaAreasProfundizacion = gestionarPlantaLaboratoriosPorAreasBO.consultarAreasProfundizacionRegistradas();
+        listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosRegistrados();
+        if (Utilidades.validarNulo(editarDepartamento)) {
+            listaLaboratorios = gestionarPlantaLaboratoriosPorAreasBO.consultarLaboratoriosPorIDDepartamento(editarDepartamento.getIddepartamento());
+        }
     }
 
     public void recibirIDLaboratoriosPorAreasDetalles(BigInteger idRegistro) {
@@ -142,11 +146,15 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
 
     public void registrarModificarLaboratorioPorArea() {
         if (validarResultadosValidacion() == true) {
-            if (validarRegistroRepetido() == true) {
-                almacenarModificarLaboratorioPorAreaEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            if (Utilidades.validarNulo(editarLaboratorio)) {
+                if (validarRegistroRepetido() == true) {
+                    almacenarModificarLaboratorioPorAreaEnSistema();
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
+                }
             } else {
-                mensajeFormulario = "EL registro ya se encuentra registrado en el sistema.";
+                mensajeFormulario = "Seleccione el laboratorio antes de continuar.";
             }
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";

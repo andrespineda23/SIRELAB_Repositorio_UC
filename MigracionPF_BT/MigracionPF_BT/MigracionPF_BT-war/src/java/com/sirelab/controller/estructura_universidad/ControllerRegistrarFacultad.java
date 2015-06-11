@@ -104,6 +104,7 @@ public class ControllerRegistrarFacultad implements Serializable {
             nuevaFacultad.setCodigofacultad(nuevoCodigo);
             nuevaFacultad.setNombrefacultad(nuevoNombre);
             gestionarFacultadBO.crearNuevaFacultad(nuevaFacultad);
+            cancelarRegistroFacultad();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarFacultades almacenarNuevoFacultadEnSistema : " + e.toString());
         }

@@ -105,7 +105,7 @@
                                         <f:selectItems value="#{controllerRegistrarLaboratorioPorArea.listaAreasProfundizacion}" var="area"
                                                        itemLabel="#{area.nombrearea}" itemValue="#{area}"/>
                                         <f:converter converterId="ConverterGenerico" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarLaboratorioPorArea.actualizarDepartamentos()}" execute="nuevoArea" render="msnArea"/>
+                                        <f:ajax event="change" listener="#{controllerRegistrarLaboratorioPorArea.actualizarAreaProfundizacion()}" execute="nuevoArea" render="msnArea"/>
                                     </h:selectOneMenu>
                                     <h6><h:message id="msnArea" for="nuevoArea" style="color: red"/></h6>
                                 </div>

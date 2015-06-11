@@ -382,6 +382,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
                 entidadexternaNueva.setNombreentidad("");
             }
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(usuarioNuevo, personaNueva, entidadexternaNueva);
+            cancelarRegistroEntidadExterna();
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
         }

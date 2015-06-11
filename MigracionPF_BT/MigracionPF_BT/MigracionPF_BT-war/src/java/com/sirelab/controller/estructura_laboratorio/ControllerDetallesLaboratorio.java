@@ -49,7 +49,6 @@ public class ControllerDetallesLaboratorio implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
         activarModificacionDepartamento = true;
         validacionesCodigo = true;
         validacionesDepartamento = true;
@@ -72,6 +71,11 @@ public class ControllerDetallesLaboratorio implements Serializable {
         editarDepartamento = laboratorioDetalles.getDepartamento();
         editarNombre = laboratorioDetalles.getNombrelaboratorio();
         editarFacultad = laboratorioDetalles.getDepartamento().getFacultad();
+        activarModificacionDepartamento = false;
+        listaFacultades = listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
+        if (Utilidades.validarNulo(editarFacultad)) {
+            listaDepartamentos = gestionarPlantaLaboratoriosBO.consultarDepartamentosPorIDFacultad(editarFacultad.getIdfacultad());
+        }
     }
 
     public void recibirIDLaboratoriosDetalles(BigInteger idRegistro) {
@@ -180,6 +184,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
             laboratorioDetalles.setCodigolaboratorio(editarCodigo);
             laboratorioDetalles.setDepartamento(editarDepartamento);
             gestionarPlantaLaboratoriosBO.modificarInformacionLaboratorio(laboratorioDetalles);
+            restaurarInformacionLaboratorio();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema : " + e.toString());
 

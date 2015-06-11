@@ -59,7 +59,6 @@ public class ControllerDetallesInsumo implements Serializable {
         validacionesMarca = true;
         validacionesModelo = true;
         mensajeFormulario = "";
-        listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
     }
 
     public void restaurarInformacionInsumo() {
@@ -85,6 +84,7 @@ public class ControllerDetallesInsumo implements Serializable {
         editarModelo = insumoDetalles.getModeloinsumo();
         editarNombre = insumoDetalles.getNombreinsumo();
         editarProveedor = insumoDetalles.getProveedor();
+        listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
     }
 
     public void recibirIDInsumosDetalles(BigInteger idDetalle) {
@@ -118,7 +118,7 @@ public class ControllerDetallesInsumo implements Serializable {
 
     public void validarCodigoInsumo() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
-            if (Utilidades.validarCaracterString(editarCodigo)) {
+            if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = true;
             } else {
                 validacionesCodigo = false;
@@ -231,6 +231,7 @@ public class ControllerDetallesInsumo implements Serializable {
             if (validarCodigoRepetido() == true) {
                 almacenarModificacionInsumoEnSistema();
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                recibirIDInsumosDetalles(this.idInsumo);
             } else {
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el proveedor seleccionado.";
             }

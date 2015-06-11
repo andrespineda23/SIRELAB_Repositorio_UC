@@ -114,9 +114,20 @@ public class ControllerRegistrarEdificio implements Serializable {
             edificioNuevo.setDireccion(nuevoDireccion);
             edificioNuevo.setSede(nuevoSede);
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerLogin almacenarNuevoEdificioEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        nuevoDescripcion = null;
+        nuevoDireccion = null;
+        nuevoSede = null;
+        validacionesDescripcion = false;
+        validacionesDireccion = true;
+        validacionesSede = false;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroEdificio() {

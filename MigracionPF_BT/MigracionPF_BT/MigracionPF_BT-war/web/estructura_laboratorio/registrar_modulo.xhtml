@@ -150,7 +150,7 @@
                             </h:commandButton>
                             <span></span>
                             <span></span>
-                            <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_modulos" actionListener="#{controllerRegistrarModulo.limpiarRegistroModuloLaboratorio()}">
+                            <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_modulos" actionListener="#{controllerRegistrarModulo.limpiarRegistroModuloLaboratorio()}" immediate="true">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

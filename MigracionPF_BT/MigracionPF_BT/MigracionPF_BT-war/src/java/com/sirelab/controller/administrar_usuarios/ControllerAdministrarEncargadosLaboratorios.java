@@ -116,14 +116,20 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 filtros.put("parametroEstado", "false");
             }
         }
-        if (null != parametroFacultad) {
-            filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+        if (Utilidades.validarNulo(parametroFacultad)) {
+            if (parametroFacultad.getIdfacultad() != null) {
+                filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+            }
         }
-        if (null != parametroDepartamento) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento)) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
-        if (null != parametroLaboratorio) {
-            filtros.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
+        if (Utilidades.validarNulo(parametroLaboratorio)) {
+            if (parametroLaboratorio.getIdlaboratorio() != null) {
+                filtros.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
+            }
         }
     }
 

@@ -52,7 +52,6 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesRegistradas();
         activarModificacionCarrera = true;
         activarModificacionDepartamento = true;
         validacionesCarrera = true;
@@ -80,6 +79,15 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         editarDepartamento = planEstudiosDetalles.getCarrera().getDepartamento();
         editarFacultad = planEstudiosDetalles.getCarrera().getDepartamento().getFacultad();
         editarNombre = planEstudiosDetalles.getNombreplanestudio();
+        activarModificacionDepartamento = false;
+        listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesRegistradas();
+        if (Utilidades.validarNulo(editarFacultad)) {
+            listaDepartamentos = gestionarPlanesEstudiosBO.consultarDepartamentosPorIDFacultad(editarFacultad.getIdfacultad());
+        }
+        activarModificacionCarrera = false;
+        if (Utilidades.validarNulo(editarDepartamento)) {
+            listaCarreras = gestionarPlanesEstudiosBO.consultarCarrerasPorIDDepartamento(editarDepartamento.getIddepartamento());
+        }
     }
 
     public void recibirIDPlanesEstudioDetalles(BigInteger idRegistro) {
@@ -150,7 +158,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     public void validarCodigoPlanEstudio() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
-            if (!Utilidades.validarCaracterString(editarCodigo)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             } else {
@@ -195,11 +203,16 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     public void registrarModificacionPlanEstudio() {
         if (validarResultadosValidacion() == true) {
-            if (validarCodigoRepetido() == true) {
-                almacenarModificacionPlanEstudioEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            if (Utilidades.validarNulo(editarCarrera)) {
+                if (validarCodigoRepetido() == true) {
+                    almacenarModificacionPlanEstudioEnSistema();
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    recibirIDPlanesEstudioDetalles(this.idPlanEstudios);
+                } else {
+                    mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el departamento seleccionado.";
+                }
             } else {
-                mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el departamento seleccionado.";
+                mensajeFormulario = "Seleccione una carrera para continuar con el proceso.";
             }
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -217,7 +230,6 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         }
     }
 
-    
     //GET-SET
     public PlanEstudios getPlanEstudiosDetalles() {
         return planEstudiosDetalles;

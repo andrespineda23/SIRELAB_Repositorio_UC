@@ -120,6 +120,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
             if (validarCodigoRepetido() == true) {
                 almacenarModificacionAreaProfundizacion();
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                recibirIDAreasProfundizacionDetalles(this.idAreaProfundizacion);
             } else {
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }

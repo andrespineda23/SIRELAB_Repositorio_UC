@@ -170,9 +170,23 @@ public class ControllerRegistrarCarrera implements Serializable {
             carreraNuevo.setCodigocarrera(nuevoCodigo);
             carreraNuevo.setDepartamento(nuevoDepartamento);
             gestionarCarrerasBO.crearNuevaCarrera(carreraNuevo);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarCarreras almacenarNuevoCarreraEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        activarNuevoDepartamento = true;
+        validacionesCodigo = false;
+        validacionesDepartamento = false;
+        validacionesFacultad = false;
+        validacionesNombre = false;
+        mensajeFormulario = "";
+        nuevoCodigo = null;
+        nuevoDepartamento = null;
+        nuevoFacultad = null;
+        nuevoNombre = null;
     }
 
     //GET-SET

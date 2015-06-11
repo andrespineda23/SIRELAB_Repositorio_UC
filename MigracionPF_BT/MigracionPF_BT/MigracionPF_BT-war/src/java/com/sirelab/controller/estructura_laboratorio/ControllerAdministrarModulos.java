@@ -94,11 +94,15 @@ public class ControllerAdministrarModulos implements Serializable {
         if ((Utilidades.validarNulo(parametroDetalle) == true) && (!parametroDetalle.isEmpty())) {
             filtros.put("parametroDetalle", parametroDetalle.toString());
         }
-        if (parametroLaboratorioPorArea.getIdlaboratoriosporareas() != null) {
-            filtros.put("parametroLaboratorioPorArea", parametroLaboratorioPorArea.getIdlaboratoriosporareas().toString());
+        if (Utilidades.validarNulo(parametroLaboratorioPorArea)) {
+            if (parametroLaboratorioPorArea.getIdlaboratoriosporareas() != null) {
+                filtros.put("parametroLaboratorioPorArea", parametroLaboratorioPorArea.getIdlaboratoriosporareas().toString());
+            }
         }
-        if (parametroSalaLaboratorio.getIdsalalaboratorio() != null) {
-            filtros.put("parametroSalaLaboratorio", parametroSalaLaboratorio.getIdsalalaboratorio().toString());
+        if (Utilidades.validarNulo(parametroSalaLaboratorio)) {
+            if (parametroSalaLaboratorio.getIdsalalaboratorio() != null) {
+                filtros.put("parametroSalaLaboratorio", parametroSalaLaboratorio.getIdsalalaboratorio().toString());
+            }
         }
     }
 

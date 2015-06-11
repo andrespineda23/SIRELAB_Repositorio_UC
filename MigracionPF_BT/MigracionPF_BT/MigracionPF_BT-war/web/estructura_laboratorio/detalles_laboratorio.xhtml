@@ -72,7 +72,7 @@
                                 <legend class="text-info">Datos Personales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Nombre Laboratorio*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerDetallesLaboratorio.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerDetallesLaboratorio.editarNombre}"  required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerDetallesLaboratorio.validarNombreLaboratorio()}" execute="editarNombre" render="editarNombre msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
@@ -120,7 +120,7 @@
                                 <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesLaboratorio.mensajeFormulario}"/></strong>
                             </div>
                             <div class="right pull-right">
-                                <h:commandButton value="Registrar" actionListener="#{controllerDetallesLaboratorio.registrarModificacionLaboratorio()}" class="btn btn-success" >
+                                <h:commandButton value="Modificar" actionListener="#{controllerDetallesLaboratorio.registrarModificacionLaboratorio()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                                 <span></span>

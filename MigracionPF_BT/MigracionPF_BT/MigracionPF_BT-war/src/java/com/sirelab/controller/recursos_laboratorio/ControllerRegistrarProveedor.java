@@ -191,6 +191,7 @@ public class ControllerRegistrarProveedor implements Serializable {
                 nuevaProveedor.setTelefonovendedor("");
             }
             gestionarRecursoProveedoresBO.crearNuevoProveedor(nuevaProveedor);
+            cancelarRegistroProveedor();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarProveedores almacenarNuevoProveedorEnSistema : " + e.toString());
         }

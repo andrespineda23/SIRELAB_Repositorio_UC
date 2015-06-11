@@ -66,14 +66,20 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if (parametroDepartamento.getIddepartamento() != null) {
-            filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+        if (Utilidades.validarNulo(parametroDepartamento)) {
+            if (parametroDepartamento.getIddepartamento() != null) {
+                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
         }
-        if (parametroLaboratorio.getIdlaboratorio() != null) {
-            filtros.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
+        if (Utilidades.validarNulo(parametroLaboratorio)) {
+            if (parametroLaboratorio.getIdlaboratorio() != null) {
+                filtros.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
+            }
         }
-        if (parametroArea.getIdareaprofundizacion() != null) {
-            filtros.put("parametroArea", parametroArea.getIdareaprofundizacion().toString());
+        if (Utilidades.validarNulo(parametroArea)) {
+            if (parametroArea.getIdareaprofundizacion() != null) {
+                filtros.put("parametroArea", parametroArea.getIdareaprofundizacion().toString());
+            }
         }
     }
 
@@ -89,6 +95,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
 
     public void limpiarProcesoBusqueda() {
         activarLaboratorio = true;
+        listaLaboratoriosPorAreas = null;
         parametroDepartamento = new Departamento();
         parametroArea = new AreaProfundizacion();
         parametroLaboratorio = new Laboratorio();

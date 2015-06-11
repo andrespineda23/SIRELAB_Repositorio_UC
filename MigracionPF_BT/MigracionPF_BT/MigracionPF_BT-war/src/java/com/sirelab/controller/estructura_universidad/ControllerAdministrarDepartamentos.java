@@ -69,32 +69,25 @@ public class ControllerAdministrarDepartamentos implements Serializable {
         if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if (parametroFacultad.getIdfacultad() != null) {
-            filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+        if (Utilidades.validarNulo(parametroFacultad)) {
+            if (parametroFacultad.getIdfacultad() != null) {
+                filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+            }
         }
     }
 
     public void buscarDepartamentosPorParametros() {
         try {
-            //RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaDepartamentos = null;
             listaDepartamentos = gestionarDepartamentosBO.consultarDepartamentosPorParametro(filtros);
             if (listaDepartamentos != null) {
                 if (listaDepartamentos.size() > 0) {
                     activarExport = false;
-                    //activarFiltrosTabla();
                 } else {
                     activarExport = true;
-                    //  context.execute("consultaSinDatos.show();");
                 }
-            } else {
-                //context.execute("consultaSinDatos.show()");
             }
-            //context.update("form:datosBusqueda");
-            //context.update("form:exportarXLS");
-            //context.update("form:exportarXML");
-            //context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros : " + e.toString());
         }

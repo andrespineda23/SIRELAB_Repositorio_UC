@@ -51,12 +51,12 @@ public class ControllerRegistrarSala implements Serializable {
 
     @PostConstruct
     public void init() {
-        validacionesCosto = true;
+        validacionesCosto = false;
         validacionesCapacidad = false;
         validacionesCodigo = false;
         validacionesDescripcion = false;
         validacionesEdificio = false;
-        validacionesInversion = false;
+        validacionesInversion = true;
         validacionesLaboratorio = false;
         validacionesNombre = false;
         validacionesSede = false;
@@ -70,7 +70,7 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoDescripcionSala = null;
         nuevoCostoSala = null;
         nuevoCapacidadSala = null;
-        nuevoInversionSala = null;
+        nuevoInversionSala = "0";
         nuevoSedeSala = null;
         nuevoEdificioSala = null;
         listaEdificios = null;
@@ -214,17 +214,17 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoDescripcionSala = null;
         nuevoCostoSala = null;
         nuevoCapacidadSala = null;
-        nuevoInversionSala = null;
+        nuevoInversionSala = "0";
         nuevoSedeSala = null;
         nuevoEdificioSala = null;
         listaEdificios = null;
         //
-        validacionesCosto = true;
+        validacionesCosto = false;
         validacionesCapacidad = false;
         validacionesCodigo = false;
         validacionesDescripcion = false;
         validacionesEdificio = false;
-        validacionesInversion = false;
+        validacionesInversion = true;
         validacionesLaboratorio = false;
         validacionesNombre = false;
         validacionesSede = false;
@@ -235,34 +235,44 @@ public class ControllerRegistrarSala implements Serializable {
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCosto == false) {
+            System.out.println("1");
             retorno = false;
         }
         if (validacionesCapacidad == false) {
+            System.out.println("2");
             retorno = false;
         }
         if (validacionesCodigo == false) {
             retorno = false;
+            System.out.println("3");
         }
         if (validacionesDescripcion == false) {
             retorno = false;
+            System.out.println("4");
         }
         if (validacionesEdificio == false) {
             retorno = false;
+            System.out.println("5");
         }
         if (validacionesInversion == false) {
             retorno = false;
+            System.out.println("6");
         }
         if (validacionesLaboratorio == false) {
             retorno = false;
+            System.out.println("7");
         }
         if (validacionesNombre == false) {
             retorno = false;
+            System.out.println("8");
         }
         if (validacionesSede == false) {
             retorno = false;
+            System.out.println("9");
         }
         if (validacionesUbicacion == false) {
             retorno = false;
+            System.out.println("10");
         }
         return retorno;
     }

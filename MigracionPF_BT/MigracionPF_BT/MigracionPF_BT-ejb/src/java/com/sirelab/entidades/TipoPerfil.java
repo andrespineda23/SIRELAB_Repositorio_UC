@@ -111,35 +111,35 @@ public class TipoPerfil implements Serializable {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre.toUpperCase();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public String getCodigo() {
-        return codigo;
+        return codigo.toUpperCase();
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.toUpperCase();
     }
 
     public String getNombreregistro() {
-        return nombreregistro;
+        return nombreregistro.toUpperCase();
     }
 
     public void setNombreregistro(String nombreregistro) {
-        this.nombreregistro = nombreregistro;
+        this.nombreregistro = nombreregistro.toUpperCase();
     }
 
     public String getCodigoregistro() {
-        return codigoregistro;
+        return codigoregistro.toUpperCase();
     }
 
     public void setCodigoregistro(String codigoregistro) {
-        this.codigoregistro = codigoregistro;
+        this.codigoregistro = codigoregistro.toUpperCase();
     }
 
     @XmlTransient

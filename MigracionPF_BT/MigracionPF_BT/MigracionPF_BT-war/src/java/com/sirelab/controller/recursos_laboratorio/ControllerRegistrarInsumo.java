@@ -220,14 +220,35 @@ public class ControllerRegistrarInsumo implements Serializable {
             nuevaInsumo.setNombreinsumo(nuevoNombre);
             nuevaInsumo.setModeloinsumo(nuevoModelo);
             nuevaInsumo.setMarcainsumo(nuevoMarca);
-            nuevaInsumo.setCantidadexistencia(Integer.valueOf(nuevoCantidadMin));
+            nuevaInsumo.setCantidadexistencia(Integer.valueOf(nuevoCantidadExistencia));
             nuevaInsumo.setCantidadminimia(Integer.valueOf(nuevoCantidadMin));
             nuevaInsumo.setDescripcioninsumo(nuevoDescripcion);
             nuevaInsumo.setProveedor(nuevoProveedor);
             gestionarRecursoInsumosBO.crearNuevoInsumo(nuevaInsumo);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarInsumos almacenarNuevoInsumoEnSistema : " + e.toString());
         }
+    }
+    
+    public void limpiarFormulario(){
+        nuevoCantidadExistencia = null;
+        nuevoCantidadMin = null;
+        nuevoCodigo = null;
+        nuevoDescripcion = null;
+        nuevoMarca = null;
+        nuevoModelo = null;
+        nuevoNombre = null;
+        nuevoProveedor = null;
+        validacionesCodigo = false;
+        validacionesNombre = false;
+        validacionesProveedor = false;
+        validacionesCantidadExistencia = true;
+        validacionesCantidadMin = true;
+        validacionesDescripcion = true;
+        validacionesMarca = true;
+        validacionesModelo = true;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroInsumo() {

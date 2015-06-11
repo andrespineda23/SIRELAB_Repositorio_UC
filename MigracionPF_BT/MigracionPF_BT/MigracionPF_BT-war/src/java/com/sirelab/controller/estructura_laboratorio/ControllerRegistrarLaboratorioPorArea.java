@@ -95,12 +95,15 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesDepartamento == false) {
+            System.out.println("1");
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
+            System.out.println("2");
             retorno = false;
         }
         if (validacionesArea == false) {
+            System.out.println("3");
             retorno = false;
         }
         return retorno;
@@ -133,11 +136,23 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
             LaboratoriosPorAreas laboratorioNuevo = new LaboratoriosPorAreas();
             laboratorioNuevo.setAreaprofundizacion(nuevoArea);
             laboratorioNuevo.setLaboratorio(nuevoLaboratorio);
-            gestionarPlantaLaboratoriosPorAreasBO.crearLaboratoriosPorAreas(laboratorioNuevo);;
+            gestionarPlantaLaboratoriosPorAreasBO.crearLaboratoriosPorAreas(laboratorioNuevo);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema : " + e.toString());
 
         }
+    }
+
+    public void limpiarFormulario() {
+        nuevoArea = null;
+        nuevoDepartamento = null;
+        nuevoLaboratorio = null;
+        activarLaboratorio = true;
+        validacionesArea = false;
+        validacionesDepartamento = false;
+        validacionesLaboratorio = false;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroLaboratorioPorArea() {

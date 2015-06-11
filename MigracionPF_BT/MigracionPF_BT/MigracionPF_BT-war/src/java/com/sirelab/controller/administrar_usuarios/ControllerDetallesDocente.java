@@ -421,7 +421,7 @@ public class ControllerDetallesDocente implements Serializable {
                 docenteDetalles.getPersona().getUsuario().setEstado(bool);
                 administrarDocentesBO.actualizarInformacionUsuario(docenteDetalles.getPersona().getUsuario());
                 restaurarInformacionDocente();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha activado el docente.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
@@ -441,7 +441,7 @@ public class ControllerDetallesDocente implements Serializable {
                 administrarDocentesBO.actualizarInformacionUsuario(docenteDetalles.getPersona().getUsuario());
                 docenteDetalles = new Docente();
                 restaurarInformacionDocente();
-                mensajeFormulario = "Se ha registrado con exito la modificación del registro.";
+                mensajeFormulario = "Se ha inactivado el docente.";
             } else {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }

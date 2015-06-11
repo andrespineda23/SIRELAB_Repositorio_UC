@@ -55,47 +55,47 @@
                     <br></br>
                     <br></br>
                     <br></br> 
+                    <div class="text-center">
+                        <h1>Variables de Usuario</h1>
+                    </div>
                 </div>
                 <div class="row col-md-12">
                     <div class="container">
-                        <div id="resultadosBusqueda" class="row clearfix">
+                        <div id="resultadosBusquedaTP" class="row clearfix">
                             <fieldset style="border: black;border-radius: 10px;">
-                                <h3><legend style="color: darkblue"><strong>TIPOS ACTIVOS REGISTRADOS</strong></legend></h3>
+                                <h3><legend style="color: darkblue"><strong>TIPOS PERFILES REGISTRADOS</strong></legend></h3>
                                 <div class="row">
-                                    <h:dataTable id="dataTable" var="item" 
+                                    <h:dataTable id="dataTableTP" var="itemTP" 
                                                  styleClass="table table-striped table-hover table-responsive" 
-                                                 value="#{controllerAdministrarTipoPerfil.listaTiposPerfiles}">
+                                                 value="#{controllerVariablesUsuario.listaTiposPerfiles}">
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Nombre"/>
                                             </f:facet>
-                                            <h:outputText value="#{item.nombre}"/>
+                                            <h:outputText value="#{itemTP.nombre}"/>
                                         </h:column>  
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Codigo"/>
                                             </f:facet>
-                                            <h:outputText value="#{item.codigo}"/>
+                                            <h:outputText value="#{itemTP.codigo}"/>
                                         </h:column>  
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Nombre Registro"/>
                                             </f:facet>
-                                            <h:outputText value="#{item.nombreregistro}"/>
+                                            <h:outputText value="#{itemTP.nombreregistro}"/>
                                         </h:column>  
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Codigo Registro"/>
                                             </f:facet>
-                                            <h:outputText value="#{item.codigoregistro}"/>
+                                            <h:outputText value="#{itemTP.codigoregistro}"/>
                                         </h:column>  
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Detalles"/>
                                             </f:facet>
-                                            <h:commandLink value="Ver" actionListener="#{controllerAdministrarTipoPerfil.recibirIDTipoPerfilEditar(item.idtipoperfil)}" immediate="true">
-                                                <f:ajax execute="@form" render="formularioGeneral" />
-                                            </h:commandLink>
                                         </h:column>
                                     </h:dataTable>
                                 </div><!--/.row-->
@@ -103,56 +103,49 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <br></br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr  style="color: black; width: 10px"></hr>
+                        </div>
+                    </div>
+                    <br></br>
+                </div>
                 <div class="row col-md-12">
-                    <fieldset style="border: black;border-radius: 10px;">
-                        <h4><legend style="color: darkblue">Editar Tipo Perfil</legend></h4>
-                        <div class="form-group">
-                            <h:outputText value="Nombre Tipo Perfil*"/>
-                            <h:inputText id="nombreEditar" class="form-control" maxlength="45" disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.nombreEditar}" required="true" requiredMessage="El campo Nombre es obligatorio.">
-                                <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarNombreEditar()}" execute="nombreEditar" render="nombreEditar msnNombreE" />
-                            </h:inputText>
-                            <h6><h:message id="msnNombreE" for="nombreEditar" style="color: red"></h:message></h6>
+                    <div class="container">
+                        <div id="resultadosBusquedaTU" class="row clearfix">
+                            <fieldset style="border: black;border-radius: 10px;">
+                                <h3><legend style="color: darkblue"><strong>TIPOS USUARIO REGISTRADOS</strong></legend></h3>
+                                <div class="row">
+                                    <h:dataTable id="dataTableTU" var="itemTU" 
+                                                 styleClass="table table-striped table-hover table-responsive" 
+                                                 value="#{controllerVariablesUsuario.listaTiposUsuario}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{itemTU.nombretipousuario}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalles"/>
+                                            </f:facet>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div><!--/.row-->
+                            </fieldset>
                         </div>
-                        <div class="form-group">
-                            <h:outputText value="Codigo Tipo Perfil*"/>
-                            <h:inputText id="codigoEditar" class="form-control" maxlength="45"  disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.codigoEditar}" required="true" requiredMessage="El campo Codigo es obligatorio.">
-                                <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarCodigoEditar()}" execute="codigoEditar" render="codigoEditar msnCodigoE" />
-                            </h:inputText>
-                            <h6><h:message id="msnCodigoE" for="codigoEditar" style="color: red"></h:message></h6>
-                        </div>
-                        <div class="form-group">
-                            <h:outputText value="Nombre Registro Tipo Perfil*"/>
-                            <h:inputText id="nombreRegistroEditar" class="form-control" maxlength="45" disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.nombreRegistroEditar}" required="true" requiredMessage="El campo Nombre es obligatorio.">
-                                <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarNombreRegistroEditar()}" execute="nombreRegistroEditar" render="nombreRegistroEditar msnNombreE" />
-                            </h:inputText>
-                            <h6><h:message id="msnNombreE2" for="nombreRegistroEditar" style="color: red"></h:message></h6>
-                        </div>
-                        <div class="form-group">
-                            <h:outputText value="Codigo Registro Tipo Perfil*"/>
-                            <h:inputText id="codigoRegistroEditar" class="form-control" maxlength="45"  disabled="#{controllerAdministrarTipoPerfil.visibleEditar}" value="#{controllerAdministrarTipoPerfil.codigoRegistroEditar}" required="true" requiredMessage="El campo Codigo es obligatorio.">
-                                <f:ajax event="blur" listener="#{controllerAdministrarTipoPerfil.validarCodigoRegistroEditar()}" execute="codigoRegistroEditar" render="codigoRegistroEditar msnCodigoE" />
-                            </h:inputText>
-                            <h6><h:message id="msnCodigoE2" for="codigoEditar" style="color: red"></h:message></h6>
-                        </div>
-                        <div class="row col-md-12">
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormularioEditar" class="text-uppercase" value="#{controllerAdministrarTipoPerfil.mensajeFormularioEditar}"/></strong>
-                            </div>
-                        </div>
-                        <h:commandButton value="Registrar" class="btn btn-success" actionListener="#{controllerAdministrarTipoPerfil.registrarModificacionTipoPerfil()}">
-                            <f:ajax execute="@form" render="formularioGeneral" />
-                        </h:commandButton>
-                        <span></span>
-                        <span></span>
-                        <h:commandButton value="Cancelar" class="btn btn-danger" actionListener="#{controllerAdministrarTipoPerfil.cancelarModificarRegistro()}" immediate="true">
-                            <f:ajax execute="@form" immediate="true" render="formularioGeneral" />
-                        </h:commandButton>
-                    </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
                 </div>
                 <div class="row">
                     <div class="col-md-11"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarTipoPerfil.limpiarProcesoPagina()}" class="btn btn-primary" immediate="true">
+                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarEstadoEquipo.limpiarInformacion()}" class="btn btn-primary" immediate="true">
                             <f:ajax execute="@form" render="formularioGeneral" />
                         </h:commandButton>
                     </div>

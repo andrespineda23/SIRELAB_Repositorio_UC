@@ -52,10 +52,12 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         nuevoDepartamento = null;
         nuevoNombre = null;
         nuevoFacultad = null;
+        //
         validacionesCodigo = false;
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
+        mensajeFormulario = "";
     }
 
     public void actualizarFacultades() {
@@ -157,10 +159,25 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             laboratorioNuevo.setCodigolaboratorio(nuevoCodigo);
             laboratorioNuevo.setDepartamento(nuevoDepartamento);
             gestionarPlantaLaboratoriosBO.crearNuevaLaboratorio(laboratorioNuevo);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString());
 
         }
+    }
+
+    public void limpiarFormulario() {
+        activarNuevoDepartamento = true;
+        nuevoCodigo = null;
+        nuevoDepartamento = null;
+        nuevoNombre = null;
+        nuevoFacultad = null;
+        //
+        validacionesCodigo = false;
+        validacionesDepartamento = false;
+        validacionesFacultad = false;
+        validacionesNombre = false;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroLaboratorio() {
@@ -171,15 +188,17 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         nuevoDepartamento = null;
         nuevoNombre = null;
         nuevoFacultad = null;
+        //
         validacionesCodigo = false;
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
+        mensajeFormulario = "";
     }
 
     //GET-SET
     public List<Facultad> getListaFacultades() {
-        if(listaFacultades == null){
+        if (listaFacultades == null) {
             listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
         }
         return listaFacultades;

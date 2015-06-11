@@ -78,7 +78,7 @@ public class TipoUsuario implements Serializable {
     }
 
     public void setNombretipousuario(String nombretipousuario) {
-        this.nombretipousuario = nombretipousuario;
+        this.nombretipousuario = nombretipousuario.toUpperCase();
     }
 
     @XmlTransient

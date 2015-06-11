@@ -416,11 +416,47 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setEstadoequipo(nuevoEstadoEquipoEquipo);
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
-            System.out.println("Proceso OK !");
-            limpiarRegistroEquipoElemento();
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        activarNuevoModuloLaboratorio = true;
+        activarNuevoSalaLaboratorio = true;
+        nuevoNombreEquipo = null;
+        nuevoInventarioEquipo = null;
+        nuevoModeloEquipo = null;
+        nuevoMarcaEquipo = null;
+        nuevoSerieEquipo = null;
+        nuevoCostoAlquilerEquipo = null;
+        nuevoEspecificacionEquipo = null;
+        nuevoCostoInversionEquipo = null;
+        nuevoFechaAdquisicionEquipo = null;
+        nuevoLaboratorioPorArea = null;
+        nuevoSalaLaboratorioEquipo = null;
+        nuevoModuloLaboratorioEquipo = null;
+        nuevoTipoActivoEquipo = null;
+        nuevoEstadoEquipoEquipo = null;
+        nuevoProveedorEquipo = null;
+        //
+        validacionesCosto = true;
+        validacionesEspecificacion = true;
+        validacionesEstado = false;
+        validacionesFecha = true;
+        validacionesInventario = false;
+        validacionesInversion = true;
+        validacionesLaboratorio = false;
+        validacionesMarca = true;
+        validacionesModelo = true;
+        validacionesModulo = false;
+        validacionesNombre = false;
+        validacionesProveedor = false;
+        validacionesSala = false;
+        validacionesSerie = true;
+        validacionesTipo = false;
+        mensajeFormulario = "";
     }
 
     //GET - SET

@@ -349,6 +349,35 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         }
     }
 
+    public void limpiarFormulario() {
+        activarDepartamento = true;
+        inputApellido = null;
+        inputFacultad = null;
+        inputContrasenia = null;
+        inputContraseniaConfirma = null;
+        inputDireccion = null;
+        inputEmail = null;
+        inputID = null;
+        inputNombre = null;
+        inputDepartamento = null;
+        inputLaboratorio = null;
+        inputPerfil = null;
+        validacionesPerfil = false;
+        validacionesNombre = false;
+        validacionesApellido = false;
+        validacionesCorreo = false;
+        validacionesID = false;
+        validacionesPassw = false;
+        validacionesTel1 = true;
+        validacionesTel2 = true;
+        validacionesDireccion = true;
+        validacionesPassw2 = false;
+        validacionesFacultad = false;
+        validacionesDepartamento = false;
+        validacionesLaboratorio = false;
+        mensajeFormulario = "";
+    }
+
     /**
      * Metodo encargado de cancelar el proceso de registro
      */
@@ -369,6 +398,20 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         listaLaboratorios = null;
         listaTiposPerfiles = null;
         inputPerfil = null;
+        validacionesPerfil = false;
+        validacionesNombre = false;
+        validacionesApellido = false;
+        validacionesCorreo = false;
+        validacionesID = false;
+        validacionesPassw = false;
+        validacionesTel1 = true;
+        validacionesTel2 = true;
+        validacionesDireccion = true;
+        validacionesPassw2 = false;
+        validacionesFacultad = false;
+        validacionesDepartamento = false;
+        validacionesLaboratorio = false;
+        mensajeFormulario = "";
     }
 
     /**
@@ -383,16 +426,29 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             usuarioNuevo.setPasswordusuario(inputContrasenia);
             Persona personaNueva = new Persona();
             personaNueva.setApellidospersona(inputApellido);
-            personaNueva.setDireccionpersona(inputDireccion);
             personaNueva.setEmailpersona(inputEmail);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
-            personaNueva.setTelefono1persona(inputTelefono1);
-            personaNueva.setTelefono2persona(inputTelefono2);
+            if (Utilidades.validarNulo(inputDireccion) && (!inputDireccion.isEmpty())) {
+                personaNueva.setDireccionpersona(inputDireccion);
+            } else {
+                personaNueva.setDireccionpersona("");
+            }
+            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())) {
+                personaNueva.setTelefono1persona(inputTelefono1);
+            } else {
+                personaNueva.setTelefono1persona("");
+            }
+            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())) {
+                personaNueva.setTelefono2persona(inputTelefono2);
+            } else {
+                personaNueva.setTelefono2persona("");
+            }
             EncargadoLaboratorio encargadoNueva = new EncargadoLaboratorio();
             encargadoNueva.setLaboratorio(inputLaboratorio);
             encargadoNueva.setTipoperfil(inputPerfil);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
+            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
         }
