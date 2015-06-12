@@ -101,13 +101,17 @@
                                 </div><!--/.row-->
                             </fieldset>
                         </div>
+                        <br></br>
+                        <div class="left pull-left">
+                            <h:commandButton value="Nuevo Tipo Perfil" action="registrar_tipoperfil" class="btn btn-success"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <br></br>
                     <div class="row">
                         <div class="col-md-12">
-                            <hr  style="color: black; width: 10px"></hr>
+                            <hr></hr>
                         </div>
                     </div>
                     <br></br>
@@ -136,6 +140,10 @@
                                 </div><!--/.row-->
                             </fieldset>
                         </div>
+                        <br></br>
+                        <div class="left pull-left">
+                            <h:commandButton value="Nuevo Tipo Usuario" action="registrar_tipousuario" class="btn btn-success"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -145,7 +153,7 @@
                 <div class="row">
                     <div class="col-md-11"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarEstadoEquipo.limpiarInformacion()}" class="btn btn-primary" immediate="true">
+                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerVariablesUsuario.limpiarInformacion()}" class="btn btn-primary" immediate="true">
                             <f:ajax execute="@form" render="formularioGeneral" />
                         </h:commandButton>
                     </div>

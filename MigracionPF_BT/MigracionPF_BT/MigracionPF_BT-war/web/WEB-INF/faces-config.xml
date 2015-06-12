@@ -67,6 +67,60 @@
     
     
     <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_tipousuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_usuario</from-outcome>
+            <to-view-id>/variables_entorno/variables_usuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_tipousuario</from-outcome>
+            <to-view-id>/variables_entorno/registrar_tipousuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_tipoperfil.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_usuario</from-outcome>
+            <to-view-id>/variables_entorno/variables_usuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_tipoperfil</from-outcome>
+            <to-view-id>/variables_entorno/registrar_tipoperfil.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
