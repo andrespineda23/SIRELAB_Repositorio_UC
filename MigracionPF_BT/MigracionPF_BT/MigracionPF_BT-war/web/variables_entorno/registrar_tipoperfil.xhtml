@@ -39,7 +39,7 @@
                                     <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
                                     <a class="navbar-brand topnav" href="#">SIRELAB</a>    
                                 </a><p class="navbar-text pull-left ">
-                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userPerfil}</label>
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
                                 </p>
                             </div>
                             <!-- /.navbar-collapse -->
@@ -112,7 +112,7 @@
                                 </h:commandButton>
                                 <span></span>
                                 <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="variables_usuario" actionListener="#{controllerRegistrarTipoPerfil.cancelarTipoPerfil()}" immediate="true">
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarTipoPerfil.cerrarPagina()}" actionListener="#{controllerVariablesUsuario.iniciarInformacionTablas()}" immediate="true">
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

@@ -7,6 +7,7 @@ package com.sirelab.controller.estructura_universidad;
 
 import com.sirelab.bo.interfacebo.GestionarEdificiosBOInterface;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -35,8 +36,10 @@ public class ControllerDetallesEdificio implements Serializable {
     private String editarDescripcion, editarDireccion;
     private List<Sede> listaSedes;
     private Sede editarSede;
+    private List<HorarioAtencion> listaHorariosAtencion;
+    private HorarioAtencion editarHorario;
     //
-    private boolean validacionesDescripcion, validacionesDireccion, validacionesSede;
+    private boolean validacionesDescripcion, validacionesDireccion, validacionesSede, validacionesHorario;
     private String mensajeFormulario;
 
     public ControllerDetallesEdificio() {
@@ -47,12 +50,14 @@ public class ControllerDetallesEdificio implements Serializable {
         validacionesDescripcion = true;
         validacionesDireccion = true;
         validacionesSede = true;
+        validacionesHorario = true;
         mensajeFormulario = "";
     }
 
     public void restaurarInformacionEdificio() {
         validacionesDescripcion = true;
         validacionesDireccion = true;
+        validacionesHorario = true;
         validacionesSede = true;
         mensajeFormulario = "";
         edificioDetalles = new Edificio();
@@ -63,7 +68,9 @@ public class ControllerDetallesEdificio implements Serializable {
         editarDescripcion = edificioDetalles.getDescripcionedificio();
         editarDireccion = edificioDetalles.getDireccion();
         editarSede = edificioDetalles.getSede();
+        editarHorario = edificioDetalles.getHorarioatencion();
         listaSedes = gestionarEdificiosBO.consultarSedesRegistradas();
+        listaHorariosAtencion = gestionarEdificiosBO.consultarHorariosAtencionRegistrados();
     }
 
     public void recibirIDEdificiosDetalles(BigInteger idRegistro) {
@@ -106,6 +113,15 @@ public class ControllerDetallesEdificio implements Serializable {
         }
     }
 
+    public void validarHorarioEdificio() {
+        if (Utilidades.validarNulo(editarHorario)) {
+            validacionesHorario = true;
+        } else {
+            validacionesHorario = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarHorario", new FacesMessage("El horario es obligatorio."));
+        }
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesDireccion == false) {
@@ -115,6 +131,9 @@ public class ControllerDetallesEdificio implements Serializable {
             retorno = false;
         }
         if (validacionesSede == false) {
+            retorno = false;
+        }
+        if (validacionesHorario == false) {
             retorno = false;
         }
         return retorno;
@@ -135,6 +154,7 @@ public class ControllerDetallesEdificio implements Serializable {
             edificioDetalles.setDescripcionedificio(editarDireccion);
             edificioDetalles.setDireccion(editarDescripcion);
             edificioDetalles.setSede(editarSede);
+            edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
             System.out.println("Error ControllerLogin almacenarNuevoEdificioEnSistema : " + e.toString());
@@ -188,6 +208,22 @@ public class ControllerDetallesEdificio implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public List<HorarioAtencion> getListaHorariosAtencion() {
+        return listaHorariosAtencion;
+    }
+
+    public void setListaHorariosAtencion(List<HorarioAtencion> listaHorariosAtencion) {
+        this.listaHorariosAtencion = listaHorariosAtencion;
+    }
+
+    public HorarioAtencion getEditarHorario() {
+        return editarHorario;
+    }
+
+    public void setEditarHorario(HorarioAtencion editarHorario) {
+        this.editarHorario = editarHorario;
     }
 
 }

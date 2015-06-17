@@ -163,7 +163,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarPlanesEstudio.listaPlanesEstudios}">
+                                                     value="#{controllerAdministrarPlanesEstudio.listaPlanesEstudiosTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -200,6 +200,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_planestudio" actionListener="#{controllerDetallesPlanEstudio.recibirIDPlanesEstudioDetalles(item.idplanestudios)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarPlanesEstudio.cargarPaginaAnteriorPlanEstudio()}" disabled="#{controllerAdministrarPlanesEstudio.bloquearPagAntPlanEstudio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarPlanesEstudio.cargarPaginaSiguientePlanEstudio()}" disabled="#{controllerAdministrarPlanesEstudio.bloquearPagSigPlanEstudio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>

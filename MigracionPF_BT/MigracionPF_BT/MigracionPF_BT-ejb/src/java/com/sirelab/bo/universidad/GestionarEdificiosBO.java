@@ -2,8 +2,10 @@ package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.GestionarEdificiosBOInterface;
 import com.sirelab.dao.interfacedao.EdificioDAOInterface;
+import com.sirelab.dao.interfacedao.HorarioAtencionDAOInterface;
 import com.sirelab.dao.interfacedao.SedeDAOInterface;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.entidades.Sede;
 import java.math.BigInteger;
 import java.util.List;
@@ -22,6 +24,8 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
     EdificioDAOInterface edificioDAO;
     @EJB
     SedeDAOInterface sedeDAO;
+    @EJB
+    HorarioAtencionDAOInterface horarioAtencionDAO;
 
     //@Override
     public List<Sede> consultarSedesRegistradas() {
@@ -30,6 +34,17 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarEdificioBO consultarSedesRegistradas : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<HorarioAtencion> consultarHorariosAtencionRegistrados() {
+        try {
+            List<HorarioAtencion> lista = horarioAtencionDAO.consultarHorariosAtencion();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarEdificioBO consultarHorariosAtencionRegistrados : " + e.toString());
             return null;
         }
     }

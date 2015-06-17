@@ -163,7 +163,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarAsignaturas.listaAsignaturas}">
+                                                     value="#{controllerAdministrarAsignaturas.listaAsignaturasTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -200,6 +200,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_asignatura" actionListener="#{controllerDetallesAsignatura.recibirIDAsignaturasDetalles(item.idasignatura)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarAsignaturas.cargarPaginaAnteriorAsignatura()}" disabled="#{controllerAdministrarAsignaturas.bloquearPagAntAsignatura}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarAsignaturas.cargarPaginaSiguienteAsignatura()}" disabled="#{controllerAdministrarAsignaturas.bloquearPagSigAsignatura}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>

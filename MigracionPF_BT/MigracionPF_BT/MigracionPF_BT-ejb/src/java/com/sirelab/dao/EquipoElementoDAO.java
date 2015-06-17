@@ -124,6 +124,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
     private String adicionarFiltros(String jpql, Map<String, String> filters, String alias) {
         final StringBuilder wheres = new StringBuilder();
         int camposFiltro = 0;
+        System.out.println("filters : "+filters);
         if (null != filters && !filters.isEmpty()) {
             wheres.append(" WHERE ");
             for (Map.Entry<String, String> entry : filters.entrySet()) {

@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.entidades.Sede;
 import java.math.BigInteger;
 import java.util.List;
@@ -26,5 +27,7 @@ public interface GestionarEdificiosBOInterface {
     public void modificarInformacionEdificio(Edificio edificio);
 
     public Edificio obtenerEdificioPorIDEdificio(BigInteger idEdificio);
+
+    public List<HorarioAtencion> consultarHorariosAtencionRegistrados();
 
 }

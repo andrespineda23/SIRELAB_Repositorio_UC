@@ -7,15 +7,14 @@ import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 /**
  * Controlador: ControllerAdministrarEstudiantes Este controlador se encarga de
@@ -46,7 +45,12 @@ public class ControllerAdministrarEstudiantes implements Serializable {
     private boolean activarExport;
     //
     private List<Estudiante> listaEstudiantes;
-    private List<Estudiante> filtrarListaEstudiantes;
+    private List<Estudiante> listaEstudiantesTabla;
+    private int posicionEstudianteTabla;
+    private int tamTotalEstudiante;
+    private boolean bloquearPagSigEstudiante, bloquearPagAntEstudiante;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarEstudiantes() {
     }
@@ -68,7 +72,15 @@ public class ControllerAdministrarEstudiantes implements Serializable {
         listaDepartamentos = administrarEstudiantesBO.obtenerListasDepartamentos();
         inicializarFiltros();
         listaEstudiantes = null;
-        filtrarListaEstudiantes = null;
+        listaEstudiantesTabla = null;
+        posicionEstudianteTabla = 0;
+        tamTotalEstudiante = 0;
+        bloquearPagAntEstudiante = true;
+        bloquearPagSigEstudiante = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     /**
@@ -148,19 +160,81 @@ public class ControllerAdministrarEstudiantes implements Serializable {
             if (listaEstudiantes != null) {
                 if (listaEstudiantes.size() > 0) {
                     activarExport = false;
+                    listaEstudiantesTabla = new ArrayList<Estudiante>();
+                    tamTotalEstudiante = listaEstudiantes.size();
+                    posicionEstudianteTabla = 0;
+                    cargarDatosTablaEstudiante();
                 } else {
                     activarExport = true;
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Estudiantes");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
+                    listaEstudiantesTabla = null;
+                    tamTotalEstudiante = 0;
+                    posicionEstudianteTabla = 0;
+                    bloquearPagAntEstudiante = true;
+                    bloquearPagSigEstudiante = true;
                 }
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Estudiantes");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
+                listaEstudiantesTabla = null;
+                tamTotalEstudiante = 0;
+                posicionEstudianteTabla = 0;
+                bloquearPagAntEstudiante = true;
+                bloquearPagSigEstudiante = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaEstudiante() {
+        if (tamTotalEstudiante < 10) {
+            for (int i = 0; i < tamTotalEstudiante; i++) {
+                listaEstudiantesTabla.add(listaEstudiantes.get(i));
+            }
+            bloquearPagSigEstudiante = true;
+            bloquearPagAntEstudiante = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaEstudiantesTabla.add(listaEstudiantes.get(i));
+            }
+            bloquearPagSigEstudiante = false;
+            bloquearPagAntEstudiante = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteEstudiante() {
+        listaEstudiantesTabla = new ArrayList<Estudiante>();
+        posicionEstudianteTabla = posicionEstudianteTabla + 10;
+        int diferencia = tamTotalEstudiante - posicionEstudianteTabla;
+        if (diferencia > 10) {
+            for (int i = posicionEstudianteTabla; i < (posicionEstudianteTabla + 10); i++) {
+                listaEstudiantesTabla.add(listaEstudiantes.get(i));
+            }
+            bloquearPagSigEstudiante = false;
+            bloquearPagAntEstudiante = false;
+        } else {
+            for (int i = posicionEstudianteTabla; i < (posicionEstudianteTabla + diferencia); i++) {
+                listaEstudiantesTabla.add(listaEstudiantes.get(i));
+            }
+            bloquearPagSigEstudiante = true;
+            bloquearPagAntEstudiante = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorEstudiante() {
+        listaEstudiantesTabla = new ArrayList<Estudiante>();
+        posicionEstudianteTabla = posicionEstudianteTabla - 10;
+        int diferencia = tamTotalEstudiante - posicionEstudianteTabla;
+        if (diferencia == tamTotalEstudiante) {
+            for (int i = posicionEstudianteTabla; i < (posicionEstudianteTabla + 10); i++) {
+                listaEstudiantesTabla.add(listaEstudiantes.get(i));
+            }
+            bloquearPagSigEstudiante = false;
+            bloquearPagAntEstudiante = true;
+        } else {
+            for (int i = posicionEstudianteTabla; i < (posicionEstudianteTabla + 10); i++) {
+                listaEstudiantesTabla.add(listaEstudiantes.get(i));
+            }
+            bloquearPagSigEstudiante = false;
+            bloquearPagAntEstudiante = false;
         }
     }
 
@@ -168,7 +242,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
      *
      * Metodo encargado de limpiar los parametros de busqueda
      */
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         activarExport = true;
         activoCarrera = true;
         activoPlan = true;
@@ -184,6 +258,12 @@ public class ControllerAdministrarEstudiantes implements Serializable {
         parametroTipo = 1;
         inicializarFiltros();
         listaEstudiantes = null;
+        listaEstudiantesTabla = null;
+        posicionEstudianteTabla = 0;
+        tamTotalEstudiante = 0;
+        bloquearPagAntEstudiante = true;
+        bloquearPagSigEstudiante = true;
+        return paginaAnterior;
     }
 
     /**
@@ -369,14 +449,6 @@ public class ControllerAdministrarEstudiantes implements Serializable {
         this.listaEstudiantes = listaEstudiantes;
     }
 
-    public List<Estudiante> getFiltrarListaEstudiantes() {
-        return filtrarListaEstudiantes;
-    }
-
-    public void setFiltrarListaEstudiantes(List<Estudiante> filtrarListaEstudiantes) {
-        this.filtrarListaEstudiantes = filtrarListaEstudiantes;
-    }
-
     public boolean isActivoCarrera() {
         return activoCarrera;
     }
@@ -407,6 +479,30 @@ public class ControllerAdministrarEstudiantes implements Serializable {
 
     public void setParametroTipo(int parametroTipo) {
         this.parametroTipo = parametroTipo;
+    }
+
+    public List<Estudiante> getListaEstudiantesTabla() {
+        return listaEstudiantesTabla;
+    }
+
+    public void setListaEstudiantesTabla(List<Estudiante> listaEstudiantesTabla) {
+        this.listaEstudiantesTabla = listaEstudiantesTabla;
+    }
+
+    public boolean isBloquearPagSigEstudiante() {
+        return bloquearPagSigEstudiante;
+    }
+
+    public void setBloquearPagSigEstudiante(boolean bloquearPagSigEstudiante) {
+        this.bloquearPagSigEstudiante = bloquearPagSigEstudiante;
+    }
+
+    public boolean isBloquearPagAntEstudiante() {
+        return bloquearPagAntEstudiante;
+    }
+
+    public void setBloquearPagAntEstudiante(boolean bloquearPagAntEstudiante) {
+        this.bloquearPagAntEstudiante = bloquearPagAntEstudiante;
     }
 
 }

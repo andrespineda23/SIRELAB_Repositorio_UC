@@ -24,7 +24,7 @@
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
         <h:form id="formularioGeneral">
-            
+
             <div class="container">
                 <div class="row">
                     <!-- Navigation -->
@@ -169,7 +169,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarEntidadesExternas.listaEntidadesExternas}">
+                                                     value="#{controllerAdministrarEntidadesExternas.listaEntidadesExternasTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre Inicial"/>
@@ -224,6 +224,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="#{controllerAdministrarEntidadesExternas.verDetallesEntidadExterna()}" actionListener="#{controllerDetallesEntidadExterna.recibirIDEntidadesExternasDetalles(item.identidadexterna)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarEntidadesExternas.cargarPaginaAnteriorEntidadExterna()}" disabled="#{controllerAdministrarEntidadesExternas.bloquearPagAntEntidadExterna}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarEntidadesExternas.cargarPaginaSiguienteEntidadExterna()}" disabled="#{controllerAdministrarEntidadesExternas.bloquearPagSigEntidadExterna}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>
@@ -238,7 +254,7 @@
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" actionListener="#{controllerAdministrarEntidadesExternas.limpiarProcesoBusqueda()}" action="inicio_administrador" class="btn btn-primary"/>
+                        <h:commandButton value="Atras" action="#{controllerAdministrarEntidadesExternas.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
                     </div>
                 </div>
             </div>

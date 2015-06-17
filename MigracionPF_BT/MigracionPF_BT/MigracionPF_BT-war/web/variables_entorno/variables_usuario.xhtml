@@ -67,7 +67,7 @@
                                 <div class="row">
                                     <h:dataTable id="dataTableTP" var="itemTP" 
                                                  styleClass="table table-striped table-hover table-responsive" 
-                                                 value="#{controllerVariablesUsuario.listaTiposPerfiles}">
+                                                 value="#{controllerVariablesUsuario.listaTiposPerfilesTabla}">
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Nombre"/>
@@ -96,7 +96,24 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Detalles"/>
                                             </f:facet>
+                                            <h:commandLink value="Ver" action="detalles_tipoperfil" actionListener="#{controllerDetallesTipoPerfil.recibirIDDetalleTipoPerfil(itemTP.idtipoperfil)}"/>
                                         </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <ul class="pager">
+                                                    <li>
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorTipoPerfil()}" disabled="#{controllerVariablesUsuario.bloquearPagAntTipoPerfil}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteTipoPerfil()}" disabled="#{controllerVariablesUsuario.bloquearPagSigTipoPerfil}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </f:facet>
                                     </h:dataTable>
                                 </div><!--/.row-->
                             </fieldset>
@@ -124,7 +141,7 @@
                                 <div class="row">
                                     <h:dataTable id="dataTableTU" var="itemTU" 
                                                  styleClass="table table-striped table-hover table-responsive" 
-                                                 value="#{controllerVariablesUsuario.listaTiposUsuario}">
+                                                 value="#{controllerVariablesUsuario.listaTiposUsuarioTabla}">
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Nombre"/>
@@ -135,7 +152,24 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Detalles"/>
                                             </f:facet>
+                                            <h:commandLink value="Ver" action="detalles_tipousuario" actionListener="#{controllerDetallesTipoUsuario.recibirIDDetalleTipoUsuario(itemTU.idtipousuario)}"/>
                                         </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <ul class="pager">
+                                                    <li>
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorTipoUsuario()}" disabled="#{controllerVariablesUsuario.bloquearPagAntTipoUsuario}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteTipoUsuario()}" disabled="#{controllerVariablesUsuario.bloquearPagSigTipoUsuario}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </f:facet>
                                     </h:dataTable>
                                 </div><!--/.row-->
                             </fieldset>

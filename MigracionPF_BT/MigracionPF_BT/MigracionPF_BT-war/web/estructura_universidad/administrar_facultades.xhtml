@@ -24,7 +24,7 @@
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
         <h:form id="formularioGeneral">
-            
+
             <div class="container">
                 <div class="row">
                     <!-- Navigation -->
@@ -121,7 +121,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarFacultades.listaFacultades}">
+                                                     value="#{controllerAdministrarFacultades.listaFacultadesTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -140,6 +140,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_facultad" actionListener="#{controllerDetallesFacultad.recibirIDFacultadesDetalles(item.idfacultad)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarFacultades.cargarPaginaAnteriorFacultad()}" disabled="#{controllerAdministrarFacultades.bloquearPagAntFacultad}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarFacultades.cargarPaginaSiguienteFacultad()}" disabled="#{controllerAdministrarFacultades.bloquearPagSigFacultad}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>

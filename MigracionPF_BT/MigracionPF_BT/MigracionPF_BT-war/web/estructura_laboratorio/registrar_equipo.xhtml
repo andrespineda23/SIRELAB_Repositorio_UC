@@ -132,14 +132,14 @@
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Modelo Equipo"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoModeloEquipo}" required="true" class="form-control" id="nuevoModeloEquipo" >
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoModeloEquipo}" class="form-control" id="nuevoModeloEquipo" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarModeloEquipo()}" execute="nuevoModeloEquipo" render="nuevoModeloEquipo msnModeloEquipo" />
                                     </h:inputText>
                                     <h6><h:message id="msnModeloEquipo" for="nuevoModeloEquipo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Serie Equipo"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoSerieEquipo}" required="true" class="form-control" id="nuevoSerieEquipo" >
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoSerieEquipo}" class="form-control" id="nuevoSerieEquipo" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarSerieEquipo()}" execute="nuevoSerieEquipo" render="nuevoSerieEquipo msnSerieEquipo" />
                                     </h:inputText>
                                     <h6><h:message id="msnSerieEquipo" for="nuevoSerieEquipo" style="color: red"/></h6>
@@ -166,9 +166,9 @@
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha Adquisición"/></strong>
-                                    <h:inputText  maxlength="10"  value="#{controllerRegistrarEquipo.nuevoFechaAdquisicionEquipo}" class="form-control" id="nuevoCapacidadEquipo" >
+                                    <h:inputText  maxlength="10"  value="#{controllerRegistrarEquipo.nuevoFechaAdquisicionEquipo}" class="form-control" id="nuevoFechaAdquisicionEquipo" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarFechaEquipo()}" execute="nuevoFechaAdquisicionEquipo" render="nuevoFechaAdquisicionEquipo msnFechaAdquisicionEquipo" />
-                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                     </h:inputText>
                                     <h6><h:message id="msnFechaAdquisicionEquipo" for="nuevoFechaAdquisicionEquipo" style="color: red"/></h6>
                                 </div>
@@ -205,7 +205,7 @@
                                     <f:selectItems value="#{controllerRegistrarEquipo.listaSalasLaboratorios}" var="sala"
                                                    itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarNuevoLaboratorioPorArea()}" execute="nuevoSalaLaboratorioEquipo" render="@this nuevoModuloLaboratorioEquipo msnSalaLaboratorioEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarNuevoSalaLaboratorio()}" execute="nuevoSalaLaboratorioEquipo" render="@this nuevoModuloLaboratorioEquipo msnSalaLaboratorioEquipo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnSalaLaboratorioEquipo" for="nuevoSalaLaboratorioEquipo" style="color: red"/></h6>
                             </div>
@@ -218,7 +218,7 @@
                                     <f:selectItems value="#{controllerRegistrarEquipo.listaModulosLaboratorios}" var="modulo"
                                                    itemLabel="#{modulo.detallemodulo}" itemValue="#{modulo}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarNuevoLaboratorioPorArea()}" execute="nuevoModuloLaboratorioEquipo" render="@this msnModuloLaboratorioEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarModulo()}" execute="nuevoModuloLaboratorioEquipo" render="@this msnModuloLaboratorioEquipo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnModuloLaboratorioEquipo" for="nuevoModuloLaboratorioEquipo" style="color: red"/></h6>
                             </div>
@@ -232,7 +232,7 @@
                             </h:commandButton>
                             <span></span>
                             <span></span>
-                            <h:commandButton class="btn btn-danger" value="Cancelar" action="administrar_equipos" actionListener="#{controllerRegistrarEquipo.limpiarRegistroEquipoElemento()}">
+                            <h:commandButton class="btn btn-danger" value="Cancelar" action="administrar_equipos" actionListener="#{controllerRegistrarEquipo.limpiarRegistroEquipoElemento()}" immediate="true">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

@@ -96,9 +96,19 @@
                                     </h:selectOneMenu>
                                     <h6><h:message id="msnSede" for="editarSede" style="color: red"/></h6>
                                 </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Horario Atención*"/></strong>
+                                    <h:selectOneMenu value="#{controllerDetallesEdificio.editarHorario}"
+                                                     class="form-control"
+                                                     id="editarHorario">
+                                        <f:selectItems value="#{controllerDetallesEdificio.listaHorariosAtencion}" var="horario"
+                                                       itemLabel="#{horario.descripcionhorario}" itemValue="#{horario}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerDetallesEdificio.validarHorarioEdificio()}" execute="editarHorario" render="msnHorario"/>
+                                    </h:selectOneMenu>
+                                    <h6><h:message id="msnHorario" for="editarHorario" style="color: red"/></h6>
+                                </div>
                             </fieldset>
-                            <br></br>
-                            <br></br>
                             <br></br>
                             <br></br>
                             <br></br>

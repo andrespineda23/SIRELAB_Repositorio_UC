@@ -121,7 +121,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarProveedores.listaProveedores}">
+                                                     value="#{controllerAdministrarProveedores.listaProveedoresTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -152,6 +152,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_proveedor" actionListener="#{controllerDetallesProveedor.recibirIDProveedoresDetalles(item.idproveedor)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarProveedores.cargarPaginaAnteriorProveedor()}" disabled="#{controllerAdministrarProveedores.bloquearPagAntProveedor}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarProveedores.cargarPaginaSiguienteProveedor()}" disabled="#{controllerAdministrarProveedores.bloquearPagSigProveedor}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>
@@ -166,7 +182,7 @@
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" class="btn btn-primary" immediate="true" action="inicio_administrador" actionListener="#{controllerAdministrarProveedores.limpiarProcesoBusqueda()}"/>
+                        <h:commandButton value="Atras" class="btn btn-primary" immediate="true" action="#{controllerAdministrarProveedores.limpiarProcesoBusqueda()}" />
                     </div>
                 </div>
             </div>

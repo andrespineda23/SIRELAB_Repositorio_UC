@@ -110,19 +110,13 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     public void almacenarNuevoEstudianteEnSistema(Usuario usuarioNuevo, Persona personaNuevo, Estudiante estudianteNuevo) {
         try {
             int sec = 1;
-            BigInteger idUsuario = new BigInteger(String.valueOf(sec++));
-            //usuarioNuevo.setIdusuario(idUsuario);
             TipoUsuario tipoUsuario = tipoUsuarioDAO.buscarTipoUsuarioPorNombre("ESTUDIANTE");
             usuarioNuevo.setTipousuario(tipoUsuario);
             usuarioDAO.crearUsuario(usuarioNuevo);
             Usuario usuarioRegistrado = usuarioDAO.obtenerUltimoUsuarioRegistrado();
-            BigInteger idPersona = new BigInteger(String.valueOf(sec++));
-            //personaNuevo.setIdpersona(idPersona);
             personaNuevo.setUsuario(usuarioRegistrado);
             personaDAO.crearPersona(personaNuevo);
             Persona personaRegistrada = personaDAO.obtenerUltimaPersonaRegistrada();
-            BigInteger idEstudiante = new BigInteger(String.valueOf(sec++));
-            //estudianteNuevo.setIdestudiante(idEstudiante);
             estudianteNuevo.setPersona(personaRegistrada);
             estudianteDAO.crearEstudiante(estudianteNuevo);
         } catch (Exception e) {
@@ -174,17 +168,21 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
         }
     }
 
-    @Override
-    public Object obtenerUsuarioFinalLogin(String nombreTipoUsuario, BigInteger idPersona) {
+    //@Override
+    public Object obtenerUsuarioFinalLogin(BigInteger idTipoUsuario, BigInteger idPersona) {
+        // idTipoUsuario : 2- Docente / 3- Estudiante / 4-EncargadoLab / 5-EntidadExterna
         try {
             Object registro = null;
-            if ("ESTUDIANTE".equals(nombreTipoUsuario)) {
+            BigInteger secuencia = new BigInteger("3");
+            if (secuencia.equals(idTipoUsuario)) {
                 registro = estudianteDAO.buscarEstudiantePorIDPersona(idPersona);
             } else {
-                if ("DOCENTE".equals(nombreTipoUsuario)) {
+                secuencia = new BigInteger("2");
+                if (secuencia.equals(idTipoUsuario)) {
                     registro = docenteDAO.buscarDocentePorIDPersona(idPersona);
                 } else {
-                    if ("ENCARGADOLAB".equals(nombreTipoUsuario)) {
+                    secuencia = new BigInteger("4");
+                    if (secuencia.equals(idTipoUsuario)) {
                         registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorIDPersona(idPersona);
                     } else {
                         registro = entidadExternaDAO.buscarEntidadExternaPorIDPersona(idPersona);

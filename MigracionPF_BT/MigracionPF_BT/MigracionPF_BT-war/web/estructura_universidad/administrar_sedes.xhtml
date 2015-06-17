@@ -127,7 +127,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarSedes.listaSedes}">
+                                                     value="#{controllerAdministrarSedes.listaSedesTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -152,6 +152,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_sede" actionListener="#{controllerDetallesSede.recibirIDSedesDetalles(item.idsede)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarSedes.cargarPaginaAnteriorSede()}" disabled="#{controllerAdministrarSedes.bloquearPagAntSede}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarSedes.cargarPaginaSiguienteSede()}" disabled="#{controllerAdministrarSedes.bloquearPagSigSede}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>

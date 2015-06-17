@@ -66,6 +66,9 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     @PostConstruct
     public void init() {
+        nuevoCostoAlquilerEquipo = "0";
+        nuevoCostoInversionEquipo = "0";
+        nuevoFechaAdquisicionEquipo = new Date();
         validacionesCosto = true;
         validacionesEspecificacion = true;
         validacionesEstado = false;
@@ -101,10 +104,10 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoModeloEquipo = null;
         nuevoMarcaEquipo = null;
         nuevoSerieEquipo = null;
-        nuevoCostoAlquilerEquipo = null;
         nuevoEspecificacionEquipo = null;
-        nuevoCostoInversionEquipo = null;
-        nuevoFechaAdquisicionEquipo = null;
+        nuevoCostoAlquilerEquipo = "0";
+        nuevoCostoInversionEquipo = "0";
+        nuevoFechaAdquisicionEquipo = new Date();
         nuevoLaboratorioPorArea = null;
         nuevoSalaLaboratorioEquipo = null;
         nuevoModuloLaboratorioEquipo = null;
@@ -388,6 +391,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             if (validarCodigoRepetido() == true) {
                 almacenarNuevoEquipoEnSistema();
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                limpiarFormulario();
             } else {
                 mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
             }
@@ -404,19 +408,24 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setMarcaequipo(nuevoMarcaEquipo);
             equipoNuevo.setSeriequipo(nuevoSerieEquipo);
             equipoNuevo.setModeloequipo(nuevoModeloEquipo);
-
-            equipoNuevo.setCantidadequipo(Integer.valueOf("1").intValue());
-            equipoNuevo.setCostoadquisicion(Integer.valueOf(nuevoCostoInversionEquipo));
-            equipoNuevo.setCostoalquiler(Integer.valueOf(nuevoCostoAlquilerEquipo));
+            equipoNuevo.setCantidadequipo(Integer.valueOf("1"));
+            if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty())) {
+                equipoNuevo.setCostoadquisicion(Integer.valueOf(nuevoCostoInversionEquipo));
+            } else {
+                equipoNuevo.setCostoadquisicion(Integer.valueOf("0"));
+            }
+            if (Utilidades.validarNulo(nuevoCostoAlquilerEquipo) && (!nuevoCostoAlquilerEquipo.isEmpty())) {
+                equipoNuevo.setCostoalquiler(Integer.valueOf(nuevoCostoAlquilerEquipo));
+            } else {
+                equipoNuevo.setCostoalquiler(Integer.valueOf("0"));
+            }
             equipoNuevo.setFechaadquisicion(nuevoFechaAdquisicionEquipo);
             equipoNuevo.setEspecificacionestecnicas(nuevoEspecificacionEquipo);
-
             equipoNuevo.setModulolaboratorio(nuevoModuloLaboratorioEquipo);
             equipoNuevo.setTipoactivo(nuevoTipoActivoEquipo);
             equipoNuevo.setEstadoequipo(nuevoEstadoEquipoEquipo);
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
-            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString());
         }
@@ -433,7 +442,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoCostoAlquilerEquipo = null;
         nuevoEspecificacionEquipo = null;
         nuevoCostoInversionEquipo = null;
-        nuevoFechaAdquisicionEquipo = null;
+        nuevoFechaAdquisicionEquipo = new Date();
         nuevoLaboratorioPorArea = null;
         nuevoSalaLaboratorioEquipo = null;
         nuevoModuloLaboratorioEquipo = null;
@@ -456,7 +465,6 @@ public class ControllerRegistrarEquipo implements Serializable {
         validacionesSala = false;
         validacionesSerie = true;
         validacionesTipo = false;
-        mensajeFormulario = "";
     }
 
     //GET - SET

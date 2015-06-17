@@ -180,7 +180,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarDocentes.listaDocentes}">
+                                                     value="#{controllerAdministrarDocentes.listaDocentesTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -235,6 +235,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="#{controllerAdministrarDocentes.verDetallesDocente()}" actionListener="#{controllerDetallesDocente.recibirIDDocentesDetalles(item.iddocente)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarDocentes.cargarPaginaAnteriorDocente()}" disabled="#{controllerAdministrarDocentes.bloquearPagAntDocente}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarDocentes.cargarPaginaSiguienteDocente()}" disabled="#{controllerAdministrarDocentes.bloquearPagSigDocente}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>
@@ -249,7 +265,7 @@
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarDocentes.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                        <h:commandButton value="Atras" action="#{controllerAdministrarDocentes.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
                     </div>
                 </div>
             </div>

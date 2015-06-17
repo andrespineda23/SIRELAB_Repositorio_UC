@@ -6,15 +6,14 @@ import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 /**
  * Controlador: ControllerAdministrarDocentes Este controlador se encarga del
@@ -44,7 +43,12 @@ public class ControllerAdministrarDocentes implements Serializable {
     private boolean activarExport;
     //
     private List<Docente> listaDocentes;
-    private List<Docente> filtrarListaDocentes;
+    private List<Docente> listaDocentesTabla;
+    private int posicionDocenteTabla;
+    private int tamTotalDocente;
+    private boolean bloquearPagSigDocente, bloquearPagAntDocente;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarDocentes() {
     }
@@ -61,7 +65,15 @@ public class ControllerAdministrarDocentes implements Serializable {
         parametroDepartamento = null;
         inicializarFiltros();
         listaDocentes = null;
-        filtrarListaDocentes = null;
+        listaDocentesTabla = null;
+        posicionDocenteTabla = 0;
+        tamTotalDocente = 0;
+        bloquearPagSigDocente = true;
+        bloquearPagAntDocente = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     /**
@@ -131,12 +143,81 @@ public class ControllerAdministrarDocentes implements Serializable {
             if (listaDocentes != null) {
                 if (listaDocentes.size() > 0) {
                     activarExport = false;
+                    listaDocentesTabla = new ArrayList<Docente>();
+                    tamTotalDocente = listaDocentes.size();
+                    posicionDocenteTabla = 0;
+                    cargarDatosTablaDocente();
                 } else {
                     activarExport = true;
+                    listaDocentesTabla = null;
+                    tamTotalDocente = 0;
+                    posicionDocenteTabla = 0;
+                    bloquearPagAntDocente = true;
+                    bloquearPagSigDocente = true;
                 }
-            } 
+            } else {
+                listaDocentesTabla = null;
+                tamTotalDocente = 0;
+                posicionDocenteTabla = 0;
+                bloquearPagAntDocente = true;
+                bloquearPagSigDocente = true;
+            }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaDocente() {
+        if (tamTotalDocente < 10) {
+            for (int i = 0; i < tamTotalDocente; i++) {
+                listaDocentesTabla.add(listaDocentes.get(i));
+            }
+            bloquearPagSigDocente = true;
+            bloquearPagAntDocente = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaDocentesTabla.add(listaDocentes.get(i));
+            }
+            bloquearPagSigDocente = false;
+            bloquearPagAntDocente = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteDocente() {
+        listaDocentesTabla = new ArrayList<Docente>();
+        posicionDocenteTabla = posicionDocenteTabla + 10;
+        int diferencia = tamTotalDocente - posicionDocenteTabla;
+        if (diferencia > 10) {
+            for (int i = posicionDocenteTabla; i < (posicionDocenteTabla + 10); i++) {
+                listaDocentesTabla.add(listaDocentes.get(i));
+            }
+            bloquearPagSigDocente = false;
+            bloquearPagAntDocente = false;
+        } else {
+            for (int i = posicionDocenteTabla; i < (posicionDocenteTabla + diferencia); i++) {
+                listaDocentesTabla.add(listaDocentes.get(i));
+            }
+            bloquearPagSigDocente = true;
+            bloquearPagAntDocente = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorDocente() {
+        listaDocentesTabla = new ArrayList<Docente>();
+        posicionDocenteTabla = posicionDocenteTabla - 10;
+        int diferencia = tamTotalDocente - posicionDocenteTabla;
+        if (diferencia == tamTotalDocente) {
+            for (int i = posicionDocenteTabla; i < (posicionDocenteTabla + 10); i++) {
+                listaDocentesTabla.add(listaDocentes.get(i));
+            }
+            bloquearPagSigDocente = false;
+            bloquearPagAntDocente = true;
+        } else {
+            for (int i = posicionDocenteTabla; i < (posicionDocenteTabla + 10); i++) {
+                listaDocentesTabla.add(listaDocentes.get(i));
+            }
+            bloquearPagSigDocente = false;
+            bloquearPagAntDocente = false;
         }
     }
 
@@ -144,7 +225,7 @@ public class ControllerAdministrarDocentes implements Serializable {
      *
      * Metodo encargado de limpiar los parametros de busqueda
      */
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         activoDepartamento = true;
         activarExport = true;
         parametroNombre = null;
@@ -157,6 +238,12 @@ public class ControllerAdministrarDocentes implements Serializable {
         parametroEstado = 1;
         inicializarFiltros();
         listaDocentes = null;
+        listaDocentesTabla = null;
+        tamTotalDocente = 0;
+        posicionDocenteTabla = 0;
+        bloquearPagAntDocente = true;
+        bloquearPagSigDocente = true;
+        return paginaAnterior;
     }
 
     /**
@@ -328,12 +415,28 @@ public class ControllerAdministrarDocentes implements Serializable {
         this.listaDocentes = listaDocentes;
     }
 
-    public List<Docente> getFiltrarListaDocentes() {
-        return filtrarListaDocentes;
+    public List<Docente> getListaDocentesTabla() {
+        return listaDocentesTabla;
     }
 
-    public void setFiltrarListaDocentes(List<Docente> filtrarListaDocentes) {
-        this.filtrarListaDocentes = filtrarListaDocentes;
+    public void setListaDocentesTabla(List<Docente> listaDocentesTabla) {
+        this.listaDocentesTabla = listaDocentesTabla;
+    }
+
+    public boolean isBloquearPagSigDocente() {
+        return bloquearPagSigDocente;
+    }
+
+    public void setBloquearPagSigDocente(boolean bloquearPagSigDocente) {
+        this.bloquearPagSigDocente = bloquearPagSigDocente;
+    }
+
+    public boolean isBloquearPagAntDocente() {
+        return bloquearPagAntDocente;
+    }
+
+    public void setBloquearPagAntDocente(boolean bloquearPagAntDocente) {
+        this.bloquearPagAntDocente = bloquearPagAntDocente;
     }
 
 }

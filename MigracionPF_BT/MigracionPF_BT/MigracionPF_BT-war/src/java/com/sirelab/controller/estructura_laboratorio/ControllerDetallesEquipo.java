@@ -480,8 +480,16 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setFechaadquisicion(fechaEquipoElemento);
 
             equipoElementoDetalles.setCantidadequipo(Integer.valueOf(cantidadEquipoElemento).intValue());
-            equipoElementoDetalles.setCostoadquisicion(Integer.valueOf(inversionEquipoElemento));
-            equipoElementoDetalles.setCostoalquiler(Integer.valueOf(alquilerEquipoElemento));
+            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())) {
+                equipoElementoDetalles.setCostoadquisicion(Integer.valueOf(inversionEquipoElemento));
+            } else {
+                equipoElementoDetalles.setCostoadquisicion(Integer.valueOf("0"));
+            }
+            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())) {
+                equipoElementoDetalles.setCostoalquiler(Integer.valueOf(alquilerEquipoElemento));
+            } else {
+                equipoElementoDetalles.setCostoalquiler(Integer.valueOf("0"));
+            }
 
             equipoElementoDetalles.setModulolaboratorio(moduloEquipoElemento);
             equipoElementoDetalles.setEstadoequipo(estadoEquipoElemento);

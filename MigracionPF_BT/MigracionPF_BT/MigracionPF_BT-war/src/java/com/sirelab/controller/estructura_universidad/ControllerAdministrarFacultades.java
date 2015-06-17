@@ -5,6 +5,7 @@ import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,10 @@ public class ControllerAdministrarFacultades implements Serializable {
     private Map<String, String> filtros;
     //
     private List<Facultad> listaFacultades;
-    private List<Facultad> filtrarListaFacultades;
+    private List<Facultad> listaFacultadesTabla;
+    private int posicionFacultadTabla;
+    private int tamTotalFacultad;
+    private boolean bloquearPagSigFacultad, bloquearPagAntFacultad;
     //
     private String altoTabla;
     //
@@ -44,7 +48,11 @@ public class ControllerAdministrarFacultades implements Serializable {
         altoTabla = "150";
         inicializarFiltros();
         listaFacultades = null;
-        filtrarListaFacultades = null;
+        listaFacultadesTabla = null;
+        posicionFacultadTabla = 0;
+        tamTotalFacultad = 0;
+        bloquearPagAntFacultad = true;
+        bloquearPagSigFacultad = true;
         activarExport = true;
     }
 
@@ -72,12 +80,81 @@ public class ControllerAdministrarFacultades implements Serializable {
             if (listaFacultades != null) {
                 if (listaFacultades.size() > 0) {
                     activarExport = false;
+                    listaFacultadesTabla = new ArrayList<Facultad>();
+                    tamTotalFacultad = listaFacultades.size();
+                    posicionFacultadTabla = 0;
+                    cargarDatosTablaFacultad();
                 } else {
                     activarExport = true;
+                    listaFacultadesTabla = null;
+                    tamTotalFacultad = 0;
+                    posicionFacultadTabla = 0;
+                    bloquearPagAntFacultad = true;
+                    bloquearPagSigFacultad = true;
                 }
-            } 
+            } else {
+                listaFacultadesTabla = null;
+                tamTotalFacultad = 0;
+                posicionFacultadTabla = 0;
+                bloquearPagAntFacultad = true;
+                bloquearPagSigFacultad = true;
+            }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaFacultad() {
+        if (tamTotalFacultad < 10) {
+            for (int i = 0; i < tamTotalFacultad; i++) {
+                listaFacultadesTabla.add(listaFacultades.get(i));
+            }
+            bloquearPagSigFacultad = true;
+            bloquearPagAntFacultad = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaFacultadesTabla.add(listaFacultades.get(i));
+            }
+            bloquearPagSigFacultad = false;
+            bloquearPagAntFacultad = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteFacultad() {
+        listaFacultadesTabla = new ArrayList<Facultad>();
+        posicionFacultadTabla = posicionFacultadTabla + 10;
+        int diferencia = tamTotalFacultad - posicionFacultadTabla;
+        if (diferencia > 10) {
+            for (int i = posicionFacultadTabla; i < (posicionFacultadTabla + 10); i++) {
+                listaFacultadesTabla.add(listaFacultades.get(i));
+            }
+            bloquearPagSigFacultad = false;
+            bloquearPagAntFacultad = false;
+        } else {
+            for (int i = posicionFacultadTabla; i < (posicionFacultadTabla + diferencia); i++) {
+                listaFacultadesTabla.add(listaFacultades.get(i));
+            }
+            bloquearPagSigFacultad = true;
+            bloquearPagAntFacultad = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorFacultad() {
+        listaFacultadesTabla = new ArrayList<Facultad>();
+        posicionFacultadTabla = posicionFacultadTabla - 10;
+        int diferencia = tamTotalFacultad - posicionFacultadTabla;
+        if (diferencia == tamTotalFacultad) {
+            for (int i = posicionFacultadTabla; i < (posicionFacultadTabla + 10); i++) {
+                listaFacultadesTabla.add(listaFacultades.get(i));
+            }
+            bloquearPagSigFacultad = false;
+            bloquearPagAntFacultad = true;
+        } else {
+            for (int i = posicionFacultadTabla; i < (posicionFacultadTabla + 10); i++) {
+                listaFacultadesTabla.add(listaFacultades.get(i));
+            }
+            bloquearPagSigFacultad = false;
+            bloquearPagAntFacultad = false;
         }
     }
 
@@ -85,8 +162,13 @@ public class ControllerAdministrarFacultades implements Serializable {
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
-        inicializarFiltros();
         listaFacultades = null;
+        listaFacultadesTabla = null;
+        posicionFacultadTabla = 0;
+        tamTotalFacultad = 0;
+        bloquearPagAntFacultad = true;
+        bloquearPagSigFacultad = true;
+        inicializarFiltros();
     }
 
     /*
@@ -140,14 +222,6 @@ public class ControllerAdministrarFacultades implements Serializable {
         this.listaFacultades = listaFacultades;
     }
 
-    public List<Facultad> getFiltrarListaFacultades() {
-        return filtrarListaFacultades;
-    }
-
-    public void setFiltrarListaFacultades(List<Facultad> filtrarListaFacultades) {
-        this.filtrarListaFacultades = filtrarListaFacultades;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
@@ -162,6 +236,30 @@ public class ControllerAdministrarFacultades implements Serializable {
 
     public void setActivarExport(boolean activarExport) {
         this.activarExport = activarExport;
+    }
+
+    public List<Facultad> getListaFacultadesTabla() {
+        return listaFacultadesTabla;
+    }
+
+    public void setListaFacultadesTabla(List<Facultad> listaFacultadesTabla) {
+        this.listaFacultadesTabla = listaFacultadesTabla;
+    }
+
+    public boolean isBloquearPagSigFacultad() {
+        return bloquearPagSigFacultad;
+    }
+
+    public void setBloquearPagSigFacultad(boolean bloquearPagSigFacultad) {
+        this.bloquearPagSigFacultad = bloquearPagSigFacultad;
+    }
+
+    public boolean isBloquearPagAntFacultad() {
+        return bloquearPagAntFacultad;
+    }
+
+    public void setBloquearPagAntFacultad(boolean bloquearPagAntFacultad) {
+        this.bloquearPagAntFacultad = bloquearPagAntFacultad;
     }
 
 }

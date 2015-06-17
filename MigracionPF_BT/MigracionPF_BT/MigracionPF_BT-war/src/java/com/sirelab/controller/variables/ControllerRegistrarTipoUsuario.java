@@ -74,6 +74,11 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
             System.out.println("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo: " + e.toString());
         }
     }
+    
+    public String cerrarPagina(){
+        cancelarTipoUsuario();
+        return "variables_usuario";
+    }
 
     public void cancelarTipoUsuario() {
         inputNombre = null;
@@ -93,14 +98,6 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
 
     public void setInputNombre(String inputNombre) {
         this.inputNombre = inputNombre;
-    }
-
-    public boolean isValidacionesNombre() {
-        return validacionesNombre;
-    }
-
-    public void setValidacionesNombre(boolean validacionesNombre) {
-        this.validacionesNombre = validacionesNombre;
     }
 
     public String getMensajeFormulario() {

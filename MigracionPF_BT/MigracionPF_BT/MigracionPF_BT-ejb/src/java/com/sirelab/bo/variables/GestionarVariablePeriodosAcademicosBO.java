@@ -8,6 +8,7 @@ package com.sirelab.bo.variables;
 import com.sirelab.bo.interfacebo.GestionarVariablePeriodosAcademicosBOInterface;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
 import com.sirelab.entidades.PeriodoAcademico;
+import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -48,6 +49,17 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
             periodoAcademicoInterface.editarPeriodoAcademico(periodo);
         } catch (Exception e) {
             System.out.println("Error GestionarVariablePeriodosAcademicosBO editarPeriodoAcademico: " + e.toString());
+        }
+    }
+
+    @Override
+    public PeriodoAcademico consultarPeriodoAcademicoPorID(BigInteger idRegistro) {
+        try {
+            PeriodoAcademico registro = periodoAcademicoInterface.buscarPeriodoAcademicoPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarVariablePeriodosAcademicosBO consultarPeriodoAcademicoPorID: " + e.toString());
+            return null;
         }
     }
 }

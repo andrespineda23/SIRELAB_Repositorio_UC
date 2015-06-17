@@ -150,7 +150,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarModulos.listaModulosLaboratorios}">
+                                                     value="#{controllerAdministrarModulos.listaModulosLaboratoriosTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Detalle"/>
@@ -193,6 +193,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="#{controllerAdministrarModulos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesModulo.recibirIDModuloLaboratorioDetalles(item.idmodulolaboratorio)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarModulos.cargarPaginaAnteriorModulo()}" disabled="#{controllerAdministrarModulos.bloquearPagAntModulo}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarModulos.cargarPaginaSiguienteModulo()}" disabled="#{controllerAdministrarModulos.bloquearPagSigModulo}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>
@@ -207,7 +223,7 @@
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarModulos.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                        <h:commandButton value="Atras" action="#{controllerAdministrarModulos.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,10 +45,15 @@ public class ControllerAdministrarModulos implements Serializable {
     private boolean activarExport;
     //
     private List<ModuloLaboratorio> listaModulosLaboratorios;
-    private List<ModuloLaboratorio> filtrarListaModulosLaboratorios;
+    private List<ModuloLaboratorio> listaModulosLaboratoriosTabla;
+    private int posicionModuloTabla;
+    private int tamTotalModulo;
+    private boolean bloquearPagSigModulo, bloquearPagAntModulo;
     //
     private String altoTabla;
     //
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarModulos() {
     }
@@ -64,9 +70,18 @@ public class ControllerAdministrarModulos implements Serializable {
         listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
         altoTabla = "150";
         inicializarFiltros();
-        filtrarListaModulosLaboratorios = null;
         listaSalasLaboratorios = null;
         parametroEstado = 1;
+        listaModulosLaboratoriosTabla = null;
+        listaModulosLaboratorios = null;
+        posicionModuloTabla = 0;
+        tamTotalModulo = 0;
+        bloquearPagAntModulo = true;
+        bloquearPagSigModulo = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     private void inicializarFiltros() {
@@ -114,26 +129,101 @@ public class ControllerAdministrarModulos implements Serializable {
             if (listaModulosLaboratorios != null) {
                 if (listaModulosLaboratorios.size() > 0) {
                     activarExport = false;
+                    listaModulosLaboratoriosTabla = new ArrayList<ModuloLaboratorio>();
+                    tamTotalModulo = listaModulosLaboratorios.size();
+                    posicionModuloTabla = 0;
+                    cargarDatosTablaModulo();
                 } else {
                     activarExport = true;
+                    listaModulosLaboratoriosTabla = null;
+                    tamTotalModulo = 0;
+                    posicionModuloTabla = 0;
+                    bloquearPagAntModulo = true;
+                    bloquearPagSigModulo = true;
                 }
+            } else {
+                listaModulosLaboratoriosTabla = null;
+                tamTotalModulo = 0;
+                posicionModuloTabla = 0;
+                bloquearPagAntModulo = true;
+                bloquearPagSigModulo = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    private void cargarDatosTablaModulo() {
+        if (tamTotalModulo < 10) {
+            for (int i = 0; i < tamTotalModulo; i++) {
+                listaModulosLaboratoriosTabla.add(listaModulosLaboratorios.get(i));
+            }
+            bloquearPagSigModulo = true;
+            bloquearPagAntModulo = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaModulosLaboratoriosTabla.add(listaModulosLaboratorios.get(i));
+            }
+            bloquearPagSigModulo = false;
+            bloquearPagAntModulo = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteModulo() {
+        listaModulosLaboratoriosTabla = new ArrayList<ModuloLaboratorio>();
+        posicionModuloTabla = posicionModuloTabla + 10;
+        int diferencia = tamTotalModulo - posicionModuloTabla;
+        if (diferencia > 10) {
+            for (int i = posicionModuloTabla; i < (posicionModuloTabla + 10); i++) {
+                listaModulosLaboratoriosTabla.add(listaModulosLaboratorios.get(i));
+            }
+            bloquearPagSigModulo = false;
+            bloquearPagAntModulo = false;
+        } else {
+            for (int i = posicionModuloTabla; i < (posicionModuloTabla + diferencia); i++) {
+                listaModulosLaboratoriosTabla.add(listaModulosLaboratorios.get(i));
+            }
+            bloquearPagSigModulo = true;
+            bloquearPagAntModulo = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorModulo() {
+        listaModulosLaboratoriosTabla = new ArrayList<ModuloLaboratorio>();
+        posicionModuloTabla = posicionModuloTabla - 10;
+        int diferencia = tamTotalModulo - posicionModuloTabla;
+        if (diferencia == tamTotalModulo) {
+            for (int i = posicionModuloTabla; i < (posicionModuloTabla + 10); i++) {
+                listaModulosLaboratoriosTabla.add(listaModulosLaboratorios.get(i));
+            }
+            bloquearPagSigModulo = false;
+            bloquearPagAntModulo = true;
+        } else {
+            for (int i = posicionModuloTabla; i < (posicionModuloTabla + 10); i++) {
+                listaModulosLaboratoriosTabla.add(listaModulosLaboratorios.get(i));
+            }
+            bloquearPagSigModulo = false;
+            bloquearPagAntModulo = false;
+        }
+    }
+
+    public String limpiarProcesoBusqueda() {
         activarAreaProfundizacion = true;
         activarSala = true;
         parametroEstado = 1;
-        listaModulosLaboratorios = null;
         activarExport = true;
         parametroCodigo = null;
         parametroDetalle = null;
         parametroLaboratorioPorArea = new LaboratoriosPorAreas();
         parametroSalaLaboratorio = new SalaLaboratorio();
+        listaModulosLaboratorios = null;
+        listaModulosLaboratoriosTabla = null;
+        posicionModuloTabla = 0;
+        tamTotalModulo = 0;
+        bloquearPagAntModulo = true;
+        bloquearPagSigModulo = true;
         inicializarFiltros();
+        return paginaAnterior;
     }
 
     public void actualizarLaboratoriosAreasProfundizacion() {
@@ -268,20 +358,36 @@ public class ControllerAdministrarModulos implements Serializable {
         this.listaModulosLaboratorios = listaModulosLaboratorios;
     }
 
-    public List<ModuloLaboratorio> getFiltrarListaModulosLaboratorios() {
-        return filtrarListaModulosLaboratorios;
-    }
-
-    public void setFiltrarListaModulosLaboratorios(List<ModuloLaboratorio> filtrarListaModulosLaboratorios) {
-        this.filtrarListaModulosLaboratorios = filtrarListaModulosLaboratorios;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<ModuloLaboratorio> getListaModulosLaboratoriosTabla() {
+        return listaModulosLaboratoriosTabla;
+    }
+
+    public void setListaModulosLaboratoriosTabla(List<ModuloLaboratorio> listaModulosLaboratoriosTabla) {
+        this.listaModulosLaboratoriosTabla = listaModulosLaboratoriosTabla;
+    }
+
+    public boolean isBloquearPagSigModulo() {
+        return bloquearPagSigModulo;
+    }
+
+    public void setBloquearPagSigModulo(boolean bloquearPagSigModulo) {
+        this.bloquearPagSigModulo = bloquearPagSigModulo;
+    }
+
+    public boolean isBloquearPagAntModulo() {
+        return bloquearPagAntModulo;
+    }
+
+    public void setBloquearPagAntModulo(boolean bloquearPagAntModulo) {
+        this.bloquearPagAntModulo = bloquearPagAntModulo;
     }
 
 }

@@ -7,7 +7,9 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,11 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +46,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SalaLaboratorio.findByCapacidadsala", query = "SELECT s FROM SalaLaboratorio s WHERE s.capacidadsala = :capacidadsala"),
     @NamedQuery(name = "SalaLaboratorio.findByValorinversion", query = "SELECT s FROM SalaLaboratorio s WHERE s.valorinversion = :valorinversion")})
 public class SalaLaboratorio implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
+    private Collection<ModuloLaboratorio> moduloLaboratorioCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -235,6 +241,15 @@ public class SalaLaboratorio implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.SalaLaboratorio[ idsalalaboratorio=" + idsalalaboratorio + " ]";
+    }
+
+    @XmlTransient
+    public Collection<ModuloLaboratorio> getModuloLaboratorioCollection() {
+        return moduloLaboratorioCollection;
+    }
+
+    public void setModuloLaboratorioCollection(Collection<ModuloLaboratorio> moduloLaboratorioCollection) {
+        this.moduloLaboratorioCollection = moduloLaboratorioCollection;
     }
 
 }

@@ -129,14 +129,14 @@
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Modelo Equipo"/></strong>
-                                    <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.modeloEquipoElemento}" required="true" class="form-control" id="modeloEquipoElemento" >
+                                    <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.modeloEquipoElemento}" class="form-control" id="modeloEquipoElemento" >
                                         <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarModeloEquipo()}" execute="modeloEquipoElemento" render="modeloEquipoElemento msnModeloEquipo" />
                                     </h:inputText>
                                     <h6><h:message id="msnModeloEquipo" for="modeloEquipoElemento" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Serie Equipo"/></strong>
-                                    <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.serieEquipoElemento}" required="true" class="form-control" id="serieEquipoElemento" >
+                                    <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.serieEquipoElemento}" class="form-control" id="serieEquipoElemento" >
                                         <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarSerieEquipo()}" execute="serieEquipoElemento" render="serieEquipoElemento msnSerieEquipo" />
                                     </h:inputText>
                                     <h6><h:message id="msnSerieEquipo" for="serieEquipoElemento" style="color: red"/></h6>
@@ -165,7 +165,7 @@
                                     <strong><h:outputText value="Fecha Adquisición"/></strong>
                                     <h:inputText  maxlength="10" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.fechaEquipoElemento}" class="form-control" id="fechaEquipoElemento" >
                                         <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarFechaEquipo()}" execute="fechaEquipoElemento" render="fechaEquipoElemento msnFechaAdquisicionEquipo" />
-                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                     </h:inputText>
                                     <h6><h:message id="msnFechaAdquisicionEquipo" for="fechaEquipoElemento" style="color: red"/></h6>
                                 </div>
@@ -214,7 +214,7 @@
                                     <f:selectItems value="#{controllerDetallesEquipo.listaModulosLaboratorio}" var="modulo"
                                                    itemLabel="#{modulo.detallemodulo}" itemValue="#{modulo}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.activarModuloLaboratorio}" execute="moduloEquipoElemento" render="@this msnModuloLaboratorioEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarModulosLaboratorio()}" execute="moduloEquipoElemento" render="@this msnModuloLaboratorioEquipo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnModuloLaboratorioEquipo" for="moduloEquipoElemento" style="color: red"/></h6>
                             </div>
@@ -226,14 +226,19 @@
                         </div>
                     </div>
                     <div class="row col-md-12">
-                        <div class="col-md-3"></div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonComponentes" value="COMPONENTES" action="administrar_componentes" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerDetallesEquipo.idEquipoElemento)}" class="btn btn-primary right" >
+                                <f:ajax execute="@form" render="formularioGeneral" />
+                            </h:commandButton>
+                        </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonEditar" disabled="#{controllerDetallesEquipo.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesEquipo.activarEditarRegistro()}" class="btn btn-primary right" >
                                 <f:ajax execute="@form" render="formularioGeneral" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
-                            <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesEquipo.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" class="btn btn-default right" >
+                            <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesEquipo.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" class="btn btn-default right" immediate="true">
                                 <f:ajax execute="@form" render="formularioGeneral" />
                             </h:commandButton>
                         </div>
@@ -242,12 +247,12 @@
                                 <f:ajax execute="@form" render="formularioGeneral" />
                             </h:commandButton>
                         </div>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-2"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-11"></div>
                         <div class="col-md-1">
-                            <h:commandButton value="Atras" action="administrar_equipos" actionListener="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" class="btn btn-primary"/>
+                            <h:commandButton value="Atras" action="administrar_equipos" actionListener="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" class="btn btn-primary" immediate="true"/>
                         </div>
                     </div>
                 </div>

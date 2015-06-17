@@ -33,6 +33,14 @@
     <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
             <from-outcome>recuperacionexitosa</from-outcome>
             <to-view-id>/recuperacionexitosa.xhtml</to-view-id>
             <redirect />
@@ -85,6 +93,258 @@
     
     
     <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_estadoreserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_estadoreserva</from-outcome>
+            <to-view-id>/variables_entorno/registrar_estadoreserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_estadoreserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_estadoreserva</from-outcome>
+            <to-view-id>/variables_entorno/detalles_estadoreserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_tiporeserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_tiporeserva</from-outcome>
+            <to-view-id>/variables_entorno/registrar_tiporeserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_tiporeserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_tiporeserva</from-outcome>
+            <to-view-id>/variables_entorno/detalles_tiporeserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_horarioatencion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_horarioatencion</from-outcome>
+            <to-view-id>/variables_entorno/registrar_horarioatencion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_horarioatencion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_horarioatencion</from-outcome>
+            <to-view-id>/variables_entorno/detalles_horarioatencion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_periodoacademico.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_periodoacademico</from-outcome>
+            <to-view-id>/variables_entorno/registrar_periodoacademico.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_periodoacademico.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_reserva</from-outcome>
+            <to-view-id>/variables_entorno/variables_reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_periodoacademico</from-outcome>
+            <to-view-id>/variables_entorno/detalles_periodoacademico.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_estadoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_estadoequipo</from-outcome>
+            <to-view-id>/variables_entorno/registrar_estadoequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_tipoactivo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_tipoactivo</from-outcome>
+            <to-view-id>/variables_entorno/registrar_tipoactivo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_estadoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_estadoequipo</from-outcome>
+            <to-view-id>/variables_entorno/detalles_estadoequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_tipoevento.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_tipoevento</from-outcome>
+            <to-view-id>/variables_entorno/detalles_tipoevento.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_tipoactivo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_tipoactivo</from-outcome>
+            <to-view-id>/variables_entorno/detalles_tipoactivo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/variables_entorno/registrar_tipousuario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>variables_usuario</from-outcome>
@@ -97,6 +357,25 @@
         <navigation-case>
             <from-outcome>registrar_tipousuario</from-outcome>
             <to-view-id>/variables_entorno/registrar_tipousuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_tipousuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_usuario</from-outcome>
+            <to-view-id>/variables_entorno/variables_usuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_tipousuario</from-outcome>
+            <to-view-id>/variables_entorno/detalles_tipousuario.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -121,15 +400,33 @@
     
     
     <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
+        <from-view-id>/variables_entorno/detalles_tipoperfil.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>inicio_administrador</from-outcome>
-            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <from-outcome>variables_usuario</from-outcome>
+            <to-view-id>/variables_entorno/variables_usuario.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/variables_entorno/variables_usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_tipoperfil</from-outcome>
+            <to-view-id>/variables_entorno/detalles_tipoperfil.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
@@ -154,111 +451,21 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-   
-   
-    <navigation-rule>
-        <from-view-id>/variables_entorno/administrar_estadoequipo.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>inicio_administrador</from-outcome>
-            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>administrar_estadoequipo</from-outcome>
-            <to-view-id>/variables_entorno/administrar_estadoequipo.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
     
     
     <navigation-rule>
-        <from-view-id>/variables_entorno/administrar_perfilesporencargado.xhtml</from-view-id>
+        <from-view-id>/configurarusuario.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>inicio_administrador</from-outcome>
-            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <from-outcome>paginainicioA</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrar_perfilesporencargado</from-outcome>
-            <to-view-id>/variables_entorno/administrar_perfilesporencargado.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    
-    
-    <navigation-rule>
-        <from-view-id>/variables_entorno/administrar_perfilesporencargado.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>registrar_perfilporencargado</from-outcome>
-            <to-view-id>/variables_entorno/registrar_perfilporencargado.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/variables_entorno/registrar_perfilporencargado.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>administrar_perfilesporencargado</from-outcome>
-            <to-view-id>/variables_entorno/administrar_perfilesporencargado.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    
-    
-    <navigation-rule>
-        <from-view-id>/variables_entorno/administrar_tipoperfil.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>inicio_administrador</from-outcome>
-            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>administrar_tipoperfil</from-outcome>
-            <to-view-id>/variables_entorno/administrar_tipoperfil.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    
-    
-    <navigation-rule>
-        <from-view-id>/variables_entorno/administrar_tipousuario.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>inicio_administrador</from-outcome>
-            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>administrar_tipousuario</from-outcome>
-            <to-view-id>/variables_entorno/administrar_tipousuario.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    
-    
-    <navigation-rule>
-        <from-view-id>/variables_entorno/administrar_tipoactivo.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>inicio_administrador</from-outcome>
-            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>administrar_tipoactivo</from-outcome>
-            <to-view-id>/variables_entorno/administrar_tipoactivo.xhtml</to-view-id>
+            <from-outcome>configurarusuarioL</from-outcome>
+            <to-view-id>/configurarusuario.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -301,6 +508,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_encargadoslaboratorios</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_entidadesexternas</from-outcome>
@@ -313,6 +538,24 @@
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
             <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_entidadesexternas</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_entidadesexternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -337,6 +580,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_docentes</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_docentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_docentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_estudiantes</from-outcome>
@@ -349,6 +610,24 @@
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
             <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_estudiantes</from-outcome>
+            <to-view-id>/administrar_usuarios/administrar_estudiantes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrar_usuarios/administrar_estudiantes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -373,6 +652,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratorios</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_laboratoriosporareas</from-outcome>
@@ -385,6 +682,24 @@
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
             <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_laboratoriosporareas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_laboratoriosporareas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -409,6 +724,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_salas</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_salas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_salas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_modulos</from-outcome>
@@ -427,6 +760,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_modulos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_modulos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_modulos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_equipos</from-outcome>
@@ -439,6 +790,24 @@
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
             <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_equipos</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_equipos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_equipos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -589,6 +958,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_proveedores</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_proveedores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_insumos</from-outcome>
@@ -607,6 +994,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_insumos</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_insumos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_insumos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrar_areasprofundizacion</from-outcome>
@@ -619,6 +1024,24 @@
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
             <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_areasprofundizacion</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_areasprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -1359,6 +1782,61 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_equipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_componentes</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_componentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_componentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_equipo</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_equipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_componentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_componente</from-outcome>
+            <to-view-id>/estructura_laboratorio/registrar_componente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/registrar_componente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_componentes</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_componentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/administrar_componentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_componente</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_componente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_componente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_componentes</from-outcome>
+            <to-view-id>/estructura_laboratorio/administrar_componentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
     
     
 </faces-config>

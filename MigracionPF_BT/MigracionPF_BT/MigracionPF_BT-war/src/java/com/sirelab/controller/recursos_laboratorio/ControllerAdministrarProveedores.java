@@ -10,6 +10,7 @@ import com.sirelab.entidades.Proveedor;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +34,16 @@ public class ControllerAdministrarProveedores implements Serializable {
     private Map<String, String> filtros;
     //
     private List<Proveedor> listaProveedores;
-    private List<Proveedor> filtrarListaProveedores;
+    private List<Proveedor> listaProveedoresTabla;
+    private int posicionProveedorTabla;
+    private int tamTotalProveedor;
+    private boolean bloquearPagSigProveedor, bloquearPagAntProveedor;
     //
     private String altoTabla;
     //
     private boolean activarExport;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarProveedores() {
     }
@@ -51,8 +57,16 @@ public class ControllerAdministrarProveedores implements Serializable {
         altoTabla = "150";
         inicializarFiltros();
         listaProveedores = null;
-        filtrarListaProveedores = null;
+        listaProveedoresTabla = null;
+        posicionProveedorTabla = 0;
+        tamTotalProveedor = 0;
+        bloquearPagAntProveedor = true;
+        bloquearPagSigProveedor = true;
         activarExport = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     private void inicializarFiltros() {
@@ -87,24 +101,98 @@ public class ControllerAdministrarProveedores implements Serializable {
             if (listaProveedores != null) {
                 if (listaProveedores.size() > 0) {
                     activarExport = false;
+                    listaProveedoresTabla = new ArrayList<Proveedor>();
+                    tamTotalProveedor = listaProveedores.size();
+                    posicionProveedorTabla = 0;
+                    cargarDatosTablaProveedor();
                 } else {
                     activarExport = true;
+                    listaProveedoresTabla = null;
+                    tamTotalProveedor = 0;
+                    posicionProveedorTabla = 0;
+                    bloquearPagAntProveedor = true;
+                    bloquearPagSigProveedor = true;
                 }
+            } else {
+                listaProveedoresTabla = null;
+                tamTotalProveedor = 0;
+                posicionProveedorTabla = 0;
+                bloquearPagAntProveedor = true;
+                bloquearPagSigProveedor = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString());
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    private void cargarDatosTablaProveedor() {
+        if (tamTotalProveedor < 10) {
+            for (int i = 0; i < tamTotalProveedor; i++) {
+                listaProveedoresTabla.add(listaProveedores.get(i));
+            }
+            bloquearPagSigProveedor = true;
+            bloquearPagAntProveedor = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaProveedoresTabla.add(listaProveedores.get(i));
+            }
+            bloquearPagSigProveedor = false;
+            bloquearPagAntProveedor = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteProveedor() {
+        listaProveedoresTabla = new ArrayList<Proveedor>();
+        posicionProveedorTabla = posicionProveedorTabla + 10;
+        int diferencia = tamTotalProveedor - posicionProveedorTabla;
+        if (diferencia > 10) {
+            for (int i = posicionProveedorTabla; i < (posicionProveedorTabla + 10); i++) {
+                listaProveedoresTabla.add(listaProveedores.get(i));
+            }
+            bloquearPagSigProveedor = false;
+            bloquearPagAntProveedor = false;
+        } else {
+            for (int i = posicionProveedorTabla; i < (posicionProveedorTabla + diferencia); i++) {
+                listaProveedoresTabla.add(listaProveedores.get(i));
+            }
+            bloquearPagSigProveedor = true;
+            bloquearPagAntProveedor = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorProveedor() {
+        listaProveedoresTabla = new ArrayList<Proveedor>();
+        posicionProveedorTabla = posicionProveedorTabla - 10;
+        int diferencia = tamTotalProveedor - posicionProveedorTabla;
+        if (diferencia == tamTotalProveedor) {
+            for (int i = posicionProveedorTabla; i < (posicionProveedorTabla + 10); i++) {
+                listaProveedoresTabla.add(listaProveedores.get(i));
+            }
+            bloquearPagSigProveedor = false;
+            bloquearPagAntProveedor = true;
+        } else {
+            for (int i = posicionProveedorTabla; i < (posicionProveedorTabla + 10); i++) {
+                listaProveedoresTabla.add(listaProveedores.get(i));
+            }
+            bloquearPagSigProveedor = false;
+            bloquearPagAntProveedor = false;
+        }
+    }
+
+    public String limpiarProcesoBusqueda() {
         activarExport = true;
         parametroNombre = null;
         parametroNIT = null;
         parametroDireccion = null;
         parametroTelefono = null;
-        inicializarFiltros();
         listaProveedores = null;
-        //RequestContext.getCurrentInstance().update("formT:form:panelMenu");
+        listaProveedoresTabla = null;
+        posicionProveedorTabla = 0;
+        tamTotalProveedor = 0;
+        bloquearPagAntProveedor = true;
+        bloquearPagSigProveedor = true;
+        inicializarFiltros();
+        return paginaAnterior;
     }
 
     /*
@@ -132,7 +220,7 @@ public class ControllerAdministrarProveedores implements Serializable {
      direccionTabla.setFilterStyle("display: none; visibility: hidden;");
      telefonoTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:telefonoTabla");
      telefonoTabla.setFilterStyle("display: none; visibility: hidden;");
-     filtrarListaProveedores = null;
+     listaProveedoresTabla = null;
      }
      */
     /*
@@ -201,14 +289,6 @@ public class ControllerAdministrarProveedores implements Serializable {
         this.listaProveedores = listaProveedores;
     }
 
-    public List<Proveedor> getFiltrarListaProveedores() {
-        return filtrarListaProveedores;
-    }
-
-    public void setFiltrarListaProveedores(List<Proveedor> filtrarListaProveedores) {
-        this.filtrarListaProveedores = filtrarListaProveedores;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
@@ -223,6 +303,30 @@ public class ControllerAdministrarProveedores implements Serializable {
 
     public void setActivarExport(boolean activarExport) {
         this.activarExport = activarExport;
+    }
+
+    public List<Proveedor> getListaProveedoresTabla() {
+        return listaProveedoresTabla;
+    }
+
+    public void setListaProveedoresTabla(List<Proveedor> listaProveedoresTabla) {
+        this.listaProveedoresTabla = listaProveedoresTabla;
+    }
+
+    public boolean isBloquearPagSigProveedor() {
+        return bloquearPagSigProveedor;
+    }
+
+    public void setBloquearPagSigProveedor(boolean bloquearPagSigProveedor) {
+        this.bloquearPagSigProveedor = bloquearPagSigProveedor;
+    }
+
+    public boolean isBloquearPagAntProveedor() {
+        return bloquearPagAntProveedor;
+    }
+
+    public void setBloquearPagAntProveedor(boolean bloquearPagAntProveedor) {
+        this.bloquearPagAntProveedor = bloquearPagAntProveedor;
     }
 
 }

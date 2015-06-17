@@ -70,7 +70,7 @@
                                                     <label for="parametroNombre">
                                                         Nombre Equipo
                                                     </label>
-                                                    <h:inputText maxlength="45" value="#{controllerAdminstrarEquipos.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                    <h:inputText maxlength="45" value="#{controllerAdministrarEquipos.parametroNombre}" class="form-control" id="parametroNombre" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -78,7 +78,7 @@
                                                     <label for="parametroInventario">
                                                         Codigo Equipo
                                                     </label>
-                                                    <h:inputText maxlength="45" value="#{controllerAdminstrarEquipos.parametroInventario}" class="form-control" id="parametroInventario" />
+                                                    <h:inputText maxlength="45" value="#{controllerAdministrarEquipos.parametroInventario}" class="form-control" id="parametroInventario" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -86,11 +86,11 @@
                                                     <label for="parametroEstado">
                                                         Estado Equipo
                                                     </label>
-                                                    <h:selectOneMenu value="#{controllerAdminstrarEquipos.parametroEstadoEquipo}"
+                                                    <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroEstadoEquipo}"
                                                                      class="form-control" 
                                                                      id="parametroEstadoEquipo">
                                                         <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
-                                                        <f:selectItems value="#{controllerAdminstrarEquipos.listaEstadosEquipos}" var="estado"
+                                                        <f:selectItems value="#{controllerAdministrarEquipos.listaEstadosEquipos}" var="estado"
                                                                        itemLabel="#{estado.nombreestadoequipo}" itemValue="#{estado}"/>
                                                         <f:converter converterId="ConverterGenerico" />
                                                     </h:selectOneMenu>
@@ -101,7 +101,7 @@
                                                     <label for="parametroMarca">
                                                         Marca Equipo
                                                     </label>
-                                                    <h:inputText maxlength="45" value="#{controllerAdminstrarEquipos.parametroMarca}" class="form-control" id="parametroMarca" />
+                                                    <h:inputText maxlength="45" value="#{controllerAdministrarEquipos.parametroMarca}" class="form-control" id="parametroMarca" />
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -113,7 +113,7 @@
                                                 <label for="parametroModelo">
                                                     Modelo Equipo
                                                 </label>
-                                                <h:inputText maxlength="45" value="#{controllerAdminstrarEquipos.parametroModelo}" class="form-control" id="parametroModelo" />
+                                                <h:inputText maxlength="45" value="#{controllerAdministrarEquipos.parametroModelo}" class="form-control" id="parametroModelo" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -121,7 +121,7 @@
                                                 <label for="parametroSerie">
                                                     Serie Equipo
                                                 </label>
-                                                <h:inputText maxlength="45" value="#{controllerAdminstrarEquipos.parametroSerie}" class="form-control" id="parametroSerie" />
+                                                <h:inputText maxlength="45" value="#{controllerAdministrarEquipos.parametroSerie}" class="form-control" id="parametroSerie" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -129,11 +129,11 @@
                                                 <label for="parametroProveedor">
                                                     Proveedor
                                                 </label>
-                                                <h:selectOneMenu value="#{controllerAdminstrarEquipos.parametroProveedor}"
+                                                <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroProveedor}"
                                                                  class="form-control" 
                                                                  id="parametroProveedor">
                                                     <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
-                                                    <f:selectItems value="#{controllerAdminstrarEquipos.listaProveedores}" var="proveedor"
+                                                    <f:selectItems value="#{controllerAdministrarEquipos.listaProveedores}" var="proveedor"
                                                                    itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
                                                     <f:converter converterId="ConverterGenerico" />
                                                 </h:selectOneMenu>
@@ -144,11 +144,11 @@
                                                 <label for="parametroTipoActivo">
                                                     Tipo Activo
                                                 </label>
-                                                <h:selectOneMenu value="#{controllerAdminstrarEquipos.parametroTipoActivo}"
+                                                <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroTipoActivo}"
                                                                  class="form-control" 
                                                                  id="parametroTipoActivo">
                                                     <f:selectItem itemLabel="Seleccione Tipo" itemValue="null" />
-                                                    <f:selectItems value="#{controllerAdminstrarEquipos.listaTiposActivos}" var="tipo"
+                                                    <f:selectItems value="#{controllerAdministrarEquipos.listaTiposActivos}" var="tipo"
                                                                    itemLabel="#{tipo.nombretipoactivo}" itemValue="#{tipo}"/>
                                                     <f:converter converterId="ConverterGenerico" />
                                                 </h:selectOneMenu>
@@ -160,39 +160,39 @@
                                             <label for="parametroLaboratorioPorArea">
                                                 Laboratorios Por Area Profundización
                                             </label>
-                                            <h:selectOneMenu value="#{controllerAdminstrarEquipos.parametroLaboratorioPorArea}"
+                                            <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroLaboratorioPorArea}"
                                                              class="form-control" 
                                                              id="parametroLaboratorioPorArea">
                                                 <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                                <f:selectItems value="#{controllerAdminstrarEquipos.listaLaboratoriosPorAreas}" var="area"
+                                                <f:selectItems value="#{controllerAdministrarEquipos.listaLaboratoriosPorAreas}" var="area"
                                                                itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
                                                 <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerAdminstrarEquipos.actualizarLaboratoriosAreasProfundizacion()}" execute="parametroLaboratorioPorArea" render="@this parametroSalaLaboratorio parametroModuloLaboratorio"/>
+                                                <f:ajax event="change" listener="#{controllerAdministrarEquipos.actualizarLaboratoriosAreasProfundizacion()}" execute="parametroLaboratorioPorArea" render="@this parametroSalaLaboratorio parametroModuloLaboratorio"/>
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="parametroSalaLaboratorio">
                                                 Sala de Laboratorio
                                             </label>
-                                            <h:selectOneMenu value="#{controllerAdminstrarEquipos.parametroSalaLaboratorio}"
-                                                             class="form-control" disabled="#{controllerAdminstrarEquipos.activarSalaLaboratorio}"
+                                            <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroSalaLaboratorio}"
+                                                             class="form-control" disabled="#{controllerAdministrarEquipos.activarSalaLaboratorio}"
                                                              id="parametroSalaLaboratorio">
                                                 <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
-                                                <f:selectItems value="#{controllerAdminstrarEquipos.listaSalasLaboratorios}" var="sala"
+                                                <f:selectItems value="#{controllerAdministrarEquipos.listaSalasLaboratorios}" var="sala"
                                                                itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
                                                 <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerAdminstrarEquipos.actualizarSalasLaboratorio()}" execute="parametroSalaLaboratorio" render="@this parametroModuloLaboratorio"/>
+                                                <f:ajax event="change" listener="#{controllerAdministrarEquipos.actualizarSalasLaboratorio()}" execute="parametroSalaLaboratorio" render="@this parametroModuloLaboratorio"/>
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="parametroModuloLaboratorio">
                                                 Modulo/Banco de Trabajo
                                             </label>
-                                            <h:selectOneMenu value="#{controllerAdminstrarEquipos.parametroModuloLaboratorio}"
-                                                             class="form-control" disabled="#{controllerAdminstrarEquipos.activarModuloLaboratorio}"
+                                            <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroModuloLaboratorio}"
+                                                             class="form-control" disabled="#{controllerAdministrarEquipos.activarModuloLaboratorio}"
                                                              id="parametroModuloLaboratorio">
                                                 <f:selectItem itemLabel="Seleccione Modulo" itemValue="null" />
-                                                <f:selectItems value="#{controllerAdminstrarEquipos.listaModulosLaboratorios}" var="equipo"
+                                                <f:selectItems value="#{controllerAdministrarEquipos.listaModulosLaboratorios}" var="equipo"
                                                                itemLabel="#{equipo.detallemodulo}" itemValue="#{equipo}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                             </h:selectOneMenu>
@@ -204,12 +204,12 @@
                                     <div class="col-md-10">
                                     </div> 
                                     <div class="col-md-1">
-                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdminstrarEquipos.buscarEquiposElementosPorParametros()}">
+                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarEquipos.buscarEquiposElementosPorParametros()}">
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>
                                     <div class="col-md-1">
-                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdminstrarEquipos.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarEquipos.limpiarProcesoBusqueda()}" class="btn btn-default right" >
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>
@@ -222,7 +222,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item"  
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdminstrarEquipos.listaEquiposElementos}">
+                                                     value="#{controllerAdministrarEquipos.listaEquiposElementosTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -261,10 +261,26 @@
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="Nombres"/>
+                                                    <h:outputText value="Detalles"/>
                                                 </f:facet>
-                                                <h:commandLink value="Ver" action="#{controllerAdminstrarEquipos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesEquipo.recibirIDEquiposElementoDetalles(item.idequipoelemento)}"/>
+                                                <h:commandLink value="Ver" action="#{controllerAdministrarEquipos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesEquipo.recibirIDEquiposElementoDetalles(item.idequipoelemento)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarEquipos.cargarPaginaAnteriorEquipo()}" disabled="#{controllerAdministrarEquipos.bloquearPagAntEquipo}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarEquipos.cargarPaginaSiguienteEquipo()}" disabled="#{controllerAdministrarEquipos.bloquearPagSigEquipo}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>
@@ -275,11 +291,11 @@
                 <br></br>
                 <div class="row">
                     <div class="col-md-1">
-                        <h:commandButton value="Nuevo Equipo" action="registrar_equipo" actionListener="#{controllerAdminstrarEquipos.limpiarProcesoBusqueda()}" class="btn btn-success"/>
+                        <h:commandButton value="Nuevo Equipo" action="registrar_equipo" actionListener="#{controllerAdministrarEquipos.limpiarProcesoBusqueda()}" class="btn btn-success"/>
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdminstrarEquipos.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                        <h:commandButton value="Atras" action="#{controllerAdministrarEquipos.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                     </div>
                 </div>
             </div>

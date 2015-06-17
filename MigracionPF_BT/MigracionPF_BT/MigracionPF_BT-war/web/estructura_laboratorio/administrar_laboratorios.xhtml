@@ -24,7 +24,7 @@
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
         <h:form id="formularioGeneral">
-            
+
             <div class="container">
                 <div class="row">
                     <!-- Navigation -->
@@ -134,7 +134,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item"  
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarLaboratorios.listaLaboratorios}">
+                                                     value="#{controllerAdministrarLaboratorios.listaLaboratoriosTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -165,6 +165,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_laboratorio" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(item.idlaboratorio)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarLaboratorios.cargarPaginaAnteriorLaboratorio()}" disabled="#{controllerAdministrarLaboratorios.bloquearPagAntLaboratorio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarLaboratorios.cargarPaginaSiguienteLaboratorio()}" disabled="#{controllerAdministrarLaboratorios.bloquearPagSigLaboratorio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>
@@ -179,7 +195,7 @@
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                        <h:commandButton value="Atras" action="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                     </div>
                 </div>
             </div>

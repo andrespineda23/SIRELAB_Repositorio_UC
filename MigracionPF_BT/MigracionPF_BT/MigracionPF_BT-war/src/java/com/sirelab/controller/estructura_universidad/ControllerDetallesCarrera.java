@@ -101,7 +101,7 @@ public class ControllerDetallesCarrera implements Serializable {
 
     public void validarCodigoCarrera() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
-            if (!Utilidades.validarCaracterString(editarCodigo)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             } else {

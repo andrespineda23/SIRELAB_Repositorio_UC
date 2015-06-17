@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.HorarioAtencion;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -19,4 +20,6 @@ public interface GestionarVariableHorariosAtencionBOInterface {
     public void crearHorarioAtencion(HorarioAtencion horario);
 
     public void editarHorarioAtencion(HorarioAtencion horario);
+
+    public HorarioAtencion consultarHorarioAtencionPorID(BigInteger idRegistro);
 }

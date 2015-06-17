@@ -131,7 +131,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item"  
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarLaboratoriosPorAreas.listaLaboratoriosPorAreas}">
+                                                     value="#{controllerAdministrarLaboratoriosPorAreas.listaLaboratoriosPorAreasTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Departamento"/>
@@ -156,6 +156,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_laboratorioporarea" actionListener="#{controllerDetallesLaboratorioPorArea.recibirIDLaboratoriosPorAreasDetalles(item.idlaboratoriosporareas)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarLaboratoriosPorAreas.cargarPaginaAnteriorLaboratorioPorArea()}" disabled="#{controllerAdministrarLaboratoriosPorAreas.bloquearPagAntLaboratorioPorArea}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarLaboratoriosPorAreas.cargarPaginaSiguienteLaboratorioPorArea()}" disabled="#{controllerAdministrarLaboratoriosPorAreas.bloquearPagSigLaboratorioPorArea}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>
@@ -170,7 +186,7 @@
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarLaboratoriosPorAreas.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                        <h:commandButton value="Atras" action="#{controllerAdministrarLaboratoriosPorAreas.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                     </div>
                 </div>
             </div>

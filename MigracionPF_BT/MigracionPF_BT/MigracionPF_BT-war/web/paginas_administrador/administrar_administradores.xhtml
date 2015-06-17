@@ -138,7 +138,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarAdministradores.listaAdministradores}">
+                                                     value="#{controllerAdministrarAdministradores.listaAdministradoresTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -175,6 +175,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_administrador" actionListener="#{controllerDetallesAdministrador.recibirIDAdministradoresDetalles(item.idpersona)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarAdministradores.cargarPaginaAnteriorAdministrador()}" disabled="#{controllerAdministrarAdministradores.bloquearPagAntAdministrador}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarAdministradores.cargarPaginaSiguienteAdministrador()}" disabled="#{controllerAdministrarAdministradores.bloquearPagSigAdministrador}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>

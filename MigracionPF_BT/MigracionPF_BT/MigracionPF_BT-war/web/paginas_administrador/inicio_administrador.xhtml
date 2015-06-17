@@ -101,7 +101,7 @@
                                                         Permite administrar la informacion de los estudiantes
                                                     </p>
                                                     <p> 
-                                                        <h:commandButton class="btn btn-primary" action="administrar_estudiantes" value="Aceptar"/>
+                                                        <h:commandButton class="btn btn-primary" actionListener="#{controllerAdministrarEstudiantes.recibirPaginaAnterior('inicio_administrador')}" action="administrar_estudiantes" value="Aceptar"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -117,7 +117,7 @@
                                                         Permite administrar la informacion de los docente
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" action="administrar_docentes" class="btn btn-primary"/>
+                                                        <h:commandButton value="Aceptar" actionListener="#{controllerAdministrarDocentes.recibirPaginaAnterior('inicio_administrador')}" action="administrar_docentes" class="btn btn-primary"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -133,7 +133,7 @@
                                                         Permite administrar la informacion de los convenios
                                                     </p>
                                                     <p>
-                                                        <h:commandButton class="btn btn-primary" value="Aceptar" action="administrar_entidadesexternas"/>
+                                                        <h:commandButton class="btn btn-primary" actionListener="#{controllerAdministrarEntidadesExternas.recibirPaginaAnterior('inicio_administrador')}" value="Aceptar" action="administrar_entidadesexternas"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -151,7 +151,7 @@
                                                         Permite administrar la informacion de los laboratoristas
                                                     </p>
                                                     <p>
-                                                        <h:commandButton class="btn btn-primary" action="administrar_encargadoslaboratorios" value="Aceptar"/>
+                                                        <h:commandButton class="btn btn-primary" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('inicio_administrador')}" action="administrar_encargadoslaboratorios" value="Aceptar"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -187,7 +187,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" action="administrar_laboratorios" class="btn btn-primary"/>
+                                                        <h:commandButton value="Aceptar" actionListener="#{controllerAdministrarLaboratorios.recibirPaginaAnterior('inicio_administrador')}" action="administrar_laboratorios" class="btn btn-primary"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -203,7 +203,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="administrar_salas"/>
+                                                        <h:commandButton value="Aceptar" actionListener="#{controllerAdministrarSalas.recibirPaginaAnterior('inicio_administrador')}" class="btn btn-primary" action="administrar_salas"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -221,7 +221,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton class="btn btn-primary" value="Aceptar" action="administrar_modulos"/>
+                                                        <h:commandButton class="btn btn-primary" actionListener="#{controllerAdministrarModulos.recibirPaginaAnterior('inicio_administrador')}" value="Aceptar" action="administrar_modulos"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -237,7 +237,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="administrar_equipos"/>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarEquipos.recibirPaginaAnterior('inicio_administrador')}" action="administrar_equipos"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -253,7 +253,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="administrar_laboratoriosporareas"/>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarLaboratoriosPorAreas.recibirPaginaAnterior('inicio_administrador')}" action="administrar_laboratoriosporareas"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -391,7 +391,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="administrar_proveedores"/>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarProveedores.recibirPaginaAnterior('inicio_administrador')}" action="administrar_proveedores"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -407,7 +407,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="administrar_insumos"/>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarInsumos.recibirPaginaAnterior('inicio_administrador')}" action="administrar_insumos"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -423,7 +423,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="administrar_areasprofundizacion"/>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarAreasProfundizacion.recibirPaginaAnterior('inicio_administrador')}" action="administrar_areasprofundizacion"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -477,7 +477,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="variables_usuario"/> 
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerVariablesUsuario.iniciarInformacionTablas()}" action="variables_usuario"/> 
                                                     </p>
                                                 </div>
                                             </div>
@@ -493,7 +493,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="variables_inventario"/>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerVariablesInventario.iniciarInformacionTablas()}" action="variables_inventario"/>
                                                     </p>
                                                 </div>
                                             </div>
@@ -509,7 +509,7 @@
                                                         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
                                                     </p>
                                                     <p>
-                                                        <h:commandButton value="Aceptar" class="btn btn-primary" action="administrar_tipousuario"/>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerVariablesReserva.iniciarInformacionTablas()}" action="variables_reserva"/>
                                                     </p>
                                                 </div>
                                             </div>

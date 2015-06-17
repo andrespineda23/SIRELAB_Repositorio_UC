@@ -126,7 +126,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarDepartamentos.listaDepartamentos}">
+                                                     value="#{controllerAdministrarDepartamentos.listaDepartamentosTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
@@ -145,6 +145,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_departamento" actionListener="#{controllerDetallesDepartamento.recibirIDDepartamentosDetalles(item.iddepartamento)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarDepartamentos.cargarPaginaAnteriorDepartamento()}" disabled="#{controllerAdministrarDepartamentos.bloquearPagAntDepartamento}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarDepartamentos.cargarPaginaSiguienteDepartamento()}" disabled="#{controllerAdministrarDepartamentos.bloquearPagSigDepartamento}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>

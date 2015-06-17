@@ -15,6 +15,7 @@ import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,10 +56,15 @@ public class ControllerAdministrarSalas implements Serializable {
     private boolean activarExport;
     //
     private List<SalaLaboratorio> listaSalasLaboratorios;
-    private List<SalaLaboratorio> filtrarListaSalasLaboratorios;
+    private List<SalaLaboratorio> listaSalasLaboratoriosTabla;
+    private int posicionSalaTabla;
+    private int tamTotalSala;
+    private boolean bloquearPagSigSala, bloquearPagAntSala;
     //
     private String altoTabla;
     //
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarSalas() {
     }
@@ -83,8 +89,17 @@ public class ControllerAdministrarSalas implements Serializable {
         inicializarFiltros();
         listaLaboratorios = null;
         listaEdificios = null;
-        filtrarListaSalasLaboratorios = null;
         parametroEstado = 1;
+        listaSalasLaboratoriosTabla = null;
+        listaSalasLaboratorios = null;
+        posicionSalaTabla = 0;
+        tamTotalSala = 0;
+        bloquearPagAntSala = true;
+        bloquearPagSigSala = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     private void inicializarFiltros() {
@@ -153,17 +168,85 @@ public class ControllerAdministrarSalas implements Serializable {
             if (listaSalasLaboratorios != null) {
                 if (listaSalasLaboratorios.size() > 0) {
                     activarExport = false;
+                    listaSalasLaboratoriosTabla = new ArrayList<SalaLaboratorio>();
+                    tamTotalSala = listaSalasLaboratorios.size();
+                    posicionSalaTabla = 0;
+                    cargarDatosTablaSala();
                 } else {
                     activarExport = true;
+                    listaSalasLaboratoriosTabla = null;
+                    tamTotalSala = 0;
+                    posicionSalaTabla = 0;
+                    bloquearPagAntSala = true;
+                    bloquearPagSigSala = true;
                 }
+            } else {
+                listaSalasLaboratoriosTabla = null;
+                tamTotalSala = 0;
+                posicionSalaTabla = 0;
+                bloquearPagAntSala = true;
+                bloquearPagSigSala = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros : " + e.toString());
         }
     }
 
-    public void limpiarProcesoBusqueda() {
-        listaSalasLaboratorios = null;
+    private void cargarDatosTablaSala() {
+        if (tamTotalSala < 10) {
+            for (int i = 0; i < tamTotalSala; i++) {
+                listaSalasLaboratoriosTabla.add(listaSalasLaboratorios.get(i));
+            }
+            bloquearPagSigSala = true;
+            bloquearPagAntSala = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaSalasLaboratoriosTabla.add(listaSalasLaboratorios.get(i));
+            }
+            bloquearPagSigSala = false;
+            bloquearPagAntSala = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteSala() {
+        listaSalasLaboratoriosTabla = new ArrayList<SalaLaboratorio>();
+        posicionSalaTabla = posicionSalaTabla + 10;
+        int diferencia = tamTotalSala - posicionSalaTabla;
+        if (diferencia > 10) {
+            for (int i = posicionSalaTabla; i < (posicionSalaTabla + 10); i++) {
+                listaSalasLaboratoriosTabla.add(listaSalasLaboratorios.get(i));
+            }
+            bloquearPagSigSala = false;
+            bloquearPagAntSala = false;
+        } else {
+            for (int i = posicionSalaTabla; i < (posicionSalaTabla + diferencia); i++) {
+                listaSalasLaboratoriosTabla.add(listaSalasLaboratorios.get(i));
+            }
+            bloquearPagSigSala = true;
+            bloquearPagAntSala = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorSala() {
+        listaSalasLaboratoriosTabla = new ArrayList<SalaLaboratorio>();
+        posicionSalaTabla = posicionSalaTabla - 10;
+        int diferencia = tamTotalSala - posicionSalaTabla;
+        if (diferencia == tamTotalSala) {
+            for (int i = posicionSalaTabla; i < (posicionSalaTabla + 10); i++) {
+                listaSalasLaboratoriosTabla.add(listaSalasLaboratorios.get(i));
+            }
+            bloquearPagSigSala = false;
+            bloquearPagAntSala = true;
+        } else {
+            for (int i = posicionSalaTabla; i < (posicionSalaTabla + 10); i++) {
+                listaSalasLaboratoriosTabla.add(listaSalasLaboratorios.get(i));
+            }
+            bloquearPagSigSala = false;
+            bloquearPagAntSala = false;
+        }
+    }
+
+    public String limpiarProcesoBusqueda() {
         activarEdificio = true;
         activarLaboratorio = true;
         parametroEstado = 1;
@@ -176,9 +259,16 @@ public class ControllerAdministrarSalas implements Serializable {
         parametroLaboratorio = new Laboratorio();
         parametroEdificio = new Edificio();
         parametroSede = new Sede();
-        inicializarFiltros();
         listaEdificios = null;
         listaLaboratorios = null;
+        listaSalasLaboratorios = null;
+        listaSalasLaboratoriosTabla = null;
+        posicionSalaTabla = 0;
+        tamTotalSala = 0;
+        bloquearPagAntSala = true;
+        bloquearPagSigSala = true;
+        inicializarFiltros();
+        return paginaAnterior;
     }
 
     public void actualizarDepartamentos() {
@@ -381,20 +471,36 @@ public class ControllerAdministrarSalas implements Serializable {
         this.listaSalasLaboratorios = listaSalasLaboratorios;
     }
 
-    public List<SalaLaboratorio> getFiltrarListaSalasLaboratorios() {
-        return filtrarListaSalasLaboratorios;
-    }
-
-    public void setFiltrarListaSalasLaboratorios(List<SalaLaboratorio> filtrarListaSalasLaboratorios) {
-        this.filtrarListaSalasLaboratorios = filtrarListaSalasLaboratorios;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<SalaLaboratorio> getListaSalasLaboratoriosTabla() {
+        return listaSalasLaboratoriosTabla;
+    }
+
+    public void setListaSalasLaboratoriosTabla(List<SalaLaboratorio> listaSalasLaboratoriosTabla) {
+        this.listaSalasLaboratoriosTabla = listaSalasLaboratoriosTabla;
+    }
+
+    public boolean isBloquearPagSigSala() {
+        return bloquearPagSigSala;
+    }
+
+    public void setBloquearPagSigSala(boolean bloquearPagSigSala) {
+        this.bloquearPagSigSala = bloquearPagSigSala;
+    }
+
+    public boolean isBloquearPagAntSala() {
+        return bloquearPagAntSala;
+    }
+
+    public void setBloquearPagAntSala(boolean bloquearPagAntSala) {
+        this.bloquearPagAntSala = bloquearPagAntSala;
     }
 
 }

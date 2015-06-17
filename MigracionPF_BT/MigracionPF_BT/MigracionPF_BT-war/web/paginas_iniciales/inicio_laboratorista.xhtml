@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form>
+
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                                <p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <h:commandLink id="confifButton" value="Configurar Cuenta" action="configurarusuario" actionListener="#{controllerConfigurarUsuario.recibirUsuarioLogin()}"/>
+                                    </li>
+                                    <li>
+                                        <h:commandLink id="sessionButton" value="Cerrar Sesion" action="#{controllerPaginasIniciales.cerrarSession()}"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content" id="tabs-868824">
+                            <ul class="nav nav-pills">
+                                <li class="active">
+                                    <a href="#panelUsuarios" data-toggle="tab">Usuarios</a>
+                                </li>
+                                <li>
+                                    <a href="#panelLaboratorio" data-toggle="tab">Estructura Laboratorio</a>
+                                </li>
+                                <li>
+                                    <a href="#panelRecursos" data-toggle="tab">Recursos Laboratorio</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="panelUsuarios">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/people" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        ESTUDIANTES
+                                                    </h3>
+                                                    <p>
+                                                        Permite administrar la informacion de los estudiantes
+                                                    </p>
+                                                    <p> 
+                                                        <h:commandButton class="btn btn-primary" action="administrar_estudiantes" actionListener="#{controllerAdministrarEstudiantes.recibirPaginaAnterior('inicio_laboratorista')}" value="Aceptar"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x200" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/city" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        DOCENTES
+                                                    </h3>
+                                                    <p>
+                                                        Permite administrar la informacion de los docente
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" action="administrar_docentes" actionListener="#{controllerAdministrarDocentes.recibirPaginaAnterior('inicio_laboratorista')}" class="btn btn-primary"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/sports" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        CONVENIOS
+                                                    </h3>
+                                                    <p>
+                                                        Permite administrar la informacion de los convenios
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton class="btn btn-primary" value="Aceptar" actionListener="#{controllerAdministrarEntidadesExternas.recibirPaginaAnterior('inicio_laboratorista')}" action="administrar_entidadesexternas"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/sports" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        LABORATORISTAS
+                                                    </h3>
+                                                    <p>
+                                                        Permite administrar la informacion de los laboratoristas
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton class="btn btn-primary" action="administrar_encargadoslaboratorios" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('inicio_laboratorista')}" value="Aceptar"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="panelLaboratorio">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/people" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Laboratorios
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" actionListener="#{controllerAdministrarLaboratorios.recibirPaginaAnterior('inicio_laboratorista')}" action="administrar_laboratorios" class="btn btn-primary"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/city" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Salas de Laboratorio
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" actionListener="#{controllerAdministrarSalas.recibirPaginaAnterior('inicio_laboratorista')}" class="btn btn-primary" action="administrar_salas"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/sports" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Bancos/Modulos de Trabajo
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton class="btn btn-primary" value="Aceptar" actionListener="#{controllerAdministrarModulos.recibirPaginaAnterior('inicio_laboratorista')}" action="administrar_modulos"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/sports" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Equipos de Trabajo
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" actionListener="#{controllerAdministrarEquipos.recibirPaginaAnterior('inicio_laboratorista')}" class="btn btn-primary" action="administrar_equipos"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/sports" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Laboratorios Por Areas
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarLaboratoriosPorAreas.recibirPaginaAnterior('inicio_laboratorista')}" action="administrar_laboratoriosporareas"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="panelRecursos">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/people" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Proveedores
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarProveedores.recibirPaginaAnterior('inicio_laboratorista')}" action="administrar_proveedores"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/city" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Insumos
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarInsumos.recibirPaginaAnterior('inicio_laboratorista')}" action="administrar_insumos"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/sports" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Areas de Profundizacion
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <h:commandButton value="Aceptar" class="btn btn-primary" actionListener="#{controllerAdministrarAreasProfundizacion.recibirPaginaAnterior('inicio_laboratorista')}" action="administrar_areasprofundizacion"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/people" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Guias de Laboratorios
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <a class="btn btn-primary" href="#">Aceptar</a> 
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="thumbnail">
+                                                <img alt="300x400" class="img-responsive img-rounded" src="http://lorempixel.com/600/200/city" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Manuales de Trabajo
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                        <a class="btn btn-primary" href="#">Aceptar</a> 
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

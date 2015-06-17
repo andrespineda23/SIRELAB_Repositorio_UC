@@ -156,6 +156,11 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
         mensajeFormulario = "";
     }
 
+    public String cerrarPagina() {
+        cancelarTipoPerfil();
+        return "variables_usuario";
+    }
+
     private void restaurarFormulario() {
         inputNombre = null;
         inputCodigo = null;

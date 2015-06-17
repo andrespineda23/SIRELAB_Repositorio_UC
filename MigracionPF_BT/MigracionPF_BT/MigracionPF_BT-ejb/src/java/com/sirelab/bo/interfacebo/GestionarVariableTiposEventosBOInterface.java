@@ -5,10 +5,23 @@
  */
 package com.sirelab.bo.interfacebo;
 
+import com.sirelab.entidades.TipoEvento;
+import java.math.BigInteger;
+import java.util.List;
+
 /**
  *
  * @author AndresPineda
  */
 public interface GestionarVariableTiposEventosBOInterface {
-        
+
+    public void crearTipoEvento(TipoEvento tipoEvento);
+
+    public void editarTipoEvento(TipoEvento tipoEvento);
+
+    public void borrarTipoEvento(TipoEvento tipoEvento);
+
+    public TipoEvento consultarTipoEventoPorID(BigInteger idRegistro);
+
+    public List<TipoEvento> consultarTiposEventosRegistrados();
 }

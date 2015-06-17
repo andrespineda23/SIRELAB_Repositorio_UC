@@ -9,6 +9,7 @@ import com.sirelab.bo.interfacebo.AdministrarAdministradoresBOInterface;
 import com.sirelab.entidades.Persona;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,10 @@ public class ControllerAdministrarAdministradores implements Serializable {
     private boolean activarExport;
     //
     private List<Persona> listaAdministradores;
-    private List<Persona> filtrarListaAdministradores;
+    private List<Persona> listaAdministradoresTabla;
+    private int posicionAdministradorTabla;
+    private int tamTotalAdministrador;
+    private boolean bloquearPagSigAdministrador, bloquearPagAntAdministrador;
 
     public ControllerAdministrarAdministradores() {
     }
@@ -55,7 +59,12 @@ public class ControllerAdministrarAdministradores implements Serializable {
         parametroCorreo = null;
         inicializarFiltros();
         listaAdministradores = null;
-        filtrarListaAdministradores = null;
+        listaAdministradoresTabla = null;
+        posicionAdministradorTabla = 0;
+        tamTotalAdministrador = 0;
+        bloquearPagAntAdministrador = true;
+        bloquearPagSigAdministrador = true;
+
     }
 
     /**
@@ -109,19 +118,81 @@ public class ControllerAdministrarAdministradores implements Serializable {
             if (listaAdministradores != null) {
                 if (listaAdministradores.size() > 0) {
                     activarExport = false;
+                    listaAdministradoresTabla = new ArrayList<Persona>();
+                    tamTotalAdministrador = listaAdministradores.size();
+                    posicionAdministradorTabla = 0;
+                    cargarDatosTablaAdministrador();
                 } else {
                     activarExport = true;
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado.", "Consulta de Administradores");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
+                    listaAdministradoresTabla = null;
+                    tamTotalAdministrador = 0;
+                    posicionAdministradorTabla = 0;
+                    bloquearPagAntAdministrador = true;
+                    bloquearPagSigAdministrador = true;
                 }
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado.", "Consulta de Administradores");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
+                listaAdministradoresTabla = null;
+                tamTotalAdministrador = 0;
+                posicionAdministradorTabla = 0;
+                bloquearPagAntAdministrador = true;
+                bloquearPagSigAdministrador = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaAdministrador() {
+        if (tamTotalAdministrador < 10) {
+            for (int i = 0; i < tamTotalAdministrador; i++) {
+                listaAdministradoresTabla.add(listaAdministradores.get(i));
+            }
+            bloquearPagSigAdministrador = true;
+            bloquearPagAntAdministrador = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaAdministradoresTabla.add(listaAdministradores.get(i));
+            }
+            bloquearPagSigAdministrador = false;
+            bloquearPagAntAdministrador = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteAdministrador() {
+        listaAdministradoresTabla = new ArrayList<Persona>();
+        posicionAdministradorTabla = posicionAdministradorTabla + 10;
+        int diferencia = tamTotalAdministrador - posicionAdministradorTabla;
+        if (diferencia > 10) {
+            for (int i = posicionAdministradorTabla; i < (posicionAdministradorTabla + 10); i++) {
+                listaAdministradoresTabla.add(listaAdministradores.get(i));
+            }
+            bloquearPagSigAdministrador = false;
+            bloquearPagAntAdministrador = false;
+        } else {
+            for (int i = posicionAdministradorTabla; i < (posicionAdministradorTabla + diferencia); i++) {
+                listaAdministradoresTabla.add(listaAdministradores.get(i));
+            }
+            bloquearPagSigAdministrador = true;
+            bloquearPagAntAdministrador = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorAdministrador() {
+        listaAdministradoresTabla = new ArrayList<Persona>();
+        posicionAdministradorTabla = posicionAdministradorTabla - 10;
+        int diferencia = tamTotalAdministrador - posicionAdministradorTabla;
+        if (diferencia == tamTotalAdministrador) {
+            for (int i = posicionAdministradorTabla; i < (posicionAdministradorTabla + 10); i++) {
+                listaAdministradoresTabla.add(listaAdministradores.get(i));
+            }
+            bloquearPagSigAdministrador = false;
+            bloquearPagAntAdministrador = true;
+        } else {
+            for (int i = posicionAdministradorTabla; i < (posicionAdministradorTabla + 10); i++) {
+                listaAdministradoresTabla.add(listaAdministradores.get(i));
+            }
+            bloquearPagSigAdministrador = false;
+            bloquearPagAntAdministrador = false;
         }
     }
 
@@ -136,8 +207,13 @@ public class ControllerAdministrarAdministradores implements Serializable {
         parametroDocumento = null;
         parametroCorreo = null;
         parametroEstado = 1;
-        inicializarFiltros();
         listaAdministradores = null;
+        listaAdministradoresTabla = null;
+        posicionAdministradorTabla = 0;
+        tamTotalAdministrador = 0;
+        bloquearPagAntAdministrador = true;
+        bloquearPagSigAdministrador = true;
+        inicializarFiltros();
     }
 
     /*
@@ -231,12 +307,28 @@ public class ControllerAdministrarAdministradores implements Serializable {
         this.listaAdministradores = listaAdministradores;
     }
 
-    public List<Persona> getFiltrarListaAdministradores() {
-        return filtrarListaAdministradores;
+    public List<Persona> getListaAdministradoresTabla() {
+        return listaAdministradoresTabla;
     }
 
-    public void setFiltrarListaAdministradores(List<Persona> filtrarListaAdministradores) {
-        this.filtrarListaAdministradores = filtrarListaAdministradores;
+    public void setListaAdministradoresTabla(List<Persona> listaAdministradoresTabla) {
+        this.listaAdministradoresTabla = listaAdministradoresTabla;
+    }
+
+    public boolean isBloquearPagSigAdministrador() {
+        return bloquearPagSigAdministrador;
+    }
+
+    public void setBloquearPagSigAdministrador(boolean bloquearPagSigAdministrador) {
+        this.bloquearPagSigAdministrador = bloquearPagSigAdministrador;
+    }
+
+    public boolean isBloquearPagAntAdministrador() {
+        return bloquearPagAntAdministrador;
+    }
+
+    public void setBloquearPagAntAdministrador(boolean bloquearPagAntAdministrador) {
+        this.bloquearPagAntAdministrador = bloquearPagAntAdministrador;
     }
 
 }

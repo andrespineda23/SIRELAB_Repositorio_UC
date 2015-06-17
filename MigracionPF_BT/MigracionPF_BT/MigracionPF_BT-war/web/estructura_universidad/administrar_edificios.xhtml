@@ -133,7 +133,7 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarEdificios.listaEdificios}">
+                                                     value="#{controllerAdministrarEdificios.listaEdificiosTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Descripción"/>
@@ -158,6 +158,22 @@
                                                 </f:facet>
                                                 <h:commandLink value="Ver" action="detalles_edificio" actionListener="#{controllerDetallesEdificio.recibirIDEdificiosDetalles(item.idedificio)}"/>
                                             </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarEdificios.cargarPaginaAnteriorEdificio()}" disabled="#{controllerAdministrarEdificios.bloquearPagAntEdificio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarEdificios.cargarPaginaSiguienteEdificio()}" disabled="#{controllerAdministrarEdificios.bloquearPagSigEdificio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div><!--/.row-->
                                 </fieldset>

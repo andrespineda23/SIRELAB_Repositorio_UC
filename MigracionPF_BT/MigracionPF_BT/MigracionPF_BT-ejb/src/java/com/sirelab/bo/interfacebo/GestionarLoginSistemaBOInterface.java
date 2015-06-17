@@ -38,6 +38,6 @@ public interface GestionarLoginSistemaBOInterface {
 
     public Persona obtenerPersonaLogin(String usuario, String password);
 
-    public Object obtenerUsuarioFinalLogin(String nombreTipoUsuario, BigInteger idPersona);
+    public Object obtenerUsuarioFinalLogin(BigInteger idTipoUsuario, BigInteger idPersona);
 
 }

@@ -13,6 +13,7 @@ import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,10 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
     private boolean activarExport;
     //
     private List<PlanEstudios> listaPlanesEstudios;
-    private List<PlanEstudios> filtrarListaPlanesEstudios;
+    private List<PlanEstudios> listaPlanesEstudiosTabla;
+    private int posicionPlanEstudioTabla;
+    private int tamTotalPlanEstudio;
+    private boolean bloquearPagSigPlanEstudio, bloquearPagAntPlanEstudio;
     //
     private String altoTabla;
 
@@ -70,10 +74,14 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         parametroCarrera = new Carrera();
         altoTabla = "150";
         inicializarFiltros();
-        listaPlanesEstudios = null;
         listaDepartamentos = null;
         listaCarreras = null;
-        filtrarListaPlanesEstudios = null;
+        listaPlanesEstudiosTabla = null;
+        listaPlanesEstudios = null;
+        posicionPlanEstudioTabla = 0;
+        tamTotalPlanEstudio = 0;
+        bloquearPagAntPlanEstudio = true;
+        bloquearPagSigPlanEstudio = true;
     }
 
     private void inicializarFiltros() {
@@ -118,12 +126,81 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
             if (listaPlanesEstudios != null) {
                 if (listaPlanesEstudios.size() > 0) {
                     activarExport = false;
+                    listaPlanesEstudiosTabla = new ArrayList<PlanEstudios>();
+                    tamTotalPlanEstudio = listaPlanesEstudios.size();
+                    posicionPlanEstudioTabla = 0;
+                    cargarDatosTablaPlanEstudio();
                 } else {
                     activarExport = true;
+                    listaPlanesEstudiosTabla = null;
+                    tamTotalPlanEstudio = 0;
+                    posicionPlanEstudioTabla = 0;
+                    bloquearPagAntPlanEstudio = true;
+                    bloquearPagSigPlanEstudio = true;
                 }
+            } else {
+                listaPlanesEstudiosTabla = null;
+                tamTotalPlanEstudio = 0;
+                posicionPlanEstudioTabla = 0;
+                bloquearPagAntPlanEstudio = true;
+                bloquearPagSigPlanEstudio = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaPlanEstudio() {
+        if (tamTotalPlanEstudio < 10) {
+            for (int i = 0; i < tamTotalPlanEstudio; i++) {
+                listaPlanesEstudiosTabla.add(listaPlanesEstudios.get(i));
+            }
+            bloquearPagSigPlanEstudio = true;
+            bloquearPagAntPlanEstudio = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaPlanesEstudiosTabla.add(listaPlanesEstudios.get(i));
+            }
+            bloquearPagSigPlanEstudio = false;
+            bloquearPagAntPlanEstudio = true;
+        }
+    }
+
+    public void cargarPaginaSiguientePlanEstudio() {
+        listaPlanesEstudiosTabla = new ArrayList<PlanEstudios>();
+        posicionPlanEstudioTabla = posicionPlanEstudioTabla + 10;
+        int diferencia = tamTotalPlanEstudio - posicionPlanEstudioTabla;
+        if (diferencia > 10) {
+            for (int i = posicionPlanEstudioTabla; i < (posicionPlanEstudioTabla + 10); i++) {
+                listaPlanesEstudiosTabla.add(listaPlanesEstudios.get(i));
+            }
+            bloquearPagSigPlanEstudio = false;
+            bloquearPagAntPlanEstudio = false;
+        } else {
+            for (int i = posicionPlanEstudioTabla; i < (posicionPlanEstudioTabla + diferencia); i++) {
+                listaPlanesEstudiosTabla.add(listaPlanesEstudios.get(i));
+            }
+            bloquearPagSigPlanEstudio = true;
+            bloquearPagAntPlanEstudio = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorPlanEstudio() {
+        listaPlanesEstudiosTabla = new ArrayList<PlanEstudios>();
+        posicionPlanEstudioTabla = posicionPlanEstudioTabla - 10;
+        int diferencia = tamTotalPlanEstudio - posicionPlanEstudioTabla;
+        if (diferencia == tamTotalPlanEstudio) {
+            for (int i = posicionPlanEstudioTabla; i < (posicionPlanEstudioTabla + 10); i++) {
+                listaPlanesEstudiosTabla.add(listaPlanesEstudios.get(i));
+            }
+            bloquearPagSigPlanEstudio = false;
+            bloquearPagAntPlanEstudio = true;
+        } else {
+            for (int i = posicionPlanEstudioTabla; i < (posicionPlanEstudioTabla + 10); i++) {
+                listaPlanesEstudiosTabla.add(listaPlanesEstudios.get(i));
+            }
+            bloquearPagSigPlanEstudio = false;
+            bloquearPagAntPlanEstudio = false;
         }
     }
 
@@ -136,10 +213,15 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         parametroDepartamento = new Departamento();
         parametroFacultad = new Facultad();
         parametroCarrera = new Carrera();
-        inicializarFiltros();
-        listaPlanesEstudios = null;
         listaDepartamentos = null;
         listaCarreras = null;
+        listaPlanesEstudios = null;
+        listaPlanesEstudiosTabla = null;
+        posicionPlanEstudioTabla = 0;
+        tamTotalPlanEstudio = 0;
+        bloquearPagAntPlanEstudio = true;
+        bloquearPagSigPlanEstudio = true;
+        inicializarFiltros();
     }
 
     public void actualizarFacultades() {
@@ -315,20 +397,36 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         this.listaPlanesEstudios = listaPlanesEstudios;
     }
 
-    public List<PlanEstudios> getFiltrarListaPlanesEstudios() {
-        return filtrarListaPlanesEstudios;
-    }
-
-    public void setFiltrarListaPlanesEstudios(List<PlanEstudios> filtrarListaPlanesEstudios) {
-        this.filtrarListaPlanesEstudios = filtrarListaPlanesEstudios;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<PlanEstudios> getListaPlanesEstudiosTabla() {
+        return listaPlanesEstudiosTabla;
+    }
+
+    public void setListaPlanesEstudiosTabla(List<PlanEstudios> listaPlanesEstudiosTabla) {
+        this.listaPlanesEstudiosTabla = listaPlanesEstudiosTabla;
+    }
+
+    public boolean isBloquearPagSigPlanEstudio() {
+        return bloquearPagSigPlanEstudio;
+    }
+
+    public void setBloquearPagSigPlanEstudio(boolean bloquearPagSigPlanEstudio) {
+        this.bloquearPagSigPlanEstudio = bloquearPagSigPlanEstudio;
+    }
+
+    public boolean isBloquearPagAntPlanEstudio() {
+        return bloquearPagAntPlanEstudio;
+    }
+
+    public void setBloquearPagAntPlanEstudio(boolean bloquearPagAntPlanEstudio) {
+        this.bloquearPagAntPlanEstudio = bloquearPagAntPlanEstudio;
     }
 
 }

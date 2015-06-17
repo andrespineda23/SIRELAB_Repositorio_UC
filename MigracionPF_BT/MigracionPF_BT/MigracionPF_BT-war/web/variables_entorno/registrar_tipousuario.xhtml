@@ -98,7 +98,7 @@
                                 </h:commandButton>
                                 <span></span>
                                 <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="variables_usuario" actionListener="#{controllerRegistrarTipoUsuario.cancelarTipoUsuario()}" immediate="true">
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarTipoUsuario.cerrarPagina()}" actionListener="#{controllerVariablesUsuario.iniciarInformacionTablas()}" immediate="true">
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

@@ -12,6 +12,7 @@ import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,10 @@ public class ControllerAdministrarCarreras implements Serializable {
     private boolean activarExport;
     //
     private List<Carrera> listaCarreras;
-    private List<Carrera> filtrarListaCarreras;
+    private List<Carrera> listaCarrerasTabla;
+    private int posicionCarreraTabla;
+    private int tamTotalCarrera;
+    private boolean bloquearPagSigCarrera, bloquearPagAntCarrera;
     //
     private String altoTabla;
 
@@ -60,9 +64,13 @@ public class ControllerAdministrarCarreras implements Serializable {
         parametroDepartamento = new Departamento();
         altoTabla = "150";
         inicializarFiltros();
-        listaCarreras = null;
         listaDepartamentos = null;
-        filtrarListaCarreras = null;
+        listaCarreras = null;
+        listaCarrerasTabla = null;
+        posicionCarreraTabla = 0;
+        tamTotalCarrera = 0;
+        bloquearPagAntCarrera = true;
+        bloquearPagSigCarrera = true;
     }
 
     private void inicializarFiltros() {
@@ -101,12 +109,81 @@ public class ControllerAdministrarCarreras implements Serializable {
             if (listaCarreras != null) {
                 if (listaCarreras.size() > 0) {
                     activarExport = false;
+                    listaCarrerasTabla = new ArrayList<Carrera>();
+                    tamTotalCarrera = listaCarreras.size();
+                    posicionCarreraTabla = 0;
+                    cargarDatosTablaCarrera();
                 } else {
                     activarExport = true;
+                    listaCarrerasTabla = null;
+                    tamTotalCarrera = 0;
+                    posicionCarreraTabla = 0;
+                    bloquearPagAntCarrera = true;
+                    bloquearPagSigCarrera = true;
                 }
+            } else {
+                listaCarrerasTabla = null;
+                tamTotalCarrera = 0;
+                posicionCarreraTabla = 0;
+                bloquearPagAntCarrera = true;
+                bloquearPagSigCarrera = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaCarrera() {
+        if (tamTotalCarrera < 10) {
+            for (int i = 0; i < tamTotalCarrera; i++) {
+                listaCarrerasTabla.add(listaCarreras.get(i));
+            }
+            bloquearPagSigCarrera = true;
+            bloquearPagAntCarrera = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaCarrerasTabla.add(listaCarreras.get(i));
+            }
+            bloquearPagSigCarrera = false;
+            bloquearPagAntCarrera = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteCarrera() {
+        listaCarrerasTabla = new ArrayList<Carrera>();
+        posicionCarreraTabla = posicionCarreraTabla + 10;
+        int diferencia = tamTotalCarrera - posicionCarreraTabla;
+        if (diferencia > 10) {
+            for (int i = posicionCarreraTabla; i < (posicionCarreraTabla + 10); i++) {
+                listaCarrerasTabla.add(listaCarreras.get(i));
+            }
+            bloquearPagSigCarrera = false;
+            bloquearPagAntCarrera = false;
+        } else {
+            for (int i = posicionCarreraTabla; i < (posicionCarreraTabla + diferencia); i++) {
+                listaCarrerasTabla.add(listaCarreras.get(i));
+            }
+            bloquearPagSigCarrera = true;
+            bloquearPagAntCarrera = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorCarrera() {
+        listaCarrerasTabla = new ArrayList<Carrera>();
+        posicionCarreraTabla = posicionCarreraTabla - 10;
+        int diferencia = tamTotalCarrera - posicionCarreraTabla;
+        if (diferencia == tamTotalCarrera) {
+            for (int i = posicionCarreraTabla; i < (posicionCarreraTabla + 10); i++) {
+                listaCarrerasTabla.add(listaCarreras.get(i));
+            }
+            bloquearPagSigCarrera = false;
+            bloquearPagAntCarrera = true;
+        } else {
+            for (int i = posicionCarreraTabla; i < (posicionCarreraTabla + 10); i++) {
+                listaCarrerasTabla.add(listaCarreras.get(i));
+            }
+            bloquearPagSigCarrera = false;
+            bloquearPagAntCarrera = false;
         }
     }
 
@@ -117,9 +194,14 @@ public class ControllerAdministrarCarreras implements Serializable {
         parametroCodigo = null;
         parametroDepartamento = new Departamento();
         parametroFacultad = new Facultad();
-        inicializarFiltros();
-        listaCarreras = null;
         listaDepartamentos = null;
+        listaCarreras = null;
+        listaCarrerasTabla = null;
+        posicionCarreraTabla = 0;
+        tamTotalCarrera = 0;
+        bloquearPagAntCarrera = true;
+        bloquearPagSigCarrera = true;
+        inicializarFiltros();
     }
 
     public void actualizarFacultades() {
@@ -236,20 +318,36 @@ public class ControllerAdministrarCarreras implements Serializable {
         this.listaCarreras = listaCarreras;
     }
 
-    public List<Carrera> getFiltrarListaCarreras() {
-        return filtrarListaCarreras;
-    }
-
-    public void setFiltrarListaCarreras(List<Carrera> filtrarListaCarreras) {
-        this.filtrarListaCarreras = filtrarListaCarreras;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<Carrera> getListaCarrerasTabla() {
+        return listaCarrerasTabla;
+    }
+
+    public void setListaCarrerasTabla(List<Carrera> listaCarrerasTabla) {
+        this.listaCarrerasTabla = listaCarrerasTabla;
+    }
+
+    public boolean isBloquearPagSigCarrera() {
+        return bloquearPagSigCarrera;
+    }
+
+    public void setBloquearPagSigCarrera(boolean bloquearPagSigCarrera) {
+        this.bloquearPagSigCarrera = bloquearPagSigCarrera;
+    }
+
+    public boolean isBloquearPagAntCarrera() {
+        return bloquearPagAntCarrera;
+    }
+
+    public void setBloquearPagAntCarrera(boolean bloquearPagAntCarrera) {
+        this.bloquearPagAntCarrera = bloquearPagAntCarrera;
     }
 
 }

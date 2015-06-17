@@ -14,9 +14,14 @@ import java.util.List;
  * @author AndresPineda
  */
 public interface HorarioAtencionDAOInterface {
+
     public void crearHorarioAtencion(HorarioAtencion horario);
+
     public void editarHorarioAtencion(HorarioAtencion horario);
+
     public void eliminarHorarioAtencion(HorarioAtencion horario);
+
     public List<HorarioAtencion> consultarHorariosAtencion();
+
     public HorarioAtencion buscarHorarioAtencionPorID(BigInteger idRegistro);
 }

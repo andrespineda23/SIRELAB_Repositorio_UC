@@ -12,6 +12,7 @@ import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,12 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
     private boolean activarExport;
     //
     private List<EncargadoLaboratorio> listaEncargadosLaboratorios;
-    private List<EncargadoLaboratorio> filtrarListaEncargadosLaboratorios;
+    private List<EncargadoLaboratorio> listaEncargadosLaboratoriosTabla;
+    private int posicionEncargadoLaboratorioTabla;
+    private int tamTotalEncargadoLaboratorio;
+    private boolean bloquearPagSigEncargadoLaboratorio, bloquearPagAntEncargadoLaboratorio;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarEncargadosLaboratorios() {
     }
@@ -73,7 +79,15 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         listaFacultades = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
         inicializarFiltros();
         listaEncargadosLaboratorios = null;
-        filtrarListaEncargadosLaboratorios = null;
+        listaEncargadosLaboratoriosTabla = null;
+        posicionEncargadoLaboratorioTabla = 0;
+        tamTotalEncargadoLaboratorio = 0;
+        bloquearPagSigEncargadoLaboratorio = true;
+        bloquearPagAntEncargadoLaboratorio = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     /**
@@ -146,19 +160,81 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
             if (listaEncargadosLaboratorios != null) {
                 if (listaEncargadosLaboratorios.size() > 0) {
                     activarExport = false;
+                    listaEncargadosLaboratoriosTabla = new ArrayList<EncargadoLaboratorio>();
+                    tamTotalEncargadoLaboratorio = listaEncargadosLaboratorios.size();
+                    posicionEncargadoLaboratorioTabla = 0;
+                    cargarDatosTablaEncargadoLaboratorio();
                 } else {
                     activarExport = true;
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Personal Laboratorio");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
+                    listaEncargadosLaboratoriosTabla = null;
+                    tamTotalEncargadoLaboratorio = 0;
+                    posicionEncargadoLaboratorioTabla = 0;
+                    bloquearPagAntEncargadoLaboratorio = true;
+                    bloquearPagSigEncargadoLaboratorio = true;
                 }
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Personal Laboratorio");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
+                listaEncargadosLaboratoriosTabla = null;
+                tamTotalEncargadoLaboratorio = 0;
+                posicionEncargadoLaboratorioTabla = 0;
+                bloquearPagAntEncargadoLaboratorio = true;
+                bloquearPagSigEncargadoLaboratorio = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaEncargadoLaboratorio() {
+        if (tamTotalEncargadoLaboratorio < 10) {
+            for (int i = 0; i < tamTotalEncargadoLaboratorio; i++) {
+                listaEncargadosLaboratoriosTabla.add(listaEncargadosLaboratorios.get(i));
+            }
+            bloquearPagSigEncargadoLaboratorio = true;
+            bloquearPagAntEncargadoLaboratorio = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaEncargadosLaboratoriosTabla.add(listaEncargadosLaboratorios.get(i));
+            }
+            bloquearPagSigEncargadoLaboratorio = false;
+            bloquearPagAntEncargadoLaboratorio = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteEncargadoLaboratorio() {
+        listaEncargadosLaboratoriosTabla = new ArrayList<EncargadoLaboratorio>();
+        posicionEncargadoLaboratorioTabla = posicionEncargadoLaboratorioTabla + 10;
+        int diferencia = tamTotalEncargadoLaboratorio - posicionEncargadoLaboratorioTabla;
+        if (diferencia > 10) {
+            for (int i = posicionEncargadoLaboratorioTabla; i < (posicionEncargadoLaboratorioTabla + 10); i++) {
+                listaEncargadosLaboratoriosTabla.add(listaEncargadosLaboratorios.get(i));
+            }
+            bloquearPagSigEncargadoLaboratorio = false;
+            bloquearPagAntEncargadoLaboratorio = false;
+        } else {
+            for (int i = posicionEncargadoLaboratorioTabla; i < (posicionEncargadoLaboratorioTabla + diferencia); i++) {
+                listaEncargadosLaboratoriosTabla.add(listaEncargadosLaboratorios.get(i));
+            }
+            bloquearPagSigEncargadoLaboratorio = true;
+            bloquearPagAntEncargadoLaboratorio = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorEncargadoLaboratorio() {
+        listaEncargadosLaboratoriosTabla = new ArrayList<EncargadoLaboratorio>();
+        posicionEncargadoLaboratorioTabla = posicionEncargadoLaboratorioTabla - 10;
+        int diferencia = tamTotalEncargadoLaboratorio - posicionEncargadoLaboratorioTabla;
+        if (diferencia == tamTotalEncargadoLaboratorio) {
+            for (int i = posicionEncargadoLaboratorioTabla; i < (posicionEncargadoLaboratorioTabla + 10); i++) {
+                listaEncargadosLaboratoriosTabla.add(listaEncargadosLaboratorios.get(i));
+            }
+            bloquearPagSigEncargadoLaboratorio = false;
+            bloquearPagAntEncargadoLaboratorio = true;
+        } else {
+            for (int i = posicionEncargadoLaboratorioTabla; i < (posicionEncargadoLaboratorioTabla + 10); i++) {
+                listaEncargadosLaboratoriosTabla.add(listaEncargadosLaboratorios.get(i));
+            }
+            bloquearPagSigEncargadoLaboratorio = false;
+            bloquearPagAntEncargadoLaboratorio = false;
         }
     }
 
@@ -166,7 +242,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
      *
      * Metodo encargado de limpiar los parametros de busqueda
      */
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         activarExport = true;
         activoDepartamento = true;
         activoLaboratorio = true;
@@ -180,6 +256,12 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         parametroEstado = 1;
         inicializarFiltros();
         listaEncargadosLaboratorios = null;
+        listaEncargadosLaboratoriosTabla = null;
+        tamTotalEncargadoLaboratorio = 0;
+        posicionEncargadoLaboratorioTabla = 0;
+        bloquearPagAntEncargadoLaboratorio = true;
+        bloquearPagSigEncargadoLaboratorio = true;
+        return paginaAnterior;
     }
 
     /**
@@ -383,12 +465,28 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         this.listaEncargadosLaboratorios = listaEncargadosLaboratorios;
     }
 
-    public List<EncargadoLaboratorio> getFiltrarListaEncargadosLaboratorios() {
-        return filtrarListaEncargadosLaboratorios;
+    public List<EncargadoLaboratorio> getListaEncargadosLaboratoriosTabla() {
+        return listaEncargadosLaboratoriosTabla;
     }
 
-    public void setFiltrarListaEncargadosLaboratorios(List<EncargadoLaboratorio> filtrarListaEncargadosLaboratorios) {
-        this.filtrarListaEncargadosLaboratorios = filtrarListaEncargadosLaboratorios;
+    public void setListaEncargadosLaboratoriosTabla(List<EncargadoLaboratorio> listaEncargadosLaboratoriosTabla) {
+        this.listaEncargadosLaboratoriosTabla = listaEncargadosLaboratoriosTabla;
+    }
+
+    public boolean isBloquearPagSigEncargadoLaboratorio() {
+        return bloquearPagSigEncargadoLaboratorio;
+    }
+
+    public void setBloquearPagSigEncargadoLaboratorio(boolean bloquearPagSigEncargadoLaboratorio) {
+        this.bloquearPagSigEncargadoLaboratorio = bloquearPagSigEncargadoLaboratorio;
+    }
+
+    public boolean isBloquearPagAntEncargadoLaboratorio() {
+        return bloquearPagAntEncargadoLaboratorio;
+    }
+
+    public void setBloquearPagAntEncargadoLaboratorio(boolean bloquearPagAntEncargadoLaboratorio) {
+        this.bloquearPagAntEncargadoLaboratorio = bloquearPagAntEncargadoLaboratorio;
     }
 
 }

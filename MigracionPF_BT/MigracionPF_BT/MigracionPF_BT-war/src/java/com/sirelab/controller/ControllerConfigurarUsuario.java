@@ -11,6 +11,7 @@ import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -76,9 +77,23 @@ public class ControllerConfigurarUsuario implements Serializable {
         inputTelefono2 = personaConfigurar.getTelefono2persona();
     }
 
-    public void cancelarProcesosModificacion() {
+    public String cancelarProcesosModificacion() {
         cancelarActualizarContrasenia();
         cancelarModificacionUsuario();
+        String pagina = "";
+        // 1- Administrador / 2- Docente / 3- Estudiante / 4-EncargadoLab / 5-EntidadExterna
+        BigInteger secuencia = new BigInteger("1");
+        if (secuencia.equals(personaConfigurar.getUsuario().getTipousuario().getIdtipousuario())) {
+            pagina = "paginainicioA";
+        } else {
+            secuencia = new BigInteger("4");
+            if (secuencia.equals(personaConfigurar.getUsuario().getTipousuario().getIdtipousuario())) {
+                pagina = "paginainicioL";
+            } else {
+                secuencia = new BigInteger("3");
+            }
+        }
+        return pagina;
     }
 
     public void validarNombrePersona() {

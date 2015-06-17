@@ -11,6 +11,7 @@ import com.sirelab.entidades.Proveedor;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +37,16 @@ public class ControllerAdministrarInsumos implements Serializable {
     private Proveedor parametroProveedor;
     //
     private List<Insumo> listaInsumos;
-    private List<Insumo> filtrarListaInsumos;
+    private List<Insumo> listaInsumosTabla;
+    private int posicionInsumoTabla;
+    private int tamTotalInsumo;
+    private boolean bloquearPagSigInsumo, bloquearPagAntInsumo;
     //
     private String altoTabla;
     //
     private boolean activarExport;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarInsumos() {
     }
@@ -55,8 +61,16 @@ public class ControllerAdministrarInsumos implements Serializable {
         altoTabla = "150";
         inicializarFiltros();
         listaInsumos = null;
-        filtrarListaInsumos = null;
+        listaInsumosTabla = null;
+        posicionInsumoTabla = 0;
+        tamTotalInsumo = 0;
+        bloquearPagAntInsumo = true;
+        bloquearPagSigInsumo = true;
         activarExport = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     private void inicializarFiltros() {
@@ -97,24 +111,99 @@ public class ControllerAdministrarInsumos implements Serializable {
             if (listaInsumos != null) {
                 if (listaInsumos.size() > 0) {
                     activarExport = false;
+                    listaInsumosTabla = new ArrayList<Insumo>();
+                    tamTotalInsumo = listaInsumos.size();
+                    posicionInsumoTabla = 0;
+                    cargarDatosTablaInsumo();
                 } else {
                     activarExport = true;
+                    listaInsumosTabla = null;
+                    tamTotalInsumo = 0;
+                    posicionInsumoTabla = 0;
+                    bloquearPagAntInsumo = true;
+                    bloquearPagSigInsumo = true;
                 }
+            } else {
+                listaInsumosTabla = null;
+                tamTotalInsumo = 0;
+                posicionInsumoTabla = 0;
+                bloquearPagAntInsumo = true;
+                bloquearPagSigInsumo = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString());
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    private void cargarDatosTablaInsumo() {
+        if (tamTotalInsumo < 10) {
+            for (int i = 0; i < tamTotalInsumo; i++) {
+                listaInsumosTabla.add(listaInsumos.get(i));
+            }
+            bloquearPagSigInsumo = true;
+            bloquearPagAntInsumo = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaInsumosTabla.add(listaInsumos.get(i));
+            }
+            bloquearPagSigInsumo = false;
+            bloquearPagAntInsumo = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteInsumo() {
+        listaInsumosTabla = new ArrayList<Insumo>();
+        posicionInsumoTabla = posicionInsumoTabla + 10;
+        int diferencia = tamTotalInsumo - posicionInsumoTabla;
+        if (diferencia > 10) {
+            for (int i = posicionInsumoTabla; i < (posicionInsumoTabla + 10); i++) {
+                listaInsumosTabla.add(listaInsumos.get(i));
+            }
+            bloquearPagSigInsumo = false;
+            bloquearPagAntInsumo = false;
+        } else {
+            for (int i = posicionInsumoTabla; i < (posicionInsumoTabla + diferencia); i++) {
+                listaInsumosTabla.add(listaInsumos.get(i));
+            }
+            bloquearPagSigInsumo = true;
+            bloquearPagAntInsumo = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorInsumo() {
+        listaInsumosTabla = new ArrayList<Insumo>();
+        posicionInsumoTabla = posicionInsumoTabla - 10;
+        int diferencia = tamTotalInsumo - posicionInsumoTabla;
+        if (diferencia == tamTotalInsumo) {
+            for (int i = posicionInsumoTabla; i < (posicionInsumoTabla + 10); i++) {
+                listaInsumosTabla.add(listaInsumos.get(i));
+            }
+            bloquearPagSigInsumo = false;
+            bloquearPagAntInsumo = true;
+        } else {
+            for (int i = posicionInsumoTabla; i < (posicionInsumoTabla + 10); i++) {
+                listaInsumosTabla.add(listaInsumos.get(i));
+            }
+            bloquearPagSigInsumo = false;
+            bloquearPagAntInsumo = false;
+        }
+    }
+
+    public String limpiarProcesoBusqueda() {
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
         parametroModelo = null;
         parametroMarca = null;
         parametroProveedor = null;
-        inicializarFiltros();
         listaInsumos = null;
+        listaInsumosTabla = null;
+        posicionInsumoTabla = 0;
+        tamTotalInsumo = 0;
+        bloquearPagAntInsumo = true;
+        bloquearPagSigInsumo = true;
+        inicializarFiltros();
+        return paginaAnterior;
     }
 
     /*
@@ -202,14 +291,6 @@ public class ControllerAdministrarInsumos implements Serializable {
         this.listaInsumos = listaInsumos;
     }
 
-    public List<Insumo> getFiltrarListaInsumos() {
-        return filtrarListaInsumos;
-    }
-
-    public void setFiltrarListaInsumos(List<Insumo> filtrarListaInsumos) {
-        this.filtrarListaInsumos = filtrarListaInsumos;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
@@ -224,6 +305,30 @@ public class ControllerAdministrarInsumos implements Serializable {
 
     public void setActivarExport(boolean activarExport) {
         this.activarExport = activarExport;
+    }
+
+    public List<Insumo> getListaInsumosTabla() {
+        return listaInsumosTabla;
+    }
+
+    public void setListaInsumosTabla(List<Insumo> listaInsumosTabla) {
+        this.listaInsumosTabla = listaInsumosTabla;
+    }
+
+    public boolean isBloquearPagSigInsumo() {
+        return bloquearPagSigInsumo;
+    }
+
+    public void setBloquearPagSigInsumo(boolean bloquearPagSigInsumo) {
+        this.bloquearPagSigInsumo = bloquearPagSigInsumo;
+    }
+
+    public boolean isBloquearPagAntInsumo() {
+        return bloquearPagAntInsumo;
+    }
+
+    public void setBloquearPagAntInsumo(boolean bloquearPagAntInsumo) {
+        this.bloquearPagAntInsumo = bloquearPagAntInsumo;
     }
 
 }

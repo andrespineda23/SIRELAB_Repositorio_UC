@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "edificio")
@@ -40,7 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Edificio implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "edificio")
     private Collection<SalaLaboratorio> salaLaboratorioCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +55,9 @@ public class Edificio implements Serializable {
     @JoinColumn(name = "sede", referencedColumnName = "idsede")
     @ManyToOne(optional = false)
     private Sede sede;
+    @JoinColumn(name = "horarioatencion", referencedColumnName = "idhorarioatencion")
+    @ManyToOne(optional = false)
+    private HorarioAtencion horarioatencion;
 
     public Edificio() {
     }
@@ -73,25 +75,19 @@ public class Edificio implements Serializable {
     }
 
     public String getDireccion() {
-        if (null != direccion) {
-            return direccion.toUpperCase();
-        }
         return direccion;
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion.toUpperCase();
+        this.direccion = direccion;
     }
 
     public String getDescripcionedificio() {
-        if (null != descripcionedificio) {
-            return descripcionedificio.toUpperCase();
-        }
         return descripcionedificio;
     }
 
     public void setDescripcionedificio(String descripcionedificio) {
-        this.descripcionedificio = descripcionedificio.toUpperCase();
+        this.descripcionedificio = descripcionedificio;
     }
 
     public Sede getSede() {
@@ -100,6 +96,14 @@ public class Edificio implements Serializable {
 
     public void setSede(Sede sede) {
         this.sede = sede;
+    }
+
+    public HorarioAtencion getHorarioatencion() {
+        return horarioatencion;
+    }
+
+    public void setHorarioatencion(HorarioAtencion horarioatencion) {
+        this.horarioatencion = horarioatencion;
     }
 
     @Override
@@ -135,5 +139,5 @@ public class Edificio implements Serializable {
     public void setSalaLaboratorioCollection(Collection<SalaLaboratorio> salaLaboratorioCollection) {
         this.salaLaboratorioCollection = salaLaboratorioCollection;
     }
-
+    
 }

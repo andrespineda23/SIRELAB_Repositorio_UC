@@ -9,6 +9,7 @@ import com.sirelab.bo.interfacebo.AdministrarEntidadesExternasBOInterface;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,12 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     private boolean activarExport;
     //
     private List<EntidadExterna> listaEntidadesExternas;
-    private List<EntidadExterna> filtrarListaEntidadesExternas;
+    private List<EntidadExterna> listaEntidadesExternasTabla;
+    private int posicionEntidadExternaTabla;
+    private int tamTotalEntidadExterna;
+    private boolean bloquearPagSigEntidadExterna, bloquearPagAntEntidadExterna;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarEntidadesExternas() {
     }
@@ -59,7 +65,15 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         parametroEmailEntidad = null;
         inicializarFiltros();
         listaEntidadesExternas = null;
-        filtrarListaEntidadesExternas = null;
+        listaEntidadesExternasTabla = null;
+        posicionEntidadExternaTabla = 0;
+        tamTotalEntidadExterna = 0;
+        bloquearPagAntEntidadExterna = true;
+        bloquearPagSigEntidadExterna = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     /**
@@ -125,19 +139,81 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
             if (listaEntidadesExternas != null) {
                 if (listaEntidadesExternas.size() > 0) {
                     activarExport = false;
+                    listaEntidadesExternasTabla = new ArrayList<EntidadExterna>();
+                    tamTotalEntidadExterna = listaEntidadesExternas.size();
+                    posicionEntidadExternaTabla = 0;
+                    cargarDatosTablaEntidadExterna();
                 } else {
                     activarExport = true;
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Entidades Externas");
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage("message", message);
+                    listaEntidadesExternasTabla = null;
+                    tamTotalEntidadExterna = 0;
+                    posicionEntidadExternaTabla = 0;
+                    bloquearPagAntEntidadExterna = true;
+                    bloquearPagSigEntidadExterna = true;
                 }
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La consulta no ha retornado ningun resultado de busqueda.", "Consulta de Entidades Externas");
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage("message", message);
+                listaEntidadesExternasTabla = null;
+                tamTotalEntidadExterna = 0;
+                posicionEntidadExternaTabla = 0;
+                bloquearPagAntEntidadExterna = true;
+                bloquearPagSigEntidadExterna = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaEntidadExterna() {
+        if (tamTotalEntidadExterna < 10) {
+            for (int i = 0; i < tamTotalEntidadExterna; i++) {
+                listaEntidadesExternasTabla.add(listaEntidadesExternas.get(i));
+            }
+            bloquearPagSigEntidadExterna = true;
+            bloquearPagAntEntidadExterna = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaEntidadesExternasTabla.add(listaEntidadesExternas.get(i));
+            }
+            bloquearPagSigEntidadExterna = false;
+            bloquearPagAntEntidadExterna = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteEntidadExterna() {
+        listaEntidadesExternasTabla = new ArrayList<EntidadExterna>();
+        posicionEntidadExternaTabla = posicionEntidadExternaTabla + 10;
+        int diferencia = tamTotalEntidadExterna - posicionEntidadExternaTabla;
+        if (diferencia > 10) {
+            for (int i = posicionEntidadExternaTabla; i < (posicionEntidadExternaTabla + 10); i++) {
+                listaEntidadesExternasTabla.add(listaEntidadesExternas.get(i));
+            }
+            bloquearPagSigEntidadExterna = false;
+            bloquearPagAntEntidadExterna = false;
+        } else {
+            for (int i = posicionEntidadExternaTabla; i < (posicionEntidadExternaTabla + diferencia); i++) {
+                listaEntidadesExternasTabla.add(listaEntidadesExternas.get(i));
+            }
+            bloquearPagSigEntidadExterna = true;
+            bloquearPagAntEntidadExterna = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorEntidadExterna() {
+        listaEntidadesExternasTabla = new ArrayList<EntidadExterna>();
+        posicionEntidadExternaTabla = posicionEntidadExternaTabla - 10;
+        int diferencia = tamTotalEntidadExterna - posicionEntidadExternaTabla;
+        if (diferencia == tamTotalEntidadExterna) {
+            for (int i = posicionEntidadExternaTabla; i < (posicionEntidadExternaTabla + 10); i++) {
+                listaEntidadesExternasTabla.add(listaEntidadesExternas.get(i));
+            }
+            bloquearPagSigEntidadExterna = false;
+            bloquearPagAntEntidadExterna = true;
+        } else {
+            for (int i = posicionEntidadExternaTabla; i < (posicionEntidadExternaTabla + 10); i++) {
+                listaEntidadesExternasTabla.add(listaEntidadesExternas.get(i));
+            }
+            bloquearPagSigEntidadExterna = false;
+            bloquearPagAntEntidadExterna = false;
         }
     }
 
@@ -145,7 +221,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
      *
      * Metodo encargado de limpiar los parametros de busqueda
      */
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         activarExport = true;
         parametroNombre = null;
         parametroApellido = null;
@@ -157,6 +233,12 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         parametroEstado = 1;
         inicializarFiltros();
         listaEntidadesExternas = null;
+        listaEntidadesExternasTabla = null;
+        bloquearPagAntEntidadExterna = true;
+        bloquearPagSigEntidadExterna = true;
+        posicionEntidadExternaTabla = 0;
+        tamTotalEntidadExterna = 0;
+        return paginaAnterior;
     }
 
     /**
@@ -274,12 +356,28 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         this.listaEntidadesExternas = listaEntidadesExternas;
     }
 
-    public List<EntidadExterna> getFiltrarListaEntidadesExternas() {
-        return filtrarListaEntidadesExternas;
+    public List<EntidadExterna> getListaEntidadesExternasTabla() {
+        return listaEntidadesExternasTabla;
     }
 
-    public void setFiltrarListaEntidadesExternas(List<EntidadExterna> filtrarListaEntidadesExternas) {
-        this.filtrarListaEntidadesExternas = filtrarListaEntidadesExternas;
+    public void setListaEntidadesExternasTabla(List<EntidadExterna> listaEntidadesExternasTabla) {
+        this.listaEntidadesExternasTabla = listaEntidadesExternasTabla;
+    }
+
+    public boolean isBloquearPagSigEntidadExterna() {
+        return bloquearPagSigEntidadExterna;
+    }
+
+    public void setBloquearPagSigEntidadExterna(boolean bloquearPagSigEntidadExterna) {
+        this.bloquearPagSigEntidadExterna = bloquearPagSigEntidadExterna;
+    }
+
+    public boolean isBloquearPagAntEntidadExterna() {
+        return bloquearPagAntEntidadExterna;
+    }
+
+    public void setBloquearPagAntEntidadExterna(boolean bloquearPagAntEntidadExterna) {
+        this.bloquearPagAntEntidadExterna = bloquearPagAntEntidadExterna;
     }
 
 }

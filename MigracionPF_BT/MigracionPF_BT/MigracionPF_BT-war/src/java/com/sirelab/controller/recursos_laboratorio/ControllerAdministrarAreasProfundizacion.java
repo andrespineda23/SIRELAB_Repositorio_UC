@@ -10,15 +10,14 @@ import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -38,9 +37,14 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
     private boolean activarExport;
     //
     private List<AreaProfundizacion> listaAreasProfundizacion;
-    private List<AreaProfundizacion> filtrarListaAreasProfundizacion;
+    private List<AreaProfundizacion> listaAreasProfundizacionTabla;
+    private int posicionAreaProfundizacionTabla;
+    private int tamTotalAreaProfundizacion;
+    private boolean bloquearPagSigAreaProfundizacion, bloquearPagAntAreaProfundizacion;
     //
     private String altoTabla;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarAreasProfundizacion() {
     }
@@ -53,7 +57,15 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
         altoTabla = "150";
         inicializarFiltros();
         listaAreasProfundizacion = null;
-        filtrarListaAreasProfundizacion = null;
+        listaAreasProfundizacionTabla = null;
+        posicionAreaProfundizacionTabla = 0;
+        tamTotalAreaProfundizacion = 0;
+        bloquearPagAntAreaProfundizacion = true;
+        bloquearPagSigAreaProfundizacion = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     private void inicializarFiltros() {
@@ -80,21 +92,96 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
             if (listaAreasProfundizacion != null) {
                 if (listaAreasProfundizacion.size() > 0) {
                     activarExport = false;
+                    listaAreasProfundizacionTabla = new ArrayList<AreaProfundizacion>();
+                    tamTotalAreaProfundizacion = listaAreasProfundizacion.size();
+                    posicionAreaProfundizacionTabla = 0;
+                    cargarDatosTablaAreaProfundizacion();
                 } else {
                     activarExport = true;
+                    listaAreasProfundizacionTabla = null;
+                    tamTotalAreaProfundizacion = 0;
+                    posicionAreaProfundizacionTabla = 0;
+                    bloquearPagAntAreaProfundizacion = true;
+                    bloquearPagSigAreaProfundizacion = true;
                 }
+            } else {
+                listaAreasProfundizacionTabla = null;
+                tamTotalAreaProfundizacion = 0;
+                posicionAreaProfundizacionTabla = 0;
+                bloquearPagAntAreaProfundizacion = true;
+                bloquearPagSigAreaProfundizacion = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    private void cargarDatosTablaAreaProfundizacion() {
+        if (tamTotalAreaProfundizacion < 10) {
+            for (int i = 0; i < tamTotalAreaProfundizacion; i++) {
+                listaAreasProfundizacionTabla.add(listaAreasProfundizacion.get(i));
+            }
+            bloquearPagSigAreaProfundizacion = true;
+            bloquearPagAntAreaProfundizacion = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaAreasProfundizacionTabla.add(listaAreasProfundizacion.get(i));
+            }
+            bloquearPagSigAreaProfundizacion = false;
+            bloquearPagAntAreaProfundizacion = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteAreaProfundizacion() {
+        listaAreasProfundizacionTabla = new ArrayList<AreaProfundizacion>();
+        posicionAreaProfundizacionTabla = posicionAreaProfundizacionTabla + 10;
+        int diferencia = tamTotalAreaProfundizacion - posicionAreaProfundizacionTabla;
+        if (diferencia > 10) {
+            for (int i = posicionAreaProfundizacionTabla; i < (posicionAreaProfundizacionTabla + 10); i++) {
+                listaAreasProfundizacionTabla.add(listaAreasProfundizacion.get(i));
+            }
+            bloquearPagSigAreaProfundizacion = false;
+            bloquearPagAntAreaProfundizacion = false;
+        } else {
+            for (int i = posicionAreaProfundizacionTabla; i < (posicionAreaProfundizacionTabla + diferencia); i++) {
+                listaAreasProfundizacionTabla.add(listaAreasProfundizacion.get(i));
+            }
+            bloquearPagSigAreaProfundizacion = true;
+            bloquearPagAntAreaProfundizacion = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorAreaProfundizacion() {
+        listaAreasProfundizacionTabla = new ArrayList<AreaProfundizacion>();
+        posicionAreaProfundizacionTabla = posicionAreaProfundizacionTabla - 10;
+        int diferencia = tamTotalAreaProfundizacion - posicionAreaProfundizacionTabla;
+        if (diferencia == tamTotalAreaProfundizacion) {
+            for (int i = posicionAreaProfundizacionTabla; i < (posicionAreaProfundizacionTabla + 10); i++) {
+                listaAreasProfundizacionTabla.add(listaAreasProfundizacion.get(i));
+            }
+            bloquearPagSigAreaProfundizacion = false;
+            bloquearPagAntAreaProfundizacion = true;
+        } else {
+            for (int i = posicionAreaProfundizacionTabla; i < (posicionAreaProfundizacionTabla + 10); i++) {
+                listaAreasProfundizacionTabla.add(listaAreasProfundizacion.get(i));
+            }
+            bloquearPagSigAreaProfundizacion = false;
+            bloquearPagAntAreaProfundizacion = false;
+        }
+    }
+
+    public String limpiarProcesoBusqueda() {
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
-        inicializarFiltros();
         listaAreasProfundizacion = null;
+        listaAreasProfundizacionTabla = null;
+        posicionAreaProfundizacionTabla = 0;
+        tamTotalAreaProfundizacion = 0;
+        bloquearPagAntAreaProfundizacion = true;
+        bloquearPagSigAreaProfundizacion = true;
+        inicializarFiltros();
+        return paginaAnterior;
     }
 
     /*
@@ -155,20 +242,36 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
         this.listaAreasProfundizacion = listaAreasProfundizacion;
     }
 
-    public List<AreaProfundizacion> getFiltrarListaAreasProfundizacion() {
-        return filtrarListaAreasProfundizacion;
-    }
-
-    public void setFiltrarListaAreasProfundizacion(List<AreaProfundizacion> filtrarListaAreasProfundizacion) {
-        this.filtrarListaAreasProfundizacion = filtrarListaAreasProfundizacion;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<AreaProfundizacion> getListaAreasProfundizacionTabla() {
+        return listaAreasProfundizacionTabla;
+    }
+
+    public void setListaAreasProfundizacionTabla(List<AreaProfundizacion> listaAreasProfundizacionTabla) {
+        this.listaAreasProfundizacionTabla = listaAreasProfundizacionTabla;
+    }
+
+    public boolean isBloquearPagSigAreaProfundizacion() {
+        return bloquearPagSigAreaProfundizacion;
+    }
+
+    public void setBloquearPagSigAreaProfundizacion(boolean bloquearPagSigAreaProfundizacion) {
+        this.bloquearPagSigAreaProfundizacion = bloquearPagSigAreaProfundizacion;
+    }
+
+    public boolean isBloquearPagAntAreaProfundizacion() {
+        return bloquearPagAntAreaProfundizacion;
+    }
+
+    public void setBloquearPagAntAreaProfundizacion(boolean bloquearPagAntAreaProfundizacion) {
+        this.bloquearPagAntAreaProfundizacion = bloquearPagAntAreaProfundizacion;
     }
 
 }

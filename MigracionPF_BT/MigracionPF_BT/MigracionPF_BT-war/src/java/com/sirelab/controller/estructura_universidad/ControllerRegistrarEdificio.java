@@ -7,6 +7,7 @@ package com.sirelab.controller.estructura_universidad;
 
 import com.sirelab.bo.interfacebo.GestionarEdificiosBOInterface;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -32,8 +33,10 @@ public class ControllerRegistrarEdificio implements Serializable {
     private String nuevoDescripcion, nuevoDireccion;
     private List<Sede> listaSedes;
     private Sede nuevoSede;
+    private List<HorarioAtencion> listaHorariosAtencion;
+    private HorarioAtencion nuevoHorario;
     //
-    private boolean validacionesDescripcion, validacionesDireccion, validacionesSede;
+    private boolean validacionesDescripcion, validacionesDireccion, validacionesSede, validacionesHorario;
     private String mensajeFormulario;
 
     public ControllerRegistrarEdificio() {
@@ -44,8 +47,10 @@ public class ControllerRegistrarEdificio implements Serializable {
         nuevoDescripcion = null;
         nuevoDireccion = null;
         nuevoSede = null;
+        nuevoHorario = null;
         validacionesDescripcion = false;
         validacionesDireccion = true;
+        validacionesSede = false;
         validacionesSede = false;
         mensajeFormulario = "";
     }
@@ -84,6 +89,15 @@ public class ControllerRegistrarEdificio implements Serializable {
         }
     }
 
+    public void validarHorarioEdificio() {
+        if (Utilidades.validarNulo(nuevoHorario)) {
+            validacionesHorario = true;
+        } else {
+            validacionesHorario = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoHorario", new FacesMessage("El horario es obligatorio."));
+        }
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesDireccion == false) {
@@ -93,6 +107,9 @@ public class ControllerRegistrarEdificio implements Serializable {
             retorno = false;
         }
         if (validacionesSede == false) {
+            retorno = false;
+        }
+        if (validacionesHorario == false) {
             retorno = false;
         }
         return retorno;
@@ -112,6 +129,7 @@ public class ControllerRegistrarEdificio implements Serializable {
             Edificio edificioNuevo = new Edificio();
             edificioNuevo.setDescripcionedificio(nuevoDescripcion);
             edificioNuevo.setDireccion(nuevoDireccion);
+            edificioNuevo.setHorarioatencion(nuevoHorario);
             edificioNuevo.setSede(nuevoSede);
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
             limpiarFormulario();
@@ -134,9 +152,11 @@ public class ControllerRegistrarEdificio implements Serializable {
         nuevoDescripcion = null;
         nuevoDireccion = null;
         nuevoSede = null;
+        nuevoHorario = null;
         validacionesDescripcion = false;
         validacionesDireccion = true;
         validacionesSede = false;
+        validacionesHorario = false;
         mensajeFormulario = "";
         listaSedes = null;
     }
@@ -183,6 +203,25 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     public void setListaSedes(List<Sede> listaSedes) {
         this.listaSedes = listaSedes;
+    }
+
+    public List<HorarioAtencion> getListaHorariosAtencion() {
+        if (listaHorariosAtencion == null) {
+            listaHorariosAtencion = gestionarEdificiosBO.consultarHorariosAtencionRegistrados();
+        }
+        return listaHorariosAtencion;
+    }
+
+    public void setListaHorariosAtencion(List<HorarioAtencion> listaHorariosAtencion) {
+        this.listaHorariosAtencion = listaHorariosAtencion;
+    }
+
+    public HorarioAtencion getNuevoHorario() {
+        return nuevoHorario;
+    }
+
+    public void setNuevoHorario(HorarioAtencion nuevoHorario) {
+        this.nuevoHorario = nuevoHorario;
     }
 
 }

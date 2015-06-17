@@ -6,8 +6,10 @@
 package com.sirelab.entidades;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,16 +17,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author AndresPineda
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "horarioatencion")
@@ -33,72 +35,71 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HorarioAtencion.findAll", query = "SELECT h FROM HorarioAtencion h"),
     @NamedQuery(name = "HorarioAtencion.findByIdhorarioatencion", query = "SELECT h FROM HorarioAtencion h WHERE h.idhorarioatencion = :idhorarioatencion"),
     @NamedQuery(name = "HorarioAtencion.findByCodigohorario", query = "SELECT h FROM HorarioAtencion h WHERE h.codigohorario = :codigohorario"),
-    @NamedQuery(name = "HorarioAtencion.findByFechainicio", query = "SELECT h FROM HorarioAtencion h WHERE h.fechainicio = :fechainicio"),
-    @NamedQuery(name = "HorarioAtencion.findByFechafinal", query = "SELECT h FROM HorarioAtencion h WHERE h.fechafinal = :fechafinal")})
+    @NamedQuery(name = "HorarioAtencion.findByDescripcionhorario", query = "SELECT h FROM HorarioAtencion h WHERE h.descripcionhorario = :descripcionhorario")})
 public class HorarioAtencion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idhorarioatencion")
-    private Long idhorarioatencion;
-    @Size(max = 45)
+    private BigInteger idhorarioatencion;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "codigohorario")
     private String codigohorario;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechainicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechainicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechafinal")
-    @Temporal(TemporalType.DATE)
-    private Date fechafinal;
+    @Size(min = 1, max = 100)
+    @Column(name = "descripcionhorario")
+    private String descripcionhorario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horarioatencion")
+    private Collection<Edificio> edificioCollection;
 
     public HorarioAtencion() {
     }
 
-    public HorarioAtencion(Long idhorarioatencion) {
+    public HorarioAtencion(BigInteger idhorarioatencion) {
         this.idhorarioatencion = idhorarioatencion;
     }
 
-    public HorarioAtencion(Long idhorarioatencion, Date fechainicio, Date fechafinal) {
+    public HorarioAtencion(BigInteger idhorarioatencion, String codigohorario, String descripcionhorario) {
         this.idhorarioatencion = idhorarioatencion;
-        this.fechainicio = fechainicio;
-        this.fechafinal = fechafinal;
+        this.codigohorario = codigohorario;
+        this.descripcionhorario = descripcionhorario;
     }
 
-    public Long getIdhorarioatencion() {
+    public BigInteger getIdhorarioatencion() {
         return idhorarioatencion;
     }
 
-    public void setIdhorarioatencion(Long idhorarioatencion) {
+    public void setIdhorarioatencion(BigInteger idhorarioatencion) {
         this.idhorarioatencion = idhorarioatencion;
     }
 
     public String getCodigohorario() {
-        return codigohorario;
+        return codigohorario.toUpperCase();
     }
 
     public void setCodigohorario(String codigohorario) {
-        this.codigohorario = codigohorario;
+        this.codigohorario = codigohorario.toUpperCase();
     }
 
-    public Date getFechainicio() {
-        return fechainicio;
+    public String getDescripcionhorario() {
+        return descripcionhorario.toUpperCase();
     }
 
-    public void setFechainicio(Date fechainicio) {
-        this.fechainicio = fechainicio;
+    public void setDescripcionhorario(String descripcionhorario) {
+        this.descripcionhorario = descripcionhorario.toUpperCase();
     }
 
-    public Date getFechafinal() {
-        return fechafinal;
+    @XmlTransient
+    public Collection<Edificio> getEdificioCollection() {
+        return edificioCollection;
     }
 
-    public void setFechafinal(Date fechafinal) {
-        this.fechafinal = fechafinal;
+    public void setEdificioCollection(Collection<Edificio> edificioCollection) {
+        this.edificioCollection = edificioCollection;
     }
 
     @Override

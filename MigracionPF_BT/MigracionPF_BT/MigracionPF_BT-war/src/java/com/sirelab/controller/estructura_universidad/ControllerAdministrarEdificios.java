@@ -11,6 +11,7 @@ import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,10 @@ public class ControllerAdministrarEdificios implements Serializable {
     private boolean activarExport;
     //
     private List<Edificio> listaEdificios;
-    private List<Edificio> filtrarListaEdificios;
+    private List<Edificio> listaEdificiosTabla;
+    private int posicionEdificioTabla;
+    private int tamTotalEdificio;
+    private boolean bloquearPagSigEdificio, bloquearPagAntEdificio;
     //
     private String altoTabla;
 
@@ -56,7 +60,11 @@ public class ControllerAdministrarEdificios implements Serializable {
         altoTabla = "150";
         inicializarFiltros();
         listaEdificios = null;
-        filtrarListaEdificios = null;
+        listaEdificiosTabla = null;
+        posicionEdificioTabla = 0;
+        tamTotalEdificio = 0;
+        bloquearPagAntEdificio = true;
+        bloquearPagSigEdificio = true;
     }
 
     private void inicializarFiltros() {
@@ -89,12 +97,81 @@ public class ControllerAdministrarEdificios implements Serializable {
             if (listaEdificios != null) {
                 if (listaEdificios.size() > 0) {
                     activarExport = false;
+                    listaEdificiosTabla = new ArrayList<Edificio>();
+                    tamTotalEdificio = listaEdificios.size();
+                    posicionEdificioTabla = 0;
+                    cargarDatosTablaEdificio();
                 } else {
                     activarExport = true;
+                    listaEdificiosTabla = null;
+                    tamTotalEdificio = 0;
+                    posicionEdificioTabla = 0;
+                    bloquearPagAntEdificio = true;
+                    bloquearPagSigEdificio = true;
                 }
+            } else {
+                listaEdificiosTabla = null;
+                tamTotalEdificio = 0;
+                posicionEdificioTabla = 0;
+                bloquearPagAntEdificio = true;
+                bloquearPagSigEdificio = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarEdificios buscarEdificiosPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaEdificio() {
+        if (tamTotalEdificio < 10) {
+            for (int i = 0; i < tamTotalEdificio; i++) {
+                listaEdificiosTabla.add(listaEdificios.get(i));
+            }
+            bloquearPagSigEdificio = true;
+            bloquearPagAntEdificio = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaEdificiosTabla.add(listaEdificios.get(i));
+            }
+            bloquearPagSigEdificio = false;
+            bloquearPagAntEdificio = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteEdificio() {
+        listaEdificiosTabla = new ArrayList<Edificio>();
+        posicionEdificioTabla = posicionEdificioTabla + 10;
+        int diferencia = tamTotalEdificio - posicionEdificioTabla;
+        if (diferencia > 10) {
+            for (int i = posicionEdificioTabla; i < (posicionEdificioTabla + 10); i++) {
+                listaEdificiosTabla.add(listaEdificios.get(i));
+            }
+            bloquearPagSigEdificio = false;
+            bloquearPagAntEdificio = false;
+        } else {
+            for (int i = posicionEdificioTabla; i < (posicionEdificioTabla + diferencia); i++) {
+                listaEdificiosTabla.add(listaEdificios.get(i));
+            }
+            bloquearPagSigEdificio = true;
+            bloquearPagAntEdificio = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorEdificio() {
+        listaEdificiosTabla = new ArrayList<Edificio>();
+        posicionEdificioTabla = posicionEdificioTabla - 10;
+        int diferencia = tamTotalEdificio - posicionEdificioTabla;
+        if (diferencia == tamTotalEdificio) {
+            for (int i = posicionEdificioTabla; i < (posicionEdificioTabla + 10); i++) {
+                listaEdificiosTabla.add(listaEdificios.get(i));
+            }
+            bloquearPagSigEdificio = false;
+            bloquearPagAntEdificio = true;
+        } else {
+            for (int i = posicionEdificioTabla; i < (posicionEdificioTabla + 10); i++) {
+                listaEdificiosTabla.add(listaEdificios.get(i));
+            }
+            bloquearPagSigEdificio = false;
+            bloquearPagAntEdificio = false;
         }
     }
 
@@ -103,9 +180,13 @@ public class ControllerAdministrarEdificios implements Serializable {
         parametroDescripcion = null;
         parametroDireccion = null;
         parametroSede = new Sede();
-        inicializarFiltros();
         listaEdificios = null;
-        //RequestContext.getCurrentInstance().update("formT:form:panelMenu");
+        listaEdificiosTabla = null;
+        posicionEdificioTabla = 0;
+        tamTotalEdificio = 0;
+        bloquearPagAntEdificio = true;
+        bloquearPagSigEdificio = true;
+        inicializarFiltros();
     }
 
     /*
@@ -183,20 +264,36 @@ public class ControllerAdministrarEdificios implements Serializable {
         this.listaEdificios = listaEdificios;
     }
 
-    public List<Edificio> getFiltrarListaEdificios() {
-        return filtrarListaEdificios;
-    }
-
-    public void setFiltrarListaEdificios(List<Edificio> filtrarListaEdificios) {
-        this.filtrarListaEdificios = filtrarListaEdificios;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<Edificio> getListaEdificiosTabla() {
+        return listaEdificiosTabla;
+    }
+
+    public void setListaEdificiosTabla(List<Edificio> listaEdificiosTabla) {
+        this.listaEdificiosTabla = listaEdificiosTabla;
+    }
+
+    public boolean isBloquearPagSigEdificio() {
+        return bloquearPagSigEdificio;
+    }
+
+    public void setBloquearPagSigEdificio(boolean bloquearPagSigEdificio) {
+        this.bloquearPagSigEdificio = bloquearPagSigEdificio;
+    }
+
+    public boolean isBloquearPagAntEdificio() {
+        return bloquearPagAntEdificio;
+    }
+
+    public void setBloquearPagAntEdificio(boolean bloquearPagAntEdificio) {
+        this.bloquearPagAntEdificio = bloquearPagAntEdificio;
     }
 
 }

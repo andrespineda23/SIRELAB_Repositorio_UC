@@ -12,6 +12,7 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,12 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
     private Map<String, String> filtros;
     //
     private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
+    private List<LaboratoriosPorAreas> listaLaboratoriosPorAreasTabla;
+    private int posicionLaboratorioPorAreaTabla;
+    private int tamTotalLaboratorioPorArea;
+    private boolean bloquearPagSigLaboratorioPorArea, bloquearPagAntLaboratorioPorArea;
+    //
+    private String paginaAnterior;
 
     public ControllerAdministrarLaboratoriosPorAreas() {
     }
@@ -55,6 +62,16 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         listaAreasProfundizacion = gestionarPlantaLaboratoriosPorAreasBO.consultarAreasProfundizacionRegistradas();
         inicializarFiltros();
         listaLaboratorios = null;
+        listaLaboratoriosPorAreasTabla = null;
+        listaLaboratoriosPorAreas = null;
+        posicionLaboratorioPorAreaTabla = 0;
+        tamTotalLaboratorioPorArea = 0;
+        bloquearPagAntLaboratorioPorArea = true;
+        bloquearPagSigLaboratorioPorArea = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     private void inicializarFiltros() {
@@ -88,19 +105,99 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
             inicializarFiltros();
             listaLaboratoriosPorAreas = null;
             listaLaboratoriosPorAreas = gestionarPlantaLaboratoriosPorAreasBO.consultarLaboratoriosPorAreasPorParametro(filtros);
+            if (listaLaboratoriosPorAreas != null) {
+                if (listaLaboratoriosPorAreas.size() > 0) {
+                    listaLaboratoriosPorAreasTabla = new ArrayList<LaboratoriosPorAreas>();
+                    tamTotalLaboratorioPorArea = listaLaboratoriosPorAreas.size();
+                    posicionLaboratorioPorAreaTabla = 0;
+                    cargarDatosTablaLaboratorioPorArea();
+                } else {
+                    listaLaboratoriosPorAreasTabla = null;
+                    tamTotalLaboratorioPorArea = 0;
+                    posicionLaboratorioPorAreaTabla = 0;
+                    bloquearPagAntLaboratorioPorArea = true;
+                    bloquearPagSigLaboratorioPorArea = true;
+                }
+            } else {
+                listaLaboratoriosPorAreasTabla = null;
+                tamTotalLaboratorioPorArea = 0;
+                posicionLaboratorioPorAreaTabla = 0;
+                bloquearPagAntLaboratorioPorArea = true;
+                bloquearPagSigLaboratorioPorArea = true;
+            }
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarLaboratoriosPorAreas buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    private void cargarDatosTablaLaboratorioPorArea() {
+        if (tamTotalLaboratorioPorArea < 10) {
+            for (int i = 0; i < tamTotalLaboratorioPorArea; i++) {
+                listaLaboratoriosPorAreasTabla.add(listaLaboratoriosPorAreas.get(i));
+            }
+            bloquearPagSigLaboratorioPorArea = true;
+            bloquearPagAntLaboratorioPorArea = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaLaboratoriosPorAreasTabla.add(listaLaboratoriosPorAreas.get(i));
+            }
+            bloquearPagSigLaboratorioPorArea = false;
+            bloquearPagAntLaboratorioPorArea = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteLaboratorioPorArea() {
+        listaLaboratoriosPorAreasTabla = new ArrayList<LaboratoriosPorAreas>();
+        posicionLaboratorioPorAreaTabla = posicionLaboratorioPorAreaTabla + 10;
+        int diferencia = tamTotalLaboratorioPorArea - posicionLaboratorioPorAreaTabla;
+        if (diferencia > 10) {
+            for (int i = posicionLaboratorioPorAreaTabla; i < (posicionLaboratorioPorAreaTabla + 10); i++) {
+                listaLaboratoriosPorAreasTabla.add(listaLaboratoriosPorAreas.get(i));
+            }
+            bloquearPagSigLaboratorioPorArea = false;
+            bloquearPagAntLaboratorioPorArea = false;
+        } else {
+            for (int i = posicionLaboratorioPorAreaTabla; i < (posicionLaboratorioPorAreaTabla + diferencia); i++) {
+                listaLaboratoriosPorAreasTabla.add(listaLaboratoriosPorAreas.get(i));
+            }
+            bloquearPagSigLaboratorioPorArea = true;
+            bloquearPagAntLaboratorioPorArea = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorLaboratorioPorArea() {
+        listaLaboratoriosPorAreasTabla = new ArrayList<LaboratoriosPorAreas>();
+        posicionLaboratorioPorAreaTabla = posicionLaboratorioPorAreaTabla - 10;
+        int diferencia = tamTotalLaboratorioPorArea - posicionLaboratorioPorAreaTabla;
+        if (diferencia == tamTotalLaboratorioPorArea) {
+            for (int i = posicionLaboratorioPorAreaTabla; i < (posicionLaboratorioPorAreaTabla + 10); i++) {
+                listaLaboratoriosPorAreasTabla.add(listaLaboratoriosPorAreas.get(i));
+            }
+            bloquearPagSigLaboratorioPorArea = false;
+            bloquearPagAntLaboratorioPorArea = true;
+        } else {
+            for (int i = posicionLaboratorioPorAreaTabla; i < (posicionLaboratorioPorAreaTabla + 10); i++) {
+                listaLaboratoriosPorAreasTabla.add(listaLaboratoriosPorAreas.get(i));
+            }
+            bloquearPagSigLaboratorioPorArea = false;
+            bloquearPagAntLaboratorioPorArea = false;
+        }
+    }
+
+    public String limpiarProcesoBusqueda() {
         activarLaboratorio = true;
-        listaLaboratoriosPorAreas = null;
         parametroDepartamento = new Departamento();
         parametroArea = new AreaProfundizacion();
         parametroLaboratorio = new Laboratorio();
         inicializarFiltros();
         listaLaboratorios = null;
+        listaLaboratoriosPorAreas = null;
+        listaLaboratoriosPorAreasTabla = null;
+        posicionLaboratorioPorAreaTabla = 0;
+        tamTotalLaboratorioPorArea = 0;
+        bloquearPagAntLaboratorioPorArea = true;
+        bloquearPagSigLaboratorioPorArea = true;
+        return paginaAnterior;
     }
 
     public void actualizarDepartamentos() {
@@ -203,6 +300,30 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
 
     public void setListaLaboratoriosPorAreas(List<LaboratoriosPorAreas> listaLaboratoriosPorAreas) {
         this.listaLaboratoriosPorAreas = listaLaboratoriosPorAreas;
+    }
+
+    public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreasTabla() {
+        return listaLaboratoriosPorAreasTabla;
+    }
+
+    public void setListaLaboratoriosPorAreasTabla(List<LaboratoriosPorAreas> listaLaboratoriosPorAreasTabla) {
+        this.listaLaboratoriosPorAreasTabla = listaLaboratoriosPorAreasTabla;
+    }
+
+    public boolean isBloquearPagSigLaboratorioPorArea() {
+        return bloquearPagSigLaboratorioPorArea;
+    }
+
+    public void setBloquearPagSigLaboratorioPorArea(boolean bloquearPagSigLaboratorioPorArea) {
+        this.bloquearPagSigLaboratorioPorArea = bloquearPagSigLaboratorioPorArea;
+    }
+
+    public boolean isBloquearPagAntLaboratorioPorArea() {
+        return bloquearPagAntLaboratorioPorArea;
+    }
+
+    public void setBloquearPagAntLaboratorioPorArea(boolean bloquearPagAntLaboratorioPorArea) {
+        this.bloquearPagAntLaboratorioPorArea = bloquearPagAntLaboratorioPorArea;
     }
 
 }

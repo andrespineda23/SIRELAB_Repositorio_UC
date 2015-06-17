@@ -7,6 +7,7 @@ import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,10 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     private boolean activarExport;
     //
     private List<Asignatura> listaAsignaturas;
-    private List<Asignatura> filtrarListaAsignaturas;
+    private List<Asignatura> listaAsignaturasTabla;
+    private int posicionAsignaturaTabla;
+    private int tamTotalAsignatura;
+    private boolean bloquearPagSigAsignatura, bloquearPagAntAsignatura;
     //
     private String altoTabla;
 
@@ -70,10 +74,14 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         altoTabla = "150";
         inicializarFiltros();
         listaPlanesEstudios = null;
-        listaAsignaturas = null;
         listaDepartamentos = null;
         listaCarreras = null;
-        filtrarListaAsignaturas = null;
+        listaAsignaturas = null;
+        listaAsignaturasTabla = null;
+        posicionAsignaturaTabla = 0;
+        tamTotalAsignatura = 0;
+        bloquearPagAntAsignatura = true;
+        bloquearPagSigAsignatura = true;
     }
 
     private void inicializarFiltros() {
@@ -122,12 +130,81 @@ public class ControllerAdministrarAsignaturas implements Serializable {
             if (listaAsignaturas != null) {
                 if (listaAsignaturas.size() > 0) {
                     activarExport = false;
+                    listaAsignaturasTabla = new ArrayList<Asignatura>();
+                    tamTotalAsignatura = listaAsignaturas.size();
+                    posicionAsignaturaTabla = 0;
+                    cargarDatosTablaAsignatura();
                 } else {
                     activarExport = true;
+                    listaAsignaturasTabla = null;
+                    tamTotalAsignatura = 0;
+                    posicionAsignaturaTabla = 0;
+                    bloquearPagAntAsignatura = true;
+                    bloquearPagSigAsignatura = true;
                 }
+            } else {
+                listaAsignaturasTabla = null;
+                tamTotalAsignatura = 0;
+                posicionAsignaturaTabla = 0;
+                bloquearPagAntAsignatura = true;
+                bloquearPagSigAsignatura = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaAsignatura() {
+        if (tamTotalAsignatura < 10) {
+            for (int i = 0; i < tamTotalAsignatura; i++) {
+                listaAsignaturasTabla.add(listaAsignaturas.get(i));
+            }
+            bloquearPagSigAsignatura = true;
+            bloquearPagAntAsignatura = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaAsignaturasTabla.add(listaAsignaturas.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteAsignatura() {
+        listaAsignaturasTabla = new ArrayList<Asignatura>();
+        posicionAsignaturaTabla = posicionAsignaturaTabla + 10;
+        int diferencia = tamTotalAsignatura - posicionAsignaturaTabla;
+        if (diferencia > 10) {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + 10); i++) {
+                listaAsignaturasTabla.add(listaAsignaturas.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = false;
+        } else {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + diferencia); i++) {
+                listaAsignaturasTabla.add(listaAsignaturas.get(i));
+            }
+            bloquearPagSigAsignatura = true;
+            bloquearPagAntAsignatura = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorAsignatura() {
+        listaAsignaturasTabla = new ArrayList<Asignatura>();
+        posicionAsignaturaTabla = posicionAsignaturaTabla - 10;
+        int diferencia = tamTotalAsignatura - posicionAsignaturaTabla;
+        if (diferencia == tamTotalAsignatura) {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + 10); i++) {
+                listaAsignaturasTabla.add(listaAsignaturas.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = true;
+        } else {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + 10); i++) {
+                listaAsignaturasTabla.add(listaAsignaturas.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = false;
         }
     }
 
@@ -142,10 +219,15 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         parametroCarrera = new Carrera();
         parametroPlanEstudio = new PlanEstudios();
         inicializarFiltros();
-        listaAsignaturas = null;
         listaDepartamentos = null;
         listaCarreras = null;
         listaPlanesEstudios = null;
+        listaAsignaturas = null;
+        listaAsignaturasTabla = null;
+        posicionAsignaturaTabla = 0;
+        tamTotalAsignatura = 0;
+        bloquearPagAntAsignatura = true;
+        bloquearPagSigAsignatura = true;
     }
 
     public void actualizarDepartamentos() {
@@ -345,20 +427,36 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         this.listaAsignaturas = listaAsignaturas;
     }
 
-    public List<Asignatura> getFiltrarListaAsignaturas() {
-        return filtrarListaAsignaturas;
-    }
-
-    public void setFiltrarListaAsignaturas(List<Asignatura> filtrarListaAsignaturas) {
-        this.filtrarListaAsignaturas = filtrarListaAsignaturas;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<Asignatura> getListaAsignaturasTabla() {
+        return listaAsignaturasTabla;
+    }
+
+    public void setListaAsignaturasTabla(List<Asignatura> listaAsignaturasTabla) {
+        this.listaAsignaturasTabla = listaAsignaturasTabla;
+    }
+
+    public boolean isBloquearPagSigAsignatura() {
+        return bloquearPagSigAsignatura;
+    }
+
+    public void setBloquearPagSigAsignatura(boolean bloquearPagSigAsignatura) {
+        this.bloquearPagSigAsignatura = bloquearPagSigAsignatura;
+    }
+
+    public boolean isBloquearPagAntAsignatura() {
+        return bloquearPagAntAsignatura;
+    }
+
+    public void setBloquearPagAntAsignatura(boolean bloquearPagAntAsignatura) {
+        this.bloquearPagAntAsignatura = bloquearPagAntAsignatura;
     }
 
 }

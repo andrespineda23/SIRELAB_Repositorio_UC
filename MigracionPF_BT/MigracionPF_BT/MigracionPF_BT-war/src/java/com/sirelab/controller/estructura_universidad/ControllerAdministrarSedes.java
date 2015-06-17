@@ -10,6 +10,7 @@ import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,10 @@ public class ControllerAdministrarSedes implements Serializable {
     private Map<String, String> filtros;
     //
     private List<Sede> listaSedes;
-    private List<Sede> filtrarListaSedes;
+    private List<Sede> listaSedesTabla;
+    private int posicionSedeTabla;
+    private int tamTotalSede;
+    private boolean bloquearPagSigSede, bloquearPagAntSede;
     //
     private String altoTabla;
     //
@@ -53,7 +57,11 @@ public class ControllerAdministrarSedes implements Serializable {
         altoTabla = "150";
         inicializarFiltros();
         listaSedes = null;
-        filtrarListaSedes = null;
+        listaSedesTabla = null;
+        posicionSedeTabla = 0;
+        tamTotalSede = 0;
+        bloquearPagAntSede = true;
+        bloquearPagSigSede = true;
         activarExport = true;
     }
 
@@ -85,12 +93,81 @@ public class ControllerAdministrarSedes implements Serializable {
             if (listaSedes != null) {
                 if (listaSedes.size() > 0) {
                     activarExport = false;
+                    listaSedesTabla = new ArrayList<Sede>();
+                    tamTotalSede = listaSedes.size();
+                    posicionSedeTabla = 0;
+                    cargarDatosTablaSede();
                 } else {
                     activarExport = true;
+                    listaSedesTabla = null;
+                    tamTotalSede = 0;
+                    posicionSedeTabla = 0;
+                    bloquearPagAntSede = true;
+                    bloquearPagSigSede = true;
                 }
-            } 
+            } else {
+                listaSedesTabla = null;
+                tamTotalSede = 0;
+                posicionSedeTabla = 0;
+                bloquearPagAntSede = true;
+                bloquearPagSigSede = true;
+            }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString());
+        }
+    }
+
+    private void cargarDatosTablaSede() {
+        if (tamTotalSede < 10) {
+            for (int i = 0; i < tamTotalSede; i++) {
+                listaSedesTabla.add(listaSedes.get(i));
+            }
+            bloquearPagSigSede = true;
+            bloquearPagAntSede = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaSedesTabla.add(listaSedes.get(i));
+            }
+            bloquearPagSigSede = false;
+            bloquearPagAntSede = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteSede() {
+        listaSedesTabla = new ArrayList<Sede>();
+        posicionSedeTabla = posicionSedeTabla + 10;
+        int diferencia = tamTotalSede - posicionSedeTabla;
+        if (diferencia > 10) {
+            for (int i = posicionSedeTabla; i < (posicionSedeTabla + 10); i++) {
+                listaSedesTabla.add(listaSedes.get(i));
+            }
+            bloquearPagSigSede = false;
+            bloquearPagAntSede = false;
+        } else {
+            for (int i = posicionSedeTabla; i < (posicionSedeTabla + diferencia); i++) {
+                listaSedesTabla.add(listaSedes.get(i));
+            }
+            bloquearPagSigSede = true;
+            bloquearPagAntSede = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorSede() {
+        listaSedesTabla = new ArrayList<Sede>();
+        posicionSedeTabla = posicionSedeTabla - 10;
+        int diferencia = tamTotalSede - posicionSedeTabla;
+        if (diferencia == tamTotalSede) {
+            for (int i = posicionSedeTabla; i < (posicionSedeTabla + 10); i++) {
+                listaSedesTabla.add(listaSedes.get(i));
+            }
+            bloquearPagSigSede = false;
+            bloquearPagAntSede = true;
+        } else {
+            for (int i = posicionSedeTabla; i < (posicionSedeTabla + 10); i++) {
+                listaSedesTabla.add(listaSedes.get(i));
+            }
+            bloquearPagSigSede = false;
+            bloquearPagAntSede = false;
         }
     }
 
@@ -99,8 +176,13 @@ public class ControllerAdministrarSedes implements Serializable {
         parametroNombre = null;
         parametroDireccion = null;
         parametroTelefono = null;
-        inicializarFiltros();
         listaSedes = null;
+        listaSedesTabla = null;
+        posicionSedeTabla = 0;
+        tamTotalSede = 0;
+        bloquearPagAntSede = true;
+        bloquearPagSigSede = true;
+        inicializarFiltros();
     }
 
     public void dispararDialogoEditarSede(BigInteger idSede) {
@@ -235,14 +317,6 @@ public class ControllerAdministrarSedes implements Serializable {
         this.listaSedes = listaSedes;
     }
 
-    public List<Sede> getFiltrarListaSedes() {
-        return filtrarListaSedes;
-    }
-
-    public void setFiltrarListaSedes(List<Sede> filtrarListaSedes) {
-        this.filtrarListaSedes = filtrarListaSedes;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
@@ -289,6 +363,30 @@ public class ControllerAdministrarSedes implements Serializable {
 
     public void setSedeEditar(Sede sedeEditar) {
         this.sedeEditar = sedeEditar;
+    }
+
+    public List<Sede> getListaSedesTabla() {
+        return listaSedesTabla;
+    }
+
+    public void setListaSedesTabla(List<Sede> listaSedesTabla) {
+        this.listaSedesTabla = listaSedesTabla;
+    }
+
+    public boolean isBloquearPagSigSede() {
+        return bloquearPagSigSede;
+    }
+
+    public void setBloquearPagSigSede(boolean bloquearPagSigSede) {
+        this.bloquearPagSigSede = bloquearPagSigSede;
+    }
+
+    public boolean isBloquearPagAntSede() {
+        return bloquearPagAntSede;
+    }
+
+    public void setBloquearPagAntSede(boolean bloquearPagAntSede) {
+        this.bloquearPagAntSede = bloquearPagAntSede;
     }
 
 }

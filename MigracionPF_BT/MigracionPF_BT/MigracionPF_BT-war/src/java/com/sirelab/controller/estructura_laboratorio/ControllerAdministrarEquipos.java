@@ -15,7 +15,7 @@ import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoActivo;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +26,11 @@ import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author AndresPineda
+ * @author ELECTRONICA
  */
 @ManagedBean
 @SessionScoped
-public class ControllerAdminstrarEquipos implements Serializable {
+public class ControllerAdministrarEquipos implements Serializable {
 
     @EJB
     GestionarPlantaEquiposElementosBOInterface gestionarPlantaEquiposElementosBO;
@@ -57,11 +57,16 @@ public class ControllerAdminstrarEquipos implements Serializable {
     private boolean activarExport;
     //
     private List<EquipoElemento> listaEquiposElementos;
-    private List<EquipoElemento> filtrarListaEquiposElementos;
+    private List<EquipoElemento> listaEquiposElementosTabla;
+    private int posicionEquipoTabla;
+    private int tamTotalEquipo;
+    private boolean bloquearPagSigEquipo, bloquearPagAntEquipo;
     //
     private String altoTabla;
+    //
+    private String paginaAnterior;
 
-    public ControllerAdminstrarEquipos() {
+    public ControllerAdministrarEquipos() {
     }
 
     @PostConstruct
@@ -89,7 +94,16 @@ public class ControllerAdminstrarEquipos implements Serializable {
         inicializarFiltros();
         listaModulosLaboratorios = null;
         listaSalasLaboratorios = null;
-        filtrarListaEquiposElementos = null;
+        listaEquiposElementosTabla = null;
+        listaEquiposElementos = null;
+        posicionEquipoTabla = 0;
+        tamTotalEquipo = 0;
+        bloquearPagAntEquipo = true;
+        bloquearPagSigEquipo = true;
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        paginaAnterior = pagina;
     }
 
     private void inicializarFiltros() {
@@ -109,9 +123,6 @@ public class ControllerAdminstrarEquipos implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if (parametroEstadoEquipo.getIdestadoequipo() != null) {
-            filtros.put("parametroEstado", parametroEstadoEquipo.getIdestadoequipo().toString());
-        }
         if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
@@ -127,20 +138,35 @@ public class ControllerAdminstrarEquipos implements Serializable {
         if ((Utilidades.validarNulo(parametroSerie) == true) && (!parametroSerie.isEmpty())) {
             filtros.put("parametroSerie", parametroSerie.toString());
         }
-        if (parametroLaboratorioPorArea.getIdlaboratoriosporareas() != null) {
-            filtros.put("parametroLaboratorioPorArea", parametroLaboratorioPorArea.getIdlaboratoriosporareas().toString());
+        if (Utilidades.validarNulo(parametroLaboratorioPorArea)) {
+            if (parametroLaboratorioPorArea.getIdlaboratoriosporareas() != null) {
+                filtros.put("parametroLaboratorioPorArea", parametroLaboratorioPorArea.getIdlaboratoriosporareas().toString());
+            }
         }
-        if (parametroSalaLaboratorio.getIdsalalaboratorio() != null) {
-            filtros.put("parametroSalaLaboratorio", parametroSalaLaboratorio.getIdsalalaboratorio().toString());
+        if (Utilidades.validarNulo(parametroEstadoEquipo)) {
+            if (parametroEstadoEquipo.getIdestadoequipo() != null) {
+                filtros.put("parametroEstado", parametroEstadoEquipo.getIdestadoequipo().toString());
+            }
         }
-        if (parametroModuloLaboratorio.getIdmodulolaboratorio() != null) {
-            filtros.put("parametroModuloLaboratorio", parametroModuloLaboratorio.getIdmodulolaboratorio().toString());
+        if (Utilidades.validarNulo(parametroSalaLaboratorio)) {
+            if (parametroSalaLaboratorio.getIdsalalaboratorio() != null) {
+                filtros.put("parametroSalaLaboratorio", parametroSalaLaboratorio.getIdsalalaboratorio().toString());
+            }
         }
-        if (parametroProveedor.getIdproveedor() != null) {
-            filtros.put("parametroProveedor", parametroProveedor.getIdproveedor().toString());
+        if (Utilidades.validarNulo(parametroModuloLaboratorio)) {
+            if (parametroModuloLaboratorio.getIdmodulolaboratorio() != null) {
+                filtros.put("parametroModuloLaboratorio", parametroModuloLaboratorio.getIdmodulolaboratorio().toString());
+            }
         }
-        if (parametroTipoActivo.getIdtipoactivo() != null) {
-            filtros.put("parametroTipoActivo", parametroTipoActivo.getIdtipoactivo().toString());
+        if (Utilidades.validarNulo(parametroProveedor)) {
+            if (parametroProveedor.getIdproveedor() != null) {
+                filtros.put("parametroProveedor", parametroProveedor.getIdproveedor().toString());
+            }
+        }
+        if (Utilidades.validarNulo(parametroTipoActivo)) {
+            if (parametroTipoActivo.getIdtipoactivo() != null) {
+                filtros.put("parametroTipoActivo", parametroTipoActivo.getIdtipoactivo().toString());
+            }
         }
     }
 
@@ -152,21 +178,88 @@ public class ControllerAdminstrarEquipos implements Serializable {
             if (listaEquiposElementos != null) {
                 if (listaEquiposElementos.size() > 0) {
                     activarExport = false;
+                    listaEquiposElementosTabla = new ArrayList<EquipoElemento>();
+                    tamTotalEquipo = listaEquiposElementos.size();
+                    posicionEquipoTabla = 0;
+                    cargarDatosTablaEquipo();
                 } else {
                     activarExport = true;
-
+                    listaEquiposElementosTabla = null;
+                    tamTotalEquipo = 0;
+                    posicionEquipoTabla = 0;
+                    bloquearPagAntEquipo = true;
+                    bloquearPagSigEquipo = true;
                 }
+            } else {
+                listaEquiposElementosTabla = null;
+                tamTotalEquipo = 0;
+                posicionEquipoTabla = 0;
+                bloquearPagAntEquipo = true;
+                bloquearPagSigEquipo = true;
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros : " + e.toString());
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    private void cargarDatosTablaEquipo() {
+        if (tamTotalEquipo < 10) {
+            for (int i = 0; i < tamTotalEquipo; i++) {
+                listaEquiposElementosTabla.add(listaEquiposElementos.get(i));
+            }
+            bloquearPagSigEquipo = true;
+            bloquearPagAntEquipo = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaEquiposElementosTabla.add(listaEquiposElementos.get(i));
+            }
+            bloquearPagSigEquipo = false;
+            bloquearPagAntEquipo = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteEquipo() {
+        listaEquiposElementosTabla = new ArrayList<EquipoElemento>();
+        posicionEquipoTabla = posicionEquipoTabla + 10;
+        int diferencia = tamTotalEquipo - posicionEquipoTabla;
+        if (diferencia > 10) {
+            for (int i = posicionEquipoTabla; i < (posicionEquipoTabla + 10); i++) {
+                listaEquiposElementosTabla.add(listaEquiposElementos.get(i));
+            }
+            bloquearPagSigEquipo = false;
+            bloquearPagAntEquipo = false;
+        } else {
+            for (int i = posicionEquipoTabla; i < (posicionEquipoTabla + diferencia); i++) {
+                listaEquiposElementosTabla.add(listaEquiposElementos.get(i));
+            }
+            bloquearPagSigEquipo = true;
+            bloquearPagAntEquipo = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorEquipo() {
+        listaEquiposElementosTabla = new ArrayList<EquipoElemento>();
+        posicionEquipoTabla = posicionEquipoTabla - 10;
+        int diferencia = tamTotalEquipo - posicionEquipoTabla;
+        if (diferencia == tamTotalEquipo) {
+            for (int i = posicionEquipoTabla; i < (posicionEquipoTabla + 10); i++) {
+                listaEquiposElementosTabla.add(listaEquiposElementos.get(i));
+            }
+            bloquearPagSigEquipo = false;
+            bloquearPagAntEquipo = true;
+        } else {
+            for (int i = posicionEquipoTabla; i < (posicionEquipoTabla + 10); i++) {
+                listaEquiposElementosTabla.add(listaEquiposElementos.get(i));
+            }
+            bloquearPagSigEquipo = false;
+            bloquearPagAntEquipo = false;
+        }
+    }
+
+    public String limpiarProcesoBusqueda() {
         activarAreaProfundizacion = true;
         activarSalaLaboratorio = true;
         activarModuloLaboratorio = true;
-        listaEquiposElementos = null;
         activarExport = true;
         parametroNombre = null;
         parametroInventario = null;
@@ -179,14 +272,16 @@ public class ControllerAdminstrarEquipos implements Serializable {
         parametroTipoActivo = new TipoActivo();
         parametroEstadoEquipo = new EstadoEquipo();
         parametroProveedor = new Proveedor();
-        inicializarFiltros();
         listaSalasLaboratorios = null;
         listaModulosLaboratorios = null;
-    }
-
-    public String dispararPaginaNuevoRegistro() {
-        limpiarProcesoBusqueda();
-        return "adicionarplantaequipo";
+        listaEquiposElementos = null;
+        listaEquiposElementosTabla = null;
+        posicionEquipoTabla = 0;
+        tamTotalEquipo = 0;
+        bloquearPagAntEquipo = true;
+        bloquearPagSigEquipo = true;
+        inicializarFiltros();
+        return paginaAnterior;
     }
 
     public void actualizarLaboratoriosAreasProfundizacion() {
@@ -427,20 +522,36 @@ public class ControllerAdminstrarEquipos implements Serializable {
         this.listaEquiposElementos = listaEquiposElementos;
     }
 
-    public List<EquipoElemento> getFiltrarListaEquiposElementos() {
-        return filtrarListaEquiposElementos;
-    }
-
-    public void setFiltrarListaEquiposElementos(List<EquipoElemento> filtrarListaEquiposElementos) {
-        this.filtrarListaEquiposElementos = filtrarListaEquiposElementos;
-    }
-
     public String getAltoTabla() {
         return altoTabla;
     }
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public List<EquipoElemento> getListaEquiposElementosTabla() {
+        return listaEquiposElementosTabla;
+    }
+
+    public void setListaEquiposElementosTabla(List<EquipoElemento> listaEquiposElementosTabla) {
+        this.listaEquiposElementosTabla = listaEquiposElementosTabla;
+    }
+
+    public boolean isBloquearPagSigEquipo() {
+        return bloquearPagSigEquipo;
+    }
+
+    public void setBloquearPagSigEquipo(boolean bloquearPagSigEquipo) {
+        this.bloquearPagSigEquipo = bloquearPagSigEquipo;
+    }
+
+    public boolean isBloquearPagAntEquipo() {
+        return bloquearPagAntEquipo;
+    }
+
+    public void setBloquearPagAntEquipo(boolean bloquearPagAntEquipo) {
+        this.bloquearPagAntEquipo = bloquearPagAntEquipo;
     }
 
 }

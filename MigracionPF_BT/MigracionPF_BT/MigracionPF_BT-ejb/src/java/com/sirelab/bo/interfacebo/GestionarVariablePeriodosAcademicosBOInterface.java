@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.PeriodoAcademico;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -19,4 +20,6 @@ public interface GestionarVariablePeriodosAcademicosBOInterface {
     public void crearPeriodoAcademico(PeriodoAcademico periodo);
 
     public void editarPeriodoAcademico(PeriodoAcademico periodo);
+
+    public PeriodoAcademico consultarPeriodoAcademicoPorID(BigInteger idRegistro);
 }
