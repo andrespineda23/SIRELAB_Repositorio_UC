@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a><p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="row col-md-12">
+                            <h2 class="info">
+                                Información Registro
+                            </h2>
+                            <p>
+                                Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                            </p>
+                            <p>
+                                Este registro es unicamente para el ingreso de periodos academicos.
+                            </p>
+                        </div>
+
+                        <div class="col-md-12 row">
+                            <fieldset>
+                                <legend class="text-info">Datos Basicos</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Detalle Periodo Academico*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarHojaVidaEquipo.inputDetalle}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarHojaVidaEquipo.validarDetalle()}" execute="inputDetalle" render="inputDetalle msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Fecha Inicio*"/></strong>
+                                    <h:inputText value="#{controllerRegistrarHojaVidaEquipo.inputFechaEvento}" required="true" class="form-control" id="inputFechaEvento" requiredMessage="La Fecha Inicial es obligatoria.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarHojaVidaEquipo.validarFechaEvento()}" execute="inputFechaEvento" render="inputFechaEvento msnFechaEvento" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnFechaEvento" for="inputFechaEvento" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Fecha Finalización*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarHojaVidaEquipo.inputFechaRegistro}" required="true" class="form-control" id="inputFechaRegistro" requiredMessage="La Fecha Final es obligatoria.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarHojaVidaEquipo.validarFechaRegistro()}" execute="inputFechaRegistro" render="inputFechaRegistro msnFechaRegistro" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnFechaRegistro" for="inputFechaRegistro" style="color: red"/></h6>
+                                </div>
+
+                            </fieldset>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <div class="left pull-left">
+                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarHojaVidaEquipo.mensajeFormulario}"/></strong>
+                            </div>
+                            <div class="right pull-right">
+                                <h:commandButton value="Registrar" actionListener="#{controllerRegistrarHojaVidaEquipo.registrarHojaVidaEquipo()}" class="btn btn-success" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarHojaVidaEquipo.cerrarPagina()}" actionListener="#{controllerHojaVidaEquipo.recibirIDEquipoElemento(controllerRegistrarHojaVidaEquipo.idEquipo)}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

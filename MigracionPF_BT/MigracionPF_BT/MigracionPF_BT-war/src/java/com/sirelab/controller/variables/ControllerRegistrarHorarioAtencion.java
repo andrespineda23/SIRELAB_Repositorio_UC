@@ -78,11 +78,24 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
         return retorno;
     }
 
+    public boolean validarCodigoRepetido() {
+        boolean retorno = true;
+        HorarioAtencion registro = gestionarVariableHorariosAtencionBO.consultarHorarioAtencionPorCodigo(inputCodigo);
+        if (null != registro) {
+            retorno = false;
+        }
+        return retorno;
+    }
+
     public void registrarHorarioAtencion() {
         if (validarResultadosValidacion() == true) {
-            almacenarNuevoRegistro();
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
-            restaurarFormulario();
+            if (validarCodigoRepetido() == true) {
+                almacenarNuevoRegistro();
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                restaurarFormulario();
+            } else {
+                mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
+            }
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }

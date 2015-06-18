@@ -110,7 +110,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 restaurarFormulario();
             } else {
-                mensajeFormulario = "La fecha final es menor o igual que la fecha inicial, por favor corregir para continuar.";
+                mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
             }
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -141,7 +141,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     public String cerrarPagina() {
         cancelarPeriodoAcademico();
-        return "variables_reserva";
+        return "hojadevida";
     }
 
     private void restaurarFormulario() {

@@ -32,6 +32,7 @@ public class ControllerAdministrarComponentes implements Serializable {
     //
     private List<ComponenteEquipo> listaComponentesEquipos;
     private List<ComponenteEquipo> listaComponentesEquiposTabla;
+    private List<ComponenteEquipo> listaBorrarComponentesEquipos;
     private int posicionComponenteTabla;
     private int tamTotalComponente;
     private boolean bloquearPagSigComponente, bloquearPagAntComponente;
@@ -42,6 +43,7 @@ public class ControllerAdministrarComponentes implements Serializable {
 
     @PostConstruct
     public void init() {
+        listaBorrarComponentesEquipos = new ArrayList<ComponenteEquipo>();
         listaComponentesEquiposTabla = null;
         listaComponentesEquipos = null;
         posicionComponenteTabla = 0;
@@ -128,6 +130,7 @@ public class ControllerAdministrarComponentes implements Serializable {
         tamTotalComponente = 0;
         bloquearPagAntComponente = true;
         bloquearPagSigComponente = true;
+        listaBorrarComponentesEquipos = new ArrayList<ComponenteEquipo>();
         return "registrar_componente";
     }
 
@@ -138,9 +141,45 @@ public class ControllerAdministrarComponentes implements Serializable {
         tamTotalComponente = 0;
         bloquearPagAntComponente = true;
         bloquearPagSigComponente = true;
+        listaBorrarComponentesEquipos = new ArrayList<ComponenteEquipo>();
         return "detalles_equipo";
     }
 
+    public void eliminarRegistroComponenteEquipo(BigInteger idComponente) {
+        int posicion = -1;
+        for (int i = 0; i < listaComponentesEquipos.size(); i++) {
+            if (listaComponentesEquipos.get(i).getIdcomponenteequipo().equals(idComponente)) {
+                posicion = i;
+                break;
+            }
+        }
+        if (posicion != -1) {
+            listaComponentesEquipos.remove(posicion);
+            if (null != listaComponentesEquipos && (!listaComponentesEquipos.isEmpty())) {
+                listaComponentesEquiposTabla = new ArrayList<ComponenteEquipo>();
+                tamTotalComponente = listaComponentesEquipos.size();
+                posicionComponenteTabla = 0;
+                cargarDatosTablaComponenteEquipo();
+            }
+        }
+    }
+
+    public void guardarInformacionComponenteEquipo() {
+        borrarComponentesEquipo();
+        obtenerComponentesAsociadosAlEquipo();
+        listaBorrarComponentesEquipos = new ArrayList<ComponenteEquipo>();
+    }
+
+    private void borrarComponentesEquipo() {
+        for (int i = 0; i < listaBorrarComponentesEquipos.size(); i++) {
+            gestionarPlantaComponentesEquiposBO.eliminarComponenteEquipo(listaBorrarComponentesEquipos.get(i));
+        }
+    }
+
+    public void restaurarInformacionComponenteEquipo() {
+        obtenerComponentesAsociadosAlEquipo();
+        listaBorrarComponentesEquipos = new ArrayList<ComponenteEquipo>();
+    }
     /*    
      //EXPORTAR
      public void exportPDF() throws IOException {
@@ -159,6 +198,7 @@ public class ControllerAdministrarComponentes implements Serializable {
      context.responseComplete();
      }
      */
+
     public String cambiarPaginaDetalles() {
         limpiarProcesoBusqueda();
         return "detalles_componente";

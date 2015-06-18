@@ -22,4 +22,6 @@ public interface GestionarVariableHorariosAtencionBOInterface {
     public void editarHorarioAtencion(HorarioAtencion horario);
 
     public HorarioAtencion consultarHorarioAtencionPorID(BigInteger idRegistro);
+
+    public HorarioAtencion consultarHorarioAtencionPorCodigo(String codigo);
 }

@@ -1803,6 +1803,60 @@
     
     
     <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_equipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>hojadevida</from-outcome>
+            <to-view-id>/estructura_laboratorio/hojavidaequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/hojavidaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_equipo</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_equipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/registrar_hojavidaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>hojadevida</from-outcome>
+            <to-view-id>/estructura_laboratorio/hojavidaequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/hojavidaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_hojavidaequipo</from-outcome>
+            <to-view-id>/estructura_laboratorio/registrar_hojavidaequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/detalles_hojavidaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>hojadevida</from-outcome>
+            <to-view-id>/estructura_laboratorio/hojavidaequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/estructura_laboratorio/hojavidaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_hojavidaequipo</from-outcome>
+            <to-view-id>/estructura_laboratorio/detalles_hojavidaequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/estructura_laboratorio/administrar_componentes.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrar_componente</from-outcome>
@@ -1836,7 +1890,6 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-    
     
     
 </faces-config>

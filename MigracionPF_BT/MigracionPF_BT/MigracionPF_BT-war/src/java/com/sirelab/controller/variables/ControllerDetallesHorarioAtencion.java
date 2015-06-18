@@ -95,12 +95,27 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
         return retorno;
     }
 
+    public boolean validarCodigoRepetido() {
+        boolean retorno = true;
+        HorarioAtencion registro = gestionarVariableHorariosAtencionBO.consultarHorarioAtencionPorCodigo(inputCodigo);
+        if (null != registro) {
+            if (!horarioAtencionDetalles.getIdhorarioatencion().equals(registro.getIdhorarioatencion())) {
+                retorno = false;
+            }
+        }
+        return retorno;
+    }
+
     public void registrarModificacionHorarioAtencion() {
         if (modificacionesRegistro == true) {
             if (validarResultadosValidacion() == true) {
-                almacenarModificacionRegistro();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
-                cargarInformacionRegistro();
+                if (validarCodigoRepetido() == true) {
+                    almacenarModificacionRegistro();
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    cargarInformacionRegistro();
+                } else {
+                    mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
+                }
             } else {
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }

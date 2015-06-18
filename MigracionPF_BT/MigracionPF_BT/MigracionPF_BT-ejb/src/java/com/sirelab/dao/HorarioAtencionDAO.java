@@ -82,4 +82,19 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             return null;
         }
     }
+
+    @Override
+    public HorarioAtencion buscarHorarioAtencionPorCodigo(String codigo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM HorarioAtencion p WHERE p.codigohorario=:codigo");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("codigo", codigo);
+            HorarioAtencion registro = (HorarioAtencion) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarHorarioAtencionPorCodigo HorarioAtencionDAO : " + e.toString());
+            return null;
+        }
+    }
 }

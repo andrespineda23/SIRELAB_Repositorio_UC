@@ -24,4 +24,6 @@ public interface HorarioAtencionDAOInterface {
     public List<HorarioAtencion> consultarHorariosAtencion();
 
     public HorarioAtencion buscarHorarioAtencionPorID(BigInteger idRegistro);
+
+    public HorarioAtencion buscarHorarioAtencionPorCodigo(String codigo);
 }

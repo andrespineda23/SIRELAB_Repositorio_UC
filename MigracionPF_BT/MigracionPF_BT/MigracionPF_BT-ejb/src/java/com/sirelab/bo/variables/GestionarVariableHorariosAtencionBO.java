@@ -44,6 +44,17 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
             return null;
         }
     }
+    
+    @Override
+    public HorarioAtencion consultarHorarioAtencionPorCodigo(String codigo) {
+        try {
+            HorarioAtencion registro = horarioAtencionInterface.buscarHorarioAtencionPorCodigo(codigo);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorCodigo: " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public void crearHorarioAtencion(HorarioAtencion horario) {

@@ -52,6 +52,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EquipoElemento.findByFechaadquisicion", query = "SELECT e FROM EquipoElemento e WHERE e.fechaadquisicion = :fechaadquisicion")})
 public class EquipoElemento implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
+    private Collection<HojaVidaEquipo> hojaVidaEquipoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
     private Collection<ComponenteEquipo> componenteEquipoCollection;
     private static final long serialVersionUID = 1L;
     @Id
@@ -292,6 +294,15 @@ public class EquipoElemento implements Serializable {
 
     public void setComponenteEquipoCollection(Collection<ComponenteEquipo> componenteEquipoCollection) {
         this.componenteEquipoCollection = componenteEquipoCollection;
+    }
+
+    @XmlTransient
+    public Collection<HojaVidaEquipo> getHojaVidaEquipoCollection() {
+        return hojaVidaEquipoCollection;
+    }
+
+    public void setHojaVidaEquipoCollection(Collection<HojaVidaEquipo> hojaVidaEquipoCollection) {
+        this.hojaVidaEquipoCollection = hojaVidaEquipoCollection;
     }
     
 }
