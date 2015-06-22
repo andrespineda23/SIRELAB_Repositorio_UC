@@ -191,7 +191,7 @@
                 <br></br>
                 <div class="row">
                     <div class="col-md-1">
-                        <h:commandButton value="Nuevo Laboratorio" class="btn btn-success" action="registrar_laboratorio" actionListener="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}"/>
+                        <h:commandButton value="Nuevo Laboratorio" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}" class="btn btn-success" action="registrar_laboratorio" actionListener="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}"/>
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">

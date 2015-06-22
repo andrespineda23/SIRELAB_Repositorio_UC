@@ -7,6 +7,7 @@ package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.ModuloLaboratorio;
@@ -21,6 +22,8 @@ import java.util.Map;
  * @author ANDRES PINEDA
  */
 public interface GestionarPlantaModulosBOInterface {
+
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 
     public ModuloLaboratorio obtenerModuloLaboratorioPorCodigoYSala(String codigo, BigInteger sala);
 

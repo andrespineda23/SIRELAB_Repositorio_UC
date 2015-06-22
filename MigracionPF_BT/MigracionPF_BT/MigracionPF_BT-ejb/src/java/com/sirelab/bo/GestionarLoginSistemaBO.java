@@ -18,6 +18,7 @@ import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.entidades.Usuario;
+import com.sirelab.utilidades.EncriptarContrasenia;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
@@ -50,6 +51,10 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     EntidadExternaDAOInterface entidadExternaDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+
+    private final String NUMEROS = "0123456789";
+    private final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
 
     @Override
     public List<Departamento> obtenerListasDepartamentos() {
@@ -136,18 +141,18 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     }
 
     @Override
+    public String generarNuevaContrasenia() {
+        String key = MAYUSCULAS + MINUSCULAS + NUMEROS;
+        String pswd = "";
+        for (int i = 0; i < 12; i++) {
+            pswd += (key.charAt((int) (Math.random() * key.length())));
+        }
+        return pswd;
+    }
+
+    @Override
     public Persona configurarContraseñaPersona(Persona persona) {
         try {
-            boolean bandera = true;
-            int nuevaPass = 0;
-            while (bandera) {
-                nuevaPass = (int) (Math.random() * 9999999) + 1;
-                if (nuevaPass >= 100000) {
-                    bandera = false;
-                }
-            }
-            String newPass = String.valueOf(nuevaPass) + "SIRELAB";
-            persona.getUsuario().setPasswordusuario(newPass);
             usuarioDAO.editarUsuario(persona.getUsuario());
             Persona registro = personaDAO.buscarPersonaPorID(persona.getIdpersona());
             return registro;
@@ -160,7 +165,8 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     @Override
     public Persona obtenerPersonaLogin(String usuario, String password) {
         try {
-            Persona registro = personaDAO.obtenerPersonaLoginUserPassword(usuario, password);
+            EncriptarContrasenia obj = new EncriptarContrasenia();
+            Persona registro = personaDAO.obtenerPersonaLoginUserPassword(usuario, obj.encriptarContrasenia(password));
             return registro;
         } catch (Exception e) {
             System.out.println("Error obtenerPersonaLogin GestionarLoginSistemaBO : " + e.toString());

@@ -6,6 +6,7 @@ import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Persona;
+import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -95,8 +96,11 @@ public class ControllerIndex implements Serializable {
                 correoRecuperacion = null;
                 identificacionRecuperacion = null;
                 if (recuperar != null) {
+                    String nuevaContrasenia = gestionarLoginSistemaBO.generarNuevaContrasenia();
+                    EncriptarContrasenia obj = new EncriptarContrasenia();
+                    recuperar.getUsuario().setPasswordusuario(obj.encriptarContrasenia(nuevaContrasenia));
                     Persona personaRecuperada = gestionarLoginSistemaBO.configurarContraseñaPersona(recuperar);
-                    enviarCorreoRecuperacion(personaRecuperada);
+                    enviarCorreoRecuperacion(personaRecuperada, nuevaContrasenia);
                     mensajeFormularioRecupera = "Contraseña recuperada.";
                     paginaRecuperacion = "recuperacionexitosa";
                 } else {
@@ -125,7 +129,7 @@ public class ControllerIndex implements Serializable {
      *
      * @param personaRecuperada Usuario que solicita el cambio de contraseña
      */
-    public void enviarCorreoRecuperacion(Persona personaRecuperada) {
+    public void enviarCorreoRecuperacion(Persona personaRecuperada, String nuevaContrasenia) {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -144,7 +148,7 @@ public class ControllerIndex implements Serializable {
             message.setFrom(new InternetAddress("proyecto.sirelab@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(personaRecuperada.getEmailpersona()));
             message.setSubject("Recuperación de Contraseña - SIRELAB UC");
-            message.setText("Se solicito la recuperación de la contraseña de SIRELAB, la contraseña restaurada es la siguiente: " + personaRecuperada.getUsuario().getPasswordusuario() + " . Se solicita ingresar al sistema y cambiar la contraseña.");
+            message.setText("Se solicito la recuperación de la contraseña de SIRELAB, la contraseña restaurada es la siguiente: " + nuevaContrasenia + " . Se solicita ingresar al sistema y cambiar la contraseña.");
 
             Transport.send(message);
 
@@ -213,9 +217,10 @@ public class ControllerIndex implements Serializable {
     }
 
     /**
-     * Metodo encargado del login al sistema de información
-     * idTipoUsuario : 1- Administrador / 2- Docente / 3- Estudiante / 4-EncargadoLab / 5-EntidadExterna
-     * 
+     * Metodo encargado del login al sistema de información idTipoUsuario : 1-
+     * Administrador / 2- Docente / 3- Estudiante / 4-EncargadoLab /
+     * 5-EntidadExterna
+     *
      */
     public void loginUsuario() {
         paginaSiguiente = null;

@@ -13,6 +13,7 @@ import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.Usuario;
+import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.List;
@@ -423,7 +424,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
             usuarioNuevo.setNombreusuario(inputEmail);
-            usuarioNuevo.setPasswordusuario(inputContrasenia);
+            EncriptarContrasenia obj = new EncriptarContrasenia();
+            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputContrasenia));
             Persona personaNueva = new Persona();
             personaNueva.setApellidospersona(inputApellido);
             personaNueva.setEmailpersona(inputEmail);

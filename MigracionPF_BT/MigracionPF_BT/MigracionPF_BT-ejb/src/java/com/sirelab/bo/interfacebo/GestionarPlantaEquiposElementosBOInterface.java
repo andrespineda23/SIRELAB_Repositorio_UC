@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
 import com.sirelab.entidades.Laboratorio;
@@ -53,4 +54,6 @@ public interface GestionarPlantaEquiposElementosBOInterface {
     public List<SalaLaboratorio> consultarSalasLaboratorioPorIDAreaProfundizacion(BigInteger areaProfundizacion);
 
     public EquipoElemento obtenerEquipoElementoPorCodigoYModulo(String codigo, BigInteger modulo);
+
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 }

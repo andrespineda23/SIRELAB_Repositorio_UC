@@ -2,9 +2,11 @@ package com.sirelab.bo.planta;
 
 import com.sirelab.bo.interfacebo.GestionarPlantaLaboratoriosBOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
+import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import java.math.BigInteger;
@@ -26,6 +28,30 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
     DepartamentoDAOInterface departamentoDAO;
     @EJB
     LaboratorioDAOInterface laboratorioDAO;
+    @EJB
+    EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+
+    @Override
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
+        try {
+            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Departamento consultarDepartamentoPorNombre(String nombre) {
+        try {
+            Departamento registro = departamentoDAO.buscarDepartamentoPorNombre(nombre);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratorioBO consultarDepartamentoPorNombre : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Facultad> consultarFacultadesRegistradas() {
@@ -88,7 +114,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             return null;
         }
     }
-    
+
     @Override
     public Laboratorio obtenerLaboratorioPorCodigoYDepartamento(String codigo, BigInteger departamento) {
         try {

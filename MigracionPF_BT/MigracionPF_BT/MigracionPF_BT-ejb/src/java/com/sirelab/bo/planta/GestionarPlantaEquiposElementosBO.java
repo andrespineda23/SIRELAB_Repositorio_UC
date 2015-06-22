@@ -7,6 +7,7 @@ package com.sirelab.bo.planta;
 
 import com.sirelab.bo.interfacebo.GestionarPlantaEquiposElementosBOInterface;
 import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
+import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstadoEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
@@ -16,6 +17,7 @@ import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.TipoActivoDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
 import com.sirelab.entidades.Laboratorio;
@@ -55,6 +57,19 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     ProveedorDAOInterface proveedorDAO;
     @EJB
     LaboratoriosPorAreasDAOInterface laboratoriosPorAreasDAO;
+    @EJB
+    EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+
+    @Override
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
+        try {
+            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaElementosEquiposBO obtenerEncargadoLaboratorioPorID : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
@@ -66,7 +81,7 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return null;
         }
     }
-    
+
     //@Override
     public List<Laboratorio> consultarLaboratoriosRegistrados() {
         try {
@@ -132,7 +147,7 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return null;
         }
     }
-    
+
     @Override
     public List<SalaLaboratorio> consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion(BigInteger laboratorio) {
         try {
@@ -205,7 +220,7 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return null;
         }
     }
-    
+
     @Override
     public EquipoElemento obtenerEquipoElementoPorCodigoYModulo(String codigo, BigInteger modulo) {
         try {

@@ -7,11 +7,12 @@ package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.GestionarPlantaLaboratoriosBOInterface;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -52,12 +54,16 @@ public class ControllerAdministrarLaboratorios implements Serializable {
     private String altoTabla;
     //
     private String paginaAnterior;
+    private UsuarioLogin usuarioLoginSistema;
+    //
+    private boolean perfilConsulta;
 
     public ControllerAdministrarLaboratorios() {
     }
 
     @PostConstruct
     public void init() {
+        perfilConsulta = false;
         activarDepartamento = true;
         activarExport = true;
         parametroNombre = null;
@@ -66,8 +72,6 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         parametroDepartamento = new Departamento();
         altoTabla = "150";
         inicializarFiltros();
-        listaLaboratorios = null;
-        listaDepartamentos = null;
         listaLaboratoriosTabla = null;
         listaLaboratorios = null;
         posicionLaboratorioTabla = 0;
@@ -76,8 +80,37 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         bloquearPagSigLaboratorio = true;
     }
 
+    private void cargarInformacionPerfil() {
+        usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            EncargadoLaboratorio encargadoUser = gestionarPlantaLaboratoriosBO.obtenerEncargadoLaboratorioPorID(usuarioLoginSistema.getIdUsuarioLogin());
+            if ("CONSULTA".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+                //proceso de solo consulta de la pagina
+                perfilConsulta = true;
+            } /*else {
+             if ("DEPARTAMENTO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             Departamento departamento = gestionarPlantaLaboratoriosBO.consultarDepartamentoPorNombre(encargadoUser.getTipoperfil().getNombre());
+             if (null != departamento) {
+             listaDepartamentos = new ArrayList<Departamento>();
+             listaDepartamentos.add(departamento);
+             }
+             } else {
+             if ("LABORATORIO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             } else {
+             if ("AREA PROFUNDIZACION".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             }
+             }
+             }
+
+             }
+             */
+
+        }
+    }
+
     public void recibirPaginaAnterior(String pagina) {
         paginaAnterior = pagina;
+        cargarInformacionPerfil();
     }
 
     private void inicializarFiltros() {
@@ -355,6 +388,14 @@ public class ControllerAdministrarLaboratorios implements Serializable {
 
     public void setBloquearPagAntLaboratorio(boolean bloquearPagAntLaboratorio) {
         this.bloquearPagAntLaboratorio = bloquearPagAntLaboratorio;
+    }
+
+    public boolean isPerfilConsulta() {
+        return perfilConsulta;
+    }
+
+    public void setPerfilConsulta(boolean perfilConsulta) {
+        this.perfilConsulta = perfilConsulta;
     }
 
 }

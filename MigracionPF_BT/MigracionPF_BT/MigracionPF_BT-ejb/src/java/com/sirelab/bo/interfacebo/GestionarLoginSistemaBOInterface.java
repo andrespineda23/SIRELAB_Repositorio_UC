@@ -20,6 +20,8 @@ import java.util.List;
  */
 public interface GestionarLoginSistemaBOInterface {
 
+    public String generarNuevaContrasenia();
+
     public List<Departamento> obtenerListasDepartamentos();
 
     public List<Carrera> obtenerListasCarreras();
@@ -27,7 +29,7 @@ public interface GestionarLoginSistemaBOInterface {
     public List<PlanEstudios> obtenerListasPlanesEstudioPorCarrera(BigInteger idCarrera);
 
     public Estudiante obtenerEstudiantePorCorreo(String correo);
-    
+
     public Estudiante obtenerEstudiantePorDocumento(String documento);
 
     public void almacenarNuevoEstudianteEnSistema(Usuario usuario, Persona persona, Estudiante estudiante);

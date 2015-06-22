@@ -3,6 +3,7 @@ package com.sirelab.bo.planta;
 import com.sirelab.bo.interfacebo.GestionarPlantaModulosBOInterface;
 import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.EdificioDAOInterface;
+import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
 import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
@@ -10,6 +11,7 @@ import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.SedeDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.ModuloLaboratorio;
@@ -42,6 +44,8 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
     SedeDAOInterface sedeDAO;
     @EJB
     LaboratoriosPorAreasDAOInterface laboratoriosPorAreasDAO;
+    @EJB
+    EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
 
     @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
@@ -50,6 +54,17 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
+        try {
+            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO obtenerEncargadoLaboratorioPorID : " + e.toString());
             return null;
         }
     }
@@ -159,7 +174,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             return null;
         }
     }
-    
+
     @Override
     public ModuloLaboratorio obtenerModuloLaboratorioPorCodigoYSala(String codigo, BigInteger sala) {
         try {

@@ -72,14 +72,14 @@
                                                     <fieldset>
                                                         <legend class="text-info">Datos Personales</legend>
                                                         <div class="form-group">
-                                                            <strong><h:outputText value="Nombre(s) Persona*"/></strong>
+                                                            <strong><h:outputText value="#{controllerConfigurarUsuario.mensajeNombre}*"/></strong>
                                                             <h:inputText maxlength="45" value="#{controllerConfigurarUsuario.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio." >
                                                                 <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarNombrePersona()}" execute="inputNombre" render="inputNombre msnNombre" />
                                                             </h:inputText>
                                                             <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
                                                         </div>
                                                         <div class="form-group">
-                                                            <strong><h:outputText value="Apellido(s) Persona*"/></strong>
+                                                            <strong><h:outputText value="#{controllerConfigurarUsuario.mensajeNombre}*"/></strong>
                                                             <h:inputText maxlength="45"  value="#{controllerConfigurarUsuario.inputApellido}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio."  >
                                                                 <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarApellidoPersona()}" execute="inputApellido" render="inputApellido msnApellido"/>
                                                             </h:inputText>
@@ -93,11 +93,8 @@
                                                             <h6><h:message id="msnID" for="inputID" style="color: red"/></h6>
                                                         </div>
                                                         <div class="form-group">
-                                                            <strong><h:outputText value="Correo Institucional*"/></strong>
-                                                            <div class="input-group">
-                                                                <h:inputText maxlength="29" readonly="true" value="#{controllerConfigurarUsuario.inputEmail}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio."/>
-                                                                <span class="input-group-addon">@ucentral.edu.co</span>
-                                                            </div>
+                                                            <strong><h:outputText value="Correo Contacto*"/></strong>
+                                                            <h:inputText maxlength="29" readonly="#{controllerConfigurarUsuario.activarEmail}" value="#{controllerConfigurarUsuario.inputEmail}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio."/>
                                                             <h6><h:message id="msnEmail" for="inputEmail" style="color: red"/></h6>
                                                         </div>
                                                         <fieldset>
@@ -150,21 +147,21 @@
                                                         <legend class="text-info">Cambio de Contraseña</legend>
                                                         <div class="form-group">
                                                             <strong><h:outputText value="Contraseña Anterior*"/></strong>
-                                                            <h:inputSecret maxlength="45" value="#{controllerConfigurarUsuario.inputContrasenia}" required="true" class="form-control" id="inputContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
+                                                            <h:inputSecret maxlength="20" value="#{controllerConfigurarUsuario.inputContrasenia}" required="true" class="form-control" id="inputContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
                                                                 <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarContraseniaPersona()}" execute="inputContrasenia" render="msnContrasenia" />
                                                             </h:inputSecret>
                                                             <h6><h:message id="msnContrasenia" for="inputContrasenia" style="color: red"/></h6>
                                                         </div>
                                                         <div class="form-group">
                                                             <strong><h:outputText value="Nueva Contraseña*"/></strong>
-                                                            <h:inputSecret maxlength="45" value="#{controllerConfigurarUsuario.inputContraseniaNueva}" required="true" class="form-control" id="inputContraseniaNueva" requiredMessage="El campo Contraseña es obligatorio.">
+                                                            <h:inputSecret maxlength="20" value="#{controllerConfigurarUsuario.inputContraseniaNueva}" required="true" class="form-control" id="inputContraseniaNueva" requiredMessage="El campo Contraseña es obligatorio.">
                                                                 <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarContraseniaNuevaPersona()}" execute="inputContraseniaNueva" render="msnContraseniaNueva" />
                                                             </h:inputSecret>
                                                             <h6><h:message id="msnContraseniaNueva" for="inputContraseniaNueva" style="color: red"/></h6>
                                                         </div>
                                                         <div class="form-group">
                                                             <strong><h:outputText value="Confirmar Contraseña*"/></strong>
-                                                            <h:inputSecret maxlength="45" value="#{controllerConfigurarUsuario.inputContraseniaConfirma}" required="true" class="form-control" id="inputContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
+                                                            <h:inputSecret maxlength="20" value="#{controllerConfigurarUsuario.inputContraseniaConfirma}" required="true" class="form-control" id="inputContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
                                                                 <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarContraseniaConfirmaPersona()}" execute="inputContraseniaConfirma" render="msnContraseniaConfirma" />
                                                             </h:inputSecret>
                                                             <h6><h:message id="msnContraseniaConfirma" for="inputContraseniaConfirma" style="color: red"/></h6>

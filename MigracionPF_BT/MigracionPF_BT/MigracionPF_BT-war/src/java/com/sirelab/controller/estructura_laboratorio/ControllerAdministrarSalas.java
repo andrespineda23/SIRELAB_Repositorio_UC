@@ -9,9 +9,11 @@ import com.sirelab.bo.interfacebo.GestionarPlantaSalasBOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.Sede;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -23,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -63,7 +66,9 @@ public class ControllerAdministrarSalas implements Serializable {
     //
     private String altoTabla;
     //
+    private UsuarioLogin usuarioLoginSistema;
     //
+    private boolean perfilConsulta;
     private String paginaAnterior;
 
     public ControllerAdministrarSalas() {
@@ -82,9 +87,9 @@ public class ControllerAdministrarSalas implements Serializable {
         parametroLaboratorio = new Laboratorio();
         parametroEdificio = new Edificio();
         parametroSede = new Sede();
-        listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
-        listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosRegistrados();
-        listaAreasProfundizacion = gestionarPlantaSalasBO.consultarAreasProfundizacionRegistradas();
+        listaSedes = null;
+        listaDepartamentos = null;
+        listaAreasProfundizacion = null;
         altoTabla = "150";
         inicializarFiltros();
         listaLaboratorios = null;
@@ -96,6 +101,34 @@ public class ControllerAdministrarSalas implements Serializable {
         tamTotalSala = 0;
         bloquearPagAntSala = true;
         bloquearPagSigSala = true;
+    }
+
+    private void cargarInformacionPerfil() {
+        usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            EncargadoLaboratorio encargadoUser = gestionarPlantaSalasBO.obtenerEncargadoLaboratorioPorID(usuarioLoginSistema.getIdUsuarioLogin());
+            if ("CONSULTA".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+                //proceso de solo consulta de la pagina
+                perfilConsulta = true;
+            } /*else {
+             if ("DEPARTAMENTO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             Departamento departamento = gestionarPlantaLaboratoriosBO.consultarDepartamentoPorNombre(encargadoUser.getTipoperfil().getNombre());
+             if (null != departamento) {
+             listaDepartamentos = new ArrayList<Departamento>();
+             listaDepartamentos.add(departamento);
+             }
+             } else {
+             if ("LABORATORIO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             } else {
+             if ("AREA PROFUNDIZACION".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             }
+             }
+             }
+
+             }
+             */
+
+        }
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -352,6 +385,9 @@ public class ControllerAdministrarSalas implements Serializable {
     }
 
     public List<Departamento> getListaDepartamentos() {
+        if (listaDepartamentos == null) {
+            listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosRegistrados();
+        }
         return listaDepartamentos;
     }
 
@@ -384,6 +420,9 @@ public class ControllerAdministrarSalas implements Serializable {
     }
 
     public List<AreaProfundizacion> getListaAreasProfundizacion() {
+        if (listaAreasProfundizacion == null) {
+            listaAreasProfundizacion = gestionarPlantaSalasBO.consultarAreasProfundizacionRegistradas();
+        }
         return listaAreasProfundizacion;
     }
 
@@ -400,6 +439,9 @@ public class ControllerAdministrarSalas implements Serializable {
     }
 
     public List<Sede> getListaSedes() {
+        if (listaSedes == null) {
+            listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
+        }
         return listaSedes;
     }
 
@@ -501,6 +543,14 @@ public class ControllerAdministrarSalas implements Serializable {
 
     public void setBloquearPagAntSala(boolean bloquearPagAntSala) {
         this.bloquearPagAntSala = bloquearPagAntSala;
+    }
+
+    public boolean isPerfilConsulta() {
+        return perfilConsulta;
+    }
+
+    public void setPerfilConsulta(boolean perfilConsulta) {
+        this.perfilConsulta = perfilConsulta;
     }
 
 }

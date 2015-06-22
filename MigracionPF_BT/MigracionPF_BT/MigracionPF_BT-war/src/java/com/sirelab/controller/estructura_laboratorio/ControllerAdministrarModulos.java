@@ -6,9 +6,11 @@
 package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.GestionarPlantaModulosBOInterface;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -54,6 +57,9 @@ public class ControllerAdministrarModulos implements Serializable {
     //
     //
     private String paginaAnterior;
+    private UsuarioLogin usuarioLoginSistema;
+    //
+    private boolean perfilConsulta;
 
     public ControllerAdministrarModulos() {
     }
@@ -67,7 +73,7 @@ public class ControllerAdministrarModulos implements Serializable {
         parametroDetalle = null;
         parametroLaboratorioPorArea = new LaboratoriosPorAreas();
         parametroSalaLaboratorio = new SalaLaboratorio();
-        listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
+        listaLaboratoriosPorAreas = null;
         altoTabla = "150";
         inicializarFiltros();
         listaSalasLaboratorios = null;
@@ -78,6 +84,34 @@ public class ControllerAdministrarModulos implements Serializable {
         tamTotalModulo = 0;
         bloquearPagAntModulo = true;
         bloquearPagSigModulo = true;
+    }
+
+    private void cargarInformacionPerfil() {
+        usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            EncargadoLaboratorio encargadoUser = gestionarPlantaModulosBO.obtenerEncargadoLaboratorioPorID(usuarioLoginSistema.getIdUsuarioLogin());
+            if ("CONSULTA".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+                //proceso de solo consulta de la pagina
+                perfilConsulta = true;
+            } /*else {
+             if ("DEPARTAMENTO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             Departamento departamento = gestionarPlantaLaboratoriosBO.consultarDepartamentoPorNombre(encargadoUser.getTipoperfil().getNombre());
+             if (null != departamento) {
+             listaDepartamentos = new ArrayList<Departamento>();
+             listaDepartamentos.add(departamento);
+             }
+             } else {
+             if ("LABORATORIO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             } else {
+             if ("AREA PROFUNDIZACION".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             }
+             }
+             }
+
+             }
+             */
+
+        }
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -287,6 +321,9 @@ public class ControllerAdministrarModulos implements Serializable {
     }
 
     public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
+        if (listaLaboratoriosPorAreas == null) {
+            listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
+        }
         return listaLaboratoriosPorAreas;
     }
 
@@ -388,6 +425,14 @@ public class ControllerAdministrarModulos implements Serializable {
 
     public void setBloquearPagAntModulo(boolean bloquearPagAntModulo) {
         this.bloquearPagAntModulo = bloquearPagAntModulo;
+    }
+
+    public boolean isPerfilConsulta() {
+        return perfilConsulta;
+    }
+
+    public void setPerfilConsulta(boolean perfilConsulta) {
+        this.perfilConsulta = perfilConsulta;
     }
 
 }

@@ -8,10 +8,12 @@ package com.sirelab.bo.planta;
 import com.sirelab.bo.interfacebo.GestionarPlantaLaboratoriosPorAreasBOInterface;
 import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
+import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import java.math.BigInteger;
@@ -35,6 +37,8 @@ public class GestionarPlantaLaboratoriosPorAreasBO implements GestionarPlantaLab
     LaboratorioDAOInterface laboratorioDAO;
     @EJB
     AreaProfundizacionDAOInterface areaProfundizacionDAO;
+    @EJB
+    EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
 
     @Override
     public LaboratoriosPorAreas consultarLaboratorioPorAreaPorID(BigInteger idRegistro) {
@@ -43,6 +47,17 @@ public class GestionarPlantaLaboratoriosPorAreasBO implements GestionarPlantaLab
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO consultarLaboratorioPorAreaPorID : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
+        try {
+            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO obtenerEncargadoLaboratorioPorID : " + e.toString());
             return null;
         }
     }

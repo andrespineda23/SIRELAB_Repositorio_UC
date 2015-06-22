@@ -7,6 +7,7 @@ package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import java.math.BigInteger;
@@ -36,4 +37,6 @@ public interface GestionarPlantaLaboratoriosPorAreasBOInterface {
     public LaboratoriosPorAreas consultarLaboratorioPorAreaPorID(BigInteger idRegistro);
 
     public LaboratoriosPorAreas consultarLaboratorioPorAreaPorLabYArea(BigInteger laboratorio, BigInteger area);
+
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 }

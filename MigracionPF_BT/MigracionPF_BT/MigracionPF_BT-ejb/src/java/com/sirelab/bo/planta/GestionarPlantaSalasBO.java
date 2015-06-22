@@ -4,6 +4,7 @@ import com.sirelab.bo.interfacebo.GestionarPlantaSalasBOInterface;
 import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EdificioDAOInterface;
+import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
@@ -11,6 +12,7 @@ import com.sirelab.dao.interfacedao.SedeDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.SalaLaboratorio;
@@ -42,8 +44,21 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
     SedeDAOInterface sedeDAO;
     @EJB
     LaboratoriosPorAreasDAOInterface laboratoriosPorAreasDAO;
+    @EJB
+    EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
 
-    @Override 
+    @Override
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
+        try {
+            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarFacultadesRegistradas : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
         try {
             List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreassPorAreas();
@@ -148,7 +163,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
-    
+
     @Override
     public SalaLaboratorio obtenerSalaLaboratorioPorCodigoEdificioLabArea(String codigo, BigInteger edificio, BigInteger laboratorioArea) {
         try {

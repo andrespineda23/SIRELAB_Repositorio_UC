@@ -6,6 +6,7 @@ import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.Usuario;
+import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.List;
@@ -343,7 +344,8 @@ public class ControllerRegistrarEstudiante implements Serializable {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(false);
             usuarioNuevo.setNombreusuario(inputEmail);
-            usuarioNuevo.setPasswordusuario(inputContrasenia);
+            EncriptarContrasenia obj = new EncriptarContrasenia();
+            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputContrasenia));
             Persona personaNueva = new Persona();
             personaNueva.setApellidospersona(inputApellido);
             personaNueva.setDireccionpersona(inputDireccion);

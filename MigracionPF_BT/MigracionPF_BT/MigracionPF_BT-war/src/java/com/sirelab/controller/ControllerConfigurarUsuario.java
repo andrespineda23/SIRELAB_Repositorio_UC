@@ -8,6 +8,7 @@ package com.sirelab.controller;
 import com.sirelab.bo.interfacebo.GestionarConfigurarUsuarioBOInterface;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Usuario;
+import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -37,6 +38,9 @@ public class ControllerConfigurarUsuario implements Serializable {
     private boolean validacionesNombre, validacionesApellido, validacionesID, validacionesEmail;
     private boolean validacionesTelefono1, validacionesTelefono2, validacionesDireccion;
     private boolean validacionesContrasenia, validacionesContraseniaNueva, validacionesContraseniaConfirma;
+    private UsuarioLogin usuarioLogin;
+    private String mensajeNombre, mensajeApellido;
+    private boolean activarEmail;
 
     public ControllerConfigurarUsuario() {
     }
@@ -62,15 +66,25 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     private void obtenerPersonaConfigurar() {
-        UsuarioLogin usuarioLogin = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        usuarioLogin = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         personaConfigurar = gestionarConfigurarUsuarioBO.obtenerPersonaPorUsuarioModificar(usuarioLogin.getIdUsuarioLogin(), usuarioLogin.getNombreTipoUsuario());
         cargarDatosPersona();
     }
 
     private void cargarDatosPersona() {
+        if ("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLogin.getNombreTipoUsuario())) {
+            inputEmail = personaConfigurar.getEmailpersona();
+            mensajeApellido = "Nombre Secundario Entidad";
+            mensajeNombre = "Nombre Inicial Entidad";
+            activarEmail = false;
+        } else {
+            inputEmail = personaConfigurar.getEmailpersona() + "@ucentral.edu.co";
+            activarEmail = true;
+            mensajeApellido = "Nombre(s) Persona";
+            mensajeNombre = "Apellido(s) Persona";
+        }
         inputApellido = personaConfigurar.getApellidospersona();
         inputDireccion = personaConfigurar.getDireccionpersona();
-        inputEmail = personaConfigurar.getEmailpersona();
         inputID = personaConfigurar.getIdentificacionpersona();
         inputNombre = personaConfigurar.getNombrespersona();
         inputTelefono1 = personaConfigurar.getTelefono1persona();
@@ -206,7 +220,9 @@ public class ControllerConfigurarUsuario implements Serializable {
 
     public void validarContraseniaPersona() {
         if ((Utilidades.validarNulo(inputContrasenia)) && (!inputContrasenia.isEmpty())) {
-            if (personaConfigurar.getUsuario().getPasswordusuario().equals(inputContrasenia)) {
+            EncriptarContrasenia obj = new EncriptarContrasenia();
+            String contrasenia = obj.encriptarContrasenia(inputContrasenia);
+            if (personaConfigurar.getUsuario().getPasswordusuario().equals(contrasenia)) {
                 validacionesContrasenia = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:form2:inputContrasenia", new FacesMessage("La contraseña ingresada no es la correspondiente del usuario."));
@@ -220,7 +236,9 @@ public class ControllerConfigurarUsuario implements Serializable {
 
     public void validarContraseniaNuevaPersona() {
         if ((Utilidades.validarNulo(inputContraseniaNueva)) && (!inputContraseniaNueva.isEmpty())) {
-            if (!personaConfigurar.getUsuario().getPasswordusuario().equals(inputContraseniaNueva)) {
+            EncriptarContrasenia obj = new EncriptarContrasenia();
+            String contrasenia = obj.encriptarContrasenia(inputContraseniaNueva);
+            if (!personaConfigurar.getUsuario().getPasswordusuario().equals(contrasenia)) {
                 validacionesContraseniaNueva = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:form2:inputContraseniaNueva", new FacesMessage("La contraseña ingresada es igual que la actual del usuario."));
@@ -305,7 +323,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void cancelarModificacionUsuario() {
-        cargarDatosPersona();
+        obtenerPersonaConfigurar();
         validacionesApellido = true;
         validacionesNombre = true;
         validacionesID = true;
@@ -318,7 +336,8 @@ public class ControllerConfigurarUsuario implements Serializable {
     public void actualizarContrasenia() {
         if (validarResultadosContrasenia() == true) {
             Usuario usuario = personaConfigurar.getUsuario();
-            usuario.setPasswordusuario(inputContraseniaNueva);
+            EncriptarContrasenia obj = new EncriptarContrasenia();
+            usuario.setPasswordusuario(obj.encriptarContrasenia(inputContraseniaNueva));
             gestionarConfigurarUsuarioBO.actualizarContraseniaPersona(usuario);
             mensajeFormulario2 = "Se registro con exito el cambio de contraseña";
         } else {
@@ -430,6 +449,30 @@ public class ControllerConfigurarUsuario implements Serializable {
 
     public void setMensajeFormulario1(String mensajeFormulario1) {
         this.mensajeFormulario1 = mensajeFormulario1;
+    }
+
+    public String getMensajeNombre() {
+        return mensajeNombre;
+    }
+
+    public void setMensajeNombre(String mensajeNombre) {
+        this.mensajeNombre = mensajeNombre;
+    }
+
+    public String getMensajeApellido() {
+        return mensajeApellido;
+    }
+
+    public void setMensajeApellido(String mensajeApellido) {
+        this.mensajeApellido = mensajeApellido;
+    }
+
+    public boolean isActivarEmail() {
+        return activarEmail;
+    }
+
+    public void setActivarEmail(boolean activarEmail) {
+        this.activarEmail = activarEmail;
     }
 
 }

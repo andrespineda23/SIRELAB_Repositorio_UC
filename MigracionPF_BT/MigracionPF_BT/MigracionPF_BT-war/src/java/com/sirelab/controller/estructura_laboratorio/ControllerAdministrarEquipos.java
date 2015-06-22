@@ -6,6 +6,7 @@
 package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.GestionarPlantaEquiposElementosBOInterface;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
 import com.sirelab.entidades.LaboratoriosPorAreas;
@@ -13,6 +14,7 @@ import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoActivo;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -65,6 +68,9 @@ public class ControllerAdministrarEquipos implements Serializable {
     private String altoTabla;
     //
     private String paginaAnterior;
+    //
+    private UsuarioLogin usuarioLoginSistema;
+    private boolean perfilConsulta;
 
     public ControllerAdministrarEquipos() {
     }
@@ -86,10 +92,10 @@ public class ControllerAdministrarEquipos implements Serializable {
         parametroTipoActivo = new TipoActivo();
         parametroProveedor = new Proveedor();
         parametroLaboratorioPorArea = new LaboratoriosPorAreas();
-        listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
-        listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
-        listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
-        listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
+        listaTiposActivos = null;
+        listaEstadosEquipos = null;
+        listaProveedores = null;
+        listaLaboratoriosPorAreas = null;
         altoTabla = "150";
         inicializarFiltros();
         listaModulosLaboratorios = null;
@@ -100,6 +106,34 @@ public class ControllerAdministrarEquipos implements Serializable {
         tamTotalEquipo = 0;
         bloquearPagAntEquipo = true;
         bloquearPagSigEquipo = true;
+    }
+
+    private void cargarInformacionPerfil() {
+        usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            EncargadoLaboratorio encargadoUser = gestionarPlantaEquiposElementosBO.obtenerEncargadoLaboratorioPorID(usuarioLoginSistema.getIdUsuarioLogin());
+            if ("CONSULTA".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+                //proceso de solo consulta de la pagina
+                perfilConsulta = true;
+            } /*else {
+             if ("DEPARTAMENTO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             Departamento departamento = gestionarPlantaLaboratoriosBO.consultarDepartamentoPorNombre(encargadoUser.getTipoperfil().getNombre());
+             if (null != departamento) {
+             listaDepartamentos = new ArrayList<Departamento>();
+             listaDepartamentos.add(departamento);
+             }
+             } else {
+             if ("LABORATORIO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             } else {
+             if ("AREA PROFUNDIZACION".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
+             }
+             }
+             }
+
+             }
+             */
+
+        }
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -379,6 +413,9 @@ public class ControllerAdministrarEquipos implements Serializable {
     }
 
     public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
+        if (listaLaboratoriosPorAreas == null) {
+            listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
+        }
         return listaLaboratoriosPorAreas;
     }
 
@@ -427,6 +464,9 @@ public class ControllerAdministrarEquipos implements Serializable {
     }
 
     public List<TipoActivo> getListaTiposActivos() {
+        if (listaTiposActivos == null) {
+            listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
+        }
         return listaTiposActivos;
     }
 
@@ -443,6 +483,9 @@ public class ControllerAdministrarEquipos implements Serializable {
     }
 
     public List<Proveedor> getListaProveedores() {
+        if (listaProveedores == null) {
+            listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
+        }
         return listaProveedores;
     }
 
@@ -459,6 +502,9 @@ public class ControllerAdministrarEquipos implements Serializable {
     }
 
     public List<EstadoEquipo> getListaEstadosEquipos() {
+        if (listaEstadosEquipos == null) {
+            listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
+        }
         return listaEstadosEquipos;
     }
 
@@ -552,6 +598,14 @@ public class ControllerAdministrarEquipos implements Serializable {
 
     public void setBloquearPagAntEquipo(boolean bloquearPagAntEquipo) {
         this.bloquearPagAntEquipo = bloquearPagAntEquipo;
+    }
+
+    public boolean isPerfilConsulta() {
+        return perfilConsulta;
+    }
+
+    public void setPerfilConsulta(boolean perfilConsulta) {
+        this.perfilConsulta = perfilConsulta;
     }
 
 }

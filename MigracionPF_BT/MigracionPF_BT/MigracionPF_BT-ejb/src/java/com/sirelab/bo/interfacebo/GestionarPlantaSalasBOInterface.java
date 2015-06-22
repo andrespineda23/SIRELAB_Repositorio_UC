@@ -8,6 +8,7 @@ package com.sirelab.bo.interfacebo;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.SalaLaboratorio;
@@ -43,5 +44,7 @@ public interface GestionarPlantaSalasBOInterface {
     public SalaLaboratorio obtenerSalaLaboratorioPorIDSalaLaboratorio(BigInteger idSalaLaboratorio);
 
     public SalaLaboratorio obtenerSalaLaboratorioPorCodigoEdificioLabArea(String codigo, BigInteger edificio, BigInteger laboratorioArea);
+
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 
 }

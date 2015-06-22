@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import java.math.BigInteger;
@@ -17,6 +18,8 @@ import java.util.Map;
  * @author ANDRES PINEDA
  */
 public interface GestionarPlantaLaboratoriosBOInterface {
+
+    public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 
     public List<Facultad> consultarFacultadesRegistradas();
 
@@ -31,4 +34,6 @@ public interface GestionarPlantaLaboratoriosBOInterface {
     public void modificarInformacionLaboratorio(Laboratorio laboratorio);
 
     public Laboratorio obtenerLaboratorioPorCodigoYDepartamento(String codigo, BigInteger departamento);
+
+    public Departamento consultarDepartamentoPorNombre(String nombre);
 }
