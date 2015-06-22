@@ -21,9 +21,9 @@ public interface ComponenteEquipoDAOInterface {
 
     public void eliminarComponenteEquipo(ComponenteEquipo componenteEquipo);
 
-    public List<ComponenteEquipo> consultarEquiposElementos();
+    public List<ComponenteEquipo> consultarComponentesEquipos();
 
-    public List<ComponenteEquipo> consultarEquiposElementosPorEquipo(BigInteger equipo);
+    public List<ComponenteEquipo> consultarComponentesEquiposPorEquipo(BigInteger equipo);
 
     public ComponenteEquipo buscarComponenteEquipoPorID(BigInteger idRegistro);
 

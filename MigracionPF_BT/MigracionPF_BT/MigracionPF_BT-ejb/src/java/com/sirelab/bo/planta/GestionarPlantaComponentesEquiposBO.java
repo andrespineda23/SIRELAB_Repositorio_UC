@@ -51,7 +51,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
     @Override
     public List<ComponenteEquipo> consultarComponentesEquipoPorIDEquipo(BigInteger idRegistro) {
         try {
-            List<ComponenteEquipo> lista = componenteEquipoDAO.consultarEquiposElementosPorEquipo(idRegistro);
+            List<ComponenteEquipo> lista = componenteEquipoDAO.consultarComponentesEquiposPorEquipo(idRegistro);
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaComponentesEquiposBO consultarComponentesEquipoPorIDEquipo : " + e.toString());

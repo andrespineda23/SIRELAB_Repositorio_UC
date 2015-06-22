@@ -138,46 +138,51 @@
                             <div class="left pull-left">
                                 <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesInsumo.mensajeFormulario}"/></strong>
                             </div>
-                            <div class="right pull-right">
-                                <h:commandButton value="Modificar" actionListener="#{controllerDetallesInsumo.registrarModificacionInsumo()}" class="btn btn-success" >
-                                    <f:ajax execute="@form" render="form" />
-                                </h:commandButton>
-                                <span></span>
-                                <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_insumos" actionListener="#{controllerDetallesInsumo.restaurarInformacionInsumo()}" immediate="true">
-                                    <f:ajax execute="@form" render="form" />
-                                </h:commandButton>
+                            <div class="row col-md-12">
+                                <div class="left pull-left">
+                                    <h:commandButton value="MOVIMIENTO INSUMO" action="administrar_movimientoinsumo" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerDetallesInsumo.insumoDetalles.idinsumo)}" class="btn btn-primary" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="right pull-right">
+                                    <h:commandButton value="Modificar" actionListener="#{controllerDetallesInsumo.registrarModificacionInsumo()}" class="btn btn-success" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                    <span></span>
+                                    <span></span>
+                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_insumos" actionListener="#{controllerDetallesInsumo.restaurarInformacionInsumo()}" immediate="true">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!-- Footer -->
-            <footer>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-10">
-                            <ul class="list-inline">
-                                <li>
-                                    <a href="#">Home</a>
-                                </li>
-                            </ul>
-                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="right">
-                                <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                    <!-- Footer -->
+                    <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <a href="#">Home</a>
+                                        </li>
+                                    </ul>
+                                    <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="right">
+                                        <img alt="300x400" class="img-responsive img-rounded" src="../img/logo_sirelab.jpg" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </footer>
+                    </footer>
 
-            <!-- jQuery -->
-            <script src="../js/jquery.js"></script>
+                    <!-- jQuery -->
+                    <script src="../js/jquery.js"></script>
 
-            <!-- Bootstrap Core JavaScript -->
-            <script src="../js/bootstrap.min.js"></script>
-        </h:form>
-    </h:body>
-</html>
+                    <!-- Bootstrap Core JavaScript -->
+                    <script src="../js/bootstrap.min.js"></script>
+                    </h:form>
+                    </h:body>
+                    </html>

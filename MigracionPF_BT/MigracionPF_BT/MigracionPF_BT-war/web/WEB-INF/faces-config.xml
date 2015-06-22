@@ -1318,6 +1318,60 @@
     
     
     <navigation-rule>
+        <from-view-id>/recursos_laboratorio/detalles_insumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_movimientoinsumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_movimientoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_movimientoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_insumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/detalles_insumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_movimientoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_movimientoinsumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/registrar_movimientoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/registrar_movimientoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_movimientoinsumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_movimientoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/administrar_movimientoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_movimientoinsumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/detalles_movimientoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/recursos_laboratorio/detalles_movimientoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_movimientoinsumo</from-outcome>
+            <to-view-id>/recursos_laboratorio/administrar_movimientoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+    <navigation-rule>
         <from-view-id>/administrar_usuarios/administrar_docentes.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>detalles_docente</from-outcome>

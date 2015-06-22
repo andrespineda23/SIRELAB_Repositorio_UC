@@ -9,12 +9,10 @@ import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -57,7 +55,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
     }
 
     @Override
-    public List<ComponenteEquipo> consultarEquiposElementos() {
+    public List<ComponenteEquipo> consultarComponentesEquipos() {
         try {
             em.clear();
             Query query = em.createQuery("SELECT p FROM ComponenteEquipo p");
@@ -71,7 +69,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
     }
 
     @Override
-    public List<ComponenteEquipo> consultarEquiposElementosPorEquipo(BigInteger equipo) {
+    public List<ComponenteEquipo> consultarComponentesEquiposPorEquipo(BigInteger equipo) {
         try {
             em.clear();
             Query query = em.createQuery("SELECT p FROM ComponenteEquipo p WHERE p.equipoelemento.idequipoelemento=:equipo");
@@ -80,7 +78,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
             List<ComponenteEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEquiposElementosPorEquipo ComponenteEquipoDAO : " + e.toString());
+            System.out.println("Error consultarComponentesEquiposPorEquipo ComponenteEquipoDAO : " + e.toString());
             return null;
         }
     }
