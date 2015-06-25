@@ -80,6 +80,13 @@ public class ControllerDetallesAsignatura implements Serializable {
         editarNombre = asignaturaDetalles.getNombreasignatura();
         editarPlanEstudio = asignaturaDetalles.getPlanestudios();
         listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
+        //
+        validacionesCarrera = true;
+        validacionesCodigo = true;
+        validacionesCredito = true;
+        validacionesDepartamento = true;
+        validacionesNombre = true;
+        validacionesPlanEstudio = true;
         getListaDepartamentos();
         activarModificacionCarrera = false;
         if (Utilidades.validarNulo(editarDepartamento)) {

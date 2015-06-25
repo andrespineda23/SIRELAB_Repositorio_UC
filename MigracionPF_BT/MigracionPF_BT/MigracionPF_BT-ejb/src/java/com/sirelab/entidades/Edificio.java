@@ -75,19 +75,19 @@ public class Edificio implements Serializable {
     }
 
     public String getDireccion() {
-        return direccion;
+        return direccion.toUpperCase();
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = direccion.toUpperCase();
     }
 
     public String getDescripcionedificio() {
-        return descripcionedificio;
+        return descripcionedificio.toUpperCase();
     }
 
     public void setDescripcionedificio(String descripcionedificio) {
-        this.descripcionedificio = descripcionedificio;
+        this.descripcionedificio = descripcionedificio.toUpperCase();
     }
 
     public Sede getSede() {

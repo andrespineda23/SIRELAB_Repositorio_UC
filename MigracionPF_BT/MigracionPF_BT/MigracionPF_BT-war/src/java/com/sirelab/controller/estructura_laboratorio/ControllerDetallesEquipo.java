@@ -130,9 +130,19 @@ public class ControllerDetallesEquipo implements Serializable {
         laboratorioPorAreaEquipoElemento = equipoElementoDetalles.getModulolaboratorio().getSalalaboratorio().getLaboratoriosporareas();
         salaEquipoElemento = equipoElementoDetalles.getModulolaboratorio().getSalalaboratorio();
         moduloEquipoElemento = equipoElementoDetalles.getModulolaboratorio();
+
+        listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
+        listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDAreaProfundizacion(laboratorioPorAreaEquipoElemento.getIdlaboratoriosporareas());
+        listaModulosLaboratorio = gestionarPlantaEquiposElementosBO.consultarModulosLaboratorioPorIDSalaLaboratorio(salaEquipoElemento.getIdsalalaboratorio());
+        
         tipoActivoEquipoElemento = equipoElementoDetalles.getTipoactivo();
         estadoEquipoElemento = equipoElementoDetalles.getEstadoequipo();
         proveedorEquipoElemento = equipoElementoDetalles.getProveedor();
+
+        listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
+        listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
+        listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
+
     }
 
     public void activarEditarRegistro() {
@@ -140,10 +150,8 @@ public class ControllerDetallesEquipo implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
-        listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
-        listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
-        listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
-        listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
+        activarModuloLaboratorio = false;
+        activarSalaLaboratorio = false;
     }
 
     public void restaurarInformacionEquipoElemento() {
@@ -156,12 +164,6 @@ public class ControllerDetallesEquipo implements Serializable {
         visibleGuardar = false;
         activarSalaLaboratorio = true;
         activarModuloLaboratorio = true;
-        listaLaboratoriosPorAreas = null;
-        listaSalasLaboratorio = null;
-        listaModulosLaboratorio = null;
-        listaTiposActivos = null;
-        listaEstadosEquipos = null;
-        listaProveedores = null;
         //
         validacionesCosto = true;
         validacionesEspecificacion = true;

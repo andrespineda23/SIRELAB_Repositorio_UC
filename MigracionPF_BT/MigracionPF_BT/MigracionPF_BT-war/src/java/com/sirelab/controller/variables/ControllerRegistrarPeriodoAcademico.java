@@ -141,7 +141,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     public String cerrarPagina() {
         cancelarPeriodoAcademico();
-        return "hojadevida";
+        return "variables_reserva";
     }
 
     private void restaurarFormulario() {

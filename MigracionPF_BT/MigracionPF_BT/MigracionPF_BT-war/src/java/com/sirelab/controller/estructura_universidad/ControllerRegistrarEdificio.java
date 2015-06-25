@@ -142,9 +142,11 @@ public class ControllerRegistrarEdificio implements Serializable {
         nuevoDescripcion = null;
         nuevoDireccion = null;
         nuevoSede = null;
+        nuevoHorario = null;
         validacionesDescripcion = false;
         validacionesDireccion = true;
         validacionesSede = false;
+        validacionesHorario = false;
         mensajeFormulario = "";
     }
 
@@ -159,6 +161,7 @@ public class ControllerRegistrarEdificio implements Serializable {
         validacionesHorario = false;
         mensajeFormulario = "";
         listaSedes = null;
+        listaHorariosAtencion = null;
     }
 
     //GET-SET

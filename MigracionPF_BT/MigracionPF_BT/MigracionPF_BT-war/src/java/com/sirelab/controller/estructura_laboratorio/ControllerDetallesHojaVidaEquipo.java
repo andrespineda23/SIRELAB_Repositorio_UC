@@ -7,10 +7,12 @@ package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.GestionarPlantaHojasVidaEquiposBOInterface;
 import com.sirelab.entidades.HojaVidaEquipo;
+import com.sirelab.entidades.TipoEvento;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -31,7 +33,9 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     private String inputDetalle;
     private Date inputFechaEvento, inputFechaRegistro;
-    private boolean validacionesDetalle, validacionesFechaEvento, validacionesFechaRegistro;
+    private TipoEvento inputTipoEvento;
+    private List<TipoEvento> listaTiposEventos;
+    private boolean validacionesDetalle, validacionesFechaEvento, validacionesFechaRegistro, validacionesTipo;
     private String mensajeFormulario;
     private BigInteger idEquipo;
     private BigInteger idHojaVidaEquipo;
@@ -62,6 +66,9 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             validacionesFechaEvento = true;
             validacionesFechaRegistro = true;
             modificacionesRegistro = false;
+            validacionesTipo = true;
+            inputTipoEvento = hojaVidaEquipoDetalle.getTipoevento();
+            listaTiposEventos = gestionarPlantaHojasVidaEquiposBO.consultarTiposEventosRegistrados();
         }
     }
 
@@ -110,6 +117,16 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
         modificacionesRegistro = true;
     }
 
+    public void validarTipoEvento() {
+        if (Utilidades.validarNulo(inputTipoEvento)) {
+            validacionesTipo = true;
+        } else {
+            validacionesTipo = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputTipoEvento", new FacesMessage("El campo Tipo Evento es obligatorio."));
+        }
+        modificacionesRegistro = true;
+    }
+
     private boolean validarValidacionesRegistro() {
         boolean retorno = true;
         if (validacionesDetalle == false) {
@@ -119,6 +136,9 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             retorno = false;
         }
         if (validacionesFechaEvento == false) {
+            retorno = false;
+        }
+        if (validacionesTipo == false) {
             retorno = false;
         }
         return retorno;
@@ -146,6 +166,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
         try {
             hojaVidaEquipoDetalle.setDetalleevento(inputDetalle);
             hojaVidaEquipoDetalle.setFecharegistro(inputFechaRegistro);
+            hojaVidaEquipoDetalle.setTipoevento(inputTipoEvento);
             hojaVidaEquipoDetalle.setFechaevento(inputFechaEvento);
             gestionarPlantaHojasVidaEquiposBO.editarHojaVidaEquipo(hojaVidaEquipoDetalle);
         } catch (Exception e) {
@@ -155,9 +176,11 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void cancelarHojaVidaEquipo() {
         inputDetalle = null;
+        inputTipoEvento = null;
         inputFechaEvento = new Date();
         inputFechaRegistro = new Date();
         validacionesDetalle = false;
+        validacionesTipo = false;
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
         mensajeFormulario = "";
@@ -215,6 +238,30 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void setIdHojaVidaEquipo(BigInteger idHojaVidaEquipo) {
         this.idHojaVidaEquipo = idHojaVidaEquipo;
+    }
+
+    public TipoEvento getInputTipoEvento() {
+        return inputTipoEvento;
+    }
+
+    public void setInputTipoEvento(TipoEvento inputTipoEvento) {
+        this.inputTipoEvento = inputTipoEvento;
+    }
+
+    public List<TipoEvento> getListaTiposEventos() {
+        return listaTiposEventos;
+    }
+
+    public void setListaTiposEventos(List<TipoEvento> listaTiposEventos) {
+        this.listaTiposEventos = listaTiposEventos;
+    }
+
+    public HojaVidaEquipo getHojaVidaEquipoDetalle() {
+        return hojaVidaEquipoDetalle;
+    }
+
+    public void setHojaVidaEquipoDetalle(HojaVidaEquipo hojaVidaEquipoDetalle) {
+        this.hojaVidaEquipoDetalle = hojaVidaEquipoDetalle;
     }
 
 }

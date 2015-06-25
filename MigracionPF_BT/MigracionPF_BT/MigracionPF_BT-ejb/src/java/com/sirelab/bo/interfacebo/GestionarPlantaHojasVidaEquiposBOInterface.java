@@ -7,6 +7,7 @@ package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.HojaVidaEquipo;
+import com.sirelab.entidades.TipoEvento;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface GestionarPlantaHojasVidaEquiposBOInterface {
     public HojaVidaEquipo consultarHojaVidaEquipoPorID(BigInteger hojavida);
 
     public void editarHojaVidaEquipo(HojaVidaEquipo hojaVidaEquipo);
+
+    public List<TipoEvento> consultarTiposEventosRegistrados();
 }

@@ -29,4 +29,6 @@ public interface DepartamentoDAOInterface {
     public List<Departamento> buscarDepartamentosPorIDFacultad(BigInteger idFacultad);
 
     public List<Departamento> buscarDepartamentosPorFiltrado(Map<String, String> filters);
+
+    public Departamento buscarDepartamentoPorNombre(String nombre);
 }

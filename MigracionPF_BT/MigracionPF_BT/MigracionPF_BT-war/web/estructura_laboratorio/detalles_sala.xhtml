@@ -82,13 +82,6 @@
                                 <h6><h:message id="msnCodigoSala" for="codigoSalaLaboratorio" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
-                                <strong><h:outputText value="Ubicación Sala*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerDetallesSala.ubicacionSalaLaboratorio}" required="true" class="form-control" id="ubicacionSalaLaboratorio" readonly="#{controllerDetallesSala.activarEditar}" requiredMessage="El campo Ubicacion es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesSala.validarUbicacionSala()}" execute="ubicacionSalaLaboratorio" render="ubicacionSalaLaboratorio msnUbicacionSala" />
-                                </h:inputText>
-                                <h6><h:message id="msnUbicacionSala" for="ubicacionSalaLaboratorio" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
                                 <strong><h:outputText value="Costo Alquiler*"/></strong>
                                 <div class="input-group">
                                     <h:inputText maxlength="10"  value="#{controllerDetallesSala.costoSalaLaboratorio}" required="true" class="form-control" id="costoSalaLaboratorio" requiredMessage="El campo Costo es obligatorio." readonly="#{controllerDetallesSala.activarEditar}">
@@ -169,6 +162,13 @@
                                     <f:ajax event="change" listener="#{controllerDetallesSala.actualizarEdificios()}" execute="edificioSalaLaboratorio" render="@this msnEdificioSala"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="edificioSalaLaboratorio" style="color: red"/></h6>
+                            </div>
+                             <div class="form-group">
+                                <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
+                                <h:inputText maxlength="45"  value="#{controllerDetallesSala.ubicacionSalaLaboratorio}" required="true" class="form-control" id="ubicacionSalaLaboratorio" readonly="#{controllerDetallesSala.activarEditar}" requiredMessage="El campo Ubicacion es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesSala.validarUbicacionSala()}" execute="ubicacionSalaLaboratorio" render="ubicacionSalaLaboratorio msnUbicacionSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnUbicacionSala" for="ubicacionSalaLaboratorio" style="color: red"/></h6>
                             </div>
                         </fieldset>
                     </div>

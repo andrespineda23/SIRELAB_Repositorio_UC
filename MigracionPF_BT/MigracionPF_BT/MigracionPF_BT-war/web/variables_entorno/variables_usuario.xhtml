@@ -148,12 +148,14 @@
                                             </f:facet>
                                             <h:outputText value="#{itemTU.nombretipousuario}"/>
                                         </h:column>  
+                                        <!-- 
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Detalles"/>
                                             </f:facet>
                                             <h:commandLink value="Ver" action="detalles_tipousuario" actionListener="#{controllerDetallesTipoUsuario.recibirIDDetalleTipoUsuario(itemTU.idtipousuario)}"/>
                                         </h:column>
+                                        -->
                                         <f:facet name="footer">
                                             <nav>
                                                 <ul class="pager">
@@ -175,9 +177,11 @@
                             </fieldset>
                         </div>
                         <br></br>
+                        <!--
                         <div class="left pull-left">
                             <h:commandButton value="Nuevo Tipo Usuario" action="registrar_tipousuario" class="btn btn-success"/>
                         </div>
+                        -->
                     </div>
                 </div>
                 <div class="row">

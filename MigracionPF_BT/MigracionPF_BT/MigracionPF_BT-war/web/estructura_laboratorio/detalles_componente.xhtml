@@ -136,7 +136,7 @@
                             </h:commandButton>
                             <span></span>
                             <span></span>
-                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesComponente.limpiarRegistroComponenteLaboratorio()}" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerDetallesComponente.idComponenteEquipo)}" immediate="true">
+                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesComponente.limpiarRegistroComponenteLaboratorio()}" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerDetallesComponente.componenteEquipoDetalle.equipoelemento.idequipoelemento)}" immediate="true">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

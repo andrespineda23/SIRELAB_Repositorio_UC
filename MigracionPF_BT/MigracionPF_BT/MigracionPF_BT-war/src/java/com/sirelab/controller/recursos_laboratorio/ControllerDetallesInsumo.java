@@ -246,8 +246,16 @@ public class ControllerDetallesInsumo implements Serializable {
             insumoDetalles.setNombreinsumo(editarNombre);
             insumoDetalles.setModeloinsumo(editarModelo);
             insumoDetalles.setMarcainsumo(editarMarca);
-            insumoDetalles.setCantidadexistencia(Integer.valueOf(editarCantidadMin));
-            insumoDetalles.setCantidadminimia(Integer.valueOf(editarCantidadMin));
+            if (Utilidades.validarNulo(editarCantidadExistencia) && (!editarCantidadExistencia.isEmpty())) {
+                insumoDetalles.setCantidadexistencia(Integer.valueOf(editarCantidadExistencia));
+            } else {
+                insumoDetalles.setCantidadexistencia(Integer.valueOf("0"));
+            }
+            if (Utilidades.validarNulo(editarCantidadMin) && (!editarCantidadMin.isEmpty())) {
+                insumoDetalles.setCantidadminimia(Integer.valueOf(editarCantidadMin));
+            } else {
+                insumoDetalles.setCantidadminimia(Integer.valueOf("0"));
+            }
             insumoDetalles.setDescripcioninsumo(editarDescripcion);
             insumoDetalles.setProveedor(editarProveedor);
             gestionarRecursoInsumosBO.modificarInformacionInsumo(insumoDetalles);

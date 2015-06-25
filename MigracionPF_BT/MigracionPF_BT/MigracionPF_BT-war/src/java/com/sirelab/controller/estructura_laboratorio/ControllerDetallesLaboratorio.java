@@ -272,4 +272,4 @@ public class ControllerDetallesLaboratorio implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-}
+    }

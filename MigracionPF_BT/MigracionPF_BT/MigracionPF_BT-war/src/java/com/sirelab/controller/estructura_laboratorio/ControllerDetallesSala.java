@@ -71,22 +71,16 @@ public class ControllerDetallesSala implements Serializable {
         validacionesSede = true;
         validacionesUbicacion = true;
         mensajeFormulario = "";
-        //
-        activarEdificio = true;
-        //
+    }
+
+    public void recibirIDSalasLaboratorioDetalles(BigInteger idSalaLaboratorio) {
         activarEditar = true;
-        disabledEditar = false;
-        modificacionRegistro = false;
-        visibleGuardar = false;
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionUsuario");
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
-    }
-
-    public void recibirIDSalasLaboratorioDetalles(BigInteger idSalaLaboratorio) {
         this.idSalaLaboratorio = idSalaLaboratorio;
         salaLaboratorioDetalles = gestionarPlantaSalasBO.obtenerSalaLaboratorioPorIDSalaLaboratorio(idSalaLaboratorio);
         if (salaLaboratorioDetalles.getEstadosala() == true) {
@@ -110,7 +104,13 @@ public class ControllerDetallesSala implements Serializable {
         edificioSalaLaboratorio = salaLaboratorioDetalles.getEdificio();
         sedeSalaLaboratorio = salaLaboratorioDetalles.getEdificio().getSede();
         laboratorioPorAreaSalaLaboratorio = salaLaboratorioDetalles.getLaboratoriosporareas();
-        System.out.println("laboratorioPorAreaSalaLaboratorio : " + laboratorioPorAreaSalaLaboratorio.getInformacionRegistro());
+        listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
+        listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasRegistradas();
+        listaEdificios = gestionarPlantaSalasBO.consultarEdificiosPorIDSede(sedeSalaLaboratorio.getIdsede());
+        //
+        activarEdificio = true;
+        visibleGuardar = false;
+        //
     }
 
     public void activarEditarRegistro() {
@@ -118,39 +118,12 @@ public class ControllerDetallesSala implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
-        listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
-        listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasRegistradas();
-        System.out.println("laboratorioPorAreaSalaLaboratorio : " + laboratorioPorAreaSalaLaboratorio.getInformacionRegistro());
+        activarEdificio = false;
     }
 
     public void restaurarInformacionSalaLaboratorio() {
         salaLaboratorioDetalles = new SalaLaboratorio();
-        salaLaboratorioDetalles = gestionarPlantaSalasBO.obtenerSalaLaboratorioPorIDSalaLaboratorio(idSalaLaboratorio);
-        if (salaLaboratorioDetalles.getEstadosala() == true) {
-            disabledActivar = true;
-            disabledInactivar = false;
-        } else {
-            disabledActivar = false;
-            disabledInactivar = true;
-        }
-        asignarValoresVariablesSalaLaboratorio();
-        activarEditar = true;
-        disabledEditar = false;
-        modificacionRegistro = false;
-        visibleGuardar = false;
-        activarEdificio = true;
-        listaEdificios = null;
-        listaSedes = null;
-        validacionesCosto = true;
-        validacionesCapacidad = true;
-        validacionesCodigo = true;
-        validacionesDescripcion = true;
-        validacionesEdificio = true;
-        validacionesInversion = true;
-        validacionesLaboratorio = true;
-        validacionesNombre = true;
-        validacionesSede = true;
-        validacionesUbicacion = true;
+        recibirIDSalasLaboratorioDetalles(this.idSalaLaboratorio);
         mensajeFormulario = "";
     }
 

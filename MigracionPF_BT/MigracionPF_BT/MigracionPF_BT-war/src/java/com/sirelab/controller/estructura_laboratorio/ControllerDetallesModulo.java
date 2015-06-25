@@ -81,13 +81,13 @@ public class ControllerDetallesModulo implements Serializable {
     public void recibirIDModuloLaboratorioDetalles(BigInteger idModuloLaboratorio) {
         this.idModuloLaboratorio = idModuloLaboratorio;
         moduloLaboratorioDetalles = gestionarPlantaModulosBO.obtenerModuloLaboratorioPorIDModuloLaboratorio(idModuloLaboratorio);
-        if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
-            disabledActivar = true;
-            disabledInactivar = false;
-        } else {
-            disabledActivar = false;
-            disabledInactivar = true;
-        }
+            if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
+                disabledActivar = true;
+                disabledInactivar = false;
+            } else {
+                disabledActivar = false;
+                disabledInactivar = true;
+            }
         asignarValoresVariablesModuloLaboratorio();
     }
 
@@ -112,13 +112,13 @@ public class ControllerDetallesModulo implements Serializable {
     public void restaurarInformacionModuloLaboratorio() {
         moduloLaboratorioDetalles = new ModuloLaboratorio();
         moduloLaboratorioDetalles = gestionarPlantaModulosBO.obtenerModuloLaboratorioPorIDModuloLaboratorio(idModuloLaboratorio);
-        if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
-            disabledActivar = true;
-            disabledInactivar = false;
-        } else {
-            disabledActivar = false;
-            disabledInactivar = true;
-        }
+            if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
+                disabledActivar = true;
+                disabledInactivar = false;
+            } else {
+                disabledActivar = false;
+                disabledInactivar = true;
+            }
         asignarValoresVariablesModuloLaboratorio();
         activarEditar = true;
         disabledEditar = false;
@@ -493,4 +493,4 @@ public class ControllerDetallesModulo implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-}
+    }

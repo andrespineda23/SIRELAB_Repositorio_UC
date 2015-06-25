@@ -253,4 +253,4 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-}
+    }

@@ -8,8 +8,10 @@ package com.sirelab.bo.planta;
 import com.sirelab.bo.interfacebo.GestionarPlantaHojasVidaEquiposBOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.HojaVidaEquipoDAOInterface;
+import com.sirelab.dao.interfacedao.TipoEventoDAOInterface;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.HojaVidaEquipo;
+import com.sirelab.entidades.TipoEvento;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,12 +23,25 @@ import javax.ejb.Stateful;
  */
 @Stateful
 public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVidaEquiposBOInterface {
-    
+
     @EJB
     EquipoElementoDAOInterface equipoElementoDAO;
     @EJB
     HojaVidaEquipoDAOInterface hojaVidaEquipoDAO;
-    
+    @EJB
+    TipoEventoDAOInterface tipoEventoDAO;
+
+    @Override
+    public List<TipoEvento> consultarTiposEventosRegistrados() {
+        try {
+            List<TipoEvento> lista = tipoEventoDAO.consultarTiposEventos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaHojasVidaEquiposBO consultarTiposEventosRegistrados: " + e.toString());
+            return null;
+        }
+    }
+
     @Override
     public HojaVidaEquipo consultarHojaVidaEquipoPorID(BigInteger hojavida) {
         try {
@@ -37,7 +52,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             return null;
         }
     }
-    
+
     @Override
     public EquipoElemento consultarEquipoElementoPorID(BigInteger equipo) {
         try {
@@ -48,7 +63,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             return null;
         }
     }
-    
+
     @Override
     public List<HojaVidaEquipo> consultarHojaVidaPorIDEquipo(BigInteger equipo) {
         try {
@@ -59,7 +74,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             return null;
         }
     }
-    
+
     @Override
     public void crearHojaVidaEquipo(HojaVidaEquipo hojaVidaEquipo) {
         try {
@@ -68,7 +83,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             System.out.println("Error GestionarPlantaHojasVidaEquiposBO crearHojaVidaEquipo: " + e.toString());
         }
     }
-    
+
     @Override
     public void editarHojaVidaEquipo(HojaVidaEquipo hojaVidaEquipo) {
         try {
@@ -77,5 +92,5 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             System.out.println("Error GestionarPlantaHojasVidaEquiposBO editarHojaVidaEquipo: " + e.toString());
         }
     }
-    
+
 }

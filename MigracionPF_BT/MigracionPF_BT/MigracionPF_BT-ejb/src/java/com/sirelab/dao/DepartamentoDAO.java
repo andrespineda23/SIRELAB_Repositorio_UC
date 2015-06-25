@@ -79,6 +79,21 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             return null;
         }
     }
+    
+    @Override
+    public Departamento buscarDepartamentoPorNombre(String nombre) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.nombredepartamento=:nombre");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("nombre", nombre);
+            Departamento registro = (Departamento) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.err.println("Error buscarDepartamentoPorNombre DepartamentoDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Departamento> buscarDepartamentosPorIDFacultad(BigInteger idFacultad) {

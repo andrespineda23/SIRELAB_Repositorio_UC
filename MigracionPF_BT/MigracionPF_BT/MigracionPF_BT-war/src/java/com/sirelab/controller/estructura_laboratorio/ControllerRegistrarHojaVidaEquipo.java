@@ -6,11 +6,14 @@
 package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.GestionarPlantaHojasVidaEquiposBOInterface;
+import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.HojaVidaEquipo;
+import com.sirelab.entidades.TipoEvento;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -31,9 +34,12 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     private String inputDetalle;
     private Date inputFechaEvento, inputFechaRegistro;
-    private boolean validacionesDetalle, validacionesFechaEvento, validacionesFechaRegistro;
+    private TipoEvento inputTipoEvento;
+    private List<TipoEvento> listaTiposEventos;
+    private boolean validacionesDetalle, validacionesFechaEvento, validacionesFechaRegistro, validacionesTipo;
     private String mensajeFormulario;
     private BigInteger idEquipo;
+    private EquipoElemento equipoElemento;
 
     public ControllerRegistrarHojaVidaEquipo() {
     }
@@ -43,7 +49,10 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         inputDetalle = null;
         inputFechaEvento = new Date();
         inputFechaRegistro = new Date();
+        inputTipoEvento = null;
         validacionesDetalle = false;
+        listaTiposEventos = null;
+        validacionesTipo = false;
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
         mensajeFormulario = "";
@@ -51,6 +60,8 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     public void recibirIDEquipo(BigInteger idRegistro) {
         this.idEquipo = idRegistro;
+        System.out.println("idRegistro : "+idRegistro);
+        equipoElemento = gestionarPlantaHojasVidaEquiposBO.consultarEquipoElementoPorID(idEquipo);
     }
 
     public void validarDetalle() {
@@ -95,15 +106,31 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         }
     }
 
+    public void validarTipoEvento() {
+        if (Utilidades.validarNulo(inputTipoEvento)) {
+            validacionesTipo = true;
+        } else {
+            validacionesTipo = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputTipoEvento", new FacesMessage("El campo Tipo Evento es obligatorio."));
+        }
+    }
+
     private boolean validarValidacionesRegistro() {
         boolean retorno = true;
         if (validacionesDetalle == false) {
+            System.out.println("1");
             retorno = false;
         }
         if (validacionesFechaRegistro == false) {
+            System.out.println("2");
             retorno = false;
         }
         if (validacionesFechaEvento == false) {
+            retorno = false;
+            System.out.println("3");
+        }
+        if (validacionesTipo == false) {
+            System.out.println("4");
             retorno = false;
         }
         return retorno;
@@ -129,6 +156,9 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
             reggNuevo.setDetalleevento(inputDetalle);
             reggNuevo.setFecharegistro(inputFechaRegistro);
             reggNuevo.setFechaevento(inputFechaEvento);
+            reggNuevo.setTipoevento(inputTipoEvento);
+            reggNuevo.setEquipoelemento(equipoElemento);
+            System.out.println("equipoElemento : "+reggNuevo.getEquipoelemento());
             gestionarPlantaHojasVidaEquiposBO.crearHojaVidaEquipo(reggNuevo);
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString());
@@ -152,9 +182,11 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     private void restaurarFormulario() {
         inputDetalle = null;
+        inputTipoEvento = null;
         inputFechaEvento = new Date();
         inputFechaRegistro = new Date();
         validacionesDetalle = false;
+        validacionesTipo = false;
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
     }
@@ -198,6 +230,33 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     public void setIdEquipo(BigInteger idEquipo) {
         this.idEquipo = idEquipo;
+    }
+
+    public TipoEvento getInputTipoEvento() {
+        return inputTipoEvento;
+    }
+
+    public void setInputTipoEvento(TipoEvento inputTipoEvento) {
+        this.inputTipoEvento = inputTipoEvento;
+    }
+
+    public List<TipoEvento> getListaTiposEventos() {
+        if (listaTiposEventos == null) {
+            listaTiposEventos = gestionarPlantaHojasVidaEquiposBO.consultarTiposEventosRegistrados();
+        }
+        return listaTiposEventos;
+    }
+
+    public void setListaTiposEventos(List<TipoEvento> listaTiposEventos) {
+        this.listaTiposEventos = listaTiposEventos;
+    }
+
+    public EquipoElemento getEquipoElemento() {
+        return equipoElemento;
+    }
+
+    public void setEquipoElemento(EquipoElemento equipoElemento) {
+        this.equipoElemento = equipoElemento;
     }
 
 }

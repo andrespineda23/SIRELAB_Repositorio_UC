@@ -285,12 +285,38 @@ public class ControllerRegistrarSala implements Serializable {
             if (validarCodigoRepetido() == true) {
                 almacenaNuevoSalaEnSistema();
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                limpiarFormulario();
             } else {
                 mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
             }
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
+    }
+
+    private void limpiarFormulario() {
+        activarNuevoEdificio = true;
+        nuevoNombreSala = null;
+        nuevoCodigoSala = null;
+        nuevoUbicacionSala = null;
+        nuevoDescripcionSala = null;
+        nuevoCostoSala = null;
+        nuevoCapacidadSala = null;
+        nuevoInversionSala = "0";
+        nuevoSedeSala = null;
+        nuevoEdificioSala = null;
+        listaEdificios = null;
+        //
+        validacionesCosto = false;
+        validacionesCapacidad = false;
+        validacionesCodigo = false;
+        validacionesDescripcion = false;
+        validacionesEdificio = false;
+        validacionesInversion = true;
+        validacionesLaboratorio = false;
+        validacionesNombre = false;
+        validacionesSede = false;
+        validacionesUbicacion = false;
     }
 
     public void almacenaNuevoSalaEnSistema() {
@@ -303,7 +329,11 @@ public class ControllerRegistrarSala implements Serializable {
             salaNuevo.setCostoalquiler(Long.parseLong(nuevoCostoSala));
             salaNuevo.setEstadosala(true);
             salaNuevo.setCapacidadsala(Integer.parseInt(nuevoCapacidadSala));
-            salaNuevo.setValorinversion(new BigInteger(nuevoInversionSala));
+            if (Utilidades.validarNulo(nuevoInversionSala) && (!nuevoInversionSala.isEmpty())) {
+                salaNuevo.setValorinversion(new BigInteger(nuevoInversionSala));
+            } else {
+                salaNuevo.setValorinversion(new BigInteger("0"));
+            }
             salaNuevo.setEdificio(nuevoEdificioSala);
             salaNuevo.setLaboratoriosporareas(nuevoLaboratorioPorArea);
             gestionarPlantaSalasBO.crearNuevaSalaLaboratorio(salaNuevo);

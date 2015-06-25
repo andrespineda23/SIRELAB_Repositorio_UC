@@ -10,6 +10,7 @@ import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +33,10 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     private String mensajeFormulario;
 
     public ControllerRegistrarHorarioAtencion() {
+    }
+
+    @PostConstruct
+    public void init() {
         inputDescripcion = null;
         inputCodigo = null;
         validacionesDescripcion = false;
@@ -104,6 +109,8 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     private void almacenarNuevoRegistro() {
         try {
             HorarioAtencion nuevoHorario = new HorarioAtencion();
+            System.out.println("inputCodigo : "+inputCodigo);
+            System.out.println("inputDescripcion : "+inputDescripcion);
             nuevoHorario.setCodigohorario(inputCodigo);
             nuevoHorario.setDescripcionhorario(inputDescripcion);
             gestionarVariableHorariosAtencionBO.crearHorarioAtencion(nuevoHorario);

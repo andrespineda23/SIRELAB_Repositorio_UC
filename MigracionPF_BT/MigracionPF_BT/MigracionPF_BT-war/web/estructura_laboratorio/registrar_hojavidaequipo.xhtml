@@ -78,22 +78,34 @@
                                     <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                    <h:inputText value="#{controllerRegistrarHojaVidaEquipo.inputFechaEvento}" required="true" class="form-control" id="inputFechaEvento" requiredMessage="La Fecha Inicial es obligatoria.">
+                                    <strong><h:outputText value="Fecha Evento*"/></strong>
+                                    <h:inputText value="#{controllerRegistrarHojaVidaEquipo.inputFechaEvento}" required="true" class="form-control" id="inputFechaEvento" requiredMessage="La Fecha Evento es obligatoria.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarHojaVidaEquipo.validarFechaEvento()}" execute="inputFechaEvento" render="inputFechaEvento msnFechaEvento" />
                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                     </h:inputText>
                                     <h6><h:message id="msnFechaEvento" for="inputFechaEvento" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Fecha Finalización*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarHojaVidaEquipo.inputFechaRegistro}" required="true" class="form-control" id="inputFechaRegistro" requiredMessage="La Fecha Final es obligatoria.">
+                                    <strong><h:outputText value="Fecha Registro*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarHojaVidaEquipo.inputFechaRegistro}" required="true" class="form-control" id="inputFechaRegistro" requiredMessage="La Fecha Reporte es obligatoria.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarHojaVidaEquipo.validarFechaRegistro()}" execute="inputFechaRegistro" render="inputFechaRegistro msnFechaRegistro" />
                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                     </h:inputText>
                                     <h6><h:message id="msnFechaRegistro" for="inputFechaRegistro" style="color: red"/></h6>
                                 </div>
-
+                                <div class="form-group">
+                                    <strong><h:outputText value="Tipo Evento*"/></strong>
+                                    <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.inputTipoEvento}"
+                                                     class="form-control"
+                                                     id="inputTipoEvento">
+                                        <f:selectItem itemLabel="Seleccione Tipo Evento" itemValue="null" />
+                                        <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaTiposEventos}" var="tipo"
+                                                       itemLabel="#{tipo.detalleevento}" itemValue="#{tipo}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerRegistrarHojaVidaEquipo.validarTipoEvento()}" execute="inputTipoEvento" render="msnTipoEvento inputTipoEvento"/>
+                                    </h:selectOneMenu>
+                                    <h6><h:message id="msnTipoEvento" for="inputTipoEvento" style="color: red"/></h6>
+                                </div>
                             </fieldset>
                             <br></br>
                             <br></br>
@@ -110,7 +122,7 @@
                                 </h:commandButton>
                                 <span></span>
                                 <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarHojaVidaEquipo.cerrarPagina()}" actionListener="#{controllerHojaVidaEquipo.recibirIDEquipoElemento(controllerRegistrarHojaVidaEquipo.idEquipo)}" immediate="true">
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarHojaVidaEquipo.cerrarPagina()}" actionListener="#{controllerHojaVidaEquipo.recibirIDEquipoElemento(controllerRegistrarHojaVidaEquipo.equipoElemento.idequipoelemento)}" immediate="true">
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

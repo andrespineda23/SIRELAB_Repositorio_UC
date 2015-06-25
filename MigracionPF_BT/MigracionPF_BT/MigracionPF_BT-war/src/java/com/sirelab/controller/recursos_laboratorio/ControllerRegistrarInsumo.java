@@ -46,8 +46,8 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     @PostConstruct
     public void init() {
-        nuevoCantidadExistencia = null;
-        nuevoCantidadMin = null;
+        nuevoCantidadExistencia = "0";
+        nuevoCantidadMin = "0";
         nuevoCodigo = null;
         nuevoDescripcion = null;
         nuevoMarca = null;
@@ -220,8 +220,16 @@ public class ControllerRegistrarInsumo implements Serializable {
             nuevaInsumo.setNombreinsumo(nuevoNombre);
             nuevaInsumo.setModeloinsumo(nuevoModelo);
             nuevaInsumo.setMarcainsumo(nuevoMarca);
-            nuevaInsumo.setCantidadexistencia(Integer.valueOf(nuevoCantidadExistencia));
-            nuevaInsumo.setCantidadminimia(Integer.valueOf(nuevoCantidadMin));
+            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty())) {
+                nuevaInsumo.setCantidadexistencia(Integer.valueOf(nuevoCantidadExistencia));
+            } else {
+                nuevaInsumo.setCantidadexistencia(Integer.valueOf("0"));
+            }
+            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty())) {
+                nuevaInsumo.setCantidadminimia(Integer.valueOf(nuevoCantidadMin));
+            } else {
+                nuevaInsumo.setCantidadminimia(Integer.valueOf("0"));
+            }
             nuevaInsumo.setDescripcioninsumo(nuevoDescripcion);
             nuevaInsumo.setProveedor(nuevoProveedor);
             gestionarRecursoInsumosBO.crearNuevoInsumo(nuevaInsumo);
@@ -230,10 +238,10 @@ public class ControllerRegistrarInsumo implements Serializable {
             System.out.println("Error ControllerGestionarInsumos almacenarNuevoInsumoEnSistema : " + e.toString());
         }
     }
-    
-    public void limpiarFormulario(){
-        nuevoCantidadExistencia = null;
-        nuevoCantidadMin = null;
+
+    public void limpiarFormulario() {
+        nuevoCantidadExistencia = "0";
+        nuevoCantidadMin = "0";
         nuevoCodigo = null;
         nuevoDescripcion = null;
         nuevoMarca = null;
@@ -248,7 +256,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesDescripcion = true;
         validacionesMarca = true;
         validacionesModelo = true;
-        mensajeFormulario = "";
     }
 
     public void cancelarRegistroInsumo() {

@@ -58,7 +58,7 @@ public final class Utilidades {
         respuesta = matcher.matches();
         return respuesta;
     }
-    
+
     /**
      * Metodo que valida que un caracter string este conformado unicamente por
      * caracteres
@@ -124,13 +124,13 @@ public final class Utilidades {
         try {
             boolean retorno = true;
             Date fechaDia = new Date();
-            if (fechaDia.getDay() < fechaValidar.getDay()) {
+            if (fechaValidar.getDay() < fechaDia.getDay()) {
                 retorno = false;
             }
-            if (fechaDia.getMonth() < fechaValidar.getMonth()) {
+            if (fechaValidar.getMonth() < fechaDia.getMonth()) {
                 retorno = false;
             }
-            if (fechaDia.getYear() < fechaValidar.getYear()) {
+            if (fechaValidar.getYear() < fechaDia.getYear()) {
                 retorno = false;
             }
             return retorno;

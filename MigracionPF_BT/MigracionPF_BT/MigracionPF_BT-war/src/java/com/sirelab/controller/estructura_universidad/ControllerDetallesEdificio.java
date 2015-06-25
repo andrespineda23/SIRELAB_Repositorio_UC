@@ -151,8 +151,8 @@ public class ControllerDetallesEdificio implements Serializable {
 
     private void almacenarModificacionEdificioEnSistema() {
         try {
-            edificioDetalles.setDescripcionedificio(editarDireccion);
-            edificioDetalles.setDireccion(editarDescripcion);
+            edificioDetalles.setDescripcionedificio(editarDescripcion);
+            edificioDetalles.setDireccion(editarDireccion);
             edificioDetalles.setSede(editarSede);
             edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);

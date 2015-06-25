@@ -127,6 +127,10 @@ public class ControllerDetallesDocente implements Serializable {
         modificacionRegistro = false;
         visibleGuardar = true;
         listaFacultad = administrarDocentesBO.obtenerListaFacultades();
+        if (Utilidades.validarNulo(facultadDocente)) {
+            listaDepartamento = administrarDocentesBO.obtenerDepartamentosPorIDFacultad(facultadDocente.getIdfacultad());
+        }
+        activoDepartamento = false;
     }
 
     /**
