@@ -7,6 +7,7 @@ package com.sirelab.bo.interfacebo;
 
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.TipoComponente;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.util.List;
  * @author ELECTRONICA
  */
 public interface GestionarPlantaComponentesEquiposBOInterface {
+
+    public List<TipoComponente> consultarTiposComponentesRegistrados();
 
     public EquipoElemento consultarEquipoElementoPorID(BigInteger idRegistro);
 

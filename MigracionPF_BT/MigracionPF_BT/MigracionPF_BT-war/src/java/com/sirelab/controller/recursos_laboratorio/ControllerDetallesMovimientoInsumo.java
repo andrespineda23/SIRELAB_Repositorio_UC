@@ -183,13 +183,12 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
 
     public void almacenaModificacionMovimientoEnSistema() {
         try {
-            MovimientoInsumo movimientoModificacion = new MovimientoInsumo();
-            movimientoModificacion.setTipomovimiento(editarTipoMovimiento);
-            movimientoModificacion.setCantidadmovimiento(Integer.parseInt(editarCantidadMovimiento));
-            movimientoModificacion.setCostomovimiento(Long.parseLong(editarCostoMovimiento));
-            movimientoModificacion.setFechamovimiento(editarFechaMovimiento);
-            movimientoModificacion.setInsumo(editarInsumo);
-            gestionarRecursoMovimientosInsumoBO.editarMovimientoInsumo(movimientoModificacion);
+            movimientoInsumoDetalle.setTipomovimiento(editarTipoMovimiento);
+            movimientoInsumoDetalle.setCantidadmovimiento(Integer.parseInt(editarCantidadMovimiento));
+            movimientoInsumoDetalle.setCostomovimiento(Long.parseLong(editarCostoMovimiento));
+            movimientoInsumoDetalle.setFechamovimiento(editarFechaMovimiento);
+            movimientoInsumoDetalle.setInsumo(editarInsumo);
+            gestionarRecursoMovimientosInsumoBO.editarMovimientoInsumo(movimientoInsumoDetalle);
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarMovimiento almacenaModificacionMovimientoEnSistema : " + e.toString());
         }

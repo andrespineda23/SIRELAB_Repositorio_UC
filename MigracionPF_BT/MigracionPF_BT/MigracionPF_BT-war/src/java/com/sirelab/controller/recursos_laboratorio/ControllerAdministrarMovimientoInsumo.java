@@ -127,7 +127,7 @@ public class ControllerAdministrarMovimientoInsumo implements Serializable {
         tamTotalMovimiento = 0;
         bloquearPagAntMovimiento = true;
         bloquearPagSigMovimiento = true;
-        return "registrar_movimiento";
+        return "registrar_movimientoinsumo";
     }
 
     public String limpiarProcesoBusqueda() {
@@ -160,7 +160,7 @@ public class ControllerAdministrarMovimientoInsumo implements Serializable {
      */
     public String cambiarPaginaDetalles() {
         limpiarProcesoBusqueda();
-        return "detalles_insumo";
+        return "detalles_movimientoinsumo";
     }
 
     // GET - SET

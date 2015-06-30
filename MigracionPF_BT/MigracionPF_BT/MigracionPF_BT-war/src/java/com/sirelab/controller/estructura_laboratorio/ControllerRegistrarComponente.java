@@ -8,9 +8,11 @@ package com.sirelab.controller.estructura_laboratorio;
 import com.sirelab.bo.interfacebo.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.TipoComponente;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -30,7 +32,9 @@ public class ControllerRegistrarComponente implements Serializable {
     GestionarPlantaComponentesEquiposBOInterface gestionarPlantaComponentesEquiposBO;
 
     private String nuevoNombreComponente, nuevoCodigoComponente, nuevoDescripcionComponente, nuevoMarcaComponente, nuevoModeloComponente, nuevoSerialComponente;
-    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesMarca;
+    private List<TipoComponente> listaTiposComponentes;
+    private TipoComponente nuevoTipoComponente;
+    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesMarca, validacionesTipo;
     private boolean validacionesModelo, validacionesSerial;
     private String mensajeFormulario;
     private EquipoElemento equipoElementoRegistro;
@@ -41,6 +45,7 @@ public class ControllerRegistrarComponente implements Serializable {
     @PostConstruct
     public void init() {
         validacionesSerial = true;
+        validacionesTipo = false;
         validacionesModelo = true;
         validacionesCodigo = false;
         validacionesDescripcion = false;
@@ -48,6 +53,7 @@ public class ControllerRegistrarComponente implements Serializable {
         validacionesMarca = true;
         mensajeFormulario = "";
         //
+        nuevoTipoComponente = null;
         nuevoNombreComponente = null;
         nuevoCodigoComponente = null;
         nuevoMarcaComponente = null;
@@ -58,6 +64,7 @@ public class ControllerRegistrarComponente implements Serializable {
 
     public void recibirIDEquipoElemento(BigInteger idRegistro) {
         equipoElementoRegistro = gestionarPlantaComponentesEquiposBO.consultarEquipoElementoPorID(idRegistro);
+        listaTiposComponentes = gestionarPlantaComponentesEquiposBO.consultarTiposComponentesRegistrados();
     }
 
     public void validarNombreComponente() {
@@ -145,6 +152,15 @@ public class ControllerRegistrarComponente implements Serializable {
         }
     }
 
+    public void validarTipoComponente() {
+        if (Utilidades.validarNulo(nuevoTipoComponente)) {
+            validacionesTipo = true;
+        } else {
+            validacionesTipo = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoTipoComponente", new FacesMessage("El Tipo Componente es obligatorio."));
+        }
+    }
+
     public String limpiarRegistroComponenteLaboratorio() {
         nuevoNombreComponente = null;
         nuevoCodigoComponente = null;
@@ -152,11 +168,14 @@ public class ControllerRegistrarComponente implements Serializable {
         nuevoDescripcionComponente = null;
         nuevoSerialComponente = null;
         nuevoModeloComponente = null;
+        nuevoTipoComponente = null;
+        listaTiposComponentes = null;
         //
         validacionesSerial = true;
         validacionesModelo = true;
         validacionesCodigo = false;
         validacionesDescripcion = false;
+        validacionesTipo = false;
         validacionesNombre = false;
         validacionesMarca = true;
         mensajeFormulario = "";
@@ -165,6 +184,9 @@ public class ControllerRegistrarComponente implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        if (validacionesTipo == false) {
+            retorno = false;
+        }
         if (validacionesSerial == false) {
             retorno = false;
         }
@@ -224,6 +246,7 @@ public class ControllerRegistrarComponente implements Serializable {
             componenteNuevo.setEstadocomponente(true);
             componenteNuevo.setModelocomponente(nuevoModeloComponente);
             componenteNuevo.setEquipoelemento(equipoElementoRegistro);
+            componenteNuevo.setTipocomponente(nuevoTipoComponente);
             gestionarPlantaComponentesEquiposBO.crearComponenteEquipo(componenteNuevo);
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema : " + e.toString());
@@ -232,6 +255,7 @@ public class ControllerRegistrarComponente implements Serializable {
 
     private void limpiarFormulario() {
         nuevoNombreComponente = null;
+        nuevoTipoComponente = null;
         nuevoCodigoComponente = null;
         nuevoMarcaComponente = null;
         nuevoDescripcionComponente = null;
@@ -242,6 +266,7 @@ public class ControllerRegistrarComponente implements Serializable {
         validacionesModelo = true;
         validacionesCodigo = false;
         validacionesDescripcion = false;
+        validacionesTipo = false;
         validacionesNombre = false;
         validacionesMarca = true;
     }
@@ -309,6 +334,22 @@ public class ControllerRegistrarComponente implements Serializable {
 
     public void setEquipoElementoRegistro(EquipoElemento equipoElementoRegistro) {
         this.equipoElementoRegistro = equipoElementoRegistro;
+    }
+
+    public List<TipoComponente> getListaTiposComponentes() {
+        return listaTiposComponentes;
+    }
+
+    public void setListaTiposComponentes(List<TipoComponente> listaTiposComponentes) {
+        this.listaTiposComponentes = listaTiposComponentes;
+    }
+
+    public TipoComponente getNuevoTipoComponente() {
+        return nuevoTipoComponente;
+    }
+
+    public void setNuevoTipoComponente(TipoComponente nuevoTipoComponente) {
+        this.nuevoTipoComponente = nuevoTipoComponente;
     }
 
 }

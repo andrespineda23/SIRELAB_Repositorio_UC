@@ -44,7 +44,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         validacionesCantidad = false;
         validacionesCosto = false;
         validacionesTipo = false;
-        validacionesFecha = false;
+        validacionesFecha = true;
         mensajeFormulario = "";
         //
         nuevoTipoMovimiento = null;
@@ -176,7 +176,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private void limpiarFormulario() {
         nuevoTipoMovimiento = null;
         nuevoCantidadMovimiento = null;
-        nuevoFechaMovimiento = null;
+        nuevoFechaMovimiento = new Date();
         nuevoCostoMovimiento = null;
         //
         validacionesCantidad = false;

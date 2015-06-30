@@ -8,9 +8,11 @@ package com.sirelab.controller.estructura_laboratorio;
 import com.sirelab.bo.interfacebo.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.TipoComponente;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -30,7 +32,9 @@ public class ControllerDetallesComponente implements Serializable {
     GestionarPlantaComponentesEquiposBOInterface gestionarPlantaComponentesEquiposBO;
 
     private String editarNombreComponente, editarCodigoComponente, editarDescripcionComponente, editarMarcaComponente, editarModeloComponente, editarSerialComponente;
-    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesMarca;
+    private List<TipoComponente> listaTiposComponentes;
+    private TipoComponente editarTipoComponente;
+    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesMarca, validacionesTipo;
     private boolean validacionesModelo, validacionesSerial;
     private String mensajeFormulario;
     private EquipoElemento editarEquipoElemento;
@@ -61,6 +65,8 @@ public class ControllerDetallesComponente implements Serializable {
             editarNombreComponente = componenteEquipoDetalle.getNombrecomponente();
             editarSerialComponente = componenteEquipoDetalle.getSerialcomponente();
             editarEquipoElemento = componenteEquipoDetalle.getEquipoelemento();
+            editarTipoComponente = componenteEquipoDetalle.getTipocomponente();
+            listaTiposComponentes = gestionarPlantaComponentesEquiposBO.consultarTiposComponentesRegistrados();
             //
             validacionesSerial = true;
             validacionesModelo = true;
@@ -68,6 +74,7 @@ public class ControllerDetallesComponente implements Serializable {
             validacionesDescripcion = true;
             validacionesNombre = true;
             validacionesMarca = true;
+            validacionesTipo = true;
         }
         modificacionesRegistro = false;
     }
@@ -162,6 +169,16 @@ public class ControllerDetallesComponente implements Serializable {
         modificacionesRegistro = true;
     }
 
+    public void validarTipoComponente() {
+        if (Utilidades.validarNulo(editarTipoComponente)) {
+            validacionesTipo = true;
+        } else {
+            validacionesTipo = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarTipoComponente", new FacesMessage("El Tipo Componente es obligatorio."));
+        }
+        modificacionesRegistro = true;
+    }
+
     public void modificarEstadoComponente() {
         if (modificacionesRegistro == false) {
             modificacionesRegistro = true;
@@ -176,15 +193,18 @@ public class ControllerDetallesComponente implements Serializable {
         editarSerialComponente = null;
         editarModeloComponente = null;
         editarEquipoElemento = null;
+        editarTipoComponente = null;
         //
         validacionesSerial = true;
         validacionesModelo = true;
+        validacionesTipo = false;
         validacionesCodigo = false;
         validacionesDescripcion = false;
         validacionesNombre = false;
         validacionesMarca = true;
         mensajeFormulario = "";
         //
+        listaTiposComponentes = null;
         modificacionesRegistro = false;
         idComponenteEquipo = null;
         componenteEquipoDetalle = null;
@@ -194,6 +214,9 @@ public class ControllerDetallesComponente implements Serializable {
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesSerial == false) {
+            retorno = false;
+        }
+        if (validacionesTipo == false) {
             retorno = false;
         }
         if (validacionesModelo == false) {
@@ -251,6 +274,7 @@ public class ControllerDetallesComponente implements Serializable {
             componenteEquipoDetalle.setDescripcioncomponente(editarDescripcionComponente);
             componenteEquipoDetalle.setSerialcomponente(editarSerialComponente);
             componenteEquipoDetalle.setModelocomponente(editarModeloComponente);
+            componenteEquipoDetalle.setTipocomponente(editarTipoComponente);
             gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle);
         } catch (Exception e) {
             System.out.println("Error ControllerDetallesComponente almacenaModificacionComponente : " + e.toString());
@@ -336,6 +360,22 @@ public class ControllerDetallesComponente implements Serializable {
 
     public void setIdComponenteEquipo(BigInteger idComponenteEquipo) {
         this.idComponenteEquipo = idComponenteEquipo;
+    }
+
+    public List<TipoComponente> getListaTiposComponentes() {
+        return listaTiposComponentes;
+    }
+
+    public void setListaTiposComponentes(List<TipoComponente> listaTiposComponentes) {
+        this.listaTiposComponentes = listaTiposComponentes;
+    }
+
+    public TipoComponente getEditarTipoComponente() {
+        return editarTipoComponente;
+    }
+
+    public void setEditarTipoComponente(TipoComponente editarTipoComponente) {
+        this.editarTipoComponente = editarTipoComponente;
     }
 
 }

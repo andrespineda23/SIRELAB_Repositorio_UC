@@ -109,6 +109,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         departamentoEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio().getDepartamento();
         laboratorioEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio();
         perfilEncargadoLaboratorio = encargadoLaboratorioDetalles.getTipoperfil();
+        listaTiposPerfiles = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
+        listaFacultad = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
+        if (null != facultadEncargadoLaboratorio) {
+            listaDepartamento = administrarEncargadosLaboratoriosBO.obtenerDepartamentosPorIDFacultad(facultadEncargadoLaboratorio.getIdfacultad());
+        }
+        if (departamentoEncargadoLaboratorio != null) {
+            listaLaboratorio = administrarEncargadosLaboratoriosBO.obtenerLaboratoriosPorIDDepartamento(departamentoEncargadoLaboratorio.getIddepartamento());
+        }
     }
 
     /**
@@ -138,8 +146,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
-        listaFacultad = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
-        listaTiposPerfiles = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
+        activoDepartamento = false;
+        activoLaboratorio = false;
     }
 
     /**
@@ -155,7 +163,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             disabledActivar = false;
             disabledInactivar = true;
         }
-        asignarValoresVariablesEncargadoLaboratorio();
+        
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
@@ -177,6 +185,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         validacionesDepartamento = true;
         validacionesLaboratorio = true;
         mensajeFormulario = "";
+        asignarValoresVariablesEncargadoLaboratorio();
     }
 
     /**

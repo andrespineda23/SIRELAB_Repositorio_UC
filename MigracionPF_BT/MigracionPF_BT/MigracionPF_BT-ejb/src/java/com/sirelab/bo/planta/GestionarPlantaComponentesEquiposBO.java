@@ -8,8 +8,10 @@ package com.sirelab.bo.planta;
 import com.sirelab.bo.interfacebo.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
+import com.sirelab.dao.interfacedao.TipoComponenteDAOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.TipoComponente;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,6 +28,19 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
     EquipoElementoDAOInterface equipoElementoDAO;
     @EJB
     ComponenteEquipoDAOInterface componenteEquipoDAO;
+    @EJB
+    TipoComponenteDAOInterface tipoComponenteDAO;
+
+    @Override
+    public List<TipoComponente> consultarTiposComponentesRegistrados() {
+        try {
+            List<TipoComponente> lista = tipoComponenteDAO.consultarTiposComponentes();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaComponentesEquiposBO consultarTiposComponentesRegistrados : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public EquipoElemento consultarEquipoElementoPorID(BigInteger idRegistro) {
@@ -37,6 +52,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             return null;
         }
     }
+
     @Override
     public ComponenteEquipo consultarComponenteEquipoPorID(BigInteger idRegistro) {
         try {

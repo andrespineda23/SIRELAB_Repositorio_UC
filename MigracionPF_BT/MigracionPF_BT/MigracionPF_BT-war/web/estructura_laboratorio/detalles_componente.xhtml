@@ -102,6 +102,18 @@
                                     <f:ajax event="change" listener="#{controllerDetallesComponente.modificarEstadoComponente()}" execute="estadoComponente"/>
                                 </h:selectOneMenu>
                             </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Tipo Componente*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesComponente.editarTipoComponente}"
+                                                 class="form-control"
+                                                 id="editarTipoComponente">
+                                    <f:selectItems value="#{controllerDetallesComponente.listaTiposComponentes}" var="tipo"
+                                                   itemLabel="#{tipo.nombretipo}" itemValue="#{tipo}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesComponente.validarTipoComponente()}" execute="editarTipoComponente" render="msnTipo editarTipoComponente"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnTipo" for="editarTipoComponente" style="color: red"/></h6>
+                            </div>
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">

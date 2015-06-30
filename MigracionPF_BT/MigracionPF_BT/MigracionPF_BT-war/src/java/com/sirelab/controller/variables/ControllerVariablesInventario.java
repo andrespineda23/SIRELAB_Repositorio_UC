@@ -7,9 +7,11 @@ package com.sirelab.controller.variables;
 
 import com.sirelab.bo.interfacebo.GestionarVariableEstadosEquiposBOInterface;
 import com.sirelab.bo.interfacebo.GestionarVariableTiposActivosBOInterface;
+import com.sirelab.bo.interfacebo.GestionarVariableTiposComponentesBOInterface;
 import com.sirelab.bo.interfacebo.GestionarVariableTiposEventosBOInterface;
 import com.sirelab.entidades.EstadoEquipo;
 import com.sirelab.entidades.TipoActivo;
+import com.sirelab.entidades.TipoComponente;
 import com.sirelab.entidades.TipoEvento;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ public class ControllerVariablesInventario implements Serializable {
     GestionarVariableTiposActivosBOInterface gestionarVariableTiposActivosBO;
     @EJB
     GestionarVariableTiposEventosBOInterface gestionarVariableTiposEventosBO;
+    @EJB
+    GestionarVariableTiposComponentesBOInterface gestionarVariableTiposComponentesBO;
 
     private List<TipoActivo> listaTiposActivos;
     private List<TipoActivo> listaTiposActivosTabla;
@@ -40,8 +44,11 @@ public class ControllerVariablesInventario implements Serializable {
     private List<EstadoEquipo> listaEstadosEquiposTabla;
     private List<TipoEvento> listaTiposEventos;
     private List<TipoEvento> listaTiposEventosTabla;
-    private int posicionTipoActivoTabla, posicionEstadoEquipoTabla, posicionTipoEventoTabla;
-    private int tamTotalTipoActivo, tamTotalEstadoEquipo, tamTotalTipoEvento;
+    private List<TipoComponente> listaTiposComponentes;
+    private List<TipoComponente> listaTiposComponentesTabla;
+    private int posicionTipoActivoTabla, posicionEstadoEquipoTabla, posicionTipoEventoTabla, posicionTipoComponenteTabla;
+    private int tamTotalTipoActivo, tamTotalEstadoEquipo, tamTotalTipoEvento, tamTotalTipoComponente;
+    private boolean bloquearPagSigTipoComponente, bloquearPagAntTipoComponente;
     private boolean bloquearPagSigTipoActivo, bloquearPagAntTipoActivo;
     private boolean bloquearPagSigTipoEvento, bloquearPagAntTipoEvento;
     private boolean bloquearPagSigEstadoEquipo, bloquearPagAntEstadoEquipo;
@@ -75,6 +82,29 @@ public class ControllerVariablesInventario implements Serializable {
         }
         posicionTipoEventoTabla = 0;
         cargarDatosTablaTipoEvento();
+        listaTiposComponentes = gestionarVariableTiposComponentesBO.consultarTiposComponentesRegistrados();
+        if (null != listaTiposComponentes) {
+            listaTiposComponentesTabla = new ArrayList<TipoComponente>();
+            tamTotalTipoComponente = listaTiposComponentes.size();
+        }
+        posicionTipoComponenteTabla = 0;
+        cargarDatosTablaTipoComponente();
+    }
+
+    private void cargarDatosTablaTipoComponente() {
+        if (tamTotalTipoComponente < 10) {
+            for (int i = 0; i < tamTotalTipoComponente; i++) {
+                listaTiposComponentesTabla.add(listaTiposComponentes.get(i));
+            }
+            bloquearPagSigTipoComponente = true;
+            bloquearPagAntTipoComponente = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaTiposComponentesTabla.add(listaTiposComponentes.get(i));
+            }
+            bloquearPagSigTipoComponente = false;
+            bloquearPagAntTipoComponente = true;
+        }
     }
 
     private void cargarDatosTablaTipoEvento() {
@@ -129,21 +159,65 @@ public class ControllerVariablesInventario implements Serializable {
         listaTiposActivos = null;
         listaTiposEventos = null;
         listaEstadosEquipos = null;
+        listaTiposComponentes = null;
+        listaTiposComponentesTabla = null;
         listaEstadosEquiposTabla = null;
         listaTiposActivosTabla = null;
         listaTiposEventosTabla = null;
         posicionEstadoEquipoTabla = 0;
+        posicionTipoComponenteTabla = 0;
         posicionTipoActivoTabla = 0;
         posicionTipoEventoTabla = 0;
         tamTotalEstadoEquipo = 0;
         tamTotalTipoActivo = 0;
+        tamTotalTipoComponente = 0;
         tamTotalTipoEvento = 0;
         bloquearPagAntEstadoEquipo = true;
         bloquearPagAntTipoActivo = true;
         bloquearPagAntTipoEvento = true;
+        bloquearPagAntTipoComponente = true;
+        bloquearPagSigTipoComponente = true;
         bloquearPagSigEstadoEquipo = true;
         bloquearPagSigTipoActivo = true;
         bloquearPagSigTipoEvento = true;
+    }
+
+    public void cargarPaginaSiguienteTipoComponente() {
+        listaTiposComponentesTabla = new ArrayList<TipoComponente>();
+        posicionTipoComponenteTabla = posicionTipoComponenteTabla + 10;
+        int diferencia = tamTotalTipoComponente - posicionTipoComponenteTabla;
+        if (diferencia > 10) {
+            for (int i = posicionTipoComponenteTabla; i < (posicionTipoComponenteTabla + 10); i++) {
+                listaTiposComponentesTabla.add(listaTiposComponentes.get(i));
+            }
+            bloquearPagSigTipoComponente = false;
+            bloquearPagAntTipoComponente = false;
+        } else {
+            for (int i = posicionTipoComponenteTabla; i < (posicionTipoComponenteTabla + diferencia); i++) {
+                listaTiposComponentesTabla.add(listaTiposComponentes.get(i));
+            }
+            bloquearPagSigTipoComponente = true;
+            bloquearPagAntTipoComponente = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorTipoComponente() {
+        listaTiposComponentesTabla = new ArrayList<TipoComponente>();
+        posicionTipoComponenteTabla = posicionTipoComponenteTabla - 10;
+        int diferencia = tamTotalTipoComponente - posicionTipoComponenteTabla;
+        if (diferencia == tamTotalTipoComponente) {
+            for (int i = posicionTipoComponenteTabla; i < (posicionTipoComponenteTabla + 10); i++) {
+                listaTiposComponentesTabla.add(listaTiposComponentes.get(i));
+            }
+            bloquearPagSigTipoComponente = false;
+            bloquearPagAntTipoComponente = true;
+        } else {
+            for (int i = posicionTipoComponenteTabla; i < (posicionTipoComponenteTabla + 10); i++) {
+                listaTiposComponentesTabla.add(listaTiposComponentes.get(i));
+            }
+            bloquearPagSigTipoComponente = false;
+            bloquearPagAntTipoComponente = false;
+        }
     }
 
     public void cargarPaginaSiguienteTipoActivo() {
@@ -355,6 +429,38 @@ public class ControllerVariablesInventario implements Serializable {
 
     public void setBloquearPagAntEstadoEquipo(boolean bloquearPagAntEstadoEquipo) {
         this.bloquearPagAntEstadoEquipo = bloquearPagAntEstadoEquipo;
+    }
+
+    public List<TipoComponente> getListaTiposComponentes() {
+        return listaTiposComponentes;
+    }
+
+    public void setListaTiposComponentes(List<TipoComponente> listaTiposComponentes) {
+        this.listaTiposComponentes = listaTiposComponentes;
+    }
+
+    public List<TipoComponente> getListaTiposComponentesTabla() {
+        return listaTiposComponentesTabla;
+    }
+
+    public void setListaTiposComponentesTabla(List<TipoComponente> listaTiposComponentesTabla) {
+        this.listaTiposComponentesTabla = listaTiposComponentesTabla;
+    }
+
+    public boolean isBloquearPagSigTipoComponente() {
+        return bloquearPagSigTipoComponente;
+    }
+
+    public void setBloquearPagSigTipoComponente(boolean bloquearPagSigTipoComponente) {
+        this.bloquearPagSigTipoComponente = bloquearPagSigTipoComponente;
+    }
+
+    public boolean isBloquearPagAntTipoComponente() {
+        return bloquearPagAntTipoComponente;
+    }
+
+    public void setBloquearPagAntTipoComponente(boolean bloquearPagAntTipoComponente) {
+        this.bloquearPagAntTipoComponente = bloquearPagAntTipoComponente;
     }
 
 }

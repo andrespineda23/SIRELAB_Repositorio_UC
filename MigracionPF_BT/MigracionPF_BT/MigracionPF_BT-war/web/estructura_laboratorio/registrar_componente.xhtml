@@ -92,6 +92,19 @@
                                 <strong><h:outputText value="Equipo Asociado*"/></strong>
                                 <h:inputText readonly="true"  value="#{controllerRegistrarComponente.equipoElementoRegistro.nombreequipo}" class="form-control" id="nuevoEquipoComponente" />
                             </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Tipo Componente*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarComponente.nuevoTipoComponente}"
+                                                 class="form-control"
+                                                 id="nuevoTipoComponente">
+                                    <f:selectItem itemLabel="Seleccione Tipo Componente" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarComponente.listaTiposComponentes}" var="tipo"
+                                                   itemLabel="#{tipo.nombretipo}" itemValue="#{tipo}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarComponente.validarTipoComponente()}" execute="nuevoTipoComponente" render="msnTipo nuevoTipoComponente"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnTipo" for="nuevoTipoComponente" style="color: red"/></h6>
+                            </div>
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">

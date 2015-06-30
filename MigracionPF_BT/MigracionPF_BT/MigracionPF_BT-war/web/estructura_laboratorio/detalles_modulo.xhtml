@@ -154,27 +154,27 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonActivar" disabled="#{controllerDetallesModulo.disabledActivar}" value="ACTIVAR" actionListener="#{controllerDetallesModulo.activarModuloLaboratorio()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonInactivar" disabled="#{controllerDetallesModulo.disabledInactivar}" value="INACTIVAR" actionListener="#{controllerDetallesModulo.inactivarModuloLaboratorio()}" class="btn btn-default right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonEditar" disabled="#{controllerDetallesModulo.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesModulo.activarEditarRegistro()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesModulo.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesModulo.restaurarInformacionModuloLaboratorio()}" class="btn btn-default right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonGuardar" rendered="#{controllerDetallesModulo.visibleGuardar}" value="GUARDAR" actionListener="#{controllerDetallesModulo.almacenarModificacionesModulo()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-1"></div>

@@ -164,27 +164,27 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonActivar" disabled="#{controllerDetallesEntidadExterna.disabledActivar}" value="ACTIVAR" actionListener="#{controllerDetallesEntidadExterna.activarEntidadExterna()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonInactivar" disabled="#{controllerDetallesEntidadExterna.disabledInactivar}" value="INACTIVAR" actionListener="#{controllerDetallesEntidadExterna.inactivarEntidadExterna()}" class="btn btn-default right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonEditar" disabled="#{controllerDetallesEntidadExterna.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesEntidadExterna.activarEditarRegistro()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesEntidadExterna.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" class="btn btn-default right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-2">
                             <h:commandButton id="buttonGuardar" rendered="#{controllerDetallesEntidadExterna.visibleGuardar}" value="GUARDAR" actionListener="#{controllerDetallesEntidadExterna.almacenarModificacionesEntidadExterna()}" class="btn btn-primary right" >
-                                <f:ajax execute="@form" render="formularioGeneral" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                         <div class="col-md-1"></div>
@@ -192,7 +192,7 @@
                     <div class="row">
                         <div class="col-md-11"></div>
                         <div class="col-md-1">
-                            <h:commandButton value="Atras" action="administrar_entidadesxternas" actionListener="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" class="btn btn-primary"/>
+                            <h:commandButton value="Atras" action="administrar_entidadesxternas" actionListener="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" class="btn btn-primary" immediate="true"/> 
                         </div>
                     </div>
                 </div>

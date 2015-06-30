@@ -291,6 +291,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/variables_entorno/registrar_tipocomponente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_tipocomponente</from-outcome>
+            <to-view-id>/variables_entorno/registrar_tipocomponente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/variables_entorno/detalles_estadoequipo.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>variables_inventario</from-outcome>
@@ -321,6 +339,24 @@
         <navigation-case>
             <from-outcome>detalles_tipoevento</from-outcome>
             <to-view-id>/variables_entorno/detalles_tipoevento.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/variables_entorno/detalles_tipocomponente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_inventario</from-outcome>
+            <to-view-id>/variables_entorno/variables_inventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_tipocomponente</from-outcome>
+            <to-view-id>/variables_entorno/detalles_tipocomponente.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

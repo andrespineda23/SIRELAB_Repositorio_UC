@@ -109,6 +109,10 @@ public class ControllerDetallesEstudiante implements Serializable {
             activarNumSemestre = true;
             semestreEstudiante = 10;
         }
+        listaCarrera = administrarEstudiantesBO.obtenerListaCarreras();
+        if (null != carreraEstudiante) {
+            listaPlanEstudios = administrarEstudiantesBO.obtenerListasPlanesEstudioPorCarrera(carreraEstudiante.getIdcarrera());
+        }
     }
 
     /**
@@ -137,7 +141,7 @@ public class ControllerDetallesEstudiante implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
-        listaCarrera = administrarEstudiantesBO.obtenerListaCarreras();
+        activoPlanEstudio = false;
     }
 
     /**
@@ -153,7 +157,6 @@ public class ControllerDetallesEstudiante implements Serializable {
             disabledActivar = false;
             disabledInactivar = true;
         }
-        asignarValoresVariablesEstudiante();
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
@@ -182,6 +185,7 @@ public class ControllerDetallesEstudiante implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
+        asignarValoresVariablesEstudiante();
     }
 
     public void actualizarTipoUsuarioSeleccionado() {

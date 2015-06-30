@@ -33,13 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ComponenteEquipo.findAll", query = "SELECT c FROM ComponenteEquipo c"),
     @NamedQuery(name = "ComponenteEquipo.findByIdcomponenteequipo", query = "SELECT c FROM ComponenteEquipo c WHERE c.idcomponenteequipo = :idcomponenteequipo"),
+    @NamedQuery(name = "ComponenteEquipo.findByCodigocomponete", query = "SELECT c FROM ComponenteEquipo c WHERE c.codigocomponete = :codigocomponete"),
     @NamedQuery(name = "ComponenteEquipo.findByNombrecomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.nombrecomponente = :nombrecomponente"),
     @NamedQuery(name = "ComponenteEquipo.findByDescripcioncomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.descripcioncomponente = :descripcioncomponente"),
     @NamedQuery(name = "ComponenteEquipo.findByMarcacomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.marcacomponente = :marcacomponente"),
     @NamedQuery(name = "ComponenteEquipo.findByModelocomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.modelocomponente = :modelocomponente"),
     @NamedQuery(name = "ComponenteEquipo.findBySerialcomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.serialcomponente = :serialcomponente"),
-    @NamedQuery(name = "ComponenteEquipo.findByEstadocomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.estadocomponente = :estadocomponente"),
-    @NamedQuery(name = "ComponenteEquipo.findByCodigocomponete", query = "SELECT c FROM ComponenteEquipo c WHERE c.codigocomponete = :codigocomponete")})
+    @NamedQuery(name = "ComponenteEquipo.findByEstadocomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.estadocomponente = :estadocomponente")})
 public class ComponenteEquipo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +48,11 @@ public class ComponenteEquipo implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcomponenteequipo")
     private BigInteger idcomponenteequipo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "codigocomponete")
+    private String codigocomponete;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -69,11 +74,9 @@ public class ComponenteEquipo implements Serializable {
     private String serialcomponente;
     @Column(name = "estadocomponente")
     private Boolean estadocomponente;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "codigocomponete")
-    private String codigocomponete;
+    @JoinColumn(name = "tipocomponente", referencedColumnName = "idtipocomponente")
+    @ManyToOne(optional = false)
+    private TipoComponente tipocomponente;
     @JoinColumn(name = "equipoelemento", referencedColumnName = "idequipoelemento")
     @ManyToOne(optional = false)
     private EquipoElemento equipoelemento;
@@ -89,9 +92,9 @@ public class ComponenteEquipo implements Serializable {
 
     public ComponenteEquipo(BigInteger idcomponenteequipo, String nombrecomponente, String descripcioncomponente, String codigocomponete) {
         this.idcomponenteequipo = idcomponenteequipo;
+        this.codigocomponete = codigocomponete;
         this.nombrecomponente = nombrecomponente;
         this.descripcioncomponente = descripcioncomponente;
-        this.codigocomponete = codigocomponete;
     }
 
     public BigInteger getIdcomponenteequipo() {
@@ -100,6 +103,14 @@ public class ComponenteEquipo implements Serializable {
 
     public void setIdcomponenteequipo(BigInteger idcomponenteequipo) {
         this.idcomponenteequipo = idcomponenteequipo;
+    }
+
+    public String getCodigocomponete() {
+        return codigocomponete.toUpperCase();
+    }
+
+    public void setCodigocomponete(String codigocomponete) {
+        this.codigocomponete = codigocomponete.toUpperCase();
     }
 
     public String getNombrecomponente() {
@@ -153,13 +164,13 @@ public class ComponenteEquipo implements Serializable {
     public String getStrEstado() {
         getEstadocomponente();
         if (null != estadocomponente) {
-            if (estadocomponente == true) {
+            if (true == estadocomponente) {
                 strEstado = "ACTIVO";
             } else {
                 strEstado = "INACTIVO";
             }
         } else {
-            strEstado = "";
+            strEstado = "NO POSEE";
         }
         return strEstado;
     }
@@ -168,12 +179,12 @@ public class ComponenteEquipo implements Serializable {
         this.strEstado = strEstado;
     }
 
-    public String getCodigocomponete() {
-        return codigocomponete.toUpperCase();
+    public TipoComponente getTipocomponente() {
+        return tipocomponente;
     }
 
-    public void setCodigocomponete(String codigocomponete) {
-        this.codigocomponete = codigocomponete.toUpperCase();
+    public void setTipocomponente(TipoComponente tipocomponente) {
+        this.tipocomponente = tipocomponente;
     }
 
     public EquipoElemento getEquipoelemento() {

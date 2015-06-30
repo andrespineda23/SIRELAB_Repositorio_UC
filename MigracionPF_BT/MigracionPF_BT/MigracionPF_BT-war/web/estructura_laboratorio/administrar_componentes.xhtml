@@ -67,7 +67,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="parametroNombre">
-                                                        Nombre Componente
+                                                        Nombre Equipo Trabajo
                                                     </label>
                                                     <h:inputText readonly="true" value="#{controllerAdministrarComponentes.equipoElementoDetalle.nombreequipo}" class="form-control" id="parametroNombre" />
                                                 </div>
@@ -75,7 +75,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="parametroCodigo">
-                                                        Codigo Inventario Componente
+                                                        Codigo Inventario Equipo Trabajo
                                                     </label>
                                                     <h:inputText readonly="true" value="#{controllerAdministrarComponentes.equipoElementoDetalle.inventarioequipo}" class="form-control" id="parametroCodigo" />
                                                 </div>
@@ -86,7 +86,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="parametroModulo">
-                                                    Modelo Componente
+                                                    Modelo Equipo Trabajo
                                                 </label>
                                                 <h:inputText readonly="true" value="#{controllerAdministrarComponentes.equipoElementoDetalle.modulolaboratorio.detallemodulo}" class="form-control" id="parametroModulo" />
                                             </div>
@@ -94,7 +94,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="parametroSala">
-                                                    Serie Componente
+                                                    Serie Equipo Trabajo
                                                 </label>
                                                 <h:inputText readonly="true" value="#{controllerAdministrarComponentes.equipoElementoDetalle.modulolaboratorio.salalaboratorio.nombresala}" class="form-control" id="parametroSala" />
                                             </div>
@@ -140,6 +140,12 @@
                                                     <h:outputText value="Serial"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.serialcomponente}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Tipo Componente"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.tipocomponente.nombretipo}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">
