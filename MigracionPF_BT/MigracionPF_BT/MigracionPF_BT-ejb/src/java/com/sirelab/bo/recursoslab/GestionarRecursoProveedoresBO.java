@@ -1,6 +1,6 @@
 package com.sirelab.bo.recursoslab;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoProveedoresBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoProveedoresBOInterface;
 import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
 import com.sirelab.entidades.Proveedor;
 import java.math.BigInteger;

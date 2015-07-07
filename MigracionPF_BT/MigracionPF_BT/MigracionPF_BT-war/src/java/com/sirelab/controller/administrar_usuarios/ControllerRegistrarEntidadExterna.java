@@ -5,7 +5,8 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEntidadesExternasBOInterface;
+import com.sirelab.ayuda.EnvioCorreo;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEntidadesExternasBOInterface;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Usuario;
@@ -36,13 +37,13 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     AdministrarEntidadesExternasBOInterface administrarEntidadesExternasBO;
     //
 
-    private String inputNombre, inputApellido, inputID, inputEmail, inputContrasenia, inputContraseniaConfirma, inputTelefono1, inputTelefono2, inputDireccion;
+    private String inputNombre, inputApellido, inputID, inputEmail, inputTelefono1, inputTelefono2, inputDireccion;
     private String inputIDEntidad, inputNombreEntidad, inputEmailEntidad;
     private String paginaAnterior;
     //
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
-    private boolean validacionesID, validacionesPassw, validacionesTel1, validacionesTel2;
-    private boolean validacionesDireccion, validacionesPassw2, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
+    private boolean validacionesID, validacionesTel1, validacionesTel2;
+    private boolean validacionesDireccion, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
     private String mensajeFormulario;
 
     public ControllerRegistrarEntidadExterna() {
@@ -54,11 +55,9 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesIDEntidad = false;
         validacionesEmailEntidad = false;
         validacionesNombreEntidad = false;
@@ -67,8 +66,6 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         inputNombreEntidad = null;
         inputEmailEntidad = null;
         inputApellido = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
@@ -178,30 +175,6 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         }
     }
 
-    public void validarContraseniaEntidadExterna() {
-        if ((Utilidades.validarNulo(inputContrasenia)) && (!inputContrasenia.isEmpty())) {
-            validacionesPassw = true;
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputContrasenia", new FacesMessage("La contraseña es obligatoria."));
-            validacionesPassw = false;
-        }
-    }
-
-    public void validarContraseniaConfirmaEntidadExterna() {
-        if ((Utilidades.validarNulo(inputContrasenia)) && (Utilidades.validarNulo(inputContraseniaConfirma))
-                && (!inputContrasenia.isEmpty()) && (!inputContraseniaConfirma.isEmpty())) {
-            if (inputContrasenia.equals(inputContraseniaConfirma)) {
-                validacionesPassw2 = true;
-            } else {
-                FacesContext.getCurrentInstance().addMessage("form:inputContraseniaConfirma", new FacesMessage("Las contraseñas ingresadas no concuerdan."));
-                validacionesPassw2 = false;
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputContraseniaConfirma", new FacesMessage("Las contraseñas son obligatorias."));
-            validacionesPassw2 = false;
-        }
-    }
-
     public void validarDatosEntidadExterna(int tipo) {
         if (tipo == 1) {
             if (Utilidades.validarNulo(inputIDEntidad) && (!inputIDEntidad.isEmpty())) {
@@ -264,12 +237,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesPassw == false) {
-            retorno = false;
-        }
-        if (validacionesPassw2 == false) {
-            retorno = false;
-        }
+
         if (validacionesIDEntidad == false) {
             retorno = false;
         }
@@ -292,6 +260,8 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     public void registrarNuevoEntidadExterna() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoEntidadExternaEnSistema();
+            EnvioCorreo correo = new EnvioCorreo();
+            correo.enviarCorreoCreacionCuenta(inputEmail);
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -302,35 +272,19 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
      * Metodo encargado de cancelar el proceso de registro
      */
     public void cancelarRegistroEntidadExterna() {
-        validacionesNombre = false;
-        validacionesApellido = false;
-        validacionesCorreo = false;
-        validacionesID = false;
-        validacionesPassw = false;
-        validacionesTel1 = true;
-        validacionesTel2 = true;
-        validacionesDireccion = true;
-        validacionesPassw2 = false;
-        validacionesIDEntidad = false;
-        validacionesEmailEntidad = false;
-        validacionesNombreEntidad = false;
         mensajeFormulario = "";
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesIDEntidad = false;
         validacionesEmailEntidad = false;
         validacionesNombreEntidad = false;
         mensajeFormulario = "";
         inputApellido = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
@@ -348,12 +302,15 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         try {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
-            usuarioNuevo.setNombreusuario(inputEmail);
+            usuarioNuevo.setEnlinea(false);
+            usuarioNuevo.setNumeroconexiones(0);
+            usuarioNuevo.setNombreusuario(inputID);
             EncriptarContrasenia obj = new EncriptarContrasenia();
-            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputContrasenia));
+            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
             Persona personaNueva = new Persona();
             personaNueva.setApellidospersona(inputApellido);
             personaNueva.setEmailpersona(inputEmail);
+            personaNueva.setEmailsecundario(inputEmail);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
             if ((Utilidades.validarNulo(inputTelefono1)) && (!inputTelefono1.isEmpty())) {
@@ -433,22 +390,6 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void setInputEmail(String inputEmail) {
         this.inputEmail = inputEmail;
-    }
-
-    public String getInputContrasenia() {
-        return inputContrasenia;
-    }
-
-    public void setInputContrasenia(String inputContrasenia) {
-        this.inputContrasenia = inputContrasenia;
-    }
-
-    public String getInputContraseniaConfirma() {
-        return inputContraseniaConfirma;
-    }
-
-    public void setInputContraseniaConfirma(String inputContraseniaConfirma) {
-        this.inputContraseniaConfirma = inputContraseniaConfirma;
     }
 
     public String getInputTelefono1() {

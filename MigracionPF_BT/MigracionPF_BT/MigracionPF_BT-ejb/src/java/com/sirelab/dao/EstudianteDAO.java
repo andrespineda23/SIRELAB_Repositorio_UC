@@ -29,6 +29,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
         try {
             em.clear();
             em.persist(estudiante);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEstudiante EstudianteDAO : " + e.toString());
         }
@@ -99,7 +100,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Estudiante buscarEstudiantePorCorreo(String correo) {
         try {
@@ -259,7 +260,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
         }
         return tq;
     }
-    
+
     @Override
     public Estudiante buscarEstudiantePorDocumentoYCorreo(String correo, String documento) {
         try {

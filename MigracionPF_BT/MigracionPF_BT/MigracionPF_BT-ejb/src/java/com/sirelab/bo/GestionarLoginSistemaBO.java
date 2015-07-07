@@ -13,6 +13,9 @@ import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Docente;
+import com.sirelab.entidades.EncargadoLaboratorio;
+import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
@@ -55,6 +58,50 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     private final String NUMEROS = "0123456789";
     private final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
+
+    @Override
+    public void cerrarSesionEnLineaUsuario(int tipoUsuario, BigInteger secuencia) {
+        try {
+            if (tipoUsuario == 1) {
+                Persona registro = personaDAO.buscarPersonaPorID(secuencia);
+                registro.getUsuario().setEnlinea(false);
+                actualizarUsuario(registro.getUsuario());
+            } else {
+                if (tipoUsuario == 2) {
+                    Docente registro = docenteDAO.buscarDocentePorID(secuencia);
+                    registro.getPersona().getUsuario().setEnlinea(false);
+                    actualizarUsuario(registro.getPersona().getUsuario());
+                } else {
+                    if (tipoUsuario == 3) {
+                        Estudiante registro = estudianteDAO.buscarEstudiantePorID(secuencia);
+                        registro.getPersona().getUsuario().setEnlinea(false);
+                        actualizarUsuario(registro.getPersona().getUsuario());
+                    } else {
+                        if (tipoUsuario == 4) {
+                            EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorID(secuencia);
+                            registro.getPersona().getUsuario().setEnlinea(false);
+                            actualizarUsuario(registro.getPersona().getUsuario());
+                        } else {
+                            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(secuencia);
+                            registro.getPersona().getUsuario().setEnlinea(false);
+                            actualizarUsuario(registro.getPersona().getUsuario());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarLoginSistemaBO cerrarSesionEnLineaUsuario : " + e.toString());
+        }
+    }
+
+    @Override
+    public void actualizarUsuario(Usuario usuario) {
+        try {
+            usuarioDAO.editarUsuario(usuario);
+        } catch (Exception e) {
+            System.out.println("Error GestionarLoginSistemaBO actualizarUsuario : " + e.toString());
+        }
+    }
 
     @Override
     public List<Departamento> obtenerListasDepartamentos() {
@@ -114,8 +161,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     @Override
     public void almacenarNuevoEstudianteEnSistema(Usuario usuarioNuevo, Persona personaNuevo, Estudiante estudianteNuevo) {
         try {
-            int sec = 1;
-            TipoUsuario tipoUsuario = tipoUsuarioDAO.buscarTipoUsuarioPorNombre("ESTUDIANTE");
+            TipoUsuario tipoUsuario = tipoUsuarioDAO.buscarTipoUsuarioPorID(new BigInteger("3"));
             usuarioNuevo.setTipousuario(tipoUsuario);
             usuarioDAO.crearUsuario(usuarioNuevo);
             Usuario usuarioRegistrado = usuarioDAO.obtenerUltimoUsuarioRegistrado();

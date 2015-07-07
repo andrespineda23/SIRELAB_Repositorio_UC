@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableEstadosEquiposBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableEstadosEquiposBOInterface;
 import com.sirelab.dao.interfacedao.EstadoEquipoDAOInterface;
 import com.sirelab.entidades.EstadoEquipo;
 import java.math.BigInteger;

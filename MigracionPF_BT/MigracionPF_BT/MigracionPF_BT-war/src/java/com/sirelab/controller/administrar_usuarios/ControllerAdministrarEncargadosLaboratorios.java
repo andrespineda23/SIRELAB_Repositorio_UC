@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.EncargadoLaboratorio;

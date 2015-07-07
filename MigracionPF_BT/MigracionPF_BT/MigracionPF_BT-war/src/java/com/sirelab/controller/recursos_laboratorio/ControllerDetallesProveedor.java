@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.recursos_laboratorio;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoProveedoresBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoProveedoresBOInterface;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;

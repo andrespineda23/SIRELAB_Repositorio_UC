@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.recursos_laboratorio;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoAreasProfundizacionBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoAreasProfundizacionBOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;

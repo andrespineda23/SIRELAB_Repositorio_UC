@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEstudiantesBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEstudiantesBOInterface;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.PlanEstudios;
@@ -47,12 +47,12 @@ public class ControllerDetallesEstudiante implements Serializable {
     private List<PlanEstudios> listaPlanEstudios;
     private PlanEstudios planEstudioEstudiante;
     private boolean activoPlanEstudio;
-    private String nombreEstudiante, apellidoEstudiante, correoEstudiante, identificacionEstudiante;
+    private String nombreEstudiante, apellidoEstudiante, correoEstudiante, correoOpcionalEstudiante, identificacionEstudiante;
     private String telefono1Estudiante, telefono2Estudiante, direccionEstudiante;
     private int tipoEstudiante;
     private Integer semestreEstudiante;
     private boolean activarNumSemestre;
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
+    private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
@@ -66,6 +66,7 @@ public class ControllerDetallesEstudiante implements Serializable {
         validacionesCarrera = true;
         validacionesPlanEstudio = true;
         validacionesNombre = true;
+        validacionesCorreoOpcional = true;
         validacionesApellido = true;
         validacionesCorreo = true;
         validacionesID = true;
@@ -95,6 +96,7 @@ public class ControllerDetallesEstudiante implements Serializable {
         nombreEstudiante = estudianteDetalles.getPersona().getNombrespersona();
         apellidoEstudiante = estudianteDetalles.getPersona().getApellidospersona();
         correoEstudiante = estudianteDetalles.getPersona().getEmailpersona();
+        correoOpcionalEstudiante = estudianteDetalles.getPersona().getEmailsecundario();
         identificacionEstudiante = estudianteDetalles.getPersona().getIdentificacionpersona();
         telefono1Estudiante = estudianteDetalles.getPersona().getTelefono1persona();
         telefono2Estudiante = estudianteDetalles.getPersona().getTelefono2persona();
@@ -165,7 +167,7 @@ public class ControllerDetallesEstudiante implements Serializable {
         listaCarrera = null;
         listaPlanEstudios = null;
         mensajeFormulario = "";
-        validacionesCarrera = true;
+        validacionesCorreoOpcional = true;
         validacionesPlanEstudio = true;
         validacionesNombre = true;
         validacionesApellido = true;
@@ -174,17 +176,8 @@ public class ControllerDetallesEstudiante implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-
         mensajeFormulario = "";
         validacionesCarrera = true;
-        validacionesPlanEstudio = true;
-        validacionesNombre = true;
-        validacionesApellido = true;
-        validacionesCorreo = true;
-        validacionesID = true;
-        validacionesTel1 = true;
-        validacionesTel2 = true;
-        validacionesDireccion = true;
         asignarValoresVariablesEstudiante();
     }
 
@@ -289,6 +282,18 @@ public class ControllerDetallesEstudiante implements Serializable {
         modificacionesRegistroEstudiante();
     }
 
+    public void validarCorreoOpcionalEstudiante() {
+        if (Utilidades.validarNulo(correoOpcionalEstudiante) && (!correoOpcionalEstudiante.isEmpty())) {
+            if (Utilidades.validarCorreoElectronico(correoOpcionalEstudiante)) {
+                validacionesCorreoOpcional = true;
+            } else {
+                validacionesCorreoOpcional = false;
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEstudiante", new FacesMessage("El correo se encuentra incorrecto."));
+            }
+        }
+        modificacionesRegistroEstudiante();
+    }
+
     public void validarIdentificacionEstudiante() {
         if (Utilidades.validarNulo(identificacionEstudiante) && (!identificacionEstudiante.isEmpty())) {
             if (Utilidades.validarCaracteresAlfaNumericos(identificacionEstudiante)) {
@@ -360,6 +365,9 @@ public class ControllerDetallesEstudiante implements Serializable {
         if (validacionesCorreo == false) {
             retorno = false;
         }
+        if (validacionesCorreoOpcional == false) {
+            retorno = false;
+        }
         if (validacionesDireccion == false) {
             retorno = false;
         }
@@ -407,6 +415,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             estudianteDetalles.getPersona().setApellidospersona(apellidoEstudiante);
             estudianteDetalles.getPersona().setDireccionpersona(direccionEstudiante);
             estudianteDetalles.getPersona().setEmailpersona(correoEstudiante);
+            estudianteDetalles.getPersona().setEmailsecundario(correoOpcionalEstudiante);
             estudianteDetalles.getPersona().setIdentificacionpersona(identificacionEstudiante);
             estudianteDetalles.getPersona().setNombrespersona(nombreEstudiante);
             estudianteDetalles.getPersona().setTelefono1persona(telefono1Estudiante);
@@ -665,6 +674,14 @@ public class ControllerDetallesEstudiante implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getCorreoOpcionalEstudiante() {
+        return correoOpcionalEstudiante;
+    }
+
+    public void setCorreoOpcionalEstudiante(String correoOpcionalEstudiante) {
+        this.correoOpcionalEstudiante = correoOpcionalEstudiante;
     }
 
 }

@@ -71,6 +71,9 @@ public class Persona implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "emailpersona")
     private String emailpersona;
+    @Size(max = 60)
+    @Column(name = "emailsecundario")
+    private String emailsecundario;
     @Size(max = 20)
     @Column(name = "telefono1persona")
     private String telefono1persona;
@@ -181,6 +184,14 @@ public class Persona implements Serializable {
 
     public void setDireccionpersona(String direccionpersona) {
         this.direccionpersona = direccionpersona.toUpperCase();
+    }
+
+    public String getEmailsecundario() {
+        return emailsecundario;
+    }
+
+    public void setEmailsecundario(String emailsecundario) {
+        this.emailsecundario = emailsecundario;
     }
 
     @XmlTransient

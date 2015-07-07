@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableTiposUsuarioBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposUsuarioBOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.entidades.TipoUsuario;
 import java.math.BigInteger;

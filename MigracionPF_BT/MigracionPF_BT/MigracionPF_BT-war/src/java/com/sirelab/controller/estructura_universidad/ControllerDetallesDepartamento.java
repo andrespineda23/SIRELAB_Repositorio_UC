@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.estructura_universidad;
 
-import com.sirelab.bo.interfacebo.GestionarDepartamentosBOInterface;
+import com.sirelab.bo.interfacebo.universidad.GestionarDepartamentosBOInterface;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.utilidades.Utilidades;

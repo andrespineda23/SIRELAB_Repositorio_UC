@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableHorariosAtencionBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableHorariosAtencionBOInterface;
 import com.sirelab.dao.interfacedao.HorarioAtencionDAOInterface;
 import com.sirelab.entidades.HorarioAtencion;
 import java.math.BigInteger;

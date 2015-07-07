@@ -1,6 +1,6 @@
 package com.sirelab.bo.universidad;
 
-import com.sirelab.bo.interfacebo.GestionarFacultadesBOInterface;
+import com.sirelab.bo.interfacebo.universidad.GestionarFacultadesBOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.entidades.Facultad;
 import java.math.BigInteger;

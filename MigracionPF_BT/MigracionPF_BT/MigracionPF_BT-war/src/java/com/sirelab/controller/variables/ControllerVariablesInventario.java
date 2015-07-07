@@ -5,10 +5,10 @@
  */
 package com.sirelab.controller.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableEstadosEquiposBOInterface;
-import com.sirelab.bo.interfacebo.GestionarVariableTiposActivosBOInterface;
-import com.sirelab.bo.interfacebo.GestionarVariableTiposComponentesBOInterface;
-import com.sirelab.bo.interfacebo.GestionarVariableTiposEventosBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableEstadosEquiposBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposActivosBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposComponentesBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposEventosBOInterface;
 import com.sirelab.entidades.EstadoEquipo;
 import com.sirelab.entidades.TipoActivo;
 import com.sirelab.entidades.TipoComponente;

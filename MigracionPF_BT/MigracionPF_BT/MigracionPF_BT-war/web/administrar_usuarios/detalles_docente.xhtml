@@ -110,6 +110,16 @@
                                 <fieldset>
                                     <legend class="h5 text-info">Datos Opcionales</legend>
                                     <div class="form-group">
+                                        <strong><h:outputText value="Correo Personal"/></strong>
+                                        <div class="input-group">
+                                            <h:inputText maxlength="60" value="#{controllerDetallesDocente.correoOpcionalDocente}"  readonly="#{controllerDetallesDocente.activarEditar}" class="form-control" id="correoOpcionalDocente" >
+                                                <f:ajax event="blur" listener="#{controllerDetallesDocente.validarCorreoOpcionalDocente()}" execute="correoOpcionalDocente" render="correoOpcionalDocente msnEmailOpcional" />
+                                            </h:inputText>
+                                            <span class="input-group-addon">@</span>
+                                        </div>
+                                        <h6><h:message id="msnEmailOpcional" for="correoOpcionalDocente" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
                                         <strong><h:outputText value="Número Telefonico 1"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerDetallesDocente.telefono1Docente}" readonly="#{controllerDetallesDocente.activarEditar}" class="form-control" id="telefono1Docente" >
                                             <f:ajax event="blur" listener="#{controllerDetallesDocente.validarDatosNumericosDocente(1)}" execute="telefono1Docente" render="telefono1Docente msnTelefono1" />

@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.recursos_laboratorio;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoMovimientosInsumoBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
 import com.sirelab.entidades.MovimientoInsumo;
 import com.sirelab.entidades.Insumo;
 import com.sirelab.utilidades.Utilidades;

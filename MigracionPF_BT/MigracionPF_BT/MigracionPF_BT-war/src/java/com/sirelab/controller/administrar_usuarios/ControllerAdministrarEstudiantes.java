@@ -1,6 +1,6 @@
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEstudiantesBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEstudiantesBOInterface;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Estudiante;

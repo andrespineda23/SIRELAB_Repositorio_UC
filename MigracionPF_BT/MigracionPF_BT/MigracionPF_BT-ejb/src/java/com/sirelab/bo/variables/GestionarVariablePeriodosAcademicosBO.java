@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariablePeriodosAcademicosBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariablePeriodosAcademicosBOInterface;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
 import com.sirelab.entidades.PeriodoAcademico;
 import java.math.BigInteger;

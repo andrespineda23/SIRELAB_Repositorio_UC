@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEntidadesExternasBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEntidadesExternasBOInterface;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;

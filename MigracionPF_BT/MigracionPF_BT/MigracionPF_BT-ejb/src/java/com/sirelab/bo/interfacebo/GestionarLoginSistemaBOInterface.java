@@ -20,6 +20,10 @@ import java.util.List;
  */
 public interface GestionarLoginSistemaBOInterface {
 
+    public void cerrarSesionEnLineaUsuario(int tipo, BigInteger secuencia);
+
+    public void actualizarUsuario(Usuario usuario);
+
     public String generarNuevaContrasenia();
 
     public List<Departamento> obtenerListasDepartamentos();

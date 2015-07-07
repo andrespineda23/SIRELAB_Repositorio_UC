@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
@@ -54,9 +54,9 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     private boolean activoLaboratorio;
     private List<TipoPerfil> listaTiposPerfiles;
     private TipoPerfil perfilEncargadoLaboratorio;
-    private String nombreEncargadoLaboratorio, apellidoEncargadoLaboratorio, correoEncargadoLaboratorio, identificacionEncargadoLaboratorio;
+    private String nombreEncargadoLaboratorio, apellidoEncargadoLaboratorio, correoEncargadoLaboratorio, correoOpcionalEncargadoLaboratorio, identificacionEncargadoLaboratorio;
     private String telefono1EncargadoLaboratorio, telefono2EncargadoLaboratorio, direccionEncargadoLaboratorio;
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
+    private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
     private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesPerfil;
     private boolean validacionesDireccion, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
     private String mensajeFormulario;
@@ -72,6 +72,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         validacionesCorreo = true;
         validacionesID = true;
         validacionesTel1 = true;
+        validacionesCorreoOpcional = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
         validacionesFacultad = true;
@@ -101,6 +102,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         nombreEncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getNombrespersona();
         apellidoEncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getApellidospersona();
         correoEncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getEmailpersona();
+        correoOpcionalEncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getEmailsecundario();
         identificacionEncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getIdentificacionpersona();
         telefono1EncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getTelefono1persona();
         telefono2EncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getTelefono2persona();
@@ -163,7 +165,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             disabledActivar = false;
             disabledInactivar = true;
         }
-        
+
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
@@ -173,6 +175,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         listaLaboratorio = null;
         listaDepartamento = null;
         listaFacultad = null;
+        validacionesCorreoOpcional = true;
         validacionesPerfil = true;
         validacionesNombre = true;
         validacionesApellido = true;
@@ -321,6 +324,18 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         modificacionesRegistroEncargadoLaboratorio();
     }
 
+    public void validarCorreoOpcionalEncargadoLaboratorio() {
+        if (Utilidades.validarNulo(correoOpcionalEncargadoLaboratorio) && (!correoOpcionalEncargadoLaboratorio.isEmpty())) {
+            if (Utilidades.validarCorreoElectronico(correoOpcionalEncargadoLaboratorio)) {
+                validacionesCorreoOpcional = true;
+            } else {
+                validacionesCorreoOpcional = false;
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto."));
+            }
+        }
+        modificacionesRegistroEncargadoLaboratorio();
+    }
+
     public void validarIdentificacionEncargadoLaboratorio() {
         if (Utilidades.validarNulo(identificacionEncargadoLaboratorio) && (!identificacionEncargadoLaboratorio.isEmpty())) {
             if (Utilidades.validarCaracteresAlfaNumericos(identificacionEncargadoLaboratorio)) {
@@ -392,6 +407,9 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         if (validacionesCorreo == false) {
             retorno = false;
         }
+        if (validacionesCorreoOpcional == false) {
+            retorno = false;
+        }
         if (validacionesDireccion == false) {
             retorno = false;
         }
@@ -441,6 +459,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             encargadoLaboratorioDetalles.getPersona().setApellidospersona(apellidoEncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setDireccionpersona(direccionEncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setEmailpersona(correoEncargadoLaboratorio);
+            encargadoLaboratorioDetalles.getPersona().setEmailsecundario(correoOpcionalEncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setIdentificacionpersona(identificacionEncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setNombrespersona(nombreEncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setTelefono1persona(telefono1EncargadoLaboratorio);
@@ -711,6 +730,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
 
     public void setPerfilEncargadoLaboratorio(TipoPerfil perfilEncargadoLaboratorio) {
         this.perfilEncargadoLaboratorio = perfilEncargadoLaboratorio;
+    }
+
+    public String getCorreoOpcionalEncargadoLaboratorio() {
+        return correoOpcionalEncargadoLaboratorio;
+    }
+
+    public void setCorreoOpcionalEncargadoLaboratorio(String correoOpcionalEncargadoLaboratorio) {
+        this.correoOpcionalEncargadoLaboratorio = correoOpcionalEncargadoLaboratorio;
     }
 
 }

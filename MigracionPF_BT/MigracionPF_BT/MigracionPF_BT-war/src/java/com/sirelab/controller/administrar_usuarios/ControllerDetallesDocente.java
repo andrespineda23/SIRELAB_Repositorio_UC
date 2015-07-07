@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarDocentesBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarDocentesBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
@@ -48,9 +48,9 @@ public class ControllerDetallesDocente implements Serializable {
     private boolean activoDepartamento;
     private String nombreDocente, apellidoDocente, correoDocente, identificacionDocente;
     private String telefono1Docente, telefono2Docente, direccionDocente;
-    private String cargoDocente;
+    private String cargoDocente, correoOpcionalDocente;
     //
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
+    private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesCargo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
@@ -61,6 +61,7 @@ public class ControllerDetallesDocente implements Serializable {
     @PostConstruct
     public void init() {
         validacionesNombre = true;
+        validacionesCorreoOpcional = true;
         validacionesApellido = true;
         validacionesCorreo = true;
         validacionesID = true;
@@ -98,6 +99,7 @@ public class ControllerDetallesDocente implements Serializable {
         direccionDocente = docenteDetalles.getPersona().getDireccionpersona();
         facultadDocente = docenteDetalles.getDepartamento().getFacultad();
         departamentoDocente = docenteDetalles.getDepartamento();
+        correoOpcionalDocente = docenteDetalles.getPersona().getEmailsecundario();
     }
 
     /**
@@ -154,6 +156,7 @@ public class ControllerDetallesDocente implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
+        validacionesCorreoOpcional = true;
         validacionesCargo = true;
         validacionesFacultad = true;
         validacionesDepartamento = true;
@@ -259,6 +262,18 @@ public class ControllerDetallesDocente implements Serializable {
         modificacionesRegistroDocente();
     }
 
+    public void validarCorreoOpcionalDocente() {
+        if (Utilidades.validarNulo(correoOpcionalDocente) && (!correoOpcionalDocente.isEmpty())) {
+            if (Utilidades.validarCorreoElectronico(correoOpcionalDocente)) {
+                validacionesCorreoOpcional = true;
+            } else {
+                validacionesCorreoOpcional = false;
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalDocente", new FacesMessage("El correo se encuentra incorrecto."));
+            }
+        }
+        modificacionesRegistroDocente();
+    }
+
     public void validarIdentificacionDocente() {
         if (Utilidades.validarNulo(identificacionDocente) && (!identificacionDocente.isEmpty())) {
             if (Utilidades.validarCaracteresAlfaNumericos(identificacionDocente)) {
@@ -345,6 +360,9 @@ public class ControllerDetallesDocente implements Serializable {
         if (validacionesCorreo == false) {
             retorno = false;
         }
+        if (validacionesCorreoOpcional == false) {
+            retorno = false;
+        }
         if (validacionesDireccion == false) {
             retorno = false;
         }
@@ -392,6 +410,7 @@ public class ControllerDetallesDocente implements Serializable {
             docenteDetalles.getPersona().setApellidospersona(apellidoDocente);
             docenteDetalles.getPersona().setDireccionpersona(direccionDocente);
             docenteDetalles.getPersona().setEmailpersona(correoDocente);
+            docenteDetalles.getPersona().setEmailsecundario(correoOpcionalDocente);
             docenteDetalles.getPersona().setIdentificacionpersona(identificacionDocente);
             docenteDetalles.getPersona().setNombrespersona(nombreDocente);
             docenteDetalles.getPersona().setTelefono1persona(telefono1Docente);
@@ -629,6 +648,14 @@ public class ControllerDetallesDocente implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getCorreoOpcionalDocente() {
+        return correoOpcionalDocente;
+    }
+
+    public void setCorreoOpcionalDocente(String correoOpcionalDocente) {
+        this.correoOpcionalDocente = correoOpcionalDocente;
     }
 
 }

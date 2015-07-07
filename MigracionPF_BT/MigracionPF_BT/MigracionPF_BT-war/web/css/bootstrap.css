@@ -117,6 +117,9 @@ textarea {
   margin: 0;
   font: inherit;
   color: inherit;
+  
+    resize: none;
+
 }
 button {
   overflow: visible;
@@ -6562,5 +6565,9 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+.resizableArea {
+    resize: none;
+    resize: vertical; 
 }
 /*# sourceMappingURL=bootstrap.css.map */

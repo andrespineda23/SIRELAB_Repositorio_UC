@@ -104,22 +104,18 @@
                                     </div>
                                     <h6><h:message id="msnEmail" for="inputEmail" style="color: red"/></h6>
                                 </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Contraseña*"/></strong>
-                                    <h:inputSecret maxlength="20" value="#{controllerRegistrarDocente.inputContrasenia}" required="true" class="form-control" id="inputContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarContraseniaDocente()}" execute="inputContrasenia" render="msnContrasenia" />
-                                    </h:inputSecret>
-                                    <h6><h:message id="msnContrasenia" for="inputContrasenia" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Confirmar Contraseña*"/></strong>
-                                    <h:inputSecret maxlength="20" value="#{controllerRegistrarDocente.inputContraseniaConfirma}" required="true" class="form-control" id="inputContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarContraseniaConfirmaDocente()}" execute="inputContraseniaConfirma" render="msnContraseniaConfirma" />
-                                    </h:inputSecret>
-                                    <h6><h:message id="msnContraseniaConfirma" for="inputContraseniaConfirma" style="color: red"/></h6>
-                                </div>
                                 <fieldset>
                                     <legend class="h5 text-info">Datos Opcionales</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Correo Personal"/></strong>
+                                        <div class="input-group">
+                                            <h:inputText maxlength="60" value="#{controllerRegistrarDocente.inputEmailOpcional}" class="form-control" id="inputEmailOpcional" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarCorreoOpcionalDocente()}" execute="inputEmailOpcional" render="inputEmailOpcional msnEmailOpcional" />
+                                            </h:inputText>
+                                            <span class="input-group-addon">@</span>
+                                        </div>
+                                        <h6><h:message id="msnEmailOpcional" for="inputEmailOpcional" style="color: red"/></h6>
+                                    </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Número Telefonico 1"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerRegistrarDocente.inputTelefono1}"  class="form-control" id="inputTelefono1" >

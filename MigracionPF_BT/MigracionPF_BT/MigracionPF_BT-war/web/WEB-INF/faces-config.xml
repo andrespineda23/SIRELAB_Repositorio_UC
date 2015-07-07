@@ -5,7 +5,7 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
     <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
+        <from-view-id>/seguridad/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
@@ -16,14 +16,14 @@
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>login</from-outcome>
-            <to-view-id>/login.xhtml</to-view-id>
+            <to-view-id>/seguridad/login.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     
     
     <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
+        <from-view-id>/seguridad/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
             <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
@@ -31,7 +31,7 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
+        <from-view-id>/seguridad/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicio_laboratorista</from-outcome>
             <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
@@ -39,15 +39,23 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
+        <from-view-id>/seguridad/login.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>recuperacionexitosa</from-outcome>
-            <to-view-id>/recuperacionexitosa.xhtml</to-view-id>
+            <from-outcome>inicio_docente</from-outcome>
+            <to-view-id>/inicio_docente.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/recuperacionexitosa.xhtml</from-view-id>
+        <from-view-id>/seguridad/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>recuperacionexitosa</from-outcome>
+            <to-view-id>/seguridad/recuperacionexitosa.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/seguridad/recuperacionexitosa.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
@@ -472,7 +480,7 @@
     
     
     <navigation-rule>
-        <from-view-id>/configurarusuario.xhtml</from-view-id>
+        <from-view-id>/seguridad/configurarusuario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>paginainicio</from-outcome>
             <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
@@ -483,25 +491,33 @@
         <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>configurarusuario</from-outcome>
-            <to-view-id>/configurarusuario.xhtml</to-view-id>
+            <to-view-id>/seguridad/configurarusuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>configurarusuario</from-outcome>
+            <to-view-id>/seguridad/configurarusuario.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     
     
     <navigation-rule>
-        <from-view-id>/configurarusuario.xhtml</from-view-id>
+        <from-view-id>/seguridad/configurarusuario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>paginainicioA</from-outcome>
-            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <to-view-id>/paginas_iniciales/inicio_administrador.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <from-view-id>/paginas_iniciales/configurarusuario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>configurarusuarioL</from-outcome>
-            <to-view-id>/configurarusuario.xhtml</to-view-id>
+            <to-view-id>/seguridad/inicio_laboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

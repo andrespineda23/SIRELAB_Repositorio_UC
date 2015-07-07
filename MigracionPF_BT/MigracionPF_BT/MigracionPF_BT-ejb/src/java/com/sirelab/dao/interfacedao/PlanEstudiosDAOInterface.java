@@ -31,4 +31,6 @@ public interface PlanEstudiosDAOInterface {
     public List<PlanEstudios> consultarPlanesEstudiosPorCarrera(BigInteger idCarrera);
 
     public List<PlanEstudios> buscarPlanesEstudiosPorFiltrado(Map<String, String> filters);
+
+    public PlanEstudios buscarPlanEstudiosPorCodigo(String codigo);
 }

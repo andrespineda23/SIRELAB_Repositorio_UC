@@ -1,5 +1,6 @@
 package com.sirelab.controller;
 
+import com.sirelab.ayuda.EnvioCorreo;
 import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.EncargadoLaboratorio;
@@ -46,6 +47,7 @@ public class ControllerIndex implements Serializable {
     private String correoRecuperacion, identificacionRecuperacion;
     private String usuarioLogin, passwordLogin;
     private String paginaSiguiente;
+    private int numeroConexiones;
     //
     private UsuarioLogin usuarioLoginSistema;
 
@@ -100,7 +102,8 @@ public class ControllerIndex implements Serializable {
                     EncriptarContrasenia obj = new EncriptarContrasenia();
                     recuperar.getUsuario().setPasswordusuario(obj.encriptarContrasenia(nuevaContrasenia));
                     Persona personaRecuperada = gestionarLoginSistemaBO.configurarContraseñaPersona(recuperar);
-                    enviarCorreoRecuperacion(personaRecuperada, nuevaContrasenia);
+                    EnvioCorreo correo = new EnvioCorreo();
+                    correo.enviarCorreoRecuperacion(personaRecuperada, nuevaContrasenia);
                     mensajeFormularioRecupera = "Contraseña recuperada.";
                     paginaRecuperacion = "recuperacionexitosa";
                 } else {
@@ -112,7 +115,7 @@ public class ControllerIndex implements Serializable {
                 paginaRecuperacion = "";
             }
         } catch (Exception e) {
-            System.out.println("Error recuperarContraseñaUsuario ControllerIndex : " + e.toString());
+            System.out.println("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString());
             paginaRecuperacion = "";
         }
     }
@@ -120,42 +123,6 @@ public class ControllerIndex implements Serializable {
     public String retornarPaginaRecuperacion() {
         recuperarContraseñaUsuario();
         return paginaRecuperacion;
-    }
-
-    /**
-     * Metodo encargado de enviar via e-mail al usuario que solicito la
-     * recuperación de la contraseña un correo con la información de su nueva
-     * contraseña
-     *
-     * @param personaRecuperada Usuario que solicita el cambio de contraseña
-     */
-    public void enviarCorreoRecuperacion(Persona personaRecuperada, String nuevaContrasenia) {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("proyecto.sirelab@gmail.com", "ucentral");
-                    }
-                });
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("proyecto.sirelab@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(personaRecuperada.getEmailpersona()));
-            message.setSubject("Recuperación de Contraseña - SIRELAB UC");
-            message.setText("Se solicito la recuperación de la contraseña de SIRELAB, la contraseña restaurada es la siguiente: " + nuevaContrasenia + " . Se solicita ingresar al sistema y cambiar la contraseña.");
-
-            Transport.send(message);
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     /**
@@ -231,51 +198,58 @@ public class ControllerIndex implements Serializable {
                 usuarioLogin = null;
                 passwordLogin = null;
                 if (personaLogin != null) {
-                    BigInteger idTipoUsuario = personaLogin.getUsuario().getTipousuario().getIdtipousuario();
-                    usuarioLoginSistema = new UsuarioLogin();
-                    BigInteger secuenciaLogin = new BigInteger("1");
-                    if (secuenciaLogin.equals(idTipoUsuario)) {
-                        usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOR");
-                        usuarioLoginSistema.setIdUsuarioLogin(personaLogin.getIdpersona());
-                        usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getNombreusuario());
-                        paginaSiguiente = "inicio_administrador";
-                    } else {
-                        secuenciaLogin = new BigInteger("3");
-                        Object usuarioFinal = gestionarLoginSistemaBO.obtenerUsuarioFinalLogin(idTipoUsuario, personaLogin.getIdpersona());
+                    if (personaLogin.getUsuario().getEnlinea() == false) {
+                        BigInteger idTipoUsuario = personaLogin.getUsuario().getTipousuario().getIdtipousuario();
+                        usuarioLoginSistema = new UsuarioLogin();
+                        BigInteger secuenciaLogin = new BigInteger("1");
                         if (secuenciaLogin.equals(idTipoUsuario)) {
-                            Estudiante estudianteLogin = (Estudiante) usuarioFinal;
-                            usuarioLoginSistema.setNombreTipoUsuario("ESTUDIANTE");
-                            usuarioLoginSistema.setIdUsuarioLogin(estudianteLogin.getIdestudiante());
-                            usuarioLoginSistema.setUserUsuario(estudianteLogin.getPersona().getUsuario().getNombreusuario());
-                            paginaSiguiente = "faces/paginas_estudiante/inicio_estudiante.xhtml";
+                            usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOR");
+                            usuarioLoginSistema.setIdUsuarioLogin(personaLogin.getIdpersona());
+                            usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getNombreusuario());
+                            paginaSiguiente = "inicio_administrador";
                         } else {
-                            secuenciaLogin = new BigInteger("2");
+                            secuenciaLogin = new BigInteger("3");
+                            Object usuarioFinal = gestionarLoginSistemaBO.obtenerUsuarioFinalLogin(idTipoUsuario, personaLogin.getIdpersona());
                             if (secuenciaLogin.equals(idTipoUsuario)) {
-                                Docente docenteLogin = (Docente) usuarioFinal;
-                                usuarioLoginSistema.setNombreTipoUsuario("DOCENTE");
-                                usuarioLoginSistema.setIdUsuarioLogin(docenteLogin.getIddocente());
-                                usuarioLoginSistema.setUserUsuario(docenteLogin.getPersona().getUsuario().getNombreusuario());
-                                paginaSiguiente = "faces/paginas_docente/inicio_docente.xhtml";
+                                Estudiante estudianteLogin = (Estudiante) usuarioFinal;
+                                usuarioLoginSistema.setNombreTipoUsuario("ESTUDIANTE");
+                                usuarioLoginSistema.setIdUsuarioLogin(estudianteLogin.getIdestudiante());
+                                usuarioLoginSistema.setUserUsuario(estudianteLogin.getPersona().getUsuario().getNombreusuario());
+                                paginaSiguiente = "faces/paginas_estudiante/inicio_estudiante.xhtml";
                             } else {
-                                secuenciaLogin = new BigInteger("4");
+                                secuenciaLogin = new BigInteger("2");
                                 if (secuenciaLogin.equals(idTipoUsuario)) {
-                                    EncargadoLaboratorio encargadoLabLogin = (EncargadoLaboratorio) usuarioFinal;
-                                    usuarioLoginSistema.setNombreTipoUsuario("ENCARGADOLAB");
-                                    usuarioLoginSistema.setIdUsuarioLogin(encargadoLabLogin.getIdencargadolaboratorio());
-                                    usuarioLoginSistema.setUserUsuario(encargadoLabLogin.getPersona().getUsuario().getNombreusuario());
-                                    paginaSiguiente = "inicio_laboratorista";
+                                    Docente docenteLogin = (Docente) usuarioFinal;
+                                    usuarioLoginSistema.setNombreTipoUsuario("DOCENTE");
+                                    usuarioLoginSistema.setIdUsuarioLogin(docenteLogin.getIddocente());
+                                    usuarioLoginSistema.setUserUsuario(docenteLogin.getPersona().getUsuario().getNombreusuario());
+                                    paginaSiguiente = "faces/paginas_docente/inicio_docente.xhtml";
                                 } else {
-                                    EntidadExterna entidadExternaLogin = (EntidadExterna) usuarioFinal;
-                                    usuarioLoginSistema.setNombreTipoUsuario("ENTIDADEXTERNA");
-                                    usuarioLoginSistema.setIdUsuarioLogin(entidadExternaLogin.getIdentidadexterna());
-                                    usuarioLoginSistema.setUserUsuario(entidadExternaLogin.getPersona().getUsuario().getNombreusuario());
-                                    paginaSiguiente = "faces/paginas_entidad/inicio_entidad.xhtml";
+                                    secuenciaLogin = new BigInteger("4");
+                                    if (secuenciaLogin.equals(idTipoUsuario)) {
+                                        EncargadoLaboratorio encargadoLabLogin = (EncargadoLaboratorio) usuarioFinal;
+                                        usuarioLoginSistema.setNombreTipoUsuario("ENCARGADOLAB");
+                                        usuarioLoginSistema.setIdUsuarioLogin(encargadoLabLogin.getIdencargadolaboratorio());
+                                        usuarioLoginSistema.setUserUsuario(encargadoLabLogin.getPersona().getUsuario().getNombreusuario());
+                                        paginaSiguiente = "inicio_laboratorista";
+                                    } else {
+                                        EntidadExterna entidadExternaLogin = (EntidadExterna) usuarioFinal;
+                                        usuarioLoginSistema.setNombreTipoUsuario("ENTIDADEXTERNA");
+                                        usuarioLoginSistema.setIdUsuarioLogin(entidadExternaLogin.getIdentidadexterna());
+                                        usuarioLoginSistema.setUserUsuario(entidadExternaLogin.getPersona().getUsuario().getNombreusuario());
+                                        paginaSiguiente = "faces/paginas_entidad/inicio_entidad.xhtml";
+                                    }
                                 }
                             }
                         }
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionUsuario", usuarioLoginSistema);
+                        personaLogin.getUsuario().setEnlinea(true);
+                        numeroConexiones = personaLogin.getUsuario().getNumeroconexiones();
+                        personaLogin.getUsuario().setNumeroconexiones(numeroConexiones + 1);
+                        gestionarLoginSistemaBO.actualizarUsuario(personaLogin.getUsuario());
+                    } else {
+                        mensajeFormulario = "El usuario ya se encuentra en linea.";
                     }
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionUsuario", usuarioLoginSistema);
-                    //httpServletRequest.getSession().setAttribute("sessionUsuario", usuarioLoginSistema);
                 } else {
                     mensajeFormulario = "El usuario ingresado no existe.";
                 }
@@ -283,7 +257,7 @@ public class ControllerIndex implements Serializable {
         } catch (NoResultException nre) {
             System.out.println("NoResultException loginUsuario ControllerIndex : " + nre.toString());
         } catch (Exception e) {
-            System.out.println("Exception loginUsuario ControllerIndex : " + e.toString());
+            System.out.println("Error ControllerIndex loginUsuario: " + e.toString());
         }
     }
 
@@ -298,6 +272,11 @@ public class ControllerIndex implements Serializable {
         if (null == usuarioLoginSistema) {
             paginaSiguiente = "";
             return paginaSiguiente;
+        }
+        if (numeroConexiones == 1) {
+            //paginaSiguiente = "cambiarcontrasenia";
+            System.out.println("cambiarcontrasenia");
+            //return paginaSiguiente;
         }
         return paginaSiguiente;
     }

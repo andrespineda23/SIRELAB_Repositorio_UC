@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.recursoslab;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoMovimientosInsumoBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
 import com.sirelab.dao.interfacedao.InsumoDAOInterface;
 import com.sirelab.dao.interfacedao.MovimientoInsumoDAOInterface;
 import com.sirelab.entidades.Insumo;

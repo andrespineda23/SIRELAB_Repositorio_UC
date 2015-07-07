@@ -5,8 +5,8 @@
  */
 package com.sirelab.controller.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableTiposPerfilesBOInterface;
-import com.sirelab.bo.interfacebo.GestionarVariableTiposUsuarioBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposUsuarioBOInterface;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.TipoUsuario;
 import java.io.Serializable;

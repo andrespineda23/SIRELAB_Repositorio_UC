@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado")})
 public class Usuario implements Serializable {
 
+    @Column(name = "numeroconexiones")
+    private Integer numeroconexiones;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +66,8 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "tipousuario", referencedColumnName = "idtipousuario")
     @ManyToOne(optional = false)
     private TipoUsuario tipousuario;
+    @Column(name = "enlinea")
+    private Boolean enlinea;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Persona> personaCollection;
     @Transient
@@ -122,7 +127,7 @@ public class Usuario implements Serializable {
                 strEstado = "INACTIVO";
             }
         }
-        System.out.println("strEstado : "+strEstado);
+        System.out.println("strEstado : " + strEstado);
         return strEstado;
     }
 
@@ -136,6 +141,14 @@ public class Usuario implements Serializable {
 
     public void setTipousuario(TipoUsuario tipousuario) {
         this.tipousuario = tipousuario;
+    }
+
+    public Boolean getEnlinea() {
+        return enlinea;
+    }
+
+    public void setEnlinea(Boolean enlinea) {
+        this.enlinea = enlinea;
     }
 
     @XmlTransient
@@ -170,6 +183,14 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Usuario[ idusuario=" + idusuario + " ]";
+    }
+
+    public Integer getNumeroconexiones() {
+        return numeroconexiones;
+    }
+
+    public void setNumeroconexiones(Integer numeroconexiones) {
+        this.numeroconexiones = numeroconexiones;
     }
 
 }

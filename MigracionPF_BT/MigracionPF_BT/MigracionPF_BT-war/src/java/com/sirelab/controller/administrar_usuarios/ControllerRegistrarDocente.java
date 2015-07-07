@@ -1,6 +1,7 @@
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarDocentesBOInterface;
+import com.sirelab.ayuda.EnvioCorreo;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarDocentesBOInterface;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Persona;
@@ -32,7 +33,7 @@ public class ControllerRegistrarDocente implements Serializable {
     AdministrarDocentesBOInterface administrarDocentesBO;
     //
 
-    private String inputNombre, inputApellido, inputID, inputEmail, inputContrasenia, inputContraseniaConfirma, inputTelefono1, inputTelefono2, inputDireccion;
+    private String inputNombre, inputApellido, inputID, inputEmail, inputEmailOpcional, inputTelefono1, inputTelefono2, inputDireccion;
     private String inputCargo;
     private List<Facultad> listaFacultades;
     private Facultad inputFacultad;
@@ -40,9 +41,9 @@ public class ControllerRegistrarDocente implements Serializable {
     private Departamento inputDepartamento;
     private boolean activarDepartamento;
     private String paginaAnterior;
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
-    private boolean validacionesID, validacionesPassw, validacionesTel1, validacionesTel2;
-    private boolean validacionesDireccion, validacionesPassw2, validacionesCargo, validacionesFacultad, validacionesDepartamento;
+    private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
+    private boolean validacionesID, validacionesTel1, validacionesTel2;
+    private boolean validacionesDireccion, validacionesCargo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
 
     public ControllerRegistrarDocente() {
@@ -54,24 +55,22 @@ public class ControllerRegistrarDocente implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesCargo = false;
         validacionesFacultad = false;
+        validacionesCorreoOpcional = true;
         validacionesDepartamento = false;
         mensajeFormulario = "";
         activarDepartamento = true;
         inputApellido = null;
         inputFacultad = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
+        inputEmailOpcional = null;
         inputDepartamento = null;
         inputCargo = null;
         listaDepartamentos = null;
@@ -164,6 +163,17 @@ public class ControllerRegistrarDocente implements Serializable {
         }
     }
 
+    public void validarCorreoOpcionalDocente() {
+        if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())) {
+            if (Utilidades.validarCorreoElectronico(inputEmailOpcional)) {
+                validacionesCorreoOpcional = true;
+            } else {
+                validacionesCorreoOpcional = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputEmailOpcional", new FacesMessage("El correo se encuentra incorrecto."));
+            }
+        }
+    }
+
     public void validarIdentificacionDocente() {
         if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
             if (Utilidades.validarCaracteresAlfaNumericos(inputID)) {
@@ -231,30 +241,6 @@ public class ControllerRegistrarDocente implements Serializable {
         }
     }
 
-    public void validarContraseniaDocente() {
-        if ((Utilidades.validarNulo(inputContrasenia)) && (!inputContrasenia.isEmpty())) {
-            validacionesPassw = true;
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputContrasenia", new FacesMessage("La contraseña es obligatoria."));
-            validacionesPassw = false;
-        }
-    }
-
-    public void validarContraseniaConfirmaDocente() {
-        if ((Utilidades.validarNulo(inputContrasenia)) && (Utilidades.validarNulo(inputContraseniaConfirma))
-                && (!inputContrasenia.isEmpty()) && (!inputContraseniaConfirma.isEmpty())) {
-            if (inputContrasenia.equals(inputContraseniaConfirma)) {
-                validacionesPassw2 = true;
-            } else {
-                FacesContext.getCurrentInstance().addMessage("form:inputContraseniaConfirma", new FacesMessage("Las contraseñas ingresadas no concuerdan."));
-                validacionesPassw2 = false;
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputContraseniaConfirma", new FacesMessage("Las contraseñas son obligatorias."));
-            validacionesPassw2 = false;
-        }
-    }
-
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesApellido == false) {
@@ -266,6 +252,9 @@ public class ControllerRegistrarDocente implements Serializable {
         if (validacionesCorreo == false) {
             retorno = false;
         }
+        if (validacionesCorreoOpcional == false) {
+            retorno = false;
+        }
         if (validacionesDireccion == false) {
             retorno = false;
         }
@@ -273,12 +262,6 @@ public class ControllerRegistrarDocente implements Serializable {
             retorno = false;
         }
         if (validacionesNombre == false) {
-            retorno = false;
-        }
-        if (validacionesPassw == false) {
-            retorno = false;
-        }
-        if (validacionesPassw2 == false) {
             retorno = false;
         }
         if (validacionesFacultad == false) {
@@ -303,6 +286,9 @@ public class ControllerRegistrarDocente implements Serializable {
     public void registrarNuevoDocente() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoDocenteEnSistema();
+            EnvioCorreo correo = new EnvioCorreo();
+            correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
+            limpiarFormulario();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -316,12 +302,11 @@ public class ControllerRegistrarDocente implements Serializable {
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
+        validacionesCorreoOpcional = true;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesCargo = false;
         validacionesFacultad = false;
         validacionesDepartamento = false;
@@ -330,10 +315,9 @@ public class ControllerRegistrarDocente implements Serializable {
         activarDepartamento = true;
         inputApellido = null;
         inputFacultad = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
         inputDireccion = null;
         inputEmail = null;
+        inputEmailOpcional = null;
         inputID = null;
         inputNombre = null;
         inputDepartamento = null;
@@ -347,23 +331,21 @@ public class ControllerRegistrarDocente implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesCargo = false;
         validacionesFacultad = false;
         validacionesDepartamento = false;
+        validacionesCorreoOpcional = true;
         //
         activarDepartamento = true;
         inputApellido = null;
         inputFacultad = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
+        inputEmailOpcional = null;
         inputNombre = null;
         inputDepartamento = null;
         inputCargo = null;
@@ -376,14 +358,17 @@ public class ControllerRegistrarDocente implements Serializable {
     private void almacenarNuevoDocenteEnSistema() {
         try {
             Usuario usuarioNuevo = new Usuario();
+            usuarioNuevo.setEnlinea(false);
             usuarioNuevo.setEstado(true);
-            usuarioNuevo.setNombreusuario(inputEmail);
+            usuarioNuevo.setNumeroconexiones(0);
+            usuarioNuevo.setNombreusuario(inputID);
             EncriptarContrasenia obj = new EncriptarContrasenia();
-            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputContrasenia));
+            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
             Persona personaNueva = new Persona();
             personaNueva.setApellidospersona(inputApellido);
             personaNueva.setDireccionpersona(inputDireccion);
             personaNueva.setEmailpersona(inputEmail);
+            personaNueva.setEmailsecundario(inputEmailOpcional);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
             personaNueva.setTelefono1persona(inputTelefono1);
@@ -392,7 +377,6 @@ public class ControllerRegistrarDocente implements Serializable {
             docenteNueva.setDepartamento(inputDepartamento);
             docenteNueva.setCargodocente(inputCargo);
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
-            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString());
         }
@@ -440,22 +424,6 @@ public class ControllerRegistrarDocente implements Serializable {
 
     public void setInputEmail(String inputEmail) {
         this.inputEmail = inputEmail;
-    }
-
-    public String getInputContrasenia() {
-        return inputContrasenia;
-    }
-
-    public void setInputContrasenia(String inputContrasenia) {
-        this.inputContrasenia = inputContrasenia;
-    }
-
-    public String getInputContraseniaConfirma() {
-        return inputContraseniaConfirma;
-    }
-
-    public void setInputContraseniaConfirma(String inputContraseniaConfirma) {
-        this.inputContraseniaConfirma = inputContraseniaConfirma;
     }
 
     public String getInputTelefono1() {
@@ -547,6 +515,14 @@ public class ControllerRegistrarDocente implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getInputEmailOpcional() {
+        return inputEmailOpcional;
+    }
+
+    public void setInputEmailOpcional(String inputEmailOpcional) {
+        this.inputEmailOpcional = inputEmailOpcional;
     }
 
 }

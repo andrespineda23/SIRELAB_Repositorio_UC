@@ -1,6 +1,6 @@
 package com.sirelab.bo.usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEstudiantesBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEstudiantesBOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;

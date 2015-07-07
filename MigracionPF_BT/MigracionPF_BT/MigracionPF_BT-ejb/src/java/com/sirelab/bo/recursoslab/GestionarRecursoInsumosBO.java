@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.recursoslab;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoInsumosBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoInsumosBOInterface;
 import com.sirelab.dao.interfacedao.InsumoDAOInterface;
 import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
 import com.sirelab.entidades.Insumo;

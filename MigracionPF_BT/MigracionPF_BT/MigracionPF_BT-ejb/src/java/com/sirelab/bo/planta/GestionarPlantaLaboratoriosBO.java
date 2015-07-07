@@ -1,6 +1,6 @@
 package com.sirelab.bo.planta;
 
-import com.sirelab.bo.interfacebo.GestionarPlantaLaboratoriosBOInterface;
+import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;

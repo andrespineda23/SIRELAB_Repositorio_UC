@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.recursoslab;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoAreasProfundizacionBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoAreasProfundizacionBOInterface;
 import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;

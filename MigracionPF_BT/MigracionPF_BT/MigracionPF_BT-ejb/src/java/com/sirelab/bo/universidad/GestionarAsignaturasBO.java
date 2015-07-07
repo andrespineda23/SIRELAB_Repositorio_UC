@@ -1,6 +1,6 @@
 package com.sirelab.bo.universidad;
 
-import com.sirelab.bo.interfacebo.GestionarAsignaturasBOInterface;
+import com.sirelab.bo.interfacebo.universidad.GestionarAsignaturasBOInterface;
 import com.sirelab.dao.interfacedao.AsignaturaDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;

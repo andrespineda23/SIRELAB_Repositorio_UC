@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableTiposReservasBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposReservasBOInterface;
 import com.sirelab.entidades.TipoReserva;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;

@@ -5,10 +5,10 @@
  */
 package com.sirelab.controller.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableEstadosReservasBOInterface;
-import com.sirelab.bo.interfacebo.GestionarVariableHorariosAtencionBOInterface;
-import com.sirelab.bo.interfacebo.GestionarVariablePeriodosAcademicosBOInterface;
-import com.sirelab.bo.interfacebo.GestionarVariableTiposReservasBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableEstadosReservasBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableHorariosAtencionBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariablePeriodosAcademicosBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposReservasBOInterface;
 import com.sirelab.entidades.EstadoReserva;
 import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.entidades.PeriodoAcademico;

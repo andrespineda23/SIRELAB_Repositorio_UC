@@ -5,10 +5,13 @@
  */
 package com.sirelab.controller.paginas_iniciales;
 
+import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
 import com.sirelab.utilidades.UsuarioLogin;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -22,6 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 @ManagedBean
 @SessionScoped
 public class ControllerPaginasIniciales implements Serializable {
+
+    //
+    @EJB
+    GestionarLoginSistemaBOInterface gestionarLoginSistemaBO;
 
     private UsuarioLogin usuarioLoginSistema;
 
@@ -42,6 +49,7 @@ public class ControllerPaginasIniciales implements Serializable {
      * @throws ServletException
      */
     public String cerrarSession() throws IOException, ServletException {
+        cambiarEstadoEnLinea();
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
         httpServletRequest.logout();
@@ -53,6 +61,26 @@ public class ControllerPaginasIniciales implements Serializable {
          ec.invalidateSession();
          */
         return "index";
+    }
+
+    private void cambiarEstadoEnLinea() {
+        if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            gestionarLoginSistemaBO.cerrarSesionEnLineaUsuario(1, usuarioLoginSistema.getIdUsuarioLogin());
+        } else {
+            if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                gestionarLoginSistemaBO.cerrarSesionEnLineaUsuario(2, usuarioLoginSistema.getIdUsuarioLogin());
+            } else {
+                if ("ESTUDIANTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                    gestionarLoginSistemaBO.cerrarSesionEnLineaUsuario(3, usuarioLoginSistema.getIdUsuarioLogin());
+                } else {
+                    if ("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                        gestionarLoginSistemaBO.cerrarSesionEnLineaUsuario(4, usuarioLoginSistema.getIdUsuarioLogin());
+                    } else {
+                        gestionarLoginSistemaBO.cerrarSesionEnLineaUsuario(5, usuarioLoginSistema.getIdUsuarioLogin());
+                    }
+                }
+            }
+        }
     }
 
     public UsuarioLogin getUsuarioLoginSistema() {

@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarAdministradoresBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresBOInterface;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.Utilidades;
@@ -259,6 +259,8 @@ public class ControllerRegistrarAdministrador implements Serializable {
         try {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
+            usuarioNuevo.setEnlinea(false);
+            usuarioNuevo.setNumeroconexiones(1);
             usuarioNuevo.setNombreusuario(nuevoUsuario);
             usuarioNuevo.setPasswordusuario(nuevoContrasenia);
             Persona personaNueva = new Persona();

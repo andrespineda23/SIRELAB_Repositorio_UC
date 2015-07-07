@@ -28,6 +28,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             System.out.println("Creo usuario");
             em.persist(usuario);
             em.flush();
+            System.out.println("Fin crear usuario");
         } catch (Exception e) {
             System.out.println("Error crearUsuario UsuarioDAO : " + e.toString());
         }
@@ -86,13 +87,12 @@ public class UsuarioDAO implements UsuarioDAOInterface {
     public Usuario obtenerUltimoUsuarioRegistrado() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Usuario p");
+            Query query = em.createQuery("SELECT p FROM Usuario p ORDER BY p.idusuario DESC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Usuario> registros = query.getResultList();
             if (registros != null) {
-                int tam = registros.size();
-                System.out.println("tam : "+tam);
-                Usuario ultimoRegistro = registros.get(tam - 1);
+                Usuario ultimoRegistro = registros.get(0);
+                System.out.println("ultimoRegistro : " + ultimoRegistro.getIdusuario());
                 return ultimoRegistro;
             } else {
                 return null;

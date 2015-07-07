@@ -98,20 +98,6 @@
                                 </div>
                                 <h6><h:message id="msnEmail" for="inputEmail" style="color: red"></h:message></h6>
                             </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Contraseña*"/></strong>
-                                <h:inputSecret maxlength="20" value="#{controllerRegistrarEntidadExterna.inputContrasenia}" required="true" class="form-control" id="inputContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarContraseniaEntidadExterna()}" execute="inputContrasenia" render="msnContrasenia" />
-                                </h:inputSecret>
-                                <h6><h:message id="msnContrasenia" for="msnContrasenia" style="color: red"></h:message></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Confirmar Contraseña*"/></strong>
-                                <h:inputSecret maxlength="20" value="#{controllerRegistrarEntidadExterna.inputContraseniaConfirma}" required="true" class="form-control" id="inputContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarContraseniaConfirmaEntidadExterna()}" execute="inputContraseniaConfirma" render="msnContraseniaConfirma" />
-                                </h:inputSecret>
-                                <h6><h:message id="msnContraseniaConfirma" for="inputContraseniaConfirma" style="color: red"></h:message></h6>
-                            </div>
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">

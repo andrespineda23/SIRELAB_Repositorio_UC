@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariablePeriodosAcademicosBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariablePeriodosAcademicosBOInterface;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;

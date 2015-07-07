@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableEstadosReservasBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableEstadosReservasBOInterface;
 import com.sirelab.dao.interfacedao.EstadoReservaDAOInterface;
 import com.sirelab.entidades.EstadoReserva;
 import java.math.BigInteger;

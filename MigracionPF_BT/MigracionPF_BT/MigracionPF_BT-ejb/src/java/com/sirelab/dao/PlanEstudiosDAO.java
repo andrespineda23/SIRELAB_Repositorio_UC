@@ -95,6 +95,22 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             return null;
         }
     }
+    
+    
+    @Override
+    public PlanEstudios buscarPlanEstudiosPorCodigo(String codigo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.codigoplanestudio=:codigo");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("codigo", codigo);
+            PlanEstudios registro = (PlanEstudios) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarPlanEstudiosPorCodigo PlanEstudiosDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<PlanEstudios> consultarPlanesEstudiosPorCarrera(BigInteger idCarrera) {

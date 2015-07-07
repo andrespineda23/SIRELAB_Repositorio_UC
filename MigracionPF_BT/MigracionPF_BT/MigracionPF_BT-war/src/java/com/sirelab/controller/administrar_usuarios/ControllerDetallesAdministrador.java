@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarAdministradoresBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresBOInterface;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.UsuarioLogin;

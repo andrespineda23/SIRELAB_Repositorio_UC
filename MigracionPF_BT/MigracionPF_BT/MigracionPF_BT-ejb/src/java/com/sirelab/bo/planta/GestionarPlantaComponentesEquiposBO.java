@@ -5,7 +5,7 @@
  */
 package com.sirelab.bo.planta;
 
-import com.sirelab.bo.interfacebo.GestionarPlantaComponentesEquiposBOInterface;
+import com.sirelab.bo.interfacebo.planta.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.TipoComponenteDAOInterface;

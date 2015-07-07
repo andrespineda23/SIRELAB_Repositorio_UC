@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.estructura_laboratorio;
 
-import com.sirelab.bo.interfacebo.GestionarPlantaComponentesEquiposBOInterface;
+import com.sirelab.bo.interfacebo.planta.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.TipoComponente;

@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.recursos_laboratorio;
 
-import com.sirelab.bo.interfacebo.GestionarRecursoInsumosBOInterface;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoInsumosBOInterface;
 import com.sirelab.entidades.Insumo;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.utilidades.Utilidades;

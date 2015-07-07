@@ -1,6 +1,6 @@
 package com.sirelab.bo.usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;

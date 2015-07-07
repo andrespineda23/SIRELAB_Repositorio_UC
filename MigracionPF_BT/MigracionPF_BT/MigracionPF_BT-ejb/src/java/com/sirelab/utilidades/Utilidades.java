@@ -52,6 +52,7 @@ public final class Utilidades {
      * @return true-Palabra correcta / false-Palabra incorrecta
      */
     public static boolean validarCaracterString(String str) {
+        System.out.println("validarCaracterString data : "+str);
         boolean respuesta = false;
         Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[ñÑ]|\\s)+");
         Matcher matcher = pattern.matcher(str);
@@ -83,6 +84,7 @@ public final class Utilidades {
      */
     public static boolean isNumber(String numero) {
         try {
+            System.out.println("numero : "+numero);
             boolean respuesta = false;
             Pattern pattern = Pattern.compile("([0-9])+");
             Matcher matcher = pattern.matcher(numero);

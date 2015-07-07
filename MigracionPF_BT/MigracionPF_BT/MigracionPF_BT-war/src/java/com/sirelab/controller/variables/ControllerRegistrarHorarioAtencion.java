@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
-import com.sirelab.bo.interfacebo.GestionarVariableHorariosAtencionBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableHorariosAtencionBOInterface;
 import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;

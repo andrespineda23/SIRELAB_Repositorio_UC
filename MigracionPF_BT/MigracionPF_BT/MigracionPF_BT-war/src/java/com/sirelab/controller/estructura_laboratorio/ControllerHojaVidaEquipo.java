@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.estructura_laboratorio;
 
-import com.sirelab.bo.interfacebo.GestionarPlantaHojasVidaEquiposBOInterface;
+import com.sirelab.bo.interfacebo.planta.GestionarPlantaHojasVidaEquiposBOInterface;
 import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.EquipoElemento;
 import java.io.Serializable;

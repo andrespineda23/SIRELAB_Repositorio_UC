@@ -1,6 +1,6 @@
 package com.sirelab.controller.estructura_universidad;
 
-import com.sirelab.bo.interfacebo.GestionarFacultadesBOInterface;
+import com.sirelab.bo.interfacebo.universidad.GestionarFacultadesBOInterface;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;

@@ -95,6 +95,22 @@ public class CarreraDAO implements CarreraDAOInterface {
             return null;
         }
     }
+    
+    
+    @Override
+    public Carrera buscarCarreraPorCodigo(String codigo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.codigocarrera=:codigo");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("codigo", codigo);
+            Carrera registro = (Carrera) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarCarreraPorCodigo CarreraDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Carrera> consultarCarrerasPorDepartamento(BigInteger idDepartamento) {

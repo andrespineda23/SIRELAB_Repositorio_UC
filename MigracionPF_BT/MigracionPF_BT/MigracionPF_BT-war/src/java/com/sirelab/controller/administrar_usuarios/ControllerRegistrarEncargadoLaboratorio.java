@@ -5,7 +5,8 @@
  */
 package com.sirelab.controller.administrar_usuarios;
 
-import com.sirelab.bo.interfacebo.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.ayuda.EnvioCorreo;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Persona;
@@ -40,7 +41,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     AdministrarEncargadosLaboratoriosBOInterface administrarEncargadosLaboratoriosBO;
     //
 
-    private String inputNombre, inputApellido, inputID, inputEmail, inputContrasenia, inputContraseniaConfirma, inputTelefono1, inputTelefono2, inputDireccion;
+    private String inputNombre, inputApellido, inputID, inputEmail, inputEmailOpcional, inputTelefono1, inputTelefono2, inputDireccion;
     private List<Facultad> listaFacultades;
     private Facultad inputFacultad;
     private List<Departamento> listaDepartamentos;
@@ -52,9 +53,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     private List<TipoPerfil> listaTiposPerfiles;
     private TipoPerfil inputPerfil;
     private String paginaAnterior;
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
-    private boolean validacionesID, validacionesPassw, validacionesTel1, validacionesTel2, validacionesPerfil;
-    private boolean validacionesDireccion, validacionesPassw2, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
+    private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
+    private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesPerfil;
+    private boolean validacionesDireccion, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
     private String mensajeFormulario;
 
     public ControllerRegistrarEncargadoLaboratorio() {
@@ -67,22 +68,20 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesFacultad = false;
         validacionesDepartamento = false;
         validacionesLaboratorio = false;
+        validacionesCorreoOpcional = true;
         mensajeFormulario = "";
         //
         activarDepartamento = true;
         activarLaboratorio = true;
         inputApellido = null;
         inputFacultad = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
+        inputEmailOpcional = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
@@ -216,6 +215,17 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         }
     }
 
+    public void validarCorreoOpcionalEncargadoLaboratorio() {
+        if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())) {
+            if (Utilidades.validarCorreoElectronico(inputEmailOpcional)) {
+                validacionesCorreoOpcional = true;
+            } else {
+                validacionesCorreoOpcional = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputEmailOpcional", new FacesMessage("El correo se encuentra incorrecto."));
+            }
+        }
+    }
+
     public void validarIdentificacionEncargadoLaboratorio() {
         if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
             if (Utilidades.validarCaracteresAlfaNumericos(inputID)) {
@@ -269,30 +279,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         }
     }
 
-    public void validarContraseniaEncargadoLaboratorio() {
-        if ((Utilidades.validarNulo(inputContrasenia)) && (!inputContrasenia.isEmpty())) {
-            validacionesPassw = true;
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputContrasenia", new FacesMessage("La contraseña es obligatoria."));
-            validacionesPassw = false;
-        }
-    }
-
-    public void validarContraseniaConfirmaEncargadoLaboratorio() {
-        if ((Utilidades.validarNulo(inputContrasenia)) && (Utilidades.validarNulo(inputContraseniaConfirma))
-                && (!inputContrasenia.isEmpty()) && (!inputContraseniaConfirma.isEmpty())) {
-            if (inputContrasenia.equals(inputContraseniaConfirma)) {
-                validacionesPassw2 = true;
-            } else {
-                FacesContext.getCurrentInstance().addMessage("form:inputContraseniaConfirma", new FacesMessage("Las contraseñas ingresadas no concuerdan."));
-                validacionesPassw2 = false;
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputContraseniaConfirma", new FacesMessage("Las contraseñas son obligatorias."));
-            validacionesPassw2 = false;
-        }
-    }
-
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesApellido == false) {
@@ -304,6 +290,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         if (validacionesCorreo == false) {
             retorno = false;
         }
+        if (validacionesCorreoOpcional == false) {
+            retorno = false;
+        }
         if (validacionesDireccion == false) {
             retorno = false;
         }
@@ -313,13 +302,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesPassw == false) {
-            retorno = false;
-        }
         if (validacionesPerfil == false) {
-            retorno = false;
-        }
-        if (validacionesPassw2 == false) {
             retorno = false;
         }
         if (validacionesFacultad == false) {
@@ -344,6 +327,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     public void registrarNuevoEncargadoLaboratorio() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoEncargadoLaboratorioEnSistema();
+            EnvioCorreo correo = new EnvioCorreo();
+            correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
+            limpiarFormulario();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -354,13 +340,12 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         activarDepartamento = true;
         inputApellido = null;
         inputFacultad = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
         inputDepartamento = null;
+        inputEmailOpcional = null;
         inputLaboratorio = null;
         inputPerfil = null;
         validacionesPerfil = false;
@@ -368,11 +353,10 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
+        validacionesCorreoOpcional = true;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesFacultad = false;
         validacionesDepartamento = false;
         validacionesLaboratorio = false;
@@ -386,8 +370,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         activarDepartamento = true;
         inputApellido = null;
         inputFacultad = null;
-        inputContrasenia = null;
-        inputContraseniaConfirma = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
@@ -404,11 +386,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         validacionesFacultad = false;
         validacionesDepartamento = false;
         validacionesLaboratorio = false;
@@ -423,14 +403,21 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         try {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
-            usuarioNuevo.setNombreusuario(inputEmail);
+            usuarioNuevo.setNumeroconexiones(0);
+            usuarioNuevo.setEnlinea(false);
+            usuarioNuevo.setNombreusuario(inputID);
             EncriptarContrasenia obj = new EncriptarContrasenia();
-            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputContrasenia));
+            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
             Persona personaNueva = new Persona();
             personaNueva.setApellidospersona(inputApellido);
             personaNueva.setEmailpersona(inputEmail);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
+            if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())) {
+                personaNueva.setEmailsecundario(inputEmailOpcional);
+            } else {
+                personaNueva.setEmailsecundario("");
+            }
             if (Utilidades.validarNulo(inputDireccion) && (!inputDireccion.isEmpty())) {
                 personaNueva.setDireccionpersona(inputDireccion);
             } else {
@@ -450,7 +437,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             encargadoNueva.setLaboratorio(inputLaboratorio);
             encargadoNueva.setTipoperfil(inputPerfil);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
-            limpiarFormulario();
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
         }
@@ -498,22 +484,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     public void setInputEmail(String inputEmail) {
         this.inputEmail = inputEmail;
-    }
-
-    public String getInputContrasenia() {
-        return inputContrasenia;
-    }
-
-    public void setInputContrasenia(String inputContrasenia) {
-        this.inputContrasenia = inputContrasenia;
-    }
-
-    public String getInputContraseniaConfirma() {
-        return inputContraseniaConfirma;
-    }
-
-    public void setInputContraseniaConfirma(String inputContraseniaConfirma) {
-        this.inputContraseniaConfirma = inputContraseniaConfirma;
     }
 
     public String getInputTelefono1() {
@@ -640,6 +610,14 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     public void setInputPerfil(TipoPerfil inputPerfil) {
         this.inputPerfil = inputPerfil;
+    }
+
+    public String getInputEmailOpcional() {
+        return inputEmailOpcional;
+    }
+
+    public void setInputEmailOpcional(String inputEmailOpcional) {
+        this.inputEmailOpcional = inputEmailOpcional;
     }
 
 }

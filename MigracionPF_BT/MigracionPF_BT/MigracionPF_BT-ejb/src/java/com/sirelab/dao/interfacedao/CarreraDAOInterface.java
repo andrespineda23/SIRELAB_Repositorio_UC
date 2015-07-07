@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public interface CarreraDAOInterface {
 
+    public Carrera buscarCarreraPorCodigo(String codigo);
+
     public void crearCarrera(Carrera carrera);
 
     public void editarCarrera(Carrera carrera);
