@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerAdministrarEntidadesExternas Este controlador se
@@ -49,6 +49,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     private boolean bloquearPagSigEntidadExterna, bloquearPagAntEntidadExterna;
     //
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarEntidadesExternas() {
     }
@@ -70,6 +71,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         tamTotalEntidadExterna = 0;
         bloquearPagAntEntidadExterna = true;
         bloquearPagSigEntidadExterna = true;
+        BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -159,6 +161,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
                 bloquearPagSigEntidadExterna = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros : " + e.toString());
         }
     }

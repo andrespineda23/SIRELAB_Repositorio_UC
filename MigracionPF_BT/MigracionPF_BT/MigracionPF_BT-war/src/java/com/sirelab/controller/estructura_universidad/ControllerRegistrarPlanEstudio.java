@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -43,6 +45,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesFacultad, validacionesDepartamento, validacionesCarrera;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarPlanEstudio() {
     }
@@ -62,6 +65,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void actualizarFacultad() {
@@ -190,7 +194,8 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo);
             limpiarFormulario();
         } catch (Exception e) {
-            System.out.println("Error ControllerGestionarPlanesEstudios almacenarNuevoPlanEstudioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  "+e.toString());
+            System.out.println("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString());
         }
     }
 

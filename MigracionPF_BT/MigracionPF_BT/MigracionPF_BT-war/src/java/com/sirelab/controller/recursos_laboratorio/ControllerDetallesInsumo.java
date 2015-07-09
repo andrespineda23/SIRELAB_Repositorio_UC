@@ -18,6 +18,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -44,6 +46,7 @@ public class ControllerDetallesInsumo implements Serializable {
     private boolean validacionesCantidadMin, validacionesCantidadExistencia;
     private boolean validacionesDescripcion, validacionesProveedor;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesInsumo() {
     }
@@ -59,6 +62,7 @@ public class ControllerDetallesInsumo implements Serializable {
         validacionesMarca = true;
         validacionesModelo = true;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void restaurarInformacionInsumo() {
@@ -260,7 +264,8 @@ public class ControllerDetallesInsumo implements Serializable {
             insumoDetalles.setProveedor(editarProveedor);
             gestionarRecursoInsumosBO.modificarInformacionInsumo(insumoDetalles);
         } catch (Exception e) {
-            System.out.println("Error ControllerGestionarInsumos almacenarNuevoInsumoEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema:  "+e.toString());
+            System.out.println("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema : " + e.toString());
         }
     }
 

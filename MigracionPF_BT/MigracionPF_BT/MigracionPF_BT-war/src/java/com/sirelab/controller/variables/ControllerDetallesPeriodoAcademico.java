@@ -17,6 +17,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -36,12 +38,14 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     private BigInteger idPeriodoAcademico;
     private PeriodoAcademico periodoAcademicoEditar;
     private boolean modificacionesRegistro;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesPeriodoAcademico() {
     }
 
     @PostConstruct
     public void init() {
+        BasicConfigurator.configure();
     }
 
     public void recibirIDDetallePeriodoAcademico(BigInteger idDetalle) {
@@ -126,7 +130,7 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
         if (modificacionesRegistro == true) {
             if (validarValidacionesRegistro() == true) {
                 if (inputFechaFin.after(inputFechaInicio)) {
-                    almacenarModificaionRegistro();
+                    almacenarModificacionRegistro();
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     cargarInformacionRegistro();
                 } else {
@@ -140,14 +144,15 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
         }
     }
 
-    private void almacenarModificaionRegistro() {
+    private void almacenarModificacionRegistro() {
         try {
             periodoAcademicoEditar.setDetalleperiodo(inputDetalle);
             periodoAcademicoEditar.setFechafinal(inputFechaFin);
             periodoAcademicoEditar.setFechainicial(inputFechaInicio);
             gestionarVariablePeriodosAcademicosBO.editarPeriodoAcademico(periodoAcademicoEditar);
         } catch (Exception e) {
-            System.out.println("Error ControllerDetallePeriodoAcademico almacenarModificaionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro:  " + e.toString());
+            System.out.println("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro: " + e.toString());
         }
     }
 

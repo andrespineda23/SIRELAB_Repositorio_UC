@@ -15,7 +15,6 @@ import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoActivo;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,6 +23,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -60,6 +61,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     private boolean validacionesFecha, validacionesLaboratorio, validacionesSala, validacionesModulo;
     private boolean validacionesTipo, validacionesEstado, validacionesProveedor;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarEquipo() {
     }
@@ -94,6 +96,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
         listaModulosLaboratorios = null;
         listaSalasLaboratorios = null;
+        BasicConfigurator.configure();
     }
 
     public void limpiarRegistroEquipoElemento() {
@@ -427,6 +430,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  "+e.toString());
             System.out.println("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString());
         }
     }

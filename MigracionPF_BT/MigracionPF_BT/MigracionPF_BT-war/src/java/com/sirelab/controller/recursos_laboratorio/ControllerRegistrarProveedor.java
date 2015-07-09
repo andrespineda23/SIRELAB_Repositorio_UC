@@ -15,6 +15,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -33,6 +35,7 @@ public class ControllerRegistrarProveedor implements Serializable {
     private boolean validacionesNombre, validacionesNIT, validacionesTelefono, validacionesDireccion;
     private boolean validacionesVendedor, validacionesTelVendedor;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarProveedor() {
     }
@@ -53,6 +56,7 @@ public class ControllerRegistrarProveedor implements Serializable {
         validacionesTelefono = false;
         validacionesVendedor = true;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void validarNombreProveedor() {
@@ -151,7 +155,7 @@ public class ControllerRegistrarProveedor implements Serializable {
         if (validacionesTelefono == false) {
             retorno = false;
         }
-        if (validacionesTelefono == false) {
+        if (validacionesVendedor == false) {
             retorno = false;
         }
         if (validacionesTelVendedor == false) {
@@ -193,7 +197,8 @@ public class ControllerRegistrarProveedor implements Serializable {
             gestionarRecursoProveedoresBO.crearNuevoProveedor(nuevaProveedor);
             cancelarRegistroProveedor();
         } catch (Exception e) {
-            System.out.println("Error ControllerGestionarProveedores almacenarNuevoProveedorEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema:  " + e.toString());
+            System.out.println("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema : " + e.toString());
         }
     }
 

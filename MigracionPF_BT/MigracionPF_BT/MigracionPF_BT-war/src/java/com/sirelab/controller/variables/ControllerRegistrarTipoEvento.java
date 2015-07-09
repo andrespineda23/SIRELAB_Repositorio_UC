@@ -15,6 +15,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -30,6 +32,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
     private String inputDetalle;
     private boolean validacionesDetalle;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarTipoEvento() {
     }
@@ -39,6 +42,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
         inputDetalle = null;
         validacionesDetalle = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void validarDetalle() {
@@ -71,6 +75,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
             tipoNuevo.setDetalleevento(inputDetalle);
             gestionarVariableTiposEventoBO.crearTipoEvento(tipoNuevo);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo: " + e.toString());
         }
     }

@@ -15,6 +15,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -52,6 +54,7 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     private boolean bloquearPagSigAsignatura, bloquearPagAntAsignatura;
     //
     private String altoTabla;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarAsignaturas() {
     }
@@ -82,6 +85,7 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         tamTotalAsignatura = 0;
         bloquearPagAntAsignatura = true;
         bloquearPagSigAsignatura = true;
+        BasicConfigurator.configure();
     }
 
     private void inicializarFiltros() {
@@ -150,6 +154,7 @@ public class ControllerAdministrarAsignaturas implements Serializable {
                 bloquearPagSigAsignatura = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros : " + e.toString());
         }
     }

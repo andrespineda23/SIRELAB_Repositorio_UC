@@ -17,6 +17,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador : ControllerRegistrarUsuario Este controlador esta enlazado con
@@ -49,6 +51,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarEstudiante() {
     }
@@ -80,6 +83,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
         inputSemestre = 1;
         inputTipo = 1;
         listaPlanesEstudios = null;
+        BasicConfigurator.configure();
     }
 
     public void actualizarTipoUsuarioSeleccionado() {
@@ -107,7 +111,8 @@ public class ControllerRegistrarEstudiante implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputCarrera", new FacesMessage("El campo Carrera es obligatorio."));
             }
         } catch (Exception e) {
-            System.out.println("Error ControllerLogin actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  "+e.toString());
+            System.out.println("Error ControllerRegistrarEstudiante actualizarCarreras : " + e.toString());
         }
     }
 
@@ -276,8 +281,8 @@ public class ControllerRegistrarEstudiante implements Serializable {
     public void registrarNuevoEstudiante() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoEstudianteEnSistema();
-            EnvioCorreo correo = new EnvioCorreo();
-            correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
+            //EnvioCorreo correo = new EnvioCorreo();
+            //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
@@ -351,6 +356,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
             estudianteNueva.setTipoestudiante(inputTipo);
             gestionarLoginSistemaBO.almacenarNuevoEstudianteEnSistema(usuarioNuevo, personaNueva, estudianteNueva);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  "+e.toString());
             System.out.println("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
     }

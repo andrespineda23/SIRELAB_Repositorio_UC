@@ -17,6 +17,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -53,6 +54,16 @@ public class ControllerPaginasIniciales implements Serializable {
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
         httpServletRequest.logout();
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        try {
+            if (null != session) {
+                //session.invalidate();
+            } else {
+                System.out.println("vacio logout");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar la sesion del usuario : " + e.toString());
+        }
         /*
          FacesContext facesContext = FacesContext.getCurrentInstance();
          HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);

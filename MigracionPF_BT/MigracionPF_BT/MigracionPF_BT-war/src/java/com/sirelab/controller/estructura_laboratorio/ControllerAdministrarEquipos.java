@@ -26,6 +26,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -71,6 +73,7 @@ public class ControllerAdministrarEquipos implements Serializable {
     //
     private UsuarioLogin usuarioLoginSistema;
     private boolean perfilConsulta;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarEquipos() {
     }
@@ -106,6 +109,7 @@ public class ControllerAdministrarEquipos implements Serializable {
         tamTotalEquipo = 0;
         bloquearPagAntEquipo = true;
         bloquearPagSigEquipo = true;
+        BasicConfigurator.configure();
     }
 
     private void cargarInformacionPerfil() {
@@ -232,6 +236,7 @@ public class ControllerAdministrarEquipos implements Serializable {
                 bloquearPagSigEquipo = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros : " + e.toString());
         }
     }

@@ -28,6 +28,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -48,6 +50,9 @@ public class ControllerCargueArchivos implements Serializable {
     private final String pathArchivo = "C:\\SIRELAB\\Archivos Cargue\\";
     private final String pathArchivoErrores = "C:\\SIRELAB\\Archivos Cargue\\Errores\\";
     private ReporteCargueEstudiante reporteCargueEstudiante;
+    private String paginaAnterior;
+    
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerCargueArchivos() {
     }
@@ -58,6 +63,7 @@ public class ControllerCargueArchivos implements Serializable {
         disabledAceptar = true;
         tipoCargue = 0;
         disableAcciones = true;
+        BasicConfigurator.configure();
     }
 
     public void actualizarTipoCargue() {
@@ -95,13 +101,11 @@ public class ControllerCargueArchivos implements Serializable {
                         if (null == reporteCargueEstudiante.getListaErrores()) {
                             tamanio = reporteCargueEstudiante.getListaErrores().size();
                         }
-                        System.out.println("tamanio : " + tamanio);
                         if (tamanio == 0) {
                             mensajeValidacion = "Validación exitosa. El archivo se encuentra listo para ser almacenado.";
                             disabledAceptar = false;
                             retorno = true;
                         } else {
-                            System.out.println("No Nulo");
                             mensajeValidacion = "Se presentarón errores en el proceso de validación. Un archivo de salida ha sido generado.";
                             disabledAceptar = true;
                             retorno = false;
@@ -142,6 +146,7 @@ public class ControllerCargueArchivos implements Serializable {
             salArch.close();
             descargarArchivoErrores(nombreArchivo);
         } catch (IOException ex) {
+            logger.error("Error en creación archivo txt de errores ControllerCargueArchivos:  "+ex.toString());
             System.out.println("Error en creación archivo txt de errores ControllerCargueArchivos: " + ex.toString());
         }
     }
@@ -175,8 +180,22 @@ public class ControllerCargueArchivos implements Serializable {
             archivo = null;
             disableAcciones = true;
         } catch (Exception e) {
+            logger.error("Error ControllerCargueArchivos imprimirArchivo: "+e.toString());
             System.out.println("Error ControllerCargueArchivos imprimirArchivo: " + e.toString());
         }
+    }
+
+    public void recibirPaginaAnterior(String pagina) {
+        this.paginaAnterior = pagina;
+    }
+
+    public String regresarPaginaAnterior() {
+        disabledAceptar = true;
+        mensajeValidacion = "";
+        tipoCargue = 0;
+        archivo = null;
+        disableAcciones = true;
+        return paginaAnterior;
     }
 
     private static String getFilename(Part part) {
@@ -207,7 +226,6 @@ public class ControllerCargueArchivos implements Serializable {
             }
             out.flush();
             out.close();
-            System.out.println("\nDescargado\n");
             ctx.responseComplete();
         }
     }

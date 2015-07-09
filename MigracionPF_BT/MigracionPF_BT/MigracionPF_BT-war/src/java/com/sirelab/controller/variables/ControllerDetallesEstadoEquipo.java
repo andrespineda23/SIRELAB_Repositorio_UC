@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -34,12 +36,14 @@ public class ControllerDetallesEstadoEquipo implements Serializable{
     private BigInteger idEstadoEquipo;
     private boolean modificacionesRegistro;
     private EstadoEquipo estadoEquipoDetalle;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesEstadoEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        BasicConfigurator.configure();
     }
 
     public void recibirIDDetalleEstadoEquipo(BigInteger idDetalle) {
@@ -91,6 +95,7 @@ public class ControllerDetallesEstadoEquipo implements Serializable{
             estadoEquipoDetalle.setNombreestadoequipo(inputNombre);
             gestionarVariableEstadosEquiposBO.editarEstadoEquipo(estadoEquipoDetalle);
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEstadoEquipo almacenarModificacionRegistro:  " + e.toString());
             System.out.println("Error ControllerDetallesEstadoEquipo almacenarModificacionRegistro: " + e.toString());
         }
     }

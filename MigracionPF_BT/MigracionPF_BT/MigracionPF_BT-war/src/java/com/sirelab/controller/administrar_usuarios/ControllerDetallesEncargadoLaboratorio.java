@@ -23,6 +23,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerDetallesEncargadoLaboratorio Este controlador se
@@ -60,6 +62,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesPerfil;
     private boolean validacionesDireccion, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
     private String mensajeFormulario;
+     private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesEncargadoLaboratorio() {
     }
@@ -92,6 +95,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
+        BasicConfigurator.configure();
     }
 
     /**
@@ -219,6 +223,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades:  "+e.toString());
             System.out.println("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades : " + e.toString());
         }
     }
@@ -244,6 +249,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos:  "+e.toString());
             System.out.println("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
         }
     }
@@ -470,7 +476,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
             restaurarInformacionEncargadoLaboratorio();
         } catch (Exception e) {
-            System.out.println("Error modificarInformacionEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio:  "+e.toString());
+            System.out.println("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio : " + e.toString());
 
         }
     }
@@ -499,6 +506,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEncargadoLaboratorio activarEncargadoLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesEncargadosLaboratorios activarEncargadoLaboratorio : " + e.toString());
         }
     }
@@ -519,6 +527,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEncargadoLaboratorio inactivarEncargadoLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesEncargadosLaboratorios inactivarEncargadoLaboratorio : " + e.toString());
         }
     }

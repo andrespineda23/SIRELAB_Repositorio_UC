@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -42,6 +44,7 @@ public class ControllerDetallesCarrera implements Serializable {
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesCarrera() {
     }
@@ -54,7 +57,7 @@ public class ControllerDetallesCarrera implements Serializable {
         validacionesFacultad = true;
         validacionesNombre = true;
         mensajeFormulario = "";
-
+        BasicConfigurator.configure();
     }
 
     public void restaurarInformacionCarrera() {
@@ -190,6 +193,7 @@ public class ControllerDetallesCarrera implements Serializable {
             carreraDetalles.setDepartamento(editarDepartamento);
             gestionarCarrerasBO.modificarInformacionCarrera(carreraDetalles);
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema:  "+e.toString());
             System.out.println("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema : " + e.toString());
         }
     }

@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -36,6 +38,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     private boolean validacionesID, validacionesPassw, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesPassw2, validacionesUsuario;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarAdministrador() {
     }
@@ -63,6 +66,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
         nuevoTelefono1 = null;
         nuevoTelefono2 = null;
         nuevoUsuario = null;
+        BasicConfigurator.configure();
     }
 
     public void validarNombreAdministrador() {
@@ -274,6 +278,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
             administrarAdministradoresBO.almacenarNuevaPersonaEnSistema(usuarioNuevo, personaNueva);
             cancelarRegistroAdministrador();
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema:  "+e.toString());
             System.out.println("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString());
         }
     }

@@ -18,6 +18,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -38,6 +40,7 @@ public class ControllerRegistrarEdificio implements Serializable {
     //
     private boolean validacionesDescripcion, validacionesDireccion, validacionesSede, validacionesHorario;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarEdificio() {
     }
@@ -53,6 +56,7 @@ public class ControllerRegistrarEdificio implements Serializable {
         validacionesSede = false;
         validacionesSede = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void validarDescripcionEdificio() {
@@ -134,7 +138,8 @@ public class ControllerRegistrarEdificio implements Serializable {
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
             limpiarFormulario();
         } catch (Exception e) {
-            System.out.println("Error ControllerLogin almacenarNuevoEdificioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema:  "+e.toString());
+            System.out.println("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema : " + e.toString());
         }
     }
 

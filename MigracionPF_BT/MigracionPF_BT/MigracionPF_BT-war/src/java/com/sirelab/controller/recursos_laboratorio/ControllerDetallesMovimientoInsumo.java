@@ -18,6 +18,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -38,12 +40,14 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     private BigInteger idMovimiento;
     private MovimientoInsumo movimientoInsumoDetalle;
     private boolean modificacionesRegistro;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesMovimientoInsumo() {
     }
 
     @PostConstruct
     public void init() {
+        BasicConfigurator.configure();
     }
 
     public void recibirIDMovimientoInsumo(BigInteger idRegistro) {
@@ -190,7 +194,8 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
             movimientoInsumoDetalle.setInsumo(editarInsumo);
             gestionarRecursoMovimientosInsumoBO.editarMovimientoInsumo(movimientoInsumoDetalle);
         } catch (Exception e) {
-            System.out.println("Error ControllerRegistrarMovimiento almacenaModificacionMovimientoEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesMovimientoInsumo almacenaModificacionMovimientoEnSistema:  "+e.toString());
+            System.out.println("Error ControllerDetallesMovimientoInsumo almacenaModificacionMovimientoEnSistema : " + e.toString());
         }
     }
 

@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -41,6 +43,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     //
     private boolean validacionesDepartamento, validacionesLaboratorio, validacionesArea;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarLaboratorioPorArea() {
     }
@@ -56,6 +59,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         validacionesDepartamento = false;
         validacionesLaboratorio = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void actualizarDepartamentos() {
@@ -95,15 +99,12 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesDepartamento == false) {
-            System.out.println("1");
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
-            System.out.println("2");
             retorno = false;
         }
         if (validacionesArea == false) {
-            System.out.println("3");
             retorno = false;
         }
         return retorno;
@@ -139,6 +140,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
             gestionarPlantaLaboratoriosPorAreasBO.crearLaboratoriosPorAreas(laboratorioNuevo);
             limpiarFormulario();
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema:  "+e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema : " + e.toString());
 
         }

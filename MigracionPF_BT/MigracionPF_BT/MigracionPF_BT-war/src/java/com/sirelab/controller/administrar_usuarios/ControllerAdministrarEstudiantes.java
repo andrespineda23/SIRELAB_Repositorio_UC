@@ -15,6 +15,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerAdministrarEstudiantes Este controlador se encarga de
@@ -51,6 +53,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
     private boolean bloquearPagSigEstudiante, bloquearPagAntEstudiante;
     //
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarEstudiantes() {
     }
@@ -77,6 +80,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
         tamTotalEstudiante = 0;
         bloquearPagAntEstudiante = true;
         bloquearPagSigEstudiante = true;
+        BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -180,6 +184,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 bloquearPagSigEstudiante = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString());
         }
     }
@@ -287,6 +292,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 parametroPlanEst = new PlanEstudios();
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos:  "+e.toString());
             System.out.println("Error ControllerAdministrarEstudiantes actualizarDepartamentos : " + e.toString());
         }
     }
@@ -306,6 +312,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 parametroPlanEst = new PlanEstudios();
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras:  "+e.toString());
             System.out.println("Error ControllerAdministrarEstudiantes actualizarCarreras : " + e.toString());
         }
     }

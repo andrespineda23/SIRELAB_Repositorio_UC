@@ -10,11 +10,14 @@ import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -33,8 +36,14 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
     private boolean modificacionesRegistro;
     private BigInteger idHorarioAtencion;
     private HorarioAtencion horarioAtencionDetalles;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesHorarioAtencion() {
+    }
+
+    @PostConstruct
+    public void init() {
+        BasicConfigurator.configure();
     }
 
     public void recibirIDDetalleHorarioAtencion(BigInteger idDetalle) {
@@ -130,6 +139,7 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
             horarioAtencionDetalles.setDescripcionhorario(inputDescripcion);
             gestionarVariableHorariosAtencionBO.editarHorarioAtencion(horarioAtencionDetalles);
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro:  " + e.toString());
             System.out.println("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro: " + e.toString());
         }
     }

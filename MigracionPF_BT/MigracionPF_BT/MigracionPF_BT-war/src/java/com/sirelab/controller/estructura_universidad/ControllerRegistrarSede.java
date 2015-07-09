@@ -15,6 +15,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -31,6 +33,7 @@ public class ControllerRegistrarSede implements Serializable {
     //
     private boolean validacionesNombre, validacionesDireccion, validacionesTelefono;
     private String mensajeFormulario;
+     private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarSede() {
     }
@@ -44,6 +47,7 @@ public class ControllerRegistrarSede implements Serializable {
         validacionesNombre = false;
         validacionesTelefono = false;
         mensajeFormulario = "";
+         BasicConfigurator.configure();
     }
 
     public void validarNombreSede() {
@@ -122,7 +126,8 @@ public class ControllerRegistrarSede implements Serializable {
             gestionarSedeBO.crearNuevaSede(nuevaSede);
             cancelarRegistroSede();
         } catch (Exception e) {
-            System.out.println("Error ControllerGestionarSedes almacenarNuevoSedeEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarSede almacenarNuevoSedeEnSistema:  "+e.toString());
+            System.out.println("Error ControllerRegistrarSede almacenarNuevoSedeEnSistema : " + e.toString());
         }
     }
 

@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -41,6 +43,7 @@ public class ControllerDetallesEdificio implements Serializable {
     //
     private boolean validacionesDescripcion, validacionesDireccion, validacionesSede, validacionesHorario;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesEdificio() {
     }
@@ -52,6 +55,7 @@ public class ControllerDetallesEdificio implements Serializable {
         validacionesSede = true;
         validacionesHorario = true;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void restaurarInformacionEdificio() {
@@ -157,7 +161,8 @@ public class ControllerDetallesEdificio implements Serializable {
             edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
-            System.out.println("Error ControllerLogin almacenarNuevoEdificioEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema:  "+e.toString());
+            System.out.println("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString());
         }
     }
 

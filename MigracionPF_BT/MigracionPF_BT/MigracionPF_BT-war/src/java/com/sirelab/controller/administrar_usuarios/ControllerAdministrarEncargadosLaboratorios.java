@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerAdministrarEncargadosLaboratorios Este controlador se
@@ -59,6 +59,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
     private boolean bloquearPagSigEncargadoLaboratorio, bloquearPagAntEncargadoLaboratorio;
     //
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarEncargadosLaboratorios() {
     }
@@ -84,6 +85,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         tamTotalEncargadoLaboratorio = 0;
         bloquearPagSigEncargadoLaboratorio = true;
         bloquearPagAntEncargadoLaboratorio = true;
+        BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -180,6 +182,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 bloquearPagSigEncargadoLaboratorio = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros : " + e.toString());
         }
     }
@@ -285,6 +288,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 parametroLaboratorio = new Laboratorio();
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades:  "+e.toString());
             System.out.println("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades : " + e.toString());
         }
     }
@@ -304,6 +308,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 parametroLaboratorio = new Laboratorio();
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos:  "+e.toString());
             System.out.println("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos : " + e.toString());
         }
     }

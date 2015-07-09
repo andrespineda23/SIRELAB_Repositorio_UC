@@ -7,7 +7,6 @@ package com.sirelab.controller.administrar_usuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresBOInterface;
 import com.sirelab.entidades.Persona;
-import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -19,6 +18,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -44,6 +45,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesAdministrador() {
     }
@@ -68,6 +70,7 @@ public class ControllerDetallesAdministrador implements Serializable {
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
+        BasicConfigurator.configure();
     }
 
     /**
@@ -312,7 +315,8 @@ public class ControllerDetallesAdministrador implements Serializable {
             administrarAdministradoresBO.actualizarInformacionAdministrador(administradorDetalles);
             restaurarInformacionAdministrador();
         } catch (Exception e) {
-            System.out.println("Error modificarInformacionAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador:  "+e.toString());
+            System.out.println("Error ControllerDetallesAdministrador modificarInformacionAdministrador : " + e.toString());
         }
     }
 
@@ -340,6 +344,7 @@ public class ControllerDetallesAdministrador implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesAdministrador activarAdministrador:  "+e.toString());
             System.out.println("Error ControllerDetallesAdministradores activarAdministrador : " + e.toString());
         }
     }
@@ -360,6 +365,7 @@ public class ControllerDetallesAdministrador implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesAdministrador inactivarAdministrador:  "+e.toString());
             System.out.println("Error ControllerDetallesAdministradores inactivarAdministrador : " + e.toString());
         }
     }

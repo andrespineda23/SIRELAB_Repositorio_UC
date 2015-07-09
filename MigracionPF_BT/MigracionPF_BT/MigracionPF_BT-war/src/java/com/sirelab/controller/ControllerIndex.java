@@ -27,6 +27,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.NoResultException;
+import javax.servlet.http.HttpSession;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 /**
@@ -51,12 +53,13 @@ public class ControllerIndex implements Serializable {
     //
     private UsuarioLogin usuarioLoginSistema;
 
-    private Logger logger = Logger.getLogger("ControllerIndex");
     private boolean validacionesUsuario, validacionesContrasenia;
     private String mensajeFormulario;
     private boolean validacionesCorreo, validacionesID;
     private String mensajeFormularioRecupera;
     private String paginaRecuperacion;
+
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerIndex() {
     }
@@ -74,6 +77,11 @@ public class ControllerIndex implements Serializable {
         correoRecuperacion = null;
         identificacionRecuperacion = null;
         paginaRecuperacion = "";
+
+        System.out.println("Servlet processing do get..");
+        BasicConfigurator.configure();
+        logger.debug("Logging Log4 Debug Statement...");
+        logger.info("Logging Log4 Info Statement...");
     }
 
     public boolean validarProcesoRecuperacion() {
@@ -269,6 +277,10 @@ public class ControllerIndex implements Serializable {
      */
     public String retornarPaginaSiguiente() {
         ingresarAlSistema();
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (null != session) {
+            session.setAttribute("sessionUsuario", usuarioLoginSistema);
+        }
         if (null == usuarioLoginSistema) {
             paginaSiguiente = "";
             return paginaSiguiente;

@@ -18,6 +18,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerDetallesEntidadExterna Este controlador se encarga del
@@ -46,6 +48,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesEntidadExterna() {
     }
@@ -74,6 +77,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
+        BasicConfigurator.configure();
     }
 
     /**
@@ -387,7 +391,8 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
             restaurarInformacionEntidadExterna();
         } catch (Exception e) {
-            System.out.println("Error modificarInformacionEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna:  "+e.toString());
+            System.out.println("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna : " + e.toString());
         }
     }
 
@@ -415,6 +420,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEntidadExterna activarEntidadExterna:  "+e.toString());
             System.out.println("Error ControllerDetallesEntidadesExternas activarEntidadExterna : " + e.toString());
         }
     }
@@ -435,6 +441,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEntidadExterna inactivarEntidadExterna:  "+e.toString());
             System.out.println("Error ControllerDetallesEntidadesExternas inactivarEntidadExterna : " + e.toString());
         }
     }

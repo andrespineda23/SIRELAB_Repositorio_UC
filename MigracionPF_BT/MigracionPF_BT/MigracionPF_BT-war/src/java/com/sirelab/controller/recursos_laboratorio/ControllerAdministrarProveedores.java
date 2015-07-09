@@ -18,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -44,6 +46,7 @@ public class ControllerAdministrarProveedores implements Serializable {
     private boolean activarExport;
     //
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarProveedores() {
     }
@@ -63,6 +66,7 @@ public class ControllerAdministrarProveedores implements Serializable {
         bloquearPagAntProveedor = true;
         bloquearPagSigProveedor = true;
         activarExport = true;
+        BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -121,6 +125,7 @@ public class ControllerAdministrarProveedores implements Serializable {
                 bloquearPagSigProveedor = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString());
         }
     }

@@ -51,7 +51,6 @@ public class ControllerHojaVidaEquipo implements Serializable {
     }
 
     public void recibirIDEquipoElemento(BigInteger idRegistro) {
-        System.out.println("idRegistro : "+idRegistro);
         equipoElementoDetalle = gestionarPlantaHojasVidaEquiposBO.consultarEquipoElementoPorID(idRegistro);
         obtenerHojaVidasAsociadosAlEquipo();
     }

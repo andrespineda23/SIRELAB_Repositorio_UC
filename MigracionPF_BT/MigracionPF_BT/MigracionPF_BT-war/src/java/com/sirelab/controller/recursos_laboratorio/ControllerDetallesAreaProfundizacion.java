@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -33,6 +35,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
     private String editarNombre, editarCodigo;
     private boolean validacionesNombre, validacionesCodigo;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
     
     public ControllerDetallesAreaProfundizacion() {
     }
@@ -42,6 +45,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
         validacionesCodigo = true;
         validacionesNombre = true;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
     
     public void restaurarInformacionAreaProfundizacion() {
@@ -135,6 +139,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
             areaProfundizacionDetalle.setCodigoarea(editarCodigo);
             gestionarRecursoAreaProfundizacionBO.modificarInformacionAreaProfundizacion(areaProfundizacionDetalle);
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesAreaProfundizacion almacenarModificacionAreaProfundizacion:  "+e.toString());
             System.out.println("Error ControllerDetallesAreaProfundizacion almacenarModificacionAreaProfundizacion : " + e.toString());
         }
     }

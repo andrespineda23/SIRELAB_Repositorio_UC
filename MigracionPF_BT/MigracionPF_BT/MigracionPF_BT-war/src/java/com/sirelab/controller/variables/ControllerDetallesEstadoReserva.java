@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -34,13 +36,14 @@ public class ControllerDetallesEstadoReserva implements Serializable {
     private boolean modificacionesRegistro;
     private BigInteger idEstadoReserva;
     private EstadoReserva estadoReservaDetalles;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesEstadoReserva() {
     }
 
     @PostConstruct
     public void init() {
-
+        BasicConfigurator.configure();
     }
 
     public void recibirIDDetalleEstadoReserva(BigInteger idDetalle) {
@@ -93,6 +96,7 @@ public class ControllerDetallesEstadoReserva implements Serializable {
             estadoReservaDetalles.setNombreestadoreserva(inputNombre);
             gestionarVariableEstadosReservaBO.editarEstadoReserva(estadoReservaDetalles);
         } catch (Exception e) {
+            logger.error("Error ControlleDetallesEstadoReserva almacenarModificacionRegistro:  " + e.toString());
             System.out.println("Error ControlleDetallesEstadoReserva almacenarModificacionRegistro: " + e.toString());
         }
     }

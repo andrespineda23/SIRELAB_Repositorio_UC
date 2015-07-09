@@ -83,6 +83,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/cargue_archivos/cargue_archivos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cargue_archivo</from-outcome>
+            <to-view-id>/cargue_archivos/cargue_archivos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/variables_entorno/variables_inventario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicio_administrador</from-outcome>
@@ -569,6 +587,24 @@
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/administrar_usuarios/administrar_encargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cargue_archivo</from-outcome>
+            <to-view-id>/cargue_archivos/cargue_archivos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/cargue_archivos/cargue_archivos.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicio_laboratorista</from-outcome>
             <to-view-id>/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>

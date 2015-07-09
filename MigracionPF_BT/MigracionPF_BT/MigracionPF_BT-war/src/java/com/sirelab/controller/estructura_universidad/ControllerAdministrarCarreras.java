@@ -20,6 +20,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -50,6 +52,7 @@ public class ControllerAdministrarCarreras implements Serializable {
     private boolean bloquearPagSigCarrera, bloquearPagAntCarrera;
     //
     private String altoTabla;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarCarreras() {
     }
@@ -71,6 +74,7 @@ public class ControllerAdministrarCarreras implements Serializable {
         tamTotalCarrera = 0;
         bloquearPagAntCarrera = true;
         bloquearPagSigCarrera = true;
+        BasicConfigurator.configure();
     }
 
     private void inicializarFiltros() {
@@ -129,6 +133,7 @@ public class ControllerAdministrarCarreras implements Serializable {
                 bloquearPagSigCarrera = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString());
         }
     }

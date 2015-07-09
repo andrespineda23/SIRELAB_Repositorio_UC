@@ -22,6 +22,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -60,6 +62,7 @@ public class ControllerAdministrarModulos implements Serializable {
     private UsuarioLogin usuarioLoginSistema;
     //
     private boolean perfilConsulta;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarModulos() {
     }
@@ -84,6 +87,7 @@ public class ControllerAdministrarModulos implements Serializable {
         tamTotalModulo = 0;
         bloquearPagAntModulo = true;
         bloquearPagSigModulo = true;
+        BasicConfigurator.configure();
     }
 
     private void cargarInformacionPerfil() {
@@ -183,6 +187,7 @@ public class ControllerAdministrarModulos implements Serializable {
                 bloquearPagSigModulo = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
         }
     }

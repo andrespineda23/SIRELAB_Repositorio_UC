@@ -26,6 +26,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -69,6 +71,7 @@ public class ControllerDetallesEquipo implements Serializable {
     private boolean validacionesFecha, validacionesLaboratorio, validacionesSala, validacionesModulo;
     private boolean validacionesTipo, validacionesEstado, validacionesProveedor;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesEquipo() {
     }
@@ -105,6 +108,7 @@ public class ControllerDetallesEquipo implements Serializable {
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
+        BasicConfigurator.configure();
     }
 
     public void recibirIDEquiposElementoDetalles(BigInteger idEquipoElemento) {
@@ -212,6 +216,7 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  "+e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString());
         }
     }
@@ -233,6 +238,7 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
         }
     }
@@ -247,6 +253,7 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
         }
     }
@@ -501,6 +508,7 @@ public class ControllerDetallesEquipo implements Serializable {
             gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles);
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  "+e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString());
         }
     }

@@ -24,6 +24,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerRegistrarEncargadoLaboratorio Este controlador se
@@ -57,6 +59,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesPerfil;
     private boolean validacionesDireccion, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarEncargadoLaboratorio() {
     }
@@ -90,6 +93,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         inputDepartamento = null;
         listaDepartamentos = null;
         listaLaboratorios = null;
+        BasicConfigurator.configure();
     }
 
     /**
@@ -119,6 +123,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Facultad es obligatorio."));
             }
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  "+e.toString());
             System.out.println("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
         }
     }
@@ -143,6 +148,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Departamento es obligatorio."));
             }
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  "+e.toString());
             System.out.println("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
         }
     }
@@ -327,8 +333,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     public void registrarNuevoEncargadoLaboratorio() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoEncargadoLaboratorioEnSistema();
-            EnvioCorreo correo = new EnvioCorreo();
-            correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
+            //EnvioCorreo correo = new EnvioCorreo();
+            //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
@@ -438,6 +444,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             encargadoNueva.setTipoperfil(inputPerfil);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  "+e.toString());
             System.out.println("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
         }
     }

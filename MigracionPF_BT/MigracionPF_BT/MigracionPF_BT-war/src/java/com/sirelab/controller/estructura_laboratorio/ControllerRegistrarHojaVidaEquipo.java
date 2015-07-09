@@ -20,6 +20,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -40,6 +42,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     private String mensajeFormulario;
     private BigInteger idEquipo;
     private EquipoElemento equipoElemento;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarHojaVidaEquipo() {
     }
@@ -56,11 +59,11 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void recibirIDEquipo(BigInteger idRegistro) {
         this.idEquipo = idRegistro;
-        System.out.println("idRegistro : "+idRegistro);
         equipoElemento = gestionarPlantaHojasVidaEquiposBO.consultarEquipoElementoPorID(idEquipo);
     }
 
@@ -118,19 +121,15 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     private boolean validarValidacionesRegistro() {
         boolean retorno = true;
         if (validacionesDetalle == false) {
-            System.out.println("1");
             retorno = false;
         }
         if (validacionesFechaRegistro == false) {
-            System.out.println("2");
             retorno = false;
         }
         if (validacionesFechaEvento == false) {
             retorno = false;
-            System.out.println("3");
         }
         if (validacionesTipo == false) {
-            System.out.println("4");
             retorno = false;
         }
         return retorno;
@@ -158,9 +157,9 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
             reggNuevo.setFechaevento(inputFechaEvento);
             reggNuevo.setTipoevento(inputTipoEvento);
             reggNuevo.setEquipoelemento(equipoElemento);
-            System.out.println("equipoElemento : "+reggNuevo.getEquipoelemento());
             gestionarPlantaHojasVidaEquiposBO.crearHojaVidaEquipo(reggNuevo);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo:  "+e.toString());
             System.out.println("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString());
         }
     }

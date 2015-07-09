@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerAdministrarAdministradores Este controlador esta
@@ -46,6 +46,7 @@ public class ControllerAdministrarAdministradores implements Serializable {
     private int posicionAdministradorTabla;
     private int tamTotalAdministrador;
     private boolean bloquearPagSigAdministrador, bloquearPagAntAdministrador;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarAdministradores() {
     }
@@ -64,7 +65,7 @@ public class ControllerAdministrarAdministradores implements Serializable {
         tamTotalAdministrador = 0;
         bloquearPagAntAdministrador = true;
         bloquearPagSigAdministrador = true;
-
+        BasicConfigurator.configure();
     }
 
     /**
@@ -138,6 +139,7 @@ public class ControllerAdministrarAdministradores implements Serializable {
                 bloquearPagSigAdministrador = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros : " + e.toString());
         }
     }

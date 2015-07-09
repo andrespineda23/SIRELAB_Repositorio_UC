@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerAdministrarDocentes Este controlador se encarga del
@@ -49,6 +51,7 @@ public class ControllerAdministrarDocentes implements Serializable {
     private boolean bloquearPagSigDocente, bloquearPagAntDocente;
     //
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarDocentes() {
     }
@@ -70,6 +73,7 @@ public class ControllerAdministrarDocentes implements Serializable {
         tamTotalDocente = 0;
         bloquearPagSigDocente = true;
         bloquearPagAntDocente = true;
+        BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -163,6 +167,7 @@ public class ControllerAdministrarDocentes implements Serializable {
                 bloquearPagSigDocente = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
         }
     }
@@ -261,6 +266,7 @@ public class ControllerAdministrarDocentes implements Serializable {
                 parametroDepartamento = new Departamento();
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarDocentes actualizarFacultades:  "+e.toString());
             System.out.println("Error ControllerAdministrarDocentes actualizarFacultades : " + e.toString());
         }
     }

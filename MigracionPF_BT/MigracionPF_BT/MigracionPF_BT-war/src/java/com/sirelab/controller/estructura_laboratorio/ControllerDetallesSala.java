@@ -22,6 +22,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -54,6 +56,8 @@ public class ControllerDetallesSala implements Serializable {
     private boolean validacionesCapacidad, validacionesCosto, validacionesInversion;
     private boolean validacionesLaboratorio, validacionesSede, validacionesEdificio;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
+    
 
     public ControllerDetallesSala() {
     }
@@ -71,6 +75,7 @@ public class ControllerDetallesSala implements Serializable {
         validacionesSede = true;
         validacionesUbicacion = true;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void recibirIDSalasLaboratorioDetalles(BigInteger idSalaLaboratorio) {
@@ -256,6 +261,7 @@ public class ControllerDetallesSala implements Serializable {
             }
             modificacionesRegistroSala();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesPlantaSala actualizarSedes:  "+e.toString());
             System.out.println("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString());
         }
     }
@@ -347,6 +353,7 @@ public class ControllerDetallesSala implements Serializable {
             salaLaboratorioDetalles.setLaboratoriosporareas(laboratorioPorAreaSalaLaboratorio);
             gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  "+e.toString());
             System.out.println("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema : " + e.toString());
         }
     }
@@ -369,6 +376,7 @@ public class ControllerDetallesSala implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString());
         }
     }
@@ -386,6 +394,7 @@ public class ControllerDetallesSala implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString());
         }
     }

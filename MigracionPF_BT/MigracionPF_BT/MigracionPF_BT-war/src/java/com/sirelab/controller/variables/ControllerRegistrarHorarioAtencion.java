@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -31,6 +33,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     private String inputDescripcion, inputCodigo;
     private boolean validacionesDescripcion, validacionesCodigo;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarHorarioAtencion() {
     }
@@ -42,6 +45,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
         validacionesDescripcion = false;
         validacionesCodigo = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void validarDescripcion() {
@@ -109,12 +113,11 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     private void almacenarNuevoRegistro() {
         try {
             HorarioAtencion nuevoHorario = new HorarioAtencion();
-            System.out.println("inputCodigo : "+inputCodigo);
-            System.out.println("inputDescripcion : "+inputDescripcion);
             nuevoHorario.setCodigohorario(inputCodigo);
             nuevoHorario.setDescripcionhorario(inputDescripcion);
             gestionarVariableHorariosAtencionBO.crearHorarioAtencion(nuevoHorario);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro:  " + e.toString());
             System.out.println("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString());
         }
     }

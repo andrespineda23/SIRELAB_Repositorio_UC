@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -32,6 +34,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     private Date inputFechaInicio, inputFechaFin;
     private boolean validacionesDetalle, validacionesFechaInicio, validacionesFechaFin;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarPeriodoAcademico() {
     }
@@ -45,6 +48,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void validarDetalle() {
@@ -125,6 +129,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
             periodoNuevo.setFechainicial(inputFechaInicio);
             gestionarVariablePeriodosAcademicosBO.crearPeriodoAcademico(periodoNuevo);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo: " + e.toString());
         }
     }

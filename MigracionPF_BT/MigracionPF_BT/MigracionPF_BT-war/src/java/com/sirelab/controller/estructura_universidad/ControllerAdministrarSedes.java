@@ -18,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -45,6 +47,7 @@ public class ControllerAdministrarSedes implements Serializable {
     //
     private String editarNombre, editarDireccion, editarTelefono;
     private Sede sedeEditar;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarSedes() {
     }
@@ -63,6 +66,7 @@ public class ControllerAdministrarSedes implements Serializable {
         bloquearPagAntSede = true;
         bloquearPagSigSede = true;
         activarExport = true;
+        BasicConfigurator.configure();
     }
 
     private void inicializarFiltros() {
@@ -113,6 +117,7 @@ public class ControllerAdministrarSedes implements Serializable {
                 bloquearPagSigSede = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString());
         }
     }

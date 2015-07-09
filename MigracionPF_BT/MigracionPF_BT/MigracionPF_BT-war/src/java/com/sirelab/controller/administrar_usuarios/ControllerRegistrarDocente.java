@@ -17,6 +17,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerRegistrarDocente Este controlador se encarga del
@@ -45,6 +47,7 @@ public class ControllerRegistrarDocente implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesCargo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarDocente() {
     }
@@ -74,6 +77,7 @@ public class ControllerRegistrarDocente implements Serializable {
         inputDepartamento = null;
         inputCargo = null;
         listaDepartamentos = null;
+        BasicConfigurator.configure();
     }
 
     /**
@@ -96,6 +100,7 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputFacultad", new FacesMessage("El campo Facultad es obligatorio."));
             }
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarDocente actualizarFacultades:  "+e.toString());
             System.out.println("Error ControllerRegistrarDocente actualizarFacultades : " + e.toString());
         }
     }
@@ -109,6 +114,7 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Departamento es obligatorio."));
             }
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos:  "+e.toString());
             System.out.println("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString());
         }
     }
@@ -286,8 +292,8 @@ public class ControllerRegistrarDocente implements Serializable {
     public void registrarNuevoDocente() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoDocenteEnSistema();
-            EnvioCorreo correo = new EnvioCorreo();
-            correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
+            //EnvioCorreo correo = new EnvioCorreo();
+            //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
@@ -378,6 +384,7 @@ public class ControllerRegistrarDocente implements Serializable {
             docenteNueva.setCargodocente(inputCargo);
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema:  "+e.toString());
             System.out.println("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString());
         }
     }

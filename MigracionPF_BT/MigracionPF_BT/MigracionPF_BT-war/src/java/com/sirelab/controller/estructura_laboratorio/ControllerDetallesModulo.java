@@ -21,6 +21,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -50,6 +52,7 @@ public class ControllerDetallesModulo implements Serializable {
     private boolean validacionesCodigo, validacionesDetalle, validacionesCapacidad, validacionesCosto, validacionesInversion;
     private boolean validacionesLaboratorio, validacionesSala;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesModulo() {
     }
@@ -76,6 +79,7 @@ public class ControllerDetallesModulo implements Serializable {
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
+        BasicConfigurator.configure();
     }
 
     public void recibirIDModuloLaboratorioDetalles(BigInteger idModuloLaboratorio) {
@@ -296,6 +300,7 @@ public class ControllerDetallesModulo implements Serializable {
             gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
             restaurarInformacionModuloLaboratorio();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  "+e.toString());
             System.out.println("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema : " + e.toString());
 
         }
@@ -319,6 +324,7 @@ public class ControllerDetallesModulo implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString());
         }
     }
@@ -336,6 +342,7 @@ public class ControllerDetallesModulo implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  "+e.toString());
             System.out.println("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString());
         }
     }

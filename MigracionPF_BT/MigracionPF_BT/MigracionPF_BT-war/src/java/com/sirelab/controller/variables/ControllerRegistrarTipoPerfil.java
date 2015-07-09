@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -31,6 +33,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
     private String inputNombre, inputCodigo, inputNombreRegistro, inputCodigoRegistro;
     private boolean validacionesNombre, validacionesCodigo, validacionesNombreRegistro, validacionesCodigoRegistro;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarTipoPerfil() {
     }
@@ -46,6 +49,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
         validacionesNombreRegistro = false;
         validacionesCodigoRegistro = false;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void validarNombre() {
@@ -153,6 +157,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
             tipoNuevo.setNombreregistro(inputNombreRegistro);
             gestionarVariableTiposPerfilesBO.crearTipoPerfil(tipoNuevo);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarTipoPerfil almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoPerfil almacenarRegistroNuevo: " + e.toString());
         }
     }

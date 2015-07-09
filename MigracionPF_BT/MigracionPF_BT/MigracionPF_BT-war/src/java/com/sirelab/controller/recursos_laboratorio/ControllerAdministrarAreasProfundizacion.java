@@ -18,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -45,6 +47,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
     private String altoTabla;
     //
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarAreasProfundizacion() {
     }
@@ -62,6 +65,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
         tamTotalAreaProfundizacion = 0;
         bloquearPagAntAreaProfundizacion = true;
         bloquearPagSigAreaProfundizacion = true;
+         BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -112,6 +116,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
                 bloquearPagSigAreaProfundizacion = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros : " + e.toString());
         }
     }

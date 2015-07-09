@@ -16,7 +16,6 @@ import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +25,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -70,6 +71,7 @@ public class ControllerAdministrarSalas implements Serializable {
     //
     private boolean perfilConsulta;
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarSalas() {
     }
@@ -101,6 +103,7 @@ public class ControllerAdministrarSalas implements Serializable {
         tamTotalSala = 0;
         bloquearPagAntSala = true;
         bloquearPagSigSala = true;
+        BasicConfigurator.configure();
     }
 
     private void cargarInformacionPerfil() {
@@ -221,6 +224,7 @@ public class ControllerAdministrarSalas implements Serializable {
                 bloquearPagSigSala = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros : " + e.toString());
         }
     }

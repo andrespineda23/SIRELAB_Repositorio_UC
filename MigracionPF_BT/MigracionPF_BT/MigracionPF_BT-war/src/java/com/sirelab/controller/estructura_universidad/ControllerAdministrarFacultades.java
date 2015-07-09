@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -37,6 +39,7 @@ public class ControllerAdministrarFacultades implements Serializable {
     private String altoTabla;
     //
     private boolean activarExport;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarFacultades() {
     }
@@ -54,6 +57,7 @@ public class ControllerAdministrarFacultades implements Serializable {
         bloquearPagAntFacultad = true;
         bloquearPagSigFacultad = true;
         activarExport = true;
+        BasicConfigurator.configure();
     }
 
     private void inicializarFiltros() {
@@ -100,6 +104,7 @@ public class ControllerAdministrarFacultades implements Serializable {
                 bloquearPagSigFacultad = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString());
         }
     }

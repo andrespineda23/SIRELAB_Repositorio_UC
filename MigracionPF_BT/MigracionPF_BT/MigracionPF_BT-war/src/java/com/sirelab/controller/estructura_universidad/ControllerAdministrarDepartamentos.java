@@ -19,6 +19,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -46,6 +48,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
     private boolean bloquearPagSigDepartamento, bloquearPagAntDepartamento;
     //
     private String altoTabla;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarDepartamentos() {
     }
@@ -64,6 +67,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
         tamTotalDepartamento = 0;
         bloquearPagAntDepartamento = true;
         bloquearPagSigDepartamento = true;
+        BasicConfigurator.configure();
     }
 
     private void inicializarFiltros() {
@@ -112,6 +116,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
                 bloquearPagSigDepartamento = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros : " + e.toString());
         }
     }

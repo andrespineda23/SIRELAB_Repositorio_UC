@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -36,6 +38,7 @@ public class ControllerDetallesProveedor implements Serializable {
     private boolean validacionesNombre, validacionesNIT, validacionesTelefono, validacionesDireccion;
     private boolean validacionesVendedor, validacionesTelVendedor;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesProveedor() {
     }
@@ -49,6 +52,7 @@ public class ControllerDetallesProveedor implements Serializable {
         validacionesTelefono = true;
         validacionesVendedor = true;
         mensajeFormulario = "";
+        BasicConfigurator.configure();
     }
 
     public void restaurarInformacionProveedor() {
@@ -214,7 +218,8 @@ public class ControllerDetallesProveedor implements Serializable {
             }
             gestionarRecursoProveedoresBO.modificarInformacionProveedor(proveedorDetalle);
         } catch (Exception e) {
-            System.out.println("Error ControllerGestionarProveedores almacenarNuevoProveedorEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema:  "+e.toString());
+            System.out.println("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema : " + e.toString());
         }
     }
 

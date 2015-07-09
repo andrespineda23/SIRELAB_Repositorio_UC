@@ -19,6 +19,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -47,6 +49,7 @@ public class ControllerAdministrarInsumos implements Serializable {
     private boolean activarExport;
     //
     private String paginaAnterior;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarInsumos() {
     }
@@ -67,6 +70,7 @@ public class ControllerAdministrarInsumos implements Serializable {
         bloquearPagAntInsumo = true;
         bloquearPagSigInsumo = true;
         activarExport = true;
+        BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -131,6 +135,7 @@ public class ControllerAdministrarInsumos implements Serializable {
                 bloquearPagSigInsumo = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString());
         }
     }

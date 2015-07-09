@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -38,6 +40,7 @@ public class ControllerRegistrarComponente implements Serializable {
     private boolean validacionesModelo, validacionesSerial;
     private String mensajeFormulario;
     private EquipoElemento equipoElementoRegistro;
+     private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarComponente() {
     }
@@ -60,6 +63,7 @@ public class ControllerRegistrarComponente implements Serializable {
         nuevoDescripcionComponente = null;
         nuevoSerialComponente = null;
         nuevoModeloComponente = null;
+        BasicConfigurator.configure();
     }
 
     public void recibirIDEquipoElemento(BigInteger idRegistro) {
@@ -249,6 +253,7 @@ public class ControllerRegistrarComponente implements Serializable {
             componenteNuevo.setTipocomponente(nuevoTipoComponente);
             gestionarPlantaComponentesEquiposBO.crearComponenteEquipo(componenteNuevo);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema:  "+e.toString());
             System.out.println("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema : " + e.toString());
         }
     }

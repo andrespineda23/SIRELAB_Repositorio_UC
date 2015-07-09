@@ -23,6 +23,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -55,6 +57,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
     //
     private UsuarioLogin usuarioLoginSistema;
     private boolean perfilConsulta;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarLaboratoriosPorAreas() {
     }
@@ -74,6 +77,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         tamTotalLaboratorioPorArea = 0;
         bloquearPagAntLaboratorioPorArea = true;
         bloquearPagSigLaboratorioPorArea = true;
+        BasicConfigurator.configure();
     }
 
     private void cargarInformacionPerfil() {
@@ -160,6 +164,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
                 bloquearPagSigLaboratorioPorArea = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerAdministrarLaboratoriosPorAreas buscarLaboratoriosPorParametros:  "+e.toString());
             System.out.println("Error ControllerAdministrarLaboratoriosPorAreas buscarLaboratoriosPorParametros : " + e.toString());
         }
     }

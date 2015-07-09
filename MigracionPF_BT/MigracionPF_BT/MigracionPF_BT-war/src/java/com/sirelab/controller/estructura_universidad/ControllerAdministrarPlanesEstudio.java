@@ -21,6 +21,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -56,6 +58,7 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
     private boolean bloquearPagSigPlanEstudio, bloquearPagAntPlanEstudio;
     //
     private String altoTabla;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerAdministrarPlanesEstudio() {
     }
@@ -82,6 +85,7 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         tamTotalPlanEstudio = 0;
         bloquearPagAntPlanEstudio = true;
         bloquearPagSigPlanEstudio = true;
+        BasicConfigurator.configure();
     }
 
     private void inicializarFiltros() {
@@ -146,6 +150,7 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
                 bloquearPagSigPlanEstudio = true;
             }
         } catch (Exception e) {
+            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros:  "+e.toString());
             System.out.println("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString());
         }
     }

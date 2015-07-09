@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerRegistrarEntidadExterna Este controlador se encarga
@@ -45,6 +47,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerRegistrarEntidadExterna() {
     }
@@ -71,6 +74,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         inputID = null;
         inputNombre = null;
         inputIDEntidad = null;
+        BasicConfigurator.configure();
     }
 
     public void validarNombreEntidadExterna() {
@@ -260,8 +264,8 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     public void registrarNuevoEntidadExterna() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoEntidadExternaEnSistema();
-            EnvioCorreo correo = new EnvioCorreo();
-            correo.enviarCorreoCreacionCuenta(inputEmail);
+            //EnvioCorreo correo = new EnvioCorreo();
+            //correo.enviarCorreoCreacionCuenta(inputEmail);
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -343,6 +347,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(usuarioNuevo, personaNueva, entidadexternaNueva);
             cancelarRegistroEntidadExterna();
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  "+e.toString());
             System.out.println("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
         }
     }

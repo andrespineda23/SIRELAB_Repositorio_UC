@@ -21,6 +21,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Controlador: ControllerDetallesEstudiante Este controlador esta encargado del
@@ -56,6 +58,7 @@ public class ControllerDetallesEstudiante implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesEstudiante() {
     }
@@ -85,6 +88,7 @@ public class ControllerDetallesEstudiante implements Serializable {
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
+        BasicConfigurator.configure();
     }
 
     /**
@@ -212,6 +216,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             }
             modificacionesRegistroEstudiante();
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEstudiante actualizarCarreras:  "+e.toString());
             System.out.println("Error ControllerDetallesEstudiante actualizarCarreras : " + e.toString());
         }
     }
@@ -431,7 +436,8 @@ public class ControllerDetallesEstudiante implements Serializable {
             administrarEstudiantesBO.actualizarInformacionEstudiante(estudianteDetalles);
             restaurarInformacionEstudiante();
         } catch (Exception e) {
-            System.out.println("Error modificarInformacionEstudiante almacenarNuevoEstudianteEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema:  "+e.toString());
+            System.out.println("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
     }
 
@@ -459,6 +465,7 @@ public class ControllerDetallesEstudiante implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEstudiante activarEstudiante:  "+e.toString());
             System.out.println("Error ControllerDetallesEstudiantes activarEstudiante : " + e.toString());
         }
     }
@@ -479,6 +486,7 @@ public class ControllerDetallesEstudiante implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesEstudiante inactivarEstudiante:  "+e.toString());
             System.out.println("Error ControllerDetallesEstudiantes inactivarEstudiante : " + e.toString());
         }
     }

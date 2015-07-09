@@ -16,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -34,12 +36,14 @@ public class ControllerDetallesTipoPerfil implements Serializable {
     private BigInteger idTipoPerfil;
     private TipoPerfil tipoPerfilEditar;
     private boolean modificacionRegistro;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesTipoPerfil() {
     }
 
     @PostConstruct
     public void init() {
+        BasicConfigurator.configure();
     }
 
     public void recibirIDDetalleTipoPerfil(BigInteger idDetalle) {
@@ -178,6 +182,7 @@ public class ControllerDetallesTipoPerfil implements Serializable {
             tipoPerfilEditar.setNombreregistro(inputNombreRegistro);
             gestionarVariableTiposPerfilesBO.editarTipoPerfil(tipoPerfilEditar);
         } catch (Exception e) {
+            logger.error("Error ControllerDetallesTipoPerfil almacenarModificacionRegistro:  " + e.toString());
             System.out.println("Error ControllerDetallesTipoPerfil almacenarModificacionRegistro: " + e.toString());
         }
     }

@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -41,12 +43,14 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     private BigInteger idHojaVidaEquipo;
     private HojaVidaEquipo hojaVidaEquipoDetalle;
     private boolean modificacionesRegistro;
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public ControllerDetallesHojaVidaEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        BasicConfigurator.configure();
     }
 
     public void recibirIDHojaVidaEquipo(BigInteger idRegistro) {
@@ -170,6 +174,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             hojaVidaEquipoDetalle.setFechaevento(inputFechaEvento);
             gestionarPlantaHojasVidaEquiposBO.editarHojaVidaEquipo(hojaVidaEquipoDetalle);
         } catch (Exception e) {
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro:  "+e.toString());
             System.out.println("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro: " + e.toString());
         }
     }
