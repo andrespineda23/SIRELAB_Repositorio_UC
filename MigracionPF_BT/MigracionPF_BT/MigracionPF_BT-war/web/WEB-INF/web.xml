@@ -29,4 +29,58 @@
         <servlet-name>ServletCargueArchivo</servlet-name>
         <url-pattern>/ServletCargueArchivo</url-pattern>
     </servlet-mapping>
+    
+    <filter>
+        <filter-name>FilterAdministrarUsuarios</filter-name>
+        <filter-class>com.sirelab.filters.FilterAdministrarUsuarios</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterAdministrarUsuarios</filter-name>
+        <url-pattern>/faces/administrar_usuarios/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterCargueArchivos</filter-name>
+        <filter-class>com.sirelab.filters.FilterCargueArchivos</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterCargueArchivos</filter-name>
+        <url-pattern>/faces/cargue_archivos/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterEstructuraLaboratorio</filter-name>
+        <filter-class>com.sirelab.filters.FilterEstructuraLaboratorio</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterEstructuraLaboratorio</filter-name>
+        <url-pattern>/faces/estructura_laboratorio/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterEstructuraUniversidad</filter-name>
+        <filter-class>com.sirelab.filters.FilterEstructuraUniversidad</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterEstructuraUniversidad</filter-name>
+        <url-pattern>/faces/estructura_universidad/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterPaginasAdministrador</filter-name>
+        <filter-class>com.sirelab.filters.FilterPaginasAdministrador</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterPaginasAdministrador</filter-name>
+        <url-pattern>/faces/paginas_administrador/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterRecursosLaboratorio</filter-name>
+        <filter-class>com.sirelab.filters.FilterRecursosLaboratorio</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterRecursosLaboratorio</filter-name>
+        <url-pattern>/faces/recursos_laboratorio/*</url-pattern>
+    </filter-mapping>
 </web-app>

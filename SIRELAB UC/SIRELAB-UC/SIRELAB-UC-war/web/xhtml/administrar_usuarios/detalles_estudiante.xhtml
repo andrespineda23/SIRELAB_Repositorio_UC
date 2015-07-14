@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Administrar Estudiantes</a></li>
+                        <li class="active">Detalles Estudiante</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="row col-md-12">
+                            <h2 class="info">
+                                Información Registro
+                            </h2>
+                            <p>
+                                Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                            </p>
+                            <p>
+                                Este registro es unicamente para estudiantes. 
+                            </p>
+                        </div>
+                        <div class="row col-md-12">
+                            <fieldset>
+                                <legend class="text-info">Datos Personales</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Nombre(s) Estudiante*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesEstudiante.nombreEstudiante}" required="true" class="form-control" id="nombreEstudiante" requiredMessage="El campo Nombre es obligatorio." readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                        <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarNombreEstudiante()}" execute="nombreEstudiante" render="nombreEstudiante msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="nombreEstudiante" style="color: red"></h:message></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Apellido(s) Estudiante*"/></strong>
+                                    <h:inputText maxlength="45"  value="#{controllerDetallesEstudiante.apellidoEstudiante}" required="true" class="form-control" id="apellidoEstudiante" requiredMessage="El campo Apellido es obligatorio."  readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                        <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarApellidoEstudiante()}" execute="apellidoEstudiante" render="apellidoEstudiante msnApellido"/>
+                                    </h:inputText>
+                                    <h6><h:message id="msnApellido" for="apellidoEstudiante" style="color: red"></h:message></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Número Identificación*"/></strong>
+                                    <h:inputText maxlength="20"  value="#{controllerDetallesEstudiante.identificacionEstudiante}" required="true" class="form-control" id="identificacionEstudiante" requiredMessage="El campo Documento es obligatorio." readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                        <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarIdentificacionEstudiante()}" execute="identificacionEstudiante" render="identificacionEstudiante msnID"/>
+                                    </h:inputText>
+                                    <h6><h:message id="msnID" for="identificacionEstudiante" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Correo Institucional*"/></strong>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="29"  value="#{controllerDetallesEstudiante.correoEstudiante}" required="true" class="form-control" id="correoEstudiante" requiredMessage="El campo Correo es obligatorio." readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                            <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarCorreoEstudiante()}" execute="correoEstudiante" render="correoEstudiante msnEmail"/>
+                                        </h:inputText>
+                                        <span class="input-group-addon">@ucentral.edu.co</span>
+                                    </div>
+                                    <h6><h:message id="msnEmail" for="correoEstudiante" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Estado Usuario*"/></strong>
+                                    <h:inputText readonly="true" value="#{controllerDetallesEstudiante.estudianteDetalles.persona.usuario.strEstado}" class="form-control" id="estadoEstudiante" />
+                                </div>
+                                <fieldset>
+                                    <legend class="h5 text-info">Datos Opcionales</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Correo Opcional"/></strong>
+                                        <div class="input-group">
+                                            <h:inputText maxlength="60"  value="#{controllerDetallesEstudiante.correoOpcionalEstudiante}" class="form-control" id="correoOpcionalEstudiante"  readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                                <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarCorreoOpcionalEstudiante()}" execute="correoOpcionalEstudiante" render="correoOpcionalEstudiante msnEmailOpcional"/>
+                                            </h:inputText>
+                                            <span class="input-group-addon">@ucentral.edu.co</span>
+                                        </div>
+                                        <h6><h:message id="msnEmailOpcional" for="correoOpcionalEstudiante" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Número Telefonico 1"/></strong>
+                                        <h:inputText maxlength="20"  value="#{controllerDetallesEstudiante.telefono1Estudiante}"  class="form-control" id="telefono1Estudiante"  readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                            <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarDatosNumericosEstudiante(1)}" execute="telefono1Estudiante" render="telefono1Estudiante msnTelefono1"/>
+                                        </h:inputText>
+                                        <h6><h:message id="msnTelefono1" for="telefono1Estudiante" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Número Telefonico 2"/></strong>
+                                        <h:inputText maxlength="20"  value="#{controllerDetallesEstudiante.telefono2Estudiante}"  class="form-control" id="telefono2Estudiante" readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                            <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarDatosNumericosEstudiante(2)}" execute="telefono2Estudiante" render="telefono2Estudiante msnTelefono2"/>
+                                        </h:inputText>
+                                        <h6><h:message id="msnTelefono2" for="telefono2Estudiante" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Dirección Residencia"/></strong>
+                                        <h:inputText maxlength="45"  value="#{controllerDetallesEstudiante.direccionEstudiante}"  class="form-control" id="direccionEstudiante" readonly="#{controllerDetallesEstudiante.activarEditar}">
+                                            <f:ajax event="blur" listener="#{controllerDetallesEstudiante.validarDireccionEstudiante()}" execute="direccionEstudiante" render="direccionEstudiante msnDireccion"/>
+                                        </h:inputText>
+                                        <h6><h:message id="msnDireccion" for="direccionEstudiante" style="color: red"/></h6>
+                                    </div>
+                                </fieldset>
+                            </fieldset>
+                            <fieldset>
+                                <legend class="text-info">Información Universidad</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Tipo Estudiante*"/></strong>
+                                    <h:selectOneMenu value="#{controllerDetallesEstudiante.tipoEstudiante}"
+                                                     class="form-control" readonly="#{controllerDetallesEstudiante.activarEditar}"
+                                                     id="tipoEstudiante">
+                                        <f:selectItem itemLabel="ESTUDIANTE" itemValue="1" />
+                                        <f:selectItem itemLabel="EGRESADO" itemValue="2" />
+                                        <f:ajax event="change" listener="#{controllerDetallesEstudiante.actualizarTipoUsuarioSeleccionado()}" execute="@this" render="semestreEstudiante"/>
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Número Semestre*"/></strong>
+                                    <h:selectOneMenu value="#{controllerDetallesEstudiante.semestreEstudiante}"  readonly="#{controllerDetallesEstudiante.activarEditar}"
+                                                     class="form-control" disabled="#{controllerDetallesEstudiante.activarNumSemestre}"
+                                                     id="semestreEstudiante">
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="6" itemValue="6" />
+                                        <f:selectItem itemLabel="7" itemValue="7" />
+                                        <f:selectItem itemLabel="8" itemValue="8" />
+                                        <f:selectItem itemLabel="9" itemValue="9" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:ajax event="change" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}" execute="@this" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Carrera*"/></strong>
+                                    <h:selectOneMenu value="#{controllerDetallesEstudiante.carreraEstudiante}"
+                                                     class="form-control" readonly="#{controllerDetallesEstudiante.activarEditar}"
+                                                     id="carreraEstudiante">
+                                        <f:selectItems value="#{controllerDetallesEstudiante.listaCarrera}" var="carrera"
+                                                       itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerDetallesEstudiante.actualizarCarreras()}" execute="carreraEstudiante" render="@this planEstudioEstudiante msnCarrera"/>
+                                    </h:selectOneMenu>
+                                    <h6><h:message id="msnCarrera" for="carreraEstudiante" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Plan de Estudio*"/></strong>
+                                    <h:selectOneMenu disabled="#{controllerDetallesEstudiante.activoPlanEstudio}" 
+                                                     value="#{controllerDetallesEstudiante.planEstudioEstudiante}"
+                                                     class="form-control"
+                                                     id="planEstudioEstudiante">
+                                        <f:selectItem itemLabel="Seleccione Plan de Estudio" itemValue="null" />
+                                        <f:selectItems value="#{controllerDetallesEstudiante.listaPlanEstudios}" var="plan"
+                                                       itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerDetallesEstudiante.actualizarPlanEstudio()}" execute="planEstudioEstudiante" render="planEstudioEstudiante msnPlanEstudio"/>
+                                    </h:selectOneMenu>
+                                    <h6><h:message id="msnPlanEstudio" for="planEstudioEstudiante" style="color: red"/></h6>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="left pull-left">
+                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEstudiante.mensajeFormulario}"/></strong>
+                            </div>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <h:commandButton id="buttonActivar" disabled="#{controllerDetallesEstudiante.disabledActivar}" value="ACTIVAR" actionListener="#{controllerDetallesEstudiante.activarEstudiante()}" class="btn btn-primary right" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                            <div class="col-md-2">
+                                <h:commandButton id="buttonInactivar" disabled="#{controllerDetallesEstudiante.disabledInactivar}" value="INACTIVAR" actionListener="#{controllerDetallesEstudiante.inactivarEstudiante()}" class="btn btn-default right" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                            <div class="col-md-2">
+                                <h:commandButton id="buttonEditar" disabled="#{controllerDetallesEstudiante.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesEstudiante.activarEditarRegistro()}" class="btn btn-primary right" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                            <div class="col-md-2">
+                                <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesEstudiante.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesEstudiante.restaurarInformacionEstudiante()}" class="btn btn-default right" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                            <div class="col-md-2">
+                                <h:commandButton id="buttonGuardar" rendered="#{controllerDetallesEstudiante.visibleGuardar}" value="GUARDAR" actionListener="#{controllerDetallesEstudiante.almacenarModificacionesEstudiante()}" class="btn btn-primary right" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="administrar_estudiantes" actionListener="#{controllerDetallesEstudiante.restaurarInformacionEstudiante()}" class="btn btn-primary" immediate="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row ">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../../recursos/js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../../recursos/js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

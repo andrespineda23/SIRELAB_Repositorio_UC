@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>faces/index.xhtml</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>ServletCargueArchivo</servlet-name>
+        <servlet-class>com.sirelab.controller.ServletCargueArchivo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletCargueArchivo</servlet-name>
+        <url-pattern>/ServletCargueArchivo</url-pattern>
+    </servlet-mapping>
+    
+    <filter>
+        <filter-name>FilterAdministrarUsuarios</filter-name>
+        <filter-class>com.sirelab.filters.FilterAdministrarUsuarios</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterAdministrarUsuarios</filter-name>
+        <url-pattern>/faces/xhtml/administrar_usuarios/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterCargueArchivos</filter-name>
+        <filter-class>com.sirelab.filters.FilterCargueArchivos</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterCargueArchivos</filter-name>
+        <url-pattern>/faces/xhtml/cargue_archivos/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterEstructuraLaboratorio</filter-name>
+        <filter-class>com.sirelab.filters.FilterEstructuraLaboratorio</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterEstructuraLaboratorio</filter-name>
+        <url-pattern>/faces/xhtml/estructura_laboratorio/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterEstructuraUniversidad</filter-name>
+        <filter-class>com.sirelab.filters.FilterEstructuraUniversidad</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterEstructuraUniversidad</filter-name>
+        <url-pattern>/faces/xhtml/estructura_universidad/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterPaginasAdministrador</filter-name>
+        <filter-class>com.sirelab.filters.FilterPaginasAdministrador</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterPaginasAdministrador</filter-name>
+        <url-pattern>/faces/xhtml/paginas_administrador/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>FilterRecursosLaboratorio</filter-name>
+        <filter-class>com.sirelab.filters.FilterRecursosLaboratorio</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterRecursosLaboratorio</filter-name>
+        <url-pattern>/faces/xhtml/recursos_laboratorio/*</url-pattern>
+    </filter-mapping>
+</web-app>

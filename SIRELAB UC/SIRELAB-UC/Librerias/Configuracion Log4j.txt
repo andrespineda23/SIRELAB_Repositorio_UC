@@ -1,0 +1,1 @@
+https://blogs.oracle.com/naman/entry/configure_log4j_for_use_in

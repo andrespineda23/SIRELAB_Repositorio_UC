@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="formularioGeneral">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                                <p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br> 
+                    <div class="text-center">
+                        <h1>Variables de Inventario/Recursos de Laboratorio</h1>
+                    </div>
+                </div>
+                 <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li class="active">Variables Inventario/Recursos</li>
+                    </ol>
+                </div>
+                <div class="row col-md-12">
+                    <div class="container">
+                        <div id="resultadosBusquedaEE" class="row clearfix">
+                            <fieldset style="border: black;border-radius: 10px;">
+                                <h3><legend style="color: darkblue"><strong>ESTADO EQUIPO REGISTRADOS</strong></legend></h3>
+                                <div class="row">
+                                    <h:dataTable id="dataTableEE" var="itemEE" 
+                                                 styleClass="table table-striped table-hover table-responsive" 
+                                                 value="#{controllerVariablesInventario.listaEstadosEquiposTabla}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{itemEE.nombreestadoequipo}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalles"/>
+                                            </f:facet>
+                                            <h:commandLink value="Ver" action="detalles_estadoequipo" actionListener="#{controllerDetallesEstadoEquipo.recibirIDDetalleEstadoEquipo(itemEE.idestadoequipo)}"/>
+                                        </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <ul class="pager">
+                                                    <li>
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerVariablesInventario.cargarPaginaAnteriorEstadoEquipo()}" disabled="#{controllerVariablesInventario.bloquearPagAntEstadoEquipo}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerVariablesInventario.cargarPaginaSiguienteEstadoEquipo()}" disabled="#{controllerVariablesInventario.bloquearPagSigEstadoEquipo}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </f:facet>
+                                    </h:dataTable>
+                                </div><!--/.row-->
+                            </fieldset>
+                        </div>
+                        <br></br>
+                        <div class="left pull-left">
+                            <h:commandButton value="Nuevo Estado Equipo" action="registrar_estadoequipo" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr></hr>
+                        </div>
+                    </div>
+                    <br></br>
+                </div>
+                <div class="row col-md-12">
+                    <div class="container">
+                        <div id="resultadosBusquedaTA" class="row clearfix">
+                            <fieldset style="border: black;border-radius: 10px;">
+                                <h3><legend style="color: darkblue"><strong>TIPOS ACTIVOS REGISTRADOS</strong></legend></h3>
+                                <div class="row">
+                                    <h:dataTable id="dataTableTA" var="itemTA" 
+                                                 styleClass="table table-striped table-hover table-responsive" 
+                                                 value="#{controllerVariablesInventario.listaTiposActivos}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{itemTA.nombretipoactivo}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalles"/>
+                                            </f:facet>
+                                            <h:commandLink value="Ver" action="detalles_tipoactivo" actionListener="#{controllerDetallesTipoActivo.recibirIDDetalleTipoActivo(itemTA.idtipoactivo)}"/>
+                                        </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <ul class="pager">
+                                                    <li>
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerVariablesInventario.cargarPaginaAnteriorTipoActivo()}" disabled="#{controllerVariablesInventario.bloquearPagAntTipoActivo}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerVariablesInventario.cargarPaginaSiguienteTipoActivo()}" disabled="#{controllerVariablesInventario.bloquearPagSigTipoActivo}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </f:facet>
+                                    </h:dataTable>
+                                </div><!--/.row-->
+                            </fieldset>
+                        </div>
+                        <br></br>
+                        <div class="left pull-left">
+                            <h:commandButton value="Nuevo Tipo Activo" action="registrar_tipoactivo" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr></hr>
+                        </div>
+                    </div>
+                    <br></br>
+                </div>
+                <div class="row col-md-12">
+                    <div class="container">
+                        <div id="resultadosBusquedaTE" class="row clearfix">
+                            <fieldset style="border: black;border-radius: 10px;">
+                                <h3><legend style="color: darkblue"><strong>TIPOS EVENTOS REGISTRADOS</strong></legend></h3>
+                                <div class="row">
+                                    <h:dataTable id="dataTableTE" var="itemTE" 
+                                                 styleClass="table table-striped table-hover table-responsive" 
+                                                 value="#{controllerVariablesInventario.listaTiposEventos}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalle Evento"/>
+                                            </f:facet>
+                                            <h:outputText value="#{itemTE.detalleevento}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalles"/>
+                                            </f:facet>
+                                            <h:commandLink value="Ver" action="detalles_tipoevento" actionListener="#{controllerDetallesTipoEvento.recibirIDDetalleTipoEvento(itemTE.idtipoevento)}"/>
+                                        </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <ul class="pager">
+                                                    <li>
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerVariablesInventario.cargarPaginaAnteriorTipoEvento()}" disabled="#{controllerVariablesInventario.bloquearPagAntTipoEvento}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerVariablesInventario.cargarPaginaSiguienteTipoEvento()}" disabled="#{controllerVariablesInventario.bloquearPagSigTipoEvento}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </f:facet>
+                                    </h:dataTable>
+                                </div><!--/.row-->
+                            </fieldset>
+                        </div>
+                        <br></br>
+                        <div class="left pull-left">
+                            <h:commandButton value="Nuevo Tipo Evento" action="registrar_tipoevento" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr></hr>
+                        </div>
+                    </div>
+                    <br></br>
+                </div>
+                <div class="row col-md-12">
+                    <div class="container">
+                        <div id="resultadosBusquedaTC" class="row clearfix">
+                            <fieldset style="border: black;border-radius: 10px;">
+                                <h3><legend style="color: darkblue"><strong>TIPOS COMPONENTES REGISTRADOS</strong></legend></h3>
+                                <div class="row">
+                                    <h:dataTable id="dataTableTC" var="itemTC" 
+                                                 styleClass="table table-striped table-hover table-responsive" 
+                                                 value="#{controllerVariablesInventario.listaTiposComponentes}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre Componente"/>
+                                            </f:facet>
+                                            <h:outputText value="#{itemTC.nombretipo}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalles"/>
+                                            </f:facet>
+                                            <h:commandLink value="Ver" action="detalles_tipocomponente" actionListener="#{controllerDetallesTipoComponente.recibirIDDetalleTipoComponente(itemTC.idtipocomponente)}"/>
+                                        </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <ul class="pager">
+                                                    <li>
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerVariablesInventario.cargarPaginaAnteriorTipoComponente()}" disabled="#{controllerVariablesInventario.bloquearPagAntTipoComponente}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerVariablesInventario.cargarPaginaSiguienteTipoComponente()}" disabled="#{controllerVariablesInventario.bloquearPagSigTipoComponente}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </f:facet>
+                                    </h:dataTable>
+                                </div><!--/.row-->
+                            </fieldset>
+                        </div>
+                        <br></br>
+                        <div class="left pull-left">
+                            <h:commandButton value="Nuevo Tipo Componente" action="registrar_tipocomponente" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <div class="col-md-11"></div>
+                    <div class="col-md-1">
+                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerVariablesInventario.limpiarInformacion()}" class="btn btn-primary" immediate="true">
+                            <f:ajax execute="@form" render="formularioGeneral" />
+                        </h:commandButton>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../../recursos/js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../../recursos/js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

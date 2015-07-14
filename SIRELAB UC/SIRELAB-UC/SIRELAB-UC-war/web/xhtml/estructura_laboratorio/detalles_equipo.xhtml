@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a><p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Administrar Equipos</a></li>
+                        <li class="active">Detalles Equipo</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <h2 class="info">
+                            Información Registro
+                        </h2>
+                        <p>
+                            Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                        </p>
+                        <p>
+                            Este registro es unicamente para elementos de un banco o modulo de trabajo de un laboratorio de la universidad, al momento de ser registrada en el sistema su estado sera ACTIVO, para su activación es necesario que un personal de laboratorio o administrador del sistema gestione el proceso. 
+                        </p>
+                    </div>
+                    <div class="col-md-12 row">
+
+                        <fieldset>
+                            <legend class="text-info">Datos Basicos</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Nombre Equipo*"/></strong>
+                                <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.nombreEquipoElemento}" required="true" class="form-control" id="nombreEquipoElemento" requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarNombreEquipo()}" execute="nombreEquipoElemento" render="nombreEquipoElemento msnDetalleEquipo" />
+                                </h:inputText>
+                                <h6><h:message id="msnDetalleEquipo" for="nombreEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Codigo Inventario Equipo*"/></strong>
+                                <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.inventarioEquipoElemento}" required="true" class="form-control" id="inventarioEquipoElemento" requiredMessage="El campo Inventario es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarInventarioEquipo()}" execute="inventarioEquipoElemento" render="inventarioEquipoElemento msnInventarioEquipo" />
+                                </h:inputText>
+                                <h6><h:message id="msnInventarioEquipo" for="inventarioEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Marca Equipo*"/></strong>
+                                <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.marcaEquipoElemento}" required="true" class="form-control" id="marcaEquipoElemento" requiredMessage="El campo Marca es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarMarcaEquipo()}" execute="marcaEquipoElemento" render="marcaEquipoElemento msnMarcaEquipo" />
+                                </h:inputText>
+                                <h6><h:message id="msnMarcaEquipo" for="marcaEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Estado de Equipo*"/></strong>
+                                <h:selectOneMenu  value="#{controllerDetallesEquipo.estadoEquipoElemento}"
+                                                  class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
+                                                  id="estadoEquipoElemento">
+                                    <f:selectItems value="#{controllerDetallesEquipo.listaEstadosEquipos}" var="estado"
+                                                   itemLabel="#{estado.nombreestadoequipo}" itemValue="#{estado}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarEstadoEquipo()}" execute="estadoEquipoElemento" render="@this msnEstadoEquipoEquipo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnEstadoEquipoEquipo" for="estadoEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Tipo Activo*"/></strong>
+                                <h:selectOneMenu  value="#{controllerDetallesEquipo.tipoActivoEquipoElemento}"
+                                                  class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
+                                                  id="tipoActivoEquipoElemento">
+                                    <f:selectItems value="#{controllerDetallesEquipo.listaTiposActivos}" var="tipo"
+                                                   itemLabel="#{tipo.nombretipoactivo}" itemValue="#{tipo}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarTipoActivo()}" execute="tipoActivoEquipoElemento" render="@this msnTipoActivoEquipo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnTipoActivoEquipo" for="tipoActivoEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Proveedor*"/></strong>
+                                <h:selectOneMenu  value="#{controllerDetallesEquipo.proveedorEquipoElemento}"
+                                                  class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
+                                                  id="proveedorEquipoElemento">
+                                    <f:selectItems value="#{controllerDetallesEquipo.listaProveedores}" var="proveedor"
+                                                   itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarProveedor()}" execute="proveedorEquipoElemento" render="@this msnProveedorEquipo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnProveedorEquipo" for="proveedorEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <fieldset>
+                                <legend class="h5 text-info">Datos Opcionales</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Modelo Equipo"/></strong>
+                                    <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.modeloEquipoElemento}" class="form-control" id="modeloEquipoElemento" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarModeloEquipo()}" execute="modeloEquipoElemento" render="modeloEquipoElemento msnModeloEquipo" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnModeloEquipo" for="modeloEquipoElemento" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Serie Equipo"/></strong>
+                                    <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.serieEquipoElemento}" class="form-control" id="serieEquipoElemento" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarSerieEquipo()}" execute="serieEquipoElemento" render="serieEquipoElemento msnSerieEquipo" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnSerieEquipo" for="serieEquipoElemento" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Costo Alquiler"/></strong>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="10" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.alquilerEquipoElemento}"  class="form-control" id="alquilerEquipoElemento" >
+                                            <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarCostoAlquilerEquipo()}" execute="alquilerEquipoElemento" render="alquilerEquipoElemento msnCostoAlquilerEquipo" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">$</span>
+                                    </div>
+                                    <h6><h:message id="msnCostoAlquilerEquipo" for="alquilerEquipoElemento" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Costo Inversión"/></strong>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="12" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.inversionEquipoElemento}" class="form-control" id="inversionEquipoElemento" >
+                                            <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarInversionEquipo()}" execute="inversionEquipoElemento" render="inversionEquipoElemento msnCostoInversionEquipo" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">$</span>
+                                    </div>
+                                    <h6><h:message id="msnCostoInversionEquipo" for="inversionEquipoElemento" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Fecha Adquisición"/></strong>
+                                    <h:inputText  maxlength="10" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.fechaEquipoElemento}" class="form-control" id="fechaEquipoElemento" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarFechaEquipo()}" execute="fechaEquipoElemento" render="fechaEquipoElemento msnFechaAdquisicionEquipo" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnFechaAdquisicionEquipo" for="fechaEquipoElemento" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Descripción Equipo"/></strong>
+                                    <h:inputText  maxlength="500" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.especificacionEquipoElemento}" class="form-control" id="especificacionEquipoElemento" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarEspecificacionEquipo()}" execute="especificacionEquipoElemento" render="especificacionEquipoElemento msnEspecificacionEquipo" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnEspecificacionEquipo" for="especificacionEquipoElemento" style="color: red"/></h6>
+                                </div>
+                            </fieldset>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-info">Información Laboratorio</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Laboratorio Por Area*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesEquipo.laboratorioPorAreaEquipoElemento}"
+                                                 class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
+                                                 id="laboratorioPorAreaEquipoElemento">
+                                    <f:selectItems value="#{controllerDetallesEquipo.listaLaboratoriosPorAreas}" var="area"
+                                                   itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarLaboratoriosAreasProfundizacion()}" execute="laboratorioPorAreaEquipoElemento" render="@this salaEquipoElemento moduloEquipoElemento msnLaboratorioPorAreaEquipo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnLaboratorioPorAreaEquipo" for="laboratorioPorAreaEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Sala de Laboratorio*"/></strong>
+                                <h:selectOneMenu disabled="#{controllerDetallesEquipo.activarSalaLaboratorio}" value="#{controllerDetallesEquipo.salaEquipoElemento}"
+                                                 class="form-control"
+                                                 id="salaEquipoElemento">
+                                    <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
+                                    <f:selectItems value="#{controllerDetallesEquipo.listaSalasLaboratorio}" var="sala"
+                                                   itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarSalasLaboratorio()}" execute="salaEquipoElemento" render="@this moduloEquipoElemento msnSalaLaboratorioEquipo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnSalaLaboratorioEquipo" for="salaEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Modulo/Banco de Trabajo*"/></strong>
+                                <h:selectOneMenu disabled="#{controllerDetallesEquipo.activarModuloLaboratorio}" value="#{controllerDetallesEquipo.moduloEquipoElemento}"
+                                                 class="form-control"
+                                                 id="moduloEquipoElemento">
+                                    <f:selectItem itemLabel="Seleccione Modulo/Banco" itemValue="null" />
+                                    <f:selectItems value="#{controllerDetallesEquipo.listaModulosLaboratorio}" var="modulo"
+                                                   itemLabel="#{modulo.detallemodulo}" itemValue="#{modulo}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarModulosLaboratorio()}" execute="moduloEquipoElemento" render="@this msnModuloLaboratorioEquipo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnModuloLaboratorioEquipo" for="moduloEquipoElemento" style="color: red"/></h6>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row col-md-12">
+                        <div class="left pull-left">
+                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEquipo.mensajeFormulario}"/></strong>
+                        </div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonHojaVida" value="HOJA DE VIDA" action="hojadevida" actionListener="#{controllerHojaVidaEquipo.recibirIDEquipoElemento(controllerDetallesEquipo.idEquipoElemento)}" class="btn btn-primary" >
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonComponentes" value="COMPONENTES" action="administrar_componentes" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerDetallesEquipo.idEquipoElemento)}" class="btn btn-default" >
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonEditar" disabled="#{controllerDetallesEquipo.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesEquipo.activarEditarRegistro()}" class="btn btn-primary" >
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesEquipo.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" class="btn btn-default" immediate="true">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton id="buttonGuardar" rendered="#{controllerDetallesEquipo.visibleGuardar}" value="GUARDAR" actionListener="#{controllerDetallesEquipo.almacenarModificacionesEquipoElemento()}" class="btn btn-primary" >
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-11"></div>
+                        <div class="col-md-1">
+                            <h:commandButton value="Atras" action="administrar_equipos" actionListener="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" class="btn btn-primary" immediate="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../../recursos/js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../../recursos/js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

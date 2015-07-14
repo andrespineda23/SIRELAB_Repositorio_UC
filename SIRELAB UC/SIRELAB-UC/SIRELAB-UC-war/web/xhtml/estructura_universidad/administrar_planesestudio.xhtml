@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="formularioGeneral">
+            
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                                <p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a href="#">Configurar Usuario</a>
+                                    </li>
+                                    <li>
+                                        <h:commandLink value="Cerrar Sesion" action="#{controllerPaginasIniciales.cerrarSession()}"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br> 
+                </div>
+                 <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li class="active">Administrar Planes de Estudio</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"> 
+                        <div class="container">
+                            <div class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px">
+                                    <h3><legend style="color: darkblue"><strong>INFORMACIÓN PLANES DE ESTUDIO</strong></legend></h3>
+                                    <div class="row col-md-12">
+                                        <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                            <legend class="h5">I. Personal</legend>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="parametroNombre">
+                                                        Nombre Plan
+                                                    </label>
+                                                    <h:inputText maxlength="45" value="#{controllerAdministrarPlanesEstudio.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="parametroCodigo">
+                                                        Codigo Plan
+                                                    </label>
+                                                    <h:inputText maxlength="10" value="#{controllerAdministrarPlanesEstudio.parametroCodigo}" class="form-control" id="parametroCodigo" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="parametroFacultad">
+                                                    Facultad
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerAdministrarPlanesEstudio.parametroFacultad}"
+                                                                 class="form-control"
+                                                                 id="parametroFacultad">
+                                                    <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                                    <f:selectItems value="#{controllerAdministrarPlanesEstudio.listaFacultades}" var="facultad"
+                                                                   itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                                    <f:ajax event="change" listener="#{controllerAdministrarPlanesEstudio.actualizarFacultades()}" execute="parametroFacultad" render="@this parametroDepartamento parametroCarrera"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="parametroDepartamento">
+                                                    Departamento
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerAdministrarPlanesEstudio.parametroDepartamento}"
+                                                                 class="form-control" disabled="#{controllerAdministrarPlanesEstudio.activarDepartamento}"
+                                                                 id="parametroDepartamento">
+                                                    <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                                    <f:selectItems value="#{controllerAdministrarPlanesEstudio.listaDepartamentos}" var="departamento"
+                                                                   itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerAdministrarPlanesEstudio.actualizarDepartamentos()}" execute="parametroDepartamento" render="@this parametroCarrera"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </fieldset>
+                                    </div> 
+                                    <div class="row col-md-12">
+                                        <div class="col-md-3">
+                                            <label for="parametroCarrera">
+                                                Carrera
+                                            </label>
+                                            <h:selectOneMenu value="#{controllerAdministrarPlanesEstudio.parametroCarrera}"
+                                                             class="form-control" disabled="#{controllerAdministrarPlanesEstudio.activarCarrera}"
+                                                             id="parametroCarrera">
+                                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
+                                                <f:selectItems value="#{controllerAdministrarPlanesEstudio.listaCarreras}" var="carrera"
+                                                               itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-md-9"></div>
+                                    </div>
+                                </fieldset>
+                                <br></br>
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                    </div> 
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarPlanesEstudio.buscarPlanesEstudiosPorParametros()}">
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarPlanesEstudio.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <br></br>
+                            <div id="resultadosBusqueda" class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px;">
+                                    <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                    <div class="row">
+                                        <h:dataTable id="dataTable" var="item" 
+                                                     styleClass="table table-striped table-hover table-responsive" 
+                                                     value="#{controllerAdministrarPlanesEstudio.listaPlanesEstudiosTabla}">
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Nombre"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.nombreplanestudio}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Codigo"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codigoplanestudio}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Facultad"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.carrera.departamento.facultad.nombrefacultad}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Departamento"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.carrera.departamento.nombredepartamento}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Carrera"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.carrera.nombrecarrera}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Detalles"/>
+                                                </f:facet>
+                                                <h:commandLink value="Ver" action="detalles_planestudio" actionListener="#{controllerDetallesPlanEstudio.recibirIDPlanesEstudioDetalles(item.idplanestudios)}"/>
+                                            </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarPlanesEstudio.cargarPaginaAnteriorPlanEstudio()}" disabled="#{controllerAdministrarPlanesEstudio.bloquearPagAntPlanEstudio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarPlanesEstudio.cargarPaginaSiguientePlanEstudio()}" disabled="#{controllerAdministrarPlanesEstudio.bloquearPagSigPlanEstudio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
+                                        </h:dataTable>
+                                    </div><!--/.row-->
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <div class="row">
+                    <div class="col-md-1">
+                        <h:commandButton value="Nuevo Plan Est." class="btn btn-success" action="registrar_planestudio" actionListener="#{controllerAdministrarPlanesEstudio.limpiarProcesoBusqueda()}"/>
+                    </div>
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1">
+                        <h:commandButton value="Atras" action="inicio_administrador" actionListener="#{controllerAdministrarPlanesEstudio.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../../recursos/js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../../recursos/js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

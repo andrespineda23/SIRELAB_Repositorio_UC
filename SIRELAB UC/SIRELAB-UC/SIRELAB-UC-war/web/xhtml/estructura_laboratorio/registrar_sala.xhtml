@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a><p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                 <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Administrar Salas</a></li>
+                        <li class="active">Registrar Sala</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <h2 class="info">
+                            Información Registro
+                        </h2>
+                        <p>
+                            Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                        </p>
+                        <p>
+                            Este registro es unicamente para salas de laboratorio de la universidad, al momento de ser registrada en el sistema su estado sera ACTIVO, para su activación es necesario que un personal de laboratorio o administrador del sistema gestione el proceso. 
+                        </p>
+                    </div>
+                    <div class="col-md-12 row">
+                        <fieldset>
+                            <legend class="text-info">Datos Basicos</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Nombre Sala*"/></strong>
+                                <h:inputText maxlength="45" value="#{controllerRegistrarSala.nuevoNombreSala}" required="true" class="form-control" id="nuevoNombreSala"  requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarNombreSala()}" execute="nuevoNombreSala" render="nuevoNombreSala msnNombreSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombreSala" for="nuevoNombreSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Codigo Sala*"/></strong>
+                                <h:inputText maxlength="20"  value="#{controllerRegistrarSala.nuevoCodigoSala}" required="true" class="form-control" id="nuevoCodigoSala" requiredMessage="El campo Codigo es obligatorio-">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCodigoSala()}" execute="nuevoCodigoSala" render="nuevoCodigoSala msnCodigoSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnCodigoSala" for="nuevoCodigoSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Costo Alquiler*"/></strong>
+                                <div class="input-group">
+                                    <h:inputText maxlength="10"  value="#{controllerRegistrarSala.nuevoCostoSala}" required="true" class="form-control" id="nuevoCostoSala" requiredMessage="El campo Costo es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCostoAlquilerSala()}" execute="nuevoCostoSala" render="nuevoCostoSala msnCostoSala" />
+                                    </h:inputText>
+                                    <span class="input-group-addon">$</span>
+                                </div>
+                                <h6><h:message id="msnCostoSala" for="nuevoCostoSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Capacidad Maxima*"/></strong>
+                                <h:inputText maxlength="2"  value="#{controllerRegistrarSala.nuevoCapacidadSala}" required="true" class="form-control" id="nuevoCapacidadSala" requiredMessage="El campo Capacidada es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCapacidadSala()}" execute="nuevoCapacidadSala" render="nuevoCapacidadSala msnCapacidadSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnCapacidadSala" for="nuevoCapacidadSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Descripción*"/></strong>
+                                <h:inputText maxlength="500"  value="#{controllerRegistrarSala.nuevoDescripcionSala}" required="true" class="form-control" id="nuevoDescripcionSala" requiredMessage="El campo Descripcion es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarDescripcionSala()}" execute="nuevoDescripcionSala" render="nuevoDescripcionSala msnDescripcionSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnDescripcionSala" for="nuevoDescripcionSala" style="color: red"/></h6>
+                            </div>
+                            <fieldset>
+                                <legend class="h5 text-info">Datos Opcionales</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Costo Inversión"/></strong>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="12"  value="#{controllerRegistrarSala.nuevoInversionSala}" class="form-control" id="nuevoInversionSala" >
+                                            <f:ajax event="blur" listener="#{controllerRegistrarSala.validarInversionSala()}" execute="nuevoInversionSala" render="nuevoInversionSala msnInversionSala" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">$</span>
+                                    </div>
+                                    <h6><h:message id="msnInversionSala" for="nuevoInversionSala" style="color: red"/></h6>
+                                </div>
+                            </fieldset>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-info">Información Universidad</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Laboratorio Por Area de Profundización*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioPorArea}"
+                                                 class="form-control"
+                                                 id="nuevoLaboratorioPorArea">
+                                    <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarSala.listaLaboratoriosPorAreas}" var="laboratorio"
+                                                   itemLabel="#{laboratorio.informacionRegistro}" itemValue="#{laboratorio}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarLaboratorios()}" execute="nuevoLaboratorioPorArea" render="@this msnLaboratorioPorArea"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnLaboratorioPorArea" for="nuevoLaboratorioPorArea" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Sede*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarSala.nuevoSedeSala}"
+                                                 class="form-control"
+                                                 id="nuevoSedeSala">
+                                    <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarSala.listaSedes}" var="sede"
+                                                   itemLabel="#{sede.nombresede}" itemValue="#{sede}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarNuevoSede()}" execute="nuevoSedeSala" render="@this nuevoEdificioSala msnedeSala"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnedeSala" for="nuevoSedeSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Edificio*"/></strong>
+                                <h:selectOneMenu disabled="#{controllerRegistrarSala.activarNuevoEdificio}" value="#{controllerRegistrarSala.nuevoEdificioSala}"
+                                                 class="form-control"
+                                                 id="nuevoEdificioSala">
+                                    <f:selectItem itemLabel="Seleccione Edificio" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarSala.listaEdificios}" var="edificio"
+                                                   itemLabel="#{edificio.descripcionedificio}" itemValue="#{edificio}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarEdificios()}" execute="nuevoSedeSala" render="@this msnEdificioSala"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnEdificioSala" for="nuevoEdificioSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
+                                <h:inputText maxlength="45"  value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarUbicacionSala()}" execute="nuevoUbicacionSala" render="nuevoUbicacionSala msnUbicacionSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
+                            </div>
+                        </fieldset>
+                        <div class="left pull-left">
+                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarSala.mensajeFormulario}"/></strong>
+                        </div>
+                        <div class="right pull-right">
+                            <h:commandButton class="btn btn-success" value="Registrar" actionListener="#{controllerRegistrarSala.registrarNuevoSala()}">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_salas" actionListener="#{controllerRegistrarSala.limpiarRegistroSalaLaboratorio()}" immediate="true">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../../recursos/js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../../recursos/js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>
