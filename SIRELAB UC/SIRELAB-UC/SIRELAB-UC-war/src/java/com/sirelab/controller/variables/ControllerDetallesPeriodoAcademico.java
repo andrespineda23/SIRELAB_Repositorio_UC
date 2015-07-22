@@ -39,6 +39,7 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     private PeriodoAcademico periodoAcademicoEditar;
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesPeriodoAcademico() {
     }
@@ -51,7 +52,8 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     public void recibirIDDetallePeriodoAcademico(BigInteger idDetalle) {
         this.idPeriodoAcademico = idDetalle;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
     }
 
     private void cargarInformacionRegistro() {
@@ -131,15 +133,19 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
             if (validarValidacionesRegistro() == true) {
                 if (inputFechaFin.after(inputFechaInicio)) {
                     almacenarModificacionRegistro();
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     cargarInformacionRegistro();
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "La fecha final es menor o igual que la fecha inicial, por favor corregir para continuar.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No existen modificaciones para ser almacenadas.";
         }
     }
@@ -163,7 +169,8 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
         validacionesDetalle = false;
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         idPeriodoAcademico = null;
         periodoAcademicoEditar = null;
         modificacionesRegistro = false;
@@ -205,6 +212,14 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

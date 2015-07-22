@@ -36,6 +36,7 @@ public class ControllerAdministrarComponentes implements Serializable {
     private int posicionComponenteTabla;
     private int tamTotalComponente;
     private boolean bloquearPagSigComponente, bloquearPagAntComponente;
+    private String cantidadRegistros;
     //
 
     public ControllerAdministrarComponentes() {
@@ -64,6 +65,7 @@ public class ControllerAdministrarComponentes implements Serializable {
                 listaComponentesEquiposTabla = new ArrayList<ComponenteEquipo>();
                 tamTotalComponente = listaComponentesEquipos.size();
                 posicionComponenteTabla = 0;
+                cantidadRegistros = String.valueOf(tamTotalComponente);
                 cargarDatosTablaComponenteEquipo();
             }
         }
@@ -243,6 +245,14 @@ public class ControllerAdministrarComponentes implements Serializable {
 
     public void setBloquearPagAntComponente(boolean bloquearPagAntComponente) {
         this.bloquearPagAntComponente = bloquearPagAntComponente;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

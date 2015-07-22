@@ -26,47 +26,51 @@ import org.apache.log4j.Logger;
 @ManagedBean
 @SessionScoped
 public class ControllerDetallesAreaProfundizacion implements Serializable {
-    
+
     @EJB
     GestionarRecursoAreasProfundizacionBOInterface gestionarRecursoAreaProfundizacionBO;
-    
+
     private AreaProfundizacion areaProfundizacionDetalle;
     private BigInteger idAreaProfundizacion;
     private String editarNombre, editarCodigo;
     private boolean validacionesNombre, validacionesCodigo;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
-    
+    private String colorMensaje;
+
     public ControllerDetallesAreaProfundizacion() {
     }
-    
+
     @PostConstruct
     public void init() {
         validacionesCodigo = true;
         validacionesNombre = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
-    
-    public void restaurarInformacionAreaProfundizacion() {
+
+    public String restaurarInformacionAreaProfundizacion() {
         validacionesCodigo = true;
         validacionesNombre = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         areaProfundizacionDetalle = new AreaProfundizacion();
         recibirIDAreasProfundizacionDetalles(idAreaProfundizacion);
+        return "administrar_areasprofundizacion";
     }
-    
+
     public void asignarValoresVariablesAreaProfundizacion() {
         editarCodigo = areaProfundizacionDetalle.getCodigoarea();
         editarNombre = areaProfundizacionDetalle.getNombrearea();
     }
-    
+
     public void recibirIDAreasProfundizacionDetalles(BigInteger idArea) {
         this.idAreaProfundizacion = idArea;
         areaProfundizacionDetalle = gestionarRecursoAreaProfundizacionBO.obtenerAreaProfundizacionPorIDAreaProfundizacion(idAreaProfundizacion);
         asignarValoresVariablesAreaProfundizacion();
     }
-    
+
     public void validarNombreAreaProfundizacion() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
@@ -79,9 +83,9 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
             validacionesNombre = false;
             FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio."));
         }
-        
+
     }
-    
+
     public void validarCodigoAreaProfundizacion() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
@@ -95,19 +99,19 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio."));
         }
     }
-    
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
             retorno = false;
         }
-        
+
         if (validacionesNombre == false) {
             retorno = false;
         }
         return retorno;
     }
-    
+
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
         AreaProfundizacion registro = gestionarRecursoAreaProfundizacionBO.obtenerAreaProfundizacionPorCodigo(editarCodigo);
@@ -118,28 +122,31 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
         }
         return retorno;
     }
-    
+
     public void modificarInformacionAreaProfundizacion() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarModificacionAreaProfundizacion();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 recibirIDAreasProfundizacionDetalles(this.idAreaProfundizacion);
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
-    
+
     private void almacenarModificacionAreaProfundizacion() {
         try {
             areaProfundizacionDetalle.setNombrearea(editarNombre);
             areaProfundizacionDetalle.setCodigoarea(editarCodigo);
             gestionarRecursoAreaProfundizacionBO.modificarInformacionAreaProfundizacion(areaProfundizacionDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAreaProfundizacion almacenarModificacionAreaProfundizacion:  "+e.toString());
+            logger.error("Error ControllerDetallesAreaProfundizacion almacenarModificacionAreaProfundizacion:  " + e.toString());
             System.out.println("Error ControllerDetallesAreaProfundizacion almacenarModificacionAreaProfundizacion : " + e.toString());
         }
     }
@@ -148,33 +155,41 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
     public AreaProfundizacion getAreaProfundizacionDetalle() {
         return areaProfundizacionDetalle;
     }
-    
+
     public void setAreaProfundizacionDetalle(AreaProfundizacion areaProfundizacionDetalle) {
         this.areaProfundizacionDetalle = areaProfundizacionDetalle;
     }
-    
+
     public String getEditarNombre() {
         return editarNombre;
     }
-    
+
     public void setEditarNombre(String editarNombre) {
         this.editarNombre = editarNombre;
     }
-    
+
     public String getEditarCodigo() {
         return editarCodigo;
     }
-    
+
     public void setEditarCodigo(String editarCodigo) {
         this.editarCodigo = editarCodigo;
     }
-    
+
     public String getMensajeFormulario() {
         return mensajeFormulario;
     }
-    
+
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
     }
-    
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
 }

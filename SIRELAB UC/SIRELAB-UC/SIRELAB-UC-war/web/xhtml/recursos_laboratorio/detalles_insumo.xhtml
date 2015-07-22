@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Insumos</a></li>
@@ -78,18 +78,18 @@
                             <fieldset>
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Nombre Insumo*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerDetallesInsumo.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerDetallesInsumo.validarNombreInsumo()}" execute="editarNombre" render="editarNombre msnNombre" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
                                     <strong><h:outputText value="Codigo Insumo*"/></strong>
                                     <h:inputText maxlength="45" value="#{controllerDetallesInsumo.editarCodigo}" required="true" class="form-control" id="editarCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerDetallesInsumo.validarCodigoInsumo()}" execute="editarCodigo" render="editarCodigo msnCodigo" />
                                     </h:inputText>
                                     <h6><h:message id="msnCodigo" for="editarCodigo" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Nombre Insumo*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesInsumo.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesInsumo.validarNombreInsumo()}" execute="editarNombre" render="editarNombre msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Proveedor*"/></strong>
@@ -142,9 +142,19 @@
                                     </div>
                                 </fieldset>
                             </fieldset>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesInsumo.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesInsumo.mensajeFormulario}" style="color: #{controllerDetallesInsumo.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="row col-md-12">
                                 <div class="left pull-left">
                                     <h:commandButton value="MOVIMIENTO INSUMO" action="administrar_movimientoinsumo" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerDetallesInsumo.insumoDetalles.idinsumo)}" class="btn btn-primary" >
@@ -157,7 +167,7 @@
                                     </h:commandButton>
                                     <span></span>
                                     <span></span>
-                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_insumos" actionListener="#{controllerDetallesInsumo.restaurarInformacionInsumo()}" immediate="true">
+                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesInsumo.restaurarInformacionInsumo()}" actionListener="#{controllerAdministrarInsumos.limpiarDatos()}" immediate="true">
                                         <f:ajax execute="@form" render="form" />
                                     </h:commandButton>
                                 </div>

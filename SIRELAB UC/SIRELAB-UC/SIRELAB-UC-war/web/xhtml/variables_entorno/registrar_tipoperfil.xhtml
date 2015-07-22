@@ -79,40 +79,48 @@
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Nombre Tipo Perfil*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarTipoPerfil.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarTipoPerfil.validarNombre()}" execute="inputNombre" render="inputNombre msnNombre" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
+                                    <h:selectOneMenu value="#{controllerRegistrarTipoPerfil.tipoPerfil}" 
+                                                     class="form-control"  disabled="#{controllerRegistrarTipoPerfil.activarCasillas}"
+                                                     id="nombreTipoPerfil">
+                                        <f:selectItem itemLabel="DEPARTAMENTO" itemValue="DEPARTAMENTO" />
+                                        <f:selectItem itemLabel="LABORATORIO" itemValue="LABORATORIO" />
+                                        <f:selectItem itemLabel="AREA PROFUNDIZACIÓN" itemValue="AREA PROFUNDIZACIÓN" />
+                                        <f:ajax event="change" listener="#{controllerRegistrarTipoPerfil.actualizarTipoPerfil()}" execute="nombreTipoPerfil" render="nombreTipoPerfil inputCodigo inputCodigoRegistro inputNombreRegistro" />
+                                    </h:selectOneMenu>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Codigo Tipo Perfil*"/></strong>
-                                    <h:inputText maxlength="20" value="#{controllerRegistrarTipoPerfil.inputCodigo}" required="true" class="form-control" id="inputCodigo" requiredMessage="El campo Codigo es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarTipoPerfil.validarCodigo()}" execute="inputCodigo" render="inputCodigo msnCodigo" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnCodigo" for="inputCodigo" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Nombre del Registro*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarTipoPerfil.inputNombreRegistro}" required="true" class="form-control" id="inputNombreRegistro" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarTipoPerfil.validarNombreRegistro()}" execute="inputNombreRegistro" render="inputNombreRegistro msnNombreRegistro" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombreRegistro" for="inputNombreRegistro" style="color: red"/></h6>
+                                    <h:inputText readonly="true" disabled="#{controllerRegistrarTipoPerfil.activarCasillas}" value="#{controllerRegistrarTipoPerfil.inputCodigo}" class="form-control" id="inputCodigo" />
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Codigo del Registro*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarTipoPerfil.inputCodigoRegistro}" required="true" class="form-control" id="inputCodigoRegistro" requiredMessage="El campo Codigo es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarTipoPerfil.validarCodigoRegistro()}" execute="inputCodigoRegistro" render="inputCodigoRegistro msnCodigoRegistro" />
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarTipoPerfil.inputCodigoRegistro}" disabled="#{controllerRegistrarTipoPerfil.activarCasillas}" readonly="#{controllerRegistrarTipoPerfil.activarCasillasAdd}" required="true" class="form-control" id="inputCodigoRegistro" requiredMessage="El campo Codigo es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarTipoPerfil.validarCodigoRegistro()}" execute="inputCodigoRegistro" render="inputCodigoRegistro msnCodigoRegistro inputNombreRegistro" />
                                     </h:inputText>
                                     <h6><h:message id="msnCodigoRegistro" for="inputCodigoRegistro" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Nombre del Registro*"/></strong>
+                                    <h:inputText readonly="true" value="#{controllerRegistrarTipoPerfil.inputNombreRegistro}" disabled="#{controllerRegistrarTipoPerfil.activarCasillas}" class="form-control" id="inputNombreRegistro"/>
                                 </div>
                             </fieldset>
                             <br></br>
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarTipoPerfil.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarTipoPerfil.mensajeFormulario}" style="color: #{controllerRegistrarTipoPerfil.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarTipoPerfil.registrarTipoPerfil()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -120,6 +128,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarTipoPerfil.cerrarPagina()}" actionListener="#{controllerVariablesUsuario.iniciarInformacionTablas()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarTipoPerfil.activarLimpiar}" actionListener="#{controllerRegistrarTipoPerfil.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

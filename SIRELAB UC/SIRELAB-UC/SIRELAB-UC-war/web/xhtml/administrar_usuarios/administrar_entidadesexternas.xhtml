@@ -154,7 +154,10 @@
                                 </fieldset>
                                 <br></br>
                                 <div class="col-md-12">
-                                    <div class="col-md-10">
+                                    <div class="col-md-2">
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarEntidadesExternas.cantidadRegistros}"/>
+                                    </div>
+                                    <div class="col-md-8">
                                     </div> 
                                     <div class="col-md-1">
                                         <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarEntidadesExternas.buscarEntidadesExternasPorParametros()}">

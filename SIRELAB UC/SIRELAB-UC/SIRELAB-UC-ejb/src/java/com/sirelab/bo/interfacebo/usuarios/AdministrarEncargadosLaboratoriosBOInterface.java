@@ -1,5 +1,6 @@
 package com.sirelab.bo.interfacebo.usuarios;
 
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
@@ -42,4 +43,13 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorCorreo(String correo);
 
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorDocumento(String documento);
+
+    public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro);
+
+    public Departamento obtenerDepartamentoPorCodigo(String codigo);
+
+    public AreaProfundizacion obtenerAreaProfundizacionPorCodigo(String codigo);
+
+    public Laboratorio obtenerLaboratorioPorCodigo(String codigo);
+
 }

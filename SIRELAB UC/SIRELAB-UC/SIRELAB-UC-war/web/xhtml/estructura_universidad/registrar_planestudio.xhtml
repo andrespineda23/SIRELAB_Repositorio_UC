@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Planes de Estudio</a></li>
@@ -78,23 +78,23 @@
                             <fieldset>
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Nombre Plan*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarPlanEstudio.nuevoNombre}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarPlanEstudio.validarNombrePlanEstudio()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
                                     <strong><h:outputText value="Codigo Plan*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarPlanEstudio.nuevoCodigo}" class="form-control" id="nuevoCodigo" required="true" requiredMessage="El campo Codigo es obligatorio.">
+                                    <h:inputText maxlength="10" value="#{controllerRegistrarPlanEstudio.nuevoCodigo}" disabled="#{controllerRegistrarPlanEstudio.activarCasillas}" class="form-control" id="nuevoCodigo" required="true" requiredMessage="El campo Codigo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarPlanEstudio.validarCodigoPlanEstudio()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
                                     </h:inputText>
                                     <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
+                                    <strong><h:outputText value="Nombre Plan*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarPlanEstudio.nuevoNombre}" disabled="#{controllerRegistrarPlanEstudio.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarPlanEstudio.validarNombrePlanEstudio()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
                                     <strong><h:outputText value="Facultad*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarPlanEstudio.nuevoFacultad}"
-                                                     class="form-control"
+                                                     class="form-control" disabled="#{controllerRegistrarPlanEstudio.activarCasillas}"
                                                      id="nuevoFacultad">
                                         <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarPlanEstudio.listaFacultades}" var="facultad"
@@ -135,9 +135,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPlanEstudio.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPlanEstudio.mensajeFormulario}" style="color: #{controllerRegistrarPlanEstudio.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarPlanEstudio.registrarNuevoPlanEstudio()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -145,6 +155,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_planesestudio" actionListener="#{controllerRegistrarPlanEstudio.cancelarRegistroPlanEstudio()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarPlanEstudio.activarLimpiar}" actionListener="#{controllerRegistrarPlanEstudio.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

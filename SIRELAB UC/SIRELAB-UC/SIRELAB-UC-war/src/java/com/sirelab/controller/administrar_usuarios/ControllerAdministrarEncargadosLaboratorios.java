@@ -60,12 +60,14 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
     //
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarEncargadosLaboratorios() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarExport = true;
         activoDepartamento = true;
         activoLaboratorio = true;
@@ -123,7 +125,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
             filtros.put("parametroDocumento", parametroDocumento);
         }
         if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())) {
-            filtros.put("parametroCorreo", parametroCorreo + "@ucentral.edu.co");
+            filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
             filtros.put("parametroEstado", "true");
@@ -165,12 +167,14 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                     listaEncargadosLaboratoriosTabla = new ArrayList<EncargadoLaboratorio>();
                     tamTotalEncargadoLaboratorio = listaEncargadosLaboratorios.size();
                     posicionEncargadoLaboratorioTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalEncargadoLaboratorio);
                     cargarDatosTablaEncargadoLaboratorio();
                 } else {
                     activarExport = true;
                     listaEncargadosLaboratoriosTabla = null;
                     tamTotalEncargadoLaboratorio = 0;
                     posicionEncargadoLaboratorioTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalEncargadoLaboratorio);
                     bloquearPagAntEncargadoLaboratorio = true;
                     bloquearPagSigEncargadoLaboratorio = true;
                 }
@@ -179,10 +183,11 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 tamTotalEncargadoLaboratorio = 0;
                 posicionEncargadoLaboratorioTabla = 0;
                 bloquearPagAntEncargadoLaboratorio = true;
+                cantidadRegistros = String.valueOf(tamTotalEncargadoLaboratorio);
                 bloquearPagSigEncargadoLaboratorio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros : " + e.toString());
         }
     }
@@ -257,14 +262,39 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         parametroDepartamento = null;
         parametroLaboratorio = null;
         parametroEstado = 1;
-        inicializarFiltros();
         listaEncargadosLaboratorios = null;
         listaEncargadosLaboratoriosTabla = null;
         tamTotalEncargadoLaboratorio = 0;
         posicionEncargadoLaboratorioTabla = 0;
         bloquearPagAntEncargadoLaboratorio = true;
         bloquearPagSigEncargadoLaboratorio = true;
+        listaDepartamentos = null;
+        listaFacultades = null;
+        listaLaboratorios = null;
+        inicializarFiltros();
+        cantidadRegistros = "N/A";
         return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        activarExport = true;
+        activoDepartamento = true;
+        activoLaboratorio = true;
+        parametroNombre = null;
+        parametroApellido = null;
+        parametroDocumento = null;
+        parametroCorreo = null;
+        parametroFacultad = null;
+        parametroDepartamento = null;
+        parametroLaboratorio = null;
+        parametroEstado = 1;
+        listaEncargadosLaboratorios = null;
+        listaEncargadosLaboratoriosTabla = null;
+        tamTotalEncargadoLaboratorio = 0;
+        posicionEncargadoLaboratorioTabla = 0;
+        bloquearPagAntEncargadoLaboratorio = true;
+        bloquearPagSigEncargadoLaboratorio = true;
+        cantidadRegistros = "N/A";
     }
 
     /**
@@ -288,7 +318,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 parametroLaboratorio = new Laboratorio();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades:  "+e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades:  " + e.toString());
             System.out.println("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades : " + e.toString());
         }
     }
@@ -308,7 +338,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 parametroLaboratorio = new Laboratorio();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos:  "+e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos:  " + e.toString());
             System.out.println("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos : " + e.toString());
         }
     }
@@ -492,6 +522,14 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
 
     public void setBloquearPagAntEncargadoLaboratorio(boolean bloquearPagAntEncargadoLaboratorio) {
         this.bloquearPagAntEncargadoLaboratorio = bloquearPagAntEncargadoLaboratorio;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

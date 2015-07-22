@@ -79,14 +79,14 @@
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Codigo Horario Atención*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarHorarioAtencion.inputCodigo}" required="true" class="form-control" id="inputCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarHorarioAtencion.inputCodigo}" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}" required="true" class="form-control" id="inputCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarHorarioAtencion.validarCodigo()}" execute="inputCodigo" render="inputCodigo msnCodigo" />
                                     </h:inputText>
                                     <h6><h:message id="msnCodigo" for="inputCodigo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Descripción Horario Atención*"/></strong>
-                                    <h:inputText maxlength="100" value="#{controllerRegistrarHorarioAtencion.inputDescripcion}" required="true" class="form-control" id="inputDescripcion" requiredMessage="El campo Descripción es obligatorio.">
+                                    <h:inputText maxlength="100" value="#{controllerRegistrarHorarioAtencion.inputDescripcion}" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}" required="true" class="form-control" id="inputDescripcion" requiredMessage="El campo Descripción es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarHorarioAtencion.validarDescripcion()}" execute="inputDescripcion" render="inputDescripcion msnDescripcion" />
                                     </h:inputText>
                                     <h6><h:message id="msnDescripcion" for="inputDescripcion" style="color: red"/></h6>
@@ -101,9 +101,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarHorarioAtencion.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarHorarioAtencion.mensajeFormulario}" style="color: #{controllerRegistrarHorarioAtencion.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarHorarioAtencion.registrarHorarioAtencion()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -111,6 +121,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarHorarioAtencion.cerrarPagina()}" actionListener="#{controllerVariablesReserva.iniciarInformacionTablas()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarHorarioAtencion.activarLimpiar}" actionListener="#{controllerRegistrarHorarioAtencion.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

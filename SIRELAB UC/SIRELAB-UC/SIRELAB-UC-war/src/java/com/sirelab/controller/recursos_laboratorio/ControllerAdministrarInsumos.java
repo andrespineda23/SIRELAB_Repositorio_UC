@@ -50,12 +50,14 @@ public class ControllerAdministrarInsumos implements Serializable {
     //
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarInsumos() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         parametroNombre = null;
         parametroCodigo = null;
         parametroModelo = null;
@@ -118,6 +120,7 @@ public class ControllerAdministrarInsumos implements Serializable {
                     listaInsumosTabla = new ArrayList<Insumo>();
                     tamTotalInsumo = listaInsumos.size();
                     posicionInsumoTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalInsumo);
                     cargarDatosTablaInsumo();
                 } else {
                     activarExport = true;
@@ -125,6 +128,7 @@ public class ControllerAdministrarInsumos implements Serializable {
                     tamTotalInsumo = 0;
                     posicionInsumoTabla = 0;
                     bloquearPagAntInsumo = true;
+                    cantidadRegistros = String.valueOf(tamTotalInsumo);
                     bloquearPagSigInsumo = true;
                 }
             } else {
@@ -132,10 +136,11 @@ public class ControllerAdministrarInsumos implements Serializable {
                 tamTotalInsumo = 0;
                 posicionInsumoTabla = 0;
                 bloquearPagAntInsumo = true;
+                cantidadRegistros = String.valueOf(tamTotalInsumo);
                 bloquearPagSigInsumo = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString());
         }
     }
@@ -194,13 +199,32 @@ public class ControllerAdministrarInsumos implements Serializable {
         }
     }
 
-    public String limpiarProcesoBusqueda() {
+    public void limpiarDatos() {
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
         parametroModelo = null;
         parametroMarca = null;
         parametroProveedor = null;
+        listaInsumos = null;
+        listaInsumosTabla = null;
+        posicionInsumoTabla = 0;
+        tamTotalInsumo = 0;
+        bloquearPagAntInsumo = true;
+        cantidadRegistros = "N/A";
+        bloquearPagSigInsumo = true;
+        inicializarFiltros();
+    }
+
+    public String limpiarProcesoBusqueda() {
+        activarExport = true;
+        parametroNombre = null;
+        parametroCodigo = null;
+        cantidadRegistros = "N/A";
+        parametroModelo = null;
+        parametroMarca = null;
+        parametroProveedor = null;
+        listaProveedores = null;
         listaInsumos = null;
         listaInsumosTabla = null;
         posicionInsumoTabla = 0;
@@ -334,6 +358,14 @@ public class ControllerAdministrarInsumos implements Serializable {
 
     public void setBloquearPagAntInsumo(boolean bloquearPagAntInsumo) {
         this.bloquearPagAntInsumo = bloquearPagAntInsumo;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

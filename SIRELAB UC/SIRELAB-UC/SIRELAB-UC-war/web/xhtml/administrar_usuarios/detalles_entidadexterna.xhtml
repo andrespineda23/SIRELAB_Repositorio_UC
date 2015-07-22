@@ -163,11 +163,19 @@
                             </div>
                         </fieldset>
                     </div>
+                    <hr class="intro-divider"/>
                     <div class="row col-md-12">
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEntidadExterna.mensajeFormulario}"/></strong>
+                        <div class="text-center">
+                            <h5>
+                                Resultados del Formulario
+                            </h5>
+                            <strong>
+                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEntidadExterna.mensajeFormulario}" style="color: #{controllerDetallesEntidadExterna.colorMensaje}}"/>
+                            </strong>
                         </div>
+                        <br></br>
                     </div>
+                    <hr class="intro-divider"/>
                     <div class="row col-md-12">
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
@@ -200,7 +208,7 @@
                     <div class="row">
                         <div class="col-md-11"></div>
                         <div class="col-md-1">
-                            <h:commandButton value="Atras" action="administrar_entidadesxternas" actionListener="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" class="btn btn-primary" immediate="true"/> 
+                            <h:commandButton value="Atras" action="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" actionListener="#{controllerAdministrarEntidadesExternas.limpiarProcesoBusqueda()}" class="btn btn-primary" immediate="true"/> 
                         </div>
                     </div>
                 </div>

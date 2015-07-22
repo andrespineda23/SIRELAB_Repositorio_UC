@@ -52,6 +52,7 @@ public class ControllerDetallesAsignatura implements Serializable {
     private boolean validacionesDepartamento, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesAsignatura() {
     }
@@ -60,20 +61,23 @@ public class ControllerDetallesAsignatura implements Serializable {
     public void init() {
         activarModificacionCarrera = true;
         activarModificacionPlanEstudio = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionAsignatura() {
+    public String restaurarInformacionAsignatura() {
         validacionesCarrera = true;
         validacionesCodigo = true;
         validacionesCredito = true;
         validacionesDepartamento = true;
         validacionesNombre = true;
         validacionesPlanEstudio = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         asignaturaDetalles = new Asignatura();
         recibirIDAsignaturasDetalles(idAsignatura);
+        return "administrar_asignaturas";
     }
 
     public void asignarValoresVariablesAsignatura() {
@@ -142,6 +146,7 @@ public class ControllerDetallesAsignatura implements Serializable {
             listaPlanesEstudios = null;
             editarPlanEstudio = null;
             activarModificacionPlanEstudio = true;
+            FacesContext.getCurrentInstance().addMessage("form:editarCarrera", new FacesMessage("La Carrera es obligatoria."));
         }
     }
 
@@ -233,12 +238,15 @@ public class ControllerDetallesAsignatura implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarModificacionAsignaturaEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 recibirIDAsignaturasDetalles(this.idAsignatura);
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el plan de estudio seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -251,7 +259,7 @@ public class ControllerDetallesAsignatura implements Serializable {
             asignaturaDetalles.setPlanestudios(editarPlanEstudio);
             gestionarAsignaturasBO.modificarInformacionAsignatura(asignaturaDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema : " + e.toString());
         }
     }
@@ -367,6 +375,14 @@ public class ControllerDetallesAsignatura implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

@@ -162,7 +162,7 @@ public class ControllerConfigurarUsuario implements Serializable {
 
     public void validarIdentificacionPersona() {
         if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputID)) {
+            if (Utilidades.validarNumeroIdentificacion(inputID)) {
                 Persona registro = gestionarConfigurarUsuarioBO.obtenerPersonaPorDocumento(inputID);
                 if (null == registro) {
                     validacionesID = true;
@@ -209,7 +209,7 @@ public class ControllerConfigurarUsuario implements Serializable {
 
     public void validarDireccionPersona() {
         if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputDireccion)) {
+            if (Utilidades.validarDirecciones(inputDireccion)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:form1:inputDireccion", new FacesMessage("La dirección se encuentra incorrecta."));

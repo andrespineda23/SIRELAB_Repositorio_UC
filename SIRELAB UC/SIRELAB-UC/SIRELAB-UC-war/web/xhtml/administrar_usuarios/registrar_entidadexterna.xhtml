@@ -76,21 +76,21 @@
                             <legend class="text-info">Datos Personales</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="Nombre Inicial Entidad*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre Inicial es obligatorio.">
+                                <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputNombre}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre Inicial es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarNombreEntidadExterna()}" execute="inputNombre" render="inputNombre msnNombre" />
                                 </h:inputText>
                                 <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Nombre Secundario Entidad*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputApellido}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Nombre Secundario es obligatorio.">
+                                <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputApellido}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Nombre Secundario es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarApellidoEntidadExterna()}" execute="inputApellido" render="inputApellido msnApellido" />
                                 </h:inputText>
                                 <h6><h:message id="msnApellido" for="inputApellido" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Número Identificación*"/></strong>
-                                <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputID}" required="true" class="form-control" id="inputID" requiredMessage="El campo Identificación es obligatorio.">
+                                <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputID}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" required="true" class="form-control" id="inputID" requiredMessage="El campo Identificación es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarIdentificacionEntidadExterna()}" execute="inputID" render="inputID msnID" />
                                 </h:inputText>
                                 <h6><h:message id="msnID" for="inputID" style="color: red"></h:message></h6>
@@ -98,7 +98,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Correo Contacto*"/></strong>
                                 <div class="input-group">
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputEmail}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputEmail}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarCorreoEntidadExterna()}" execute="inputEmail" render="inputEmail msnEmail" />
                                     </h:inputText>
                                     <span class="input-group-addon">@</span>
@@ -109,21 +109,21 @@
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Número Telefonico 1"/></strong>
-                                    <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputTelefono1}"  class="form-control" id="inputTelefono1" >
+                                    <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputTelefono1}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" class="form-control" id="inputTelefono1" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarDatosNumericosEntidadExterna(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"></h:message></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Número Telefonico 2"/></strong>
-                                    <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputTelefono2}"  class="form-control" id="inputTelefono2" >
+                                    <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputTelefono2}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" class="form-control" id="inputTelefono2" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarDatosNumericosEntidadExterna(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"></h:message></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Dirección Residencia"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputDireccion}"  class="form-control" id="inputDireccion" >
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputDireccion}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" class="form-control" id="inputDireccion" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarDireccionEntidadExterna()}" execute="inputDireccion" render="inputDireccion msnDireccion" />
                                     </h:inputText>
                                     <h6><h:message id="msnDireccion" for="inputDireccion" style="color: red"></h:message></h6>
@@ -134,7 +134,7 @@
                             <legend class="text-info">Información Entidad Externa</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="ID Entidad Externa*"/></strong>
-                                <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputIDEntidad}" required="true" class="form-control" id="inputIDEntidad" requiredMessage="El campo ID Entidad Externa es obligatorio.">
+                                <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputIDEntidad}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" required="true" class="form-control" id="inputIDEntidad" requiredMessage="El campo ID Entidad Externa es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarDatosEntidadExterna(1)}" execute="inputIDEntidad" render="inputIDEntidad msnIDEntidad" />
                                 </h:inputText>
                                 <h6><h:message id="msnIDEntidad" for="inputIDEntidad" style="color: red"></h:message></h6>
@@ -149,7 +149,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Email Contacto"/></strong>
                                 <div class="input-group">
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputEmailEntidad}"  class="form-control" id="inputEmailEntidad" >
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputEmailEntidad}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" class="form-control" id="inputEmailEntidad" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarDatosEntidadExterna(3)}" execute="inputEmailEntidad" render="inputEmailEntidad msnEmailEntidad" />
                                     </h:inputText>
                                     <span class="input-group-addon">@</span>
@@ -157,9 +157,19 @@
                                 <h6><h:message id="msnEmailEntidad" for="inputEmailEntidad" style="color: red"></h:message></h6>
                             </div>
                         </fieldset>
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEntidadExterna.mensajeFormulario}"/></strong>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEntidadExterna.mensajeFormulario}" style="color: #{controllerRegistrarEntidadExterna.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEntidadExterna.registrarNuevoEntidadExterna()}" class="btn btn-success" >
                                 <f:ajax execute="@form" render="form" />
@@ -167,6 +177,11 @@
                             <span></span>
                             <span></span>
                             <h:commandButton value="Cancelar" action="administrar_entidadesxternas" class="btn btn-danger" actionListener="#{controllerRegistrarEntidadExterna.cancelarRegistroEntidadExterna()}" immediate="true"> 
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarEntidadExterna.activarLimpiar}" actionListener="#{controllerRegistrarEntidadExterna.cambiarActivarCasillas()}" >
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

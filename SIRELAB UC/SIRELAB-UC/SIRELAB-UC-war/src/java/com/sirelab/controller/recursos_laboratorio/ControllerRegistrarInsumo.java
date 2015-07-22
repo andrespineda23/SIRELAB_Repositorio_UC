@@ -43,6 +43,9 @@ public class ControllerRegistrarInsumo implements Serializable {
     private boolean validacionesDescripcion, validacionesProveedor;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarInsumo() {
     }
@@ -65,7 +68,10 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesDescripcion = true;
         validacionesMarca = true;
         validacionesModelo = true;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -208,11 +214,15 @@ public class ControllerRegistrarInsumo implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarNuevoInsumoEnSistema();
+                limpiarFormulario();
+                activarLimpiar = false;
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el proveedor seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -237,9 +247,10 @@ public class ControllerRegistrarInsumo implements Serializable {
             nuevaInsumo.setDescripcioninsumo(nuevoDescripcion);
             nuevaInsumo.setProveedor(nuevoProveedor);
             gestionarRecursoInsumosBO.crearNuevoInsumo(nuevaInsumo);
-            limpiarFormulario();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema : " + e.toString());
         }
     }
@@ -280,8 +291,19 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesDescripcion = true;
         validacionesMarca = true;
         validacionesModelo = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
         listaProveedores = null;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -374,6 +396,30 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void setNuevoProveedor(Proveedor nuevoProveedor) {
         this.nuevoProveedor = nuevoProveedor;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

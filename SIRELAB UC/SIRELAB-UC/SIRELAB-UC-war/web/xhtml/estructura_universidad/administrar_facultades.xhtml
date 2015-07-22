@@ -46,17 +46,6 @@
                                     Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
                                 </p>
                             </div>
-                            <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li>
-                                        <a href="#">Configurar Usuario</a>
-                                    </li>
-                                    <li>
-                                        <h:commandLink value="Cerrar Sesion" action="#{controllerPaginasIniciales.cerrarSession()}"/>
-                                    </li>
-                                </ul>
-                            </div>
                             <!-- /.navbar-collapse -->
                         </div>
                         <!-- /.container -->
@@ -106,8 +95,11 @@
                                 </fieldset>
                                 <br></br>
                                 <div class="col-md-12">
-                                    <div class="col-md-10">
-                                    </div> 
+                                    <div class="col-md-2">
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarFacultades.cantidadRegistros}"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                    </div>
                                     <div class="col-md-1">
                                         <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarFacultades.buscarFacultadesPorParametros()}">
                                             <f:ajax execute="@form" render="formularioGeneral" />

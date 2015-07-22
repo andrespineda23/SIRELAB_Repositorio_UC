@@ -35,6 +35,9 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     private boolean validacionesDetalle, validacionesFechaInicio, validacionesFechaFin;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarPeriodoAcademico() {
     }
@@ -47,7 +50,10 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         validacionesDetalle = false;
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -111,12 +117,15 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         if (validarValidacionesRegistro() == true) {
             if (inputFechaFin.after(inputFechaInicio)) {
                 almacenarRegistroNuevo();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 restaurarFormulario();
+                activarLimpiar = false;
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -128,6 +137,8 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
             periodoNuevo.setFechafinal(inputFechaFin);
             periodoNuevo.setFechainicial(inputFechaInicio);
             gestionarVariablePeriodosAcademicosBO.crearPeriodoAcademico(periodoNuevo);
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo: " + e.toString());
@@ -141,7 +152,10 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         validacionesDetalle = false;
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
     }
 
     public String cerrarPagina() {
@@ -156,6 +170,15 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         validacionesDetalle = false;
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -189,6 +212,30 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

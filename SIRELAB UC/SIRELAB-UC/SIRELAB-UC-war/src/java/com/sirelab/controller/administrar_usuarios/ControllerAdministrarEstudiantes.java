@@ -54,12 +54,14 @@ public class ControllerAdministrarEstudiantes implements Serializable {
     //
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarEstudiantes() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarExport = true;
         activoCarrera = true;
         activoPlan = true;
@@ -120,7 +122,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
             filtros.put("parametroDocumento", parametroDocumento);
         }
         if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())) {
-            filtros.put("parametroCorreo", parametroCorreo + "@ucentral.edu.co");
+            filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
             filtros.put("parametroEstado", "true");
@@ -167,6 +169,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                     listaEstudiantesTabla = new ArrayList<Estudiante>();
                     tamTotalEstudiante = listaEstudiantes.size();
                     posicionEstudianteTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalEstudiante);
                     cargarDatosTablaEstudiante();
                 } else {
                     activarExport = true;
@@ -174,6 +177,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                     tamTotalEstudiante = 0;
                     posicionEstudianteTabla = 0;
                     bloquearPagAntEstudiante = true;
+                    cantidadRegistros = String.valueOf(tamTotalEstudiante);
                     bloquearPagSigEstudiante = true;
                 }
             } else {
@@ -181,10 +185,11 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 tamTotalEstudiante = 0;
                 posicionEstudianteTabla = 0;
                 bloquearPagAntEstudiante = true;
+                cantidadRegistros = String.valueOf(tamTotalEstudiante);
                 bloquearPagSigEstudiante = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString());
         }
     }
@@ -268,7 +273,35 @@ public class ControllerAdministrarEstudiantes implements Serializable {
         tamTotalEstudiante = 0;
         bloquearPagAntEstudiante = true;
         bloquearPagSigEstudiante = true;
+        listaCarreras = null;
+        listaDepartamentos = null;
+        listaPlanesEstudios = null;
+        cantidadRegistros = "N/A";
         return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        cantidadRegistros = "N/A";
+        activarExport = true;
+        activoCarrera = true;
+        activoPlan = true;
+        parametroNombre = null;
+        parametroApellido = null;
+        parametroDocumento = null;
+        parametroCorreo = null;
+        parametroSemestre = null;
+        parametroDepartamento = null;
+        parametroCarrera = null;
+        parametroPlanEst = null;
+        parametroEstado = 1;
+        parametroTipo = 1;
+        inicializarFiltros();
+        listaEstudiantes = null;
+        listaEstudiantesTabla = null;
+        posicionEstudianteTabla = 0;
+        tamTotalEstudiante = 0;
+        bloquearPagAntEstudiante = true;
+        bloquearPagSigEstudiante = true;
     }
 
     /**
@@ -292,7 +325,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 parametroPlanEst = new PlanEstudios();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos:  "+e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos:  " + e.toString());
             System.out.println("Error ControllerAdministrarEstudiantes actualizarDepartamentos : " + e.toString());
         }
     }
@@ -312,7 +345,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 parametroPlanEst = new PlanEstudios();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras:  "+e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras:  " + e.toString());
             System.out.println("Error ControllerAdministrarEstudiantes actualizarCarreras : " + e.toString());
         }
     }
@@ -510,6 +543,14 @@ public class ControllerAdministrarEstudiantes implements Serializable {
 
     public void setBloquearPagAntEstudiante(boolean bloquearPagAntEstudiante) {
         this.bloquearPagAntEstudiante = bloquearPagAntEstudiante;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

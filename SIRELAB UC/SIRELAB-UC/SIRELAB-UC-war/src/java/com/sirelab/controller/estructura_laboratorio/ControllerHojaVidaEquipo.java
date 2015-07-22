@@ -35,6 +35,7 @@ public class ControllerHojaVidaEquipo implements Serializable {
     private int posicionHojaVidaTabla;
     private int tamTotalHojaVida;
     private boolean bloquearPagSigHojaVida, bloquearPagAntHojaVida;
+    private String cantidadRegistros;
     //
 
     public ControllerHojaVidaEquipo() {
@@ -62,6 +63,7 @@ public class ControllerHojaVidaEquipo implements Serializable {
                 listaHojasVidaEquiposTabla = new ArrayList<HojaVidaEquipo>();
                 tamTotalHojaVida = listaHojasVidaEquipos.size();
                 posicionHojaVidaTabla = 0;
+                cantidadRegistros = String.valueOf(tamTotalHojaVida);
                 cargarDatosTablaHojaVidaEquipo();
             }
         }
@@ -136,6 +138,7 @@ public class ControllerHojaVidaEquipo implements Serializable {
         listaHojasVidaEquiposTabla = null;
         posicionHojaVidaTabla = 0;
         tamTotalHojaVida = 0;
+        cantidadRegistros = "N/A";
         bloquearPagAntHojaVida = true;
         bloquearPagSigHojaVida = true;
         return "detalles_equipo";
@@ -203,6 +206,14 @@ public class ControllerHojaVidaEquipo implements Serializable {
 
     public void setBloquearPagAntHojaVida(boolean bloquearPagAntHojaVida) {
         this.bloquearPagAntHojaVida = bloquearPagAntHojaVida;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

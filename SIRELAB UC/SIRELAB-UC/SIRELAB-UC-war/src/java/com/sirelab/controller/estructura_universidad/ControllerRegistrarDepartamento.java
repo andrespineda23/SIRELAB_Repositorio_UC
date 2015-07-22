@@ -31,13 +31,16 @@ public class ControllerRegistrarDepartamento implements Serializable {
     @EJB
     GestionarDepartamentosBOInterface gestionarDepartamentosBO;
 
-    private String nuevoNombre;
+    private String nuevoNombre, nuevoCodigo;
     private List<Facultad> listaFacultades;
     private Facultad nuevoFacultad;
     //
-    private boolean validacionesNombre, validacionesFacultad;
+    private boolean validacionesNombre, validacionesCodigo, validacionesFacultad;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarDepartamento() {
     }
@@ -45,10 +48,15 @@ public class ControllerRegistrarDepartamento implements Serializable {
     @PostConstruct
     public void init() {
         nuevoFacultad = null;
+        nuevoCodigo = null;
         nuevoNombre = null;
         validacionesFacultad = false;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        validacionesCodigo = false;
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -66,6 +74,25 @@ public class ControllerRegistrarDepartamento implements Serializable {
         }
     }
 
+    public void validarCodigoDepartamento() {
+        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
+                Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(nuevoCodigo);
+                if (null != registro) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El nombre ingresado es incorrectp."));
+                } else {
+                    validacionesCodigo = true;
+                }
+            } else {
+                validacionesCodigo = true;
+            }
+        } else {
+            validacionesCodigo = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El nombre es obligatorio."));
+        }
+    }
+
     public void validarFacultadDepartamento() {
         if (Utilidades.validarNulo(nuevoFacultad)) {
             validacionesFacultad = true;
@@ -80,6 +107,9 @@ public class ControllerRegistrarDepartamento implements Serializable {
         if (validacionesFacultad == false) {
             retorno = false;
         }
+        if (validacionesCodigo == false) {
+            retorno = false;
+        }
         if (validacionesNombre == false) {
             retorno = false;
         }
@@ -89,8 +119,11 @@ public class ControllerRegistrarDepartamento implements Serializable {
     public void registrarNuevoDepartamento() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoDepartamentoEnSistema();
+            limpiarFormulario();
+            activarLimpiar = false;
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -98,31 +131,49 @@ public class ControllerRegistrarDepartamento implements Serializable {
     public void almacenarNuevoDepartamentoEnSistema() {
         try {
             Departamento departamentoNuevo = new Departamento();
+            departamentoNuevo.setCodigodepartamento(nuevoCodigo);
             departamentoNuevo.setNombredepartamento(nuevoNombre);
             departamentoNuevo.setFacultad(nuevoFacultad);
             gestionarDepartamentosBO.crearNuevaDepartamento(departamentoNuevo);
-            limpiarFormulario();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema : " + e.toString());
         }
     }
 
     public void limpiarFormulario() {
         nuevoFacultad = null;
+        nuevoCodigo = null;
         nuevoNombre = null;
         validacionesFacultad = false;
         validacionesNombre = false;
+        validacionesCodigo = false;
         mensajeFormulario = "";
     }
 
     public void cancelarRegistroDepartamento() {
         nuevoFacultad = null;
+        nuevoCodigo = null;
         nuevoNombre = null;
         validacionesFacultad = false;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        validacionesCodigo = false;
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         listaFacultades = null;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -159,6 +210,38 @@ public class ControllerRegistrarDepartamento implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getNuevoCodigo() {
+        return nuevoCodigo;
+    }
+
+    public void setNuevoCodigo(String nuevoCodigo) {
+        this.nuevoCodigo = nuevoCodigo;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

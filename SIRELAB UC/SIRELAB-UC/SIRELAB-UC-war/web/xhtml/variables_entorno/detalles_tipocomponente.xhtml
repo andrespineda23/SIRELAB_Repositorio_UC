@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Variables Inventario/Recursos</a></li>
@@ -96,9 +96,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesTipoComponente.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesTipoComponente.mensajeFormulario}" style="color: #{controllerDetallesTipoComponente.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Modificar" actionListener="#{controllerDetallesTipoComponente.registrarModificacionTipoComponente()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />

@@ -45,8 +45,8 @@ public class ControllerDetallesLaboratorio implements Serializable {
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
-     private Logger logger = Logger.getLogger(getClass().getName());
-     
+    private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesLaboratorio() {
     }
@@ -58,17 +58,21 @@ public class ControllerDetallesLaboratorio implements Serializable {
         validacionesDepartamento = true;
         validacionesFacultad = true;
         validacionesNombre = true;
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionLaboratorio() {
+    public String restaurarInformacionLaboratorio() {
         validacionesCodigo = true;
         validacionesDepartamento = true;
         validacionesFacultad = true;
         validacionesNombre = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         laboratorioDetalles = new Laboratorio();
         recibirIDLaboratoriosDetalles(idLaboratorio);
+        return "administrar_laboratorios";
     }
 
     public void asignarValoresVariablesLaboratorio() {
@@ -161,7 +165,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
 
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
-        Laboratorio registro = gestionarPlantaLaboratoriosBO.obtenerLaboratorioPorCodigoYDepartamento(editarCodigo, editarDepartamento.getIddepartamento());
+        Laboratorio registro = gestionarPlantaLaboratoriosBO.obtenerLaboratorioPorCodigo(editarCodigo);
         if (null != registro) {
             if (!laboratorioDetalles.getIdlaboratorio().equals(registro.getIdlaboratorio())) {
                 retorno = false;
@@ -174,11 +178,14 @@ public class ControllerDetallesLaboratorio implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarModificacionLaboratorioEnSistema();
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el departamento seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -191,7 +198,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
             gestionarPlantaLaboratoriosBO.modificarInformacionLaboratorio(laboratorioDetalles);
             restaurarInformacionLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema : " + e.toString());
 
         }
@@ -278,4 +285,12 @@ public class ControllerDetallesLaboratorio implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
+    public String getColorMensaje() {
+        return colorMensaje;
     }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+}

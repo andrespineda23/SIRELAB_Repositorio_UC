@@ -79,14 +79,14 @@
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Detalle Periodo Academico*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarPeriodoAcademico.inputDetalle}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarPeriodoAcademico.inputDetalle}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarDetalle()}" execute="inputDetalle" render="inputDetalle msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                    <h:inputText value="#{controllerRegistrarPeriodoAcademico.inputFechaInicio}" required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
+                                    <h:inputText value="#{controllerRegistrarPeriodoAcademico.inputFechaInicio}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                     </h:inputText>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha Finalización*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarPeriodoAcademico.inputFechaFin}" required="true" class="form-control" id="inputFechaFin" requiredMessage="La Fecha Final es obligatoria.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarPeriodoAcademico.inputFechaFin}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputFechaFin" requiredMessage="La Fecha Final es obligatoria.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                     </h:inputText>
@@ -108,9 +108,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPeriodoAcademico.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPeriodoAcademico.mensajeFormulario}" style="color: #{controllerRegistrarPeriodoAcademico.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarPeriodoAcademico.registrarPeriodoAcademico()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -118,6 +128,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarPeriodoAcademico.cerrarPagina()}" actionListener="#{controllerVariablesReserva.iniciarInformacionTablas()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarPeriodoAcademico.activarLimpiar}" actionListener="#{controllerRegistrarPeriodoAcademico.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

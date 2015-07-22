@@ -53,12 +53,14 @@ public class ControllerAdministrarCarreras implements Serializable {
     //
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarCarreras() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarDepartamento = true;
         activarExport = true;
         parametroNombre = null;
@@ -116,6 +118,7 @@ public class ControllerAdministrarCarreras implements Serializable {
                     listaCarrerasTabla = new ArrayList<Carrera>();
                     tamTotalCarrera = listaCarreras.size();
                     posicionCarreraTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalCarrera);
                     cargarDatosTablaCarrera();
                 } else {
                     activarExport = true;
@@ -123,6 +126,7 @@ public class ControllerAdministrarCarreras implements Serializable {
                     tamTotalCarrera = 0;
                     posicionCarreraTabla = 0;
                     bloquearPagAntCarrera = true;
+                    cantidadRegistros = String.valueOf(tamTotalCarrera);
                     bloquearPagSigCarrera = true;
                 }
             } else {
@@ -130,10 +134,11 @@ public class ControllerAdministrarCarreras implements Serializable {
                 tamTotalCarrera = 0;
                 posicionCarreraTabla = 0;
                 bloquearPagAntCarrera = true;
+                cantidadRegistros = String.valueOf(tamTotalCarrera);
                 bloquearPagSigCarrera = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString());
         }
     }
@@ -199,10 +204,32 @@ public class ControllerAdministrarCarreras implements Serializable {
         parametroCodigo = null;
         parametroDepartamento = new Departamento();
         parametroFacultad = new Facultad();
+
+        listaDepartamentos = null;
+        listaFacultades = null;
+
+        listaCarreras = null;
+        listaCarrerasTabla = null;
+        posicionCarreraTabla = 0;
+        tamTotalCarrera = 0;
+        cantidadRegistros = "N/A";
+        bloquearPagAntCarrera = true;
+        bloquearPagSigCarrera = true;
+        inicializarFiltros();
+    }
+
+    public void limpiarDatos() {
+        activarDepartamento = true;
+        activarExport = true;
+        parametroNombre = null;
+        parametroCodigo = null;
+        parametroDepartamento = new Departamento();
+        parametroFacultad = new Facultad();
         listaDepartamentos = null;
         listaCarreras = null;
         listaCarrerasTabla = null;
         posicionCarreraTabla = 0;
+        cantidadRegistros = "N/A";
         tamTotalCarrera = 0;
         bloquearPagAntCarrera = true;
         bloquearPagSigCarrera = true;
@@ -353,6 +380,14 @@ public class ControllerAdministrarCarreras implements Serializable {
 
     public void setBloquearPagAntCarrera(boolean bloquearPagAntCarrera) {
         this.bloquearPagAntCarrera = bloquearPagAntCarrera;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

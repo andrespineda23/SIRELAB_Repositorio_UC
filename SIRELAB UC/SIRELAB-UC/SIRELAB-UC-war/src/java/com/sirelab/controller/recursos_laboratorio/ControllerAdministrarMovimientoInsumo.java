@@ -35,6 +35,7 @@ public class ControllerAdministrarMovimientoInsumo implements Serializable {
     private int posicionMovimientoTabla;
     private int tamTotalMovimiento;
     private boolean bloquearPagSigMovimiento, bloquearPagAntMovimiento;
+    private String cantidadRegistros;
 
     public ControllerAdministrarMovimientoInsumo() {
     }
@@ -61,6 +62,7 @@ public class ControllerAdministrarMovimientoInsumo implements Serializable {
                 listaMovimientosInsumoTabla = new ArrayList<MovimientoInsumo>();
                 tamTotalMovimiento = listaMovimientosInsumo.size();
                 posicionMovimientoTabla = 0;
+                cantidadRegistros = String.valueOf(tamTotalMovimiento);
                 cargarDatosTablaMovimientoInsumo();
             }
         }
@@ -137,6 +139,7 @@ public class ControllerAdministrarMovimientoInsumo implements Serializable {
         tamTotalMovimiento = 0;
         bloquearPagAntMovimiento = true;
         bloquearPagSigMovimiento = true;
+        cantidadRegistros = "N/A";
         return "detalles_insumo";
     }
 
@@ -194,6 +197,14 @@ public class ControllerAdministrarMovimientoInsumo implements Serializable {
 
     public void setBloquearPagAntMovimiento(boolean bloquearPagAntMovimiento) {
         this.bloquearPagAntMovimiento = bloquearPagAntMovimiento;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

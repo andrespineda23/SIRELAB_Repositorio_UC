@@ -17,7 +17,7 @@ import java.util.Map;
  * @author ANDRES PINEDA
  */
 public interface GestionarDepartamentosBOInterface {
-    
+
     public List<Facultad> consultarFacultadesRegistradas();
 
     public List<Departamento> consultarDepartamentosPorParametro(Map<String, String> filtros);
@@ -25,6 +25,8 @@ public interface GestionarDepartamentosBOInterface {
     public void crearNuevaDepartamento(Departamento departamento);
 
     public void modificarInformacionDepartamento(Departamento departamento);
+
+    public Departamento obtenerDepartamentoPorCodigo(String codigo);
 
     public Departamento obtenerDepartamentoPorIDDepartamento(BigInteger idDepartamento);
 }

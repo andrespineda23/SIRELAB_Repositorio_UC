@@ -47,12 +47,14 @@ public class ControllerAdministrarProveedores implements Serializable {
     //
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarProveedores() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         parametroNombre = null;
         parametroNIT = null;
         parametroDireccion = null;
@@ -108,6 +110,7 @@ public class ControllerAdministrarProveedores implements Serializable {
                     listaProveedoresTabla = new ArrayList<Proveedor>();
                     tamTotalProveedor = listaProveedores.size();
                     posicionProveedorTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalProveedor);
                     cargarDatosTablaProveedor();
                 } else {
                     activarExport = true;
@@ -115,17 +118,19 @@ public class ControllerAdministrarProveedores implements Serializable {
                     tamTotalProveedor = 0;
                     posicionProveedorTabla = 0;
                     bloquearPagAntProveedor = true;
+                    cantidadRegistros = String.valueOf(tamTotalProveedor);
                     bloquearPagSigProveedor = true;
                 }
             } else {
                 listaProveedoresTabla = null;
                 tamTotalProveedor = 0;
                 posicionProveedorTabla = 0;
+                cantidadRegistros = String.valueOf(tamTotalProveedor);
                 bloquearPagAntProveedor = true;
                 bloquearPagSigProveedor = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString());
         }
     }
@@ -196,6 +201,7 @@ public class ControllerAdministrarProveedores implements Serializable {
         tamTotalProveedor = 0;
         bloquearPagAntProveedor = true;
         bloquearPagSigProveedor = true;
+        cantidadRegistros = "N/A";
         inicializarFiltros();
         return paginaAnterior;
     }
@@ -332,6 +338,14 @@ public class ControllerAdministrarProveedores implements Serializable {
 
     public void setBloquearPagAntProveedor(boolean bloquearPagAntProveedor) {
         this.bloquearPagAntProveedor = bloquearPagAntProveedor;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

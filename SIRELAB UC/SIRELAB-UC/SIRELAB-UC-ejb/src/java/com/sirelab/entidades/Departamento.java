@@ -38,7 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Departamento.findByIddepartamento", query = "SELECT d FROM Departamento d WHERE d.iddepartamento = :iddepartamento"),
     @NamedQuery(name = "Departamento.findByNombredepartamento", query = "SELECT d FROM Departamento d WHERE d.nombredepartamento = :nombredepartamento")})
 public class Departamento implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +49,11 @@ public class Departamento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nombredepartamento")
     private String nombredepartamento;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "codigodepartamento")
+    private String codigodepartamento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento")
     private Collection<Carrera> carreraCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento")
@@ -59,6 +63,7 @@ public class Departamento implements Serializable {
     private Facultad facultad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento")
     private Collection<Docente> docenteCollection;
+    
 
     public Departamento() {
     }
@@ -149,6 +154,14 @@ public class Departamento implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Departamento[ iddepartamento=" + iddepartamento + " ]";
+    }
+
+    public String getCodigodepartamento() {
+        return codigodepartamento;
+    }
+
+    public void setCodigodepartamento(String codigodepartamento) {
+        this.codigodepartamento = codigodepartamento;
     }
 
 }

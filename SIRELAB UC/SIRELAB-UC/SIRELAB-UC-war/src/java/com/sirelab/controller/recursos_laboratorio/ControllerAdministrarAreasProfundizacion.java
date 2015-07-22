@@ -48,12 +48,14 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
     //
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarAreasProfundizacion() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
@@ -65,7 +67,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
         tamTotalAreaProfundizacion = 0;
         bloquearPagAntAreaProfundizacion = true;
         bloquearPagSigAreaProfundizacion = true;
-         BasicConfigurator.configure();
+        BasicConfigurator.configure();
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -99,6 +101,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
                     listaAreasProfundizacionTabla = new ArrayList<AreaProfundizacion>();
                     tamTotalAreaProfundizacion = listaAreasProfundizacion.size();
                     posicionAreaProfundizacionTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalAreaProfundizacion);
                     cargarDatosTablaAreaProfundizacion();
                 } else {
                     activarExport = true;
@@ -107,6 +110,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
                     posicionAreaProfundizacionTabla = 0;
                     bloquearPagAntAreaProfundizacion = true;
                     bloquearPagSigAreaProfundizacion = true;
+                    cantidadRegistros = String.valueOf(tamTotalAreaProfundizacion);
                 }
             } else {
                 listaAreasProfundizacionTabla = null;
@@ -114,9 +118,10 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
                 posicionAreaProfundizacionTabla = 0;
                 bloquearPagAntAreaProfundizacion = true;
                 bloquearPagSigAreaProfundizacion = true;
+                cantidadRegistros = String.valueOf(tamTotalAreaProfundizacion);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
@@ -185,6 +190,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
         tamTotalAreaProfundizacion = 0;
         bloquearPagAntAreaProfundizacion = true;
         bloquearPagSigAreaProfundizacion = true;
+        cantidadRegistros = "N/A";
         inicializarFiltros();
         return paginaAnterior;
     }
@@ -277,6 +283,14 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
 
     public void setBloquearPagAntAreaProfundizacion(boolean bloquearPagAntAreaProfundizacion) {
         this.bloquearPagAntAreaProfundizacion = bloquearPagAntAreaProfundizacion;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

@@ -62,12 +62,19 @@ public class ControllerRegistrarEquipo implements Serializable {
     private boolean validacionesTipo, validacionesEstado, validacionesProveedor;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         nuevoCostoAlquilerEquipo = "0";
         nuevoCostoInversionEquipo = "0";
         nuevoFechaAdquisicionEquipo = new Date();
@@ -86,7 +93,6 @@ public class ControllerRegistrarEquipo implements Serializable {
         validacionesSala = false;
         validacionesSerie = true;
         validacionesTipo = false;
-        mensajeFormulario = "";
         //
         activarNuevoModuloLaboratorio = true;
         activarNuevoSalaLaboratorio = true;
@@ -97,45 +103,6 @@ public class ControllerRegistrarEquipo implements Serializable {
         listaModulosLaboratorios = null;
         listaSalasLaboratorios = null;
         BasicConfigurator.configure();
-    }
-
-    public void limpiarRegistroEquipoElemento() {
-        activarNuevoModuloLaboratorio = true;
-        activarNuevoSalaLaboratorio = true;
-        nuevoNombreEquipo = null;
-        nuevoInventarioEquipo = null;
-        nuevoModeloEquipo = null;
-        nuevoMarcaEquipo = null;
-        nuevoSerieEquipo = null;
-        nuevoEspecificacionEquipo = null;
-        nuevoCostoAlquilerEquipo = "0";
-        nuevoCostoInversionEquipo = "0";
-        nuevoFechaAdquisicionEquipo = new Date();
-        nuevoLaboratorioPorArea = null;
-        nuevoSalaLaboratorioEquipo = null;
-        nuevoModuloLaboratorioEquipo = null;
-        nuevoTipoActivoEquipo = null;
-        nuevoEstadoEquipoEquipo = null;
-        nuevoProveedorEquipo = null;
-        listaSalasLaboratorios = null;
-        listaModulosLaboratorios = null;
-        //
-        validacionesCosto = true;
-        validacionesEspecificacion = true;
-        validacionesEstado = false;
-        validacionesFecha = true;
-        validacionesInventario = false;
-        validacionesInversion = true;
-        validacionesLaboratorio = false;
-        validacionesMarca = true;
-        validacionesModelo = true;
-        validacionesModulo = false;
-        validacionesNombre = false;
-        validacionesProveedor = false;
-        validacionesSala = false;
-        validacionesSerie = true;
-        validacionesTipo = false;
-        mensajeFormulario = "";
     }
 
     public void validarNombreEquipo() {
@@ -393,12 +360,15 @@ public class ControllerRegistrarEquipo implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarNuevoEquipoEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 limpiarFormulario();
+                activarLimpiar = false;
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -429,8 +399,10 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setEstadoequipo(nuevoEstadoEquipoEquipo);
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString());
         }
     }
@@ -469,6 +441,58 @@ public class ControllerRegistrarEquipo implements Serializable {
         validacionesSala = false;
         validacionesSerie = true;
         validacionesTipo = false;
+    }
+
+    public void limpiarRegistroEquipoElemento() {
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        activarNuevoModuloLaboratorio = true;
+        activarNuevoSalaLaboratorio = true;
+        nuevoNombreEquipo = null;
+        nuevoInventarioEquipo = null;
+        nuevoModeloEquipo = null;
+        nuevoMarcaEquipo = null;
+        nuevoSerieEquipo = null;
+        nuevoEspecificacionEquipo = null;
+        nuevoCostoAlquilerEquipo = "0";
+        nuevoCostoInversionEquipo = "0";
+        nuevoFechaAdquisicionEquipo = new Date();
+        nuevoLaboratorioPorArea = null;
+        nuevoSalaLaboratorioEquipo = null;
+        nuevoModuloLaboratorioEquipo = null;
+        nuevoTipoActivoEquipo = null;
+        nuevoEstadoEquipoEquipo = null;
+        nuevoProveedorEquipo = null;
+        listaSalasLaboratorios = null;
+        listaModulosLaboratorios = null;
+        //
+        validacionesCosto = true;
+        validacionesEspecificacion = true;
+        validacionesEstado = false;
+        validacionesFecha = true;
+        validacionesInventario = false;
+        validacionesInversion = true;
+        validacionesLaboratorio = false;
+        validacionesMarca = true;
+        validacionesModelo = true;
+        validacionesModulo = false;
+        validacionesNombre = false;
+        validacionesProveedor = false;
+        validacionesSala = false;
+        validacionesSerie = true;
+        validacionesTipo = false;
+        mensajeFormulario = "";
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET - SET
@@ -662,6 +686,30 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

@@ -41,6 +41,9 @@ public class ControllerRegistrarEdificio implements Serializable {
     private boolean validacionesDescripcion, validacionesDireccion, validacionesSede, validacionesHorario;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarEdificio() {
     }
@@ -55,7 +58,10 @@ public class ControllerRegistrarEdificio implements Serializable {
         validacionesDireccion = true;
         validacionesSede = false;
         validacionesSede = false;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -75,7 +81,7 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     public void validarDireccionEdificio() {
         if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty())) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDireccion)) {
+            if (!Utilidades.validarDirecciones(nuevoDireccion)) {
                 validacionesDireccion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
             } else {
@@ -122,8 +128,11 @@ public class ControllerRegistrarEdificio implements Serializable {
     public void registrarNuevoEdificio() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoEdificioEnSistema();
+            limpiarFormulario();
+            activarLimpiar = false;
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -136,9 +145,10 @@ public class ControllerRegistrarEdificio implements Serializable {
             edificioNuevo.setHorarioatencion(nuevoHorario);
             edificioNuevo.setSede(nuevoSede);
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
-            limpiarFormulario();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema : " + e.toString());
         }
     }
@@ -164,9 +174,21 @@ public class ControllerRegistrarEdificio implements Serializable {
         validacionesDireccion = true;
         validacionesSede = false;
         validacionesHorario = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         listaSedes = null;
         listaHorariosAtencion = null;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -230,6 +252,30 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     public void setNuevoHorario(HorarioAtencion nuevoHorario) {
         this.nuevoHorario = nuevoHorario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

@@ -76,21 +76,21 @@
                             <legend class="text-info">Datos Personales</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="Nombre(s) Encargado*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarEncargadoLaboratorio.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre el obligatorio.">
+                                <h:inputText maxlength="45" value="#{controllerRegistrarEncargadoLaboratorio.inputNombre}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre el obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarNombreEncargadoLaboratorio()}" execute="inputNombre" render="inputNombre msnNombre" />
                                 </h:inputText>
                                 <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Apellido(s) Encargado*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerRegistrarEncargadoLaboratorio.inputApellido}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio.">
+                                <h:inputText maxlength="45"  value="#{controllerRegistrarEncargadoLaboratorio.inputApellido}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarApellidoEncargadoLaboratorio()}" execute="inputApellido" render="inputApellido msnApellido" />
                                 </h:inputText>
                                 <h6><h:message id="msnApellido" for="inputApellido" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Número Identificación*"/></strong>
-                                <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputID}" required="true" class="form-control" id="inputID" requiredMessage="El campo Identificación es obligatorio.">
+                                <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputID}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputID" requiredMessage="El campo Identificación es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarIdentificacionEncargadoLaboratorio()}" execute="inputID" render="inputID msnID" />
                                 </h:inputText>
                                 <h6><h:message id="msnID" for="inputID" style="color: red"></h:message></h6>
@@ -98,7 +98,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Correo Institucional*"/></strong>
                                 <div class="input-group">
-                                    <h:inputText maxlength="29"  value="#{controllerRegistrarEncargadoLaboratorio.inputEmail}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
+                                    <h:inputText maxlength="29"  value="#{controllerRegistrarEncargadoLaboratorio.inputEmail}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarCorreoEncargadoLaboratorio()}" execute="inputEmail" render="inputEmail msnEmail" />
                                     </h:inputText>
                                     <span class="input-group-addon">@ucentral.edu.co</span>
@@ -110,7 +110,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Correo Personal"/></strong>
                                     <div class="input-group">
-                                        <h:inputText maxlength="60"  value="#{controllerRegistrarEncargadoLaboratorio.inputEmailOpcional}" class="form-control" id="inputEmailOpcional">
+                                        <h:inputText maxlength="60"  value="#{controllerRegistrarEncargadoLaboratorio.inputEmailOpcional}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputEmailOpcional">
                                             <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarCorreoOpcionalEncargadoLaboratorio()}" execute="inputEmailOpcional" render="inputEmailOcional msnEmailOpcional" />
                                         </h:inputText>
                                         <span class="input-group-addon">@</span>
@@ -119,21 +119,21 @@
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Número Telefonico 1"/></strong>
-                                    <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono1}"  class="form-control" id="inputTelefono1" >
+                                    <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono1}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono1" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDatosNumericosEncargadoLaboratorio(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"></h:message></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Número Telefonico 2"/></strong>
-                                    <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono2}"  class="form-control" id="inputTelefono2" >
+                                    <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono2}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono2" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDatosNumericosEncargadoLaboratorio(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"></h:message></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Dirección Residencia"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEncargadoLaboratorio.inputDireccion}"  class="form-control" id="inputDireccion" >
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEncargadoLaboratorio.inputDireccion}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputDireccion" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDireccionEncargadoLaboratorio()}" execute="inputDireccion" render="inputDireccion msnDireccion" />
                                     </h:inputText>
                                     <h6><h:message id="msnDireccion" for="inputDireccion" style="color: red"></h:message></h6>
@@ -145,7 +145,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Facultad*"/></strong>
                                 <h:selectOneMenu value="#{controllerRegistrarEncargadoLaboratorio.inputFacultad}"
-                                                 class="form-control"
+                                                 class="form-control" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}"
                                                  id="inputFacultad">
                                     <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaFacultades}" var="facultad"
@@ -184,7 +184,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Tipo Perfil*"/></strong>
                                 <h:selectOneMenu value="#{controllerRegistrarEncargadoLaboratorio.inputPerfil}"
-                                                 class="form-control"
+                                                 class="form-control" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}"
                                                  id="inputPerfil">
                                     <f:selectItem itemLabel="Seleccione Tipo Perfil" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaTiposPerfiles}" var="perfil"
@@ -195,9 +195,19 @@
                                 <h6><h:message id="msnPerfil" for="inputPerfil" style="color: red"></h:message></h6>
                             </div>
                         </fieldset>
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEncargadoLaboratorio.mensajeFormulario}"/></strong>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEncargadoLaboratorio.mensajeFormulario}" style="color: #{controllerRegistrarEncargadoLaboratorio.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEncargadoLaboratorio.registrarNuevoEncargadoLaboratorio()}" class="btn btn-success">
                                 <f:ajax execute="@this" render="mensajeFormulario" />
@@ -206,6 +216,11 @@
                             <span></span>
                             <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_encargadoslaboratorios" actionListener="#{controllerRegistrarEncargadoLaboratorio.cancelarRegistroEncargadoLaboratorio()}" immediate="true">
                                 <f:ajax execute="@this" render="mensajeFormulario" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarEncargadoLaboratorio.activarLimpiar}" actionListener="#{controllerRegistrarEncargadoLaboratorio.cambiarActivarCasillas()}" >
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>
                     </div>

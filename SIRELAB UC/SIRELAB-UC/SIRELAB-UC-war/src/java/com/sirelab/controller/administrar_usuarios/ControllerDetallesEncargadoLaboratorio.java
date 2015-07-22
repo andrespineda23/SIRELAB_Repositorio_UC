@@ -62,13 +62,15 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesPerfil;
     private boolean validacionesDireccion, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
     private String mensajeFormulario;
-     private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesEncargadoLaboratorio() {
     }
 
     @PostConstruct
     public void init() {
+        colorMensaje = "black";
         validacionesPerfil = true;
         validacionesNombre = true;
         validacionesApellido = true;
@@ -81,7 +83,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         validacionesFacultad = true;
         validacionesDepartamento = true;
         validacionesLaboratorio = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
         //
         activoDepartamento = true;
         activoLaboratorio = true;
@@ -154,12 +156,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         visibleGuardar = true;
         activoDepartamento = false;
         activoLaboratorio = false;
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     /**
      * Metodo encargado de restaurar la información del encargado laboratorio
      */
-    public void restaurarInformacionEncargadoLaboratorio() {
+    public String restaurarInformacionEncargadoLaboratorio() {
         encargadoLaboratorioDetalles = new EncargadoLaboratorio();
         encargadoLaboratorioDetalles = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio(idEncargadoLaboratorio);
         if (encargadoLaboratorioDetalles.getPersona().getUsuario().getEstado() == true) {
@@ -191,8 +195,10 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         validacionesFacultad = true;
         validacionesDepartamento = true;
         validacionesLaboratorio = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         asignarValoresVariablesEncargadoLaboratorio();
+        return "administrar_encargadoslaboratorios";
     }
 
     /**
@@ -223,7 +229,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades:  "+e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades:  " + e.toString());
             System.out.println("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades : " + e.toString());
         }
     }
@@ -249,7 +255,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos:  "+e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos:  " + e.toString());
             System.out.println("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
         }
     }
@@ -344,7 +350,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
 
     public void validarIdentificacionEncargadoLaboratorio() {
         if (Utilidades.validarNulo(identificacionEncargadoLaboratorio) && (!identificacionEncargadoLaboratorio.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(identificacionEncargadoLaboratorio)) {
+            if (Utilidades.validarNumeroIdentificacion(identificacionEncargadoLaboratorio)) {
                 EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorDocumento(identificacionEncargadoLaboratorio);
                 if (null == registro) {
                     validacionesID = true;
@@ -392,7 +398,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
 
     public void validarDireccionEncargadoLaboratorio() {
         if ((Utilidades.validarNulo(direccionEncargadoLaboratorio)) && (!direccionEncargadoLaboratorio.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(direccionEncargadoLaboratorio)) {
+            if (Utilidades.validarDirecciones(direccionEncargadoLaboratorio)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -447,11 +453,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         if (modificacionRegistro == true) {
             if (validarResultadosValidacion() == true) {
                 modificarInformacionEncargadoLaboratorio();
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
         }
     }
@@ -476,7 +485,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
             restaurarInformacionEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio : " + e.toString());
 
         }
@@ -501,12 +510,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 encargadoLaboratorioDetalles.getPersona().getUsuario().setEstado(bool);
                 administrarEncargadosLaboratoriosBO.actualizarInformacionUsuario(encargadoLaboratorioDetalles.getPersona().getUsuario());
                 restaurarInformacionEncargadoLaboratorio();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha activado el personal de laboratorio.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio activarEncargadoLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio activarEncargadoLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesEncargadosLaboratorios activarEncargadoLaboratorio : " + e.toString());
         }
     }
@@ -522,12 +533,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 administrarEncargadosLaboratoriosBO.actualizarInformacionUsuario(encargadoLaboratorioDetalles.getPersona().getUsuario());
                 encargadoLaboratorioDetalles = new EncargadoLaboratorio();
                 restaurarInformacionEncargadoLaboratorio();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el personal de laboratorio.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio inactivarEncargadoLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio inactivarEncargadoLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesEncargadosLaboratorios inactivarEncargadoLaboratorio : " + e.toString());
         }
     }
@@ -747,6 +760,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
 
     public void setCorreoOpcionalEncargadoLaboratorio(String correoOpcionalEncargadoLaboratorio) {
         this.correoOpcionalEncargadoLaboratorio = correoOpcionalEncargadoLaboratorio;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

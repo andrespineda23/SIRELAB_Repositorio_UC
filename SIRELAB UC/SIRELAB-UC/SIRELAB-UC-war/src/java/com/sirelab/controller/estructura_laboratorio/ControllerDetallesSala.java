@@ -57,7 +57,7 @@ public class ControllerDetallesSala implements Serializable {
     private boolean validacionesLaboratorio, validacionesSede, validacionesEdificio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
-    
+    private String colorMensaje;
 
     public ControllerDetallesSala() {
     }
@@ -74,7 +74,8 @@ public class ControllerDetallesSala implements Serializable {
         validacionesNombre = true;
         validacionesSede = true;
         validacionesUbicacion = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
@@ -124,12 +125,16 @@ public class ControllerDetallesSala implements Serializable {
         modificacionRegistro = false;
         visibleGuardar = true;
         activarEdificio = false;
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
-    public void restaurarInformacionSalaLaboratorio() {
+    public String restaurarInformacionSalaLaboratorio() {
         salaLaboratorioDetalles = new SalaLaboratorio();
         recibirIDSalasLaboratorioDetalles(this.idSalaLaboratorio);
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        return "administrar_salas";
     }
 
     public void validarNombreSala() {
@@ -261,7 +266,7 @@ public class ControllerDetallesSala implements Serializable {
             }
             modificacionesRegistroSala();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaSala actualizarSedes:  "+e.toString());
+            logger.error("Error ControllerDetallesPlantaSala actualizarSedes:  " + e.toString());
             System.out.println("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString());
         }
     }
@@ -330,12 +335,15 @@ public class ControllerDetallesSala implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenaModificacionSalaEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 recibirIDSalasLaboratorioDetalles(this.idSalaLaboratorio);
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -353,7 +361,7 @@ public class ControllerDetallesSala implements Serializable {
             salaLaboratorioDetalles.setLaboratoriosporareas(laboratorioPorAreaSalaLaboratorio);
             gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema : " + e.toString());
         }
     }
@@ -371,12 +379,14 @@ public class ControllerDetallesSala implements Serializable {
                 salaLaboratorioDetalles.setEstadosala(bool);
                 gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
                 restaurarInformacionSalaLaboratorio();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha activado la sala.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString());
         }
     }
@@ -389,12 +399,14 @@ public class ControllerDetallesSala implements Serializable {
                 gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
                 salaLaboratorioDetalles = new SalaLaboratorio();
                 restaurarInformacionSalaLaboratorio();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado la sala.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString());
         }
     }
@@ -582,6 +594,14 @@ public class ControllerDetallesSala implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

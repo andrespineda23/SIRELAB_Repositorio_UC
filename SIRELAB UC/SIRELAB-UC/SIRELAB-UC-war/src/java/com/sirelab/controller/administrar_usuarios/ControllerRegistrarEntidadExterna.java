@@ -48,12 +48,19 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     private boolean validacionesDireccion, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarEntidadExterna() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
@@ -64,7 +71,6 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         validacionesIDEntidad = false;
         validacionesEmailEntidad = false;
         validacionesNombreEntidad = false;
-        mensajeFormulario = "";
         //
         inputNombreEntidad = null;
         inputEmailEntidad = null;
@@ -128,7 +134,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void validarIdentificacionEntidadExterna() {
         if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputID)) {
+            if (Utilidades.validarNumeroIdentificacion(inputID)) {
                 EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorDocumento(inputID);
                 if (null == registro) {
                     validacionesID = true;
@@ -170,7 +176,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void validarDireccionEntidadExterna() {
         if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputDireccion)) {
+            if (Utilidades.validarDirecciones(inputDireccion)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -266,17 +272,16 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             almacenarNuevoEntidadExternaEnSistema();
             //EnvioCorreo correo = new EnvioCorreo();
             //correo.enviarCorreoCreacionCuenta(inputEmail);
+            limpiarFormulario();
+            activarLimpiar = false;
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
 
-    /**
-     * Metodo encargado de cancelar el proceso de registro
-     */
-    public void cancelarRegistroEntidadExterna() {
-        mensajeFormulario = "";
+    public void limpiarFormulario() {
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
@@ -290,6 +295,39 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         mensajeFormulario = "";
         inputApellido = null;
         inputDireccion = null;
+        inputTelefono1 = null;
+        inputTelefono2 = null;
+        inputEmail = null;
+        inputID = null;
+        inputNombre = null;
+        inputIDEntidad = null;
+        inputNombreEntidad = null;
+        inputEmailEntidad = null;
+    }
+
+    /**
+     * Metodo encargado de cancelar el proceso de registro
+     */
+    public void cancelarRegistroEntidadExterna() {
+        mensajeFormulario = "N/A";
+        activarCasillas = false;
+        activarLimpiar = true;
+        colorMensaje = "black";
+        validacionesNombre = false;
+        validacionesApellido = false;
+        validacionesCorreo = false;
+        validacionesID = false;
+        validacionesTel1 = true;
+        validacionesTel2 = true;
+        validacionesDireccion = true;
+        validacionesIDEntidad = false;
+        validacionesEmailEntidad = false;
+        validacionesNombreEntidad = false;
+        mensajeFormulario = "";
+        inputApellido = null;
+        inputDireccion = null;
+        inputTelefono1 = null;
+        inputTelefono2 = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
@@ -345,15 +383,25 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
                 entidadexternaNueva.setNombreentidad("");
             }
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(usuarioNuevo, personaNueva, entidadexternaNueva);
-            cancelarRegistroEntidadExterna();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
         }
     }
 
     public void recibirPaginaAnterior(String page) {
         paginaAnterior = page;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     public String retornarPaginaAnterior() {
@@ -459,6 +507,30 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

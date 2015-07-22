@@ -49,12 +49,14 @@ public class ControllerAdministrarEdificios implements Serializable {
     //
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarEdificios() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarExport = true;
         parametroDescripcion = null;
         parametroDireccion = null;
@@ -104,12 +106,14 @@ public class ControllerAdministrarEdificios implements Serializable {
                     listaEdificiosTabla = new ArrayList<Edificio>();
                     tamTotalEdificio = listaEdificios.size();
                     posicionEdificioTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalEdificio);
                     cargarDatosTablaEdificio();
                 } else {
                     activarExport = true;
                     listaEdificiosTabla = null;
                     tamTotalEdificio = 0;
                     posicionEdificioTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalEdificio);
                     bloquearPagAntEdificio = true;
                     bloquearPagSigEdificio = true;
                 }
@@ -117,11 +121,12 @@ public class ControllerAdministrarEdificios implements Serializable {
                 listaEdificiosTabla = null;
                 tamTotalEdificio = 0;
                 posicionEdificioTabla = 0;
+                cantidadRegistros = String.valueOf(tamTotalEdificio);
                 bloquearPagAntEdificio = true;
                 bloquearPagSigEdificio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarEdificios buscarEdificiosPorParametros : " + e.toString());
         }
     }
@@ -186,7 +191,24 @@ public class ControllerAdministrarEdificios implements Serializable {
         parametroDireccion = null;
         parametroSede = new Sede();
         listaEdificios = null;
+        listaSedes = null;
         listaEdificiosTabla = null;
+        posicionEdificioTabla = 0;
+        cantidadRegistros = "N/A";
+        tamTotalEdificio = 0;
+        bloquearPagAntEdificio = true;
+        bloquearPagSigEdificio = true;
+        inicializarFiltros();
+    }
+
+    public void limpiarDatos() {
+        activarExport = true;
+        parametroDescripcion = null;
+        parametroDireccion = null;
+        parametroSede = new Sede();
+        listaEdificios = null;
+        listaEdificiosTabla = null;
+        cantidadRegistros = "N/A";
         posicionEdificioTabla = 0;
         tamTotalEdificio = 0;
         bloquearPagAntEdificio = true;
@@ -299,6 +321,14 @@ public class ControllerAdministrarEdificios implements Serializable {
 
     public void setBloquearPagAntEdificio(boolean bloquearPagAntEdificio) {
         this.bloquearPagAntEdificio = bloquearPagAntEdificio;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

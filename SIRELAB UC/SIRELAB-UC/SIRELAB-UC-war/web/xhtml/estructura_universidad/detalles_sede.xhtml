@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Sedes</a></li>
@@ -107,16 +107,26 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesSede.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesSede.mensajeFormulario}" style="color: #{controllerDetallesSede.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Modificar" actionListener="#{controllerDetallesSede.registrarModificacionSede()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                                 <span></span>
                                 <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_sedes" actionListener="#{controllerDetallesSede.restaurarInformacionSede()}" immediate="true">
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesSede.restaurarInformacionSede()}" actionListener="#{controllerAdministrarSedes.limpiarProcesoBusqueda()}" immediate="true">
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

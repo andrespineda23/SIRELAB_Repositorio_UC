@@ -33,7 +33,7 @@ public interface GestionarPlantaLaboratoriosBOInterface {
 
     public void modificarInformacionLaboratorio(Laboratorio laboratorio);
 
-    public Laboratorio obtenerLaboratorioPorCodigoYDepartamento(String codigo, BigInteger departamento);
+    public Laboratorio obtenerLaboratorioPorCodigo(String codigo);
 
     public Departamento consultarDepartamentoPorNombre(String nombre);
 }

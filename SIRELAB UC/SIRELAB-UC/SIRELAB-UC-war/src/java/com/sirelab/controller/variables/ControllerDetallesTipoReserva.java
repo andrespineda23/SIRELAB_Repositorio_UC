@@ -37,6 +37,7 @@ public class ControllerDetallesTipoReserva implements Serializable {
     private BigInteger idTipoReserva;
     private TipoReserva tipoReservaDetalles;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesTipoReserva() {
     }
@@ -49,7 +50,8 @@ public class ControllerDetallesTipoReserva implements Serializable {
     public void recibirIDDetalleTipoReserva(BigInteger idDetalle) {
         this.idTipoReserva = idDetalle;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
     }
 
     private void cargarInformacionRegistro() {
@@ -80,12 +82,15 @@ public class ControllerDetallesTipoReserva implements Serializable {
         if (modificacionesRegistro == true) {
             if (validacionesNombre == true) {
                 almacenarModificacionRegistro();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 cargarInformacionRegistro();
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No existen modificaciones para ser almacenadas.";
         }
     }
@@ -108,7 +113,8 @@ public class ControllerDetallesTipoReserva implements Serializable {
     public void cancelarTipoReserva() {
         inputNombre = null;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         idTipoReserva = null;
         modificacionesRegistro = false;
         tipoReservaDetalles = null;
@@ -129,6 +135,14 @@ public class ControllerDetallesTipoReserva implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

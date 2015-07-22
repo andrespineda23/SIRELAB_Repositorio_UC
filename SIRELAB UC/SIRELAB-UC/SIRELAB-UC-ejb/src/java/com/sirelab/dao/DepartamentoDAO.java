@@ -81,6 +81,21 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     }
     
     @Override
+    public Departamento buscarDepartamentoPorCodigo(String codigo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.codigodepartamento=:codigo");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("codigo", codigo);
+            Departamento registro = (Departamento) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.err.println("Error buscarDepartamentoPorCodigo DepartamentoDAO : " + e.toString());
+            return null;
+        }
+    }
+    
+    @Override
     public Departamento buscarDepartamentoPorNombre(String nombre) {
         try {
             em.clear();
@@ -142,8 +157,14 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
                     }
                     if ("parametroNombre".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".direccion")
-                                .append(") Like :nombredepartamento");
+                                .append(".nombredepartamento")
+                                .append(") Like :parametroNombre");
+                        camposFiltro++;
+                    }
+                    if ("parametroCodigo".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".codigodepartamento")
+                                .append(") Like :parametroCodigo");
                         camposFiltro++;
                     }
                     if ("parametroFacultad".equals(entry.getKey())) {
@@ -170,7 +191,9 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             if (null != entry.getValue() && !entry.getValue().isEmpty()) {
                 if ("parametroNombre".equals(entry.getKey())) {
-                    //
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
+                if ("parametroCodigo".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
                 if ("parametroFacultad".equals(entry.getKey())) {

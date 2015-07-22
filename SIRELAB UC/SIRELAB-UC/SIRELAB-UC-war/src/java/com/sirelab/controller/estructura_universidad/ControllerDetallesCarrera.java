@@ -45,6 +45,7 @@ public class ControllerDetallesCarrera implements Serializable {
     private boolean validacionesNombre, validacionesCodigo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesCarrera() {
     }
@@ -56,18 +57,21 @@ public class ControllerDetallesCarrera implements Serializable {
         validacionesDepartamento = true;
         validacionesFacultad = true;
         validacionesNombre = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionCarrera() {
+    public String restaurarInformacionCarrera() {
         validacionesCodigo = true;
         validacionesDepartamento = true;
         validacionesFacultad = true;
         validacionesNombre = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         carreraDetalles = new Carrera();
         recibirIDCarrerasDetalles(idCarrera);
+        return "administrar_carreras";
     }
 
     public void asignarValoresVariablesCarrera() {
@@ -76,7 +80,7 @@ public class ControllerDetallesCarrera implements Serializable {
         editarFacultad = carreraDetalles.getDepartamento().getFacultad();
         editarNombre = carreraDetalles.getNombrecarrera();
         activarModificacionDepartamento = false;
-       listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
+        listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
         if (Utilidades.validarNulo(editarFacultad)) {
             listaDepartamentos = gestionarCarrerasBO.consultarDepartamentosPorIDFacultad(editarFacultad.getIdfacultad());
         }
@@ -173,15 +177,19 @@ public class ControllerDetallesCarrera implements Serializable {
             if (Utilidades.validarNulo(editarDepartamento)) {
                 if (validarCodigoRepetido() == true) {
                     almacenarModificacionCarreraEnSistema();
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     recibirIDCarrerasDetalles(this.idCarrera);
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el departamento seleccionado.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Seleccione un departamento para continuar con el proceso.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -193,7 +201,7 @@ public class ControllerDetallesCarrera implements Serializable {
             carreraDetalles.setDepartamento(editarDepartamento);
             gestionarCarrerasBO.modificarInformacionCarrera(carreraDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema : " + e.toString());
         }
     }
@@ -277,6 +285,14 @@ public class ControllerDetallesCarrera implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

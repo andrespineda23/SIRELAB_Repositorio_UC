@@ -37,6 +37,7 @@ public class ControllerDetallesTipoComponente implements Serializable {
     private BigInteger idTipoComponente;
     private TipoComponente tipoComponenteDetalle;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesTipoComponente() {
     }
@@ -49,7 +50,8 @@ public class ControllerDetallesTipoComponente implements Serializable {
     public void recibirIDDetalleTipoComponente(BigInteger idDetalle) {
         this.idTipoComponente = idDetalle;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
     }
 
     private void cargarInformacionRegistro() {
@@ -80,12 +82,15 @@ public class ControllerDetallesTipoComponente implements Serializable {
         if (modificacionesRegistro == true) {
             if (validacionesNombre == true) {
                 almacenarModificacionRegistro();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 cargarInformacionRegistro();
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No existen modificaciones para ser almacenadas.";
         }
     }
@@ -108,7 +113,8 @@ public class ControllerDetallesTipoComponente implements Serializable {
     public void cancelarTipoComponente() {
         inputNombre = null;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         idTipoComponente = null;
         modificacionesRegistro = false;
         tipoComponenteDetalle = null;
@@ -145,6 +151,14 @@ public class ControllerDetallesTipoComponente implements Serializable {
 
     public void setTipoComponenteDetalle(TipoComponente tipoComponenteDetalle) {
         this.tipoComponenteDetalle = tipoComponenteDetalle;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

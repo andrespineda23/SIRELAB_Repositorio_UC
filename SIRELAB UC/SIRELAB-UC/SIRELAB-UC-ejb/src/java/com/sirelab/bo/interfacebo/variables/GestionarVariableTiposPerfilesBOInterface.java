@@ -5,6 +5,9 @@
  */
 package com.sirelab.bo.interfacebo.variables;
 
+import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
 import java.math.BigInteger;
 import java.util.List;
@@ -26,4 +29,10 @@ public interface GestionarVariableTiposPerfilesBOInterface {
     public TipoPerfil consultarTipoPerfilPorID(BigInteger idRegistro);
 
     public TipoPerfil consultarTipoPerfilPorCodigo(String codigo);
+
+    public Departamento consultarDepartamentoPorCodigo(String codigo);
+
+    public Laboratorio consultaLaboratorioPorCodigo(String codigo);
+
+    public AreaProfundizacion consultarAreaProfundizacionPorCodigo(String codigo);
 }

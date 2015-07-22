@@ -92,7 +92,7 @@
                                                     Facultad
                                                 </label>
                                                 <h:selectOneMenu value="#{controllerAdministrarLaboratorios.parametroFacultad}"
-                                                                 class="form-control"
+                                                                 class="form-control" disabled="#{controllerAdministrarLaboratorios.activarFacultad}"
                                                                  id="parametroFacultad">
                                                     <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
                                                     <f:selectItems value="#{controllerAdministrarLaboratorios.listaFacultades}" var="facultad"
@@ -119,15 +119,18 @@
                                 </fieldset>
                                 <br></br>
                                 <div class="col-md-12">
-                                    <div class="col-md-10">
-                                    </div> 
+                                     <div class="col-md-2">
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarLaboratorios.cantidadRegistros}"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                    </div>
                                     <div class="col-md-1">
                                         <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarLaboratorios.buscarLaboratoriosPorParametros()}">
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>
                                     <div class="col-md-1">
-                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarLaboratorios.limpiarConsulta()}" class="btn btn-default right" >
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>
@@ -169,7 +172,7 @@
                                                 <f:facet name="header">
                                                     <h:outputText value="Detalles"/>
                                                 </f:facet>
-                                                <h:commandLink value="Ver" action="detalles_laboratorio" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(item.idlaboratorio)}"/>
+                                                <h:commandLink value="Ver" action="detalles_laboratorio" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(item.idlaboratorio)}" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}"/>
                                             </h:column>
                                             <f:facet name="footer">
                                                 <nav>

@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Asignaturas</a></li>
@@ -78,22 +78,22 @@
                             <fieldset>
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Nombre Asignatura*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarAsignatura.nuevoNombre}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarAsignatura.validarNombreAsignatura()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
                                     <strong><h:outputText value="Codigo Asignatura*"/></strong>
-                                    <h:inputText maxlength="15" value="#{controllerRegistrarAsignatura.nuevoCodigo}" class="form-control" id="nuevoCodigo" required="true" requiredMessage="El campo Codigo es obligatorio.">
+                                    <h:inputText maxlength="15" value="#{controllerRegistrarAsignatura.nuevoCodigo}" disabled="#{controllerRegistrarAsignatura.activarCasillas}" class="form-control" id="nuevoCodigo" required="true" requiredMessage="El campo Codigo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarAsignatura.validarCodigoAsignatura()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
                                     </h:inputText>
                                     <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
+                                    <strong><h:outputText value="Nombre Asignatura*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarAsignatura.nuevoNombre}" disabled="#{controllerRegistrarAsignatura.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarAsignatura.validarNombreAsignatura()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
                                     <strong><h:outputText value="Creditos Asignatura*"/></strong>
-                                    <h:inputText maxlength="1" value="#{controllerRegistrarAsignatura.nuevoCredito}" class="form-control" id="nuevoCredito" required="true" requiredMessage="El campo Credito es obligatorio.">
+                                    <h:inputText maxlength="1" value="#{controllerRegistrarAsignatura.nuevoCredito}" disabled="#{controllerRegistrarAsignatura.activarCasillas}" class="form-control" id="nuevoCredito" required="true" requiredMessage="El campo Credito es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarAsignatura.validarCreditosAsignatura()}" execute="nuevoCredito" render="nuevoCredito msnCredito" />
                                     </h:inputText>
                                     <h6><h:message id="msnCredito" for="nuevoCredito" style="color: red"/></h6>
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Departamento*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarAsignatura.nuevoDepartamento}"
-                                                     class="form-control" 
+                                                     class="form-control"  disabled="#{controllerRegistrarAsignatura.activarCasillas}"
                                                      id="nuevoDepartamento">
                                         <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarAsignatura.listaDepartamentos}" var="departamento"
@@ -140,9 +140,19 @@
                             </fieldset>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarAsignatura.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarAsignatura.mensajeFormulario}" style="color: #{controllerRegistrarAsignatura.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarAsignatura.registrarNuevoAsignatura()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -150,6 +160,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_asignaturas" actionListener="#{controllerRegistrarAsignatura.cancelarRegistroPlanEstudio()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarAsignatura.activarLimpiar}" actionListener="#{controllerRegistrarAsignatura.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

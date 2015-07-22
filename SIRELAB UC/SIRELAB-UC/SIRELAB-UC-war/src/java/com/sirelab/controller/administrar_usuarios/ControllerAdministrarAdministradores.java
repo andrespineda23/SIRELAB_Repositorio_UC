@@ -47,12 +47,14 @@ public class ControllerAdministrarAdministradores implements Serializable {
     private int tamTotalAdministrador;
     private boolean bloquearPagSigAdministrador, bloquearPagAntAdministrador;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarAdministradores() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarExport = true;
         parametroNombre = null;
         parametroApellido = null;
@@ -96,7 +98,7 @@ public class ControllerAdministrarAdministradores implements Serializable {
             filtros.put("parametroDocumento", parametroDocumento);
         }
         if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())) {
-            filtros.put("parametroCorreo", parametroCorreo + "@ucentral.edu.co");
+            filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
             filtros.put("parametroEstado", "true");
@@ -122,6 +124,7 @@ public class ControllerAdministrarAdministradores implements Serializable {
                     listaAdministradoresTabla = new ArrayList<Persona>();
                     tamTotalAdministrador = listaAdministradores.size();
                     posicionAdministradorTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalAdministrador);
                     cargarDatosTablaAdministrador();
                 } else {
                     activarExport = true;
@@ -130,16 +133,18 @@ public class ControllerAdministrarAdministradores implements Serializable {
                     posicionAdministradorTabla = 0;
                     bloquearPagAntAdministrador = true;
                     bloquearPagSigAdministrador = true;
+                    cantidadRegistros = String.valueOf(tamTotalAdministrador);
                 }
             } else {
                 listaAdministradoresTabla = null;
                 tamTotalAdministrador = 0;
                 posicionAdministradorTabla = 0;
                 bloquearPagAntAdministrador = true;
+                cantidadRegistros = String.valueOf(tamTotalAdministrador);
                 bloquearPagSigAdministrador = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros : " + e.toString());
         }
     }
@@ -209,6 +214,7 @@ public class ControllerAdministrarAdministradores implements Serializable {
         parametroDocumento = null;
         parametroCorreo = null;
         parametroEstado = 1;
+        cantidadRegistros = "N/A";
         listaAdministradores = null;
         listaAdministradoresTabla = null;
         posicionAdministradorTabla = 0;
@@ -331,6 +337,14 @@ public class ControllerAdministrarAdministradores implements Serializable {
 
     public void setBloquearPagAntAdministrador(boolean bloquearPagAntAdministrador) {
         this.bloquearPagAntAdministrador = bloquearPagAntAdministrador;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

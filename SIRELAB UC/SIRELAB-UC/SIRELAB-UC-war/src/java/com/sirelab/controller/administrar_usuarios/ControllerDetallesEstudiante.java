@@ -59,13 +59,15 @@ public class ControllerDetallesEstudiante implements Serializable {
     private boolean validacionesDireccion, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesEstudiante() {
     }
 
     @PostConstruct
     public void init() {
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
         validacionesCarrera = true;
         validacionesPlanEstudio = true;
         validacionesNombre = true;
@@ -148,12 +150,14 @@ public class ControllerDetallesEstudiante implements Serializable {
         modificacionRegistro = false;
         visibleGuardar = true;
         activoPlanEstudio = false;
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     /**
      * Metodo encargado de restaurar la información del estudiante
      */
-    public void restaurarInformacionEstudiante() {
+    public String restaurarInformacionEstudiante() {
         estudianteDetalles = new Estudiante();
         estudianteDetalles = administrarEstudiantesBO.obtenerEstudiantePorIDEstudiante(idEstudiante);
         if (estudianteDetalles.getPersona().getUsuario().getEstado() == true) {
@@ -170,7 +174,8 @@ public class ControllerDetallesEstudiante implements Serializable {
         activoPlanEstudio = true;
         listaCarrera = null;
         listaPlanEstudios = null;
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
         validacionesCorreoOpcional = true;
         validacionesPlanEstudio = true;
         validacionesNombre = true;
@@ -180,9 +185,10 @@ public class ControllerDetallesEstudiante implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
         validacionesCarrera = true;
         asignarValoresVariablesEstudiante();
+        return "administrar_estudiantes";
     }
 
     public void actualizarTipoUsuarioSeleccionado() {
@@ -216,7 +222,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             }
             modificacionesRegistroEstudiante();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante actualizarCarreras:  "+e.toString());
+            logger.error("Error ControllerDetallesEstudiante actualizarCarreras:  " + e.toString());
             System.out.println("Error ControllerDetallesEstudiante actualizarCarreras : " + e.toString());
         }
     }
@@ -301,7 +307,7 @@ public class ControllerDetallesEstudiante implements Serializable {
 
     public void validarIdentificacionEstudiante() {
         if (Utilidades.validarNulo(identificacionEstudiante) && (!identificacionEstudiante.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(identificacionEstudiante)) {
+            if (Utilidades.validarNumeroIdentificacion(identificacionEstudiante)) {
                 Estudiante registro = administrarEstudiantesBO.obtenerEstudianteDocumento(identificacionEstudiante);
                 if (null == registro) {
                     validacionesID = true;
@@ -349,7 +355,7 @@ public class ControllerDetallesEstudiante implements Serializable {
 
     public void validarDireccionEstudiante() {
         if ((Utilidades.validarNulo(direccionEstudiante)) && (!direccionEstudiante.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(direccionEstudiante)) {
+            if (Utilidades.validarDirecciones(direccionEstudiante)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:direccionEstudiante", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -402,11 +408,14 @@ public class ControllerDetallesEstudiante implements Serializable {
         if (modificacionRegistro == true) {
             if (validarResultadosValidacion() == true) {
                 modificarInformacionEstudiante();
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
         }
     }
@@ -436,7 +445,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             administrarEstudiantesBO.actualizarInformacionEstudiante(estudianteDetalles);
             restaurarInformacionEstudiante();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
     }
@@ -460,12 +469,14 @@ public class ControllerDetallesEstudiante implements Serializable {
                 estudianteDetalles.getPersona().getUsuario().setEstado(bool);
                 administrarEstudiantesBO.actualizarInformacionUsuario(estudianteDetalles.getPersona().getUsuario());
                 restaurarInformacionEstudiante();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha activado el estudiante.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante activarEstudiante:  "+e.toString());
+            logger.error("Error ControllerDetallesEstudiante activarEstudiante:  " + e.toString());
             System.out.println("Error ControllerDetallesEstudiantes activarEstudiante : " + e.toString());
         }
     }
@@ -481,12 +492,14 @@ public class ControllerDetallesEstudiante implements Serializable {
                 administrarEstudiantesBO.actualizarInformacionUsuario(estudianteDetalles.getPersona().getUsuario());
                 estudianteDetalles = new Estudiante();
                 restaurarInformacionEstudiante();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el estudiante.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante inactivarEstudiante:  "+e.toString());
+            logger.error("Error ControllerDetallesEstudiante inactivarEstudiante:  " + e.toString());
             System.out.println("Error ControllerDetallesEstudiantes inactivarEstudiante : " + e.toString());
         }
     }
@@ -690,6 +703,14 @@ public class ControllerDetallesEstudiante implements Serializable {
 
     public void setCorreoOpcionalEstudiante(String correoOpcionalEstudiante) {
         this.correoOpcionalEstudiante = correoOpcionalEstudiante;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

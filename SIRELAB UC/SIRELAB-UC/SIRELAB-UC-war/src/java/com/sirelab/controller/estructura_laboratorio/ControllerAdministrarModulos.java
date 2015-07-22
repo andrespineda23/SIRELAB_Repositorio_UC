@@ -63,6 +63,7 @@ public class ControllerAdministrarModulos implements Serializable {
     //
     private boolean perfilConsulta;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarModulos() {
     }
@@ -70,6 +71,7 @@ public class ControllerAdministrarModulos implements Serializable {
     @PostConstruct
     public void init() {
         activarSala = true;
+        cantidadRegistros = "N/A";
         activarAreaProfundizacion = true;
         activarExport = true;
         parametroCodigo = null;
@@ -170,6 +172,7 @@ public class ControllerAdministrarModulos implements Serializable {
                     listaModulosLaboratoriosTabla = new ArrayList<ModuloLaboratorio>();
                     tamTotalModulo = listaModulosLaboratorios.size();
                     posicionModuloTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalModulo);
                     cargarDatosTablaModulo();
                 } else {
                     activarExport = true;
@@ -177,6 +180,7 @@ public class ControllerAdministrarModulos implements Serializable {
                     tamTotalModulo = 0;
                     posicionModuloTabla = 0;
                     bloquearPagAntModulo = true;
+                    cantidadRegistros = String.valueOf(tamTotalModulo);
                     bloquearPagSigModulo = true;
                 }
             } else {
@@ -184,10 +188,11 @@ public class ControllerAdministrarModulos implements Serializable {
                 tamTotalModulo = 0;
                 posicionModuloTabla = 0;
                 bloquearPagAntModulo = true;
+                cantidadRegistros = String.valueOf(tamTotalModulo);
                 bloquearPagSigModulo = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
         }
     }
@@ -248,6 +253,31 @@ public class ControllerAdministrarModulos implements Serializable {
 
     public String limpiarProcesoBusqueda() {
         activarAreaProfundizacion = true;
+        cantidadRegistros = "N/A";
+        activarSala = true;
+        parametroEstado = 1;
+        activarExport = true;
+        parametroCodigo = null;
+        parametroDetalle = null;
+        parametroLaboratorioPorArea = new LaboratoriosPorAreas();
+        parametroSalaLaboratorio = new SalaLaboratorio();
+
+        listaLaboratoriosPorAreas = null;
+        listaSalasLaboratorios = null;
+
+        listaModulosLaboratorios = null;
+        listaModulosLaboratoriosTabla = null;
+        posicionModuloTabla = 0;
+        tamTotalModulo = 0;
+        bloquearPagAntModulo = true;
+        bloquearPagSigModulo = true;
+        inicializarFiltros();
+        return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        cantidadRegistros = "N/A";
+        activarAreaProfundizacion = true;
         activarSala = true;
         parametroEstado = 1;
         activarExport = true;
@@ -262,7 +292,6 @@ public class ControllerAdministrarModulos implements Serializable {
         bloquearPagAntModulo = true;
         bloquearPagSigModulo = true;
         inicializarFiltros();
-        return paginaAnterior;
     }
 
     public void actualizarLaboratoriosAreasProfundizacion() {
@@ -438,6 +467,14 @@ public class ControllerAdministrarModulos implements Serializable {
 
     public void setPerfilConsulta(boolean perfilConsulta) {
         this.perfilConsulta = perfilConsulta;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

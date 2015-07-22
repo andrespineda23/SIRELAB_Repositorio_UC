@@ -50,12 +50,14 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     //
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarEntidadesExternas() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarExport = true;
         parametroNombre = null;
         parametroApellido = null;
@@ -144,6 +146,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
                     listaEntidadesExternasTabla = new ArrayList<EntidadExterna>();
                     tamTotalEntidadExterna = listaEntidadesExternas.size();
                     posicionEntidadExternaTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalEntidadExterna);
                     cargarDatosTablaEntidadExterna();
                 } else {
                     activarExport = true;
@@ -151,6 +154,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
                     tamTotalEntidadExterna = 0;
                     posicionEntidadExternaTabla = 0;
                     bloquearPagAntEntidadExterna = true;
+                    cantidadRegistros = String.valueOf(tamTotalEntidadExterna);
                     bloquearPagSigEntidadExterna = true;
                 }
             } else {
@@ -159,9 +163,10 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
                 posicionEntidadExternaTabla = 0;
                 bloquearPagAntEntidadExterna = true;
                 bloquearPagSigEntidadExterna = true;
+                cantidadRegistros = String.valueOf(tamTotalEntidadExterna);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros : " + e.toString());
         }
     }
@@ -241,6 +246,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         bloquearPagSigEntidadExterna = true;
         posicionEntidadExternaTabla = 0;
         tamTotalEntidadExterna = 0;
+        cantidadRegistros = "N/A";
         return paginaAnterior;
     }
 
@@ -381,6 +387,14 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
 
     public void setBloquearPagAntEntidadExterna(boolean bloquearPagAntEntidadExterna) {
         this.bloquearPagAntEntidadExterna = bloquearPagAntEntidadExterna;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

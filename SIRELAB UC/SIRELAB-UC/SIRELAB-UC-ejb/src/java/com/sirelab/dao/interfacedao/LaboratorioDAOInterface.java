@@ -32,4 +32,6 @@ public interface LaboratorioDAOInterface {
 
     public Laboratorio buscarLaboratorioPorCodigoYDepartamento(String codigo, BigInteger departamento);
 
+    public Laboratorio buscarLaboratorioPorCodigo(String codigo);
+
 }

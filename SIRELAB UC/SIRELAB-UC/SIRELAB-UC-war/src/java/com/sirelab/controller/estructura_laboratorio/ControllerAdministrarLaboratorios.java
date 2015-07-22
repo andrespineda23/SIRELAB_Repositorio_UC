@@ -6,10 +6,12 @@
 package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
-import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -35,6 +37,8 @@ public class ControllerAdministrarLaboratorios implements Serializable {
 
     @EJB
     GestionarPlantaLaboratoriosBOInterface gestionarPlantaLaboratoriosBO;
+    @EJB
+    AdministrarEncargadosLaboratoriosBOInterface administrarValidadorTipoUsuario;
 
     private String parametroNombre, parametroCodigo;
     private List<Facultad> listaFacultades;
@@ -42,6 +46,7 @@ public class ControllerAdministrarLaboratorios implements Serializable {
     private List<Departamento> listaDepartamentos;
     private Departamento parametroDepartamento;
     private boolean activarDepartamento;
+    private boolean activarFacultad;
     //
     private Map<String, String> filtros;
     //
@@ -60,12 +65,16 @@ public class ControllerAdministrarLaboratorios implements Serializable {
     //
     private boolean perfilConsulta;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private TipoPerfil tipoPerfil;
+    private String cantidadRegistros;
 
     public ControllerAdministrarLaboratorios() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
+        activarFacultad = false;
         perfilConsulta = false;
         activarDepartamento = true;
         activarExport = true;
@@ -81,35 +90,62 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         tamTotalLaboratorio = 0;
         bloquearPagAntLaboratorio = true;
         bloquearPagSigLaboratorio = true;
-         BasicConfigurator.configure();
+        BasicConfigurator.configure();
     }
 
     private void cargarInformacionPerfil() {
         usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-            EncargadoLaboratorio encargadoUser = gestionarPlantaLaboratoriosBO.obtenerEncargadoLaboratorioPorID(usuarioLoginSistema.getIdUsuarioLogin());
-            if ("CONSULTA".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
-                //proceso de solo consulta de la pagina
-                perfilConsulta = true;
-            } /*else {
-             if ("DEPARTAMENTO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
-             Departamento departamento = gestionarPlantaLaboratoriosBO.consultarDepartamentoPorNombre(encargadoUser.getTipoperfil().getNombre());
-             if (null != departamento) {
-             listaDepartamentos = new ArrayList<Departamento>();
-             listaDepartamentos.add(departamento);
-             }
-             } else {
-             if ("LABORATORIO".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
-             } else {
-             if ("AREA PROFUNDIZACION".equalsIgnoreCase(encargadoUser.getTipoperfil().getNombre())) {
-             }
-             }
-             }
-
-             }
-             */
-
+            perfilConsulta = validarSesionConsulta();
+            if (perfilConsulta == false) {
+                System.out.println("Perfil diferente a consulta");
+                Map<String, Object> datosPerfil = validarSesionAdicionales();
+                if (datosPerfil.containsKey("DEPARTAMENTO")) {
+                    activarFacultad = true;
+                    activarDepartamento = true;
+                    parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
+                    parametroFacultad = parametroDepartamento.getFacultad();
+                    listaDepartamentos = new ArrayList<Departamento>();
+                    listaFacultades = new ArrayList<Facultad>();
+                    listaDepartamentos.add(parametroDepartamento);
+                    listaFacultades.add(parametroFacultad);
+                }
+            }
         }
+    }
+
+    private boolean validarSesionConsulta() {
+        boolean retorno = false;
+        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuarioLoginSistema.getIdUsuarioLogin());
+        if (null != tipoPerfil) {
+            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
+                retorno = true;
+            }
+        }
+        return retorno;
+    }
+
+    private Map<String, Object> validarSesionAdicionales() {
+        Map<String, Object> lista = new HashMap<String, Object>();
+        if ("DEPARTAMENTO".equalsIgnoreCase(tipoPerfil.getNombre())) {
+            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(tipoPerfil.getCodigoregistro());
+            if (null != registro) {
+                lista.put("DEPARTAMENTO", registro);
+            }
+        }
+        if ("AREAPROFUNDIZACION".equalsIgnoreCase(tipoPerfil.getNombre())) {
+            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(tipoPerfil.getCodigoregistro());
+            if (null != registro) {
+                lista.put("AREAPROFUNDIZACION", registro);
+            }
+        }
+        if ("LABORATORIO".equalsIgnoreCase(tipoPerfil.getNombre())) {
+            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(tipoPerfil.getCodigoregistro());
+            if (null != registro) {
+                lista.put("LABORATORIO", registro);
+            }
+        }
+        return lista;
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -156,12 +192,14 @@ public class ControllerAdministrarLaboratorios implements Serializable {
                     listaLaboratoriosTabla = new ArrayList<Laboratorio>();
                     tamTotalLaboratorio = listaLaboratorios.size();
                     posicionLaboratorioTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalLaboratorio);
                     cargarDatosTablaLaboratorio();
                 } else {
                     activarExport = true;
                     listaLaboratoriosTabla = null;
                     tamTotalLaboratorio = 0;
                     posicionLaboratorioTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalLaboratorio);
                     bloquearPagAntLaboratorio = true;
                     bloquearPagSigLaboratorio = true;
                 }
@@ -171,9 +209,10 @@ public class ControllerAdministrarLaboratorios implements Serializable {
                 posicionLaboratorioTabla = 0;
                 bloquearPagAntLaboratorio = true;
                 bloquearPagSigLaboratorio = true;
+                cantidadRegistros = String.valueOf(tamTotalLaboratorio);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
@@ -232,14 +271,13 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         }
     }
 
-    public String limpiarProcesoBusqueda() {
+    public void limpiarConsulta() {
         activarDepartamento = true;
         parametroCodigo = null;
         activarExport = true;
         parametroNombre = null;
         parametroDepartamento = new Departamento();
         parametroFacultad = new Facultad();
-        inicializarFiltros();
         listaDepartamentos = null;
         listaLaboratorios = null;
         listaLaboratoriosTabla = null;
@@ -247,6 +285,30 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         tamTotalLaboratorio = 0;
         bloquearPagAntLaboratorio = true;
         bloquearPagSigLaboratorio = true;
+        cantidadRegistros = "N/A";
+        cargarInformacionPerfil();
+        inicializarFiltros();
+    }
+
+    public String limpiarProcesoBusqueda() {
+        cantidadRegistros = "N/A";
+        activarDepartamento = true;
+        parametroCodigo = null;
+        activarExport = true;
+        parametroNombre = null;
+        parametroDepartamento = new Departamento();
+        parametroFacultad = new Facultad();
+
+        listaDepartamentos = null;
+        listaFacultades = null;
+
+        listaLaboratorios = null;
+        listaLaboratoriosTabla = null;
+        posicionLaboratorioTabla = 0;
+        tamTotalLaboratorio = 0;
+        bloquearPagAntLaboratorio = true;
+        bloquearPagSigLaboratorio = true;
+        inicializarFiltros();
         return paginaAnterior;
     }
 
@@ -401,6 +463,22 @@ public class ControllerAdministrarLaboratorios implements Serializable {
 
     public void setPerfilConsulta(boolean perfilConsulta) {
         this.perfilConsulta = perfilConsulta;
+    }
+
+    public boolean isActivarFacultad() {
+        return activarFacultad;
+    }
+
+    public void setActivarFacultad(boolean activarFacultad) {
+        this.activarFacultad = activarFacultad;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

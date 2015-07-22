@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Edificios</a></li>
@@ -79,14 +79,14 @@
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Descripcion Edificio*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarEdificio.nuevoDescripcion}" required="true" class="form-control" id="nuevoDescripcion" requiredMessage="El campo Descripcion es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarEdificio.nuevoDescripcion}" disabled="#{controllerRegistrarEdificio.activarCasillas}" required="true" class="form-control" id="nuevoDescripcion" requiredMessage="El campo Descripcion es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarEdificio.validarDescripcionEdificio()}" execute="nuevoDescripcion" render="nuevoDescripcion msnDescripcion" />
                                     </h:inputText>
                                     <h6><h:message id="msnDescripcion" for="nuevoDescripcion" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Dirección Edificio*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarEdificio.nuevoDireccion}" class="form-control" id="nuevoDireccion">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarEdificio.nuevoDireccion}" disabled="#{controllerRegistrarEdificio.activarCasillas}" class="form-control" id="nuevoDireccion">
                                         <f:ajax event="blur" listener="#{controllerRegistrarEdificio.validarDireccionEdificio()}" execute="nuevoDireccion" render="nuevoDireccion msnDireccion" />
                                     </h:inputText>
                                     <h6><h:message id="msnDireccion" for="nuevoDireccion" style="color: red"/></h6>
@@ -94,7 +94,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Sede*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarEdificio.nuevoSede}"
-                                                     class="form-control"
+                                                     class="form-control" disabled="#{controllerRegistrarEdificio.activarCasillas}"
                                                      id="nuevoSede">
                                         <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarEdificio.listaSedes}" var="sede"
@@ -107,7 +107,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Horario Atención*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarEdificio.nuevoHorario}"
-                                                     class="form-control"
+                                                     class="form-control" disabled="#{controllerRegistrarEdificio.activarCasillas}"
                                                      id="nuevoHorario">
                                         <f:selectItem itemLabel="Seleccione Horario Atención" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarEdificio.listaHorariosAtencion}" var="horario"
@@ -124,9 +124,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEdificio.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEdificio.mensajeFormulario}" style="color: #{controllerRegistrarEdificio.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEdificio.registrarNuevoEdificio()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -134,6 +144,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_edificios" actionListener="#{controllerRegistrarEdificio.cancelarRegistroEdificio()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarEdificio.activarLimpiar}" actionListener="#{controllerRegistrarEdificio.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

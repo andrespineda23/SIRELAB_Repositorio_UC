@@ -186,15 +186,18 @@
                                 </fieldset>
                                 <br></br>
                                 <div class="col-md-12">
-                                    <div class="col-md-10">
-                                    </div> 
+                                    <div class="col-md-2">
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarSalas.cantidadRegistros}"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                    </div>
                                     <div class="col-md-1">
                                         <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarSalas.buscarSalasLaboratorioPorParametros()}">
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>
                                     <div class="col-md-1">
-                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarSalas.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarSalas.limpiarDatos()}" class="btn btn-default right" >
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>

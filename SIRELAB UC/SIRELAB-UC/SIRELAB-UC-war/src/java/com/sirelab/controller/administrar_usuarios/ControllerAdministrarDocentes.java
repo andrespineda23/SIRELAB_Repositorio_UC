@@ -52,12 +52,14 @@ public class ControllerAdministrarDocentes implements Serializable {
     //
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarDocentes() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activoDepartamento = true;
         activarExport = true;
         parametroNombre = null;
@@ -111,7 +113,7 @@ public class ControllerAdministrarDocentes implements Serializable {
             filtros.put("parametroDocumento", parametroDocumento);
         }
         if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())) {
-            filtros.put("parametroCorreo", parametroCorreo + "@ucentral.edu.co");
+            filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
             filtros.put("parametroEstado", "true");
@@ -149,12 +151,14 @@ public class ControllerAdministrarDocentes implements Serializable {
                     activarExport = false;
                     listaDocentesTabla = new ArrayList<Docente>();
                     tamTotalDocente = listaDocentes.size();
+                    cantidadRegistros = String.valueOf(tamTotalDocente);
                     posicionDocenteTabla = 0;
                     cargarDatosTablaDocente();
                 } else {
                     activarExport = true;
                     listaDocentesTabla = null;
                     tamTotalDocente = 0;
+                    cantidadRegistros = String.valueOf(tamTotalDocente);
                     posicionDocenteTabla = 0;
                     bloquearPagAntDocente = true;
                     bloquearPagSigDocente = true;
@@ -162,12 +166,13 @@ public class ControllerAdministrarDocentes implements Serializable {
             } else {
                 listaDocentesTabla = null;
                 tamTotalDocente = 0;
+                cantidadRegistros = String.valueOf(tamTotalDocente);
                 posicionDocenteTabla = 0;
                 bloquearPagAntDocente = true;
                 bloquearPagSigDocente = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
         }
     }
@@ -248,7 +253,31 @@ public class ControllerAdministrarDocentes implements Serializable {
         posicionDocenteTabla = 0;
         bloquearPagAntDocente = true;
         bloquearPagSigDocente = true;
+        listaFacultades = null;
+        listaDepartamentos = null;
+        cantidadRegistros = "N/A";
         return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        activoDepartamento = true;
+        activarExport = true;
+        parametroNombre = null;
+        parametroApellido = null;
+        parametroDocumento = null;
+        parametroCorreo = null;
+        parametroCargo = null;
+        parametroDepartamento = null;
+        parametroFacultad = null;
+        parametroEstado = 1;
+        listaDocentes = null;
+        listaDocentesTabla = null;
+        tamTotalDocente = 0;
+        posicionDocenteTabla = 0;
+        bloquearPagAntDocente = true;
+        bloquearPagSigDocente = true;
+        cantidadRegistros = "N/A";
+        inicializarFiltros();
     }
 
     /**
@@ -266,7 +295,7 @@ public class ControllerAdministrarDocentes implements Serializable {
                 parametroDepartamento = new Departamento();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarDocentes actualizarFacultades:  "+e.toString());
+            logger.error("Error ControllerAdministrarDocentes actualizarFacultades:  " + e.toString());
             System.out.println("Error ControllerAdministrarDocentes actualizarFacultades : " + e.toString());
         }
     }
@@ -443,6 +472,14 @@ public class ControllerAdministrarDocentes implements Serializable {
 
     public void setBloquearPagAntDocente(boolean bloquearPagAntDocente) {
         this.bloquearPagAntDocente = bloquearPagAntDocente;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

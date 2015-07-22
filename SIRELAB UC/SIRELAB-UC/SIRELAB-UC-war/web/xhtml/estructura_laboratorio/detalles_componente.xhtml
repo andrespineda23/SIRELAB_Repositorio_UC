@@ -148,9 +148,19 @@
                                 </div>
                             </fieldset>
                         </fieldset>
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesComponente.mensajeFormulario}"/></strong>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesComponente.mensajeFormulario}" style="color: #{controllerDetallesComponente.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton class="btn btn-success" value="Modificar" actionListener="#{controllerDetallesComponente.registrarModificarComponente()}">
                                 <f:ajax execute="@form" render="form" />

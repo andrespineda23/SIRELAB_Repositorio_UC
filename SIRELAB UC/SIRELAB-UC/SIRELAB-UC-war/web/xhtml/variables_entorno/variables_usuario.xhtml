@@ -102,7 +102,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Detalles"/>
                                             </f:facet>
-                                            <h:commandLink value="Ver" action="detalles_tipoperfil" actionListener="#{controllerDetallesTipoPerfil.recibirIDDetalleTipoPerfil(itemTP.idtipoperfil)}"/>
+                                            <h:commandLink value="Ver" rendered="#{((itemTP.idtipoperfil eq 1) or (itemTP.idtipoperfil eq 2))}" action="detalles_tipoperfil" actionListener="#{controllerDetallesTipoPerfil.recibirIDDetalleTipoPerfil(itemTP.idtipoperfil)}"/>
                                         </h:column>
                                         <f:facet name="footer">
                                             <nav>

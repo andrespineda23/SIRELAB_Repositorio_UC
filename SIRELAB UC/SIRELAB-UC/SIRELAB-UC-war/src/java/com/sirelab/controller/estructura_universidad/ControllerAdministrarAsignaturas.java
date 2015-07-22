@@ -55,12 +55,14 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     //
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarAsignaturas() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarDepartamento = true;
         activarCarrera = true;
         activarPlanEstudio = true;
@@ -137,6 +139,7 @@ public class ControllerAdministrarAsignaturas implements Serializable {
                     listaAsignaturasTabla = new ArrayList<Asignatura>();
                     tamTotalAsignatura = listaAsignaturas.size();
                     posicionAsignaturaTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalAsignatura);
                     cargarDatosTablaAsignatura();
                 } else {
                     activarExport = true;
@@ -144,6 +147,7 @@ public class ControllerAdministrarAsignaturas implements Serializable {
                     tamTotalAsignatura = 0;
                     posicionAsignaturaTabla = 0;
                     bloquearPagAntAsignatura = true;
+                    cantidadRegistros = String.valueOf(tamTotalAsignatura);
                     bloquearPagSigAsignatura = true;
                 }
             } else {
@@ -152,9 +156,10 @@ public class ControllerAdministrarAsignaturas implements Serializable {
                 posicionAsignaturaTabla = 0;
                 bloquearPagAntAsignatura = true;
                 bloquearPagSigAsignatura = true;
+                cantidadRegistros = String.valueOf(tamTotalAsignatura);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros : " + e.toString());
         }
     }
@@ -223,7 +228,6 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         parametroDepartamento = new Departamento();
         parametroCarrera = new Carrera();
         parametroPlanEstudio = new PlanEstudios();
-        inicializarFiltros();
         listaDepartamentos = null;
         listaCarreras = null;
         listaPlanesEstudios = null;
@@ -233,6 +237,33 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         tamTotalAsignatura = 0;
         bloquearPagAntAsignatura = true;
         bloquearPagSigAsignatura = true;
+        cantidadRegistros = "N/A";
+        inicializarFiltros();
+    }
+
+    public void limpiarDatos() {
+        cantidadRegistros = "N/A";
+        activarDepartamento = true;
+        activarCarrera = true;
+        activarPlanEstudio = true;
+        activarExport = true;
+        parametroNombre = null;
+        parametroCreditos = null;
+        parametroDepartamento = new Departamento();
+        parametroCarrera = new Carrera();
+        parametroPlanEstudio = new PlanEstudios();
+
+        listaDepartamentos = null;
+        listaCarreras = null;
+        listaPlanesEstudios = null;
+
+        listaAsignaturas = null;
+        listaAsignaturasTabla = null;
+        posicionAsignaturaTabla = 0;
+        tamTotalAsignatura = 0;
+        bloquearPagAntAsignatura = true;
+        bloquearPagSigAsignatura = true;
+        inicializarFiltros();
     }
 
     public void actualizarDepartamentos() {
@@ -462,6 +493,14 @@ public class ControllerAdministrarAsignaturas implements Serializable {
 
     public void setBloquearPagAntAsignatura(boolean bloquearPagAntAsignatura) {
         this.bloquearPagAntAsignatura = bloquearPagAntAsignatura;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

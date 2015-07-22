@@ -6,10 +6,15 @@
 package com.sirelab.controller.variables;
 
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
+import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -30,13 +35,17 @@ public class ControllerDetallesTipoPerfil implements Serializable {
     @EJB
     GestionarVariableTiposPerfilesBOInterface gestionarVariableTiposPerfilesBO;
 
-    private String inputNombre, inputCodigo, inputNombreRegistro, inputCodigoRegistro;
-    private boolean validacionesNombre, validacionesCodigo, validacionesNombreRegistro, validacionesCodigoRegistro;
+    private String inputCodigo, inputNombreRegistro, inputCodigoRegistro;
+    private boolean validacionesCodigoRegistro;
     private String mensajeFormulario;
     private BigInteger idTipoPerfil;
     private TipoPerfil tipoPerfilEditar;
     private boolean modificacionRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private List<String> listaTiposPerfiles;
+    private String tipoPerfil;
+    private boolean activarCasillasAdd;
+    private String colorMensaje;
 
     public ControllerDetallesTipoPerfil() {
     }
@@ -48,78 +57,72 @@ public class ControllerDetallesTipoPerfil implements Serializable {
 
     public void recibirIDDetalleTipoPerfil(BigInteger idDetalle) {
         this.idTipoPerfil = idDetalle;
+        listaTiposPerfiles = new ArrayList<String>();
+        listaTiposPerfiles.add("DEPARTAMENTO");
+        listaTiposPerfiles.add("LABORATORIO");
+        listaTiposPerfiles.add("AREA PROFUNDIZACIÓN");
+        activarCasillasAdd = false;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
     }
 
     private void cargarInformacionRegistro() {
         tipoPerfilEditar = gestionarVariableTiposPerfilesBO.consultarTipoPerfilPorID(idTipoPerfil);
         if (null != tipoPerfilEditar) {
             inputCodigo = tipoPerfilEditar.getCodigo();
-            inputNombre = tipoPerfilEditar.getNombre();
+            tipoPerfil = tipoPerfilEditar.getNombre();
             inputNombreRegistro = tipoPerfilEditar.getNombreregistro();
             inputCodigoRegistro = tipoPerfilEditar.getCodigoregistro();
-            validacionesCodigo = true;
             validacionesCodigoRegistro = true;
-            validacionesNombre = true;
-            validacionesNombreRegistro = true;
             modificacionRegistro = false;
         }
 
     }
 
-    public void validarNombre() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())) {
-            if (Utilidades.validarCaracterString(inputNombre)) {
-                validacionesNombre = true;
-            } else {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
-            }
-        } else {
-            validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+    public void actualizarTipoPerfil() {
+        if ("DEPARTAMENTO".equalsIgnoreCase(tipoPerfil)) {
+            inputCodigo = "3";
+            activarCasillasAdd = false;
         }
-        modificacionRegistro = true;
-    }
-
-    public void validarCodigo() {
-        if (Utilidades.validarNulo(inputCodigo) && (!inputCodigo.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputCodigo)) {
-                validacionesCodigo = true;
-            } else {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto."));
-            }
-        } else {
-            validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto."));
+        if ("LABORATORIO".equalsIgnoreCase(tipoPerfil)) {
+            inputCodigo = "4";
+            activarCasillasAdd = false;
         }
-        modificacionRegistro = true;
-    }
-
-    public void validarNombreRegistro() {
-        if (Utilidades.validarNulo(inputNombreRegistro) && (!inputNombreRegistro.isEmpty())) {
-            if (Utilidades.validarCaracterString(inputNombreRegistro)) {
-                validacionesNombreRegistro = true;
-            } else {
-                validacionesNombreRegistro = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombreRegistro", new FacesMessage("El nombre se encuentra incorrecto."));
-            }
-        } else {
-            validacionesNombreRegistro = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputNombreRegistro", new FacesMessage("El nombre se encuentra incorrecto."));
+        if ("AREA PROFUNDIZACIÓN".equalsIgnoreCase(tipoPerfil)) {
+            inputCodigo = "5";
+            activarCasillasAdd = false;
         }
-        modificacionRegistro = true;
     }
 
     public void validarCodigoRegistro() {
         if (Utilidades.validarNulo(inputCodigoRegistro) && (!inputCodigoRegistro.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputCodigoRegistro)) {
-                validacionesCodigoRegistro = true;
-            } else {
-                validacionesCodigoRegistro = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo se encuentra incorrecto."));
+            if (inputCodigo.equalsIgnoreCase("3")) {
+                Departamento registro = gestionarVariableTiposPerfilesBO.consultarDepartamentoPorCodigo(inputCodigoRegistro);
+                if (null != registro) {
+                    inputNombreRegistro = registro.getNombredepartamento();
+                } else {
+                    validacionesCodigoRegistro = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo no se encuentre registrado."));
+                }
+            }
+            if (inputCodigo.equalsIgnoreCase("4")) {
+                Laboratorio registro = gestionarVariableTiposPerfilesBO.consultaLaboratorioPorCodigo(inputCodigoRegistro);
+                if (null != registro) {
+                    inputNombreRegistro = registro.getNombrelaboratorio();
+                } else {
+                    validacionesCodigoRegistro = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo no se encuentre registrado."));
+                }
+            }
+            if (inputCodigo.equalsIgnoreCase("5")) {
+                AreaProfundizacion registro = gestionarVariableTiposPerfilesBO.consultarAreaProfundizacionPorCodigo(inputCodigoRegistro);
+                if (null != registro) {
+                    inputNombreRegistro = registro.getNombrearea();
+                } else {
+                    validacionesCodigoRegistro = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo no se encuentre registrado."));
+                }
             }
         } else {
             validacionesCodigoRegistro = false;
@@ -130,15 +133,6 @@ public class ControllerDetallesTipoPerfil implements Serializable {
 
     private boolean validarValidacionesRegistro() {
         boolean retorno = true;
-        if (validacionesNombre == false) {
-            retorno = false;
-        }
-        if (validacionesNombreRegistro == false) {
-            retorno = false;
-        }
-        if (validacionesCodigo == false) {
-            retorno = false;
-        }
         if (validacionesCodigoRegistro == false) {
             retorno = false;
         }
@@ -161,15 +155,19 @@ public class ControllerDetallesTipoPerfil implements Serializable {
             if (validarValidacionesRegistro() == true) {
                 if (validarCodigoRepetido() == true) {
                     almacenarModificacionRegistro();
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     cargarInformacionRegistro();
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "green";
             mensajeFormulario = "No existen modificaciones para ser almacenadas.";
         }
     }
@@ -178,7 +176,7 @@ public class ControllerDetallesTipoPerfil implements Serializable {
         try {
             tipoPerfilEditar.setCodigo(inputCodigo);
             tipoPerfilEditar.setCodigoregistro(inputCodigoRegistro);
-            tipoPerfilEditar.setNombre(inputNombre);
+            tipoPerfilEditar.setNombre(tipoPerfil);
             tipoPerfilEditar.setNombreregistro(inputNombreRegistro);
             gestionarVariableTiposPerfilesBO.editarTipoPerfil(tipoPerfilEditar);
         } catch (Exception e) {
@@ -188,16 +186,16 @@ public class ControllerDetallesTipoPerfil implements Serializable {
     }
 
     public void cancelarTipoPerfil() {
+        tipoPerfil = "DEPARTAMENTO";
+        inputCodigo = "3";
+        activarCasillasAdd = false;
         idTipoPerfil = null;
-        inputNombre = null;
         inputCodigo = null;
         inputNombreRegistro = null;
         inputCodigoRegistro = null;
-        validacionesNombre = false;
-        validacionesCodigo = false;
-        validacionesNombreRegistro = false;
         validacionesCodigoRegistro = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "green";
         modificacionRegistro = false;
     }
 
@@ -207,12 +205,28 @@ public class ControllerDetallesTipoPerfil implements Serializable {
     }
 
     //GET-SET
-    public String getInputNombre() {
-        return inputNombre;
+    public List<String> getListaTiposPerfiles() {
+        return listaTiposPerfiles;
     }
 
-    public void setInputNombre(String inputNombre) {
-        this.inputNombre = inputNombre;
+    public void setListaTiposPerfiles(List<String> listaTiposPerfiles) {
+        this.listaTiposPerfiles = listaTiposPerfiles;
+    }
+
+    public String getTipoPerfil() {
+        return tipoPerfil;
+    }
+
+    public void setTipoPerfil(String tipoPerfil) {
+        this.tipoPerfil = tipoPerfil;
+    }
+
+    public boolean isActivarCasillasAdd() {
+        return activarCasillasAdd;
+    }
+
+    public void setActivarCasillasAdd(boolean activarCasillasAdd) {
+        this.activarCasillasAdd = activarCasillasAdd;
     }
 
     public String getInputCodigo() {
@@ -245,6 +259,14 @@ public class ControllerDetallesTipoPerfil implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

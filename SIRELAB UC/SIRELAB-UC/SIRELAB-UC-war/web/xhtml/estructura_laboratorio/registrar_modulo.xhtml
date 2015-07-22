@@ -52,7 +52,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Modulos/Bancos</a></li>
@@ -75,25 +75,25 @@
                         <fieldset>
                             <legend class="text-info">Datos Basicos</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Detalle Modulo*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarModulo.nuevoDetalleModulo}" required="true" class="form-control" id="nuevoDetalleModulo" requiredMessage="El campo Detalle es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarModulo.validarDetalleModulo()}" execute="nuevoDetalleModulo" render="nuevoDetalleModulo msnDetalleModulo" />
-                                </h:inputText>
-                                <h6><h:message id="msnDetalleModulo" for="nuevoDetalleModulo" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
                                 <strong><h:outputText value="Codigo Modulo*"/></strong>
-                                <h:inputText maxlength="20"  value="#{controllerRegistrarModulo.nuevoCodigoModulo}" required="true" class="form-control" id="nuevoCodigoModulo" requiredMessage="El campo Codigo es obligatorio.">
+                                <h:inputText maxlength="20"  value="#{controllerRegistrarModulo.nuevoCodigoModulo}" disabled="#{controllerRegistrarModulo.activarCasillas}" required="true" class="form-control" id="nuevoCodigoModulo" requiredMessage="El campo Codigo es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarModulo.validarCodigoModulo()}" execute="nuevoCodigoModulo" render="nuevoCodigoModulo msnCodigoModulo" />
                                 </h:inputText>
                                 <h6><h:message id="msnCodigoModulo" for="nuevoCodigoModulo" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Detalle Modulo*"/></strong>
+                                <h:inputText maxlength="45" value="#{controllerRegistrarModulo.nuevoDetalleModulo}" disabled="#{controllerRegistrarModulo.activarCasillas}" required="true" class="form-control" id="nuevoDetalleModulo" requiredMessage="El campo Detalle es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarModulo.validarDetalleModulo()}" execute="nuevoDetalleModulo" render="nuevoDetalleModulo msnDetalleModulo" />
+                                </h:inputText>
+                                <h6><h:message id="msnDetalleModulo" for="nuevoDetalleModulo" style="color: red"/></h6>
                             </div>
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Costo Alquiler"/></strong>
                                     <div class="input-group">
-                                        <h:inputText maxlength="10"  value="#{controllerRegistrarModulo.nuevoCostoModulo}" required="true" class="form-control" id="nuevoCostoModulo" >
+                                        <h:inputText maxlength="10"  value="#{controllerRegistrarModulo.nuevoCostoModulo}" disabled="#{controllerRegistrarModulo.activarCasillas}" required="true" class="form-control" id="nuevoCostoModulo" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarModulo.validarCostoAlquilerModulo()}" execute="nuevoCostoModulo" render="nuevoCostoModulo msnCostoModulo" />
                                         </h:inputText>
                                         <span class="input-group-addon">$</span>
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Costo Inversión"/></strong>
                                     <div class="input-group">
-                                        <h:inputText maxlength="12"  value="#{controllerRegistrarModulo.nuevoInversionModulo}" class="form-control" id="nuevoInversionModulo" >
+                                        <h:inputText maxlength="12"  value="#{controllerRegistrarModulo.nuevoInversionModulo}" disabled="#{controllerRegistrarModulo.activarCasillas}" class="form-control" id="nuevoInversionModulo" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarModulo.validarInversionModulo()}" execute="nuevoInversionModulo" render="nuevoInversionModulo msnInversionModulo" />
                                         </h:inputText>
                                         <span class="input-group-addon">$</span>
@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Capacidad Modulo"/></strong>
-                                    <h:inputText maxlength="2"  value="#{controllerRegistrarModulo.nuevoCapacidadModulo}" class="form-control" id="nuevoCapacidadModulo" >
+                                    <h:inputText maxlength="2"  value="#{controllerRegistrarModulo.nuevoCapacidadModulo}" disabled="#{controllerRegistrarModulo.activarCasillas}" class="form-control" id="nuevoCapacidadModulo" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarModulo.validarCapacidadModulo()}" execute="nuevoCapacidadModulo" render="nuevoCapacidadModulo msnCapacidadModulo" />
                                     </h:inputText>
                                     <h6><h:message id="msnCapacidadModulo" for="nuevoCapacidadModulo" style="color: red"/></h6>
@@ -124,7 +124,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Laboratorio Por Area*"/></strong>
                                 <h:selectOneMenu value="#{controllerRegistrarModulo.nuevoLaboratorioPorAreaModulo}"
-                                                 class="form-control"
+                                                 class="form-control" disabled="#{controllerRegistrarModulo.activarCasillas}"
                                                  id="nuevoLaboratorioPorAreaModulo">
                                     <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarModulo.listaLaboratoriosPorAreas}" var="area"
@@ -148,9 +148,19 @@
                                 <h6><h:message id="msnSalaLaboratorioModulo" for="nuevoSalaLaboratorioModulo" style="color: red"/></h6>
                             </div>
                         </fieldset>
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarModulo.mensajeFormulario}"/></strong>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarModulo.mensajeFormulario}" style="color: #{controllerRegistrarModulo.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton class="btn btn-success" value="Registrar" actionListener="#{controllerRegistrarModulo.registrarNuevoModulo()}">
                                 <f:ajax execute="@form" render="form" />
@@ -158,6 +168,11 @@
                             <span></span>
                             <span></span>
                             <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_modulos" actionListener="#{controllerRegistrarModulo.limpiarRegistroModuloLaboratorio()}" immediate="true">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarModulo.activarLimpiar}" actionListener="#{controllerRegistrarModulo.cambiarActivarCasillas()}" >
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

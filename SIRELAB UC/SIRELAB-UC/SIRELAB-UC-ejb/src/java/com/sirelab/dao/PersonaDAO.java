@@ -216,27 +216,27 @@ public class PersonaDAO implements PersonaDAOInterface {
                         camposFiltro++;
                     }
                     if ("parametroNombre".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
+                        wheres.append(alias)
                                 .append(".nombrespersona")
-                                .append(") Like :parametroNombre");
+                                .append(" Like :parametroNombre");
                         camposFiltro++;
                     }
                     if ("parametroApellido".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
+                        wheres.append(alias)
                                 .append(".apellidospersona")
-                                .append(") Like :parametroApellido");
+                                .append(" Like :parametroApellido");
                         camposFiltro++;
                     }
                     if ("parametroDocumento".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
+                        wheres.append(alias)
                                 .append(".identificacionpersona")
-                                .append(") Like :parametroDocumento");
+                                .append(" Like :parametroDocumento");
                         camposFiltro++;
                     }
                     if ("parametroCorreo".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
+                        wheres.append(alias)
                                 .append(".emailpersona")
-                                .append(") Like :parametroCorreo");
+                                .append(" Like :parametroCorreo");
                         camposFiltro++;
                     }
                 }

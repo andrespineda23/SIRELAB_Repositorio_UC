@@ -52,7 +52,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Salas</a></li>
@@ -75,23 +75,23 @@
                         <fieldset>
                             <legend class="text-info">Datos Basicos</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Nombre Sala*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarSala.nuevoNombreSala}" required="true" class="form-control" id="nuevoNombreSala"  requiredMessage="El campo Nombre es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarNombreSala()}" execute="nuevoNombreSala" render="nuevoNombreSala msnNombreSala" />
-                                </h:inputText>
-                                <h6><h:message id="msnNombreSala" for="nuevoNombreSala" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
                                 <strong><h:outputText value="Codigo Sala*"/></strong>
-                                <h:inputText maxlength="20"  value="#{controllerRegistrarSala.nuevoCodigoSala}" required="true" class="form-control" id="nuevoCodigoSala" requiredMessage="El campo Codigo es obligatorio-">
+                                <h:inputText maxlength="20"  value="#{controllerRegistrarSala.nuevoCodigoSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoCodigoSala" requiredMessage="El campo Codigo es obligatorio-">
                                     <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCodigoSala()}" execute="nuevoCodigoSala" render="nuevoCodigoSala msnCodigoSala" />
                                 </h:inputText>
                                 <h6><h:message id="msnCodigoSala" for="nuevoCodigoSala" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
+                                <strong><h:outputText value="Nombre Sala*"/></strong>
+                                <h:inputText maxlength="45" value="#{controllerRegistrarSala.nuevoNombreSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoNombreSala"  requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarNombreSala()}" execute="nuevoNombreSala" render="nuevoNombreSala msnNombreSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombreSala" for="nuevoNombreSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
                                 <strong><h:outputText value="Costo Alquiler*"/></strong>
                                 <div class="input-group">
-                                    <h:inputText maxlength="10"  value="#{controllerRegistrarSala.nuevoCostoSala}" required="true" class="form-control" id="nuevoCostoSala" requiredMessage="El campo Costo es obligatorio.">
+                                    <h:inputText maxlength="10"  value="#{controllerRegistrarSala.nuevoCostoSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoCostoSala" requiredMessage="El campo Costo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCostoAlquilerSala()}" execute="nuevoCostoSala" render="nuevoCostoSala msnCostoSala" />
                                     </h:inputText>
                                     <span class="input-group-addon">$</span>
@@ -100,14 +100,14 @@
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Capacidad Maxima*"/></strong>
-                                <h:inputText maxlength="2"  value="#{controllerRegistrarSala.nuevoCapacidadSala}" required="true" class="form-control" id="nuevoCapacidadSala" requiredMessage="El campo Capacidada es obligatorio.">
+                                <h:inputText maxlength="2"  value="#{controllerRegistrarSala.nuevoCapacidadSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoCapacidadSala" requiredMessage="El campo Capacidada es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCapacidadSala()}" execute="nuevoCapacidadSala" render="nuevoCapacidadSala msnCapacidadSala" />
                                 </h:inputText>
                                 <h6><h:message id="msnCapacidadSala" for="nuevoCapacidadSala" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Descripción*"/></strong>
-                                <h:inputText maxlength="500"  value="#{controllerRegistrarSala.nuevoDescripcionSala}" required="true" class="form-control" id="nuevoDescripcionSala" requiredMessage="El campo Descripcion es obligatorio.">
+                                <h:inputText maxlength="500"  value="#{controllerRegistrarSala.nuevoDescripcionSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoDescripcionSala" requiredMessage="El campo Descripcion es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarSala.validarDescripcionSala()}" execute="nuevoDescripcionSala" render="nuevoDescripcionSala msnDescripcionSala" />
                                 </h:inputText>
                                 <h6><h:message id="msnDescripcionSala" for="nuevoDescripcionSala" style="color: red"/></h6>
@@ -117,7 +117,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Costo Inversión"/></strong>
                                     <div class="input-group">
-                                        <h:inputText maxlength="12"  value="#{controllerRegistrarSala.nuevoInversionSala}" class="form-control" id="nuevoInversionSala" >
+                                        <h:inputText maxlength="12"  value="#{controllerRegistrarSala.nuevoInversionSala}" disabled="#{controllerRegistrarSala.activarCasillas}" class="form-control" id="nuevoInversionSala" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarSala.validarInversionSala()}" execute="nuevoInversionSala" render="nuevoInversionSala msnInversionSala" />
                                         </h:inputText>
                                         <span class="input-group-addon">$</span>
@@ -131,7 +131,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Laboratorio Por Area de Profundización*"/></strong>
                                 <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioPorArea}"
-                                                 class="form-control"
+                                                 class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}"
                                                  id="nuevoLaboratorioPorArea">
                                     <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarSala.listaLaboratoriosPorAreas}" var="laboratorio"
@@ -144,7 +144,7 @@
                             <div class="form-group">
                                 <strong><h:outputText value="Sede*"/></strong>
                                 <h:selectOneMenu value="#{controllerRegistrarSala.nuevoSedeSala}"
-                                                 class="form-control"
+                                                 class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}"
                                                  id="nuevoSedeSala">
                                     <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarSala.listaSedes}" var="sede"
@@ -169,15 +169,25 @@
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
+                                <h:inputText maxlength="45" disabled="#{controllerRegistrarSala.activarCasillas}" value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarSala.validarUbicacionSala()}" execute="nuevoUbicacionSala" render="nuevoUbicacionSala msnUbicacionSala" />
                                 </h:inputText>
                                 <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
                             </div>
                         </fieldset>
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarSala.mensajeFormulario}"/></strong>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarSala.mensajeFormulario}" style="color: #{controllerRegistrarSala.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton class="btn btn-success" value="Registrar" actionListener="#{controllerRegistrarSala.registrarNuevoSala()}">
                                 <f:ajax execute="@form" render="form" />
@@ -185,6 +195,11 @@
                             <span></span>
                             <span></span>
                             <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_salas" actionListener="#{controllerRegistrarSala.limpiarRegistroSalaLaboratorio()}" immediate="true">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarSala.activarLimpiar}" actionListener="#{controllerRegistrarSala.cambiarActivarCasillas()}" >
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

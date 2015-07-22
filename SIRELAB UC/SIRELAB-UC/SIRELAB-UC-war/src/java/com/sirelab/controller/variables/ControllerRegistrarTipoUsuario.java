@@ -33,6 +33,9 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
     private boolean validacionesNombre;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarTipoUsuario() {
     }
@@ -41,7 +44,10 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
     public void init() {
         inputNombre = null;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -62,9 +68,11 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
     public void registrarTipoUsuario() {
         if (validacionesNombre == true) {
             almacenarRegistroNuevo();
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
             restaurarFormulario();
+            activarLimpiar = false;
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -74,13 +82,15 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
             TipoUsuario tipoNuevo = new TipoUsuario();
             tipoNuevo.setNombretipousuario(inputNombre);
             gestionarVariableTiposUsuarioBO.crearTipoUsuario(tipoNuevo);
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo: " + e.toString());
         }
     }
-    
-    public String cerrarPagina(){
+
+    public String cerrarPagina() {
         cancelarTipoUsuario();
         return "variables_usuario";
     }
@@ -88,7 +98,19 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
     public void cancelarTipoUsuario() {
         inputNombre = null;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     private void restaurarFormulario() {
@@ -111,6 +133,30 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

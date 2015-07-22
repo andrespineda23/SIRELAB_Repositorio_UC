@@ -47,6 +47,7 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
     private boolean validacionesDepartamento, validacionesLaboratorio, validacionesArea;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesLaboratorioPorArea() {
     }
@@ -58,17 +59,20 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
         validacionesArea = true;
         validacionesDepartamento = true;
         validacionesLaboratorio = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionLaboratoriosPorAreas() {
+    public String restaurarInformacionLaboratoriosPorAreas() {
         validacionesArea = true;
         validacionesDepartamento = true;
         validacionesLaboratorio = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         laboratorioPorAreaDetalles = new LaboratoriosPorAreas();
         recibirIDLaboratoriosPorAreasDetalles(this.idLaboratorioPorArea);
+        return "administrar_laboratoriosporareas";
     }
 
     public void asignarValoresVariablesLaboratoriosPorAreas() {
@@ -153,14 +157,18 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
             if (Utilidades.validarNulo(editarLaboratorio)) {
                 if (validarRegistroRepetido() == true) {
                     almacenarModificarLaboratorioPorAreaEnSistema();
+                    colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Seleccione el laboratorio antes de continuar.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -171,7 +179,7 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
             laboratorioPorAreaDetalles.setLaboratorio(editarLaboratorio);
             gestionarPlantaLaboratoriosPorAreasBO.editarLaboratoriosPorAreas(laboratorioPorAreaDetalles);;
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificarLaboratorioPorAreaEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificarLaboratorioPorAreaEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarModificarLaboratorioPorAreaEnSistema : " + e.toString());
 
         }
@@ -258,4 +266,12 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
+    public String getColorMensaje() {
+        return colorMensaje;
     }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+}

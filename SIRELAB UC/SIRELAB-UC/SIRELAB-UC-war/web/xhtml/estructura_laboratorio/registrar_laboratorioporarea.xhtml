@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Laboratorios y Areas de Profundización</a></li>
@@ -80,7 +80,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Departamento*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarLaboratorioPorArea.nuevoDepartamento}"
-                                                     class="form-control"
+                                                     class="form-control" disabled="#{controllerRegistrarLaboratorioPorArea.activarCasillas}"
                                                      id="nuevoDepartamento">
                                         <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarLaboratorioPorArea.listaDepartamentos}" var="departamento"
@@ -106,7 +106,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Area de Profundización*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarLaboratorioPorArea.nuevoArea}"
-                                                     class="form-control"
+                                                     class="form-control" disabled="#{controllerRegistrarLaboratorioPorArea.activarCasillas}"
                                                      id="nuevoArea">
                                         <f:selectItem itemLabel="Seleccione Area Profundización" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarLaboratorioPorArea.listaAreasProfundizacion}" var="area"
@@ -124,9 +124,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarLaboratorioPorArea.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarLaboratorioPorArea.mensajeFormulario}" style="color: #{controllerRegistrarLaboratorioPorArea.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarLaboratorioPorArea.registrarNuevoLaboratorioPorArea()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -134,6 +144,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_laboratoriosporareas" actionListener="#{controllerRegistrarLaboratorioPorArea.cancelarRegistroLaboratorioPorArea()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarLaboratorioPorArea.activarLimpiar}" actionListener="#{controllerRegistrarLaboratorioPorArea.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

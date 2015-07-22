@@ -44,12 +44,19 @@ public class ControllerRegistrarModulo implements Serializable {
     private boolean validacionesLaboratorio, validacionesSala;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarModulo() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         validacionesDetalle = false;
         validacionesCodigo = false;
         validacionesLaboratorio = false;
@@ -57,7 +64,6 @@ public class ControllerRegistrarModulo implements Serializable {
         validacionesCapacidad = true;
         validacionesCosto = true;
         validacionesInversion = true;
-        mensajeFormulario = "";
         activarNuevoSala = true;
         nuevoCodigoModulo = null;
         nuevoDetalleModulo = null;
@@ -70,6 +76,10 @@ public class ControllerRegistrarModulo implements Serializable {
     }
 
     public void limpiarRegistroModuloLaboratorio() {
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         validacionesDetalle = false;
         validacionesCodigo = false;
         validacionesLaboratorio = false;
@@ -77,7 +87,6 @@ public class ControllerRegistrarModulo implements Serializable {
         validacionesCapacidad = true;
         validacionesCosto = true;
         validacionesInversion = true;
-        mensajeFormulario = "";
         activarNuevoSala = true;
         nuevoCodigoModulo = null;
         nuevoDetalleModulo = null;
@@ -220,11 +229,15 @@ public class ControllerRegistrarModulo implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenaNuevoModuloEnSistema();
+                limpiarFormulario();
+                activarLimpiar = false;
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -240,9 +253,10 @@ public class ControllerRegistrarModulo implements Serializable {
             salaNuevo.setEstadomodulo(true);
             salaNuevo.setSalalaboratorio(nuevoSalaLaboratorioModulo);
             gestionarPlantaModulosBO.crearNuevoModuloLaboratorio(salaNuevo);
-            limpiarFormulario();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString());
         }
     }
@@ -264,6 +278,15 @@ public class ControllerRegistrarModulo implements Serializable {
         nuevoInversionModulo = null;
         nuevoSalaLaboratorioModulo = null;
         nuevoLaboratorioPorAreaModulo = null;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -356,6 +379,30 @@ public class ControllerRegistrarModulo implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

@@ -43,12 +43,19 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     private BigInteger idEquipo;
     private EquipoElemento equipoElemento;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarHojaVidaEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         inputDetalle = null;
         inputFechaEvento = new Date();
         inputFechaRegistro = new Date();
@@ -58,7 +65,6 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         validacionesTipo = false;
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
-        mensajeFormulario = "";
         BasicConfigurator.configure();
     }
 
@@ -139,12 +145,15 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         if (validarValidacionesRegistro() == true) {
             if ((inputFechaRegistro.after(inputFechaEvento)) || (inputFechaRegistro.equals(inputFechaEvento))) {
                 almacenarRegistroNuevo();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 restaurarFormulario();
+                activarLimpiar = false;
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "La fecha registro es menor que la fecha evento, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -158,20 +167,25 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
             reggNuevo.setTipoevento(inputTipoEvento);
             reggNuevo.setEquipoelemento(equipoElemento);
             gestionarPlantaHojasVidaEquiposBO.crearHojaVidaEquipo(reggNuevo);
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo:  "+e.toString());
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString());
         }
     }
 
     public void cancelarHojaVidaEquipo() {
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         inputDetalle = null;
         inputFechaEvento = new Date();
         inputFechaRegistro = new Date();
         validacionesDetalle = false;
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
-        mensajeFormulario = "";
     }
 
     public String cerrarPagina() {
@@ -188,6 +202,15 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         validacionesTipo = false;
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -256,6 +279,30 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     public void setEquipoElemento(EquipoElemento equipoElemento) {
         this.equipoElemento = equipoElemento;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

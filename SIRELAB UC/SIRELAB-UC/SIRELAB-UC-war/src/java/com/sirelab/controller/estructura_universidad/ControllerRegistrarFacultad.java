@@ -33,6 +33,9 @@ public class ControllerRegistrarFacultad implements Serializable {
     private boolean validacionesNombre, validacionesCodigo;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarFacultad() {
     }
@@ -43,7 +46,10 @@ public class ControllerRegistrarFacultad implements Serializable {
         nuevoNombre = null;
         validacionesCodigo = false;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -96,6 +102,8 @@ public class ControllerRegistrarFacultad implements Serializable {
     public void registrarNuevoFacultad() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoFacultadEnSistema();
+            limpiarRegistro();
+            activarLimpiar = false;
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -108,11 +116,20 @@ public class ControllerRegistrarFacultad implements Serializable {
             nuevaFacultad.setCodigofacultad(nuevoCodigo);
             nuevaFacultad.setNombrefacultad(nuevoNombre);
             gestionarFacultadBO.crearNuevaFacultad(nuevaFacultad);
-            cancelarRegistroFacultad();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarFacultad almacenarNuevoFacultadEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarFacultad almacenarNuevoFacultadEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarFacultad almacenarNuevoFacultadEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarRegistro() {
+        nuevoCodigo = null;
+        nuevoNombre = null;
+        validacionesCodigo = false;
+        validacionesNombre = false;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroFacultad() {
@@ -120,7 +137,19 @@ public class ControllerRegistrarFacultad implements Serializable {
         nuevoNombre = null;
         validacionesCodigo = false;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -146,6 +175,30 @@ public class ControllerRegistrarFacultad implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

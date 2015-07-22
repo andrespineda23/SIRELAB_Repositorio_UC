@@ -49,12 +49,19 @@ public class ControllerRegistrarAsignatura implements Serializable {
     private boolean validacionesDepartamento, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarAsignatura() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         activarNuevoCarrera = true;
         activarNuevoPlanEstudio = true;
         nuevoCarrera = null;
@@ -69,7 +76,6 @@ public class ControllerRegistrarAsignatura implements Serializable {
         validacionesDepartamento = false;
         validacionesNombre = false;
         validacionesPlanEstudio = false;
-        mensajeFormulario = "";
         BasicConfigurator.configure();
     }
 
@@ -196,11 +202,15 @@ public class ControllerRegistrarAsignatura implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarNuevoAsignaturaEnSistema();
+                limpiarFormulario();
+                activarLimpiar = false;
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el plan de estudio seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -214,9 +224,10 @@ public class ControllerRegistrarAsignatura implements Serializable {
             asignaturaNueva.setNumerocreditos(creditos.intValue());
             asignaturaNueva.setPlanestudios(nuevoPlanEstudio);
             gestionarAsignaturasBO.crearNuevoAsignatura(asignaturaNueva);
-            limpiarFormulario();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema : " + e.toString());
         }
     }
@@ -254,10 +265,22 @@ public class ControllerRegistrarAsignatura implements Serializable {
         validacionesDepartamento = false;
         validacionesNombre = false;
         validacionesPlanEstudio = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         listaCarreras = null;
         listaDepartamentos = null;
         listaPlanesEstudios = null;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -358,6 +381,30 @@ public class ControllerRegistrarAsignatura implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

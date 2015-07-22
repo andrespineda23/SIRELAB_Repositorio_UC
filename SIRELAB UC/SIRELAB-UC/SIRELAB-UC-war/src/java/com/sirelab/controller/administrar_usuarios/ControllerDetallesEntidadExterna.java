@@ -49,12 +49,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     private boolean validacionesDireccion, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesEntidadExterna() {
     }
 
     @PostConstruct
     public void init() {
+        colorMensaje = "black";
         validacionesNombre = true;
         validacionesApellido = true;
         validacionesCorreo = true;
@@ -65,7 +67,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         validacionesIDEntidad = true;
         validacionesEmailEntidad = true;
         validacionesNombreEntidad = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
         //
         activarEditar = true;
         disabledEditar = false;
@@ -124,12 +126,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     /**
      * Metodo encargado de restaurar la información de la entidad externa
      */
-    public void restaurarInformacionEntidadExterna() {
+    public String restaurarInformacionEntidadExterna() {
         entidadExternaDetalles = new EntidadExterna();
         entidadExternaDetalles = administrarEntidadesExternasBO.obtenerEntidadExternaPorIDEntidadExterna(idEntidadExterna);
         if (entidadExternaDetalles.getPersona().getUsuario().getEstado() == true) {
@@ -154,7 +158,9 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         validacionesIDEntidad = true;
         validacionesEmailEntidad = true;
         validacionesNombreEntidad = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        return "administrar_entidadesxternas";
     }
 
     public void validarNombreEntidadExterna() {
@@ -214,7 +220,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     public void validarIdentificacionEntidadExterna() {
         if (Utilidades.validarNulo(identificacionEntidadExterna) && (!identificacionEntidadExterna.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(identificacionEntidadExterna)) {
+            if (Utilidades.validarNumeroIdentificacion(identificacionEntidadExterna)) {
                 EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorDocumento(identificacionEntidadExterna);
                 if (null == registro) {
                     validacionesID = true;
@@ -262,7 +268,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     public void validarDireccionEntidadExterna() {
         if ((Utilidades.validarNulo(direccionEntidadExterna)) && (!direccionEntidadExterna.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(direccionEntidadExterna)) {
+            if (Utilidades.validarDirecciones(direccionEntidadExterna)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -362,11 +368,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         if (modificacionRegistro == true) {
             if (validarResultadosValidacion() == true) {
                 modificarInformacionEntidadExterna();
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
         }
     }
@@ -391,7 +400,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
             restaurarInformacionEntidadExterna();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna:  "+e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna:  " + e.toString());
             System.out.println("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna : " + e.toString());
         }
     }
@@ -415,12 +424,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 entidadExternaDetalles.getPersona().getUsuario().setEstado(bool);
                 administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
                 restaurarInformacionEntidadExterna();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha activado la entidad/convenio.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEntidadExterna activarEntidadExterna:  "+e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna activarEntidadExterna:  " + e.toString());
             System.out.println("Error ControllerDetallesEntidadesExternas activarEntidadExterna : " + e.toString());
         }
     }
@@ -436,12 +447,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
                 entidadExternaDetalles = new EntidadExterna();
                 restaurarInformacionEntidadExterna();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado la entidad/convenio.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEntidadExterna inactivarEntidadExterna:  "+e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna inactivarEntidadExterna:  " + e.toString());
             System.out.println("Error ControllerDetallesEntidadesExternas inactivarEntidadExterna : " + e.toString());
         }
     }
@@ -597,6 +610,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

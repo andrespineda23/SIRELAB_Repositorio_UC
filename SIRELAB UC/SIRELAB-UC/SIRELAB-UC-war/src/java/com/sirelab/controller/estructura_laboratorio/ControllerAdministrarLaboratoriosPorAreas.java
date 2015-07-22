@@ -58,12 +58,14 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
     private UsuarioLogin usuarioLoginSistema;
     private boolean perfilConsulta;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarLaboratoriosPorAreas() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarLaboratorio = true;
         parametroDepartamento = new Departamento();
         parametroLaboratorio = new Laboratorio();
@@ -148,12 +150,14 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
                     listaLaboratoriosPorAreasTabla = new ArrayList<LaboratoriosPorAreas>();
                     tamTotalLaboratorioPorArea = listaLaboratoriosPorAreas.size();
                     posicionLaboratorioPorAreaTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalLaboratorioPorArea);
                     cargarDatosTablaLaboratorioPorArea();
                 } else {
                     listaLaboratoriosPorAreasTabla = null;
                     tamTotalLaboratorioPorArea = 0;
                     posicionLaboratorioPorAreaTabla = 0;
                     bloquearPagAntLaboratorioPorArea = true;
+                    cantidadRegistros = String.valueOf(tamTotalLaboratorioPorArea);
                     bloquearPagSigLaboratorioPorArea = true;
                 }
             } else {
@@ -161,10 +165,11 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
                 tamTotalLaboratorioPorArea = 0;
                 posicionLaboratorioPorAreaTabla = 0;
                 bloquearPagAntLaboratorioPorArea = true;
+                cantidadRegistros = String.valueOf(tamTotalLaboratorioPorArea);
                 bloquearPagSigLaboratorioPorArea = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarLaboratoriosPorAreas buscarLaboratoriosPorParametros:  "+e.toString());
+            logger.error("Error ControllerAdministrarLaboratoriosPorAreas buscarLaboratoriosPorParametros:  " + e.toString());
             System.out.println("Error ControllerAdministrarLaboratoriosPorAreas buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
@@ -229,6 +234,28 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         parametroArea = new AreaProfundizacion();
         parametroLaboratorio = new Laboratorio();
         inicializarFiltros();
+
+        listaLaboratorios = null;
+        listaDepartamentos = null;
+        listaAreasProfundizacion = null;
+
+        listaLaboratoriosPorAreas = null;
+        listaLaboratoriosPorAreasTabla = null;
+        posicionLaboratorioPorAreaTabla = 0;
+        tamTotalLaboratorioPorArea = 0;
+        bloquearPagAntLaboratorioPorArea = true;
+        bloquearPagSigLaboratorioPorArea = true;
+        cantidadRegistros = "N/A";
+        return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        cantidadRegistros = "N/A";
+        activarLaboratorio = true;
+        parametroDepartamento = new Departamento();
+        parametroArea = new AreaProfundizacion();
+        parametroLaboratorio = new Laboratorio();
+        inicializarFiltros();
         listaLaboratorios = null;
         listaLaboratoriosPorAreas = null;
         listaLaboratoriosPorAreasTabla = null;
@@ -236,7 +263,6 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         tamTotalLaboratorioPorArea = 0;
         bloquearPagAntLaboratorioPorArea = true;
         bloquearPagSigLaboratorioPorArea = true;
-        return paginaAnterior;
     }
 
     public void actualizarDepartamentos() {
@@ -371,6 +397,14 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
 
     public void setPerfilConsulta(boolean perfilConsulta) {
         this.perfilConsulta = perfilConsulta;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

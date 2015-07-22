@@ -57,12 +57,14 @@ public class ControllerDetallesDocente implements Serializable {
     private boolean validacionesDireccion, validacionesCargo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesDocente() {
     }
 
     @PostConstruct
     public void init() {
+        colorMensaje = "black";
         validacionesNombre = true;
         validacionesCorreoOpcional = true;
         validacionesApellido = true;
@@ -74,7 +76,7 @@ public class ControllerDetallesDocente implements Serializable {
         validacionesCargo = true;
         validacionesFacultad = true;
         validacionesDepartamento = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
         activoDepartamento = true;
         activarEditar = true;
         disabledEditar = false;
@@ -104,6 +106,10 @@ public class ControllerDetallesDocente implements Serializable {
         facultadDocente = docenteDetalles.getDepartamento().getFacultad();
         departamentoDocente = docenteDetalles.getDepartamento();
         correoOpcionalDocente = docenteDetalles.getPersona().getEmailsecundario();
+        listaFacultad = administrarDocentesBO.obtenerListaFacultades();
+        if (Utilidades.validarNulo(facultadDocente)) {
+            listaDepartamento = administrarDocentesBO.obtenerDepartamentosPorIDFacultad(facultadDocente.getIdfacultad());
+        }
     }
 
     /**
@@ -128,21 +134,19 @@ public class ControllerDetallesDocente implements Serializable {
      * Metodo encargado de activar las opciones de editar
      */
     public void activarEditarRegistro() {
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
         activarEditar = false;
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
-        listaFacultad = administrarDocentesBO.obtenerListaFacultades();
-        if (Utilidades.validarNulo(facultadDocente)) {
-            listaDepartamento = administrarDocentesBO.obtenerDepartamentosPorIDFacultad(facultadDocente.getIdfacultad());
-        }
         activoDepartamento = false;
     }
 
     /**
      * Metodo encargado de restaurar la información del docente
      */
-    public void restaurarInformacionDocente() {
+    public String restaurarInformacionDocente() {
         docenteDetalles = new Docente();
         docenteDetalles = administrarDocentesBO.obtenerDocentePorIDDocente(idDocente);
         if (docenteDetalles.getPersona().getUsuario().getEstado() == true) {
@@ -152,7 +156,6 @@ public class ControllerDetallesDocente implements Serializable {
             disabledActivar = false;
             disabledInactivar = true;
         }
-        asignarValoresVariablesDocente();
         validacionesNombre = true;
         validacionesApellido = true;
         validacionesCorreo = true;
@@ -164,7 +167,8 @@ public class ControllerDetallesDocente implements Serializable {
         validacionesCargo = true;
         validacionesFacultad = true;
         validacionesDepartamento = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
@@ -172,6 +176,8 @@ public class ControllerDetallesDocente implements Serializable {
         activoDepartamento = true;
         listaDepartamento = null;
         listaFacultad = null;
+        asignarValoresVariablesDocente();
+        return "administrar_docentes";
     }
 
     /**
@@ -196,7 +202,7 @@ public class ControllerDetallesDocente implements Serializable {
             }
             modificacionesRegistroDocente();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente actualizarFacultades:  "+e.toString());
+            logger.error("Error ControllerDetallesDocente actualizarFacultades:  " + e.toString());
             System.out.println("Error ControllerDetallesDocente actualizarFacultades : " + e.toString());
         }
     }
@@ -281,7 +287,7 @@ public class ControllerDetallesDocente implements Serializable {
 
     public void validarIdentificacionDocente() {
         if (Utilidades.validarNulo(identificacionDocente) && (!identificacionDocente.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(identificacionDocente)) {
+            if (Utilidades.validarNumeroIdentificacion(identificacionDocente)) {
                 Docente registro = administrarDocentesBO.obtenerDocentePorDocumento(identificacionDocente);
                 if (null == registro) {
                     validacionesID = true;
@@ -329,7 +335,7 @@ public class ControllerDetallesDocente implements Serializable {
 
     public void validarDireccionDocente() {
         if ((Utilidades.validarNulo(direccionDocente)) && (!direccionDocente.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(direccionDocente)) {
+            if (Utilidades.validarDirecciones(direccionDocente)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:direccionDocente", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -396,11 +402,14 @@ public class ControllerDetallesDocente implements Serializable {
         if (modificacionRegistro == true) {
             if (validarResultadosValidacion() == true) {
                 modificarInformacionDocente();
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
             restaurarInformacionDocente();
         }
@@ -426,7 +435,7 @@ public class ControllerDetallesDocente implements Serializable {
             administrarDocentesBO.actualizarInformacionDocente(docenteDetalles);
             restaurarInformacionDocente();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente almacenarNuevoDocenteEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesDocente almacenarNuevoDocenteEnSistema:  " + e.toString());
             System.out.println("Error modificarInformacionDocente almacenarNuevoDocenteEnSistema : " + e.toString());
         }
     }
@@ -451,11 +460,13 @@ public class ControllerDetallesDocente implements Serializable {
                 administrarDocentesBO.actualizarInformacionUsuario(docenteDetalles.getPersona().getUsuario());
                 restaurarInformacionDocente();
                 mensajeFormulario = "Se ha activado el docente.";
+                colorMensaje = "green";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente activarDocente:  "+e.toString());
+            logger.error("Error ControllerDetallesDocente activarDocente:  " + e.toString());
             System.out.println("Error ControllerDetallesDocentes activarDocente : " + e.toString());
         }
     }
@@ -471,12 +482,14 @@ public class ControllerDetallesDocente implements Serializable {
                 administrarDocentesBO.actualizarInformacionUsuario(docenteDetalles.getPersona().getUsuario());
                 docenteDetalles = new Docente();
                 restaurarInformacionDocente();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el docente.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente inactivarDocente:  "+e.toString());
+            logger.error("Error ControllerDetallesDocente inactivarDocente:  " + e.toString());
             System.out.println("Error ControllerDetallesDocentes inactivarDocente : " + e.toString());
         }
     }
@@ -664,6 +677,14 @@ public class ControllerDetallesDocente implements Serializable {
 
     public void setCorreoOpcionalDocente(String correoOpcionalDocente) {
         this.correoOpcionalDocente = correoOpcionalDocente;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

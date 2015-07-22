@@ -44,12 +44,19 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     private boolean validacionesDepartamento, validacionesLaboratorio, validacionesArea;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarLaboratorioPorArea() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         nuevoArea = null;
         nuevoDepartamento = null;
         nuevoLaboratorio = null;
@@ -58,7 +65,6 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         validacionesArea = false;
         validacionesDepartamento = false;
         validacionesLaboratorio = false;
-        mensajeFormulario = "";
         BasicConfigurator.configure();
     }
 
@@ -123,11 +129,15 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarRegistroRepetido() == true) {
                 almacenarNuevoLaboratorioPorAreaEnSistema();
+                limpiarFormulario();
+                activarLimpiar = false;
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "EL registro ya se encuentra registrado en el sistema.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -138,9 +148,10 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
             laboratorioNuevo.setAreaprofundizacion(nuevoArea);
             laboratorioNuevo.setLaboratorio(nuevoLaboratorio);
             gestionarPlantaLaboratoriosPorAreasBO.crearLaboratoriosPorAreas(laboratorioNuevo);
-            limpiarFormulario();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema : " + e.toString());
 
         }
@@ -167,7 +178,19 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         validacionesArea = false;
         validacionesDepartamento = false;
         validacionesLaboratorio = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -239,6 +262,30 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

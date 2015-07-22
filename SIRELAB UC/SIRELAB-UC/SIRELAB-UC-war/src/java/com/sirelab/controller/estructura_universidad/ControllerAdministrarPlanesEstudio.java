@@ -59,12 +59,14 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
     //
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarPlanesEstudio() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarDepartamento = true;
         activarCarrera = true;
         activarNuevoDepartamento = true;
@@ -133,6 +135,7 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
                     listaPlanesEstudiosTabla = new ArrayList<PlanEstudios>();
                     tamTotalPlanEstudio = listaPlanesEstudios.size();
                     posicionPlanEstudioTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalPlanEstudio);
                     cargarDatosTablaPlanEstudio();
                 } else {
                     activarExport = true;
@@ -140,6 +143,7 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
                     tamTotalPlanEstudio = 0;
                     posicionPlanEstudioTabla = 0;
                     bloquearPagAntPlanEstudio = true;
+                    cantidadRegistros = String.valueOf(tamTotalPlanEstudio);
                     bloquearPagSigPlanEstudio = true;
                 }
             } else {
@@ -148,9 +152,10 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
                 posicionPlanEstudioTabla = 0;
                 bloquearPagAntPlanEstudio = true;
                 bloquearPagSigPlanEstudio = true;
+                cantidadRegistros = String.valueOf(tamTotalPlanEstudio);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString());
         }
     }
@@ -216,6 +221,31 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
         parametroNombre = null;
         parametroCodigo = null;
         parametroDepartamento = new Departamento();
+        parametroFacultad = new Facultad();
+        parametroCarrera = new Carrera();
+
+        listaDepartamentos = null;
+        listaCarreras = null;
+        listaFacultades = null;
+        cantidadRegistros = "N/A";
+
+        listaPlanesEstudios = null;
+        listaPlanesEstudiosTabla = null;
+        posicionPlanEstudioTabla = 0;
+        tamTotalPlanEstudio = 0;
+        bloquearPagAntPlanEstudio = true;
+        bloquearPagSigPlanEstudio = true;
+        inicializarFiltros();
+    }
+
+    public void limpiarDatos() {
+        activarDepartamento = true;
+        activarCarrera = true;
+        activarExport = true;
+        parametroNombre = null;
+        parametroCodigo = null;
+        parametroDepartamento = new Departamento();
+        cantidadRegistros = "N/A";
         parametroFacultad = new Facultad();
         parametroCarrera = new Carrera();
         listaDepartamentos = null;
@@ -432,6 +462,14 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
 
     public void setBloquearPagAntPlanEstudio(boolean bloquearPagAntPlanEstudio) {
         this.bloquearPagAntPlanEstudio = bloquearPagAntPlanEstudio;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

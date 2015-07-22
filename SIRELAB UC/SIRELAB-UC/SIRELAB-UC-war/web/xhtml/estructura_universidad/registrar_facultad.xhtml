@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Facultades</a></li>
@@ -78,18 +78,18 @@
                             <fieldset>
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Nombre(s) Facultad*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarFacultad.nuevoNombre}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarFacultad.validarNombreFacultad()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
                                     <strong><h:outputText value="Codigo Facultad*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarFacultad.nuevoCodigo}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                    <h:inputText maxlength="10" value="#{controllerRegistrarFacultad.nuevoCodigo}" disabled="#{controllerRegistrarFacultad.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarFacultad.validarCodigoFacultad()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
                                     </h:inputText>
                                     <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Nombre(s) Facultad*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarFacultad.nuevoNombre}" disabled="#{controllerRegistrarFacultad.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarFacultad.validarNombreFacultad()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
                                 </div>
                             </fieldset>
                             <br></br>
@@ -101,9 +101,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarFacultad.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarFacultad.mensajeFormulario}" style="color: #{controllerRegistrarFacultad.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarFacultad.registrarNuevoFacultad()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -111,6 +121,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_facultades" actionListener="#{controllerRegistrarFacultad.cancelarRegistroFacultad()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarFacultad.activarLimpiar}" actionListener="#{controllerRegistrarFacultad.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

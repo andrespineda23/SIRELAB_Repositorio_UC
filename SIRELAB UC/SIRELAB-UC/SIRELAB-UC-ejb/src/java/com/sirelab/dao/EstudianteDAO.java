@@ -245,7 +245,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
                         || ("parametroNombre".equals(entry.getKey()))
                         || ("parametroApellido".equals(entry.getKey()))) {
                     //
-                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue() + "%");
                 }
                 if (("parametroEstado".equals(entry.getKey()))) {
                     tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));

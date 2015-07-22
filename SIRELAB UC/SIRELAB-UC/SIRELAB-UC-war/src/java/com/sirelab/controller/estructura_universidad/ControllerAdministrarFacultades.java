@@ -40,12 +40,14 @@ public class ControllerAdministrarFacultades implements Serializable {
     //
     private boolean activarExport;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarFacultades() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         parametroNombre = null;
         parametroCodigo = null;
         altoTabla = "150";
@@ -87,6 +89,7 @@ public class ControllerAdministrarFacultades implements Serializable {
                     listaFacultadesTabla = new ArrayList<Facultad>();
                     tamTotalFacultad = listaFacultades.size();
                     posicionFacultadTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalFacultad);
                     cargarDatosTablaFacultad();
                 } else {
                     activarExport = true;
@@ -94,6 +97,7 @@ public class ControllerAdministrarFacultades implements Serializable {
                     tamTotalFacultad = 0;
                     posicionFacultadTabla = 0;
                     bloquearPagAntFacultad = true;
+                    cantidadRegistros = String.valueOf(tamTotalFacultad);
                     bloquearPagSigFacultad = true;
                 }
             } else {
@@ -101,10 +105,11 @@ public class ControllerAdministrarFacultades implements Serializable {
                 tamTotalFacultad = 0;
                 posicionFacultadTabla = 0;
                 bloquearPagAntFacultad = true;
+                cantidadRegistros = String.valueOf(tamTotalFacultad);
                 bloquearPagSigFacultad = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString());
         }
     }
@@ -172,6 +177,7 @@ public class ControllerAdministrarFacultades implements Serializable {
         posicionFacultadTabla = 0;
         tamTotalFacultad = 0;
         bloquearPagAntFacultad = true;
+        cantidadRegistros = "N/A";
         bloquearPagSigFacultad = true;
         inicializarFiltros();
     }
@@ -265,6 +271,14 @@ public class ControllerAdministrarFacultades implements Serializable {
 
     public void setBloquearPagAntFacultad(boolean bloquearPagAntFacultad) {
         this.bloquearPagAntFacultad = bloquearPagAntFacultad;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

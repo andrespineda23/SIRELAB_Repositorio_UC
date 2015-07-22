@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Sedes</a></li>
@@ -79,21 +79,21 @@
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Nombre(s) Sede*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarSede.nuevoNombre}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarSede.nuevoNombre}" disabled="#{controllerRegistrarSede.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarSede.validarNombreSede()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Dirección Sede*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarSede.nuevoDireccion}" required="true" class="form-control" id="nuevoDireccion" requiredMessage="El campo Dirección es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarSede.nuevoDireccion}" disabled="#{controllerRegistrarSede.activarCasillas}" required="true" class="form-control" id="nuevoDireccion" requiredMessage="El campo Dirección es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarSede.validarDireccionSede()}" execute="nuevoDireccion" render="nuevoDireccion msnDireccion" />
                                     </h:inputText>
                                     <h6><h:message id="msnDireccion" for="nuevoDireccion" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Telefono Sede*"/></strong>
-                                    <h:inputText maxlength="20" value="#{controllerRegistrarSede.nuevoTelefono}" required="true" class="form-control" id="nuevoTelefono" requiredMessage="El campo Telefono es obligatorio.">
+                                    <h:inputText maxlength="20" value="#{controllerRegistrarSede.nuevoTelefono}" disabled="#{controllerRegistrarSede.activarCasillas}" required="true" class="form-control" id="nuevoTelefono" requiredMessage="El campo Telefono es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarSede.validarTelefonoSede()}" execute="nuevoTelefono" render="nuevoTelefono msnTelefono" />
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono" for="nuevoTelefono" style="color: red"/></h6>
@@ -107,9 +107,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarSede.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarSede.mensajeFormulario}" style="color: #{controllerRegistrarSede.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarSede.registrarNuevoSede()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -117,6 +127,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_sedes" actionListener="#{controllerRegistrarSede.cancelarRegistroSede()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarSede.activarLimpiar}" actionListener="#{controllerRegistrarSede.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

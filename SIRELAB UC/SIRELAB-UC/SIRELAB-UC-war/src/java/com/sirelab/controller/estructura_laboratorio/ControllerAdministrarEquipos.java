@@ -74,12 +74,14 @@ public class ControllerAdministrarEquipos implements Serializable {
     private UsuarioLogin usuarioLoginSistema;
     private boolean perfilConsulta;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarEquipos() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarModuloLaboratorio = true;
         activarSalaLaboratorio = true;
         activarAreaProfundizacion = true;
@@ -219,6 +221,7 @@ public class ControllerAdministrarEquipos implements Serializable {
                     listaEquiposElementosTabla = new ArrayList<EquipoElemento>();
                     tamTotalEquipo = listaEquiposElementos.size();
                     posicionEquipoTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalEquipo);
                     cargarDatosTablaEquipo();
                 } else {
                     activarExport = true;
@@ -227,16 +230,18 @@ public class ControllerAdministrarEquipos implements Serializable {
                     posicionEquipoTabla = 0;
                     bloquearPagAntEquipo = true;
                     bloquearPagSigEquipo = true;
+                    cantidadRegistros = String.valueOf(tamTotalEquipo);
                 }
             } else {
                 listaEquiposElementosTabla = null;
                 tamTotalEquipo = 0;
                 posicionEquipoTabla = 0;
                 bloquearPagAntEquipo = true;
+                cantidadRegistros = String.valueOf(tamTotalEquipo);
                 bloquearPagSigEquipo = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros : " + e.toString());
         }
     }
@@ -311,6 +316,42 @@ public class ControllerAdministrarEquipos implements Serializable {
         parametroTipoActivo = new TipoActivo();
         parametroEstadoEquipo = new EstadoEquipo();
         parametroProveedor = new Proveedor();
+
+        listaLaboratoriosPorAreas = null;
+        listaSalasLaboratorios = null;
+        listaModulosLaboratorios = null;
+        listaEstadosEquipos = null;
+        listaProveedores = null;
+        listaTiposActivos = null;
+
+        listaEquiposElementos = null;
+        listaEquiposElementosTabla = null;
+        posicionEquipoTabla = 0;
+        tamTotalEquipo = 0;
+        bloquearPagAntEquipo = true;
+        bloquearPagSigEquipo = true;
+        cantidadRegistros = "N/A";
+        inicializarFiltros();
+        return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        cantidadRegistros = "N/A";
+        activarAreaProfundizacion = true;
+        activarSalaLaboratorio = true;
+        activarModuloLaboratorio = true;
+        activarExport = true;
+        parametroNombre = null;
+        parametroInventario = null;
+        parametroMarca = null;
+        parametroModelo = null;
+        parametroSerie = null;
+        parametroSalaLaboratorio = new SalaLaboratorio();
+        parametroLaboratorioPorArea = new LaboratoriosPorAreas();
+        parametroModuloLaboratorio = new ModuloLaboratorio();
+        parametroTipoActivo = new TipoActivo();
+        parametroEstadoEquipo = new EstadoEquipo();
+        parametroProveedor = new Proveedor();
         listaSalasLaboratorios = null;
         listaModulosLaboratorios = null;
         listaEquiposElementos = null;
@@ -320,7 +361,6 @@ public class ControllerAdministrarEquipos implements Serializable {
         bloquearPagAntEquipo = true;
         bloquearPagSigEquipo = true;
         inicializarFiltros();
-        return paginaAnterior;
     }
 
     public void actualizarLaboratoriosAreasProfundizacion() {
@@ -611,6 +651,14 @@ public class ControllerAdministrarEquipos implements Serializable {
 
     public void setPerfilConsulta(boolean perfilConsulta) {
         this.perfilConsulta = perfilConsulta;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

@@ -116,12 +116,12 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
     }
 
     @Override
-    public Laboratorio obtenerLaboratorioPorCodigoYDepartamento(String codigo, BigInteger departamento) {
+    public Laboratorio obtenerLaboratorioPorCodigo(String codigo) {
         try {
-            Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigoYDepartamento(codigo, departamento);
+            Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO obtenerLaboratorioPorCodigoYDepartamento : " + e.toString());
+            System.out.println("Error GestionarPlantaLaboratorioBO obtenerLaboratorioPorCodigo : " + e.toString());
             return null;
         }
     }

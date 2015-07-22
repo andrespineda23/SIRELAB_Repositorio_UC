@@ -48,12 +48,14 @@ public class ControllerAdministrarSedes implements Serializable {
     private String editarNombre, editarDireccion, editarTelefono;
     private Sede sedeEditar;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarSedes() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         parametroNombre = null;
         parametroDireccion = null;
         parametroTelefono = null;
@@ -100,6 +102,7 @@ public class ControllerAdministrarSedes implements Serializable {
                     listaSedesTabla = new ArrayList<Sede>();
                     tamTotalSede = listaSedes.size();
                     posicionSedeTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalSede);
                     cargarDatosTablaSede();
                 } else {
                     activarExport = true;
@@ -108,16 +111,18 @@ public class ControllerAdministrarSedes implements Serializable {
                     posicionSedeTabla = 0;
                     bloquearPagAntSede = true;
                     bloquearPagSigSede = true;
+                    cantidadRegistros = String.valueOf(tamTotalSede);
                 }
             } else {
                 listaSedesTabla = null;
                 tamTotalSede = 0;
                 posicionSedeTabla = 0;
                 bloquearPagAntSede = true;
+                cantidadRegistros = String.valueOf(tamTotalSede);
                 bloquearPagSigSede = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString());
         }
     }
@@ -186,6 +191,7 @@ public class ControllerAdministrarSedes implements Serializable {
         posicionSedeTabla = 0;
         tamTotalSede = 0;
         bloquearPagAntSede = true;
+        cantidadRegistros = "N/A";
         bloquearPagSigSede = true;
         inicializarFiltros();
     }
@@ -392,6 +398,14 @@ public class ControllerAdministrarSedes implements Serializable {
 
     public void setBloquearPagAntSede(boolean bloquearPagAntSede) {
         this.bloquearPagAntSede = bloquearPagAntSede;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

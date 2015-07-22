@@ -18,6 +18,8 @@ public interface DepartamentoDAOInterface {
 
     public void crearDepartamento(Departamento departamento);
 
+    public Departamento buscarDepartamentoPorCodigo(String codigo);
+
     public void editarDepartamento(Departamento departamento);
 
     public void eliminarDepartamento(Departamento departamento);

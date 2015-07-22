@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Variables Inventario/Recursos</a></li>
@@ -79,7 +79,7 @@
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Nombre Estado Equipo*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarEstadoEquipo.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarEstadoEquipo.inputNombre}" disabled="#{controllerRegistrarEstadoEquipo.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarEstadoEquipo.validarNombre()}" execute="inputNombre" render="inputNombre msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
@@ -96,9 +96,19 @@
                             <br></br>
                             <br></br>
                             <br></br>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEstadoEquipo.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEstadoEquipo.mensajeFormulario}" style="color: #{controllerRegistrarEstadoEquipo.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEstadoEquipo.registrarEstadoEquipo()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -106,6 +116,11 @@
                                 <span></span>
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarEstadoEquipo.cerrarPagina()}" actionListener="#{controllerVariablesInventario.iniciarInformacionTablas()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarEstadoEquipo.activarLimpiar}" actionListener="#{controllerRegistrarEstadoEquipo.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                             </div>

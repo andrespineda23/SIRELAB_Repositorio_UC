@@ -46,6 +46,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     private boolean validacionesDireccion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesAdministrador() {
     }
@@ -59,7 +60,8 @@ public class ControllerDetallesAdministrador implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
@@ -113,12 +115,14 @@ public class ControllerDetallesAdministrador implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     /**
      * Metodo encargado de restaurar la información del administrador
      */
-    public void restaurarInformacionAdministrador() {
+    public String restaurarInformacionAdministrador() {
         administradorDetalles = new Persona();
         administradorDetalles = administrarAdministradoresBO.obtenerAdministradorPorIDPersona(idAdministrador);
         if (administradorDetalles.getUsuario().getEstado() == true) {
@@ -136,11 +140,13 @@ public class ControllerDetallesAdministrador implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
         visibleGuardar = false;
+        return "administrar_administradores";
     }
 
     public void validarNombreAdministrador() {
@@ -201,7 +207,7 @@ public class ControllerDetallesAdministrador implements Serializable {
 
     public void validarIdentificacionAdministrador() {
         if (Utilidades.validarNulo(identificacionAdministrador) && (!identificacionAdministrador.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(identificacionAdministrador)) {
+            if (Utilidades.validarNumeroIdentificacion(identificacionAdministrador)) {
                 Persona registro = administrarAdministradoresBO.obtenerAdministradorPorDocumento(identificacionAdministrador);
                 if (null == registro) {
                     validacionesID = true;
@@ -249,7 +255,7 @@ public class ControllerDetallesAdministrador implements Serializable {
 
     public void validarDireccionAdministrador() {
         if ((Utilidades.validarNulo(direccionAdministrador)) && (!direccionAdministrador.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(direccionAdministrador)) {
+            if (Utilidades.validarDirecciones(direccionAdministrador)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:direccionAdministrador", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -289,13 +295,16 @@ public class ControllerDetallesAdministrador implements Serializable {
         if (modificacionRegistro == true) {
             if (validarResultadosValidacion() == true) {
                 modificarInformacionAdministrador();
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
-            mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
             restaurarInformacionAdministrador();
+            colorMensaje = "black";
+            mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
         }
     }
 
@@ -315,7 +324,7 @@ public class ControllerDetallesAdministrador implements Serializable {
             administrarAdministradoresBO.actualizarInformacionAdministrador(administradorDetalles);
             restaurarInformacionAdministrador();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador:  "+e.toString());
+            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador:  " + e.toString());
             System.out.println("Error ControllerDetallesAdministrador modificarInformacionAdministrador : " + e.toString());
         }
     }
@@ -339,12 +348,14 @@ public class ControllerDetallesAdministrador implements Serializable {
                 administradorDetalles.getUsuario().setEstado(bool);
                 administrarAdministradoresBO.actualizarInformacionUsuario(administradorDetalles.getUsuario());
                 restaurarInformacionAdministrador();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha activado el administrador.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministrador activarAdministrador:  "+e.toString());
+            logger.error("Error ControllerDetallesAdministrador activarAdministrador:  " + e.toString());
             System.out.println("Error ControllerDetallesAdministradores activarAdministrador : " + e.toString());
         }
     }
@@ -360,12 +371,14 @@ public class ControllerDetallesAdministrador implements Serializable {
                 administrarAdministradoresBO.actualizarInformacionUsuario(administradorDetalles.getUsuario());
                 administradorDetalles = new Persona();
                 restaurarInformacionAdministrador();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el administrador.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministrador inactivarAdministrador:  "+e.toString());
+            logger.error("Error ControllerDetallesAdministrador inactivarAdministrador:  " + e.toString());
             System.out.println("Error ControllerDetallesAdministradores inactivarAdministrador : " + e.toString());
         }
     }
@@ -497,6 +510,14 @@ public class ControllerDetallesAdministrador implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

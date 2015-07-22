@@ -52,13 +52,19 @@ public class ControllerRegistrarEstudiante implements Serializable {
     private boolean validacionesDireccion, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarEstudiante() {
     }
 
     @PostConstruct
     public void init() {
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         validacionesCarrera = false;
         validacionesPlanEstudio = false;
         validacionesCorreoOpcional = true;
@@ -111,7 +117,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputCarrera", new FacesMessage("El campo Carrera es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  "+e.toString());
+            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  " + e.toString());
             System.out.println("Error ControllerRegistrarEstudiante actualizarCarreras : " + e.toString());
         }
     }
@@ -188,7 +194,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
 
     public void validarIdentificacionEstudiante() {
         if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputID)) {
+            if (Utilidades.validarNumeroIdentificacion(inputID)) {
                 Estudiante registro = gestionarLoginSistemaBO.obtenerEstudiantePorDocumento(inputID);
                 if (null == registro) {
                     validacionesID = true;
@@ -230,7 +236,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
 
     public void validarDireccionEstudiante() {
         if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputDireccion)) {
+            if (Utilidades.validarDirecciones(inputDireccion)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -284,8 +290,10 @@ public class ControllerRegistrarEstudiante implements Serializable {
             //EnvioCorreo correo = new EnvioCorreo();
             //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
+            activarLimpiar = false;
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
 
@@ -295,7 +303,10 @@ public class ControllerRegistrarEstudiante implements Serializable {
      * Metodo encargado de cancelar el proceso de registro
      */
     public void cancelarRegistroEstudiante() {
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         validacionesCarrera = false;
         validacionesPlanEstudio = false;
         validacionesCorreoOpcional = true;
@@ -355,14 +366,15 @@ public class ControllerRegistrarEstudiante implements Serializable {
             }
             estudianteNueva.setTipoestudiante(inputTipo);
             gestionarLoginSistemaBO.almacenarNuevoEstudianteEnSistema(usuarioNuevo, personaNueva, estudianteNueva);
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  "+e.toString());
+            logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  " + e.toString());
             System.out.println("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
     }
 
     public void limpiarFormulario() {
-        mensajeFormulario = "";
         validacionesCarrera = false;
         validacionesPlanEstudio = false;
         validacionesCorreoOpcional = true;
@@ -387,6 +399,15 @@ public class ControllerRegistrarEstudiante implements Serializable {
         inputTelefono2 = null;
         inputSemestre = 1;
         inputTipo = 1;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     public void recibirPaginaAnterior(String page) {
@@ -538,6 +559,30 @@ public class ControllerRegistrarEstudiante implements Serializable {
 
     public void setInputEmailOpcional(String inputEmailOpcional) {
         this.inputEmailOpcional = inputEmailOpcional;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

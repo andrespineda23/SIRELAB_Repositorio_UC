@@ -53,6 +53,7 @@ public class ControllerDetallesModulo implements Serializable {
     private boolean validacionesLaboratorio, validacionesSala;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesModulo() {
     }
@@ -67,7 +68,8 @@ public class ControllerDetallesModulo implements Serializable {
         validacionesCapacidad = true;
         validacionesCosto = true;
         validacionesInversion = true;
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
         //
         activarEditar = true;
         disabledEditar = false;
@@ -85,13 +87,13 @@ public class ControllerDetallesModulo implements Serializable {
     public void recibirIDModuloLaboratorioDetalles(BigInteger idModuloLaboratorio) {
         this.idModuloLaboratorio = idModuloLaboratorio;
         moduloLaboratorioDetalles = gestionarPlantaModulosBO.obtenerModuloLaboratorioPorIDModuloLaboratorio(idModuloLaboratorio);
-            if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
-                disabledActivar = true;
-                disabledInactivar = false;
-            } else {
-                disabledActivar = false;
-                disabledInactivar = true;
-            }
+        if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
+            disabledActivar = true;
+            disabledInactivar = false;
+        } else {
+            disabledActivar = false;
+            disabledInactivar = true;
+        }
         asignarValoresVariablesModuloLaboratorio();
     }
 
@@ -103,6 +105,7 @@ public class ControllerDetallesModulo implements Serializable {
         inversionModuloLaboratorio = moduloLaboratorioDetalles.getCostomodulo().toString();
         salaModuloLaboratorio = moduloLaboratorioDetalles.getSalalaboratorio();
         laboratorioPorAreaSalaLaboratorio = moduloLaboratorioDetalles.getSalalaboratorio().getLaboratoriosporareas();
+        listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
     }
 
     public void activarEditarRegistro() {
@@ -110,19 +113,20 @@ public class ControllerDetallesModulo implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
-        listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasRegistradas();
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
-    public void restaurarInformacionModuloLaboratorio() {
+    public String restaurarInformacionModuloLaboratorio() {
         moduloLaboratorioDetalles = new ModuloLaboratorio();
         moduloLaboratorioDetalles = gestionarPlantaModulosBO.obtenerModuloLaboratorioPorIDModuloLaboratorio(idModuloLaboratorio);
-            if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
-                disabledActivar = true;
-                disabledInactivar = false;
-            } else {
-                disabledActivar = false;
-                disabledInactivar = true;
-            }
+        if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
+            disabledActivar = true;
+            disabledInactivar = false;
+        } else {
+            disabledActivar = false;
+            disabledInactivar = true;
+        }
         asignarValoresVariablesModuloLaboratorio();
         activarEditar = true;
         disabledEditar = false;
@@ -138,7 +142,9 @@ public class ControllerDetallesModulo implements Serializable {
         validacionesCapacidad = true;
         validacionesCosto = true;
         validacionesInversion = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        return "administrar_modulos";
     }
 
     public void actualizarLaboratoriosPorAreas() {
@@ -276,16 +282,20 @@ public class ControllerDetallesModulo implements Serializable {
             if (validarResultadosValidacion() == true) {
                 if (validarCodigoRepetido() == true) {
                     modificarInformacionModuloLaboratorio();
+                    colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
-            mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
             restaurarInformacionModuloLaboratorio();
+            colorMensaje = "black";
+            mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
         }
     }
 
@@ -300,7 +310,7 @@ public class ControllerDetallesModulo implements Serializable {
             gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
             restaurarInformacionModuloLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema : " + e.toString());
 
         }
@@ -319,12 +329,14 @@ public class ControllerDetallesModulo implements Serializable {
                 moduloLaboratorioDetalles.setEstadomodulo(bool);
                 gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
                 restaurarInformacionModuloLaboratorio();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha activado el modulo/banco de trabajo.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString());
         }
     }
@@ -337,12 +349,14 @@ public class ControllerDetallesModulo implements Serializable {
                 gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
                 moduloLaboratorioDetalles = new ModuloLaboratorio();
                 restaurarInformacionModuloLaboratorio();
+                colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el modulo/banco de trabajo.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString());
         }
     }
@@ -500,4 +514,12 @@ public class ControllerDetallesModulo implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
+    public String getColorMensaje() {
+        return colorMensaje;
     }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+}

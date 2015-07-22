@@ -75,18 +75,18 @@
                         <fieldset>
                             <legend class="text-info">Datos Basicos</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Detalle Modulo*"/></strong>
-                                <h:inputText maxlength="45" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.detalleModuloLaboratorio}" required="true" class="form-control" id="detalleModuloLaboratorio" requiredMessage="El campo Detalle es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesModulo.validarDetalleModulo()}" execute="detalleModuloLaboratorio" render="detalleModuloLaboratorio msnDetalleModulo" />
-                                </h:inputText>
-                                <h6><h:message id="msnDetalleModulo" for="detalleModuloLaboratorio" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
                                 <strong><h:outputText value="Codigo Modulo*"/></strong>
                                 <h:inputText maxlength="20" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.codigoModuloLaboratorio}" required="true" class="form-control" id="codigoModuloLaboratorio" requiredMessage="El campo Codigo es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerDetallesModulo.validarCodigoModulo()}" execute="codigoModuloLaboratorio" render="codigoModuloLaboratorio msnCodigoModulo" />
                                 </h:inputText>
                                 <h6><h:message id="msnCodigoModulo" for="codigoModuloLaboratorio" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Detalle Modulo*"/></strong>
+                                <h:inputText maxlength="45" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.detalleModuloLaboratorio}" required="true" class="form-control" id="detalleModuloLaboratorio" requiredMessage="El campo Detalle es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesModulo.validarDetalleModulo()}" execute="detalleModuloLaboratorio" render="detalleModuloLaboratorio msnDetalleModulo" />
+                                </h:inputText>
+                                <h6><h:message id="msnDetalleModulo" for="detalleModuloLaboratorio" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Estado*"/></strong>
@@ -152,11 +152,19 @@
                             </div>
                         </fieldset>
                     </div>
+                    <hr class="intro-divider"/>
                     <div class="row col-md-12">
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesModulo.mensajeFormulario}"/></strong>
+                        <div class="text-center">
+                            <h5>
+                                Resultados del Formulario
+                            </h5>
+                            <strong>
+                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesModulo.mensajeFormulario}" style="color: #{controllerDetallesModulo.colorMensaje}}"/>
+                            </strong>
                         </div>
+                        <br></br>
                     </div>
+                    <hr class="intro-divider"/>
                     <div class="row col-md-12">
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
@@ -189,7 +197,7 @@
                     <div class="row col-md-12">
                         <div class="col-md-11"></div>
                         <div class="col-md-1">
-                            <h:commandButton value="Atras" class="btn btn-danger" action="administrar_modulos" actionListener="#{controllerDetallesModulo.restaurarInformacionModuloLaboratorio()}" immediate="true"/>
+                            <h:commandButton value="Atras" class="btn btn-danger" action="#{controllerDetallesModulo.restaurarInformacionModuloLaboratorio()}" actionListener="#{controllerAdministrarModulos.limpiarDatos()}" immediate="true"/>
                         </div>
                     </div>
                 </div>

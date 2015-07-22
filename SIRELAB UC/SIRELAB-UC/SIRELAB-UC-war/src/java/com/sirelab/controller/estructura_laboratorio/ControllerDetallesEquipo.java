@@ -72,12 +72,14 @@ public class ControllerDetallesEquipo implements Serializable {
     private boolean validacionesTipo, validacionesEstado, validacionesProveedor;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        colorMensaje = "black";
         validacionesCosto = true;
         validacionesEspecificacion = true;
         validacionesEstado = true;
@@ -93,7 +95,7 @@ public class ControllerDetallesEquipo implements Serializable {
         validacionesSala = true;
         validacionesSerie = true;
         validacionesTipo = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
         //
         activarSalaLaboratorio = true;
         activarModuloLaboratorio = true;
@@ -138,7 +140,7 @@ public class ControllerDetallesEquipo implements Serializable {
         listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
         listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDAreaProfundizacion(laboratorioPorAreaEquipoElemento.getIdlaboratoriosporareas());
         listaModulosLaboratorio = gestionarPlantaEquiposElementosBO.consultarModulosLaboratorioPorIDSalaLaboratorio(salaEquipoElemento.getIdsalalaboratorio());
-        
+
         tipoActivoEquipoElemento = equipoElementoDetalles.getTipoactivo();
         estadoEquipoElemento = equipoElementoDetalles.getEstadoequipo();
         proveedorEquipoElemento = equipoElementoDetalles.getProveedor();
@@ -156,9 +158,11 @@ public class ControllerDetallesEquipo implements Serializable {
         visibleGuardar = true;
         activarModuloLaboratorio = false;
         activarSalaLaboratorio = false;
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
-    public void restaurarInformacionEquipoElemento() {
+    public String restaurarInformacionEquipoElemento() {
         equipoElementoDetalles = new EquipoElemento();
         equipoElementoDetalles = gestionarPlantaEquiposElementosBO.obtenerEquipoElementoPorIDEquipoElemento(idEquipoElemento);
         asignarValoresVariablesEquipoElemento();
@@ -184,8 +188,10 @@ public class ControllerDetallesEquipo implements Serializable {
         validacionesSala = true;
         validacionesSerie = true;
         validacionesTipo = true;
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
         //
+        return "administrar_equipos";
     }
 
     public void actualizarLaboratoriosAreasProfundizacion() {
@@ -216,7 +222,7 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  "+e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  " + e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString());
         }
     }
@@ -238,7 +244,7 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
         }
     }
@@ -253,7 +259,7 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  "+e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
         }
     }
@@ -464,14 +470,18 @@ public class ControllerDetallesEquipo implements Serializable {
             if (validarResultadosValidacion() == true) {
                 if (validarCodigoRepetido() == true) {
                     modificarInformacionEquipoElemento();
+                    colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
             restaurarInformacionEquipoElemento();
         }
@@ -508,7 +518,7 @@ public class ControllerDetallesEquipo implements Serializable {
             gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles);
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString());
         }
     }
@@ -766,6 +776,14 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

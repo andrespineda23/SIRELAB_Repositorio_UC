@@ -47,6 +47,7 @@ public class ControllerDetallesInsumo implements Serializable {
     private boolean validacionesDescripcion, validacionesProveedor;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesInsumo() {
     }
@@ -61,11 +62,12 @@ public class ControllerDetallesInsumo implements Serializable {
         validacionesDescripcion = true;
         validacionesMarca = true;
         validacionesModelo = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionInsumo() {
+    public String restaurarInformacionInsumo() {
         validacionesCodigo = true;
         validacionesNombre = true;
         validacionesProveedor = true;
@@ -74,9 +76,11 @@ public class ControllerDetallesInsumo implements Serializable {
         validacionesDescripcion = true;
         validacionesMarca = true;
         validacionesModelo = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         insumoDetalles = new Insumo();
         recibirIDInsumosDetalles(idInsumo);
+        return "administrar_insumos";
     }
 
     public void asignarValoresVariablesInsumo() {
@@ -234,12 +238,15 @@ public class ControllerDetallesInsumo implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarModificacionInsumoEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 recibirIDInsumosDetalles(this.idInsumo);
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el proveedor seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -264,7 +271,7 @@ public class ControllerDetallesInsumo implements Serializable {
             insumoDetalles.setProveedor(editarProveedor);
             gestionarRecursoInsumosBO.modificarInformacionInsumo(insumoDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema : " + e.toString());
         }
     }
@@ -356,6 +363,14 @@ public class ControllerDetallesInsumo implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

@@ -56,7 +56,7 @@
                     <br></br>
                     <br></br> 
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li class="active">Administrar Areas de Profundización</li>
@@ -92,8 +92,11 @@
                                 </fieldset>
                                 <br></br>
                                 <div class="col-md-12">
-                                    <div class="col-md-10">
-                                    </div> 
+                                    <div class="col-md-2">
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarAreasProfundizacion.cantidadRegistros}"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                    </div>
                                     <div class="col-md-1">
                                         <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarAreasProfundizacion.buscarAreasProfundizacionPorParametros()}">
                                             <f:ajax execute="@form" render="formularioGeneral" />

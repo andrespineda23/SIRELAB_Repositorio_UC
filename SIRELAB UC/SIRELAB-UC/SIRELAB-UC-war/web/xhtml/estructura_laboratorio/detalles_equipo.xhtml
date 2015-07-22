@@ -76,18 +76,18 @@
                         <fieldset>
                             <legend class="text-info">Datos Basicos</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Nombre Equipo*"/></strong>
-                                <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.nombreEquipoElemento}" required="true" class="form-control" id="nombreEquipoElemento" requiredMessage="El campo Nombre es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarNombreEquipo()}" execute="nombreEquipoElemento" render="nombreEquipoElemento msnDetalleEquipo" />
-                                </h:inputText>
-                                <h6><h:message id="msnDetalleEquipo" for="nombreEquipoElemento" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
                                 <strong><h:outputText value="Codigo Inventario Equipo*"/></strong>
                                 <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.inventarioEquipoElemento}" required="true" class="form-control" id="inventarioEquipoElemento" requiredMessage="El campo Inventario es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarInventarioEquipo()}" execute="inventarioEquipoElemento" render="inventarioEquipoElemento msnInventarioEquipo" />
                                 </h:inputText>
                                 <h6><h:message id="msnInventarioEquipo" for="inventarioEquipoElemento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Nombre Equipo*"/></strong>
+                                <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.nombreEquipoElemento}" required="true" class="form-control" id="nombreEquipoElemento" requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarNombreEquipo()}" execute="nombreEquipoElemento" render="nombreEquipoElemento msnDetalleEquipo" />
+                                </h:inputText>
+                                <h6><h:message id="msnDetalleEquipo" for="nombreEquipoElemento" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Marca Equipo*"/></strong>
@@ -227,11 +227,19 @@
                             </div>
                         </fieldset>
                     </div>
+                    <hr class="intro-divider"/>
                     <div class="row col-md-12">
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEquipo.mensajeFormulario}"/></strong>
+                        <div class="text-center">
+                            <h5>
+                                Resultados del Formulario
+                            </h5>
+                            <strong>
+                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEquipo.mensajeFormulario}" style="color: #{controllerDetallesEquipo.colorMensaje}}"/>
+                            </strong>
                         </div>
+                        <br></br>
                     </div>
+                    <hr class="intro-divider"/>
                     <div class="row col-md-12">
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
@@ -264,7 +272,7 @@
                     <div class="row">
                         <div class="col-md-11"></div>
                         <div class="col-md-1">
-                            <h:commandButton value="Atras" action="administrar_equipos" actionListener="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" class="btn btn-primary" immediate="true"/>
+                            <h:commandButton value="Atras" action="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" actionListener="#{controllerAdministrarEquipos.limpiarDatos()}" class="btn btn-primary" immediate="true"/>
                         </div>
                     </div>
                 </div>

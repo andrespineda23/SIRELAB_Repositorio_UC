@@ -33,6 +33,9 @@ public class ControllerRegistrarTipoEvento implements Serializable {
     private boolean validacionesDetalle;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarTipoEvento() {
     }
@@ -41,7 +44,10 @@ public class ControllerRegistrarTipoEvento implements Serializable {
     public void init() {
         inputDetalle = null;
         validacionesDetalle = false;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -62,9 +68,11 @@ public class ControllerRegistrarTipoEvento implements Serializable {
     public void registrarTipoEvento() {
         if (validacionesDetalle == true) {
             almacenarRegistroNuevo();
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
             restaurarFormulario();
+            activarLimpiar = false;
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -74,6 +82,8 @@ public class ControllerRegistrarTipoEvento implements Serializable {
             TipoEvento tipoNuevo = new TipoEvento();
             tipoNuevo.setDetalleevento(inputDetalle);
             gestionarVariableTiposEventoBO.crearTipoEvento(tipoNuevo);
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo: " + e.toString());
@@ -88,12 +98,24 @@ public class ControllerRegistrarTipoEvento implements Serializable {
     public void cancelarTipoEvento() {
         inputDetalle = null;
         validacionesDetalle = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
     }
 
     private void restaurarFormulario() {
         inputDetalle = null;
         validacionesDetalle = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -111,6 +133,30 @@ public class ControllerRegistrarTipoEvento implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

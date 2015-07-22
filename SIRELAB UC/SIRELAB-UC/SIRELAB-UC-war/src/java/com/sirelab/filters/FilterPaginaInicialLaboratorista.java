@@ -123,7 +123,7 @@ public class FilterPaginaInicialLaboratorista implements Filter {
             log("FilterPaginaInicialLaboratorista:doFilter()");
         }
 
-        doBeforeProcessing(request, response);
+        //doBeforeProcessing(request, response);
 
         Throwable problem = null;
         try {
@@ -136,7 +136,7 @@ public class FilterPaginaInicialLaboratorista implements Filter {
             t.printStackTrace();
         }
 
-        doAfterProcessing(request, response);
+        //doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.

@@ -52,7 +52,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Insumos</a></li>
@@ -78,28 +78,28 @@
                             <legend class="text-info">Datos Basicos</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="Tipo Movimiento*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarMovimientoInsumo.nuevoTipoMovimiento}" required="true" class="form-control" id="nuevoTipoMovimiento"  requiredMessage="El campo Tipo es obligatorio.">
+                                <h:inputText maxlength="45" value="#{controllerRegistrarMovimientoInsumo.nuevoTipoMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoTipoMovimiento"  requiredMessage="El campo Tipo es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarTipoMovimiento()}" execute="nuevoTipoMovimiento" render="nuevoTipoMovimiento msnTipoMovimiento" />
                                 </h:inputText>
                                 <h6><h:message id="msnTipoMovimiento" for="nuevoTipoMovimiento" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Costo Movimiento*"/></strong>
-                                <h:inputText maxlength="10"  value="#{controllerRegistrarMovimientoInsumo.nuevoCostoMovimiento}" required="true" class="form-control" id="nuevoCostoMovimiento" requiredMessage="El campo Codigo es obligatorio-">
+                                <h:inputText maxlength="10"  value="#{controllerRegistrarMovimientoInsumo.nuevoCostoMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCostoMovimiento" requiredMessage="El campo Costo es obligatorio">
                                     <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarCostoMovimiento()}" execute="nuevoCostoMovimiento" render="nuevoCostoMovimiento msnCostoMovimiento" />
                                 </h:inputText>
                                 <h6><h:message id="msnCostoMovimiento" for="nuevoCostoMovimiento" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Cantidad*"/></strong>
-                                <h:inputText maxlength="2"  value="#{controllerRegistrarMovimientoInsumo.nuevoCantidadMovimiento}" required="true" class="form-control" id="nuevoCantidadMovimiento" requiredMessage="El campo Descripción es obligatorio.">
+                                <h:inputText maxlength="2"  value="#{controllerRegistrarMovimientoInsumo.nuevoCantidadMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCantidadMovimiento" requiredMessage="El campo Descripción es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarCantidadMovimiento()}" execute="nuevoCantidadMovimiento" render="nuevoCantidadMovimiento msnCantidadMovimiento" />
                                 </h:inputText>
                                 <h6><h:message id="msnCantidadMovimiento" for="nuevoCantidadMovimiento" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Fecha Movimiento*"/></strong>
-                                <h:inputText value="#{controllerRegistrarMovimientoInsumo.nuevoFechaMovimiento}" required="true" class="form-control" id="nuevoFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
+                                <h:inputText value="#{controllerRegistrarMovimientoInsumo.nuevoFechaMovimiento}" required="true" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" class="form-control" id="nuevoFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="nuevoFechaMovimiento" render="nuevoFechaMovimiento msnFechaMovimiento" />
                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                 </h:inputText>
@@ -110,9 +110,19 @@
                                 <h:inputText readonly="true"  value="#{controllerRegistrarMovimientoInsumo.insumoRegistro.nombreinsumo}" class="form-control" id="nuevoInsumoMovimiento" />
                             </div>
                         </fieldset>
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarMovimientoInsumo.mensajeFormulario}"/></strong>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarMovimientoInsumo.mensajeFormulario}" style="color: #{controllerRegistrarMovimientoInsumo.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton class="btn btn-success" value="Registrar" actionListener="#{controllerRegistrarMovimientoInsumo.registrarNuevoMovimiento()}">
                                 <f:ajax execute="@form" render="form" />
@@ -120,6 +130,11 @@
                             <span></span>
                             <span></span>
                             <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarMovimientoInsumo.limpiarRegistroMovimientoLaboratorio()}" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerRegistrarMovimientoInsumo.insumoRegistro.idinsumo)}" immediate="true">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarMovimientoInsumo.activarLimpiar}" actionListener="#{controllerRegistrarMovimientoInsumo.cambiarActivarCasillas()}" >
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

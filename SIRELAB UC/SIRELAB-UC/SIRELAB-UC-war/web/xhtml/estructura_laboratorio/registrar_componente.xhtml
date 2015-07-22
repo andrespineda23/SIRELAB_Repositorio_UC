@@ -77,22 +77,22 @@
                         <fieldset>
                             <legend class="text-info">Datos Basicos</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Nombre Componente*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarComponente.nuevoNombreComponente}" required="true" class="form-control" id="nuevoNombreComponente"  requiredMessage="El campo Nombre es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarComponente.validarNombreComponente()}" execute="nuevoNombreComponente" render="nuevoNombreComponente msnNombreComponente" />
-                                </h:inputText>
-                                <h6><h:message id="msnNombreComponente" for="nuevoNombreComponente" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
                                 <strong><h:outputText value="Codigo Componente*"/></strong>
-                                <h:inputText maxlength="20"  value="#{controllerRegistrarComponente.nuevoCodigoComponente}" required="true" class="form-control" id="nuevoCodigoComponente" requiredMessage="El campo Codigo es obligatorio-">
+                                <h:inputText maxlength="20"  value="#{controllerRegistrarComponente.nuevoCodigoComponente}" disabled="#{controllerRegistrarComponente.activarCasillas}" required="true" class="form-control" id="nuevoCodigoComponente" requiredMessage="El campo Codigo es obligatorio-">
                                     <f:ajax event="blur" listener="#{controllerRegistrarComponente.validarCodigoComponente()}" execute="nuevoCodigoComponente" render="nuevoCodigoComponente msnCodigoComponente" />
                                 </h:inputText>
                                 <h6><h:message id="msnCodigoComponente" for="nuevoCodigoComponente" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
+                                <strong><h:outputText value="Nombre Componente*"/></strong>
+                                <h:inputText maxlength="45" value="#{controllerRegistrarComponente.nuevoNombreComponente}" disabled="#{controllerRegistrarComponente.activarCasillas}" required="true" class="form-control" id="nuevoNombreComponente"  requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarComponente.validarNombreComponente()}" execute="nuevoNombreComponente" render="nuevoNombreComponente msnNombreComponente" />
+                                </h:inputText>
+                                <h6><h:message id="msnNombreComponente" for="nuevoNombreComponente" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
                                 <strong><h:outputText value="Descripción Componente*"/></strong>
-                                <h:inputText maxlength="500"  value="#{controllerRegistrarComponente.nuevoDescripcionComponente}" required="true" class="form-control" id="nuevoDescripcionComponente" requiredMessage="El campo Descripción es obligatorio.">
+                                <h:inputText maxlength="500"  value="#{controllerRegistrarComponente.nuevoDescripcionComponente}" disabled="#{controllerRegistrarComponente.activarCasillas}" required="true" class="form-control" id="nuevoDescripcionComponente" requiredMessage="El campo Descripción es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarComponente.validarDescripcionComponente()}" execute="nuevoDescripcionComponente" render="nuevoDescripcionComponente msnDescripcionComponente" />
                                 </h:inputText>
                                 <h6><h:message id="msnDescripcionComponente" for="nuevoDescripcionComponente" style="color: red"/></h6>
@@ -110,7 +110,7 @@
                                     <f:selectItems value="#{controllerRegistrarComponente.listaTiposComponentes}" var="tipo"
                                                    itemLabel="#{tipo.nombretipo}" itemValue="#{tipo}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarComponente.validarTipoComponente()}" execute="nuevoTipoComponente" render="msnTipo nuevoTipoComponente"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarComponente.validarTipoComponente()}" disabled="#{controllerRegistrarComponente.activarCasillas}" disabled="#{controllerRegistrarComponente.activarCasillas}" execute="nuevoTipoComponente" render="msnTipo nuevoTipoComponente"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnTipo" for="nuevoTipoComponente" style="color: red"/></h6>
                             </div>
@@ -118,30 +118,40 @@
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Marca Componente"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarComponente.nuevoMarcaComponente}" class="form-control" id="nuevoMarcaComponente" >
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarComponente.nuevoMarcaComponente}" disabled="#{controllerRegistrarComponente.activarCasillas}" class="form-control" id="nuevoMarcaComponente" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarComponente.validarMarcaComponente()}" execute="nuevoMarcaComponente" render="nuevoMarcaComponente msnMarcaComponente" />
                                     </h:inputText>
                                     <h6><h:message id="msnMarcaComponente" for="nuevoMarcaComponente" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Modelo Componente"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarComponente.nuevoModeloComponente}" class="form-control" id="nuevoModeloComponente" >
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarComponente.nuevoModeloComponente}" disabled="#{controllerRegistrarComponente.activarCasillas}" class="form-control" id="nuevoModeloComponente" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarComponente.validarModeloComponente()}" execute="nuevoModeloComponente" render="nuevoModeloComponente msnModeloComponente" />
                                     </h:inputText>
                                     <h6><h:message id="msnModeloComponente" for="nuevoModeloComponente" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Serial Componente"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarComponente.nuevoSerialComponente}" class="form-control" id="nuevoSerialComponente" >
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarComponente.nuevoSerialComponente}" disabled="#{controllerRegistrarComponente.activarCasillas}" class="form-control" id="nuevoSerialComponente" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarComponente.validarSerialComponente()}" execute="nuevoSerialComponente" render="nuevoSerialComponente msnSerialComponente" />
                                     </h:inputText>
                                     <h6><h:message id="msnSerialComponente" for="nuevoSerialComponente" style="color: red"/></h6>
                                 </div>
                             </fieldset>
                         </fieldset>
-                        <div class="left pull-left">
-                            <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarComponente.mensajeFormulario}"/></strong>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarComponente.mensajeFormulario}" style="color: #{controllerRegistrarComponente.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton class="btn btn-success" value="Registrar" actionListener="#{controllerRegistrarComponente.registrarNuevoComponente()}">
                                 <f:ajax execute="@form" render="form" />
@@ -151,6 +161,11 @@
                             <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarComponente.limpiarRegistroComponenteLaboratorio()}" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerRegistrarComponente.equipoElementoRegistro.idequipoelemento)}" immediate="true">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
+                            <span></span>
+                        <span></span>
+                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarComponente.activarLimpiar}" actionListener="#{controllerRegistrarComponente.cambiarActivarCasillas()}" >
+                            <f:ajax execute="@form" render="form" />
+                        </h:commandButton>
                         </div>
                     </div>
                 </div>

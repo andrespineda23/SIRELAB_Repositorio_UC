@@ -73,4 +73,15 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             return null;
         }
     }
+
+    @Override
+    public Departamento obtenerDepartamentoPorCodigo(String codigo) {
+        try {
+            Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString());
+            return null;
+        }
+    }
 }

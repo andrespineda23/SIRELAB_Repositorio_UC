@@ -44,6 +44,7 @@ public class ControllerDetallesComponente implements Serializable {
     private BigInteger idComponenteEquipo;
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesComponente() {
     }
@@ -55,7 +56,8 @@ public class ControllerDetallesComponente implements Serializable {
     public void recibirIDComponenteEquipo(BigInteger idRegistro) {
         this.idComponenteEquipo = idRegistro;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -206,7 +208,8 @@ public class ControllerDetallesComponente implements Serializable {
         validacionesDescripcion = false;
         validacionesNombre = false;
         validacionesMarca = true;
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
         //
         listaTiposComponentes = null;
         modificacionesRegistro = false;
@@ -260,12 +263,15 @@ public class ControllerDetallesComponente implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenaModificacionComponente();
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 cargarInformacionRegistro();
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el equipo asociado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -281,7 +287,7 @@ public class ControllerDetallesComponente implements Serializable {
             componenteEquipoDetalle.setTipocomponente(editarTipoComponente);
             gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesComponente almacenaModificacionComponente:  "+e.toString());
+            logger.error("Error ControllerDetallesComponente almacenaModificacionComponente:  " + e.toString());
             System.out.println("Error ControllerDetallesComponente almacenaModificacionComponente : " + e.toString());
         }
     }
@@ -381,6 +387,14 @@ public class ControllerDetallesComponente implements Serializable {
 
     public void setEditarTipoComponente(TipoComponente editarTipoComponente) {
         this.editarTipoComponente = editarTipoComponente;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

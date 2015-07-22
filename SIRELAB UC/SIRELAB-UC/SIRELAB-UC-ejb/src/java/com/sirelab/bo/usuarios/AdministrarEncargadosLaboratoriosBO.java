@@ -1,6 +1,7 @@
 package com.sirelab.bo.usuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
@@ -9,6 +10,7 @@ import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.TipoPerfilDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
@@ -46,6 +48,8 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     LaboratorioDAOInterface laboratorioDAO;
     @EJB
     TipoPerfilDAOInterface TipoPerfilDAO;
+    @EJB
+    AreaProfundizacionDAOInterface areaProfundizacionDAO;
 
     @Override
     public List<TipoPerfil> consultarPerfilesPorEncargadoRegistrados() {
@@ -188,6 +192,57 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             encargadoLaboratorioDAO.editarEncargadoLaboratorio(personalNuevo);
         } catch (Exception e) {
             System.out.println("Error AdministrarEncargadosLaboratoriosBO almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
+        }
+    }
+
+    @Override
+    public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro) {
+        try {
+            System.out.println("Ingreso al metodo");
+            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
+            if (null != registro) {
+                System.out.println("Ok");
+                return registro.getTipoperfil();
+            } else {
+                System.out.println("Null");
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error AdministrarValidadorTipoUsuario buscarTipoPerfilPorIDEncargado: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Departamento obtenerDepartamentoPorCodigo(String codigo) {
+        try {
+            Departamento registro = departamentoDAO.buscarDepartamentoPorID(BigInteger.ZERO);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarValidadorTipoUsuario obtenerDepartamentoPorCodigo: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public AreaProfundizacion obtenerAreaProfundizacionPorCodigo(String codigo) {
+        try {
+            AreaProfundizacion registro = areaProfundizacionDAO.buscarAreaProfundizacionPorCodigo(codigo);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarValidadorTipoUsuario obtenerAreaProfundizacionPorCodigo: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Laboratorio obtenerLaboratorioPorCodigo(String codigo) {
+        try {
+            Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarValidadorTipoUsuario obtenerLaboratorioPorCodigo: " + e.toString());
+            return null;
         }
     }
 }

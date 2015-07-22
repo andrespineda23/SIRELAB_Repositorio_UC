@@ -36,6 +36,9 @@ public class ControllerRegistrarProveedor implements Serializable {
     private boolean validacionesVendedor, validacionesTelVendedor;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarProveedor() {
     }
@@ -55,7 +58,10 @@ public class ControllerRegistrarProveedor implements Serializable {
         validacionesTelVendedor = true;
         validacionesTelefono = false;
         validacionesVendedor = true;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
 
@@ -109,7 +115,7 @@ public class ControllerRegistrarProveedor implements Serializable {
 
     public void validarDireccionProveedor() {
         if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoDireccion)) {
+            if (Utilidades.validarDirecciones(nuevoDireccion)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -171,8 +177,11 @@ public class ControllerRegistrarProveedor implements Serializable {
     public void registrarNuevoProveedor() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoProveedorEnSistema();
+            limpiarFormulario();
+            activarLimpiar = false;
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -195,11 +204,29 @@ public class ControllerRegistrarProveedor implements Serializable {
                 nuevaProveedor.setTelefonovendedor("");
             }
             gestionarRecursoProveedoresBO.crearNuevoProveedor(nuevaProveedor);
-            cancelarRegistroProveedor();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema : " + e.toString());
         }
+    }
+
+    public void limpiarFormulario() {
+        nuevoDireccion = null;
+        nuevoNIT = null;
+        nuevoNombre = null;
+        nuevoTelVendedor = null;
+        nuevoTelefono = null;
+        nuevoVendedor = null;
+        //
+        validacionesDireccion = false;
+        validacionesNIT = false;
+        validacionesNombre = false;
+        validacionesTelVendedor = true;
+        validacionesTelefono = false;
+        validacionesVendedor = true;
+        mensajeFormulario = "";
     }
 
     public void cancelarRegistroProveedor() {
@@ -216,7 +243,19 @@ public class ControllerRegistrarProveedor implements Serializable {
         validacionesTelVendedor = true;
         validacionesTelefono = false;
         validacionesVendedor = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -274,6 +313,30 @@ public class ControllerRegistrarProveedor implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

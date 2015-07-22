@@ -34,13 +34,14 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     private Departamento departamentoDetalles;
     private BigInteger idDepartamento;
-    private String editarNombre;
+    private String editarNombre, editarCodigo;
     private List<Facultad> listaFacultades;
     private Facultad editarFacultad;
     //
-    private boolean validacionesNombre, validacionesFacultad;
+    private boolean validacionesNombre, validacionesFacultad, validacionesCodigo;
     private String mensajeFormulario;
-     private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesDepartamento() {
     }
@@ -48,21 +49,27 @@ public class ControllerDetallesDepartamento implements Serializable {
     @PostConstruct
     public void init() {
         validacionesFacultad = true;
+        validacionesCodigo = true;
         validacionesNombre = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionDepartamento() {
+    public String restaurarInformacionDepartamento() {
         validacionesFacultad = true;
         validacionesNombre = true;
-        mensajeFormulario = "";
+        validacionesCodigo = true;
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         departamentoDetalles = new Departamento();
         recibirIDDepartamentosDetalles(idDepartamento);
+        return "administrar_departamentos";
     }
 
     public void asignarValoresVariablesDepartamento() {
         editarFacultad = departamentoDetalles.getFacultad();
+        editarCodigo = departamentoDetalles.getCodigodepartamento();
         editarNombre = departamentoDetalles.getNombredepartamento();
         listaFacultades = gestionarDepartamentosBO.consultarFacultadesRegistradas();
     }
@@ -77,13 +84,35 @@ public class ControllerDetallesDepartamento implements Serializable {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrectp."));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
             } else {
                 validacionesNombre = true;
             }
         } else {
             validacionesNombre = false;
             FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio."));
+        }
+    }
+
+    public void validarCodigoDepartamento() {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
+                Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(editarCodigo);
+                if (null != registro) {
+                    if (departamentoDetalles.getIddepartamento().equals(registro.getIddepartamento())) {
+                        validacionesCodigo = true;
+                    } else {
+                        validacionesCodigo = false;
+                        FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo ya se encuentra registrado."));
+                    }
+                }
+            } else {
+                validacionesCodigo = true;
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo ingresado es incorrecto."));
+            }
+        } else {
+            validacionesCodigo = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo es obligatorio."));
         }
     }
 
@@ -101,6 +130,9 @@ public class ControllerDetallesDepartamento implements Serializable {
         if (validacionesFacultad == false) {
             retorno = false;
         }
+        if (validacionesCodigo == false) {
+            retorno = false;
+        }
         if (validacionesNombre == false) {
             retorno = false;
         }
@@ -110,9 +142,11 @@ public class ControllerDetallesDepartamento implements Serializable {
     public void registrarModificacionDepartamento() {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionDepartamentoEnSistema();
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
             recibirIDDepartamentosDetalles(this.idDepartamento);
+            colorMensaje = "green";
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -121,9 +155,10 @@ public class ControllerDetallesDepartamento implements Serializable {
         try {
             departamentoDetalles.setNombredepartamento(editarNombre);
             departamentoDetalles.setFacultad(editarFacultad);
+            departamentoDetalles.setCodigodepartamento(editarCodigo);
             gestionarDepartamentosBO.modificarInformacionDepartamento(departamentoDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema : " + e.toString());
         }
     }
@@ -175,6 +210,22 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getEditarCodigo() {
+        return editarCodigo;
+    }
+
+    public void setEditarCodigo(String editarCodigo) {
+        this.editarCodigo = editarCodigo;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

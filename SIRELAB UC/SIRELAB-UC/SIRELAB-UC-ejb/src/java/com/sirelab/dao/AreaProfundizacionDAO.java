@@ -157,21 +157,6 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
                                 .append(") Like :parametroCodigo");
                         camposFiltro++;
                     }
-                    if ("parametroLaboratorio".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "laboratorio.idlaboratorio");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
-                    if ("parametroDepartamento".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "laboratorio.departamento.iddepartamento");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
-                    if ("parametroFacultad".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "laboratorio.departamento.facultad.idfacultad");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
                 }
             }
         }
@@ -192,13 +177,6 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
                         || ("parametroCodigo".equals(entry.getKey()))) {
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
-                if (("parametroLaboratorio".equals(entry.getKey()))
-                        || ("parametroDepartamento".equals(entry.getKey()))
-                        || ("parametroFacultad".equals(entry.getKey()))) {
-                    //
-                    tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
-                }
-
             }
         }
         return tq;

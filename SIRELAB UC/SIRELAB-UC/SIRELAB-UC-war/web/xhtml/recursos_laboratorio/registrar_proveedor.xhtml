@@ -53,7 +53,7 @@
                     <br></br>
                     <br></br>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Administrar Proveedores</a></li>
@@ -79,28 +79,28 @@
                                 <legend class="text-info">Datos Personales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Nombre Proveedor*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoNombre}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoNombre}" disabled="#{controllerRegistrarProveedor.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarProveedor.validarNombreProveedor()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="NIT Proveedor*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoNIT}" required="true" class="form-control" id="nuevoNIT" requiredMessage="El campo NIT es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoNIT}" disabled="#{controllerRegistrarProveedor.activarCasillas}" required="true" class="form-control" id="nuevoNIT" requiredMessage="El campo NIT es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarProveedor.validarNITProveedor()}" execute="nuevoNIT" render="nuevoNIT msnNIT" />
                                     </h:inputText>
                                     <h6><h:message id="msnNIT" for="nuevoNIT" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Direccion*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoDireccion}" required="true" class="form-control" id="nuevoDireccion" requiredMessage="El campo Dirección es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoDireccion}" disabled="#{controllerRegistrarProveedor.activarCasillas}" required="true" class="form-control" id="nuevoDireccion" requiredMessage="El campo Dirección es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarProveedor.validarDireccionProveedor()}" execute="nuevoDireccion" render="nuevoDireccion msnDireccion" />
                                     </h:inputText>
                                     <h6><h:message id="msnDireccion" for="nuevoDireccion" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Telefono*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoTelefono}" required="true" class="form-control" id="nuevoTelefono" requiredMessage="El campo Telefono es obligatorio.">
+                                    <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoTelefono}" disabled="#{controllerRegistrarProveedor.activarCasillas}" required="true" class="form-control" id="nuevoTelefono" requiredMessage="El campo Telefono es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarProveedor.validarTelefonoProveedor()}" execute="nuevoTelefono" render="nuevoTelefono msnTelefono" />
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono" for="nuevoTelefono" style="color: red"/></h6>
@@ -109,23 +109,33 @@
                                     <legend class="h5 text-info">Datos Opcionales</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Nombre Vendedor"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoVendedor}"  class="form-control" id="nuevoVendedor" >
+                                        <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoVendedor}" disabled="#{controllerRegistrarProveedor.activarCasillas}" class="form-control" id="nuevoVendedor" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarProveedor.validarDatosOpcionales(1)}" execute="nuevoVendedor" render="nuevoVendedor msnVendedor" />
                                         </h:inputText>
                                         <h6><h:message id="msnVendedor" for="nuevoVendedor" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Telefono Vendedor"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoTelVendedor}"  class="form-control" id="nuevoTelVendedor" >
+                                        <h:inputText maxlength="45" value="#{controllerRegistrarProveedor.nuevoTelVendedor}" disabled="#{controllerRegistrarProveedor.activarCasillas}" class="form-control" id="nuevoTelVendedor" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarProveedor.validarDatosOpcionales(2)}" execute="nuevoTelVendedor" render="nuevoTelVendedor msnTelVendedor" />
                                         </h:inputText>
                                         <h6><h:message id="msnTelVendedor" for="nuevoTelVendedor" style="color: red"/></h6>
                                     </div>
                                 </fieldset>
                             </fieldset>
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarProveedor.mensajeFormulario}"/></strong>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarProveedor.mensajeFormulario}" style="color: #{controllerRegistrarProveedor.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
                             </div>
+                            <hr class="intro-divider"/>
                             <div class="right pull-right">
                                 <h:commandButton value="Registrar" actionListener="#{controllerRegistrarProveedor.registrarNuevoProveedor()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
@@ -134,7 +144,12 @@
                                 <span></span>
                                 <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_proveedores" actionListener="#{controllerRegistrarProveedor.cancelarRegistroProveedor()}" immediate="true">
                                     <f:ajax execute="@form" render="form" />
+                                </h:commandButton><span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarProveedor.activarLimpiar}" actionListener="#{controllerRegistrarProveedor.cambiarActivarCasillas()}" >
+                                    <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
+
                             </div>
                         </div>
                     </div>

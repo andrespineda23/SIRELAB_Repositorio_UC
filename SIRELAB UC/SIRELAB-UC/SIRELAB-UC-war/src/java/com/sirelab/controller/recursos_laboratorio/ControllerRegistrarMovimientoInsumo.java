@@ -38,6 +38,9 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private String mensajeFormulario;
     private Insumo insumoRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarMovimientoInsumo() {
     }
@@ -48,7 +51,10 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         validacionesCosto = false;
         validacionesTipo = false;
         validacionesFecha = true;
-        mensajeFormulario = "";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         //
         nuevoTipoMovimiento = null;
         nuevoCantidadMovimiento = null;
@@ -128,7 +134,10 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         validacionesCosto = false;
         validacionesTipo = false;
         validacionesFecha = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         return "administrar_movimientoinsumo";
     }
 
@@ -156,9 +165,11 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     public void registrarNuevoMovimiento() {
         if (validarResultadosValidacion() == true) {
             almacenaNuevoMovimientoEnSistema();
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
             limpiarFormulario();
+            activarLimpiar = false;
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -172,8 +183,10 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             movimientoNuevo.setFechamovimiento(nuevoFechaMovimiento);
             movimientoNuevo.setInsumo(insumoRegistro);
             gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumo(movimientoNuevo);
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString());
         }
     }
@@ -188,6 +201,15 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         validacionesCosto = false;
         validacionesTipo = false;
         validacionesFecha = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -237,6 +259,30 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
 
     public void setInsumoRegistro(Insumo insumoRegistro) {
         this.insumoRegistro = insumoRegistro;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

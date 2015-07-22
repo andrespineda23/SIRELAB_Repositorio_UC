@@ -203,11 +203,19 @@
                                 </div>
                             </fieldset>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="row col-md-12">
-                            <div class="left pull-left">
-                                <strong><h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEstudiante.mensajeFormulario}"/></strong>
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesEstudiante.mensajeFormulario}" style="color: #{controllerDetallesEstudiante.colorMensaje}}"/>
+                                </strong>
                             </div>
+                            <br></br>
                         </div>
+                        <hr class="intro-divider"/>
                         <div class="row col-md-12">
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
@@ -240,7 +248,7 @@
                         <div class="row col-md-12">
                             <div class="col-md-11"></div>
                             <div class="col-md-1">
-                                <h:commandButton value="Atras" action="administrar_estudiantes" actionListener="#{controllerDetallesEstudiante.restaurarInformacionEstudiante()}" class="btn btn-primary" immediate="true"/>
+                                <h:commandButton value="Atras" action="#{controllerDetallesEstudiante.restaurarInformacionEstudiante()}" actionListener="#{controllerAdministrarEstudiantes.limpiarDatos()}" class="btn btn-primary" immediate="true"/>
                             </div>
                         </div>
                     </div>

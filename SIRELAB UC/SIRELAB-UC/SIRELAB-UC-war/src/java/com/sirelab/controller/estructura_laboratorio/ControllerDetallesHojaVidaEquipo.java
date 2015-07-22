@@ -44,6 +44,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     private HojaVidaEquipo hojaVidaEquipoDetalle;
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesHojaVidaEquipo() {
     }
@@ -56,7 +57,8 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     public void recibirIDHojaVidaEquipo(BigInteger idRegistro) {
         this.idHojaVidaEquipo = idRegistro;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     private void cargarInformacionRegistro() {
@@ -153,15 +155,19 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             if (validarValidacionesRegistro() == true) {
                 if ((inputFechaRegistro.after(inputFechaEvento)) || (inputFechaRegistro.equals(inputFechaEvento))) {
                     almacenarModificacionRegistro();
+                    colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     cargarInformacionRegistro();
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "La fecha registro es menor que la fecha evento, por favor corregir para continuar.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No existen modificaciones para ser almacenadas.";
         }
     }
@@ -174,7 +180,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             hojaVidaEquipoDetalle.setFechaevento(inputFechaEvento);
             gestionarPlantaHojasVidaEquiposBO.editarHojaVidaEquipo(hojaVidaEquipoDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro:  "+e.toString());
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro:  " + e.toString());
             System.out.println("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro: " + e.toString());
         }
     }
@@ -188,7 +194,8 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
         validacionesTipo = false;
         validacionesFechaRegistro = false;
         validacionesFechaEvento = false;
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     public String cerrarPagina() {
@@ -267,6 +274,14 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void setHojaVidaEquipoDetalle(HojaVidaEquipo hojaVidaEquipoDetalle) {
         this.hojaVidaEquipoDetalle = hojaVidaEquipoDetalle;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

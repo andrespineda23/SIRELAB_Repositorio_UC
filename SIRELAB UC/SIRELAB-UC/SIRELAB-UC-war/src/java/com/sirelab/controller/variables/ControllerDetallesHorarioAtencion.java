@@ -37,6 +37,7 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
     private BigInteger idHorarioAtencion;
     private HorarioAtencion horarioAtencionDetalles;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesHorarioAtencion() {
     }
@@ -49,7 +50,8 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
     public void recibirIDDetalleHorarioAtencion(BigInteger idDetalle) {
         this.idHorarioAtencion = idDetalle;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
     }
 
     private void cargarInformacionRegistro() {
@@ -120,15 +122,19 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
             if (validarResultadosValidacion() == true) {
                 if (validarCodigoRepetido() == true) {
                     almacenarModificacionRegistro();
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     cargarInformacionRegistro();
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
+                    colorMensaje = "red";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
                 }
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No existen modificaciones para ser almacenadas.";
         }
     }
@@ -154,7 +160,8 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
         inputCodigo = null;
         validacionesDescripcion = false;
         validacionesCodigo = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         idHorarioAtencion = null;
         modificacionesRegistro = false;
         horarioAtencionDetalles = null;
@@ -183,6 +190,14 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

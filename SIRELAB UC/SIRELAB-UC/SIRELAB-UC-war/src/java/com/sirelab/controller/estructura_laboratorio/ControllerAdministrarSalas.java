@@ -72,12 +72,14 @@ public class ControllerAdministrarSalas implements Serializable {
     private boolean perfilConsulta;
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String cantidadRegistros;
 
     public ControllerAdministrarSalas() {
     }
 
     @PostConstruct
     public void init() {
+        cantidadRegistros = "N/A";
         activarLaboratorio = true;
         activarEdificio = true;
         activarExport = true;
@@ -207,6 +209,7 @@ public class ControllerAdministrarSalas implements Serializable {
                     listaSalasLaboratoriosTabla = new ArrayList<SalaLaboratorio>();
                     tamTotalSala = listaSalasLaboratorios.size();
                     posicionSalaTabla = 0;
+                    cantidadRegistros = String.valueOf(tamTotalSala);
                     cargarDatosTablaSala();
                 } else {
                     activarExport = true;
@@ -214,6 +217,7 @@ public class ControllerAdministrarSalas implements Serializable {
                     tamTotalSala = 0;
                     posicionSalaTabla = 0;
                     bloquearPagAntSala = true;
+                    cantidadRegistros = String.valueOf(tamTotalSala);
                     bloquearPagSigSala = true;
                 }
             } else {
@@ -221,10 +225,11 @@ public class ControllerAdministrarSalas implements Serializable {
                 tamTotalSala = 0;
                 posicionSalaTabla = 0;
                 bloquearPagAntSala = true;
+                cantidadRegistros = String.valueOf(tamTotalSala);
                 bloquearPagSigSala = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros : " + e.toString());
         }
     }
@@ -296,6 +301,38 @@ public class ControllerAdministrarSalas implements Serializable {
         parametroLaboratorio = new Laboratorio();
         parametroEdificio = new Edificio();
         parametroSede = new Sede();
+
+        listaEdificios = null;
+        listaLaboratorios = null;
+        listaAreasProfundizacion = null;
+        listaDepartamentos = null;
+        listaSedes = null;
+        cantidadRegistros = "N/A";
+
+        listaSalasLaboratorios = null;
+        listaSalasLaboratoriosTabla = null;
+        posicionSalaTabla = 0;
+        tamTotalSala = 0;
+        bloquearPagAntSala = true;
+        bloquearPagSigSala = true;
+        inicializarFiltros();
+        return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        cantidadRegistros = "N/A";
+        activarEdificio = true;
+        activarLaboratorio = true;
+        parametroEstado = 1;
+        activarExport = true;
+        parametroNombre = null;
+        parametroCodigo = null;
+        parametroCapacidad = null;
+        parametroAreaProfundizacion = new AreaProfundizacion();
+        parametroDepartamento = new Departamento();
+        parametroLaboratorio = new Laboratorio();
+        parametroEdificio = new Edificio();
+        parametroSede = new Sede();
         listaEdificios = null;
         listaLaboratorios = null;
         listaSalasLaboratorios = null;
@@ -305,7 +342,6 @@ public class ControllerAdministrarSalas implements Serializable {
         bloquearPagAntSala = true;
         bloquearPagSigSala = true;
         inicializarFiltros();
-        return paginaAnterior;
     }
 
     public void actualizarDepartamentos() {
@@ -555,6 +591,14 @@ public class ControllerAdministrarSalas implements Serializable {
 
     public void setPerfilConsulta(boolean perfilConsulta) {
         this.perfilConsulta = perfilConsulta;
+    }
+
+    public String getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    public void setCantidadRegistros(String cantidadRegistros) {
+        this.cantidadRegistros = cantidadRegistros;
     }
 
 }

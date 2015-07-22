@@ -39,12 +39,19 @@ public class ControllerRegistrarAdministrador implements Serializable {
     private boolean validacionesDireccion, validacionesPassw2, validacionesUsuario;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarAdministrador() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         validacionesUsuario = false;
         validacionesNombre = false;
         validacionesApellido = false;
@@ -55,7 +62,6 @@ public class ControllerRegistrarAdministrador implements Serializable {
         validacionesTel2 = true;
         validacionesDireccion = true;
         validacionesPassw2 = false;
-        mensajeFormulario = "";
         nuevoApellido = null;
         nuevoContrasenia = null;
         nuevoContraseniaConfirma = null;
@@ -121,7 +127,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void validarIdentificacionAdministrador() {
         if (Utilidades.validarNulo(nuevoDocumento) && (!nuevoDocumento.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoDocumento)) {
+            if (Utilidades.validarNumeroIdentificacion(nuevoDocumento)) {
                 Persona registro = administrarAdministradoresBO.obtenerAdministradorPorDocumento(nuevoDocumento);
                 if (null == registro) {
                     validacionesID = true;
@@ -163,7 +169,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void validarDireccionAdministrador() {
         if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoDireccion)) {
+            if (Utilidades.validarDirecciones(nuevoDireccion)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -253,8 +259,11 @@ public class ControllerRegistrarAdministrador implements Serializable {
     public void registrarNuevoAdministrador() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoAdministradorEnSistema();
+            limpiarFormulario();
+            activarLimpiar = false;
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -277,16 +286,15 @@ public class ControllerRegistrarAdministrador implements Serializable {
             personaNueva.setTelefono2persona(nuevoTelefono2);
             administrarAdministradoresBO.almacenarNuevaPersonaEnSistema(usuarioNuevo, personaNueva);
             cancelarRegistroAdministrador();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema:  "+e.toString());
+            logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString());
         }
     }
 
-    /**
-     * Metodo encargado de cancelar el proceso de registro
-     */
-    public void cancelarRegistroAdministrador() {
+    public void limpiarFormulario() {
         validacionesNombre = false;
         validacionesUsuario = false;
         validacionesApellido = false;
@@ -308,6 +316,45 @@ public class ControllerRegistrarAdministrador implements Serializable {
         nuevoTelefono1 = null;
         nuevoTelefono2 = null;
         nuevoUsuario = null;
+    }
+
+    /**
+     * Metodo encargado de cancelar el proceso de registro
+     */
+    public void cancelarRegistroAdministrador() {
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        activarCasillas = false;
+        colorMensaje = "black";
+        validacionesNombre = false;
+        validacionesUsuario = false;
+        validacionesApellido = false;
+        validacionesCorreo = false;
+        validacionesID = false;
+        validacionesPassw = false;
+        validacionesTel1 = true;
+        validacionesTel2 = true;
+        validacionesDireccion = true;
+        validacionesPassw2 = false;
+        nuevoApellido = null;
+        nuevoContrasenia = null;
+        nuevoContraseniaConfirma = null;
+        nuevoCorreo = null;
+        nuevoDireccion = null;
+        nuevoDocumento = null;
+        nuevoNombre = null;
+        nuevoTelefono1 = null;
+        nuevoTelefono2 = null;
+        nuevoUsuario = null;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -397,6 +444,30 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }

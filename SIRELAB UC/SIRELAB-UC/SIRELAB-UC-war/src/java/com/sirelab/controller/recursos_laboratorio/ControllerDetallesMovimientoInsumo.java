@@ -41,6 +41,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     private MovimientoInsumo movimientoInsumoDetalle;
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesMovimientoInsumo() {
     }
@@ -53,7 +54,8 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     public void recibirIDMovimientoInsumo(BigInteger idRegistro) {
         this.idMovimiento = idRegistro;
         cargarInformacionRegistro();
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     private void cargarInformacionRegistro() {
@@ -143,7 +145,8 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         validacionesCosto = false;
         validacionesTipo = false;
         validacionesFecha = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         idMovimiento = null;
         movimientoInsumoDetalle = null;
         modificacionesRegistro = false;
@@ -175,12 +178,15 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         if (modificacionesRegistro == true) {
             if (validarResultadosValidacion() == true) {
                 almacenaModificacionMovimientoEnSistema();
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 cargarInformacionRegistro();
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
+            colorMensaje = "black";
             mensajeFormulario = "No existen modificaciones para ser almacenadas.";
         }
     }
@@ -194,7 +200,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
             movimientoInsumoDetalle.setInsumo(editarInsumo);
             gestionarRecursoMovimientosInsumoBO.editarMovimientoInsumo(movimientoInsumoDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesMovimientoInsumo almacenaModificacionMovimientoEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesMovimientoInsumo almacenaModificacionMovimientoEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesMovimientoInsumo almacenaModificacionMovimientoEnSistema : " + e.toString());
         }
     }
@@ -254,6 +260,14 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
 
     public void setMovimientoInsumoDetalle(MovimientoInsumo movimientoInsumoDetalle) {
         this.movimientoInsumoDetalle = movimientoInsumoDetalle;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

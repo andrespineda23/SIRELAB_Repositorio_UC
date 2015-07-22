@@ -44,6 +44,7 @@ public class ControllerDetallesEdificio implements Serializable {
     private boolean validacionesDescripcion, validacionesDireccion, validacionesSede, validacionesHorario;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesEdificio() {
     }
@@ -54,18 +55,21 @@ public class ControllerDetallesEdificio implements Serializable {
         validacionesDireccion = true;
         validacionesSede = true;
         validacionesHorario = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionEdificio() {
+    public String restaurarInformacionEdificio() {
         validacionesDescripcion = true;
         validacionesDireccion = true;
         validacionesHorario = true;
         validacionesSede = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         edificioDetalles = new Edificio();
         recibirIDEdificiosDetalles(idEdificio);
+        return "administrar_edificios";
     }
 
     public void asignarValoresVariablesEdificio() {
@@ -99,7 +103,7 @@ public class ControllerDetallesEdificio implements Serializable {
 
     public void validarDireccionEdificio() {
         if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty())) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(editarDireccion)) {
+            if (!Utilidades.validarDirecciones(editarDireccion)) {
                 validacionesDireccion = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
             } else {
@@ -146,9 +150,11 @@ public class ControllerDetallesEdificio implements Serializable {
     public void registrarModificacionEdificio() {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionEdificioEnSistema();
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
             recibirIDEdificiosDetalles(this.idEdificio);
+            colorMensaje = "green";
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -161,7 +167,7 @@ public class ControllerDetallesEdificio implements Serializable {
             edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString());
         }
     }
@@ -229,6 +235,14 @@ public class ControllerDetallesEdificio implements Serializable {
 
     public void setEditarHorario(HorarioAtencion editarHorario) {
         this.editarHorario = editarHorario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

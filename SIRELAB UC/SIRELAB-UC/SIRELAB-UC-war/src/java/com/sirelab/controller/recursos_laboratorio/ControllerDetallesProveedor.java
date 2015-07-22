@@ -39,6 +39,7 @@ public class ControllerDetallesProveedor implements Serializable {
     private boolean validacionesVendedor, validacionesTelVendedor;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private String colorMensaje;
 
     public ControllerDetallesProveedor() {
     }
@@ -51,20 +52,23 @@ public class ControllerDetallesProveedor implements Serializable {
         validacionesTelVendedor = true;
         validacionesTelefono = true;
         validacionesVendedor = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public void restaurarInformacionProveedor() {
+    public String restaurarInformacionProveedor() {
         validacionesDireccion = true;
         validacionesNIT = true;
         validacionesNombre = true;
         validacionesTelVendedor = true;
         validacionesTelefono = true;
         validacionesVendedor = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
         proveedorDetalle = new Proveedor();
         recibirIDProveedoresDetalles(idProveedor);
+        return "administrar_proveedores";
     }
 
     public void asignarValoresVariablesProveedor() {
@@ -136,7 +140,7 @@ public class ControllerDetallesProveedor implements Serializable {
 
     public void validarDireccionProveedor() {
         if ((Utilidades.validarNulo(editarDireccion)) && (!editarDireccion.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(editarDireccion)) {
+            if (Utilidades.validarDirecciones(editarDireccion)) {
                 validacionesDireccion = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
@@ -193,9 +197,11 @@ public class ControllerDetallesProveedor implements Serializable {
     public void registrarModificacionesProveedor() {
         if (validarResultadosValidacion() == true) {
             almacenarModificacionesProveedorEnSistema();
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
             recibirIDProveedoresDetalles(this.idProveedor);
+            colorMensaje = "green";
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -218,7 +224,7 @@ public class ControllerDetallesProveedor implements Serializable {
             }
             gestionarRecursoProveedoresBO.modificarInformacionProveedor(proveedorDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema:  "+e.toString());
+            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema : " + e.toString());
         }
     }
@@ -286,6 +292,14 @@ public class ControllerDetallesProveedor implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

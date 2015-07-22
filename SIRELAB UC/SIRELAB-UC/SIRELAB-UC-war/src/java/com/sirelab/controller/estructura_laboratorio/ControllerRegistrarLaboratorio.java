@@ -44,12 +44,19 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     private boolean validacionesNombre, validacionesCodigo, validacionesFacultad, validacionesDepartamento;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
+    private String colorMensaje;
+    private boolean activarLimpiar;
 
     public ControllerRegistrarLaboratorio() {
     }
 
     @PostConstruct
     public void init() {
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
         activarNuevoDepartamento = true;
         nuevoCodigo = null;
         nuevoDepartamento = null;
@@ -60,7 +67,6 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
-        mensajeFormulario = "";
         BasicConfigurator.configure();
     }
 
@@ -136,7 +142,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
 
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
-        Laboratorio registro = gestionarPlantaLaboratoriosBO.obtenerLaboratorioPorCodigoYDepartamento(nuevoCodigo, nuevoDepartamento.getIddepartamento());
+        Laboratorio registro = gestionarPlantaLaboratoriosBO.obtenerLaboratorioPorCodigo(nuevoCodigo);
         if (null != registro) {
             retorno = false;
         }
@@ -147,11 +153,15 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 almacenarNuevoLaboratorioEnSistema();
+                limpiarFormulario();
+                activarLimpiar = false;
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
+                colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el departamento seleccionado.";
             }
         } else {
+            colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
@@ -163,9 +173,10 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             laboratorioNuevo.setCodigolaboratorio(nuevoCodigo);
             laboratorioNuevo.setDepartamento(nuevoDepartamento);
             gestionarPlantaLaboratoriosBO.crearNuevaLaboratorio(laboratorioNuevo);
-            limpiarFormulario();
+            activarCasillas = true;
+            colorMensaje = "green";
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema:  "+e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString());
 
         }
@@ -186,6 +197,10 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     }
 
     public void cancelarRegistroLaboratorio() {
+        mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
         listaFacultades = null;
         listaDepartamentos = null;
         activarNuevoDepartamento = true;
@@ -198,7 +213,15 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
-        mensajeFormulario = "";
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -267,6 +290,30 @@ public class ControllerRegistrarLaboratorio implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
     }
 
 }
