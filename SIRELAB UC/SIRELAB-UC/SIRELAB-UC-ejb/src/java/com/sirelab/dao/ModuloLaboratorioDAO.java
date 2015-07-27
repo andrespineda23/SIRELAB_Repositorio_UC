@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
 
-     /**
+    /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
     @PersistenceContext(unitName = "SIRELAB-UC-ejbPU")
@@ -79,7 +79,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public ModuloLaboratorio buscarModuloLaboratorioPorCodigoYSala(String codigo, BigInteger sala) {
         try {
@@ -121,8 +121,9 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<ModuloLaboratorio> tq = em.createQuery(jpql2.toString(), ModuloLaboratorio.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigomodulo ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<ModuloLaboratorio> tq = em.createQuery(consulta, ModuloLaboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

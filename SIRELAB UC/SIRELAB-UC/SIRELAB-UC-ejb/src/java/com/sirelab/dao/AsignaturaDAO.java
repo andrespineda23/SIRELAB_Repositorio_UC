@@ -82,7 +82,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Asignatura buscarAsignaturaPorCodigoYPlanEstudio(String codigo, BigInteger plan) {
         try {
@@ -109,8 +109,9 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Asignatura> tq = em.createQuery(jpql2.toString(), Asignatura.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombreasignatura ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Asignatura> tq = em.createQuery(consulta, Asignatura.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

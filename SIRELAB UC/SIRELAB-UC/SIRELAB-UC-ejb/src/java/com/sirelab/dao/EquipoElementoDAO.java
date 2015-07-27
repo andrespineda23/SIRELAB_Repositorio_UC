@@ -111,8 +111,9 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<EquipoElemento> tq = em.createQuery(jpql2.toString(), EquipoElemento.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombreequipo ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<EquipoElemento> tq = em.createQuery(consulta, EquipoElemento.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

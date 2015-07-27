@@ -151,8 +151,9 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<EncargadoLaboratorio> tq = em.createQuery(jpql2.toString(), EncargadoLaboratorio.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<EncargadoLaboratorio> tq = em.createQuery(consulta, EncargadoLaboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

@@ -136,8 +136,9 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Laboratorio> tq = em.createQuery(jpql2.toString(), Laboratorio.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigolaboratorio ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Laboratorio> tq = em.createQuery(consulta, Laboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

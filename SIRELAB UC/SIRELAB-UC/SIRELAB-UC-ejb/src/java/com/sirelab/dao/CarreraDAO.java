@@ -137,8 +137,9 @@ public class CarreraDAO implements CarreraDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Carrera> tq = em.createQuery(jpql2.toString(), Carrera.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombrecarrera ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Carrera> tq = em.createQuery(consulta, Carrera.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

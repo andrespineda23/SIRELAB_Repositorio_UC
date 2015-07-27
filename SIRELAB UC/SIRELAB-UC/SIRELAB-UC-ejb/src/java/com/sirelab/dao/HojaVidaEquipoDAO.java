@@ -72,7 +72,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
     public List<HojaVidaEquipo> consultarHojaVidaPorIDEquipo(BigInteger idRegistro) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM HojaVidaEquipo p WHERE p.equipoelemento.idequipoelemento=:idRegistro");
+            Query query = em.createQuery("SELECT p FROM HojaVidaEquipo p WHERE p.equipoelemento.idequipoelemento=:idRegistro ORDER BY p.fechaevento");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idRegistro", idRegistro);
             List<HojaVidaEquipo> lista = query.getResultList();

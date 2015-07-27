@@ -164,8 +164,9 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<EntidadExterna> tq = em.createQuery(jpql2.toString(), EntidadExterna.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<EntidadExterna> tq = em.createQuery(consulta, EntidadExterna.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

@@ -72,7 +72,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
     public List<MovimientoInsumo> consultarMovimientosInsumoPorInsumo(BigInteger insumo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM MovimientoInsumo p WHERE p.insumo.idinsumo=:insumo");
+            Query query = em.createQuery("SELECT p FROM MovimientoInsumo p WHERE p.insumo.idinsumo=:insumo ORDER BY p.fechamovimiento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("insumo", insumo);
             List<MovimientoInsumo> lista = query.getResultList();

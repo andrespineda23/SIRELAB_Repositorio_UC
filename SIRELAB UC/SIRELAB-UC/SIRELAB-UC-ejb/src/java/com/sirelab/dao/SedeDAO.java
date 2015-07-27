@@ -93,8 +93,9 @@ public class SedeDAO implements SedeDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Sede> tq = em.createQuery(jpql2.toString(), Sede.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombresede ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Sede> tq = em.createQuery(consulta, Sede.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

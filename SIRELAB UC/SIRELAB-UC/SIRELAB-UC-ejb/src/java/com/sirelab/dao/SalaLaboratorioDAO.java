@@ -167,8 +167,9 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<SalaLaboratorio> tq = em.createQuery(jpql2.toString(), SalaLaboratorio.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigosala ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<SalaLaboratorio> tq = em.createQuery(consulta, SalaLaboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

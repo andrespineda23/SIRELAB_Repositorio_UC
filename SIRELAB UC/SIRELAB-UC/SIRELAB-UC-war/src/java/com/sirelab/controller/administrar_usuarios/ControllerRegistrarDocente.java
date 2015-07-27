@@ -6,6 +6,7 @@ import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.TipoCargo;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.Utilidades;
@@ -36,12 +37,14 @@ public class ControllerRegistrarDocente implements Serializable {
     //
 
     private String inputNombre, inputApellido, inputID, inputEmail, inputEmailOpcional, inputTelefono1, inputTelefono2, inputDireccion;
-    private String inputCargo;
+    ;
     private List<Facultad> listaFacultades;
     private Facultad inputFacultad;
     private List<Departamento> listaDepartamentos;
     private Departamento inputDepartamento;
     private boolean activarDepartamento;
+    private List<TipoCargo> listaTiposCargos;
+    private TipoCargo inputCargo;
     private String paginaAnterior;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
@@ -76,6 +79,8 @@ public class ControllerRegistrarDocente implements Serializable {
         inputApellido = null;
         inputFacultad = null;
         inputDireccion = null;
+        inputTelefono1 = null;
+        inputTelefono2 = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
@@ -122,6 +127,20 @@ public class ControllerRegistrarDocente implements Serializable {
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarDocente actualizarDepartamentos:  " + e.toString());
             System.out.println("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString());
+        }
+    }
+
+    public void actualizarCargos() {
+        try {
+            if (Utilidades.validarNulo(inputCargo)) {
+                validacionesCargo = true;
+            } else {
+                validacionesCargo = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputCargo", new FacesMessage("El campo Cargo es obligatorio."));
+            }
+        } catch (Exception e) {
+            logger.error("Error ControllerRegistrarDocente actualizarCargos:  " + e.toString());
+            System.out.println("Error ControllerRegistrarDocente actualizarCargos : " + e.toString());
         }
     }
 
@@ -236,20 +255,6 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
                 validacionesDireccion = false;
             }
-        }
-    }
-
-    public void validarCargoDocente() {
-        if ((Utilidades.validarNulo(inputCargo)) && (!inputCargo.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(inputCargo)) {
-                validacionesCargo = true;
-            } else {
-                FacesContext.getCurrentInstance().addMessage("form:inputCargo", new FacesMessage("El cargo ingresado se encuentra incorrecto."));
-                validacionesCargo = false;
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputCargo", new FacesMessage("El campo Cargo es obligatorio."));
-            validacionesCargo = false;
         }
     }
 
@@ -396,7 +401,7 @@ public class ControllerRegistrarDocente implements Serializable {
             personaNueva.setTelefono2persona(inputTelefono2);
             Docente docenteNueva = new Docente();
             docenteNueva.setDepartamento(inputDepartamento);
-            docenteNueva.setCargodocente(inputCargo);
+            docenteNueva.setCargo(inputCargo);
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
             activarCasillas = true;
             colorMensaje = "green";
@@ -483,11 +488,22 @@ public class ControllerRegistrarDocente implements Serializable {
         this.inputDireccion = inputDireccion;
     }
 
-    public String getInputCargo() {
+    public List<TipoCargo> getListaTiposCargos() {
+        if (null == listaTiposCargos) {
+            listaTiposCargos = administrarDocentesBO.obtenerListaTiposCargos();
+        }
+        return listaTiposCargos;
+    }
+
+    public void setListaTiposCargos(List<TipoCargo> listaTiposCargos) {
+        this.listaTiposCargos = listaTiposCargos;
+    }
+
+    public TipoCargo getInputCargo() {
         return inputCargo;
     }
 
-    public void setInputCargo(String inputCargo) {
+    public void setInputCargo(TipoCargo inputCargo) {
         this.inputCargo = inputCargo;
     }
 

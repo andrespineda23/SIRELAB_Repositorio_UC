@@ -4,6 +4,7 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarDocentesBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.TipoCargo;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,12 +32,14 @@ public class ControllerAdministrarDocentes implements Serializable {
     @EJB
     AdministrarDocentesBOInterface administrarDocentesBO;
 
-    private String parametroNombre, parametroApellido, parametroDocumento, parametroCorreo, parametroCargo;
+    private String parametroNombre, parametroApellido, parametroDocumento, parametroCorreo;
     private int parametroEstado;
     private List<Facultad> listaFacultades;
     private Facultad parametroFacultad;
     private List<Departamento> listaDepartamentos;
     private Departamento parametroDepartamento;
+    private List<TipoCargo> listaTiposCargos;
+    private TipoCargo parametroCargo;
     private boolean activarDepartamento;
     private Map<String, String> filtros;
     //
@@ -132,8 +135,10 @@ public class ControllerAdministrarDocentes implements Serializable {
                 filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
             }
         }
-        if ((Utilidades.validarNulo(parametroCargo)) && (!parametroCargo.isEmpty())) {
-            filtros.put("parametroCargo", parametroCargo);
+        if (Utilidades.validarNulo(parametroCargo) == true) {
+            if (parametroCargo.getIdtipocargo() != null) {
+                filtros.put("parametroCargo", parametroCargo.getIdtipocargo().toString());
+            }
         }
     }
 
@@ -254,6 +259,7 @@ public class ControllerAdministrarDocentes implements Serializable {
         bloquearPagAntDocente = true;
         bloquearPagSigDocente = true;
         listaFacultades = null;
+        listaTiposCargos = null;
         listaDepartamentos = null;
         cantidadRegistros = "N/A";
         return paginaAnterior;
@@ -359,11 +365,22 @@ public class ControllerAdministrarDocentes implements Serializable {
         this.parametroCorreo = parametroCorreo;
     }
 
-    public String getParametroCargo() {
+    public List<TipoCargo> getListaTiposCargos() {
+        if (null == listaTiposCargos) {
+            listaTiposCargos = administrarDocentesBO.obtenerListaTiposCargos();
+        }
+        return listaTiposCargos;
+    }
+
+    public void setListaTiposCargos(List<TipoCargo> listaTiposCargos) {
+        this.listaTiposCargos = listaTiposCargos;
+    }
+
+    public TipoCargo getParametroCargo() {
         return parametroCargo;
     }
 
-    public void setParametroCargo(String parametroCargo) {
+    public void setParametroCargo(TipoCargo parametroCargo) {
         this.parametroCargo = parametroCargo;
     }
 

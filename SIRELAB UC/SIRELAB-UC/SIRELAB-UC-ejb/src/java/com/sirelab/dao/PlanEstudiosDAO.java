@@ -137,8 +137,9 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<PlanEstudios> tq = em.createQuery(jpql2.toString(), PlanEstudios.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigoplanestudio ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<PlanEstudios> tq = em.createQuery(consulta, PlanEstudios.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

@@ -108,8 +108,9 @@ public class EdificioDAO implements EdificioDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Edificio> tq = em.createQuery(jpql2.toString(), Edificio.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".descripcionedificio ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Edificio> tq = em.createQuery(consulta, Edificio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

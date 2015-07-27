@@ -26,7 +26,7 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
     private EntityManager em;
 
     private Logger logger = Logger.getLogger(getClass().getName());
-    
+
     @Override
     public void crearAreaProfundizacion(AreaProfundizacion areaprofundizacion) {
         try {
@@ -84,7 +84,7 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public AreaProfundizacion buscarAreaProfundizacionPorCodigo(String codigo) {
         try {
@@ -125,8 +125,9 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<AreaProfundizacion> tq = em.createQuery(jpql2.toString(), AreaProfundizacion.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombrearea ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<AreaProfundizacion> tq = em.createQuery(consulta, AreaProfundizacion.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

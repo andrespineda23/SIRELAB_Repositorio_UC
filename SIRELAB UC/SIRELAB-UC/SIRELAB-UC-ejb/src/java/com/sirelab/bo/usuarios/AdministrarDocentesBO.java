@@ -5,12 +5,14 @@ import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
+import com.sirelab.dao.interfacedao.TipoCargoDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.TipoCargo;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
@@ -38,6 +40,8 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
     DocenteDAOInterface docenteDAO;
     @EJB
     TipoUsuarioDAOInterface tipoUsuarioDAO;
+    @EJB
+    TipoCargoDAOInterface tipoCargoDAO;
 
     @Override
     public List<Docente> consultarDocentesPorParametro(Map<String, String> filtros) {
@@ -57,6 +61,17 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarDocentesBO obtenerDocentePorIDDocente : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<TipoCargo> obtenerListaTiposCargos() {
+        try {
+            List<TipoCargo> lista = tipoCargoDAO.consultarTiposCargos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarDocentesBO obtenerListaTiposCargos : " + e.toString());
             return null;
         }
     }

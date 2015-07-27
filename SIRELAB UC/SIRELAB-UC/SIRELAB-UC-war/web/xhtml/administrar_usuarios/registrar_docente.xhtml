@@ -152,9 +152,15 @@
                                 <legend class="text-info">Información Universidad</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Cargo Desempeñado*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarDocente.inputCargo}" disabled="#{controllerRegistrarDocente.activarCasillas}" class="form-control" id="inputCargo" required="true" requiredMessage="El campo Cargo es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarCargoDocente()}" execute="inputCargo" render="inputCargo msnCargo" />
-                                    </h:inputText>
+                                    <h:selectOneMenu disabled="#{controllerRegistrarDocente.activarCasillas}" value="#{controllerRegistrarDocente.inputCargo}"
+                                                     class="form-control"
+                                                     id="inputCargo">
+                                        <f:selectItem itemLabel="Seleccione Cargo" itemValue="null" />
+                                        <f:selectItems value="#{controllerRegistrarDocente.listaTiposCargos}" var="cargo"
+                                                       itemLabel="#{cargo.nombrecargo}" itemValue="#{cargo}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerRegistrarDocente.actualizarCargos()}" execute="inputCargo" render="msnCargo"/>
+                                    </h:selectOneMenu>
                                     <h6><h:message id="msnCargo" for="inputCargo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">

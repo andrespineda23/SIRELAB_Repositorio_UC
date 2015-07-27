@@ -79,7 +79,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Facultad buscarFacultadPorCodigo(String codigo) {
         try {
@@ -94,8 +94,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             return null;
         }
     }
-    
-    
+
     @Override
     public List<Facultad> buscarFacultadesPorFiltrado(Map<String, String> filters) {
         try {
@@ -106,8 +105,9 @@ public class FacultadDAO implements FacultadDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Facultad> tq = em.createQuery(jpql2.toString(), Facultad.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigofacultad ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Facultad> tq = em.createQuery(consulta, Facultad.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

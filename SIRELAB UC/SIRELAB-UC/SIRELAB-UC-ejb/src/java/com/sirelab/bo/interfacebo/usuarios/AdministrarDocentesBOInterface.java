@@ -9,6 +9,7 @@ import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.TipoCargo;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
@@ -41,4 +42,6 @@ public interface AdministrarDocentesBOInterface {
     public Docente obtenerDocentePorCorreo(String correo);
 
     public Docente obtenerDocentePorDocumento(String documento);
+
+    public List<TipoCargo> obtenerListaTiposCargos();
 }

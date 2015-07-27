@@ -9,6 +9,7 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarDocentesBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.TipoCargo;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -48,9 +49,11 @@ public class ControllerDetallesDocente implements Serializable {
     private List<Departamento> listaDepartamento;
     private Departamento departamentoDocente;
     private boolean activoDepartamento;
+    private List<TipoCargo> listaTipoCargo;
+    private TipoCargo cargoDocente;
     private String nombreDocente, apellidoDocente, correoDocente, identificacionDocente;
     private String telefono1Docente, telefono2Docente, direccionDocente;
-    private String cargoDocente, correoOpcionalDocente;
+    private String correoOpcionalDocente;
     //
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
@@ -95,7 +98,7 @@ public class ControllerDetallesDocente implements Serializable {
      * Metodo encargado de asignar los valores del docente que sera visualizado
      */
     public void asignarValoresVariablesDocente() {
-        cargoDocente = docenteDetalles.getCargodocente();
+        cargoDocente = docenteDetalles.getCargo();
         nombreDocente = docenteDetalles.getPersona().getNombrespersona();
         apellidoDocente = docenteDetalles.getPersona().getApellidospersona();
         correoDocente = docenteDetalles.getPersona().getEmailpersona();
@@ -110,6 +113,7 @@ public class ControllerDetallesDocente implements Serializable {
         if (Utilidades.validarNulo(facultadDocente)) {
             listaDepartamento = administrarDocentesBO.obtenerDepartamentosPorIDFacultad(facultadDocente.getIdfacultad());
         }
+        listaTipoCargo = administrarDocentesBO.obtenerListaTiposCargos();
     }
 
     /**
@@ -213,6 +217,16 @@ public class ControllerDetallesDocente implements Serializable {
         } else {
             validacionesDepartamento = false;
             FacesContext.getCurrentInstance().addMessage("form:departamentoDocente", new FacesMessage("El campo Departamento es obligatorio."));
+        }
+        modificacionesRegistroDocente();
+    }
+
+    public void actualizarCargos() {
+        if (Utilidades.validarNulo(cargoDocente)) {
+            validacionesCargo = true;
+        } else {
+            validacionesCargo = false;
+            FacesContext.getCurrentInstance().addMessage("form:cargoDocente", new FacesMessage("El campo Cargo es obligatorio."));
         }
         modificacionesRegistroDocente();
     }
@@ -345,21 +359,6 @@ public class ControllerDetallesDocente implements Serializable {
         modificacionesRegistroDocente();
     }
 
-    public void validarCargoDocente() {
-        if ((Utilidades.validarNulo(cargoDocente)) && (!cargoDocente.isEmpty())) {
-            if (Utilidades.validarCaracteresAlfaNumericos(cargoDocente)) {
-                validacionesCargo = true;
-            } else {
-                FacesContext.getCurrentInstance().addMessage("form:cargoDocente", new FacesMessage("El cargo ingresado se encuentra incorrecto."));
-                validacionesCargo = false;
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:cargoDocente", new FacesMessage("El campo Cargo es obligatorio."));
-            validacionesCargo = false;
-        }
-        modificacionesRegistroDocente();
-    }
-
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesApellido == false) {
@@ -430,7 +429,7 @@ public class ControllerDetallesDocente implements Serializable {
             docenteDetalles.getPersona().setTelefono1persona(telefono1Docente);
             docenteDetalles.getPersona().setTelefono2persona(telefono2Docente);
             docenteDetalles.setDepartamento(departamentoDocente);
-            docenteDetalles.setCargodocente(cargoDocente);
+            docenteDetalles.setCargo(cargoDocente);
             administrarDocentesBO.actualizarInformacionPersona(docenteDetalles.getPersona());
             administrarDocentesBO.actualizarInformacionDocente(docenteDetalles);
             restaurarInformacionDocente();
@@ -655,11 +654,19 @@ public class ControllerDetallesDocente implements Serializable {
         this.direccionDocente = direccionDocente;
     }
 
-    public String getCargoDocente() {
+    public List<TipoCargo> getListaTipoCargo() {
+        return listaTipoCargo;
+    }
+
+    public void setListaTipoCargo(List<TipoCargo> listaTipoCargo) {
+        this.listaTipoCargo = listaTipoCargo;
+    }
+
+    public TipoCargo getCargoDocente() {
         return cargoDocente;
     }
 
-    public void setCargoDocente(String cargoDocente) {
+    public void setCargoDocente(TipoCargo cargoDocente) {
         this.cargoDocente = cargoDocente;
     }
 

@@ -79,7 +79,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Proveedor buscarProveedorPorNIT(String nitProveedor) {
         try {
@@ -105,8 +105,9 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Proveedor> tq = em.createQuery(jpql2.toString(), Proveedor.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nitproveedor ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Proveedor> tq = em.createQuery(consulta, Proveedor.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

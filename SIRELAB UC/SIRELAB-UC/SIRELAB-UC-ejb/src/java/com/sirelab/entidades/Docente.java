@@ -18,21 +18,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "docente")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"),
-    @NamedQuery(name = "Docente.findByIddocente", query = "SELECT d FROM Docente d WHERE d.iddocente = :iddocente"),
-    @NamedQuery(name = "Docente.findByCargodocente", query = "SELECT d FROM Docente d WHERE d.cargodocente = :cargodocente")})
+    @NamedQuery(name = "Docente.findByIddocente", query = "SELECT d FROM Docente d WHERE d.iddocente = :iddocente")})
 public class Docente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,11 +38,9 @@ public class Docente implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddocente")
     private BigInteger iddocente;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "cargodocente")
-    private String cargodocente;
+    @JoinColumn(name = "cargo", referencedColumnName = "idtipocargo")
+    @ManyToOne(optional = false)
+    private TipoCargo cargo;
     @JoinColumn(name = "persona", referencedColumnName = "idpersona")
     @ManyToOne(optional = false)
     private Persona persona;
@@ -60,11 +55,6 @@ public class Docente implements Serializable {
         this.iddocente = iddocente;
     }
 
-    public Docente(BigInteger iddocente, String cargodocente) {
-        this.iddocente = iddocente;
-        this.cargodocente = cargodocente;
-    }
-
     public BigInteger getIddocente() {
         return iddocente;
     }
@@ -73,15 +63,12 @@ public class Docente implements Serializable {
         this.iddocente = iddocente;
     }
 
-    public String getCargodocente() {
-        if (null != cargodocente) {
-            return cargodocente.toUpperCase();
-        }
-        return cargodocente;
+    public TipoCargo getCargo() {
+        return cargo;
     }
 
-    public void setCargodocente(String cargodocente) {
-        this.cargodocente = cargodocente.toUpperCase();
+    public void setCargo(TipoCargo cargo) {
+        this.cargo = cargo;
     }
 
     public Persona getPersona() {

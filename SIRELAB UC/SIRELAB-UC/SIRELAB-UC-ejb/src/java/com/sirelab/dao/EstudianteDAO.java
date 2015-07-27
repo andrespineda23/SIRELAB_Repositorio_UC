@@ -141,8 +141,9 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Estudiante> tq = em.createQuery(jpql2.toString(), Estudiante.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Estudiante> tq = em.createQuery(consulta, Estudiante.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

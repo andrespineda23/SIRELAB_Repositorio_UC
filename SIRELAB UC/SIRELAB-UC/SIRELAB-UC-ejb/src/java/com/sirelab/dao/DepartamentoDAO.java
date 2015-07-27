@@ -79,7 +79,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Departamento buscarDepartamentoPorCodigo(String codigo) {
         try {
@@ -94,7 +94,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Departamento buscarDepartamentoPorNombre(String nombre) {
         try {
@@ -135,8 +135,9 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Departamento> tq = em.createQuery(jpql2.toString(), Departamento.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombredepartamento ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Departamento> tq = em.createQuery(consulta, Departamento.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

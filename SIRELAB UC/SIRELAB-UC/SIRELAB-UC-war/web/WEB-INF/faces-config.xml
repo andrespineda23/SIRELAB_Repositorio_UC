@@ -462,6 +462,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/xhtml/variables_entorno/registrar_tipocargo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_usuario</from-outcome>
+            <to-view-id>/xhtml/variables_entorno/variables_usuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variables_entorno/variables_usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_tipocargo</from-outcome>
+            <to-view-id>/xhtml/variables_entorno/registrar_tipocargo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/xhtml/variables_entorno/detalles_tipoperfil.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>variables_usuario</from-outcome>
@@ -474,6 +492,24 @@
         <navigation-case>
             <from-outcome>detalles_tipoperfil</from-outcome>
             <to-view-id>/xhtml/variables_entorno/detalles_tipoperfil.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variables_entorno/detalles_tipocargo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variables_usuario</from-outcome>
+            <to-view-id>/xhtml/variables_entorno/variables_usuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variables_entorno/variables_usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_tipocargo</from-outcome>
+            <to-view-id>/xhtml/variables_entorno/detalles_tipocargo.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

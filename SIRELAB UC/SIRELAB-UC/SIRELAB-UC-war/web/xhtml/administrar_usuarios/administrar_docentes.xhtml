@@ -158,7 +158,14 @@
                                                 <label for="parametroCargo">
                                                     Cargo Desempeñado
                                                 </label>
-                                                <h:inputText maxlength="45" value="#{controllerAdministrarDocentes.parametroCargo}" class="form-control" id="parametroCargo" />
+                                                <h:selectOneMenu value="#{controllerAdministrarDocentes.parametroCargo}"
+                                                                 class="form-control"
+                                                                 id="parametroCargo">
+                                                    <f:selectItem itemLabel="Seleccione Cargo" itemValue="null" />
+                                                    <f:selectItems value="#{controllerAdministrarDocentes.listaTiposCargos}" var="cargo"
+                                                                   itemLabel="#{cargo.nombrecargo}" itemValue="#{cargo}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                </h:selectOneMenu>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -230,7 +237,7 @@
                                                 <f:facet name="header">
                                                     <h:outputText value="Cargo"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.cargodocente}"/>
+                                                <h:outputText value="#{item.cargo.nombrecargo}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">

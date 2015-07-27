@@ -151,8 +151,9 @@ public class DocenteDAO implements DocenteDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Docente> tq = em.createQuery(jpql2.toString(), Docente.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Docente> tq = em.createQuery(consulta, Docente.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
@@ -171,6 +172,11 @@ public class DocenteDAO implements DocenteDAOInterface {
                 if (null != entry.getValue() && !entry.getValue().isEmpty()) {
                     if (camposFiltro > 0) {
                         wheres.append(" AND ");
+                    }
+                    if ("parametroCargo".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "cargo.idtipocargo");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
                     }
                     if ("parametroFacultad".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "departamento.facultad.idfacultad");
@@ -211,12 +217,6 @@ public class DocenteDAO implements DocenteDAOInterface {
                                 .append(") Like :parametroCorreo");
                         camposFiltro++;
                     }
-                    if ("parametroCargo".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
-                                .append(".cargodocente")
-                                .append(") Like :parametroCargo");
-                        camposFiltro++;
-                    }
                 }
             }
         }
@@ -236,14 +236,14 @@ public class DocenteDAO implements DocenteDAOInterface {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             if (null != entry.getValue() && !entry.getValue().isEmpty()) {
                 if (("parametroDepartamento".equals(entry.getKey()))
-                        || ("parametroFacultad".equals(entry.getKey()))) {
+                        || ("parametroFacultad".equals(entry.getKey()))
+                        || ("parametroCargo".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
                 }
                 if (("parametroCorreo".equals(entry.getKey()))
                         || ("parametroDocumento".equals(entry.getKey()))
                         || ("parametroNombre".equals(entry.getKey()))
-                        || ("parametroCargo".equals(entry.getKey()))
                         || ("parametroApellido".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");

@@ -84,7 +84,7 @@ public class InsumoDAO implements InsumoDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Insumo buscarInsumoPorCodigoYProveedor(String codigo, BigInteger proveedor) {
         try {
@@ -111,8 +111,9 @@ public class InsumoDAO implements InsumoDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<Insumo> tq = em.createQuery(jpql2.toString(), Insumo.class);
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigoinsumo ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<Insumo> tq = em.createQuery(consulta, Insumo.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {

@@ -5,8 +5,10 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposCargosBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposUsuarioBOInterface;
+import com.sirelab.entidades.TipoCargo;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.TipoUsuario;
 import java.io.Serializable;
@@ -29,15 +31,20 @@ public class ControllerVariablesUsuario implements Serializable {
     GestionarVariableTiposUsuarioBOInterface gestionarVariableTiposUsuarioBO;
     @EJB
     GestionarVariableTiposPerfilesBOInterface gestionarVariableTiposPerfilesBO;
+    @EJB
+    GestionarVariableTiposCargosBOInterface gestionarVariableTiposCargosBO;
 
     private List<TipoPerfil> listaTiposPerfiles;
     private List<TipoPerfil> listaTiposPerfilesTabla;
     private List<TipoUsuario> listaTiposUsuario;
     private List<TipoUsuario> listaTiposUsuarioTabla;
-    private int posicionTipoPerfilTabla, posicionTipoUsuarioTabla;
-    private int tamTotalTipoPerfil, tamTotalTipoUsuario;
+    private List<TipoCargo> listaTiposCargos;
+    private List<TipoCargo> listaTiposCargosTabla;
+    private int posicionTipoPerfilTabla, posicionTipoUsuarioTabla, posicionTipoCargoTabla;
+    private int tamTotalTipoPerfil, tamTotalTipoUsuario, tamTotalTipoCargo;
     private boolean bloquearPagSigTipoPerfil, bloquearPagAntTipoPerfil;
     private boolean bloquearPagSigTipoUsuario, bloquearPagAntTipoUsuario;
+    private boolean bloquearPagSigTipoCargo, bloquearPagAntTipoCargo;
 
     public ControllerVariablesUsuario() {
     }
@@ -61,6 +68,29 @@ public class ControllerVariablesUsuario implements Serializable {
         }
         posicionTipoPerfilTabla = 0;
         cargarDatosTablaTipoPerfil();
+        listaTiposCargos = gestionarVariableTiposCargosBO.consultarTiposCargosRegistrados();
+        if (null != listaTiposCargos) {
+            listaTiposCargosTabla = new ArrayList<TipoCargo>();
+            tamTotalTipoCargo = listaTiposCargos.size();
+        }
+        posicionTipoCargoTabla = 0;
+        cargarDatosTablaTipoCargo();
+    }
+
+    private void cargarDatosTablaTipoCargo() {
+        if (tamTotalTipoCargo < 10) {
+            for (int i = 0; i < tamTotalTipoCargo; i++) {
+                listaTiposCargosTabla.add(listaTiposCargos.get(i));
+            }
+            bloquearPagSigTipoCargo = true;
+            bloquearPagAntTipoCargo = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaTiposCargosTabla.add(listaTiposCargos.get(i));
+            }
+            bloquearPagSigTipoCargo = false;
+            bloquearPagAntTipoCargo = true;
+        }
     }
 
     private void cargarDatosTablaTipoPerfil() {
@@ -98,16 +128,60 @@ public class ControllerVariablesUsuario implements Serializable {
     public void limpiarInformacion() {
         listaTiposUsuario = null;
         listaTiposPerfiles = null;
+        listaTiposCargos = null;
         posicionTipoPerfilTabla = 0;
         posicionTipoUsuarioTabla = 0;
+        posicionTipoCargoTabla = 0;
         tamTotalTipoPerfil = 0;
+        tamTotalTipoCargo = 0;
         tamTotalTipoUsuario = 0;
         listaTiposPerfilesTabla = null;
+        listaTiposCargosTabla = null;
         listaTiposUsuarioTabla = null;
         bloquearPagSigTipoPerfil = true;
+        bloquearPagSigTipoCargo = true;
         bloquearPagAntTipoPerfil = true;
         bloquearPagSigTipoUsuario = true;
         bloquearPagAntTipoUsuario = true;
+        bloquearPagAntTipoCargo = true;
+    }
+
+    public void cargarPaginaSiguienteTipoCargo() {
+        listaTiposCargosTabla = new ArrayList<TipoCargo>();
+        posicionTipoCargoTabla = posicionTipoCargoTabla + 10;
+        int diferencia = tamTotalTipoCargo - posicionTipoCargoTabla;
+        if (diferencia > 10) {
+            for (int i = posicionTipoCargoTabla; i < (posicionTipoCargoTabla + 10); i++) {
+                listaTiposCargosTabla.add(listaTiposCargos.get(i));
+            }
+            bloquearPagSigTipoCargo = false;
+            bloquearPagAntTipoCargo = false;
+        } else {
+            for (int i = posicionTipoCargoTabla; i < (posicionTipoCargoTabla + diferencia); i++) {
+                listaTiposCargosTabla.add(listaTiposCargos.get(i));
+            }
+            bloquearPagSigTipoCargo = true;
+            bloquearPagAntTipoCargo = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorTipoCargo() {
+        listaTiposCargosTabla = new ArrayList<TipoCargo>();
+        posicionTipoCargoTabla = posicionTipoCargoTabla - 10;
+        int diferencia = tamTotalTipoCargo - posicionTipoCargoTabla;
+        if (diferencia == tamTotalTipoCargo) {
+            for (int i = posicionTipoCargoTabla; i < (posicionTipoCargoTabla + 10); i++) {
+                listaTiposCargosTabla.add(listaTiposCargos.get(i));
+            }
+            bloquearPagSigTipoCargo = false;
+            bloquearPagAntTipoCargo = true;
+        } else {
+            for (int i = posicionTipoCargoTabla; i < (posicionTipoCargoTabla + 10); i++) {
+                listaTiposCargosTabla.add(listaTiposCargos.get(i));
+            }
+            bloquearPagSigTipoCargo = false;
+            bloquearPagAntTipoCargo = false;
+        }
     }
 
     public void cargarPaginaSiguienteTipoPerfil() {
@@ -249,6 +323,38 @@ public class ControllerVariablesUsuario implements Serializable {
 
     public void setBloquearPagAntTipoUsuario(boolean bloquearPagAntTipoUsuario) {
         this.bloquearPagAntTipoUsuario = bloquearPagAntTipoUsuario;
+    }
+
+    public List<TipoCargo> getListaTiposCargos() {
+        return listaTiposCargos;
+    }
+
+    public void setListaTiposCargos(List<TipoCargo> listaTiposCargos) {
+        this.listaTiposCargos = listaTiposCargos;
+    }
+
+    public List<TipoCargo> getListaTiposCargosTabla() {
+        return listaTiposCargosTabla;
+    }
+
+    public void setListaTiposCargosTabla(List<TipoCargo> listaTiposCargosTabla) {
+        this.listaTiposCargosTabla = listaTiposCargosTabla;
+    }
+
+    public boolean isBloquearPagSigTipoCargo() {
+        return bloquearPagSigTipoCargo;
+    }
+
+    public void setBloquearPagSigTipoCargo(boolean bloquearPagSigTipoCargo) {
+        this.bloquearPagSigTipoCargo = bloquearPagSigTipoCargo;
+    }
+
+    public boolean isBloquearPagAntTipoCargo() {
+        return bloquearPagAntTipoCargo;
+    }
+
+    public void setBloquearPagAntTipoCargo(boolean bloquearPagAntTipoCargo) {
+        this.bloquearPagAntTipoCargo = bloquearPagAntTipoCargo;
     }
 
 }

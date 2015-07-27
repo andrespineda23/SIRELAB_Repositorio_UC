@@ -59,7 +59,7 @@
                         <h1>Variables de Usuario</h1>
                     </div>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li class="active">Variables Usuario</li>
@@ -154,14 +154,6 @@
                                             </f:facet>
                                             <h:outputText value="#{itemTU.nombretipousuario}"/>
                                         </h:column>  
-                                        <!-- 
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Detalles"/>
-                                            </f:facet>
-                                            <h:commandLink value="Ver" action="detalles_tipousuario" actionListener="#{controllerDetallesTipoUsuario.recibirIDDetalleTipoUsuario(itemTU.idtipousuario)}"/>
-                                        </h:column>
-                                        -->
                                         <f:facet name="footer">
                                             <nav>
                                                 <ul class="pager">
@@ -183,11 +175,62 @@
                             </fieldset>
                         </div>
                         <br></br>
-                        <!--
-                        <div class="left pull-left">
-                            <h:commandButton value="Nuevo Tipo Usuario" action="registrar_tipousuario" class="btn btn-success"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr></hr>
                         </div>
-                        -->
+                    </div>
+                    <br></br>
+                </div>
+                <div class="row col-md-12">
+                    <div class="container">
+                        <div id="resultadosBusquedaTP" class="row clearfix">
+                            <fieldset style="border: black;border-radius: 10px;">
+                                <h3><legend style="color: darkblue"><strong>TIPOS CARGOS REGISTRADOS</strong></legend></h3>
+                                <div class="row">
+                                    <h:dataTable id="dataTableTC2" var="itemTC2" 
+                                                 styleClass="table table-striped table-hover table-responsive" 
+                                                 value="#{controllerVariablesUsuario.listaTiposCargosTabla}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{itemTC2.nombrecargo}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Detalles"/>
+                                            </f:facet>
+                                            <h:commandLink value="Ver" action="detalles_tipocargo" actionListener="#{controllerDetallesTipoCargo.recibirIDDetalleTipoCargo(itemTC2.idtipocargo)}"/>
+                                        </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <ul class="pager">
+                                                    <li>
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorTipoCargo()}" disabled="#{controllerVariablesUsuario.bloquearPagAntTipoCargo}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteTipoCargo()}" disabled="#{controllerVariablesUsuario.bloquearPagSigTipoCargo}">
+                                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                                        </h:commandLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </f:facet>
+                                    </h:dataTable>
+                                </div><!--/.row-->
+                            </fieldset>
+                        </div>
+                        <br></br>
+                        <div class="left pull-left">
+                            <h:commandButton value="Nuevo Tipo Cargo" action="registrar_tipocargo" class="btn btn-success"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
