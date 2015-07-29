@@ -36,6 +36,7 @@ public class ControllerRegistrarTipoComponente implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarTipoComponente() {
     }
@@ -48,6 +49,7 @@ public class ControllerRegistrarTipoComponente implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
+        activarAceptar = false;
         BasicConfigurator.configure();
     }
 
@@ -70,6 +72,9 @@ public class ControllerRegistrarTipoComponente implements Serializable {
             almacenarRegistroNuevo();
             restaurarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -82,8 +87,6 @@ public class ControllerRegistrarTipoComponente implements Serializable {
             TipoComponente tipoNuevo = new TipoComponente();
             tipoNuevo.setNombretipo(inputNombre);
             gestionarVariableTiposComponenteBO.crearTipoComponente(tipoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoComponente almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoComponente almacenarRegistroNuevo: " + e.toString());
@@ -100,6 +103,7 @@ public class ControllerRegistrarTipoComponente implements Serializable {
         validacionesNombre = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
     }
@@ -107,6 +111,7 @@ public class ControllerRegistrarTipoComponente implements Serializable {
     public void cambiarActivarCasillas() {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarAceptar = false;
         activarLimpiar = true;
         if (activarCasillas == true) {
             activarCasillas = false;
@@ -157,6 +162,14 @@ public class ControllerRegistrarTipoComponente implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

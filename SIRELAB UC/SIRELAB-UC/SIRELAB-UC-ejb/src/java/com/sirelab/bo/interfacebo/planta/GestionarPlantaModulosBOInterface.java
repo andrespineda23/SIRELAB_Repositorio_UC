@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo.planta;
 
 import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
@@ -22,6 +23,10 @@ import java.util.Map;
  * @author ANDRES PINEDA
  */
 public interface GestionarPlantaModulosBOInterface {
+
+    public List<Departamento> consultarDepartamentosRegistrados();
+
+    public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento);
 
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 
@@ -47,7 +52,9 @@ public interface GestionarPlantaModulosBOInterface {
 
     public List<SalaLaboratorio> consultarSalasLaboratorioPorIDEdificio(BigInteger edificio);
 
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas();
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorLaboratorio(BigInteger laboratorio);
 
     public List<SalaLaboratorio> consultarSalasLaboratoriosPorIDLaboratorioArea(BigInteger laboratorioArea);
+
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas();
 }

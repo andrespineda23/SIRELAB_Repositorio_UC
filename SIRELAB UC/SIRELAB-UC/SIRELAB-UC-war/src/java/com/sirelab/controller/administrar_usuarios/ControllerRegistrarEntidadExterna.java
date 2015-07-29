@@ -51,12 +51,14 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarEntidadExterna() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -274,6 +276,9 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             //correo.enviarCorreoCreacionCuenta(inputEmail);
             limpiarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -311,6 +316,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     public void cancelarRegistroEntidadExterna() {
         mensajeFormulario = "N/A";
         activarCasillas = false;
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         validacionesNombre = false;
@@ -383,8 +389,6 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
                 entidadexternaNueva.setNombreentidad("");
             }
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(usuarioNuevo, personaNueva, entidadexternaNueva);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
@@ -399,6 +403,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -531,6 +536,14 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

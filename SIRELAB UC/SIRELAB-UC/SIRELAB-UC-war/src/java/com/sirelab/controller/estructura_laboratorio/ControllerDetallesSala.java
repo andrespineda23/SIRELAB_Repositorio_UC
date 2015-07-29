@@ -6,7 +6,9 @@
 package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaSalasBOInterface;
+import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.Sede;
@@ -42,8 +44,14 @@ public class ControllerDetallesSala implements Serializable {
     private boolean modificacionRegistro;
     private boolean disabledActivar, disabledInactivar;
     private boolean visibleGuardar;
+    private List<Departamento> listaDepartamentos;
+    private Departamento departamentoSalaLaboratorio;
+    private List<Laboratorio> listaLaboratorios;
+    private Laboratorio laboratorioSalaLaboratorio;
+    private boolean activarLaboratorio;
     private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
     private LaboratoriosPorAreas laboratorioPorAreaSalaLaboratorio;
+    private boolean activarLabPorArea;
     private List<Sede> listaSedes;
     private Sede sedeSalaLaboratorio;
     private List<Edificio> listaEdificios;
@@ -53,8 +61,8 @@ public class ControllerDetallesSala implements Serializable {
     private String costoSalaLaboratorio, capacidadSalaLaboratorio, inversionSalaLaboratorio;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesUbicacion;
-    private boolean validacionesCapacidad, validacionesCosto, validacionesInversion;
-    private boolean validacionesLaboratorio, validacionesSede, validacionesEdificio;
+    private boolean validacionesCapacidad, validacionesCosto, validacionesInversion, validacionesDepartamento;
+    private boolean validacionesLaboratorioPorArea, validacionesSede, validacionesEdificio, validacionesLaboratorio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
@@ -71,6 +79,8 @@ public class ControllerDetallesSala implements Serializable {
         validacionesEdificio = true;
         validacionesInversion = true;
         validacionesLaboratorio = true;
+        validacionesDepartamento = true;
+        validacionesLaboratorioPorArea = true;
         validacionesNombre = true;
         validacionesSede = true;
         validacionesUbicacion = true;
@@ -109,12 +119,17 @@ public class ControllerDetallesSala implements Serializable {
         inversionSalaLaboratorio = salaLaboratorioDetalles.getValorinversion().toString();
         edificioSalaLaboratorio = salaLaboratorioDetalles.getEdificio();
         sedeSalaLaboratorio = salaLaboratorioDetalles.getEdificio().getSede();
+        departamentoSalaLaboratorio = salaLaboratorioDetalles.getLaboratoriosporareas().getLaboratorio().getDepartamento();
+        laboratorioSalaLaboratorio = salaLaboratorioDetalles.getLaboratoriosporareas().getLaboratorio();
         laboratorioPorAreaSalaLaboratorio = salaLaboratorioDetalles.getLaboratoriosporareas();
         listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
-        listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasRegistradas();
         listaEdificios = gestionarPlantaSalasBO.consultarEdificiosPorIDSede(sedeSalaLaboratorio.getIdsede());
-        //
+        listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosRegistrados();
+        listaLaboratorios = gestionarPlantaSalasBO.consultarLaboratoriosPorIDDepartamento(departamentoSalaLaboratorio.getIddepartamento());
+        listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasPorLaboratorio(laboratorioSalaLaboratorio.getIdlaboratorio());
         activarEdificio = true;
+        activarLabPorArea = true;
+        activarLaboratorio = true;
         visibleGuardar = false;
         //
     }
@@ -125,6 +140,8 @@ public class ControllerDetallesSala implements Serializable {
         modificacionRegistro = false;
         visibleGuardar = true;
         activarEdificio = false;
+        activarLabPorArea = false;
+        activarLaboratorio = false;
         colorMensaje = "black";
         mensajeFormulario = "N/A";
     }
@@ -239,12 +256,54 @@ public class ControllerDetallesSala implements Serializable {
         modificacionesRegistroSala();
     }
 
+    public void actualizarDepartamentos() {
+        if (Utilidades.validarNulo(departamentoSalaLaboratorio)) {
+            validacionesDepartamento = true;
+            listaLaboratorios = gestionarPlantaSalasBO.consultarLaboratoriosPorIDDepartamento(departamentoSalaLaboratorio.getIddepartamento());
+            activarLabPorArea = false;
+            laboratorioSalaLaboratorio = null;
+        } else {
+            validacionesDepartamento = false;
+            validacionesLaboratorio = false;
+            validacionesLaboratorioPorArea = false;
+
+            listaLaboratorios = null;
+            listaLaboratoriosPorAreas = null;
+
+            activarLabPorArea = true;
+            activarLaboratorio = true;
+
+            laboratorioSalaLaboratorio = null;
+            laboratorioPorAreaSalaLaboratorio = null;
+
+            FacesContext.getCurrentInstance().addMessage("form:laboratorioSalaDepartamento", new FacesMessage("El laboratorio por area es obligatorio."));
+        }
+        modificacionesRegistroSala();
+    }
+
     public void actualizarLaboratorios() {
-        if (Utilidades.validarNulo(laboratorioPorAreaSalaLaboratorio)) {
+        if (Utilidades.validarNulo(laboratorioSalaLaboratorio)) {
             validacionesLaboratorio = true;
+            listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasPorLaboratorio(laboratorioSalaLaboratorio.getIdlaboratorio());
+            activarLabPorArea = false;
+            laboratorioPorAreaSalaLaboratorio = null;
         } else {
             validacionesLaboratorio = false;
-            FacesContext.getCurrentInstance().addMessage("form:laboratorioPorAreaSalaLaboratorio", new FacesMessage("El laboratorio por area es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:laboratorioSalaLaboratorio", new FacesMessage("El laboratorio por area es obligatorio."));
+            validacionesLaboratorioPorArea = false;
+            listaLaboratoriosPorAreas = null;
+            activarLabPorArea = true;
+            laboratorioPorAreaSalaLaboratorio = null;
+        }
+        modificacionesRegistroSala();
+    }
+
+    public void actualizarLaboratoriosPorArea() {
+        if (Utilidades.validarNulo(laboratorioPorAreaSalaLaboratorio)) {
+            validacionesLaboratorioPorArea = true;
+        } else {
+            validacionesLaboratorioPorArea = false;
+            FacesContext.getCurrentInstance().addMessage("form:laboratorioPorAreaSalaLaboratorio", new FacesMessage("El area de profundización es obligatorio."));
         }
         modificacionesRegistroSala();
     }
@@ -295,13 +354,19 @@ public class ControllerDetallesSala implements Serializable {
         if (validacionesDescripcion == false) {
             retorno = false;
         }
+        if (validacionesDepartamento == false) {
+            retorno = false;
+        }
+        if (validacionesLaboratorio == false) {
+            retorno = false;
+        }
         if (validacionesEdificio == false) {
             retorno = false;
         }
         if (validacionesInversion == false) {
             retorno = false;
         }
-        if (validacionesLaboratorio == false) {
+        if (validacionesLaboratorioPorArea == false) {
             retorno = false;
         }
         if (validacionesNombre == false) {
@@ -602,6 +667,54 @@ public class ControllerDetallesSala implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public List<Laboratorio> getListaLaboratorios() {
+        return listaLaboratorios;
+    }
+
+    public void setListaLaboratorios(List<Laboratorio> listaLaboratorios) {
+        this.listaLaboratorios = listaLaboratorios;
+    }
+
+    public Laboratorio getLaboratorioSalaLaboratorio() {
+        return laboratorioSalaLaboratorio;
+    }
+
+    public void setLaboratorioSalaLaboratorio(Laboratorio laboratorioSalaLaboratorio) {
+        this.laboratorioSalaLaboratorio = laboratorioSalaLaboratorio;
+    }
+
+    public boolean isActivarLabPorArea() {
+        return activarLabPorArea;
+    }
+
+    public void setActivarLabPorArea(boolean activarLabPorArea) {
+        this.activarLabPorArea = activarLabPorArea;
+    }
+
+    public List<Departamento> getListaDepartamentos() {
+        return listaDepartamentos;
+    }
+
+    public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
+        this.listaDepartamentos = listaDepartamentos;
+    }
+
+    public Departamento getDepartamentoSalaLaboratorio() {
+        return departamentoSalaLaboratorio;
+    }
+
+    public void setDepartamentoSalaLaboratorio(Departamento departamentoSalaLaboratorio) {
+        this.departamentoSalaLaboratorio = departamentoSalaLaboratorio;
+    }
+
+    public boolean isActivarLaboratorio() {
+        return activarLaboratorio;
+    }
+
+    public void setActivarLaboratorio(boolean activarLaboratorio) {
+        this.activarLaboratorio = activarLaboratorio;
     }
 
 }

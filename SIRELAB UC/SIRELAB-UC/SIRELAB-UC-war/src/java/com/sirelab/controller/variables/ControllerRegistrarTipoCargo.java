@@ -36,6 +36,7 @@ public class ControllerRegistrarTipoCargo implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarTipoCargo() {
     }
@@ -47,6 +48,7 @@ public class ControllerRegistrarTipoCargo implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        activarAceptar = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
@@ -70,6 +72,9 @@ public class ControllerRegistrarTipoCargo implements Serializable {
             almacenarRegistroNuevo();
             restaurarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -82,8 +87,6 @@ public class ControllerRegistrarTipoCargo implements Serializable {
             TipoCargo tipoNuevo = new TipoCargo();
             tipoNuevo.setNombrecargo(inputNombre);
             gestionarVariableTiposCargoBO.crearTipoCargo(tipoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoCargo almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoCargo almacenarRegistroNuevo: " + e.toString());
@@ -100,6 +103,7 @@ public class ControllerRegistrarTipoCargo implements Serializable {
         validacionesNombre = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
     }
@@ -113,6 +117,7 @@ public class ControllerRegistrarTipoCargo implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -157,6 +162,14 @@ public class ControllerRegistrarTipoCargo implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

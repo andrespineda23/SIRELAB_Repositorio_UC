@@ -54,12 +54,14 @@ public class ControllerRegistrarDocente implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarDocente() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -307,6 +309,9 @@ public class ControllerRegistrarDocente implements Serializable {
             //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -320,6 +325,7 @@ public class ControllerRegistrarDocente implements Serializable {
     public void cancelarRegistroDocente() {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         activarCasillas = false;
         colorMensaje = "black";
         validacionesNombre = false;
@@ -403,8 +409,6 @@ public class ControllerRegistrarDocente implements Serializable {
             docenteNueva.setDepartamento(inputDepartamento);
             docenteNueva.setCargo(inputCargo);
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString());
@@ -415,6 +419,7 @@ public class ControllerRegistrarDocente implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -596,6 +601,14 @@ public class ControllerRegistrarDocente implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

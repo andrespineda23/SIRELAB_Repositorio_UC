@@ -171,7 +171,7 @@
                         </div>
                         <hr class="intro-divider"/>
                         <div class="right pull-right">
-                            <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEntidadExterna.registrarNuevoEntidadExterna()}" class="btn btn-success" >
+                            <h:commandButton value="Registrar" disabled="#{controllerRegistrarEntidadExterna.activarAceptar}" actionListener="#{controllerRegistrarEntidadExterna.registrarNuevoEntidadExterna()}" class="btn btn-success" >
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>

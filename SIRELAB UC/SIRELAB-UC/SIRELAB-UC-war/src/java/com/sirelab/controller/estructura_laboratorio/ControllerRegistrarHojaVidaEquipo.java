@@ -46,6 +46,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarHojaVidaEquipo() {
     }
@@ -53,6 +54,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     @PostConstruct
     public void init() {
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
@@ -147,6 +149,9 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
                 almacenarRegistroNuevo();
                 restaurarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -167,8 +172,6 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
             reggNuevo.setTipoevento(inputTipoEvento);
             reggNuevo.setEquipoelemento(equipoElemento);
             gestionarPlantaHojasVidaEquiposBO.crearHojaVidaEquipo(reggNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString());
@@ -179,6 +182,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
+        activarAceptar = false;
         activarCasillas = false;
         inputDetalle = null;
         inputFechaEvento = new Date();
@@ -208,6 +212,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -303,6 +308,14 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

@@ -65,12 +65,14 @@ public class ControllerRegistrarEquipo implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -362,6 +364,9 @@ public class ControllerRegistrarEquipo implements Serializable {
                 almacenarNuevoEquipoEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -399,8 +404,6 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setEstadoequipo(nuevoEstadoEquipoEquipo);
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString());
@@ -446,6 +449,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     public void limpiarRegistroEquipoElemento() {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
         activarNuevoModuloLaboratorio = true;
@@ -489,6 +493,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     public void cambiarActivarCasillas() {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarAceptar = false;
         activarLimpiar = true;
         if (activarCasillas == true) {
             activarCasillas = false;
@@ -710,6 +715,14 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

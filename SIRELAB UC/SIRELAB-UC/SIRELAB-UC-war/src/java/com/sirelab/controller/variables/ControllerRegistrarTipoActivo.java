@@ -36,6 +36,7 @@ public class ControllerRegistrarTipoActivo implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarTipoActivo() {
     }
@@ -47,6 +48,7 @@ public class ControllerRegistrarTipoActivo implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        activarAceptar = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
@@ -70,6 +72,9 @@ public class ControllerRegistrarTipoActivo implements Serializable {
             almacenarRegistroNuevo();
             restaurarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -82,8 +87,6 @@ public class ControllerRegistrarTipoActivo implements Serializable {
             TipoActivo tipoNuevo = new TipoActivo();
             tipoNuevo.setNombretipoactivo(inputNombre);
             gestionarVariableTiposActivoBO.crearTipoActivo(tipoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoActivo almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoActivo almacenarRegistroNuevo: " + e.toString());
@@ -99,6 +102,7 @@ public class ControllerRegistrarTipoActivo implements Serializable {
         inputNombre = null;
         validacionesNombre = false;
         mensajeFormulario = "N/A";
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -113,6 +117,7 @@ public class ControllerRegistrarTipoActivo implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }

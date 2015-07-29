@@ -22,7 +22,9 @@ public interface LaboratoriosPorAreasDAOInterface {
 
     public void eliminarLaboratoriosPorAreas(LaboratoriosPorAreas laboratorioPorArea);
 
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreassPorAreas();
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreas();
+
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorLaboratorios(BigInteger laboratorio);
 
     public LaboratoriosPorAreas buscarLaboratoriosPorAreasPorID(BigInteger idRegistro);
 

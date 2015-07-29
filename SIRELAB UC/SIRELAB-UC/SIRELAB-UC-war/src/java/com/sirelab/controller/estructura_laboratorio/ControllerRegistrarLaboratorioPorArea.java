@@ -47,12 +47,14 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarLaboratorioPorArea() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -131,6 +133,9 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
                 almacenarNuevoLaboratorioPorAreaEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -148,8 +153,6 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
             laboratorioNuevo.setAreaprofundizacion(nuevoArea);
             laboratorioNuevo.setLaboratorio(nuevoLaboratorio);
             gestionarPlantaLaboratoriosPorAreasBO.crearLaboratoriosPorAreas(laboratorioNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema : " + e.toString());
@@ -172,6 +175,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         listaAreasProfundizacion = null;
         listaDepartamentos = null;
         nuevoArea = null;
+        activarAceptar = false;
         nuevoDepartamento = null;
         nuevoLaboratorio = null;
         activarLaboratorio = true;
@@ -187,6 +191,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     public void cambiarActivarCasillas() {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarAceptar = false;
         activarLimpiar = true;
         if (activarCasillas == true) {
             activarCasillas = false;
@@ -286,6 +291,14 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

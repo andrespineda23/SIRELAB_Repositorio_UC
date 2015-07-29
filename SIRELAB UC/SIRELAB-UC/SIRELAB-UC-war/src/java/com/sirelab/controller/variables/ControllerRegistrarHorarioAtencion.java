@@ -37,12 +37,14 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarHorarioAtencion() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         inputDescripcion = null;
         inputCodigo = null;
         validacionesDescripcion = false;
@@ -108,6 +110,9 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
                 almacenarNuevoRegistro();
                 restaurarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -125,8 +130,6 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
             nuevoHorario.setCodigohorario(inputCodigo);
             nuevoHorario.setDescripcionhorario(inputDescripcion);
             gestionarVariableHorariosAtencionBO.crearHorarioAtencion(nuevoHorario);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro:  " + e.toString());
             System.out.println("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString());
@@ -147,6 +150,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
 
     public void cancelarHorarioAtencion() {
         inputDescripcion = null;
+        activarAceptar = false;
         inputCodigo = null;
         validacionesDescripcion = false;
         validacionesCodigo = false;
@@ -160,6 +164,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -212,6 +217,14 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

@@ -57,11 +57,26 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
     }
 
     @Override
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreassPorAreas() {
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreas() {
         try {
             em.clear();
             Query query = em.createQuery("SELECT p FROM LaboratoriosPorAreas p");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<LaboratoriosPorAreas> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarLaboratoriosPorAreassPorAreas LaboratoriosPorAreasDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorLaboratorios(BigInteger laboratorio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM LaboratoriosPorAreas p WHERE p.laboratorio.idlaboratorio=:laboratorio");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
             List<LaboratoriosPorAreas> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
@@ -84,7 +99,7 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
             return null;
         }
     }
-    
+
     @Override
     public LaboratoriosPorAreas buscarLaboratoriosPorAreasPorLabYArea(BigInteger laboratorio, BigInteger area) {
         try {

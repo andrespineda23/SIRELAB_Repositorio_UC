@@ -36,6 +36,7 @@ public class ControllerRegistrarTipoReserva implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarTipoReserva() {
     }
@@ -48,6 +49,7 @@ public class ControllerRegistrarTipoReserva implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
+        activarAceptar = false;
         BasicConfigurator.configure();
     }
 
@@ -70,6 +72,9 @@ public class ControllerRegistrarTipoReserva implements Serializable {
             almacenarRegistroNuevo();
             restaurarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -82,8 +87,6 @@ public class ControllerRegistrarTipoReserva implements Serializable {
             TipoReserva tipoNuevo = new TipoReserva();
             tipoNuevo.setNombretiporeserva(inputNombre);
             gestionarVariableTiposReservaBO.crearTipoReserva(tipoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoReserva almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoReserva almacenarRegistroNuevo: " + e.toString());
@@ -101,6 +104,7 @@ public class ControllerRegistrarTipoReserva implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
+        activarAceptar = false;
         activarCasillas = false;
     }
 
@@ -108,6 +112,7 @@ public class ControllerRegistrarTipoReserva implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }

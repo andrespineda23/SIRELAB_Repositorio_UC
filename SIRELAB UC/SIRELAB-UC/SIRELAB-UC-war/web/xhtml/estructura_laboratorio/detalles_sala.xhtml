@@ -133,14 +133,45 @@
                         <fieldset>
                             <legend class="text-info">Información Universidad</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Laboratorio Por Area de Profundización*"/></strong>
-                                <h:selectOneMenu value="#{controllerDetallesSala.laboratorioPorAreaSalaLaboratorio}"
+                                <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
+                                <h:inputText maxlength="45"  value="#{controllerDetallesSala.ubicacionSalaLaboratorio}" required="true" class="form-control" id="ubicacionSalaLaboratorio" readonly="#{controllerDetallesSala.activarEditar}" requiredMessage="El campo Ubicacion es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesSala.validarUbicacionSala()}" execute="ubicacionSalaLaboratorio" render="ubicacionSalaLaboratorio msnUbicacionSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnUbicacionSala" for="ubicacionSalaLaboratorio" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Departamento*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesSala.departamentoSalaLaboratorio}"
                                                  class="form-control" readonly="#{controllerDetallesSala.activarEditar}"
-                                                 id="laboratorioPorAreaSalaLaboratorio">
+                                                 id="departamentoSalaLaboratorio">
+                                    <f:selectItems value="#{controllerDetallesSala.listaDepartamentos}" var="departamento"
+                                                   itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesSala.actualizarDepartamentos()}" execute="departamentoSalaLaboratorio" render="@this laboratorioSalaLaboratorio laboratorioPorAreaSalaLaboratorio msnDepartamento"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnDepartamento" for="departamentoSalaLaboratorio" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesSala.laboratorioSalaLaboratorio}"
+                                                 class="form-control" disabled="#{controllerDetallesSala.activarLaboratorio}"
+                                                 id="laboratorioSalaLaboratorio">
                                     <f:selectItems value="#{controllerDetallesSala.listaLaboratoriosPorAreas}" var="laboratorio"
                                                    itemLabel="#{laboratorio.informacionRegistro}" itemValue="#{laboratorio}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesSala.actualizarLaboratorios()}" execute="laboratorioPorAreaSalaLaboratorio" render="@this msnLaboratorioPorArea"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesSala.actualizarLaboratorios()}" execute="laboratorioSalaLaboratorio" render="@this laboratorioPorAreaSalaLaboratorio msnLaboratorio"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnLaboratorio" for="laboratorioSalaLaboratorio" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Area de Profundización*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesSala.laboratorioPorAreaSalaLaboratorio}"
+                                                 class="form-control" disabled="#{controllerDetallesSala.activarLabPorArea}"
+                                                 id="laboratorioPorAreaSalaLaboratorio">
+                                    <f:selectItems value="#{controllerDetallesSala.listaLaboratoriosPorAreas}" var="laboratorio"
+                                                   itemLabel="#{laboratorio.areaprofundizacion.nombrearea}" itemValue="#{laboratorio}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesSala.actualizarLaboratoriosPorArea()}" execute="laboratorioPorAreaSalaLaboratorio" render="@this msnLaboratorioPorArea"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnLaboratorioPorArea" for="laboratorioPorAreaSalaLaboratorio" style="color: red"/></h6>
                             </div>
@@ -169,13 +200,6 @@
                                     <f:ajax event="change" listener="#{controllerDetallesSala.actualizarEdificios()}" execute="edificioSalaLaboratorio" render="@this msnEdificioSala"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="edificioSalaLaboratorio" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerDetallesSala.ubicacionSalaLaboratorio}" required="true" class="form-control" id="ubicacionSalaLaboratorio" readonly="#{controllerDetallesSala.activarEditar}" requiredMessage="El campo Ubicacion es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesSala.validarUbicacionSala()}" execute="ubicacionSalaLaboratorio" render="ubicacionSalaLaboratorio msnUbicacionSala" />
-                                </h:inputText>
-                                <h6><h:message id="msnUbicacionSala" for="ubicacionSalaLaboratorio" style="color: red"/></h6>
                             </div>
                         </fieldset>
                     </div>

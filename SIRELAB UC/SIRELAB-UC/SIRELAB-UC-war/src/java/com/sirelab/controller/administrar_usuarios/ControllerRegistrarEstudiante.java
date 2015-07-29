@@ -55,6 +55,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarEstudiante() {
     }
@@ -62,6 +63,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
     @PostConstruct
     public void init() {
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
@@ -291,6 +293,9 @@ public class ControllerRegistrarEstudiante implements Serializable {
             //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -306,6 +311,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
+        activarAceptar = false;
         activarCasillas = false;
         validacionesCarrera = false;
         validacionesPlanEstudio = false;
@@ -366,8 +372,6 @@ public class ControllerRegistrarEstudiante implements Serializable {
             }
             estudianteNueva.setTipoestudiante(inputTipo);
             gestionarLoginSistemaBO.almacenarNuevoEstudianteEnSistema(usuarioNuevo, personaNueva, estudianteNueva);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  " + e.toString());
             System.out.println("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString());
@@ -405,6 +409,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -583,6 +588,14 @@ public class ControllerRegistrarEstudiante implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

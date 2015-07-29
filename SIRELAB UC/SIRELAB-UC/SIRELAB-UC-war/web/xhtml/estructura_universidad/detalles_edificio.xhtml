@@ -85,7 +85,7 @@
                                     <h6><h:message id="msnDescripcion" for="editarDescripcion" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Dirección Edificio*"/></strong>
+                                    <strong><h:outputText value="Dirección/Ubicación Edificio*"/></strong>
                                     <h:inputText maxlength="45" value="#{controllerDetallesEdificio.editarDireccion}" class="form-control" id="editarDireccion">
                                         <f:ajax event="blur" listener="#{controllerDetallesEdificio.validarDireccionEdificio()}" execute="editarDireccion" render="editarDireccion msnDireccion" />
                                     </h:inputText>

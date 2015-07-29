@@ -126,16 +126,40 @@
                         <fieldset>
                             <legend class="text-info">Información Laboratorio</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Laboratorio Por Area*"/></strong>
-                                <h:selectOneMenu value="#{controllerDetallesModulo.laboratorioPorAreaSalaLaboratorio}"
+                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesModulo.departamentoModuloLaboratorio}"
                                                  class="form-control" readonly="#{controllerDetallesModulo.activarEditar}"
-                                                 id="laboratorioPorAreaSalaLaboratorio">
-                                    <f:selectItems value="#{controllerDetallesModulo.listaLaboratoriosPorAreas}" var="area"
-                                                   itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
+                                                 id="departamentoSalaLaboratorio">
+                                    <f:selectItems value="#{controllerDetallesModulo.listaDepartamentos}" var="departamento"
+                                                   itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratoriosPorAreas()}" execute="laboratorioPorAreaSalaLaboratorio" render="@this salaModuloLaboratorio msnLaboratorioPorAreaModulo"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarDepartamentos()}" execute="departamentoModuloLaboratorio" render="@this laboratorioModuloLaboratorio laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnDepartamentoModulo"/>
                                 </h:selectOneMenu>
-                                <h6><h:message id="msnLaboratorioPorAreaModulo" for="laboratorioPorAreaSalaLaboratorio" style="color: red"/></h6>
+                                <h6><h:message id="msnDepartamentoModulo" for="departamentoSalaLaboratorio" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesModulo.laboratorioModuloLaboratorio}"
+                                                 class="form-control" disabled="#{controllerDetallesModulo.activarLaboratorio}"
+                                                 id="laboratorioModuloLaboratorio">
+                                    <f:selectItems value="#{controllerDetallesModulo.listaLaboratorios}" var="laboratorio"
+                                                   itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratorios()}" execute="laboratorioModuloLaboratorio" render="@this laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnLaboratorioModulo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnLaboratorioModulo" for="laboratorioModuloLaboratorio" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Area de Profundización*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesModulo.laboratorioPorAreaModuloLaboratorio}"
+                                                 class="form-control" disabled="#{controllerDetallesModulo.activarLabPorArea}"
+                                                 id="laboratorioPorAreaModuloLaboratorio">
+                                    <f:selectItems value="#{controllerDetallesModulo.listaLaboratoriosPorAreas}" var="area"
+                                                   itemLabel="#{area.areaprofundizacion.nombrearea}" itemValue="#{area}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratoriosPorAreas()}" execute="laboratorioPorAreaModuloLaboratorio" render="@this salaModuloLaboratorio msnLaboratorioPorAreaModulo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnLaboratorioPorAreaModulo" for="laboratorioPorAreaModuloLaboratorio" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Sala de Laboratorio*"/></strong>

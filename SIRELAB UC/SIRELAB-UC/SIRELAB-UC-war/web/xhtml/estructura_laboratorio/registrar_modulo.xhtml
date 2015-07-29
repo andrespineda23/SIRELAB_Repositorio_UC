@@ -122,13 +122,39 @@
                         <fieldset>
                             <legend class="text-info">Información Laboratorio</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Laboratorio Por Area*"/></strong>
-                                <h:selectOneMenu value="#{controllerRegistrarModulo.nuevoLaboratorioPorAreaModulo}"
+                                <strong><h:outputText value="Departamento*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarModulo.nuevoDepartamentoModulo}"
                                                  class="form-control" disabled="#{controllerRegistrarModulo.activarCasillas}"
+                                                 id="nuevoDepartamentoModulo">
+                                    <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarModulo.listaDepartamentos}" var="departamento"
+                                                   itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarDepartamentos()}" execute="nuevoDepartamentoModulo" render="@this nuevoLaboratorioModulo nuevoSalaDepartamentoModulo nuevoLaboratorioPorAreaModulo msnDepartamentoModulo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnDepartamentoModulo" for="nuevoDepartamentoModulo" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarModulo.nuevoLaboratorioModulo}"
+                                                 class="form-control" disabled="#{controllerRegistrarModulo.activarNuevoLaboratorio}"
+                                                 id="nuevoLaboratorioModulo">
+                                    <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarModulo.listaLaboratorios}" var="laboratorio"
+                                                   itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarLaboratorios()}" execute="nuevoLaboratorioModulo" render="@this nuevoLaboratorioPorAreaModulo nuevoSalaLaboratorioModulo msnLaboratorioModulo"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnLaboratorioModulo" for="nuevoLaboratorioModulo" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Area de Profundización*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarModulo.nuevoLaboratorioPorAreaModulo}"
+                                                 class="form-control" disabled="#{controllerRegistrarModulo.activarNuevoLabPorArea}"
                                                  id="nuevoLaboratorioPorAreaModulo">
                                     <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
                                     <f:selectItems value="#{controllerRegistrarModulo.listaLaboratoriosPorAreas}" var="area"
-                                                   itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
+                                                   itemLabel="#{area.areaprofundizacion.nombrearea}" itemValue="#{area}"/>
                                     <f:converter converterId="ConverterGenerico" />
                                     <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarLaboratoriosPorAreas()}" execute="nuevoLaboratorioPorAreaModulo" render="@this nuevoSalaLaboratorioModulo msnLaboratorioPorAreaModulo"/>
                                 </h:selectOneMenu>
@@ -162,7 +188,7 @@
                         </div>
                         <hr class="intro-divider"/>
                         <div class="right pull-right">
-                            <h:commandButton class="btn btn-success" value="Registrar" actionListener="#{controllerRegistrarModulo.registrarNuevoModulo()}">
+                            <h:commandButton class="btn btn-success" disabled="#{controllerRegistrarModulo.activarAceptar}" value="Registrar" actionListener="#{controllerRegistrarModulo.registrarNuevoModulo()}">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>

@@ -42,12 +42,14 @@ public class ControllerRegistrarAdministrador implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarAdministrador() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -261,6 +263,9 @@ public class ControllerRegistrarAdministrador implements Serializable {
             almacenarNuevoAdministradorEnSistema();
             limpiarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -286,8 +291,6 @@ public class ControllerRegistrarAdministrador implements Serializable {
             personaNueva.setTelefono2persona(nuevoTelefono2);
             administrarAdministradoresBO.almacenarNuevaPersonaEnSistema(usuarioNuevo, personaNueva);
             cancelarRegistroAdministrador();
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString());
@@ -324,6 +327,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     public void cancelarRegistroAdministrador() {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         activarCasillas = false;
         colorMensaje = "black";
         validacionesNombre = false;
@@ -352,6 +356,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -468,6 +473,14 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

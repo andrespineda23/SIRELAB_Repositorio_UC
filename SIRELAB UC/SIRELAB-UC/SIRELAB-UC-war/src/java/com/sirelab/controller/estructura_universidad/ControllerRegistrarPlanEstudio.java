@@ -49,12 +49,14 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarPlanEstudio() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         activarNuevoCarrera = true;
         activarNuevoDepartamento = true;
         nuevoCarrera = null;
@@ -183,7 +185,10 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             if (validarCodigoRepetido() == true) {
                 almacenarNuevoPlanEstudioEnSistema();
                 limpiarFormulario();
+                activarAceptar = true;
                 activarLimpiar = false;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -202,8 +207,6 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             planNuevo.setCodigoplanestudio(nuevoCodigo);
             planNuevo.setCarrera(nuevoCarrera);
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString());
@@ -240,6 +243,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "N/A";
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -252,6 +256,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -371,6 +376,14 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

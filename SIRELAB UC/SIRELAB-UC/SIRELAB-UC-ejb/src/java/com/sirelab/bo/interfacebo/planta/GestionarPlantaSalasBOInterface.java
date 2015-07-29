@@ -23,7 +23,9 @@ import java.util.Map;
  */
 public interface GestionarPlantaSalasBOInterface {
 
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas();
+    public List<Laboratorio> consultarLaboratoriosRegistrados();
+
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorLaboratorio(BigInteger laboratorio);
 
     public List<Departamento> consultarDepartamentosRegistrados();
 

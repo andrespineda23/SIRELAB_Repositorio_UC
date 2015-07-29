@@ -38,6 +38,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarPeriodoAcademico() {
     }
@@ -52,6 +53,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         validacionesFechaInicio = false;
         activarLimpiar = true;
         colorMensaje = "black";
+        activarAceptar = false;
         activarCasillas = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
@@ -119,6 +121,9 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                 almacenarRegistroNuevo();
                 restaurarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -137,8 +142,6 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
             periodoNuevo.setFechafinal(inputFechaFin);
             periodoNuevo.setFechainicial(inputFechaInicio);
             gestionarVariablePeriodosAcademicosBO.crearPeriodoAcademico(periodoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo: " + e.toString());
@@ -153,6 +156,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
         mensajeFormulario = "N/A";
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -175,6 +179,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     public void cambiarActivarCasillas() {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarAceptar = false;
         activarLimpiar = true;
         if (activarCasillas == true) {
             activarCasillas = false;
@@ -236,6 +241,14 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

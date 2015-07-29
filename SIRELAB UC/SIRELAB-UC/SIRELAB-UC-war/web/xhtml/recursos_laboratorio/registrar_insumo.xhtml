@@ -157,7 +157,7 @@
                             </div>
                             <hr class="intro-divider"/>
                             <div class="right pull-right">
-                                <h:commandButton value="Registrar" actionListener="#{controllerRegistrarInsumo.registrarNuevoInsumo()}" class="btn btn-success" >
+                                <h:commandButton value="Registrar" disabled="#{controllerRegistrarInsumo.activarAceptar}" actionListener="#{controllerRegistrarInsumo.registrarNuevoInsumo()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                                 <span></span>

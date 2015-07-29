@@ -46,12 +46,14 @@ public class ControllerRegistrarInsumo implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarInsumo() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         nuevoCantidadExistencia = "0";
         nuevoCantidadMin = "0";
         nuevoCodigo = null;
@@ -216,6 +218,9 @@ public class ControllerRegistrarInsumo implements Serializable {
                 almacenarNuevoInsumoEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -247,8 +252,6 @@ public class ControllerRegistrarInsumo implements Serializable {
             nuevaInsumo.setDescripcioninsumo(nuevoDescripcion);
             nuevaInsumo.setProveedor(nuevoProveedor);
             gestionarRecursoInsumosBO.crearNuevoInsumo(nuevaInsumo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema : " + e.toString());
@@ -284,6 +287,7 @@ public class ControllerRegistrarInsumo implements Serializable {
         nuevoNombre = null;
         nuevoProveedor = null;
         validacionesCodigo = false;
+        activarAceptar = false;
         validacionesNombre = false;
         validacionesProveedor = false;
         validacionesCantidadExistencia = true;
@@ -300,6 +304,7 @@ public class ControllerRegistrarInsumo implements Serializable {
     public void cambiarActivarCasillas() {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarAceptar = false;
         activarLimpiar = true;
         if (activarCasillas == true) {
             activarCasillas = false;
@@ -420,6 +425,14 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

@@ -74,7 +74,7 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
         try {
-            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreassPorAreas();
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreas();
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaElementosEquiposBO consultarLaboratoriosPorAreasRegistradas : " + e.toString());

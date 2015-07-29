@@ -36,6 +36,7 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarTipoUsuario() {
     }
@@ -47,6 +48,7 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        activarAceptar = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
@@ -70,6 +72,9 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
             almacenarRegistroNuevo();
             restaurarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -82,8 +87,6 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
             TipoUsuario tipoNuevo = new TipoUsuario();
             tipoNuevo.setNombretipousuario(inputNombre);
             gestionarVariableTiposUsuarioBO.crearTipoUsuario(tipoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo: " + e.toString());
@@ -101,6 +104,7 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
+        activarAceptar = false;
         activarCasillas = false;
     }
 
@@ -108,6 +112,7 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }

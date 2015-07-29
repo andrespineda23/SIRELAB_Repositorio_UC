@@ -129,15 +129,48 @@
                         <fieldset>
                             <legend class="text-info">Información Universidad</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Laboratorio Por Area de Profundización*"/></strong>
-                                <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioPorArea}"
+                                <strong><h:outputText value="Ubicación/Piso Sala*"/></strong>
+                                <h:inputText maxlength="45" disabled="#{controllerRegistrarSala.activarCasillas}" value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarUbicacionSala()}" execute="nuevoUbicacionSala" render="nuevoUbicacionSala msnUbicacionSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Departamento*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarSala.nuevoDepartamentoSala}"
                                                  class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}"
+                                                 id="nuevoDepartamentoSala">
+                                    <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarSala.listaDepartamentos}" var="departamento"
+                                                   itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarDepartamentos()}" execute="nuevoDepartamentoSala" render="@this nuevoLaboratorioSala nuevoLaboratorioPorArea msnDepartamento"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnDepartamento" for="nuevoDepartamentoSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioSala}"
+                                                 class="form-control" disabled="#{controllerRegistrarSala.activarNuevoLaboratorio}"
+                                                 id="nuevoLaboratorioSala">
+                                    <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarSala.listaLaboratorios}" var="laboratorio"
+                                                   itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarLaboratorios()}" execute="nuevoLaboratorioSala" render="@this nuevoLaboratorioPorArea msnLaboratorio"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnLaboratorio" for="nuevoLaboratorioSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Area de Profundización*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioPorArea}"
+                                                 class="form-control" disabled="#{controllerRegistrarSala.activarNuevoLabPorArea}"
                                                  id="nuevoLaboratorioPorArea">
                                     <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                    <f:selectItems value="#{controllerRegistrarSala.listaLaboratoriosPorAreas}" var="laboratorio"
-                                                   itemLabel="#{laboratorio.informacionRegistro}" itemValue="#{laboratorio}"/>
+                                    <f:selectItems value="#{controllerRegistrarSala.listaLaboratoriosPorAreas}" var="laboratorioArea"
+                                                   itemLabel="#{laboratorioArea.areaprofundizacion.nombrearea}" itemValue="#{laboratorioArea}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarLaboratorios()}" execute="nuevoLaboratorioPorArea" render="@this msnLaboratorioPorArea"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarLaboratoriosPorArea()}" execute="nuevoLaboratorioPorArea" render="@this msnLaboratorioPorArea"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnLaboratorioPorArea" for="nuevoLaboratorioPorArea" style="color: red"/></h6>
                             </div>
@@ -167,13 +200,6 @@
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="nuevoEdificioSala" style="color: red"/></h6>
                             </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
-                                <h:inputText maxlength="45" disabled="#{controllerRegistrarSala.activarCasillas}" value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarUbicacionSala()}" execute="nuevoUbicacionSala" render="nuevoUbicacionSala msnUbicacionSala" />
-                                </h:inputText>
-                                <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
-                            </div>
                         </fieldset>
                         <hr class="intro-divider"/>
                         <div class="row col-md-12">
@@ -189,7 +215,7 @@
                         </div>
                         <hr class="intro-divider"/>
                         <div class="right pull-right">
-                            <h:commandButton class="btn btn-success" value="Registrar" actionListener="#{controllerRegistrarSala.registrarNuevoSala()}">
+                            <h:commandButton class="btn btn-success" disabled="#{controllerRegistrarSala.activarAceptar}" value="Registrar" actionListener="#{controllerRegistrarSala.registrarNuevoSala()}">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>

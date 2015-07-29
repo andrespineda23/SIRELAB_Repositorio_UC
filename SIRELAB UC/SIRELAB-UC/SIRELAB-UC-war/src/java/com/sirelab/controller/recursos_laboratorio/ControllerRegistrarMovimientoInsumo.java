@@ -41,6 +41,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarMovimientoInsumo() {
     }
@@ -53,6 +54,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         validacionesFecha = true;
         activarLimpiar = true;
         colorMensaje = "black";
+        activarAceptar = false;
         activarCasillas = false;
         mensajeFormulario = "N/A";
         //
@@ -136,6 +138,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         validacionesFecha = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
         return "administrar_movimientoinsumo";
@@ -167,6 +170,9 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             almacenaNuevoMovimientoEnSistema();
             limpiarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -183,8 +189,6 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             movimientoNuevo.setFechamovimiento(nuevoFechaMovimiento);
             movimientoNuevo.setInsumo(insumoRegistro);
             gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumo(movimientoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString());
@@ -206,6 +210,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     public void cambiarActivarCasillas() {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarAceptar = false;
         activarLimpiar = true;
         if (activarCasillas == true) {
             activarCasillas = false;
@@ -283,6 +288,14 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

@@ -44,12 +44,14 @@ public class ControllerRegistrarEdificio implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarEdificio() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         nuevoDescripcion = null;
         nuevoDireccion = null;
         nuevoSede = null;
@@ -81,7 +83,7 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     public void validarDireccionEdificio() {
         if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty())) {
-            if (!Utilidades.validarDirecciones(nuevoDireccion)) {
+            if (!Utilidades.validarCaracterString(nuevoDireccion)) {
                 validacionesDireccion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
             } else {
@@ -130,6 +132,9 @@ public class ControllerRegistrarEdificio implements Serializable {
             almacenarNuevoEdificioEnSistema();
             limpiarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -145,8 +150,6 @@ public class ControllerRegistrarEdificio implements Serializable {
             edificioNuevo.setHorarioatencion(nuevoHorario);
             edificioNuevo.setSede(nuevoSede);
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema : " + e.toString());
@@ -169,6 +172,7 @@ public class ControllerRegistrarEdificio implements Serializable {
         nuevoDescripcion = null;
         nuevoDireccion = null;
         nuevoSede = null;
+        activarAceptar = false;
         nuevoHorario = null;
         validacionesDescripcion = false;
         validacionesDireccion = true;
@@ -185,6 +189,7 @@ public class ControllerRegistrarEdificio implements Serializable {
     public void cambiarActivarCasillas() {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarAceptar = false;
         activarLimpiar = true;
         if (activarCasillas == true) {
             activarCasillas = false;
@@ -276,6 +281,14 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

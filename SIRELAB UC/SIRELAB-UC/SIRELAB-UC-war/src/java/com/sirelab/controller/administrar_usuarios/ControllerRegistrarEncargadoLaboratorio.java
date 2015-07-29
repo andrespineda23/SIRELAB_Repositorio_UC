@@ -63,6 +63,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarEncargadoLaboratorio() {
     }
@@ -70,6 +71,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     @PostConstruct
     public void init() {
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
@@ -343,6 +345,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -385,6 +390,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     public void cancelarRegistroEncargadoLaboratorio() {
         mensajeFormulario = "N/A";
         activarCasillas = false;
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarDepartamento = true;
@@ -458,8 +464,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             encargadoNueva.setLaboratorio(inputLaboratorio);
             encargadoNueva.setTipoperfil(inputPerfil);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
@@ -470,6 +474,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -675,6 +680,14 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

@@ -59,12 +59,23 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
     }
 
     @Override
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
+    public List<Laboratorio> consultarLaboratoriosRegistrados() {
         try {
-            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreassPorAreas();
+            List<Laboratorio> lista = laboratorioDAO.consultarLaboratorios();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaSalasBO consultarLaboratoriosPorAreasRegistradas : " + e.toString());
+            System.out.println("Error GestionarPlantaSalasBO consultarLaboratoriosRegistrados : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorLaboratorio(BigInteger laboratorio) {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasPorLaboratorios(laboratorio);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarLaboratoriosPorAreasPorLaboratorio : " + e.toString());
             return null;
         }
     }

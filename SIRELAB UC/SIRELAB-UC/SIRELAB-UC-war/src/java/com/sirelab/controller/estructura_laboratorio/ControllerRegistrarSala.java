@@ -6,7 +6,9 @@
 package com.sirelab.controller.estructura_laboratorio;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaSalasBOInterface;
+import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
+import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.Sede;
@@ -35,28 +37,36 @@ public class ControllerRegistrarSala implements Serializable {
     GestionarPlantaSalasBOInterface gestionarPlantaSalasBO;
 
     private String nuevoNombreSala, nuevoCodigoSala, nuevoDescripcionSala, nuevoUbicacionSala, nuevoCapacidadSala, nuevoCostoSala, nuevoInversionSala;
+    private Departamento nuevoDepartamentoSala;
+    private Laboratorio nuevoLaboratorioSala;
+    private boolean activarNuevoLaboratorio;
     private LaboratoriosPorAreas nuevoLaboratorioPorArea;
+    private boolean activarNuevoLabPorArea;
     private Sede nuevoSedeSala;
     private Edificio nuevoEdificioSala;
     private boolean activarNuevoEdificio;
+    private List<Departamento> listaDepartamentos;
+    private List<Laboratorio> listaLaboratorios;
     private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
     private List<Sede> listaSedes;
     private List<Edificio> listaEdificios;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesUbicacion;
-    private boolean validacionesCapacidad, validacionesCosto, validacionesInversion;
-    private boolean validacionesLaboratorio, validacionesSede, validacionesEdificio;
+    private boolean validacionesCapacidad, validacionesCosto, validacionesInversion, validacionesDepartamento;
+    private boolean validacionesLaboratorioPorArea, validacionesSede, validacionesEdificio, validacionesLaboratorio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarSala() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -68,11 +78,15 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesEdificio = false;
         validacionesInversion = true;
         validacionesLaboratorio = false;
+        validacionesDepartamento = false;
+        validacionesLaboratorioPorArea = false;
         validacionesNombre = false;
         validacionesSede = false;
         validacionesUbicacion = false;
         //
         activarNuevoEdificio = true;
+        activarNuevoLaboratorio = true;
+        activarNuevoLabPorArea = true;
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
@@ -81,6 +95,9 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoCapacidadSala = null;
         nuevoInversionSala = "0";
         nuevoSedeSala = null;
+        nuevoLaboratorioPorArea = null;
+        nuevoLaboratorioSala = null;
+        nuevoDepartamentoSala = null;
         nuevoEdificioSala = null;
         listaEdificios = null;
         BasicConfigurator.configure();
@@ -182,12 +199,49 @@ public class ControllerRegistrarSala implements Serializable {
         }
     }
 
-    public void actualizarLaboratorios() {
-        if (Utilidades.validarNulo(nuevoLaboratorioPorArea)) {
-            validacionesLaboratorio = true;
+    public void actualizarDepartamentos() {
+        if (Utilidades.validarNulo(nuevoDepartamentoSala)) {
+            validacionesDepartamento = true;
+            listaLaboratorios = gestionarPlantaSalasBO.consultarLaboratoriosPorIDDepartamento(nuevoDepartamentoSala.getIddepartamento());
+            nuevoLaboratorioSala = null;
+            activarNuevoLaboratorio = false;
         } else {
+            listaLaboratorios = null;
+            nuevoLaboratorioSala = null;
+            activarNuevoLaboratorio = true;
+
+            activarNuevoLabPorArea = true;
+            nuevoLaboratorioPorArea = null;
+            listaLaboratoriosPorAreas = null;
+
+            validacionesDepartamento = false;
             validacionesLaboratorio = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoLaboratorioPorArea", new FacesMessage("El laboratorio por area es obligatorio."));
+            validacionesLaboratorioPorArea = false;
+        }
+    }
+
+    public void actualizarLaboratorios() {
+        if (Utilidades.validarNulo(nuevoLaboratorioSala)) {
+            validacionesLaboratorio = true;
+            nuevoLaboratorioPorArea = null;
+            listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasPorLaboratorio(nuevoLaboratorioSala.getIdlaboratorio());
+            activarNuevoLabPorArea = false;
+        } else {
+            activarNuevoLabPorArea = true;
+            nuevoLaboratorioPorArea = null;
+            listaLaboratoriosPorAreas = null;
+            validacionesLaboratorio = false;
+            validacionesLaboratorioPorArea = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoLaboratorioSala", new FacesMessage("El laboratorio obligatorio."));
+        }
+    }
+
+    public void actualizarLaboratoriosPorArea() {
+        if (Utilidades.validarNulo(nuevoLaboratorioPorArea)) {
+            validacionesLaboratorioPorArea = true;
+        } else {
+            validacionesLaboratorioPorArea = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoLaboratorioPorArea", new FacesMessage("El area de profundización es obligatorio."));
         }
     }
 
@@ -218,6 +272,9 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void limpiarRegistroSalaLaboratorio() {
         activarNuevoEdificio = true;
+        activarAceptar = false;
+        activarNuevoLabPorArea = true;
+        activarNuevoLaboratorio = true;
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
@@ -226,8 +283,14 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoCapacidadSala = null;
         nuevoInversionSala = "0";
         nuevoSedeSala = null;
+        nuevoDepartamentoSala = null;
+        nuevoLaboratorioSala = null;
         nuevoEdificioSala = null;
         listaEdificios = null;
+        listaLaboratorios = null;
+        listaSedes = null;
+        listaDepartamentos = null;
+        listaLaboratoriosPorAreas = null;
         //
         validacionesCosto = false;
         validacionesCapacidad = false;
@@ -236,6 +299,8 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesEdificio = false;
         validacionesInversion = true;
         validacionesLaboratorio = false;
+        validacionesDepartamento = false;
+        validacionesLaboratorioPorArea = false;
         validacionesNombre = false;
         validacionesSede = false;
         validacionesUbicacion = false;
@@ -262,10 +327,16 @@ public class ControllerRegistrarSala implements Serializable {
         if (validacionesEdificio == false) {
             retorno = false;
         }
+        if (validacionesDepartamento == false) {
+            retorno = false;
+        }
         if (validacionesInversion == false) {
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
+            retorno = false;
+        }
+        if (validacionesLaboratorioPorArea == false) {
             retorno = false;
         }
         if (validacionesNombre == false) {
@@ -299,6 +370,9 @@ public class ControllerRegistrarSala implements Serializable {
                 almacenaNuevoSalaEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -312,10 +386,14 @@ public class ControllerRegistrarSala implements Serializable {
 
     private void limpiarFormulario() {
         activarNuevoEdificio = true;
+        activarNuevoLabPorArea = true;
+        activarNuevoLaboratorio = true;
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
         nuevoDescripcionSala = null;
+        nuevoLaboratorioSala = null;
+        nuevoDepartamentoSala = null;
         nuevoCostoSala = null;
         nuevoCapacidadSala = null;
         nuevoInversionSala = "0";
@@ -330,6 +408,8 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesEdificio = false;
         validacionesInversion = true;
         validacionesLaboratorio = false;
+        validacionesLaboratorioPorArea = false;
+        validacionesDepartamento = false;
         validacionesNombre = false;
         validacionesSede = false;
         validacionesUbicacion = false;
@@ -353,8 +433,6 @@ public class ControllerRegistrarSala implements Serializable {
             salaNuevo.setEdificio(nuevoEdificioSala);
             salaNuevo.setLaboratoriosporareas(nuevoLaboratorioPorArea);
             gestionarPlantaSalasBO.crearNuevaSalaLaboratorio(salaNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema : " + e.toString());
@@ -365,13 +443,13 @@ public class ControllerRegistrarSala implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
     }
 
     //GET-SET    
-
     public String getNuevoNombreSala() {
         return nuevoNombreSala;
     }
@@ -461,9 +539,6 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
-        if (listaLaboratoriosPorAreas == null) {
-            listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasRegistradas();
-        }
         return listaLaboratoriosPorAreas;
     }
 
@@ -520,6 +595,65 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public Laboratorio getNuevoLaboratorioSala() {
+        return nuevoLaboratorioSala;
+    }
+
+    public void setNuevoLaboratorioSala(Laboratorio nuevoLaboratorioSala) {
+        this.nuevoLaboratorioSala = nuevoLaboratorioSala;
+    }
+
+    public List<Laboratorio> getListaLaboratorios() {
+        return listaLaboratorios;
+    }
+
+    public void setListaLaboratorios(List<Laboratorio> listaLaboratorios) {
+        this.listaLaboratorios = listaLaboratorios;
+    }
+
+    public boolean isActivarNuevoLabPorArea() {
+        return activarNuevoLabPorArea;
+    }
+
+    public void setActivarNuevoLabPorArea(boolean activarNuevoLabPorArea) {
+        this.activarNuevoLabPorArea = activarNuevoLabPorArea;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
+    }
+
+    public Departamento getNuevoDepartamentoSala() {
+        return nuevoDepartamentoSala;
+    }
+
+    public void setNuevoDepartamentoSala(Departamento nuevoDepartamentoSala) {
+        this.nuevoDepartamentoSala = nuevoDepartamentoSala;
+    }
+
+    public boolean isActivarNuevoLaboratorio() {
+        return activarNuevoLaboratorio;
+    }
+
+    public void setActivarNuevoLaboratorio(boolean activarNuevoLaboratorio) {
+        this.activarNuevoLaboratorio = activarNuevoLaboratorio;
+    }
+
+    public List<Departamento> getListaDepartamentos() {
+        if (null != listaDepartamentos) {
+            listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosRegistrados();
+        }
+        return listaDepartamentos;
+    }
+
+    public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
+        this.listaDepartamentos = listaDepartamentos;
     }
 
 }

@@ -36,6 +36,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarTipoEvento() {
     }
@@ -48,6 +49,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
+        activarAceptar = false;
         BasicConfigurator.configure();
     }
 
@@ -70,6 +72,9 @@ public class ControllerRegistrarTipoEvento implements Serializable {
             almacenarRegistroNuevo();
             restaurarFormulario();
             activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -82,8 +87,6 @@ public class ControllerRegistrarTipoEvento implements Serializable {
             TipoEvento tipoNuevo = new TipoEvento();
             tipoNuevo.setDetalleevento(inputDetalle);
             gestionarVariableTiposEventoBO.crearTipoEvento(tipoNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo: " + e.toString());
@@ -100,6 +103,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
         validacionesDetalle = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
     }
@@ -113,6 +117,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
@@ -157,6 +162,14 @@ public class ControllerRegistrarTipoEvento implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

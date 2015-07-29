@@ -36,12 +36,14 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
+    private boolean activarAceptar;
 
     public ControllerRegistrarAreaProfundizacion() {
     }
 
     @PostConstruct
     public void init() {
+        activarAceptar = false;
         nuevoCodigo = null;
         nuevoNombre = null;
         validacionesCodigo = false;
@@ -109,6 +111,9 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
                 almacenarNuevoAreaProfundizacionEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
@@ -126,8 +131,6 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
             areaNuevo.setNombrearea(nuevoNombre);
             areaNuevo.setCodigoarea(nuevoCodigo);
             gestionarRecursoAreaProfundizacionBO.crearNuevaAreaProfundizacion(areaNuevo);
-            activarCasillas = true;
-            colorMensaje = "green";
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAreaProfundizacion almacenarNuevoAreaProfundizacionEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarAreaProfundizacion almacenarNuevoAreaProfundizacionEnSistema : " + e.toString());
@@ -149,6 +152,7 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
         validacionesNombre = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
     }
@@ -157,13 +161,13 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         activarLimpiar = true;
+        activarAceptar = false;
         if (activarCasillas == true) {
             activarCasillas = false;
         }
     }
 
     //GET-SET
-
     public String getNuevoNombre() {
         return nuevoNombre;
     }
@@ -210,6 +214,14 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

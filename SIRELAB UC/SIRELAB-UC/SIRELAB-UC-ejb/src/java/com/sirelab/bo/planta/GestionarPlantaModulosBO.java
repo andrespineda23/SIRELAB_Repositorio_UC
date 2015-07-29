@@ -2,6 +2,7 @@ package com.sirelab.bo.planta;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaModulosBOInterface;
 import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
+import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EdificioDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
@@ -10,6 +11,7 @@ import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.SedeDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
@@ -31,6 +33,8 @@ import javax.ejb.Stateless;
 public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterface {
 
     @EJB
+    DepartamentoDAOInterface departamentoDAO;
+    @EJB
     ModuloLaboratorioDAOInterface moduloLaboratorioDAO;
     @EJB
     LaboratorioDAOInterface laboratorioDAO;
@@ -48,12 +52,45 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
 
     @Override
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorLaboratorio(BigInteger laboratorio) {
         try {
-            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreassPorAreas();
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasPorLaboratorios(laboratorio);
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Departamento> consultarDepartamentosRegistrados() {
+        try {
+            List<Departamento> lista = departamentoDAO.consultarDepartamentos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarDepartamentosRegistrados : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento) {
+        try {
+            List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarLaboratoriosPorAreasRegistradas : " + e.toString());
             return null;
         }
     }

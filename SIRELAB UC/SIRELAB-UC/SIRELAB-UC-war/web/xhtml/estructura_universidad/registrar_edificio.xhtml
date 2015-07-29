@@ -85,7 +85,7 @@
                                     <h6><h:message id="msnDescripcion" for="nuevoDescripcion" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Dirección Edificio*"/></strong>
+                                    <strong><h:outputText value="Dirección/Ubicación Edificio*"/></strong>
                                     <h:inputText maxlength="45" value="#{controllerRegistrarEdificio.nuevoDireccion}" disabled="#{controllerRegistrarEdificio.activarCasillas}" class="form-control" id="nuevoDireccion">
                                         <f:ajax event="blur" listener="#{controllerRegistrarEdificio.validarDireccionEdificio()}" execute="nuevoDireccion" render="nuevoDireccion msnDireccion" />
                                     </h:inputText>
@@ -138,7 +138,7 @@
                             </div>
                             <hr class="intro-divider"/>
                             <div class="right pull-right">
-                                <h:commandButton value="Registrar" actionListener="#{controllerRegistrarEdificio.registrarNuevoEdificio()}" class="btn btn-success" >
+                                <h:commandButton value="Registrar" disabled="#{controllerRegistrarEdificio.activarAceptar}" actionListener="#{controllerRegistrarEdificio.registrarNuevoEdificio()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                                 <span></span>
