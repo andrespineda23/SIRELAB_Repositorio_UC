@@ -83,11 +83,9 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Nombre(s) Docente*"/></strong>
                                     <h:inputText maxlength="45" value="#{controllerRegistrarDocente.inputNombre}" disabled="#{controllerRegistrarDocente.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio."  title="Nombre(s) Docente*">
-                                        <f:validateLength id="lgtError" minimum="20" for="inputNombre" />
                                         <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarNombreDocente()}" execute="inputNombre" render="inputNombre msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
-                                    <h6><h:message id="msnNombreLng" for="lgtError" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Apellido(s) Docente*"/></strong>
