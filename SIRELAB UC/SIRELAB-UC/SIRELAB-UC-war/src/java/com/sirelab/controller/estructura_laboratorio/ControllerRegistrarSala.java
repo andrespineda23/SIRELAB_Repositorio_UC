@@ -646,7 +646,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public List<Departamento> getListaDepartamentos() {
-        if (null != listaDepartamentos) {
+        if (null == listaDepartamentos) {
             listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosRegistrados();
         }
         return listaDepartamentos;

@@ -243,7 +243,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
     }
 
     public List<Facultad> getListaFacultades() {
-        if (null != listaFacultades) {
+        if (null == listaFacultades) {
             listaFacultades = gestionarDepartamentosBO.consultarFacultadesRegistradas();
         }
         return listaFacultades;
