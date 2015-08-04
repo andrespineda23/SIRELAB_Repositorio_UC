@@ -357,6 +357,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     public void limpiarFormulario() {
         activarDepartamento = true;
+        activarLaboratorio = true;
         inputApellido = null;
         inputFacultad = null;
         inputTelefono1 = null;
@@ -394,6 +395,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarDepartamento = true;
+        activarLaboratorio = true;
         inputApellido = null;
         inputFacultad = null;
         inputDireccion = null;

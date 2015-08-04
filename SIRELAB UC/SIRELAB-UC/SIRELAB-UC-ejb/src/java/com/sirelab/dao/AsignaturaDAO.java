@@ -67,6 +67,21 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             return null;
         }
     }
+    
+    @Override
+    public List<Asignatura> consultarAsignaturasPorPlanEstudio(BigInteger planEstudio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Asignatura p WHERE p.planestudios.idplanestudios=:planEstudio");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("planEstudio", planEstudio);
+            List<Asignatura> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarAsignaturasPorPlanEstudio AsignaturaDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public Asignatura buscarAsignaturaPorID(BigInteger idRegistro) {

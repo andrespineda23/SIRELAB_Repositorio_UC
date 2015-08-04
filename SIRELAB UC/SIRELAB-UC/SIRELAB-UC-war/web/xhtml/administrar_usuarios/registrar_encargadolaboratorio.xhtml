@@ -210,12 +210,12 @@
                         <hr class="intro-divider"/>
                         <div class="right pull-right">
                             <h:commandButton value="Registrar" disabled="#{controllerRegistrarEncargadoLaboratorio.activarAceptar}" actionListener="#{controllerRegistrarEncargadoLaboratorio.registrarNuevoEncargadoLaboratorio()}" class="btn btn-success">
-                                <f:ajax execute="@this" render="mensajeFormulario" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>
                             <span></span>
                             <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_encargadoslaboratorios" actionListener="#{controllerRegistrarEncargadoLaboratorio.cancelarRegistroEncargadoLaboratorio()}" immediate="true">
-                                <f:ajax execute="@this" render="mensajeFormulario" />
+                                <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>
                             <span></span>

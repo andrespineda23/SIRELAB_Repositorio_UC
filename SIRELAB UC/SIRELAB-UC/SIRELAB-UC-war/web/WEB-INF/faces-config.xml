@@ -42,7 +42,7 @@
         <from-view-id>/xhtml/seguridad/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicio_docente</from-outcome>
-            <to-view-id>/xhtml/inicio_docente.xhtml</to-view-id>
+            <to-view-id>/xhtml/paginas_iniciales/inicio_docente.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -63,6 +63,23 @@
         </navigation-case>
     </navigation-rule>
         
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_iniciales/inicio_docente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservasusuario</from-outcome>
+            <to-view-id>/xhtml/proceso_reservas/consultar_reservas_usuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proceso_reservas/consultar_reservas_usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_docente</from-outcome>
+            <to-view-id>/xhtml/paginas_iniciales/inicio_docente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     <navigation-rule>
         <from-view-id>/xhtml/variables_entorno/variables_usuario.xhtml</from-view-id>
@@ -1066,6 +1083,42 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
+            <from-outcome>administrar_guiaslaboratorio</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_guiaslaboratorio</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/xhtml/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
             <from-outcome>administrar_proveedores</from-outcome>
             <to-view-id>/xhtml/recursos_laboratorio/administrar_proveedores.xhtml</to-view-id>
             <redirect />
@@ -1328,6 +1381,42 @@
         <navigation-case>
             <from-outcome>administrar_laboratorios</from-outcome>
             <to-view-id>/xhtml/estructura_laboratorio/administrar_laboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_guialaboratorio</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/registrar_guialaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/registrar_guialaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_guiaslaboratorio</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_guialaboratorio</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/detalles_guialaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/detalles_guialaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_guiaslaboratorio</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

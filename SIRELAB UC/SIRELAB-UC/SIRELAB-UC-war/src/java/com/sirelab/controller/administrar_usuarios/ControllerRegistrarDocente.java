@@ -308,10 +308,11 @@ public class ControllerRegistrarDocente implements Serializable {
             //EnvioCorreo correo = new EnvioCorreo();
             //correo.enviarCorreoCreacionCuenta(inputEmail+ "@ucentral.edu.co");
             limpiarFormulario();
-            activarLimpiar = false;
+             activarLimpiar = false;
             activarAceptar = true;
             activarCasillas = true;
             colorMensaje = "green";
+            System.out.println("Funciona sin problema");
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";

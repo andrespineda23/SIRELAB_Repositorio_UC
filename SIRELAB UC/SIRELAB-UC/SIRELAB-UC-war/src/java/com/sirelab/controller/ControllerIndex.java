@@ -231,7 +231,7 @@ public class ControllerIndex implements Serializable {
                                     usuarioLoginSistema.setNombreTipoUsuario("DOCENTE");
                                     usuarioLoginSistema.setIdUsuarioLogin(docenteLogin.getIddocente());
                                     usuarioLoginSistema.setUserUsuario(docenteLogin.getPersona().getUsuario().getNombreusuario());
-                                    paginaSiguiente = "faces/paginas_docente/inicio_docente.xhtml";
+                                    paginaSiguiente = "inicio_docente";
                                 } else {
                                     secuenciaLogin = new BigInteger("4");
                                     if (secuenciaLogin.equals(idTipoUsuario)) {

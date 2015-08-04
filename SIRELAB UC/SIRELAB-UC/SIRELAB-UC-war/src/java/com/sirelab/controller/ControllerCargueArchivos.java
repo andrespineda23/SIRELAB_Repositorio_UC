@@ -89,7 +89,7 @@ public class ControllerCargueArchivos implements Serializable {
                 InputStream is = archivo.getInputStream();
                 SimpleDateFormat formatFecha = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");
                 String fecha = formatFecha.format(new Date());
-                String rutaArchivoFinal = pathArchivo + fecha + filename;
+                String rutaArchivoFinal = pathArchivo + " - " + fecha + " - " + filename;
                 FileOutputStream os = new FileOutputStream(rutaArchivoFinal);
                 int ch = is.read();
                 while (ch != -1) {

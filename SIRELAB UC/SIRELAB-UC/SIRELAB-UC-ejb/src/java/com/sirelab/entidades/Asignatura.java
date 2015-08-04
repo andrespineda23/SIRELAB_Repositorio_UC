@@ -7,7 +7,9 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Asignatura.findByNombreasignatura", query = "SELECT a FROM Asignatura a WHERE a.nombreasignatura = :nombreasignatura"),
     @NamedQuery(name = "Asignatura.findByNumerocreditos", query = "SELECT a FROM Asignatura a WHERE a.numerocreditos = :numerocreditos")})
 public class Asignatura implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
+    private Collection<ReservaSala> reservaSalaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
+    private Collection<GuiaLaboratorio> guiaLaboratorioCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -139,6 +147,24 @@ public class Asignatura implements Serializable {
 
     public void setCodigoasignatura(String codigoasignatura) {
         this.codigoasignatura = codigoasignatura;
+    }
+
+    @XmlTransient
+    public Collection<ReservaSala> getReservaSalaCollection() {
+        return reservaSalaCollection;
+    }
+
+    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
+        this.reservaSalaCollection = reservaSalaCollection;
+    }
+
+    @XmlTransient
+    public Collection<GuiaLaboratorio> getGuiaLaboratorioCollection() {
+        return guiaLaboratorioCollection;
+    }
+
+    public void setGuiaLaboratorioCollection(Collection<GuiaLaboratorio> guiaLaboratorioCollection) {
+        this.guiaLaboratorioCollection = guiaLaboratorioCollection;
     }
 
 }

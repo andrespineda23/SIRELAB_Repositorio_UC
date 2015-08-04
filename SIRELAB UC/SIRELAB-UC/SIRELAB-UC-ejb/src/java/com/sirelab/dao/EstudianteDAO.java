@@ -241,12 +241,16 @@ public class EstudianteDAO implements EstudianteDAOInterface {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
                 }
+                if ("parametroCorreo".equals(entry.getKey())) {
+                    //
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
                 if (("parametroCorreo".equals(entry.getKey()))
                         || ("parametroDocumento".equals(entry.getKey()))
                         || ("parametroNombre".equals(entry.getKey()))
                         || ("parametroApellido".equals(entry.getKey()))) {
                     //
-                    tq.setParameter(entry.getKey(), "%" + entry.getValue() + "%");
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
                 if (("parametroEstado".equals(entry.getKey()))) {
                     tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));

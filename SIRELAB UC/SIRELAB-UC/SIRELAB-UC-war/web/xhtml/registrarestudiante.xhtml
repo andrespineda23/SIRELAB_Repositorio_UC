@@ -104,7 +104,7 @@
                                     <strong><h:outputText value="Correo Opcional"/></strong>
                                     <div class="input-group">
                                         <h:inputText maxlength="60"  value="#{controllerRegistrarEstudiante.inputEmailOpcional}" disabled="#{controllerRegistrarEstudiante.activarCasillas}" class="form-control" id="inputEmailOpcional">
-                                            <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarCorreoEstudiante()}" execute="inputEmailOpcional" render="inputEmailOpcional msnEmailOpcional"/>
+                                            <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarCorreoOOpcionalEstudiante()}" execute="inputEmailOpcional" render="inputEmailOpcional msnEmailOpcional"/>
                                         </h:inputText>
                                         <span class="input-group-addon">@</span>
                                     </div>

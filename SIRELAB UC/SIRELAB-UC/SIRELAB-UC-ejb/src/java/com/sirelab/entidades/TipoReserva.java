@@ -7,7 +7,9 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +17,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TipoReserva.findByIdtiporeserva", query = "SELECT t FROM TipoReserva t WHERE t.idtiporeserva = :idtiporeserva"),
     @NamedQuery(name = "TipoReserva.findByNombretiporeserva", query = "SELECT t FROM TipoReserva t WHERE t.nombretiporeserva = :nombretiporeserva")})
 public class TipoReserva implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tiporeserva")
+    private Collection<Reserva> reservaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,6 +101,15 @@ public class TipoReserva implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.TipoReserva[ idtiporeserva=" + idtiporeserva + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Reserva> getReservaCollection() {
+        return reservaCollection;
+    }
+
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
+        this.reservaCollection = reservaCollection;
     }
     
 }

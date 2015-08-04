@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="formularioGeneral">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                                <p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br> 
+                </div>
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li class="active">Administrar Guías Laboratorio</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"> 
+                        <div class="container">
+                            <div class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px">
+                                    <h3><legend style="color: darkblue"><strong>INFORMACIÓN GUÍAS LABORATORIO</strong></legend></h3>
+                                    <div class="row col-md-12">
+                                        <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                            <legend class="h5">I. Basica</legend>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="parametroNombre">
+                                                        Nombre Guía
+                                                    </label>
+                                                    <h:inputText maxlength="100" value="#{controllerAdministrarGuiasLaboratorio.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="parametroAsignatura">
+                                                        Asignatura
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarGuiasLaboratorio.parametroAsignatura}"
+                                                                     class="form-control"
+                                                                     id="parametroProveedor">
+                                                        <f:selectItem itemLabel="Seleccione Asignatura" itemValue="null" />
+                                                        <f:selectItems value="#{controllerAdministrarGuiasLaboratorio.listaAsignaturas}" var="asignatura"
+                                                                       itemLabel="#{asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
+                                                        <f:converter converterId="ConverterGenerico" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div> 
+                                </fieldset>
+                                <br></br>
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarGuiasLaboratorio.cantidadRegistros}"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarGuiasLaboratorio.buscarGuiasLaboratorioPorParametros()}">
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <br></br>
+                            <div id="resultadosBusqueda" class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px;">
+                                    <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                    <div class="row">
+                                        <h:dataTable id="dataTable" var="item" 
+                                                     styleClass="table table-striped table-hover table-responsive" 
+                                                     value="#{controllerAdministrarGuiasLaboratorio.listaGuiasLaboratorioTabla}">
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Nombre"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.nombreguia}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Asignatura"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.asignatura.nombreasignatura}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Detalles"/>
+                                                </f:facet>
+                                                <h:commandLink value="Ver" action="detalles_guialaboratorio" actionListener="#{controllerDetallesGuiaLaboratorio.recibirIDGuiasLaboratorioDetalles(item.idguialaboratorio)}"/>
+                                            </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarGuiasLaboratorio.cargarPaginaAnteriorGuiaLaboratorio()}" disabled="#{controllerAdministrarGuiasLaboratorio.bloquearPagAntGuiaLaboratorio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarGuiasLaboratorio.cargarPaginaSiguienteGuiaLaboratorio()}" disabled="#{controllerAdministrarGuiasLaboratorio.bloquearPagSigGuiaLaboratorio}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
+                                        </h:dataTable>
+                                    </div><!--/.row-->
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <div class="row">
+                    <div class="col-md-1">
+                        <h:commandButton value="Nueva Guía" class="btn btn-success" action="registrar_guialaboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}"/>
+                    </div>
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1">
+                        <h:commandButton value="Atras" action="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../../recursos/js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../../recursos/js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

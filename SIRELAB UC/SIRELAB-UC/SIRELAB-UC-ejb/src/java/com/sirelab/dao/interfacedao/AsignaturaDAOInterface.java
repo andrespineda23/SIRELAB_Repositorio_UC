@@ -24,6 +24,8 @@ public interface AsignaturaDAOInterface {
 
     public List<Asignatura> consultarAsignaturas();
 
+    public List<Asignatura> consultarAsignaturasPorPlanEstudio(BigInteger planEstudio);
+
     public Asignatura buscarAsignaturaPorID(BigInteger idRegistro);
 
     public List<Asignatura> buscarAsignaturasPorFiltrado(Map<String, String> filters);

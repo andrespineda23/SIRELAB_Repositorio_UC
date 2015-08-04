@@ -69,9 +69,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="page-header">
-                                        <h1>Bienvenido Docente
-                                            <small>Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label></small>
-                                        </h1>
+                                        <h3>Bienvenido: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label></h3>
                                     </div>
                                 </div>
                             </div>
@@ -85,9 +83,9 @@
                                         Proceso para consulta de prestamos realizados por el docente
                                         <br>--</br>
                                         <br>--</br>
-                                        <h:commandButton value="Consultar" class="btn btn-primary"/>
+                                        <h:commandButton value="Consultar" action="consultarreservasusuario" actionListener="#{controllerConsultarReservasUsuario.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}" class="btn btn-primary"/>
                                     </p>
-                                    <img src="../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
+                                    <img src="../../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
                                     <p>
                                         Proceso para solicitar un nuevo prestamo de laboratorio
                                         <br>--</br>

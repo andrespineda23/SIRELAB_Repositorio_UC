@@ -7,7 +7,9 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +17,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EstadoReserva.findByIdestadoreserva", query = "SELECT e FROM EstadoReserva e WHERE e.idestadoreserva = :idestadoreserva"),
     @NamedQuery(name = "EstadoReserva.findByNombreestadoreserva", query = "SELECT e FROM EstadoReserva e WHERE e.nombreestadoreserva = :nombreestadoreserva")})
 public class EstadoReserva implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estadoreserva")
+    private Collection<Reserva> reservaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -96,6 +102,15 @@ public class EstadoReserva implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.EstadoReserva[ idestadoreserva=" + idestadoreserva + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Reserva> getReservaCollection() {
+        return reservaCollection;
+    }
+
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
+        this.reservaCollection = reservaCollection;
     }
 
 }

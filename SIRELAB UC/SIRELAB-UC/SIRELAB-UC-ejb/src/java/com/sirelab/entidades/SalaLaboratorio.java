@@ -47,6 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SalaLaboratorio.findByValorinversion", query = "SELECT s FROM SalaLaboratorio s WHERE s.valorinversion = :valorinversion")})
 public class SalaLaboratorio implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
+    private Collection<ReservaSala> reservaSalaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
     private Collection<ModuloLaboratorio> moduloLaboratorioCollection;
 
     private static final long serialVersionUID = 1L;
@@ -250,6 +252,15 @@ public class SalaLaboratorio implements Serializable {
 
     public void setModuloLaboratorioCollection(Collection<ModuloLaboratorio> moduloLaboratorioCollection) {
         this.moduloLaboratorioCollection = moduloLaboratorioCollection;
+    }
+
+    @XmlTransient
+    public Collection<ReservaSala> getReservaSalaCollection() {
+        return reservaSalaCollection;
+    }
+
+    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
+        this.reservaSalaCollection = reservaSalaCollection;
     }
 
 }
