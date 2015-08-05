@@ -5,18 +5,14 @@
  */
 package com.sirelab.controller.recursos_laboratorio;
 
-import com.sirelab.bo.interfacebo.recursos.GestionarRecursoGuiasLaboratorioBOInterface;
-import com.sirelab.entidades.Asignatura;
-import com.sirelab.entidades.Carrera;
-import com.sirelab.entidades.GuiaLaboratorio;
-import com.sirelab.entidades.PlanEstudios;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoManualesBOInterface;
+import com.sirelab.entidades.Manual;
 import com.sirelab.utilidades.Utilidades;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -33,53 +29,41 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerRegistrarGuiaLaboratorio implements Serializable {
+public class ControllerRegistrarManual implements Serializable {
 
     @EJB
-    GestionarRecursoGuiasLaboratorioBOInterface gestionarRecursoGuiaLaboratorioBO;
+    GestionarRecursoManualesBOInterface gestionarRecursoManualBO;
 
-    private String nuevoNombre, nuevoDescripcion;
+    private String nuevoNombre, nuevoTipo, nuevoUbicacion;
     private Part archivo;
-    private List<Carrera> listaCarreras;
-    private List<PlanEstudios> listaPlanEstudios;
-    private List<Asignatura> listaAsignaturas;
-    private Carrera nuevoCarrera;
-    private PlanEstudios nuevoPlanEstudio;
-    private boolean activarPlan;
-    private Asignatura nuevoAsignatura;
-    private boolean activarAsignatura;
-    private boolean validacionesNombre, validacionesDescripcion, validacionesArchivo;
-    private boolean validacionesCarrera, validacionesPlan, validacionesAsignatura;
+    private boolean validacionesNombre, validacionesTipo, validacionesArchivo, validacionesUbicacion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
-    private final String pathArchivo = "C:\\SIRELAB\\Guias Laboratorio\\";
+    private final String pathArchivo = "C:\\SIRELAB\\Manuales de Equipo\\";
     private String rutaArchivo;
+    private boolean activarUbicacion, activarArchivo;
 
-    public ControllerRegistrarGuiaLaboratorio() {
+    public ControllerRegistrarManual() {
     }
 
     @PostConstruct
     public void init() {
+        activarArchivo = true;
+        activarUbicacion = false;
         rutaArchivo = "";
         activarAceptar = false;
-        activarAsignatura = true;
-        activarPlan = true;
-        nuevoDescripcion = null;
-        nuevoAsignatura = null;
-        nuevoPlanEstudio = null;
+        nuevoTipo = "FISICO";
+        nuevoUbicacion = null;
         nuevoNombre = null;
-        nuevoCarrera = null;
         archivo = null;
-        validacionesDescripcion = false;
+        validacionesTipo = false;
         validacionesNombre = false;
         validacionesArchivo = false;
-        validacionesCarrera = false;
-        validacionesPlan = false;
-        validacionesAsignatura = false;
+        validacionesUbicacion = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -87,7 +71,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         BasicConfigurator.configure();
     }
 
-    public void validarNombreGuiaLaboratorio() {
+    public void validarNombreManual() {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                 validacionesNombre = false;
@@ -102,12 +86,30 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     }
 
-    public void validarDescripcionGuiaLaboratorio() {
-        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())) {
-            validacionesDescripcion = true;
+    public void validarUbicacionManual() {
+        if (Utilidades.validarNulo(nuevoUbicacion) && (!nuevoUbicacion.isEmpty())) {
+            validacionesUbicacion = true;
         } else {
-            validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción es obligatoria."));
+            validacionesUbicacion = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacion", new FacesMessage("El campo ubicación es obligatorio."));
+        }
+    }
+
+    public void actualizarTipo() {
+        if ("DIGITAL".equalsIgnoreCase(nuevoTipo)) {
+            activarUbicacion = true;
+            activarArchivo = false;
+            validacionesUbicacion = true;
+            nuevoUbicacion = null;
+            validacionesArchivo = false;
+            archivo = null;
+        } else {
+            validacionesArchivo = true;
+            archivo = null;
+            validacionesUbicacion = false;
+            activarArchivo = true;
+            activarUbicacion = false;
+            nuevoUbicacion = null;
         }
     }
 
@@ -121,7 +123,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
                 extension = rutaArchivoInicial.substring(i + 1);
             }
             if ("pdf".equals(extension)) {
-                GuiaLaboratorio registro = gestionarRecursoGuiaLaboratorioBO.consultarGuiaLaboratorioPorUbicacion(rutaArchivoInicial);
+                Manual registro = gestionarRecursoManualBO.consultarManualPorUbicacion(rutaArchivoInicial);
                 if (null == registro) {
                     validacionesArchivo = true;
                 } else {
@@ -138,57 +140,9 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         }
     }
 
-    public void actualizarCarreras() {
-        if (Utilidades.validarNulo(nuevoCarrera)) {
-            nuevoPlanEstudio = null;
-            listaPlanEstudios = gestionarRecursoGuiaLaboratorioBO.consultarPlanesEstidoPorCarrera(nuevoCarrera.getIdcarrera());
-            activarPlan = false;
-            validacionesCarrera = true;
-        } else {
-            validacionesCarrera = false;
-            validacionesPlan = false;
-            validacionesAsignatura = false;
-
-            listaPlanEstudios = null;
-            listaAsignaturas = null;
-
-            nuevoPlanEstudio = null;
-            nuevoAsignatura = null;
-
-            activarPlan = true;
-            activarAsignatura = true;
-        }
-    }
-
-    public void actualizarPlanEstudios() {
-        if (Utilidades.validarNulo(nuevoPlanEstudio)) {
-            nuevoAsignatura = null;
-            listaAsignaturas = gestionarRecursoGuiaLaboratorioBO.consultarAsignaturasPorPlanEstudio(nuevoPlanEstudio.getIdplanestudios());
-            activarAsignatura = false;
-            validacionesPlan = true;
-        } else {
-            validacionesPlan = false;
-            validacionesAsignatura = false;
-
-            listaAsignaturas = null;
-
-            nuevoAsignatura = null;
-
-            activarAsignatura = true;
-        }
-    }
-
-    public void actualizarAsignaturas() {
-        if (Utilidades.validarNulo(nuevoAsignatura)) {
-            validacionesAsignatura = true;
-        } else {
-            validacionesAsignatura = false;
-        }
-    }
-
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
-        if (validacionesDescripcion == false) {
+        if (validacionesTipo == false) {
             retorno = false;
         }
         if (validacionesArchivo == false) {
@@ -197,21 +151,15 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesAsignatura == false) {
-            retorno = false;
-        }
-        if (validacionesPlan == false) {
-            retorno = false;
-        }
-        if (validacionesCarrera == false) {
+        if (validacionesUbicacion == false) {
             retorno = false;
         }
         return retorno;
     }
 
-    public void registrarNuevoGuiaLaboratorio() {
+    public void registrarNuevoManual() {
         if (validarResultadosValidacion() == true) {
-            almacenarNuevoGuiaLaboratorioEnSistema();
+            almacenarNuevoManualEnSistema();
             limpiarFormulario();
             activarLimpiar = false;
             activarAceptar = true;
@@ -246,60 +194,52 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         }
     }
 
-    private void almacenarNuevoGuiaLaboratorioEnSistema() {
+    private void almacenarNuevoManualEnSistema() {
         try {
-            cargarGuiaAServidor();
-            GuiaLaboratorio guiaNuevo = new GuiaLaboratorio();
-            guiaNuevo.setNombreguia(nuevoNombre);
-            guiaNuevo.setDescripcion(nuevoDescripcion);
-            guiaNuevo.setUbicacionguia(rutaArchivo);
-            guiaNuevo.setAsignatura(nuevoAsignatura);
-            gestionarRecursoGuiaLaboratorioBO.crearGuiaLaboratorio(guiaNuevo);
+            Manual guiaNuevo = new Manual();
+            guiaNuevo.setNombremanual(nuevoNombre);
+            guiaNuevo.setTipomanual(nuevoTipo);
+            gestionarRecursoManualBO.crearManual(guiaNuevo);
+            if (activarArchivo == false) {
+                cargarGuiaAServidor();
+                guiaNuevo.setUbicacionmanual(rutaArchivo);
+            } else {
+                guiaNuevo.setUbicacionmanual(nuevoUbicacion);
+            }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema:  " + e.toString());
+            System.out.println("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString());
         }
     }
 
     public void limpiarFormulario() {
         rutaArchivo = "";
-        activarAsignatura = true;
-        activarPlan = true;
-        nuevoDescripcion = null;
+        activarArchivo = true;
+        activarUbicacion = false;
+        nuevoTipo = "FISICO";
         archivo = null;
         nuevoNombre = null;
-        nuevoAsignatura = null;
-        nuevoCarrera = null;
-        nuevoPlanEstudio = null;
-        validacionesDescripcion = false;
+        nuevoUbicacion = null;
+        validacionesTipo = false;
         validacionesArchivo = false;
         validacionesNombre = false;
-        validacionesAsignatura = false;
-        validacionesCarrera = false;
-        validacionesPlan = false;
+        validacionesUbicacion = false;
         mensajeFormulario = "";
     }
 
-    public void cancelarRegistroGuiaLaboratorio() {
+    public void cancelarRegistroManual() {
         rutaArchivo = "";
-        listaAsignaturas = null;
-        listaCarreras = null;
-        listaPlanEstudios = null;
-        nuevoDescripcion = null;
+        activarArchivo = true;
+        activarUbicacion = false;
+        nuevoTipo = "FISICO";
         archivo = null;
         nuevoNombre = null;
-        nuevoAsignatura = null;
-        nuevoCarrera = null;
-        nuevoPlanEstudio = null;
-        validacionesDescripcion = false;
+        nuevoUbicacion = null;
+        validacionesTipo = false;
         validacionesNombre = false;
         validacionesArchivo = false;
-        validacionesAsignatura = false;
-        validacionesCarrera = false;
-        validacionesPlan = false;
+        validacionesUbicacion = false;
         mensajeFormulario = "N/A";
-        activarAsignatura = true;
-        activarPlan = true;
         activarLimpiar = true;
         activarAceptar = false;
         colorMensaje = "black";
@@ -335,12 +275,20 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         this.nuevoNombre = nuevoNombre;
     }
 
-    public String getNuevoDescripcion() {
-        return nuevoDescripcion;
+    public String getNuevoTipo() {
+        return nuevoTipo;
     }
 
-    public void setNuevoDescripcion(String nuevoDescripcion) {
-        this.nuevoDescripcion = nuevoDescripcion;
+    public void setNuevoTipo(String nuevoTipo) {
+        this.nuevoTipo = nuevoTipo;
+    }
+
+    public String getNuevoUbicacion() {
+        return nuevoUbicacion;
+    }
+
+    public void setNuevoUbicacion(String nuevoUbicacion) {
+        this.nuevoUbicacion = nuevoUbicacion;
     }
 
     public Part getArchivo() {
@@ -349,73 +297,6 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     public void setArchivo(Part archivo) {
         this.archivo = archivo;
-    }
-
-    public List<Carrera> getListaCarreras() {
-        if (null == listaCarreras) {
-            listaCarreras = gestionarRecursoGuiaLaboratorioBO.consultarCarrerasRegistradas();
-        }
-        return listaCarreras;
-    }
-
-    public void setListaCarreras(List<Carrera> listaCarreras) {
-        this.listaCarreras = listaCarreras;
-    }
-
-    public List<PlanEstudios> getListaPlanEstudios() {
-        return listaPlanEstudios;
-    }
-
-    public void setListaPlanEstudios(List<PlanEstudios> listaPlanEstudios) {
-        this.listaPlanEstudios = listaPlanEstudios;
-    }
-
-    public List<Asignatura> getListaAsignaturas() {
-        return listaAsignaturas;
-    }
-
-    public void setListaAsignaturas(List<Asignatura> listaAsignaturas) {
-        this.listaAsignaturas = listaAsignaturas;
-    }
-
-    public Carrera getNuevoCarrera() {
-        return nuevoCarrera;
-    }
-
-    public void setNuevoCarrera(Carrera nuevoCarrera) {
-        this.nuevoCarrera = nuevoCarrera;
-    }
-
-    public PlanEstudios getNuevoPlanEstudio() {
-        return nuevoPlanEstudio;
-    }
-
-    public void setNuevoPlanEstudio(PlanEstudios nuevoPlanEstudio) {
-        this.nuevoPlanEstudio = nuevoPlanEstudio;
-    }
-
-    public boolean isActivarPlan() {
-        return activarPlan;
-    }
-
-    public void setActivarPlan(boolean activarPlan) {
-        this.activarPlan = activarPlan;
-    }
-
-    public Asignatura getNuevoAsignatura() {
-        return nuevoAsignatura;
-    }
-
-    public void setNuevoAsignatura(Asignatura nuevoAsignatura) {
-        this.nuevoAsignatura = nuevoAsignatura;
-    }
-
-    public boolean isActivarAsignatura() {
-        return activarAsignatura;
-    }
-
-    public void setActivarAsignatura(boolean activarAsignatura) {
-        this.activarAsignatura = activarAsignatura;
     }
 
     public String getMensajeFormulario() {
@@ -456,6 +337,30 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public String getRutaArchivo() {
+        return rutaArchivo;
+    }
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
+    }
+
+    public boolean isActivarUbicacion() {
+        return activarUbicacion;
+    }
+
+    public void setActivarUbicacion(boolean activarUbicacion) {
+        this.activarUbicacion = activarUbicacion;
+    }
+
+    public boolean isActivarArchivo() {
+        return activarArchivo;
+    }
+
+    public void setActivarArchivo(boolean activarArchivo) {
+        this.activarArchivo = activarArchivo;
     }
 
 }

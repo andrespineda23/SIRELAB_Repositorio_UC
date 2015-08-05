@@ -70,27 +70,35 @@
                                     <div class="row col-md-12">
                                         <fieldset style="border: black;border-radius: 10px; color: black"> 
                                             <legend class="h5">I. Basica</legend>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="parametroNombre">
                                                         Nombre Guía
                                                     </label>
-                                                    <h:inputText maxlength="100" value="#{controllerAdministrarGuiasLaboratorio.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                    <h:inputText maxlength="100" value="#{controllerAdministrarManuales.parametroNombre}" class="form-control" id="parametroNombre" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="parametroAsignatura">
-                                                        Asignatura
+                                                    <label for="parametroTipo">
+                                                        Tipo
                                                     </label>
-                                                    <h:selectOneMenu value="#{controllerAdministrarGuiasLaboratorio.parametroAsignatura}"
+                                                    <h:selectOneMenu value="#{controllerAdministrarManuales.parametroTipo}"
                                                                      class="form-control"
-                                                                     id="parametroAsignatura">
-                                                        <f:selectItem itemLabel="Seleccione Asignatura" itemValue="null" />
-                                                        <f:selectItems value="#{controllerAdministrarGuiasLaboratorio.listaAsignaturas}" var="asignatura"
-                                                                       itemLabel="#{asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
-                                                        <f:converter converterId="ConverterGenerico" />
+                                                                     id="parametroTipo">
+                                                        <f:selectItem itemLabel="Seleccione Tipo" itemValue="null" />
+                                                        <f:selectItem itemLabel="DIGITAL" itemValue="DIGITAL" />
+                                                        <f:selectItem itemLabel="FISICO" itemValue="FISICO" />
+                                                        <f:ajax event="blur" listener="#{controllerAdministrarManuales.actualizarTipo()}" execute="parametroTipo" render="parametroUbicacion" />
                                                     </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="parametroUbicacion">
+                                                        Ubicación
+                                                    </label>
+                                                    <h:inputText maxlength="256" value="#{controllerAdministrarManuales.parametroUbicacion}" disabled="#{controllerAdministrarManuales.activarUbicacion}" class="form-control" id="parametroUbicacion" />
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -99,17 +107,17 @@
                                 <br></br>
                                 <div class="col-md-12">
                                     <div class="col-md-2">
-                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarGuiasLaboratorio.cantidadRegistros}"/>
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarManuales.cantidadRegistros}"/>
                                     </div>
                                     <div class="col-md-8">
                                     </div>
                                     <div class="col-md-1">
-                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarGuiasLaboratorio.buscarGuiasLaboratorioPorParametros()}">
+                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarManuales.buscarManualesPorParametros()}">
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>
                                     <div class="col-md-1">
-                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarManuales.limpiarProcesoBusqueda()}" class="btn btn-default right" >
                                             <f:ajax execute="@form" render="formularioGeneral" />
                                         </h:commandButton>
                                     </div>
@@ -122,35 +130,41 @@
                                     <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-striped table-hover table-responsive" 
-                                                     value="#{controllerAdministrarGuiasLaboratorio.listaGuiasLaboratorioTabla}">
+                                                     value="#{controllerAdministrarManuales.listaManualesTabla}">
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Nombre"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.nombreguia}"/>
+                                                <h:outputText value="#{item.nombremanual}"/>
                                             </h:column>  
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="Asignatura"/>
+                                                    <h:outputText value="Nombre"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.asignatura.nombreasignatura}"/>
-                                            </h:column>
+                                                <h:outputText value="#{item.tipomanual}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Ubicación"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.ubicacionmanual}"/>
+                                            </h:column>  
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Detalles"/>
                                                 </f:facet>
-                                                <h:commandLink value="Ver" action="detalles_guialaboratorio" actionListener="#{controllerDetallesGuiaLaboratorio.recibirIDGuiasLaboratorioDetalles(item.idguialaboratorio)}"/>
+                                                <h:commandLink value="Ver" action="detalles_manual" actionListener="#{controllerDetallesManual.recibirIDManualesDetalles(item.idmanual)}"/>
                                             </h:column>
                                             <f:facet name="footer">
                                                 <nav>
                                                     <ul class="pager">
                                                         <li>
-                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarGuiasLaboratorio.cargarPaginaAnteriorGuiaLaboratorio()}" disabled="#{controllerAdministrarGuiasLaboratorio.bloquearPagAntGuiaLaboratorio}">
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarManuales.cargarPaginaAnteriorManual()}" disabled="#{controllerAdministrarManuales.bloquearPagAntManual}">
                                                                 <f:ajax execute="@form" render="formularioGeneral" />
                                                             </h:commandLink>
                                                         </li>
                                                         <li>
-                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarGuiasLaboratorio.cargarPaginaSiguienteGuiaLaboratorio()}" disabled="#{controllerAdministrarGuiasLaboratorio.bloquearPagSigGuiaLaboratorio}">
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarManuales.cargarPaginaSiguienteManual()}" disabled="#{controllerAdministrarManuales.bloquearPagSigManual}">
                                                                 <f:ajax execute="@form" render="formularioGeneral" />
                                                             </h:commandLink>
                                                         </li>
@@ -167,11 +181,11 @@
                 <br></br>
                 <div class="row">
                     <div class="col-md-1">
-                        <h:commandButton value="Nueva Guía" class="btn btn-success" action="registrar_guialaboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}"/>
+                        <h:commandButton value="Nueva Manual" class="btn btn-success" action="registrar_manual" actionListener="#{controllerAdministrarManuales.limpiarProcesoBusqueda()}"/>
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">
-                        <h:commandButton value="Atras" action="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
+                        <h:commandButton value="Atras" action="#{controllerAdministrarManuales.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                     </div>
                 </div>
             </div>

@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GuiaLaboratorio.findByDescripcion", query = "SELECT g FROM GuiaLaboratorio g WHERE g.descripcion = :descripcion"),
     @NamedQuery(name = "GuiaLaboratorio.findByUbicacionguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.ubicacionguia = :ubicacionguia")})
 public class GuiaLaboratorio implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -84,19 +85,25 @@ public class GuiaLaboratorio implements Serializable {
     }
 
     public String getNombreguia() {
+        if (null != nombreguia) {
+            return nombreguia.toUpperCase();
+        }
         return nombreguia;
     }
 
     public void setNombreguia(String nombreguia) {
-        this.nombreguia = nombreguia;
+        this.nombreguia = nombreguia.toUpperCase();
     }
 
     public String getDescripcion() {
+        if (null != descripcion) {
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public String getUbicacionguia() {
@@ -139,5 +146,5 @@ public class GuiaLaboratorio implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.GuiaLaboratorio[ idguialaboratorio=" + idguialaboratorio + " ]";
     }
-    
+
 }

@@ -1119,6 +1119,42 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
+            <from-outcome>administrar_manuales</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_iniciales/inicio_laboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_manuales</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_laboratorista</from-outcome>
+            <to-view-id>/xhtml/paginas_iniciales/inicio_laboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
             <from-outcome>administrar_proveedores</from-outcome>
             <to-view-id>/xhtml/recursos_laboratorio/administrar_proveedores.xhtml</to-view-id>
             <redirect />
@@ -1417,6 +1453,42 @@
         <navigation-case>
             <from-outcome>administrar_guiaslaboratorio</from-outcome>
             <to-view-id>/xhtml/recursos_laboratorio/administrar_guiaslaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_manual</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/registrar_manual.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/registrar_manual.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_manuales</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_manual</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/detalles_manual.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursos_laboratorio/detalles_manual.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_manuales</from-outcome>
+            <to-view-id>/xhtml/recursos_laboratorio/administrar_manuales.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

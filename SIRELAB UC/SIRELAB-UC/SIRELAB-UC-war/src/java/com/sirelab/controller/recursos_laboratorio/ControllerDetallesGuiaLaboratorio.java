@@ -260,12 +260,14 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
 
     private void almacenarModificacionGuiaLaboratorioEnSistema() {
         try {
+            guiaLaboratorioDetalle.setDescripcion(editarDescripcion);
             guiaLaboratorioDetalle.setNombreguia(editarNombre);
             guiaLaboratorioDetalle.setAsignatura(editarAsignatura);
-            gestionarRecursoGuiasLaboratorioBO.modificarGuiaLaboratorio(guiaLaboratorioDetalle);
             if (modificacionArchivo == true) {
                 cargarGuiaAServidor();
+                guiaLaboratorioDetalle.setUbicacionguia(rutaArchivo);
             }
+            gestionarRecursoGuiasLaboratorioBO.modificarGuiaLaboratorio(guiaLaboratorioDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema : " + e.toString());
