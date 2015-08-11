@@ -251,7 +251,7 @@ public class ControllerDetallesModulo implements Serializable {
 
     public void validarDetalleModulo() {
         if (Utilidades.validarNulo(detalleModuloLaboratorio) && (!detalleModuloLaboratorio.isEmpty())) {
-            if (!Utilidades.validarCaracterString(detalleModuloLaboratorio)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(detalleModuloLaboratorio)) {
                 validacionesDetalle = false;
                 FacesContext.getCurrentInstance().addMessage("form:detalleModuloLaboratorio", new FacesMessage("El detalle ingresado es incorrecto."));
             } else {

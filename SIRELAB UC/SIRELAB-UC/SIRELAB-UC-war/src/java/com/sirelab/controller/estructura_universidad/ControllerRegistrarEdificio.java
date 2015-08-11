@@ -69,7 +69,7 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     public void validarDescripcionEdificio() {
         if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())) {
-            if (!Utilidades.validarCaracterString(nuevoDescripcion)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) {
                 validacionesDescripcion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
             } else {

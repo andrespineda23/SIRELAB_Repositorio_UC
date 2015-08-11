@@ -216,6 +216,11 @@ public class ControllerAdministrarEdificios implements Serializable {
         inicializarFiltros();
     }
 
+    public String paginaDetalles() {
+        limpiarDatos();
+        return "detalles_edificio";
+    }
+
     /*
      //EXPORTAR
      public void exportPDF() throws IOException {

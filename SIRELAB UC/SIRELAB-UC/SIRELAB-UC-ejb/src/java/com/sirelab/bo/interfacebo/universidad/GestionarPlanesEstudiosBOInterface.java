@@ -33,6 +33,6 @@ public interface GestionarPlanesEstudiosBOInterface {
 
     public PlanEstudios obtenerPlanEstudiosPorIDPlanEstudio(BigInteger idPlanEstudio);
 
-    public PlanEstudios obtenerPlanEstudioPorCodigoYCarrera(String codigo, BigInteger carrera);
+    public PlanEstudios obtenerPlanEstudioPorCodigo(String codigo);
 
 }

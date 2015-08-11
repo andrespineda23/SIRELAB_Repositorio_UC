@@ -126,7 +126,7 @@ public class ControllerRegistrarModulo implements Serializable {
 
     public void validarDetalleModulo() {
         if (Utilidades.validarNulo(nuevoDetalleModulo) && (!nuevoDetalleModulo.isEmpty())) {
-            if (!Utilidades.validarCaracterString(nuevoDetalleModulo)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDetalleModulo)) {
                 validacionesDetalle = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto."));
             } else {
@@ -188,7 +188,7 @@ public class ControllerRegistrarModulo implements Serializable {
 
     public void actualizarDepartamentos() {
         if (Utilidades.validarNulo(nuevoDepartamentoModulo)) {
-            nuevoDepartamentoModulo = new Departamento();
+            nuevoLaboratorioModulo = new Laboratorio();
             listaLaboratorios = gestionarPlantaModulosBO.consultarLaboratoriosPorIDDepartamento(nuevoDepartamentoModulo.getIddepartamento());
             activarNuevoLaboratorio = false;
             validacionesDepartamento = true;

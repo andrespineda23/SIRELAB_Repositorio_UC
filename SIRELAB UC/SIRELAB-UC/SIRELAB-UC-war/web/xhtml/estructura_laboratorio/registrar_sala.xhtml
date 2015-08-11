@@ -99,7 +99,7 @@
                                 <h6><h:message id="msnCostoSala" for="nuevoCostoSala" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
-                                <strong><h:outputText value="Capacidad Maxima*"/></strong>
+                                <strong><h:outputText value="Capacidad Maxima(Cantidad Usuarios)*"/></strong>
                                 <h:inputText maxlength="2"  value="#{controllerRegistrarSala.nuevoCapacidadSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoCapacidadSala" requiredMessage="El campo Capacidada es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCapacidadSala()}" execute="nuevoCapacidadSala" render="nuevoCapacidadSala msnCapacidadSala" />
                                 </h:inputText>
@@ -112,29 +112,9 @@
                                 </h:inputText>
                                 <h6><h:message id="msnDescripcionSala" for="nuevoDescripcionSala" style="color: red"/></h6>
                             </div>
-                            <fieldset>
-                                <legend class="h5 text-info">Datos Opcionales</legend>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Costo Inversión"/></strong>
-                                    <div class="input-group">
-                                        <h:inputText maxlength="12"  value="#{controllerRegistrarSala.nuevoInversionSala}" disabled="#{controllerRegistrarSala.activarCasillas}" class="form-control" id="nuevoInversionSala" >
-                                            <f:ajax event="blur" listener="#{controllerRegistrarSala.validarInversionSala()}" execute="nuevoInversionSala" render="nuevoInversionSala msnInversionSala" />
-                                        </h:inputText>
-                                        <span class="input-group-addon">$</span>
-                                    </div>
-                                    <h6><h:message id="msnInversionSala" for="nuevoInversionSala" style="color: red"/></h6>
-                                </div>
-                            </fieldset>
                         </fieldset>
                         <fieldset>
                             <legend class="text-info">Información Universidad</legend>
-                            <div class="form-group">
-                                <strong><h:outputText value="Ubicación/Piso Sala*"/></strong>
-                                <h:inputText maxlength="45" disabled="#{controllerRegistrarSala.activarCasillas}" value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarUbicacionSala()}" execute="nuevoUbicacionSala" render="nuevoUbicacionSala msnUbicacionSala" />
-                                </h:inputText>
-                                <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
-                            </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Departamento*"/></strong>
                                 <h:selectOneMenu value="#{controllerRegistrarSala.nuevoDepartamentoSala}"
@@ -199,6 +179,26 @@
                                     <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarEdificios()}" execute="nuevoSedeSala" render="@this msnEdificioSala"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="nuevoEdificioSala" style="color: red"/></h6>
+                            </div>
+                             <div class="form-group">
+                                <strong><h:outputText value="Ubicación/Piso Sala*"/></strong>
+                                <h:inputText maxlength="45" disabled="#{controllerRegistrarSala.activarCasillas}" value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarSala.validarUbicacionSala()}" execute="nuevoUbicacionSala" render="nuevoUbicacionSala msnUbicacionSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="h5 text-info">Datos Opcionales</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Costo Inversión"/></strong>
+                                <div class="input-group">
+                                    <h:inputText maxlength="12"  value="#{controllerRegistrarSala.nuevoInversionSala}" disabled="#{controllerRegistrarSala.activarCasillas}" class="form-control" id="nuevoInversionSala" >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarSala.validarInversionSala()}" execute="nuevoInversionSala" render="nuevoInversionSala msnInversionSala" />
+                                    </h:inputText>
+                                    <span class="input-group-addon">$</span>
+                                </div>
+                                <h6><h:message id="msnInversionSala" for="nuevoInversionSala" style="color: red"/></h6>
                             </div>
                         </fieldset>
                         <hr class="intro-divider"/>

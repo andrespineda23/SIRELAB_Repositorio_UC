@@ -115,7 +115,7 @@
                                     <h6><h:message id="msnInversionModulo" for="inversionModuloLaboratorio" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Capacidad Modulo"/></strong>
+                                    <strong><h:outputText value="Capacidad Modulo (Cantidad Usuarios)"/></strong>
                                     <h:inputText maxlength="2" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.capacidadModuloLaboratorio}" class="form-control" id="capacidadModuloLaboratorio" >
                                         <f:ajax event="blur" listener="#{controllerDetallesModulo.validarCapacidadModulo()}" execute="capacidadModuloLaboratorio" render="capacidadModuloLaboratorio msnCapacidadModulo" />
                                     </h:inputText>
@@ -126,14 +126,14 @@
                         <fieldset>
                             <legend class="text-info">Información Laboratorio</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <strong><h:outputText value="Departamento*"/></strong>
                                 <h:selectOneMenu value="#{controllerDetallesModulo.departamentoModuloLaboratorio}"
                                                  class="form-control" readonly="#{controllerDetallesModulo.activarEditar}"
                                                  id="departamentoSalaLaboratorio">
                                     <f:selectItems value="#{controllerDetallesModulo.listaDepartamentos}" var="departamento"
                                                    itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarDepartamentos()}" execute="departamentoModuloLaboratorio" render="@this laboratorioModuloLaboratorio laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnDepartamentoModulo"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarDepartamentos()}" execute="departamentoModuloLaboratorio" render="laboratorioModuloLaboratorio laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnDepartamentoModulo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnDepartamentoModulo" for="departamentoSalaLaboratorio" style="color: red"/></h6>
                             </div>
@@ -145,7 +145,7 @@
                                     <f:selectItems value="#{controllerDetallesModulo.listaLaboratorios}" var="laboratorio"
                                                    itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratorios()}" execute="laboratorioModuloLaboratorio" render="@this laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnLaboratorioModulo"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratorios()}" execute="laboratorioModuloLaboratorio" render="laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnLaboratorioModulo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnLaboratorioModulo" for="laboratorioModuloLaboratorio" style="color: red"/></h6>
                             </div>
@@ -157,7 +157,7 @@
                                     <f:selectItems value="#{controllerDetallesModulo.listaLaboratoriosPorAreas}" var="area"
                                                    itemLabel="#{area.areaprofundizacion.nombrearea}" itemValue="#{area}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratoriosPorAreas()}" execute="laboratorioPorAreaModuloLaboratorio" render="@this salaModuloLaboratorio msnLaboratorioPorAreaModulo"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratoriosPorAreas()}" execute="laboratorioPorAreaModuloLaboratorio" render="salaModuloLaboratorio msnLaboratorioPorAreaModulo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnLaboratorioPorAreaModulo" for="laboratorioPorAreaModuloLaboratorio" style="color: red"/></h6>
                             </div>
@@ -170,7 +170,7 @@
                                     <f:selectItems value="#{controllerDetallesModulo.listaSalasLaboratorio}" var="sala"
                                                    itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarSalasLaboratorio()}" execute="salaModuloLaboratorio" render="@this msnSalaLaboratorioModulo"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarSalasLaboratorio()}" execute="salaModuloLaboratorio" render="msnSalaLaboratorioModulo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnSalaLaboratorioModulo" for="salaModuloLaboratorio" style="color: red"/></h6>
                             </div>

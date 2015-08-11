@@ -77,7 +77,7 @@ public final class Utilidades {
     
     public static boolean validarDirecciones(String str) {
         boolean respuesta = false;
-        Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[0-9]|[-]|[.]|[#]|\\s)+");
+        Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[0-9]|[-]|[.]|[#]|[o]|\\s)+");
         Matcher matcher = pattern.matcher(str);
         respuesta = matcher.matches();
         return respuesta;

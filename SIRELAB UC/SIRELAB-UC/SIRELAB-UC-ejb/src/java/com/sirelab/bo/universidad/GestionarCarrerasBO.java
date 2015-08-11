@@ -90,9 +90,9 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
     }
 
     @Override
-    public Carrera obtenerCarreraPorCodigoYDepartamento(String codigo, BigInteger departamento) {
+    public Carrera obtenerCarreraPorCodigo(String codigo) {
         try {
-            Carrera registro = carreraDAO.buscarCarreraPorCodigoYDepartamento(codigo, departamento);
+            Carrera registro = carreraDAO.buscarCarreraPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarCarrerasBO obtenerCarreraPorCodigoYDepartamento : " + e.toString());

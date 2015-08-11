@@ -99,7 +99,7 @@
                                 <h6><h:message id="msnCostoSala" for="costoSalaLaboratorio" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
-                                <strong><h:outputText value="Capacidad Maxima*"/></strong>
+                                <strong><h:outputText value="Capacidad Maxima (Cantidad Usuarios)*"/></strong>
                                 <h:inputText maxlength="2"  value="#{controllerDetallesSala.capacidadSalaLaboratorio}" required="true" class="form-control" id="capacidadSalaLaboratorio" requiredMessage="El campo Capacidada es obligatorio." readonly="#{controllerDetallesSala.activarEditar}">
                                     <f:ajax event="blur" listener="#{controllerDetallesSala.validarCapacidadSala()}" execute="capacidadSalaLaboratorio" render="capacidadSalaLaboratorio msnCapacidadSala" />
                                 </h:inputText>
@@ -116,29 +116,9 @@
                                 <strong><h:outputText value="Estado*"/></strong>
                                 <h:inputText readonly="true" value="#{controllerDetallesSala.salaLaboratorioDetalles.strEstado}" required="true" class="form-control" id="estadoSalaLaboratorio" />
                             </div>
-                            <fieldset>
-                                <legend class="h5 text-info">Datos Opcionales</legend>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Costo Inversión"/></strong>
-                                    <div class="input-group">
-                                        <h:inputText maxlength="12" readonly="#{controllerDetallesSala.activarEditar}" value="#{controllerDetallesSala.inversionSalaLaboratorio}" class="form-control" id="inversionSalaLaboratorio" >
-                                            <f:ajax event="blur" listener="#{controllerDetallesSala.validarInversionSala()}" execute="inversionSalaLaboratorio" render="inversionSalaLaboratorio msnInversionSala" />
-                                        </h:inputText>
-                                        <span class="input-group-addon">$</span>
-                                    </div>
-                                    <h6><h:message id="msnInversionSala" for="inversionSalaLaboratorio" style="color: red"/></h6>
-                                </div>
-                            </fieldset>
                         </fieldset>
                         <fieldset>
                             <legend class="text-info">Información Universidad</legend>
-                            <div class="form-group">
-                                <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerDetallesSala.ubicacionSalaLaboratorio}" required="true" class="form-control" id="ubicacionSalaLaboratorio" readonly="#{controllerDetallesSala.activarEditar}" requiredMessage="El campo Ubicacion es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesSala.validarUbicacionSala()}" execute="ubicacionSalaLaboratorio" render="ubicacionSalaLaboratorio msnUbicacionSala" />
-                                </h:inputText>
-                                <h6><h:message id="msnUbicacionSala" for="ubicacionSalaLaboratorio" style="color: red"/></h6>
-                            </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Departamento*"/></strong>
                                 <h:selectOneMenu value="#{controllerDetallesSala.departamentoSalaLaboratorio}"
@@ -200,6 +180,26 @@
                                     <f:ajax event="change" listener="#{controllerDetallesSala.actualizarEdificios()}" execute="edificioSalaLaboratorio" render="@this msnEdificioSala"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="edificioSalaLaboratorio" style="color: red"/></h6>
+                            </div>
+                             <div class="form-group">
+                                <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
+                                <h:inputText maxlength="45"  value="#{controllerDetallesSala.ubicacionSalaLaboratorio}" required="true" class="form-control" id="ubicacionSalaLaboratorio" readonly="#{controllerDetallesSala.activarEditar}" requiredMessage="El campo Ubicacion es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesSala.validarUbicacionSala()}" execute="ubicacionSalaLaboratorio" render="ubicacionSalaLaboratorio msnUbicacionSala" />
+                                </h:inputText>
+                                <h6><h:message id="msnUbicacionSala" for="ubicacionSalaLaboratorio" style="color: red"/></h6>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="h5 text-info">Datos Opcionales</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Costo Inversión"/></strong>
+                                <div class="input-group">
+                                    <h:inputText maxlength="12" readonly="#{controllerDetallesSala.activarEditar}" value="#{controllerDetallesSala.inversionSalaLaboratorio}" class="form-control" id="inversionSalaLaboratorio" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesSala.validarInversionSala()}" execute="inversionSalaLaboratorio" render="inversionSalaLaboratorio msnInversionSala" />
+                                    </h:inputText>
+                                    <span class="input-group-addon">$</span>
+                                </div>
+                                <h6><h:message id="msnInversionSala" for="inversionSalaLaboratorio" style="color: red"/></h6>
                             </div>
                         </fieldset>
                     </div>

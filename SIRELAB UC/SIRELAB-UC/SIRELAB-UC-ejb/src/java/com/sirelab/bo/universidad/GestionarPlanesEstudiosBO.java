@@ -105,12 +105,12 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
     }
 
     @Override
-    public PlanEstudios obtenerPlanEstudioPorCodigoYCarrera(String codigo, BigInteger carrera) {
+    public PlanEstudios obtenerPlanEstudioPorCodigo(String codigo) {
         try {
-            PlanEstudios registro = planEstudiosDAO.buscarPlanEstudiosPorCodigoYCarrera(codigo, carrera);
+            PlanEstudios registro = planEstudiosDAO.buscarPlanEstudiosPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlanesEstudiosBO obtenerPlanEstudioPorCodigoYCarrera : " + e.toString());
+            System.out.println("Error GestionarPlanesEstudiosBO obtenerPlanEstudioPorCodigo : " + e.toString());
             return null;
         }
     }

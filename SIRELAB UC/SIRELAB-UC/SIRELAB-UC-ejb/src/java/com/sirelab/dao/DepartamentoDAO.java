@@ -84,9 +84,9 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public Departamento buscarDepartamentoPorCodigo(String codigo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.codigodepartamento=:codigo");
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE UPPER(p.codigodepartamento)=:codigo");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("codigo", codigo);
+            query.setParameter("codigo", codigo.toUpperCase());
             Departamento registro = (Departamento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
@@ -99,9 +99,9 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public Departamento buscarDepartamentoPorNombre(String nombre) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.nombredepartamento=:nombre");
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE UPPER(p.nombredepartamento)=:nombre");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("nombre", nombre);
+            query.setParameter("nombre",  nombre.toUpperCase());
             Departamento registro = (Departamento) query.getSingleResult();
             return registro;
         } catch (Exception e) {

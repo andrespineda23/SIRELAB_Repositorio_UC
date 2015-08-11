@@ -200,7 +200,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
-        PlanEstudios planEstudios = gestionarPlanesEstudiosBO.obtenerPlanEstudioPorCodigoYCarrera(editarCodigo, editarDepartamento.getIddepartamento());
+        PlanEstudios planEstudios = gestionarPlanesEstudiosBO.obtenerPlanEstudioPorCodigo(editarCodigo);
         if (null != planEstudios) {
             if (!planEstudiosDetalles.getIdplanestudios().equals(planEstudios.getIdplanestudios())) {
                 retorno = false;
@@ -219,7 +219,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
                     colorMensaje = "red";
-                    mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el departamento seleccionado.";
+                    mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
                 }
             } else {
                 colorMensaje = "red";

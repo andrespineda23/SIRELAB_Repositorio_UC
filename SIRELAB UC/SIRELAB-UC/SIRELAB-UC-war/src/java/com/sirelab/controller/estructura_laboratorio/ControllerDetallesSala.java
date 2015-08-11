@@ -156,7 +156,7 @@ public class ControllerDetallesSala implements Serializable {
 
     public void validarNombreSala() {
         if (Utilidades.validarNulo(nombreSalaLaboratorio) && (!nombreSalaLaboratorio.isEmpty())) {
-            if (!Utilidades.validarCaracterString(nombreSalaLaboratorio)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nombreSalaLaboratorio)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre ingresado es incorrecto."));
             } else {

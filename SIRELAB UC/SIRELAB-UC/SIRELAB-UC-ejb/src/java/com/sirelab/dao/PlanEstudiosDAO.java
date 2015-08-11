@@ -170,11 +170,6 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
                                 .append(") Like :parametroCodigo");
                         camposFiltro++;
                     }
-                    if ("parametroCodigo".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "departamento.iddepartamento");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
                     if ("parametroCarrera".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "carrera.idcarrera");
                         wheres.append("= :").append(entry.getKey());

@@ -153,7 +153,7 @@
                                                 <f:facet name="header">
                                                     <h:outputText value="Detalles"/>
                                                 </f:facet>
-                                                <h:commandLink value="Ver" action="detalles_edificio" actionListener="#{controllerDetallesEdificio.recibirIDEdificiosDetalles(item.idedificio)}"/>
+                                                <h:commandLink value="Ver" action="#{controllerAdministrarEdificios.paginaDetalles()}" actionListener="#{controllerDetallesEdificio.recibirIDEdificiosDetalles(item.idedificio)}"/>
                                             </h:column>
                                             <f:facet name="footer">
                                                 <nav>
@@ -181,7 +181,7 @@
                 <br></br>
                 <div class="row">
                     <div class="col-md-1">
-                        <h:commandButton value="Nuevo Edificio" class="btn btn-success" actionListener="#{controllerAdministrarEdificios.limpiarProcesoBusqueda()}" action="registrar_edificio"/>
+                        <h:commandButton value="Nuevo Edificio" class="btn btn-success" actionListener="#{controllerAdministrarEdificios.limpiarDatos()}" action="registrar_edificio"/>
                     </div>
                     <div class="col-md-10"></div>
                     <div class="col-md-1">

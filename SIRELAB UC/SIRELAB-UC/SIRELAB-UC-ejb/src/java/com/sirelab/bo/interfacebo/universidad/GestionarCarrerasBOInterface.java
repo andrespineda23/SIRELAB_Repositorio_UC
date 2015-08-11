@@ -30,5 +30,5 @@ public interface GestionarCarrerasBOInterface {
 
     public Carrera obtenerCarreraPorIDCarrera(BigInteger idCarrera);
 
-    public Carrera obtenerCarreraPorCodigoYDepartamento(String codigo, BigInteger departamento);
+    public Carrera obtenerCarreraPorCodigo(String codigo);
 }

@@ -159,7 +159,7 @@ public class ControllerRegistrarCarrera implements Serializable {
 
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
-        Carrera carrera = gestionarCarrerasBO.obtenerCarreraPorCodigoYDepartamento(nuevoCodigo, nuevoDepartamento.getIddepartamento());
+        Carrera carrera = gestionarCarrerasBO.obtenerCarreraPorCodigo(nuevoCodigo);
         if (null != carrera) {
             retorno = false;
         }
@@ -178,7 +178,7 @@ public class ControllerRegistrarCarrera implements Serializable {
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
-                mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el departamento seleccionado.";
+                mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
             colorMensaje = "red";

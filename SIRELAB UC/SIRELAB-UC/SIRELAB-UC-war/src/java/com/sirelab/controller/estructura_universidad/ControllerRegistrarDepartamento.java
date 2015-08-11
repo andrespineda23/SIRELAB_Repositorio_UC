@@ -78,20 +78,22 @@ public class ControllerRegistrarDepartamento implements Serializable {
 
     public void validarCodigoDepartamento() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
+            if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(nuevoCodigo);
+                System.out.println("registro : "+registro);
                 if (null != registro) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El nombre ingresado es incorrectp."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado esta registrado."));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio."));
         }
     }
 

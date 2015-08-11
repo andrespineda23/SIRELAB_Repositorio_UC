@@ -107,7 +107,7 @@ public class ControllerDetallesDepartamento implements Serializable {
                     }
                 }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo ingresado es incorrecto."));
             }
         } else {
