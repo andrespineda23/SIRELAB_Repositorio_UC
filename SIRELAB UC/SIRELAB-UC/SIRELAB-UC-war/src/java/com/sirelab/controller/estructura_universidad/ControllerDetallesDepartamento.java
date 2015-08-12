@@ -81,7 +81,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     }
 
     public void validarNombreDepartamento() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -95,7 +95,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     }
 
     public void validarCodigoDepartamento() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(editarCodigo);
                 if (null != registro) {

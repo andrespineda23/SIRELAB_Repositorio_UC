@@ -84,7 +84,7 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
         if ((Utilidades.validarNulo(parametroAsignatura) == true)) {

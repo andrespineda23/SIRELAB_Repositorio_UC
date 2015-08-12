@@ -78,7 +78,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarNombreAdministrador() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nuevoNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -93,7 +93,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarApellidoAdministrador() {
-        if (Utilidades.validarNulo(nuevoApellido) && (!nuevoApellido.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoApellido) && (!nuevoApellido.isEmpty())  && (nuevoApellido.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nuevoApellido)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido ingresado es incorrecto."));
@@ -107,7 +107,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarCorreoAdministrador() {
-        if (Utilidades.validarNulo(nuevoCorreo) && (!nuevoCorreo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCorreo) && (!nuevoCorreo.isEmpty())  && (nuevoCorreo.trim().length() > 0)) {
             String correoAdministrador = nuevoCorreo + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correoAdministrador)) {
                 Persona registro = administrarAdministradoresBO.obtenerAdministradorPorCorreo(nuevoCorreo);
@@ -128,7 +128,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarIdentificacionAdministrador() {
-        if (Utilidades.validarNulo(nuevoDocumento) && (!nuevoDocumento.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoDocumento) && (!nuevoDocumento.isEmpty())  && (nuevoDocumento.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(nuevoDocumento)) {
                 Persona registro = administrarAdministradoresBO.obtenerAdministradorPorDocumento(nuevoDocumento);
                 if (null == registro) {
@@ -149,7 +149,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void validarDatosNumericosAdministrador(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(nuevoTelefono1) && (!nuevoTelefono1.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoTelefono1) && (!nuevoTelefono1.isEmpty())  && (nuevoTelefono1.trim().length() > 0)) {
                 if ((Utilidades.isNumber(nuevoTelefono1)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -158,7 +158,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(nuevoTelefono2) && (!nuevoTelefono2.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoTelefono2) && (!nuevoTelefono2.isEmpty())  && (nuevoTelefono2.trim().length() > 0)) {
                 if ((Utilidades.isNumber(nuevoTelefono2)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -170,7 +170,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarDireccionAdministrador() {
-        if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty())  && (nuevoDireccion.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(nuevoDireccion)) {
                 validacionesDireccion = true;
             } else {
@@ -181,7 +181,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarContraseniaAdministrador() {
-        if ((Utilidades.validarNulo(nuevoContrasenia)) && (!nuevoContrasenia.isEmpty())) {
+        if ((Utilidades.validarNulo(nuevoContrasenia)) && (!nuevoContrasenia.isEmpty())  && (nuevoContrasenia.trim().length() > 0)) {
             validacionesPassw = true;
         } else {
             FacesContext.getCurrentInstance().addMessage("form:nuevoContrasenia", new FacesMessage("La contraseña es obligatoria."));
@@ -191,7 +191,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void validarContraseniaConfirmaAdministrador() {
         if ((Utilidades.validarNulo(nuevoContrasenia)) && (Utilidades.validarNulo(nuevoContraseniaConfirma))
-                && (!nuevoContrasenia.isEmpty()) && (!nuevoContraseniaConfirma.isEmpty())) {
+                && (!nuevoContrasenia.isEmpty()) && (!nuevoContraseniaConfirma.isEmpty())  && (nuevoContraseniaConfirma.trim().length() > 0)) {
             if (nuevoContrasenia.equals(nuevoContraseniaConfirma)) {
                 validacionesPassw2 = true;
             } else {
@@ -205,7 +205,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarUsuarioAdministrador() {
-        if (Utilidades.validarNulo(nuevoUsuario) && (!nuevoUsuario.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoUsuario) && (!nuevoUsuario.isEmpty())  && (nuevoUsuario.trim().length() > 0)) {
             Persona registro = administrarAdministradoresBO.obtenerAdministradorPorUsuario(nuevoUsuario);
             if (null == registro) {
                 validacionesUsuario = true;

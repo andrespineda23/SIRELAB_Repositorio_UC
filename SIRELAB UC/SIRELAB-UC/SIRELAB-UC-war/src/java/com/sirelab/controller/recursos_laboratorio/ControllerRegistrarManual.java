@@ -72,7 +72,7 @@ public class ControllerRegistrarManual implements Serializable {
     }
 
     public void validarNombreManual() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -87,7 +87,7 @@ public class ControllerRegistrarManual implements Serializable {
     }
 
     public void validarUbicacionManual() {
-        if (Utilidades.validarNulo(nuevoUbicacion) && (!nuevoUbicacion.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoUbicacion) && (!nuevoUbicacion.isEmpty())  && (nuevoUbicacion.trim().length() > 0)) {
             validacionesUbicacion = true;
         } else {
             validacionesUbicacion = false;

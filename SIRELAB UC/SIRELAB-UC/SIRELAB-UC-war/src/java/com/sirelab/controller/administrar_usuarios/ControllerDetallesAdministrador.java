@@ -150,7 +150,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     }
 
     public void validarNombreAdministrador() {
-        if (Utilidades.validarNulo(nombreAdministrador) && (!nombreAdministrador.isEmpty())) {
+        if (Utilidades.validarNulo(nombreAdministrador) && (!nombreAdministrador.isEmpty())  && (nombreAdministrador.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nombreAdministrador)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nombreAdministrador", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -165,7 +165,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     }
 
     public void validarApellidoAdministrador() {
-        if (Utilidades.validarNulo(apellidoAdministrador) && (!apellidoAdministrador.isEmpty())) {
+        if (Utilidades.validarNulo(apellidoAdministrador) && (!apellidoAdministrador.isEmpty())  && (apellidoAdministrador.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(apellidoAdministrador)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:apellidoAdministrador", new FacesMessage("El apellido ingresado es incorrecto."));
@@ -180,7 +180,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     }
 
     public void validarCorreoAdministrador() {
-        if (Utilidades.validarNulo(correoAdministrador) && (!correoAdministrador.isEmpty())) {
+        if (Utilidades.validarNulo(correoAdministrador) && (!correoAdministrador.isEmpty())  && (correoAdministrador.trim().length() > 0)) {
             String correoDoc = correoAdministrador + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correoDoc)) {
                 Persona registro = administrarAdministradoresBO.obtenerAdministradorPorCorreo(correoAdministrador);
@@ -206,7 +206,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     }
 
     public void validarIdentificacionAdministrador() {
-        if (Utilidades.validarNulo(identificacionAdministrador) && (!identificacionAdministrador.isEmpty())) {
+        if (Utilidades.validarNulo(identificacionAdministrador) && (!identificacionAdministrador.isEmpty())  && (identificacionAdministrador.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(identificacionAdministrador)) {
                 Persona registro = administrarAdministradoresBO.obtenerAdministradorPorDocumento(identificacionAdministrador);
                 if (null == registro) {
@@ -232,7 +232,7 @@ public class ControllerDetallesAdministrador implements Serializable {
 
     public void validarDatosNumericosAdministrador(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(telefono1Administrador) && (!telefono1Administrador.isEmpty())) {
+            if (Utilidades.validarNulo(telefono1Administrador) && (!telefono1Administrador.isEmpty())  && (telefono1Administrador.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono1Administrador)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono1Administrador", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -241,7 +241,7 @@ public class ControllerDetallesAdministrador implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(telefono2Administrador) && (!telefono2Administrador.isEmpty())) {
+            if (Utilidades.validarNulo(telefono2Administrador) && (!telefono2Administrador.isEmpty())  && (telefono2Administrador.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono2Administrador)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono2Administrador", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -254,7 +254,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     }
 
     public void validarDireccionAdministrador() {
-        if ((Utilidades.validarNulo(direccionAdministrador)) && (!direccionAdministrador.isEmpty())) {
+        if ((Utilidades.validarNulo(direccionAdministrador)) && (!direccionAdministrador.isEmpty())  && (direccionAdministrador.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(direccionAdministrador)) {
                 validacionesDireccion = true;
             } else {

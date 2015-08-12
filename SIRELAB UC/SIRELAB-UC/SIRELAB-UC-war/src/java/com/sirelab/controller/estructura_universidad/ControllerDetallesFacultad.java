@@ -72,7 +72,7 @@ public class ControllerDetallesFacultad implements Serializable {
     }
 
     public void validarNombreFacultad() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -87,7 +87,7 @@ public class ControllerDetallesFacultad implements Serializable {
     }
 
     public void validarCodigoFacultad() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 Facultad registro = gestionarFacultadBO.obtenerFacultadPorIDCodigo(editarCodigo);
                 if (null == registro) {

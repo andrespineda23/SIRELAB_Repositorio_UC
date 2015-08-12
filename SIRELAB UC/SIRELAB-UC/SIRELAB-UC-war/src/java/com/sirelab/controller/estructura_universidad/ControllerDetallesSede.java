@@ -76,7 +76,7 @@ public class ControllerDetallesSede implements Serializable {
     }
 
     public void validarNombreSede() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -91,7 +91,7 @@ public class ControllerDetallesSede implements Serializable {
     }
 
     public void validarDireccionSede() {
-        if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty())) {
+        if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty())  && (editarDireccion.trim().length() > 0)) {
             if (!Utilidades.validarDirecciones(editarDireccion)) {
                 validacionesDireccion = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
@@ -105,7 +105,7 @@ public class ControllerDetallesSede implements Serializable {
     }
 
     public void validarTelefonoSede() {
-        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty())) {
+        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty())  && (editarTelefono.trim().length() > 0)) {
             if (!Utilidades.isNumber(editarTelefono)) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono ingresado es incorrecto."));

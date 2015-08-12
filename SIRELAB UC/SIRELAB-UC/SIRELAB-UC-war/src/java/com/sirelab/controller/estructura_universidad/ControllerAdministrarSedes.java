@@ -80,13 +80,13 @@ public class ControllerAdministrarSedes implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())  && (parametroDireccion.trim().length() > 0)) {
             filtros.put("parametroDireccion", parametroDireccion.toString());
         }
-        if ((Utilidades.validarNulo(parametroTelefono) == true) && (!parametroTelefono.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroTelefono) == true) && (!parametroTelefono.isEmpty())  && (parametroTelefono.trim().length() > 0)) {
             filtros.put("parametroTelefono", parametroTelefono.toString());
         }
     }

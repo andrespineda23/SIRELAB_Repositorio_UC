@@ -169,7 +169,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     }
 
     public void validarNombreGuiaLaboratorio() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -183,7 +183,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     }
 
     public void validarDescripcionGuiaLaboratorio() {
-        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty())) {
+        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty())  && (editarDescripcion.trim().length() > 0)) {
             validacionesDescripcion = true;
         } else {
             validacionesDescripcion = false;

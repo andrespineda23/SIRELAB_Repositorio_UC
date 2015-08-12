@@ -163,19 +163,19 @@ public class ControllerAdministrarEquipos implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroInventario) == true) && (!parametroInventario.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroInventario) == true) && (!parametroInventario.isEmpty())  && (parametroInventario.trim().length() > 0)) {
             filtros.put("parametroInventario", parametroInventario.toString());
         }
-        if ((Utilidades.validarNulo(parametroMarca) == true) && (!parametroMarca.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroMarca) == true) && (!parametroMarca.isEmpty())  && (parametroMarca.trim().length() > 0)) {
             filtros.put("parametroMarca", parametroMarca.toString());
         }
-        if ((Utilidades.validarNulo(parametroModelo) == true) && (!parametroModelo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroModelo) == true) && (!parametroModelo.isEmpty())  && (parametroModelo.trim().length() > 0)) {
             filtros.put("parametroModelo", parametroModelo.toString());
         }
-        if ((Utilidades.validarNulo(parametroSerie) == true) && (!parametroSerie.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroSerie) == true) && (!parametroSerie.isEmpty())  && (parametroSerie.trim().length() > 0)) {
             filtros.put("parametroSerie", parametroSerie.toString());
         }
         if (Utilidades.validarNulo(parametroLaboratorioPorArea)) {

@@ -143,10 +143,10 @@ public class ControllerAdministrarModulos implements Serializable {
                 filtros.put("parametroEstado", "true");
             }
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if ((Utilidades.validarNulo(parametroDetalle) == true) && (!parametroDetalle.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroDetalle) == true) && (!parametroDetalle.isEmpty())  && (parametroDetalle.trim().length() > 0)) {
             filtros.put("parametroDetalle", parametroDetalle.toString());
         }
         if (Utilidades.validarNulo(parametroLaboratorioPorArea)) {

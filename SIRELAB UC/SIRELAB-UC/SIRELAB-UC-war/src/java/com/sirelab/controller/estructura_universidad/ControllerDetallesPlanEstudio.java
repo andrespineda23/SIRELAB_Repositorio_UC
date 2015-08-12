@@ -151,7 +151,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     }
 
     public void validarNombrePlanEstudio() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -165,7 +165,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     }
 
     public void validarCodigoPlanEstudio() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));

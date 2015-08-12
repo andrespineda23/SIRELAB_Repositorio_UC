@@ -54,7 +54,7 @@ public class ControllerRegistrarTipoComponente implements Serializable {
     }
 
     public void validarNombre() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())) {
+        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())  && (inputNombre.trim().length() > 0)) {
             if (Utilidades.validarCaracterString(inputNombre)) {
                 validacionesNombre = true;
             } else {

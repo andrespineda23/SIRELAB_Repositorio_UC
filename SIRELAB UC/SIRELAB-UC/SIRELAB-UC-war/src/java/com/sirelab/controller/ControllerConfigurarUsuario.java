@@ -111,7 +111,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void validarNombrePersona() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())) {
+        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())  && (inputNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:form1:inputNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -126,7 +126,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void validarApellidoPersona() {
-        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())) {
+        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())  && (inputApellido.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputApellido)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:form1:inputApellido", new FacesMessage("El apellido ingresado es incorrecto."));
@@ -140,7 +140,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void validarEmailPersona() {
-        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())) {
+        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())  && (inputEmail.trim().length() > 0)) {
             String correoPersona = inputEmail + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correoPersona)) {
                 Persona registro = gestionarConfigurarUsuarioBO.obtenerPersonaPorEmail(inputEmail);
@@ -161,7 +161,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void validarIdentificacionPersona() {
-        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
+        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())  && (inputID.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(inputID)) {
                 Persona registro = gestionarConfigurarUsuarioBO.obtenerPersonaPorDocumento(inputID);
                 if (null == registro) {
@@ -187,7 +187,7 @@ public class ControllerConfigurarUsuario implements Serializable {
 
     public void validarDatosNumericosPersona(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())  && (inputTelefono1.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono1)) == false) {
                     validacionesTelefono1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:form1:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -196,7 +196,7 @@ public class ControllerConfigurarUsuario implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())  && (inputTelefono2.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono2)) == false) {
                     validacionesTelefono2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:form1:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -208,7 +208,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void validarDireccionPersona() {
-        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())  && (inputDireccion.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(inputDireccion)) {
                 validacionesDireccion = true;
             } else {
@@ -219,7 +219,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void validarContraseniaPersona() {
-        if ((Utilidades.validarNulo(inputContrasenia)) && (!inputContrasenia.isEmpty())) {
+        if ((Utilidades.validarNulo(inputContrasenia)) && (!inputContrasenia.isEmpty())  && (inputContrasenia.trim().length() > 0)) {
             EncriptarContrasenia obj = new EncriptarContrasenia();
             String contrasenia = obj.encriptarContrasenia(inputContrasenia);
             if (personaConfigurar.getUsuario().getPasswordusuario().equals(contrasenia)) {
@@ -235,7 +235,7 @@ public class ControllerConfigurarUsuario implements Serializable {
     }
 
     public void validarContraseniaNuevaPersona() {
-        if ((Utilidades.validarNulo(inputContraseniaNueva)) && (!inputContraseniaNueva.isEmpty())) {
+        if ((Utilidades.validarNulo(inputContraseniaNueva)) && (!inputContraseniaNueva.isEmpty())  && (inputContraseniaNueva.trim().length() > 0)) {
             EncriptarContrasenia obj = new EncriptarContrasenia();
             String contrasenia = obj.encriptarContrasenia(inputContraseniaNueva);
             if (!personaConfigurar.getUsuario().getPasswordusuario().equals(contrasenia)) {
@@ -252,7 +252,7 @@ public class ControllerConfigurarUsuario implements Serializable {
 
     public void validarContraseniaConfirmaPersona() {
         if ((Utilidades.validarNulo(inputContraseniaNueva)) && (Utilidades.validarNulo(inputContraseniaConfirma))
-                && (!inputContraseniaNueva.isEmpty()) && (!inputContraseniaConfirma.isEmpty())) {
+                && (!inputContraseniaNueva.isEmpty()) && (!inputContraseniaConfirma.isEmpty())  && (inputContraseniaConfirma.trim().length() > 0)) {
             if (inputContraseniaNueva.equals(inputContraseniaConfirma)) {
                 validacionesContraseniaConfirma = true;
             } else {

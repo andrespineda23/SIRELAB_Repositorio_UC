@@ -70,7 +70,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     }
 
     public void validarTipoMovimiento() {
-        if (Utilidades.validarNulo(nuevoTipoMovimiento) && (!nuevoTipoMovimiento.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoTipoMovimiento) && (!nuevoTipoMovimiento.isEmpty())  && (nuevoTipoMovimiento.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nuevoTipoMovimiento)) {
                 validacionesTipo = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoTipoMovimiento", new FacesMessage("El tipo ingresado es incorrecto."));
@@ -85,7 +85,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     }
 
     public void validarCantidadMovimiento() {
-        if (Utilidades.validarNulo(nuevoCantidadMovimiento) && (!nuevoCantidadMovimiento.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCantidadMovimiento) && (!nuevoCantidadMovimiento.isEmpty())  && (nuevoCantidadMovimiento.trim().length() > 0)) {
             if (!Utilidades.isNumber(nuevoCantidadMovimiento)) {
                 validacionesCantidad = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad se encuentra incorrecta."));
@@ -99,7 +99,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     }
 
     public void validarCostoMovimiento() {
-        if (Utilidades.validarNulo(nuevoCostoMovimiento) && (!nuevoCostoMovimiento.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCostoMovimiento) && (!nuevoCostoMovimiento.isEmpty())  && (nuevoCostoMovimiento.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCostoMovimiento)) == false) {
                 validacionesCosto = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto."));

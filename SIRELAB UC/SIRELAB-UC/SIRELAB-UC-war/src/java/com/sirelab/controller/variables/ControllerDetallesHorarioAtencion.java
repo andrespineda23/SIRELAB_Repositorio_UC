@@ -66,7 +66,7 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
     }
 
     public void validarDescripcion() {
-        if (Utilidades.validarNulo(inputDescripcion) && (!inputDescripcion.isEmpty())) {
+        if (Utilidades.validarNulo(inputDescripcion) && (!inputDescripcion.isEmpty())  && (inputDescripcion.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(inputDescripcion)) {
                 validacionesDescripcion = true;
             } else {
@@ -81,7 +81,7 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
     }
 
     public void validarCodigo() {
-        if (Utilidades.validarNulo(inputCodigo) && (!inputCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(inputCodigo) && (!inputCodigo.isEmpty())  && (inputCodigo.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(inputCodigo)) {
                 validacionesCodigo = true;
             } else {

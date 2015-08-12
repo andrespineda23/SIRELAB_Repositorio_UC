@@ -108,7 +108,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarNombreEquipo() {
-        if (Utilidades.validarNulo(nuevoNombreEquipo) && (!nuevoNombreEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoNombreEquipo) && (!nuevoNombreEquipo.isEmpty())  && (nuevoNombreEquipo.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nuevoNombreEquipo)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombreEquipo", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -123,7 +123,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarInventarioEquipo() {
-        if (Utilidades.validarNulo(nuevoInventarioEquipo) && (!nuevoInventarioEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoInventarioEquipo) && (!nuevoInventarioEquipo.isEmpty())  && (nuevoInventarioEquipo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoInventarioEquipo)) {
                 validacionesInventario = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoInventarioEquipo", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -137,7 +137,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarMarcaEquipo() {
-        if (Utilidades.validarNulo(nuevoMarcaEquipo) && (!nuevoMarcaEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoMarcaEquipo) && (!nuevoMarcaEquipo.isEmpty())  && (nuevoMarcaEquipo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoMarcaEquipo)) {
                 validacionesMarca = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoMarcaEquipo", new FacesMessage("La marca ingresada es incorrecta."));
@@ -178,7 +178,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarModeloEquipo() {
-        if (Utilidades.validarNulo(nuevoModeloEquipo) && (!nuevoModeloEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoModeloEquipo) && (!nuevoModeloEquipo.isEmpty())  && (nuevoModeloEquipo.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(nuevoModeloEquipo)) {
                 validacionesModelo = true;
             } else {
@@ -189,7 +189,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarSerieEquipo() {
-        if (Utilidades.validarNulo(nuevoSerieEquipo) && (!nuevoSerieEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoSerieEquipo) && (!nuevoSerieEquipo.isEmpty())  && (nuevoSerieEquipo.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(nuevoSerieEquipo)) {
                 validacionesSerie = true;
             } else {
@@ -200,7 +200,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarCostoAlquilerEquipo() {
-        if (Utilidades.validarNulo(nuevoCostoAlquilerEquipo) && (!nuevoCostoAlquilerEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCostoAlquilerEquipo) && (!nuevoCostoAlquilerEquipo.isEmpty())  && (nuevoCostoAlquilerEquipo.trim().length() > 0)) {
             if (Utilidades.isNumber(nuevoCostoAlquilerEquipo)) {
                 validacionesCosto = true;
             } else {
@@ -211,7 +211,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarInversionEquipo() {
-        if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty())  && (nuevoCostoInversionEquipo.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCostoInversionEquipo)) == false) {
                 validacionesInversion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCostoInversionEquipo", new FacesMessage("El valor de inversión se encuentra incorrecto."));
@@ -233,7 +233,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void validarEspecificacionEquipo() {
-        if (Utilidades.validarNulo(nuevoEspecificacionEquipo) && (!nuevoEspecificacionEquipo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoEspecificacionEquipo) && (!nuevoEspecificacionEquipo.isEmpty())  && (nuevoEspecificacionEquipo.trim().length() > 0)) {
             if ((Utilidades.validarCaracteresAlfaNumericos(nuevoEspecificacionEquipo)) == false) {
                 validacionesEspecificacion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoEspecificacionEquipo", new FacesMessage("La especificación ingresada se encuentra incorrecta."));
@@ -387,12 +387,12 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setSeriequipo(nuevoSerieEquipo);
             equipoNuevo.setModeloequipo(nuevoModeloEquipo);
             equipoNuevo.setCantidadequipo(Integer.valueOf("1"));
-            if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty())  && (nuevoCostoInversionEquipo.trim().length() > 0)) {
                 equipoNuevo.setCostoadquisicion(Integer.valueOf(nuevoCostoInversionEquipo));
             } else {
                 equipoNuevo.setCostoadquisicion(Integer.valueOf("0"));
             }
-            if (Utilidades.validarNulo(nuevoCostoAlquilerEquipo) && (!nuevoCostoAlquilerEquipo.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoCostoAlquilerEquipo) && (!nuevoCostoAlquilerEquipo.isEmpty())  && (nuevoCostoAlquilerEquipo.trim().length() > 0)) {
                 equipoNuevo.setCostoalquiler(Integer.valueOf(nuevoCostoAlquilerEquipo));
             } else {
                 equipoNuevo.setCostoalquiler(Integer.valueOf("0"));

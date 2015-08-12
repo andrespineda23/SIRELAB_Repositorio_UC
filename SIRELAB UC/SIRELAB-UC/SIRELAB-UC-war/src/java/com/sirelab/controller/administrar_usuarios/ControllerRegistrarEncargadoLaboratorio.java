@@ -180,7 +180,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public void validarNombreEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())) {
+        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())  && (inputNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -195,7 +195,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public void validarApellidoEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())) {
+        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())  && (inputApellido.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputApellido)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:inputApellido", new FacesMessage("El apellido ingresado es incorrecto."));
@@ -209,7 +209,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public void validarCorreoEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())) {
+        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())  && (inputEmail.trim().length() > 0)) {
             String correoEncargadoLaboratorio = inputEmail + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correoEncargadoLaboratorio)) {
                 EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorCorreo(inputEmail);
@@ -230,7 +230,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public void validarCorreoOpcionalEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())) {
+        if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())  && (inputEmailOpcional.trim().length() > 0)) {
             if (Utilidades.validarCorreoElectronico(inputEmailOpcional)) {
                 validacionesCorreoOpcional = true;
             } else {
@@ -241,7 +241,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public void validarIdentificacionEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
+        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())  && (inputID.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(inputID)) {
                 EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorDocumento(inputID);
                 if (null == registro) {
@@ -262,7 +262,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     public void validarDatosNumericosEncargadoLaboratorio(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())  && (inputTelefono1.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono1)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -271,7 +271,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())  && (inputTelefono2.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono2)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -283,7 +283,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     }
 
     public void validarDireccionEncargadoLaboratorio() {
-        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())  && (inputDireccion.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(inputDireccion)) {
                 validacionesDireccion = true;
             } else {
@@ -442,22 +442,22 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             personaNueva.setEmailpersona(inputEmail);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
-            if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())) {
+            if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())  && (inputEmailOpcional.trim().length() > 0)) {
                 personaNueva.setEmailsecundario(inputEmailOpcional);
             } else {
                 personaNueva.setEmailsecundario("");
             }
-            if (Utilidades.validarNulo(inputDireccion) && (!inputDireccion.isEmpty())) {
+            if (Utilidades.validarNulo(inputDireccion) && (!inputDireccion.isEmpty())  && (inputDireccion.trim().length() > 0)) {
                 personaNueva.setDireccionpersona(inputDireccion);
             } else {
                 personaNueva.setDireccionpersona("");
             }
-            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())  && (inputTelefono1.trim().length() > 0)) {
                 personaNueva.setTelefono1persona(inputTelefono1);
             } else {
                 personaNueva.setTelefono1persona("");
             }
-            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())  && (inputTelefono2.trim().length() > 0)) {
                 personaNueva.setTelefono2persona(inputTelefono2);
             } else {
                 personaNueva.setTelefono2persona("");

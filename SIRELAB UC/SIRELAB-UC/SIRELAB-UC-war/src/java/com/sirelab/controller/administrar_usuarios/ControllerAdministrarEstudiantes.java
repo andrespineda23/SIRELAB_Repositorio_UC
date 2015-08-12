@@ -112,16 +112,16 @@ public class ControllerAdministrarEstudiantes implements Serializable {
      * Metodo encargado de agregar los valores al filtro de busqueda
      */
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre);
         }
-        if ((Utilidades.validarNulo(parametroApellido) == true) && (!parametroApellido.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroApellido) == true) && (!parametroApellido.isEmpty())  && (parametroApellido.trim().length() > 0)) {
             filtros.put("parametroApellido", parametroApellido);
         }
-        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty())  && (parametroDocumento.trim().length() > 0)) {
             filtros.put("parametroDocumento", parametroDocumento);
         }
-        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())  && (parametroCorreo.trim().length() > 0)) {
             filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
@@ -149,7 +149,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 filtros.put("parametroPlanEst", parametroPlanEst.getIdplanestudios().toString());
             }
         }
-        if ((Utilidades.validarNulo(parametroSemestre)) && (!parametroSemestre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroSemestre)) && (!parametroSemestre.isEmpty())  && (parametroSemestre.trim().length() > 0)) {
             filtros.put("parametroSemestre", String.valueOf(parametroSemestre));
         }
     }

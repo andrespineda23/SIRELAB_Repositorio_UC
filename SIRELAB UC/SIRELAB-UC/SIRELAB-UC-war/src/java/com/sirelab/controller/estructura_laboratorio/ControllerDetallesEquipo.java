@@ -265,7 +265,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarNombreEquipo() {
-        if (Utilidades.validarNulo(nombreEquipoElemento) && (!nombreEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(nombreEquipoElemento) && (!nombreEquipoElemento.isEmpty())  && (nombreEquipoElemento.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nombreEquipoElemento)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -280,7 +280,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarInventarioEquipo() {
-        if (Utilidades.validarNulo(inventarioEquipoElemento) && (!inventarioEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(inventarioEquipoElemento) && (!inventarioEquipoElemento.isEmpty())  && (inventarioEquipoElemento.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(inventarioEquipoElemento)) {
                 validacionesInventario = false;
                 FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -294,7 +294,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarMarcaEquipo() {
-        if (Utilidades.validarNulo(marcaEquipoElemento) && (!marcaEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(marcaEquipoElemento) && (!marcaEquipoElemento.isEmpty())  && (marcaEquipoElemento.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(marcaEquipoElemento)) {
                 validacionesMarca = false;
                 FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca ingresada es incorrecta."));
@@ -335,7 +335,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarModeloEquipo() {
-        if (Utilidades.validarNulo(modeloEquipoElemento) && (!modeloEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(modeloEquipoElemento) && (!modeloEquipoElemento.isEmpty())  && (modeloEquipoElemento.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(modeloEquipoElemento)) {
                 validacionesModelo = true;
             } else {
@@ -346,7 +346,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarSerieEquipo() {
-        if (Utilidades.validarNulo(serieEquipoElemento) && (!serieEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(serieEquipoElemento) && (!serieEquipoElemento.isEmpty())  && (serieEquipoElemento.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(serieEquipoElemento)) {
                 validacionesSerie = true;
             } else {
@@ -357,7 +357,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarCostoAlquilerEquipo() {
-        if (Utilidades.validarNulo(alquilerEquipoElemento) && (!alquilerEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(alquilerEquipoElemento) && (!alquilerEquipoElemento.isEmpty())  && (alquilerEquipoElemento.trim().length() > 0)) {
             if (Utilidades.isNumber(alquilerEquipoElemento)) {
                 validacionesCosto = true;
             } else {
@@ -368,7 +368,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarInversionEquipo() {
-        if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())  && (inversionEquipoElemento.trim().length() > 0)) {
             if ((Utilidades.isNumber(inversionEquipoElemento)) == false) {
                 validacionesInversion = false;
                 FacesContext.getCurrentInstance().addMessage("form:inversionEquipoElemento", new FacesMessage("El valor de inversión se encuentra incorrecto."));
@@ -390,7 +390,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarEspecificacionEquipo() {
-        if (Utilidades.validarNulo(especificacionEquipoElemento) && (!especificacionEquipoElemento.isEmpty())) {
+        if (Utilidades.validarNulo(especificacionEquipoElemento) && (!especificacionEquipoElemento.isEmpty())  && (especificacionEquipoElemento.trim().length() > 0)) {
             if ((Utilidades.validarCaracteresAlfaNumericos(especificacionEquipoElemento)) == false) {
                 validacionesEspecificacion = false;
                 FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("La especificación ingresada se encuentra incorrecta."));
@@ -499,12 +499,12 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setFechaadquisicion(fechaEquipoElemento);
 
             equipoElementoDetalles.setCantidadequipo(Integer.valueOf(cantidadEquipoElemento).intValue());
-            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())) {
+            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())  && (inversionEquipoElemento.trim().length() > 0)) {
                 equipoElementoDetalles.setCostoadquisicion(Integer.valueOf(inversionEquipoElemento));
             } else {
                 equipoElementoDetalles.setCostoadquisicion(Integer.valueOf("0"));
             }
-            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())) {
+            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())  && (inversionEquipoElemento.trim().length() > 0)) {
                 equipoElementoDetalles.setCostoalquiler(Integer.valueOf(alquilerEquipoElemento));
             } else {
                 equipoElementoDetalles.setCostoalquiler(Integer.valueOf("0"));

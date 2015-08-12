@@ -143,7 +143,7 @@ public class ControllerIndex implements Serializable {
     }
 
     public void validarCorreoRecuperacion() {
-        if ((Utilidades.validarNulo(correoRecuperacion)) && (!correoRecuperacion.isEmpty())) {
+        if ((Utilidades.validarNulo(correoRecuperacion)) && (!correoRecuperacion.isEmpty())  && (correoRecuperacion.trim().length() > 0)) {
             String correo = correoRecuperacion + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correo) == false) {
                 validacionesCorreo = false;
@@ -158,7 +158,7 @@ public class ControllerIndex implements Serializable {
     }
 
     public void validarIDRecuperacion() {
-        if ((Utilidades.validarNulo(identificacionRecuperacion)) && (!identificacionRecuperacion.isEmpty())) {
+        if ((Utilidades.validarNulo(identificacionRecuperacion)) && (!identificacionRecuperacion.isEmpty())  && (identificacionRecuperacion.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(identificacionRecuperacion) == false) {
                 validacionesID = false;
                 FacesContext.getCurrentInstance().addMessage("form:formRecuperacion:identificacionRecuperacion", new FacesMessage("La identificación ingresada es incorrecta."));
@@ -201,7 +201,7 @@ public class ControllerIndex implements Serializable {
         paginaSiguiente = null;
         try {
             Persona personaLogin = null;
-            if ((usuarioLogin != null && (!usuarioLogin.isEmpty())) && (passwordLogin != null && (!passwordLogin.isEmpty()))) {
+            if ((usuarioLogin != null && (!usuarioLogin.isEmpty())  && (usuarioLogin.trim().length() > 0)) && (passwordLogin != null && (!passwordLogin.isEmpty())  && (passwordLogin.trim().length() > 0))) {
                 personaLogin = gestionarLoginSistemaBO.obtenerPersonaLogin(usuarioLogin, passwordLogin);
                 usuarioLogin = null;
                 passwordLogin = null;
@@ -307,7 +307,7 @@ public class ControllerIndex implements Serializable {
     }
 
     public void validarUsuarioLogin() {
-        if ((Utilidades.validarNulo(usuarioLogin)) && (!usuarioLogin.isEmpty())) {
+        if ((Utilidades.validarNulo(usuarioLogin)) && (!usuarioLogin.isEmpty())  && (usuarioLogin.trim().length() > 0)) {
             validacionesUsuario = true;
         } else {
             FacesContext.getCurrentInstance().addMessage("form:formLogin:usuarioLogin", new FacesMessage("El usuario es obligatorio."));
@@ -316,7 +316,7 @@ public class ControllerIndex implements Serializable {
     }
 
     public void validarPasswordLogin() {
-        if ((Utilidades.validarNulo(passwordLogin)) && (!passwordLogin.isEmpty())) {
+        if ((Utilidades.validarNulo(passwordLogin)) && (!passwordLogin.isEmpty())  && (passwordLogin.trim().length() > 0)) {
             validacionesContrasenia = true;
         } else {
             FacesContext.getCurrentInstance().addMessage("form:formLogin:inputContrasenia", new FacesMessage("La contraseña es obligatoria."));

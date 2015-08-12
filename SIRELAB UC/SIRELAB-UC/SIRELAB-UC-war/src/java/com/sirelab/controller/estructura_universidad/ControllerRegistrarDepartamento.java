@@ -63,7 +63,7 @@ public class ControllerRegistrarDepartamento implements Serializable {
     }
 
     public void validarNombreDepartamento() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nuevoNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrectp."));
@@ -77,10 +77,9 @@ public class ControllerRegistrarDepartamento implements Serializable {
     }
 
     public void validarCodigoDepartamento() {
-        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty()) && (nuevoCodigo.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(nuevoCodigo);
-                System.out.println("registro : "+registro);
                 if (null != registro) {
                     validacionesCodigo = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado esta registrado."));
@@ -89,7 +88,7 @@ public class ControllerRegistrarDepartamento implements Serializable {
                 }
             } else {
                 validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
             }
         } else {
             validacionesCodigo = false;

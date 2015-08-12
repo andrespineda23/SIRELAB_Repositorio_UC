@@ -80,13 +80,13 @@ public class ControllerAdministrarManuales implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroTipo) == true) && (!parametroTipo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroTipo) == true) && (!parametroTipo.isEmpty())  && (parametroTipo.trim().length() > 0)) {
             filtros.put("parametroTipo", parametroTipo.toString());
         }
-        if ((Utilidades.validarNulo(parametroUbicacion) == true) && (!parametroUbicacion.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroUbicacion) == true) && (!parametroUbicacion.isEmpty())  && (parametroUbicacion.trim().length() > 0)) {
             filtros.put("parametroUbicacion", parametroUbicacion.toString());
         }
     }

@@ -111,7 +111,7 @@ public class ControllerDetallesInsumo implements Serializable {
     }
 
     public void validarNombreInsumo() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -125,7 +125,7 @@ public class ControllerDetallesInsumo implements Serializable {
     }
 
     public void validarCodigoInsumo() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = true;
             } else {
@@ -140,7 +140,7 @@ public class ControllerDetallesInsumo implements Serializable {
 
     public void validarCantidadesInsumo(int tipo) {
         if (tipo == 1) {
-            if (Utilidades.validarNulo(editarCantidadExistencia) && (!editarCantidadExistencia.isEmpty())) {
+            if (Utilidades.validarNulo(editarCantidadExistencia) && (!editarCantidadExistencia.isEmpty())  && (editarCantidadExistencia.trim().length() > 0)) {
                 if ((Utilidades.isNumber(editarCantidadExistencia)) == false) {
                     validacionesCantidadExistencia = false;
                     FacesContext.getCurrentInstance().addMessage("form:editarCantidadExistencia", new FacesMessage("La cantidad ingresada se encuentra incorrecta."));
@@ -149,7 +149,7 @@ public class ControllerDetallesInsumo implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(editarCantidadMin) && (!editarCantidadMin.isEmpty())) {
+            if (Utilidades.validarNulo(editarCantidadMin) && (!editarCantidadMin.isEmpty())  && (editarCantidadMin.trim().length() > 0)) {
                 if ((Utilidades.isNumber(editarCantidadMin)) == false) {
                     validacionesCantidadMin = false;
                     FacesContext.getCurrentInstance().addMessage("form:editarCantidadMin", new FacesMessage("La cantidad ingresada se encuentra incorrecta."));
@@ -162,7 +162,7 @@ public class ControllerDetallesInsumo implements Serializable {
 
     public void validarMarcaModeloInsumo(int tipo) {
         if (tipo == 1) {
-            if ((Utilidades.validarNulo(editarMarca)) && (!editarMarca.isEmpty())) {
+            if ((Utilidades.validarNulo(editarMarca)) && (!editarMarca.isEmpty())  && (editarMarca.trim().length() > 0)) {
                 if (Utilidades.validarCaracteresAlfaNumericos(editarMarca)) {
                     validacionesMarca = true;
                 } else {
@@ -172,7 +172,7 @@ public class ControllerDetallesInsumo implements Serializable {
             }
         } else {
 
-            if ((Utilidades.validarNulo(editarModelo)) && (!editarModelo.isEmpty())) {
+            if ((Utilidades.validarNulo(editarModelo)) && (!editarModelo.isEmpty())  && (editarModelo.trim().length() > 0)) {
                 if (Utilidades.validarCaracteresAlfaNumericos(editarModelo)) {
                     validacionesModelo = true;
                 } else {
@@ -184,7 +184,7 @@ public class ControllerDetallesInsumo implements Serializable {
     }
 
     public void validarDescripcionInsumo(int tipoReg) {
-        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty())) {
+        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty())  && (editarDescripcion.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(editarDescripcion)) {
                 validacionesDescripcion = true;
             } else {
@@ -257,12 +257,12 @@ public class ControllerDetallesInsumo implements Serializable {
             insumoDetalles.setNombreinsumo(editarNombre);
             insumoDetalles.setModeloinsumo(editarModelo);
             insumoDetalles.setMarcainsumo(editarMarca);
-            if (Utilidades.validarNulo(editarCantidadExistencia) && (!editarCantidadExistencia.isEmpty())) {
+            if (Utilidades.validarNulo(editarCantidadExistencia) && (!editarCantidadExistencia.isEmpty())  && (editarCantidadExistencia.trim().length() > 0)) {
                 insumoDetalles.setCantidadexistencia(Integer.valueOf(editarCantidadExistencia));
             } else {
                 insumoDetalles.setCantidadexistencia(Integer.valueOf("0"));
             }
-            if (Utilidades.validarNulo(editarCantidadMin) && (!editarCantidadMin.isEmpty())) {
+            if (Utilidades.validarNulo(editarCantidadMin) && (!editarCantidadMin.isEmpty())  && (editarCantidadMin.trim().length() > 0)) {
                 insumoDetalles.setCantidadminimia(Integer.valueOf(editarCantidadMin));
             } else {
                 insumoDetalles.setCantidadminimia(Integer.valueOf("0"));

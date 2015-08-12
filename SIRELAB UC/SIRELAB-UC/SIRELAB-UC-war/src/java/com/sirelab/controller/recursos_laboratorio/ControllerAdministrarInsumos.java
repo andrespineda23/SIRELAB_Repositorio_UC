@@ -90,16 +90,16 @@ public class ControllerAdministrarInsumos implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if ((Utilidades.validarNulo(parametroMarca) == true) && (!parametroMarca.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroMarca) == true) && (!parametroMarca.isEmpty())  && (parametroMarca.trim().length() > 0)) {
             filtros.put("parametroMarca", parametroMarca.toString());
         }
-        if ((Utilidades.validarNulo(parametroModelo) == true) && (!parametroModelo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroModelo) == true) && (!parametroModelo.isEmpty())  && (parametroModelo.trim().length() > 0)) {
             filtros.put("parametroModelo", parametroModelo.toString());
         }
         if ((Utilidades.validarNulo(parametroProveedor) == true)) {

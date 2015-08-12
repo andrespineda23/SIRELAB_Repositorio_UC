@@ -281,7 +281,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     }
 
     public void validarNombreEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(nombreEncargadoLaboratorio) && (!nombreEncargadoLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(nombreEncargadoLaboratorio) && (!nombreEncargadoLaboratorio.isEmpty())  && (nombreEncargadoLaboratorio.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nombreEncargadoLaboratorio)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -296,7 +296,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     }
 
     public void validarApellidoEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(apellidoEncargadoLaboratorio) && (!apellidoEncargadoLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(apellidoEncargadoLaboratorio) && (!apellidoEncargadoLaboratorio.isEmpty())  && (apellidoEncargadoLaboratorio.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(apellidoEncargadoLaboratorio)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido ingresado es incorrecto."));
@@ -311,7 +311,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     }
 
     public void validarCorreoEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(correoEncargadoLaboratorio) && (!correoEncargadoLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(correoEncargadoLaboratorio) && (!correoEncargadoLaboratorio.isEmpty())  && (correoEncargadoLaboratorio.trim().length() > 0)) {
             String correo = correoEncargadoLaboratorio + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correo)) {
                 EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorCorreo(correoEncargadoLaboratorio);
@@ -337,7 +337,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     }
 
     public void validarCorreoOpcionalEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(correoOpcionalEncargadoLaboratorio) && (!correoOpcionalEncargadoLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(correoOpcionalEncargadoLaboratorio) && (!correoOpcionalEncargadoLaboratorio.isEmpty())  && (correoOpcionalEncargadoLaboratorio.trim().length() > 0)) {
             if (Utilidades.validarCorreoElectronico(correoOpcionalEncargadoLaboratorio)) {
                 validacionesCorreoOpcional = true;
             } else {
@@ -349,7 +349,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     }
 
     public void validarIdentificacionEncargadoLaboratorio() {
-        if (Utilidades.validarNulo(identificacionEncargadoLaboratorio) && (!identificacionEncargadoLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(identificacionEncargadoLaboratorio) && (!identificacionEncargadoLaboratorio.isEmpty())  && (identificacionEncargadoLaboratorio.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(identificacionEncargadoLaboratorio)) {
                 EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorDocumento(identificacionEncargadoLaboratorio);
                 if (null == registro) {
@@ -375,7 +375,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
 
     public void validarDatosNumericosEncargadoLaboratorio(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(telefono1EncargadoLaboratorio) && (!telefono1EncargadoLaboratorio.isEmpty())) {
+            if (Utilidades.validarNulo(telefono1EncargadoLaboratorio) && (!telefono1EncargadoLaboratorio.isEmpty())  && (telefono1EncargadoLaboratorio.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono1EncargadoLaboratorio)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono1EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -384,7 +384,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(telefono2EncargadoLaboratorio) && (!telefono2EncargadoLaboratorio.isEmpty())) {
+            if (Utilidades.validarNulo(telefono2EncargadoLaboratorio) && (!telefono2EncargadoLaboratorio.isEmpty())  && (telefono2EncargadoLaboratorio.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono2EncargadoLaboratorio)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono2EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -397,7 +397,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     }
 
     public void validarDireccionEncargadoLaboratorio() {
-        if ((Utilidades.validarNulo(direccionEncargadoLaboratorio)) && (!direccionEncargadoLaboratorio.isEmpty())) {
+        if ((Utilidades.validarNulo(direccionEncargadoLaboratorio)) && (!direccionEncargadoLaboratorio.isEmpty())  && (direccionEncargadoLaboratorio.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(direccionEncargadoLaboratorio)) {
                 validacionesDireccion = true;
             } else {

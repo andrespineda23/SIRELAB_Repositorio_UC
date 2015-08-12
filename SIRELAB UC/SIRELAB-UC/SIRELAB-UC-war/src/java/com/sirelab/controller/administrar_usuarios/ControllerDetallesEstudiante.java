@@ -238,7 +238,7 @@ public class ControllerDetallesEstudiante implements Serializable {
     }
 
     public void validarNombreEstudiante() {
-        if (Utilidades.validarNulo(nombreEstudiante) && (!nombreEstudiante.isEmpty())) {
+        if (Utilidades.validarNulo(nombreEstudiante) && (!nombreEstudiante.isEmpty())  && (nombreEstudiante.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nombreEstudiante)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nombreEstudiante", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -253,7 +253,7 @@ public class ControllerDetallesEstudiante implements Serializable {
     }
 
     public void validarApellidoEstudiante() {
-        if (Utilidades.validarNulo(apellidoEstudiante) && (!apellidoEstudiante.isEmpty())) {
+        if (Utilidades.validarNulo(apellidoEstudiante) && (!apellidoEstudiante.isEmpty())  && (apellidoEstudiante.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(apellidoEstudiante)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:apellidoEstudiante", new FacesMessage("El apellido ingresado es incorrecto."));
@@ -268,7 +268,7 @@ public class ControllerDetallesEstudiante implements Serializable {
     }
 
     public void validarCorreoEstudiante() {
-        if (Utilidades.validarNulo(correoEstudiante) && (!correoEstudiante.isEmpty())) {
+        if (Utilidades.validarNulo(correoEstudiante) && (!correoEstudiante.isEmpty())  && (correoEstudiante.trim().length() > 0)) {
             String correo = correoEstudiante + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correo)) {
                 Estudiante registro = administrarEstudiantesBO.obtenerEstudiantePorCorreo(correoEstudiante);
@@ -294,7 +294,7 @@ public class ControllerDetallesEstudiante implements Serializable {
     }
 
     public void validarCorreoOpcionalEstudiante() {
-        if (Utilidades.validarNulo(correoOpcionalEstudiante) && (!correoOpcionalEstudiante.isEmpty())) {
+        if (Utilidades.validarNulo(correoOpcionalEstudiante) && (!correoOpcionalEstudiante.isEmpty())  && (correoOpcionalEstudiante.trim().length() > 0)) {
             if (Utilidades.validarCorreoElectronico(correoOpcionalEstudiante)) {
                 validacionesCorreoOpcional = true;
             } else {
@@ -306,7 +306,7 @@ public class ControllerDetallesEstudiante implements Serializable {
     }
 
     public void validarIdentificacionEstudiante() {
-        if (Utilidades.validarNulo(identificacionEstudiante) && (!identificacionEstudiante.isEmpty())) {
+        if (Utilidades.validarNulo(identificacionEstudiante) && (!identificacionEstudiante.isEmpty())  && (identificacionEstudiante.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(identificacionEstudiante)) {
                 Estudiante registro = administrarEstudiantesBO.obtenerEstudianteDocumento(identificacionEstudiante);
                 if (null == registro) {
@@ -332,7 +332,7 @@ public class ControllerDetallesEstudiante implements Serializable {
 
     public void validarDatosNumericosEstudiante(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(telefono1Estudiante) && (!telefono1Estudiante.isEmpty())) {
+            if (Utilidades.validarNulo(telefono1Estudiante) && (!telefono1Estudiante.isEmpty())  && (telefono1Estudiante.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono1Estudiante)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono1Estudiante", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -341,7 +341,7 @@ public class ControllerDetallesEstudiante implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(telefono2Estudiante) && (!telefono2Estudiante.isEmpty())) {
+            if (Utilidades.validarNulo(telefono2Estudiante) && (!telefono2Estudiante.isEmpty())  && (telefono2Estudiante.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono2Estudiante)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono2Estudiante", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -354,7 +354,7 @@ public class ControllerDetallesEstudiante implements Serializable {
     }
 
     public void validarDireccionEstudiante() {
-        if ((Utilidades.validarNulo(direccionEstudiante)) && (!direccionEstudiante.isEmpty())) {
+        if ((Utilidades.validarNulo(direccionEstudiante)) && (!direccionEstudiante.isEmpty())  && (direccionEstudiante.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(direccionEstudiante)) {
                 validacionesDireccion = true;
             } else {

@@ -162,13 +162,13 @@ public class ControllerAdministrarSalas implements Serializable {
                 filtros.put("parametroEstado", "false");
             }
         }
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCapacidad) == true) && (!parametroCapacidad.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroCapacidad) == true) && (!parametroCapacidad.isEmpty())  && (parametroCapacidad.trim().length() > 0)) {
             filtros.put("parametroCapacidad", parametroCapacidad.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
         if (Utilidades.validarNulo(parametroDepartamento)) {

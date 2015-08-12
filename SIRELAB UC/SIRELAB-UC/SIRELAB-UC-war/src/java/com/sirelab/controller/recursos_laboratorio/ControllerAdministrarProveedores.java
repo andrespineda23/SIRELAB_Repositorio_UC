@@ -85,16 +85,16 @@ public class ControllerAdministrarProveedores implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroNIT) == true) && (!parametroNIT.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNIT) == true) && (!parametroNIT.isEmpty())  && (parametroNIT.trim().length() > 0)) {
             filtros.put("parametroNIT", parametroNIT.toString());
         }
-        if ((Utilidades.validarNulo(parametroTelefono) == true) && (!parametroTelefono.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroTelefono) == true) && (!parametroTelefono.isEmpty())  && (parametroTelefono.trim().length() > 0)) {
             filtros.put("parametroTelefono", parametroTelefono.toString());
         }
-        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())  && (parametroDireccion.trim().length() > 0)) {
             filtros.put("parametroDireccion", parametroDireccion.toString());
         }
     }

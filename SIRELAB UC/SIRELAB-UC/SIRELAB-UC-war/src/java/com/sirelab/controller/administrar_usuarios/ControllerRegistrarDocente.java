@@ -147,7 +147,7 @@ public class ControllerRegistrarDocente implements Serializable {
     }
 
     public void validarNombreDocente() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())) {
+        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())  && (inputNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -162,7 +162,7 @@ public class ControllerRegistrarDocente implements Serializable {
     }
 
     public void validarApellidoDocente() {
-        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())) {
+        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())  && (inputApellido.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputApellido)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:inputApellido", new FacesMessage("El apellido ingresado es incorrecto."));
@@ -176,7 +176,7 @@ public class ControllerRegistrarDocente implements Serializable {
     }
 
     public void validarCorreoDocente() {
-        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())) {
+        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())  && (inputEmail.trim().length() > 0)) {
             String correoDocente = inputEmail + "@ucentral.edu.co";
             if (Utilidades.validarCorreoElectronico(correoDocente)) {
                 Docente registro = administrarDocentesBO.obtenerDocentePorCorreo(inputEmail);
@@ -197,7 +197,7 @@ public class ControllerRegistrarDocente implements Serializable {
     }
 
     public void validarCorreoOpcionalDocente() {
-        if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())) {
+        if (Utilidades.validarNulo(inputEmailOpcional) && (!inputEmailOpcional.isEmpty())  && (inputEmailOpcional.trim().length() > 0)) {
             if (Utilidades.validarCorreoElectronico(inputEmailOpcional)) {
                 validacionesCorreoOpcional = true;
             } else {
@@ -208,7 +208,7 @@ public class ControllerRegistrarDocente implements Serializable {
     }
 
     public void validarIdentificacionDocente() {
-        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
+        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())  && (inputID.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(inputID)) {
                 Docente registro = administrarDocentesBO.obtenerDocentePorDocumento(inputID);
                 if (null == registro) {
@@ -229,7 +229,7 @@ public class ControllerRegistrarDocente implements Serializable {
 
     public void validarDatosNumericosDocente(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())  && (inputTelefono1.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono1)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -238,7 +238,7 @@ public class ControllerRegistrarDocente implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())  && (inputTelefono2.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono2)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -250,7 +250,7 @@ public class ControllerRegistrarDocente implements Serializable {
     }
 
     public void validarDireccionDocente() {
-        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())  && (inputDireccion.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(inputDireccion)) {
                 validacionesDireccion = true;
             } else {

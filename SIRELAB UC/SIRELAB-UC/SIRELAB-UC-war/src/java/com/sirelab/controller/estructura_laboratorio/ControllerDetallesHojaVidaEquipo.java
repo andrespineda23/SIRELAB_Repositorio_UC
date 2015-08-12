@@ -79,7 +79,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     }
 
     public void validarDetalle() {
-        if (Utilidades.validarNulo(inputDetalle) && (!inputDetalle.isEmpty())) {
+        if (Utilidades.validarNulo(inputDetalle) && (!inputDetalle.isEmpty())  && (inputDetalle.trim().length() > 0)) {
             if (Utilidades.validarCaracterString(inputDetalle)) {
                 validacionesDetalle = true;
             } else {

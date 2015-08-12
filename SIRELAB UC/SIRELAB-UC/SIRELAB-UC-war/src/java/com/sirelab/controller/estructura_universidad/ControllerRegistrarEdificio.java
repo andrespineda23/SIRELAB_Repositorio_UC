@@ -68,7 +68,7 @@ public class ControllerRegistrarEdificio implements Serializable {
     }
 
     public void validarDescripcionEdificio() {
-        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())  && (nuevoDescripcion.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) {
                 validacionesDescripcion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
@@ -82,7 +82,7 @@ public class ControllerRegistrarEdificio implements Serializable {
     }
 
     public void validarDireccionEdificio() {
-        if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty())  && (nuevoDireccion.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nuevoDireccion)) {
                 validacionesDireccion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));

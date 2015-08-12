@@ -164,7 +164,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     }
 
     public void validarNombreEntidadExterna() {
-        if (Utilidades.validarNulo(nombreEntidadExterna) && (!nombreEntidadExterna.isEmpty())) {
+        if (Utilidades.validarNulo(nombreEntidadExterna) && (!nombreEntidadExterna.isEmpty())  && (nombreEntidadExterna.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nombreEntidadExterna)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -179,7 +179,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     }
 
     public void validarApellidoEntidadExterna() {
-        if (Utilidades.validarNulo(apellidoEntidadExterna) && (!apellidoEntidadExterna.isEmpty())) {
+        if (Utilidades.validarNulo(apellidoEntidadExterna) && (!apellidoEntidadExterna.isEmpty())  && (apellidoEntidadExterna.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(apellidoEntidadExterna)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:apellidoEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -194,7 +194,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     }
 
     public void validarCorreoEntidadExterna() {
-        if (Utilidades.validarNulo(correoEntidadExterna) && (!correoEntidadExterna.isEmpty())) {
+        if (Utilidades.validarNulo(correoEntidadExterna) && (!correoEntidadExterna.isEmpty())  && (correoEntidadExterna.trim().length() > 0)) {
             if (Utilidades.validarCorreoElectronico(correoEntidadExterna)) {
                 EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorCorreo(correoEntidadExterna);
                 if (null == registro) {
@@ -219,7 +219,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     }
 
     public void validarIdentificacionEntidadExterna() {
-        if (Utilidades.validarNulo(identificacionEntidadExterna) && (!identificacionEntidadExterna.isEmpty())) {
+        if (Utilidades.validarNulo(identificacionEntidadExterna) && (!identificacionEntidadExterna.isEmpty())  && (identificacionEntidadExterna.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(identificacionEntidadExterna)) {
                 EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorDocumento(identificacionEntidadExterna);
                 if (null == registro) {
@@ -245,7 +245,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     public void validarDatosNumericosEntidadExterna(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(telefono1EntidadExterna) && (!telefono1EntidadExterna.isEmpty())) {
+            if (Utilidades.validarNulo(telefono1EntidadExterna) && (!telefono1EntidadExterna.isEmpty())  && (telefono1EntidadExterna.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono1EntidadExterna)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono1EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -254,7 +254,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(telefono2EntidadExterna) && (!telefono2EntidadExterna.isEmpty())) {
+            if (Utilidades.validarNulo(telefono2EntidadExterna) && (!telefono2EntidadExterna.isEmpty())  && (telefono2EntidadExterna.trim().length() > 0)) {
                 if ((Utilidades.isNumber(telefono2EntidadExterna)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono2EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -267,7 +267,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     }
 
     public void validarDireccionEntidadExterna() {
-        if ((Utilidades.validarNulo(direccionEntidadExterna)) && (!direccionEntidadExterna.isEmpty())) {
+        if ((Utilidades.validarNulo(direccionEntidadExterna)) && (!direccionEntidadExterna.isEmpty())  && (direccionEntidadExterna.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(direccionEntidadExterna)) {
                 validacionesDireccion = true;
             } else {
@@ -280,7 +280,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     public void validarDatosEntidadExterna(int tipo) {
         if (tipo == 1) {
-            if (Utilidades.validarNulo(idUnicoEntidadExterna) && (!idUnicoEntidadExterna.isEmpty())) {
+            if (Utilidades.validarNulo(idUnicoEntidadExterna) && (!idUnicoEntidadExterna.isEmpty())  && (idUnicoEntidadExterna.trim().length() > 0)) {
                 if (Utilidades.validarCaracteresAlfaNumericos(idUnicoEntidadExterna)) {
                     EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorIdentificacion(idUnicoEntidadExterna);
                     if (null == registro) {
@@ -303,7 +303,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             }
         }
         if (tipo == 2) {
-            if (Utilidades.validarNulo(nombreUnicoEntidadExterna) && (!nombreUnicoEntidadExterna.isEmpty())) {
+            if (Utilidades.validarNulo(nombreUnicoEntidadExterna) && (!nombreUnicoEntidadExterna.isEmpty())  && (nombreUnicoEntidadExterna.trim().length() > 0)) {
                 if (!Utilidades.validarCaracterString(nombreUnicoEntidadExterna)) {
                     validacionesNombreEntidad = false;
                     FacesContext.getCurrentInstance().addMessage("form:nombreUnicoEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -313,7 +313,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             }
         }
         if (tipo == 3) {
-            if (Utilidades.validarNulo(emailUnicoEntidadExterna) && (!emailUnicoEntidadExterna.isEmpty())) {
+            if (Utilidades.validarNulo(emailUnicoEntidadExterna) && (!emailUnicoEntidadExterna.isEmpty())  && (emailUnicoEntidadExterna.trim().length() > 0)) {
                 if (Utilidades.validarCorreoElectronico(emailUnicoEntidadExterna)) {
                     validacionesEmailEntidad = true;
                 } else {

@@ -82,10 +82,10 @@ public class ControllerAdministrarEdificios implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroDescripcion) == true) && (!parametroDescripcion.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroDescripcion) == true) && (!parametroDescripcion.isEmpty())  && (parametroDescripcion.trim().length() > 0)) {
             filtros.put("parametroDescripcion", parametroDescripcion.toString());
         }
-        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())  && (parametroDireccion.trim().length() > 0)) {
             filtros.put("parametroDireccion", parametroDireccion.toString());
         }
         if (Utilidades.validarNulo(parametroSede) == true) {

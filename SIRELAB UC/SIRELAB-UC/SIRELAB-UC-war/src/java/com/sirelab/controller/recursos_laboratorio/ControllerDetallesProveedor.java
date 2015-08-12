@@ -87,7 +87,7 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarNombreProveedor() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -101,7 +101,7 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarNITProveedor() {
-        if (Utilidades.validarNulo(editarNIT) && (!editarNIT.isEmpty())) {
+        if (Utilidades.validarNulo(editarNIT) && (!editarNIT.isEmpty())  && (editarNIT.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(editarNIT)) {
                 Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(editarNIT);
                 if (registro == null) {
@@ -125,7 +125,7 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarTelefonoProveedor() {
-        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty())) {
+        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty())  && (editarTelefono.trim().length() > 0)) {
             if ((Utilidades.isNumber(editarTelefono)) == false) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -139,7 +139,7 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarDireccionProveedor() {
-        if ((Utilidades.validarNulo(editarDireccion)) && (!editarDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(editarDireccion)) && (!editarDireccion.isEmpty())  && (editarDireccion.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(editarDireccion)) {
                 validacionesDireccion = true;
             } else {
@@ -151,7 +151,7 @@ public class ControllerDetallesProveedor implements Serializable {
 
     public void validarDatosOpcionales(int tipoReg) {
         if (tipoReg == 1) {
-            if (Utilidades.validarNulo(editarVendedor) && (!editarVendedor.isEmpty())) {
+            if (Utilidades.validarNulo(editarVendedor) && (!editarVendedor.isEmpty())  && (editarVendedor.trim().length() > 0)) {
                 if (Utilidades.validarCaracterString(editarVendedor)) {
                     validacionesVendedor = true;
                 } else {
@@ -160,7 +160,7 @@ public class ControllerDetallesProveedor implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(editarTelVendedor) && (!editarTelVendedor.isEmpty())) {
+            if (Utilidades.validarNulo(editarTelVendedor) && (!editarTelVendedor.isEmpty())  && (editarTelVendedor.trim().length() > 0)) {
                 if (Utilidades.isNumber(editarTelVendedor)) {
                     validacionesTelVendedor = true;
                 } else {

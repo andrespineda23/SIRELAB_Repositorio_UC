@@ -86,7 +86,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
     }
 
     public void validarCodigoRegistro() {
-        if (Utilidades.validarNulo(inputCodigoRegistro) && (!inputCodigoRegistro.isEmpty())) {
+        if (Utilidades.validarNulo(inputCodigoRegistro) && (!inputCodigoRegistro.isEmpty())  && (inputCodigoRegistro.trim().length() > 0)) {
             if (inputCodigo.equalsIgnoreCase("3")) {
                 Departamento registro = gestionarVariableTiposPerfilesBO.consultarDepartamentoPorCodigo(inputCodigoRegistro);
                 if (null != registro) {

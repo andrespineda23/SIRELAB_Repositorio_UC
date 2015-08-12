@@ -101,16 +101,16 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
      * Metodo encargado de agregar los valores al filtro de busqueda
      */
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre);
         }
-        if ((Utilidades.validarNulo(parametroApellido) == true) && (!parametroApellido.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroApellido) == true) && (!parametroApellido.isEmpty())  && (parametroApellido.trim().length() > 0)) {
             filtros.put("parametroApellido", parametroApellido);
         }
-        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty())  && (parametroDocumento.trim().length() > 0)) {
             filtros.put("parametroDocumento", parametroDocumento);
         }
-        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())  && (parametroCorreo.trim().length() > 0)) {
             filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
@@ -120,13 +120,13 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
                 filtros.put("parametroEstado", "false");
             }
         }
-        if ((Utilidades.validarNulo(parametroIDEntidad) == true) && (!parametroIDEntidad.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroIDEntidad) == true) && (!parametroIDEntidad.isEmpty())  && (parametroIDEntidad.trim().length() > 0)) {
             filtros.put("parametroIDEntidad", parametroIDEntidad);
         }
-        if ((Utilidades.validarNulo(parametroNombreEntidad) == true) && (!parametroNombreEntidad.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombreEntidad) == true) && (!parametroNombreEntidad.isEmpty())  && (parametroNombreEntidad.trim().length() > 0)) {
             filtros.put("parametroNombreEntidad", parametroNombreEntidad);
         }
-        if ((Utilidades.validarNulo(parametroEmailEntidad) == true) && (!parametroEmailEntidad.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroEmailEntidad) == true) && (!parametroEmailEntidad.isEmpty())  && (parametroEmailEntidad.trim().length() > 0)) {
             filtros.put("parametroEmailEntidad", parametroEmailEntidad);
         }
     }

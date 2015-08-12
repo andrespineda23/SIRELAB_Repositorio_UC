@@ -127,7 +127,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
     }
 
     public void validarNombreAsignatura() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(nuevoNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -141,7 +141,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
     }
 
     public void validarCodigoAsignatura() {
-        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())  && (nuevoCodigo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -155,7 +155,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
     }
 
     public void validarCreditosAsignatura() {
-        if (Utilidades.validarNulo(nuevoCredito) && (!nuevoCredito.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCredito) && (!nuevoCredito.isEmpty())  && (nuevoCredito.trim().length() > 0)) {
             if (Utilidades.isNumber(nuevoCredito) == true) {
                 validacionesCredito = true;
             } else {

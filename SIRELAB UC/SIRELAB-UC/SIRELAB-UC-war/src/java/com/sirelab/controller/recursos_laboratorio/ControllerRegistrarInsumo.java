@@ -87,7 +87,7 @@ public class ControllerRegistrarInsumo implements Serializable {
     }
 
     public void validarNombreInsumo() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -101,7 +101,7 @@ public class ControllerRegistrarInsumo implements Serializable {
     }
 
     public void validarCodigoInsumo() {
-        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())  && (nuevoCodigo.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                 validacionesCodigo = true;
             } else {
@@ -116,7 +116,7 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void validarCantidadesInsumo(int tipo) {
         if (tipo == 1) {
-            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty())  && (nuevoCantidadExistencia.trim().length() > 0)) {
                 if ((Utilidades.isNumber(nuevoCantidadExistencia)) == false) {
                     validacionesCantidadExistencia = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadExistencia", new FacesMessage("La cantidad ingresada se encuentra incorrecta."));
@@ -125,7 +125,7 @@ public class ControllerRegistrarInsumo implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty())  && (nuevoCantidadMin.trim().length() > 0)) {
                 if ((Utilidades.isNumber(nuevoCantidadMin)) == false) {
                     validacionesCantidadMin = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMin", new FacesMessage("La cantidad ingresada se encuentra incorrecta."));
@@ -138,7 +138,7 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void validarMarcaModeloInsumo(int tipo) {
         if (tipo == 1) {
-            if ((Utilidades.validarNulo(nuevoMarca)) && (!nuevoMarca.isEmpty())) {
+            if ((Utilidades.validarNulo(nuevoMarca)) && (!nuevoMarca.isEmpty())  && (nuevoMarca.trim().length() > 0)) {
                 if (Utilidades.validarCaracteresAlfaNumericos(nuevoMarca)) {
                     validacionesMarca = true;
                 } else {
@@ -148,7 +148,7 @@ public class ControllerRegistrarInsumo implements Serializable {
             }
         } else {
 
-            if ((Utilidades.validarNulo(nuevoModelo)) && (!nuevoModelo.isEmpty())) {
+            if ((Utilidades.validarNulo(nuevoModelo)) && (!nuevoModelo.isEmpty())  && (nuevoModelo.trim().length() > 0)) {
                 if (Utilidades.validarCaracteresAlfaNumericos(nuevoModelo)) {
                     validacionesModelo = true;
                 } else {
@@ -160,7 +160,7 @@ public class ControllerRegistrarInsumo implements Serializable {
     }
 
     public void validarDescripcionInsumo(int tipoReg) {
-        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())) {
+        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())  && (nuevoDescripcion.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) {
                 validacionesDescripcion = true;
             } else {
@@ -239,12 +239,12 @@ public class ControllerRegistrarInsumo implements Serializable {
             nuevaInsumo.setNombreinsumo(nuevoNombre);
             nuevaInsumo.setModeloinsumo(nuevoModelo);
             nuevaInsumo.setMarcainsumo(nuevoMarca);
-            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty())  && (nuevoCantidadExistencia.trim().length() > 0)) {
                 nuevaInsumo.setCantidadexistencia(Integer.valueOf(nuevoCantidadExistencia));
             } else {
                 nuevaInsumo.setCantidadexistencia(Integer.valueOf("0"));
             }
-            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty())) {
+            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty())  && (nuevoCantidadMin.trim().length() > 0)) {
                 nuevaInsumo.setCantidadminimia(Integer.valueOf(nuevoCantidadMin));
             } else {
                 nuevaInsumo.setCantidadminimia(Integer.valueOf("0"));

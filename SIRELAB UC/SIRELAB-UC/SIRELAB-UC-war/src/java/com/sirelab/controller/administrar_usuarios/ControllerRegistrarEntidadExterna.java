@@ -86,7 +86,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     }
 
     public void validarNombreEntidadExterna() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())) {
+        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())  && (inputNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -101,7 +101,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     }
 
     public void validarApellidoEntidadExterna() {
-        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())) {
+        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty())  && (inputApellido.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(inputApellido)) {
                 validacionesApellido = false;
                 FacesContext.getCurrentInstance().addMessage("form:inputApellido", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -115,7 +115,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     }
 
     public void validarCorreoEntidadExterna() {
-        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())) {
+        if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty())  && (inputEmail.trim().length() > 0)) {
             if (Utilidades.validarCorreoElectronico(inputEmail)) {
                 EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorCorreo(inputEmail);
                 if (null == registro) {
@@ -135,7 +135,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     }
 
     public void validarIdentificacionEntidadExterna() {
-        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())) {
+        if (Utilidades.validarNulo(inputID) && (!inputID.isEmpty())  && (inputID.trim().length() > 0)) {
             if (Utilidades.validarNumeroIdentificacion(inputID)) {
                 EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorDocumento(inputID);
                 if (null == registro) {
@@ -156,7 +156,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void validarDatosNumericosEntidadExterna(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty())  && (inputTelefono1.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono1)) == false) {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -165,7 +165,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())) {
+            if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty())  && (inputTelefono2.trim().length() > 0)) {
                 if ((Utilidades.isNumber(inputTelefono2)) == false) {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -177,7 +177,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     }
 
     public void validarDireccionEntidadExterna() {
-        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
+        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())  && (inputDireccion.trim().length() > 0)) {
             if (Utilidades.validarDirecciones(inputDireccion)) {
                 validacionesDireccion = true;
             } else {
@@ -189,7 +189,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void validarDatosEntidadExterna(int tipo) {
         if (tipo == 1) {
-            if (Utilidades.validarNulo(inputIDEntidad) && (!inputIDEntidad.isEmpty())) {
+            if (Utilidades.validarNulo(inputIDEntidad) && (!inputIDEntidad.isEmpty())  && (inputIDEntidad.trim().length() > 0)) {
                 if (Utilidades.validarCaracteresAlfaNumericos(inputIDEntidad)) {
                     EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorIdentificacion(inputIDEntidad);
                     if (null == registro) {
@@ -208,7 +208,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             }
         }
         if (tipo == 2) {
-            if (Utilidades.validarNulo(inputNombreEntidad) && (!inputNombreEntidad.isEmpty())) {
+            if (Utilidades.validarNulo(inputNombreEntidad) && (!inputNombreEntidad.isEmpty())  && (inputNombreEntidad.trim().length() > 0)) {
                 if (!Utilidades.validarCaracterString(inputNombreEntidad)) {
                     validacionesNombreEntidad = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputNombreEntidad", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -218,7 +218,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             }
         }
         if (tipo == 3) {
-            if (Utilidades.validarNulo(inputEmailEntidad) && (!inputEmailEntidad.isEmpty())) {
+            if (Utilidades.validarNulo(inputEmailEntidad) && (!inputEmailEntidad.isEmpty())  && (inputEmailEntidad.trim().length() > 0)) {
                 if (Utilidades.validarCorreoElectronico(inputEmailEntidad)) {
                     validacionesEmailEntidad = true;
                 } else {
@@ -361,29 +361,29 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             personaNueva.setEmailsecundario(inputEmail);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
-            if ((Utilidades.validarNulo(inputTelefono1)) && (!inputTelefono1.isEmpty())) {
+            if ((Utilidades.validarNulo(inputTelefono1)) && (!inputTelefono1.isEmpty())  && (inputTelefono1.trim().length() > 0)) {
                 personaNueva.setTelefono1persona(inputTelefono1);
             } else {
                 personaNueva.setTelefono1persona("");
             }
-            if ((Utilidades.validarNulo(inputTelefono2)) && (!inputTelefono2.isEmpty())) {
+            if ((Utilidades.validarNulo(inputTelefono2)) && (!inputTelefono2.isEmpty())  && (inputTelefono2.trim().length() > 0)) {
                 personaNueva.setTelefono2persona(inputTelefono2);
             } else {
                 personaNueva.setTelefono2persona("");
             }
-            if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())) {
+            if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty())  && (inputDireccion.trim().length() > 0)) {
                 personaNueva.setDireccionpersona(inputDireccion);
             } else {
                 personaNueva.setDireccionpersona("");
             }
             EntidadExterna entidadexternaNueva = new EntidadExterna();
-            if ((Utilidades.validarNulo(inputEmailEntidad)) && (!inputEmailEntidad.isEmpty())) {
+            if ((Utilidades.validarNulo(inputEmailEntidad)) && (!inputEmailEntidad.isEmpty())  && (inputEmailEntidad.trim().length() > 0)) {
                 entidadexternaNueva.setEmailentidad(inputEmailEntidad);
             } else {
                 entidadexternaNueva.setEmailentidad("");
             }
             entidadexternaNueva.setIdentificacionentidad(inputIDEntidad);
-            if ((Utilidades.validarNulo(inputNombreEntidad)) && (!inputNombreEntidad.isEmpty())) {
+            if ((Utilidades.validarNulo(inputNombreEntidad)) && (!inputNombreEntidad.isEmpty())  && (inputNombreEntidad.trim().length() > 0)) {
                 entidadexternaNueva.setNombreentidad(inputNombreEntidad);
             } else {
                 entidadexternaNueva.setNombreentidad("");

@@ -86,7 +86,7 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarNombreComponente() {
-        if (Utilidades.validarNulo(editarNombreComponente) && (!editarNombreComponente.isEmpty())) {
+        if (Utilidades.validarNulo(editarNombreComponente) && (!editarNombreComponente.isEmpty())  && (editarNombreComponente.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombreComponente)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -101,7 +101,7 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarCodigoComponente() {
-        if (Utilidades.validarNulo(editarCodigoComponente) && (!editarCodigoComponente.isEmpty())) {
+        if (Utilidades.validarNulo(editarCodigoComponente) && (!editarCodigoComponente.isEmpty())  && (editarCodigoComponente.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigoComponente)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -116,7 +116,7 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarMarcaComponente() {
-        if (Utilidades.validarNulo(editarMarcaComponente) && (!editarMarcaComponente.isEmpty())) {
+        if (Utilidades.validarNulo(editarMarcaComponente) && (!editarMarcaComponente.isEmpty())  && (editarMarcaComponente.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(editarMarcaComponente)) {
                 validacionesMarca = true;
             } else {
@@ -131,7 +131,7 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarSerialComponente() {
-        if (Utilidades.validarNulo(editarSerialComponente) && (!editarSerialComponente.isEmpty())) {
+        if (Utilidades.validarNulo(editarSerialComponente) && (!editarSerialComponente.isEmpty())  && (editarSerialComponente.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(editarSerialComponente)) {
                 validacionesSerial = true;
             } else {
@@ -146,7 +146,7 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarModeloComponente() {
-        if (Utilidades.validarNulo(editarModeloComponente) && (!editarModeloComponente.isEmpty())) {
+        if (Utilidades.validarNulo(editarModeloComponente) && (!editarModeloComponente.isEmpty())  && (editarModeloComponente.trim().length() > 0)) {
             if ((Utilidades.validarCaracteresAlfaNumericos(editarModeloComponente)) == false) {
                 validacionesModelo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
@@ -161,7 +161,7 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarDescripcionComponente() {
-        if (Utilidades.validarNulo(editarDescripcionComponente) && (!editarDescripcionComponente.isEmpty())) {
+        if (Utilidades.validarNulo(editarDescripcionComponente) && (!editarDescripcionComponente.isEmpty())  && (editarDescripcionComponente.trim().length() > 0)) {
             if ((Utilidades.validarCaracteresAlfaNumericos(editarDescripcionComponente)) == false) {
                 validacionesDescripcion = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("La descripción se encuentra incorrecta."));

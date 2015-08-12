@@ -250,7 +250,7 @@ public class ControllerDetallesModulo implements Serializable {
     }
 
     public void validarDetalleModulo() {
-        if (Utilidades.validarNulo(detalleModuloLaboratorio) && (!detalleModuloLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(detalleModuloLaboratorio) && (!detalleModuloLaboratorio.isEmpty())  && (detalleModuloLaboratorio.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(detalleModuloLaboratorio)) {
                 validacionesDetalle = false;
                 FacesContext.getCurrentInstance().addMessage("form:detalleModuloLaboratorio", new FacesMessage("El detalle ingresado es incorrecto."));
@@ -265,7 +265,7 @@ public class ControllerDetallesModulo implements Serializable {
     }
 
     public void validarCodigoModulo() {
-        if (Utilidades.validarNulo(codigoModuloLaboratorio) && (!codigoModuloLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(codigoModuloLaboratorio) && (!codigoModuloLaboratorio.isEmpty())  && (codigoModuloLaboratorio.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(codigoModuloLaboratorio)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:codigoModuloLaboratorio", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -280,7 +280,7 @@ public class ControllerDetallesModulo implements Serializable {
     }
 
     public void validarCostoAlquilerModulo() {
-        if (Utilidades.validarNulo(costoModuloLaboratorio) && (!costoModuloLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(costoModuloLaboratorio) && (!costoModuloLaboratorio.isEmpty())  && (costoModuloLaboratorio.trim().length() > 0)) {
             if (Utilidades.isNumber(costoModuloLaboratorio)) {
                 validacionesCosto = true;
             } else {
@@ -292,7 +292,7 @@ public class ControllerDetallesModulo implements Serializable {
     }
 
     public void validarCapacidadModulo() {
-        if (Utilidades.validarNulo(capacidadModuloLaboratorio) && (!capacidadModuloLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(capacidadModuloLaboratorio) && (!capacidadModuloLaboratorio.isEmpty())  && (capacidadModuloLaboratorio.trim().length() > 0)) {
             if ((Utilidades.isNumber(capacidadModuloLaboratorio)) == false) {
                 validacionesCapacidad = false;
                 FacesContext.getCurrentInstance().addMessage("form:capacidadModuloLaboratorio", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
@@ -304,7 +304,7 @@ public class ControllerDetallesModulo implements Serializable {
     }
 
     public void validarInversionModulo() {
-        if (Utilidades.validarNulo(inversionModuloLaboratorio) && (!inversionModuloLaboratorio.isEmpty())) {
+        if (Utilidades.validarNulo(inversionModuloLaboratorio) && (!inversionModuloLaboratorio.isEmpty())  && (inversionModuloLaboratorio.trim().length() > 0)) {
             if ((Utilidades.isNumber(inversionModuloLaboratorio)) == false) {
                 validacionesInversion = false;
                 FacesContext.getCurrentInstance().addMessage("form:inversionModuloLaboratorio", new FacesMessage("El valor de inversión se encuentra incorrecto."));

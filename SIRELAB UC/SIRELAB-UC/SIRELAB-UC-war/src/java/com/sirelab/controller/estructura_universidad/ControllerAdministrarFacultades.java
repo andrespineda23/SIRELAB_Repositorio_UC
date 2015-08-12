@@ -70,10 +70,10 @@ public class ControllerAdministrarFacultades implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
     }
