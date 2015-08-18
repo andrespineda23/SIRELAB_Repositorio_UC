@@ -115,27 +115,11 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
     }
 
     @Override
-    public void crearAsignaturaPorPlanEstudio(Asignatura asignatura, PlanEstudios planEstudios) {
+    public void crearAsignatura(Asignatura asignatura) {
         try {
             asignaturaDAO.crearAsignatura(asignatura);
-            Asignatura nuevo = asignaturaDAO.obtenerUltimaAsignaturaRegistrada();
-            AsignaturaPorPlanEstudio asignaturaPorPlanEstudio = new AsignaturaPorPlanEstudio();
-            asignaturaPorPlanEstudio.setAsignatura(nuevo);
-            asignaturaPorPlanEstudio.setPlanestudio(planEstudios);
-            asignaturaPorPlanEstudioDAO.crearAsignaturaPorPlanEstudio(asignaturaPorPlanEstudio);
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO crearAsignaturaPorPlanEstudio : " + e.toString());
-        }
-    }
-
-    @Override
-    public AsignaturaPorPlanEstudio consultarAsignaturaPorPlanEstudioRegistrado(BigInteger plan, String codigo) {
-        try {
-            AsignaturaPorPlanEstudio registro = asignaturaPorPlanEstudioDAO.buscarAsignaturaPorPlanEstudioPorPlanYAsignatura(plan, codigo);
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO consultarAsignaturaPorPlanEstudioRegistrado : " + e.toString());
-            return null;
+            System.out.println("Error GestionarAsignaturasBO crearAsignatura : " + e.toString());
         }
     }
 

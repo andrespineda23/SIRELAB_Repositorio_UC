@@ -34,20 +34,10 @@ public class ControllerRegistrarAsignatura implements Serializable {
     @EJB
     GestionarAsignaturasBOInterface gestionarAsignaturasBO;
 
-    private List<Departamento> listaDepartamentos;
-    private List<Carrera> listaCarreras;
-    private List<PlanEstudios> listaPlanesEstudios;
-    //
-    private boolean activarNuevoCarrera;
-    private boolean activarNuevoPlanEstudio;
     //
     private String nuevoNombre, nuevoCredito, nuevoCodigo;
-    private Departamento nuevoDepartamento;
-    private Carrera nuevoCarrera;
-    private PlanEstudios nuevoPlanEstudio;
     //
     private boolean validacionesNombre, validacionesCredito, validacionesCodigo;
-    private boolean validacionesDepartamento, validacionesCarrera, validacionesPlanEstudio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -65,66 +55,13 @@ public class ControllerRegistrarAsignatura implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
-        activarNuevoCarrera = true;
-        activarNuevoPlanEstudio = true;
-        nuevoCarrera = null;
         nuevoCodigo = null;
         nuevoCredito = null;
-        nuevoDepartamento = null;
         nuevoNombre = null;
-        nuevoPlanEstudio = null;
-        validacionesCarrera = false;
         validacionesCodigo = false;
         validacionesCredito = false;
-        validacionesDepartamento = false;
         validacionesNombre = false;
-        validacionesPlanEstudio = false;
         BasicConfigurator.configure();
-    }
-
-    public void actualizarDepartamentos() {
-        if (Utilidades.validarNulo(nuevoDepartamento)) {
-            nuevoCarrera = null;
-            listaCarreras = gestionarAsignaturasBO.consultarCarrerasPorIDDepartamento(nuevoDepartamento.getIddepartamento());
-            activarNuevoCarrera = false;
-            listaPlanesEstudios = null;
-            nuevoPlanEstudio = null;
-            activarNuevoPlanEstudio = true;
-            validacionesDepartamento = true;
-        } else {
-            validacionesCarrera = false;
-            validacionesDepartamento = false;
-            validacionesPlanEstudio = false;
-            nuevoCarrera = null;
-            listaCarreras = null;
-            listaPlanesEstudios = null;
-            nuevoPlanEstudio = null;
-            activarNuevoCarrera = true;
-            activarNuevoPlanEstudio = true;
-        }
-    }
-
-    public void actualizarCarreras() {
-        if (Utilidades.validarNulo(nuevoCarrera)) {
-            nuevoPlanEstudio = null;
-            listaPlanesEstudios = gestionarAsignaturasBO.consultarPlanesEstudiosPorIDCarrera(nuevoCarrera.getIdcarrera());
-            activarNuevoPlanEstudio = false;
-            validacionesCarrera = true;
-        } else {
-            validacionesCarrera = false;
-            validacionesPlanEstudio = false;
-            listaPlanesEstudios = null;
-            nuevoPlanEstudio = null;
-            activarNuevoPlanEstudio = true;
-        }
-    }
-
-    public void actualizarPlanEstudios() {
-        if (Utilidades.validarNulo(nuevoPlanEstudio)) {
-            validacionesPlanEstudio = true;
-        } else {
-            validacionesPlanEstudio = false;
-        }
     }
 
     public void validarNombreAsignatura() {
@@ -180,21 +117,13 @@ public class ControllerRegistrarAsignatura implements Serializable {
         if (validacionesCredito == false) {
             retorno = false;
         }
-        if (validacionesDepartamento == false) {
-            retorno = false;
-        }
-        if (validacionesPlanEstudio == false) {
-            retorno = false;
-        }
-        if (validacionesCarrera == false) {
-            retorno = false;
-        }
+
         return retorno;
     }
 
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
-        AsignaturaPorPlanEstudio asignatura = gestionarAsignaturasBO.consultarAsignaturaPorPlanEstudioRegistrado(nuevoPlanEstudio.getIdplanestudios(), nuevoCodigo);
+        Asignatura asignatura = gestionarAsignaturasBO.obtenerAsignaturaPorCodigo(nuevoCodigo);
         if (null != asignatura) {
             retorno = false;
         }
@@ -229,7 +158,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
             asignaturaNueva.setEstado(true);
             Integer creditos = Integer.valueOf(nuevoCredito);
             asignaturaNueva.setNumerocreditos(creditos.intValue());
-            gestionarAsignaturasBO.crearAsignaturaPorPlanEstudio(asignaturaNueva, nuevoPlanEstudio);
+            gestionarAsignaturasBO.crearAsignatura(asignaturaNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema : " + e.toString());
@@ -237,46 +166,27 @@ public class ControllerRegistrarAsignatura implements Serializable {
     }
 
     public void limpiarFormulario() {
-        activarNuevoCarrera = true;
-        activarNuevoPlanEstudio = true;
-        nuevoCarrera = null;
         nuevoCodigo = null;
         nuevoCredito = null;
-        nuevoDepartamento = null;
         nuevoNombre = null;
-        nuevoPlanEstudio = null;
-        validacionesCarrera = false;
         validacionesCodigo = false;
         validacionesCredito = false;
-        validacionesDepartamento = false;
         validacionesNombre = false;
-        validacionesPlanEstudio = false;
         mensajeFormulario = "";
     }
 
     public void cancelarRegistroPlanEstudio() {
-        activarNuevoCarrera = true;
-        activarNuevoPlanEstudio = true;
-        nuevoCarrera = null;
         nuevoCodigo = null;
         nuevoCredito = null;
-        nuevoDepartamento = null;
         nuevoNombre = null;
-        nuevoPlanEstudio = null;
-        validacionesCarrera = false;
         validacionesCodigo = false;
         validacionesCredito = false;
-        validacionesDepartamento = false;
         validacionesNombre = false;
-        validacionesPlanEstudio = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
         activarAceptar = false;
         activarCasillas = false;
-        listaCarreras = null;
-        listaDepartamentos = null;
-        listaPlanesEstudios = null;
     }
 
     public void cambiarActivarCasillas() {
@@ -290,49 +200,6 @@ public class ControllerRegistrarAsignatura implements Serializable {
     }
 
     //GET-SET
-    public List<Departamento> getListaDepartamentos() {
-        if (listaDepartamentos == null) {
-            listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
-        }
-        return listaDepartamentos;
-    }
-
-    public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
-        this.listaDepartamentos = listaDepartamentos;
-    }
-
-    public List<Carrera> getListaCarreras() {
-        return listaCarreras;
-    }
-
-    public void setListaCarreras(List<Carrera> listaCarreras) {
-        this.listaCarreras = listaCarreras;
-    }
-
-    public List<PlanEstudios> getListaPlanesEstudios() {
-        return listaPlanesEstudios;
-    }
-
-    public void setListaPlanesEstudios(List<PlanEstudios> listaPlanesEstudios) {
-        this.listaPlanesEstudios = listaPlanesEstudios;
-    }
-
-    public boolean isActivarNuevoCarrera() {
-        return activarNuevoCarrera;
-    }
-
-    public void setActivarNuevoCarrera(boolean activarNuevoCarrera) {
-        this.activarNuevoCarrera = activarNuevoCarrera;
-    }
-
-    public boolean isActivarNuevoPlanEstudio() {
-        return activarNuevoPlanEstudio;
-    }
-
-    public void setActivarNuevoPlanEstudio(boolean activarNuevoPlanEstudio) {
-        this.activarNuevoPlanEstudio = activarNuevoPlanEstudio;
-    }
-
     public String getNuevoNombre() {
         return nuevoNombre;
     }
@@ -355,30 +222,6 @@ public class ControllerRegistrarAsignatura implements Serializable {
 
     public void setNuevoCodigo(String nuevoCodigo) {
         this.nuevoCodigo = nuevoCodigo;
-    }
-
-    public Departamento getNuevoDepartamento() {
-        return nuevoDepartamento;
-    }
-
-    public void setNuevoDepartamento(Departamento nuevoDepartamento) {
-        this.nuevoDepartamento = nuevoDepartamento;
-    }
-
-    public Carrera getNuevoCarrera() {
-        return nuevoCarrera;
-    }
-
-    public void setNuevoCarrera(Carrera nuevoCarrera) {
-        this.nuevoCarrera = nuevoCarrera;
-    }
-
-    public PlanEstudios getNuevoPlanEstudio() {
-        return nuevoPlanEstudio;
-    }
-
-    public void setNuevoPlanEstudio(PlanEstudios nuevoPlanEstudio) {
-        this.nuevoPlanEstudio = nuevoPlanEstudio;
     }
 
     public String getMensajeFormulario() {

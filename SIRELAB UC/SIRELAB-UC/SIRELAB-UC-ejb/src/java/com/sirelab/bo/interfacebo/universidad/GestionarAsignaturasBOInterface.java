@@ -35,8 +35,5 @@ public interface GestionarAsignaturasBOInterface {
 
     public Asignatura obtenerAsignaturaPorCodigo(String codigo);
 
-    public void crearAsignaturaPorPlanEstudio(Asignatura asignatura, PlanEstudios planEstudios);
-
-    public AsignaturaPorPlanEstudio consultarAsignaturaPorPlanEstudioRegistrado(BigInteger plan, String codigo);
-
+    public void crearAsignatura(Asignatura asignatura);
 }

@@ -98,46 +98,10 @@
                                     </h:inputText>
                                     <h6><h:message id="msnCredito" for="nuevoCredito" style="color: red"/></h6>
                                 </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Departamento*"/></strong>
-                                    <h:selectOneMenu value="#{controllerRegistrarAsignatura.nuevoDepartamento}"
-                                                     class="form-control"  disabled="#{controllerRegistrarAsignatura.activarCasillas}"
-                                                     id="nuevoDepartamento">
-                                        <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
-                                        <f:selectItems value="#{controllerRegistrarAsignatura.listaDepartamentos}" var="departamento"
-                                                       itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
-                                        <f:converter converterId="ConverterGenerico" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarAsignatura.actualizarDepartamentos()}" execute="nuevoDepartamento" render="msnDepartamento nuevoCarrera nuevoPlanEstudio"/>
-                                    </h:selectOneMenu>
-                                    <h6><h:message id="msnDepartamento" for="nuevoDepartamento" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Carrera*"/></strong>
-                                    <h:selectOneMenu value="#{controllerRegistrarAsignatura.nuevoCarrera}"
-                                                     class="form-control" disabled="#{controllerRegistrarAsignatura.activarNuevoCarrera}"
-                                                     id="nuevoCarrera">
-                                        <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
-                                        <f:selectItems value="#{controllerRegistrarAsignatura.listaCarreras}" var="carrera"
-                                                       itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
-                                        <f:converter converterId="ConverterGenerico" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarAsignatura.actualizarCarreras()}" execute="nuevoCarrera" render="msnCarrera nuevoPlanEstudio"/>
-                                    </h:selectOneMenu>
-                                    <h6><h:message id="msnCarrera" for="nuevoCarrera" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Plan de Estudio*"/></strong>
-                                    <h:selectOneMenu value="#{controllerRegistrarAsignatura.nuevoPlanEstudio}"
-                                                     class="form-control" disabled="#{controllerRegistrarAsignatura.activarNuevoPlanEstudio}"
-                                                     id="nuevoPlanEstudio">
-                                        <f:selectItem itemLabel="Seleccione Plan Estudio" itemValue="null" />
-                                        <f:selectItems value="#{controllerRegistrarAsignatura.listaPlanesEstudios}" var="plan"
-                                                       itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
-                                        <f:converter converterId="ConverterGenerico" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarAsignatura.actualizarPlanEstudios()}" execute="nuevoPlanEstudio" render="msnPlanEstudio"/>
-                                    </h:selectOneMenu>
-                                    <h6><h:message id="msnPlanEstudio" for="nuevoPlanEstudio" style="color: red"/></h6>
-                                </div>
                             </fieldset>
+                            <br></br>
+                            <br></br>
+                            <br></br>
                             <br></br>
                             <br></br>
                             <hr class="intro-divider"/>
