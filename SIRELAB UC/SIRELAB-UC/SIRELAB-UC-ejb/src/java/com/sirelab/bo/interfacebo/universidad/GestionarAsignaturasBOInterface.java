@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo.universidad;
 
 import com.sirelab.entidades.Asignatura;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
@@ -28,11 +29,14 @@ public interface GestionarAsignaturasBOInterface {
 
     public List<Asignatura> consultarAsignaturasPorParametro(Map<String, String> filtros);
 
-    public void crearNuevoAsignatura(Asignatura asignatura);
-
     public void modificarInformacionAsignatura(Asignatura asignatura);
 
     public Asignatura obtenerAsignaturaPorIDAsignatura(BigInteger idAsignatura);
 
-    public Asignatura obtenerAsignaturaPorCodigoYPlanEstudio(String codigo, BigInteger plan);
+    public Asignatura obtenerAsignaturaPorCodigo(String codigo);
+
+    public void crearAsignaturaPorPlanEstudio(Asignatura asignatura, PlanEstudios planEstudios);
+
+    public AsignaturaPorPlanEstudio consultarAsignaturaPorPlanEstudioRegistrado(BigInteger plan, String codigo);
+
 }

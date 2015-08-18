@@ -96,7 +96,6 @@
                                     <h:selectOneMenu value="#{controllerDetallesGuiaLaboratorio.editarCarrera}"
                                                      class="form-control"  
                                                      id="editarCarrera">
-                                        <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
                                         <f:selectItems value="#{controllerDetallesGuiaLaboratorio.listaCarreras}" var="departamento"
                                                        itemLabel="#{departamento.nombrecarrera}" itemValue="#{departamento}"/>
                                         <f:converter converterId="ConverterGenerico" />
@@ -124,7 +123,7 @@
                                                      id="editarAsignatura">
                                         <f:selectItem itemLabel="Seleccione Asignatura" itemValue="null" />
                                         <f:selectItems value="#{controllerDetallesGuiaLaboratorio.listaAsignaturas}" var="asignatura"
-                                                       itemLabel="#{asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
+                                                       itemLabel="#{asignatura.asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
                                         <f:converter converterId="ConverterGenerico" />
                                         <f:ajax event="change" listener="#{controllerDetallesGuiaLaboratorio.actualizarAsignatura()}" execute="editarAsignatura" render="msnAsignatura"/>
                                     </h:selectOneMenu>

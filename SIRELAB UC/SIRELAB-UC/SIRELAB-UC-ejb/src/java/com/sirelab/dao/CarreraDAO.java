@@ -55,7 +55,7 @@ public class CarreraDAO implements CarreraDAOInterface {
     public List<Carrera> consultarCarreras() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Carrera p");
+            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Carrera> lista = query.getResultList();
             return lista;
@@ -79,7 +79,7 @@ public class CarreraDAO implements CarreraDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Carrera buscarCarreraPorCodigoYDepartamento(String codigo, BigInteger departamento) {
         try {
@@ -95,8 +95,7 @@ public class CarreraDAO implements CarreraDAOInterface {
             return null;
         }
     }
-    
-    
+
     @Override
     public Carrera buscarCarreraPorCodigo(String codigo) {
         try {
@@ -180,6 +179,11 @@ public class CarreraDAO implements CarreraDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -205,6 +209,10 @@ public class CarreraDAO implements CarreraDAOInterface {
                         || ("parametroFacultad".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
+                }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    //
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
 
             }

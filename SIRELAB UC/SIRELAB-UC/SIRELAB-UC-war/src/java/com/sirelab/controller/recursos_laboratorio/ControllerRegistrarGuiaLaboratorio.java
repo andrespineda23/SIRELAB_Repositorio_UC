@@ -6,7 +6,7 @@
 package com.sirelab.controller.recursos_laboratorio;
 
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoGuiasLaboratorioBOInterface;
-import com.sirelab.entidades.Asignatura;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.entidades.PlanEstudios;
@@ -42,11 +42,11 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     private Part archivo;
     private List<Carrera> listaCarreras;
     private List<PlanEstudios> listaPlanEstudios;
-    private List<Asignatura> listaAsignaturas;
+    private List<AsignaturaPorPlanEstudio> listaAsignaturas;
     private Carrera nuevoCarrera;
     private PlanEstudios nuevoPlanEstudio;
     private boolean activarPlan;
-    private Asignatura nuevoAsignatura;
+    private AsignaturaPorPlanEstudio nuevoAsignatura;
     private boolean activarAsignatura;
     private boolean validacionesNombre, validacionesDescripcion, validacionesArchivo;
     private boolean validacionesCarrera, validacionesPlan, validacionesAsignatura;
@@ -88,7 +88,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     }
 
     public void validarNombreGuiaLaboratorio() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -103,7 +103,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     }
 
     public void validarDescripcionGuiaLaboratorio() {
-        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())  && (nuevoDescripcion.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty()) && (nuevoDescripcion.trim().length() > 0)) {
             validacionesDescripcion = true;
         } else {
             validacionesDescripcion = false;
@@ -163,7 +163,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     public void actualizarPlanEstudios() {
         if (Utilidades.validarNulo(nuevoPlanEstudio)) {
             nuevoAsignatura = null;
-            listaAsignaturas = gestionarRecursoGuiaLaboratorioBO.consultarAsignaturasPorPlanEstudio(nuevoPlanEstudio.getIdplanestudios());
+            listaAsignaturas = gestionarRecursoGuiaLaboratorioBO.consultarAsignaturaPorPlanEstudioPorIDPlan(nuevoPlanEstudio.getIdplanestudios());
             activarAsignatura = false;
             validacionesPlan = true;
         } else {
@@ -253,7 +253,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             guiaNuevo.setNombreguia(nuevoNombre);
             guiaNuevo.setDescripcion(nuevoDescripcion);
             guiaNuevo.setUbicacionguia(rutaArchivo);
-            guiaNuevo.setAsignatura(nuevoAsignatura);
+            guiaNuevo.setAsignaturaporplanestudio(nuevoAsignatura);
             gestionarRecursoGuiaLaboratorioBO.crearGuiaLaboratorio(guiaNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema:  " + e.toString());
@@ -370,12 +370,20 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         this.listaPlanEstudios = listaPlanEstudios;
     }
 
-    public List<Asignatura> getListaAsignaturas() {
+    public List<AsignaturaPorPlanEstudio> getListaAsignaturas() {
         return listaAsignaturas;
     }
 
-    public void setListaAsignaturas(List<Asignatura> listaAsignaturas) {
+    public void setListaAsignaturas(List<AsignaturaPorPlanEstudio> listaAsignaturas) {
         this.listaAsignaturas = listaAsignaturas;
+    }
+
+    public AsignaturaPorPlanEstudio getNuevoAsignatura() {
+        return nuevoAsignatura;
+    }
+
+    public void setNuevoAsignatura(AsignaturaPorPlanEstudio nuevoAsignatura) {
+        this.nuevoAsignatura = nuevoAsignatura;
     }
 
     public Carrera getNuevoCarrera() {
@@ -400,14 +408,6 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     public void setActivarPlan(boolean activarPlan) {
         this.activarPlan = activarPlan;
-    }
-
-    public Asignatura getNuevoAsignatura() {
-        return nuevoAsignatura;
-    }
-
-    public void setNuevoAsignatura(Asignatura nuevoAsignatura) {
-        this.nuevoAsignatura = nuevoAsignatura;
     }
 
     public boolean isActivarAsignatura() {

@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,15 +31,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ReservaSala.findAll", query = "SELECT r FROM ReservaSala r"),
-    @NamedQuery(name = "ReservaSala.findByIdreservasala", query = "SELECT r FROM ReservaSala r WHERE r.idreservasala = :idreservasala")})
+    @NamedQuery(name = "ReservaSala.findByIdreservasala", query = "SELECT r FROM ReservaSala r WHERE r.idreservasala = :idreservasala"),
+    @NamedQuery(name = "ReservaSala.findByTiporeservasala", query = "SELECT r FROM ReservaSala r WHERE r.tiporeservasala = :tiporeservasala")})
 public class ReservaSala implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idreservasala")
     private BigInteger idreservasala;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tiporeservasala")
+    private String tiporeservasala;
     @JoinColumn(name = "salalaboratorio", referencedColumnName = "idsalalaboratorio")
     @ManyToOne(optional = false)
     private SalaLaboratorio salalaboratorio;
@@ -47,9 +54,9 @@ public class ReservaSala implements Serializable {
     @JoinColumn(name = "guialaboratorio", referencedColumnName = "idguialaboratorio")
     @ManyToOne(optional = false)
     private GuiaLaboratorio guialaboratorio;
-    @JoinColumn(name = "asignatura", referencedColumnName = "idasignatura")
+    @JoinColumn(name = "asignaturaporplanestudio", referencedColumnName = "idasignaturaporplanestudio")
     @ManyToOne(optional = false)
-    private Asignatura asignatura;
+    private AsignaturaPorPlanEstudio asignaturaporplanestudio;
 
     public ReservaSala() {
     }
@@ -64,6 +71,14 @@ public class ReservaSala implements Serializable {
 
     public void setIdreservasala(BigInteger idreservasala) {
         this.idreservasala = idreservasala;
+    }
+
+    public String getTiporeservasala() {
+        return tiporeservasala;
+    }
+
+    public void setTiporeservasala(String tiporeservasala) {
+        this.tiporeservasala = tiporeservasala;
     }
 
     public SalaLaboratorio getSalalaboratorio() {
@@ -90,12 +105,12 @@ public class ReservaSala implements Serializable {
         this.guialaboratorio = guialaboratorio;
     }
 
-    public Asignatura getAsignatura() {
-        return asignatura;
+    public AsignaturaPorPlanEstudio getAsignaturaporplanestudio() {
+        return asignaturaporplanestudio;
     }
 
-    public void setAsignatura(Asignatura asignatura) {
-        this.asignatura = asignatura;
+    public void setAsignaturaporplanestudio(AsignaturaPorPlanEstudio asignaturaporplanestudio) {
+        this.asignaturaporplanestudio = asignaturaporplanestudio;
     }
 
     @Override
@@ -122,5 +137,5 @@ public class ReservaSala implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.ReservaSala[ idreservasala=" + idreservasala + " ]";
     }
-
+    
 }

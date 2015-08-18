@@ -55,7 +55,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
     public List<Laboratorio> consultarLaboratorios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Laboratorio p");
+            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Laboratorio> lista = query.getResultList();
             return lista;
@@ -79,7 +79,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Laboratorio buscarLaboratorioPorCodigoYDepartamento(String codigo, BigInteger departamento) {
         try {
@@ -95,7 +95,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Laboratorio buscarLaboratorioPorCodigo(String codigo) {
         try {
@@ -179,6 +179,11 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -205,6 +210,9 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
                         || ("parametroFacultad".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
+                }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
 
             }

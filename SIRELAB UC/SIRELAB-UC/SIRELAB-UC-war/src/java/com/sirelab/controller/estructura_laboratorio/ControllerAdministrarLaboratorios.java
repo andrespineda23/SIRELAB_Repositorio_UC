@@ -67,6 +67,7 @@ public class ControllerAdministrarLaboratorios implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private TipoPerfil tipoPerfil;
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarLaboratorios() {
     }
@@ -158,15 +159,16 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         filtros.put("parametroNombre", null);
         filtros.put("parametroCodigo", null);
         filtros.put("parametroDepartamento", null);
+        filtros.put("parametroEstado", null);
         filtros.put("parametroFacultad", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
         if (Utilidades.validarNulo(parametroFacultad) == true) {
@@ -177,6 +179,13 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         if (Utilidades.validarNulo(parametroDepartamento) == true) {
             if (parametroDepartamento.getIddepartamento() != null) {
                 filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
             }
         }
     }
@@ -275,6 +284,7 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         activarDepartamento = true;
         parametroCodigo = null;
         activarExport = true;
+        parametroEstado = 1;
         parametroNombre = null;
         parametroDepartamento = new Departamento();
         parametroFacultad = new Facultad();
@@ -295,6 +305,7 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         activarDepartamento = true;
         parametroCodigo = null;
         activarExport = true;
+        parametroEstado = 1;
         parametroNombre = null;
         parametroDepartamento = new Departamento();
         parametroFacultad = new Facultad();
@@ -479,6 +490,14 @@ public class ControllerAdministrarLaboratorios implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Facultad.findByNombrefacultad", query = "SELECT f FROM Facultad f WHERE f.nombrefacultad = :nombrefacultad")})
 public class Facultad implements Serializable {
 
+    @Column(name = "estado")
+    private Boolean estado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +60,8 @@ public class Facultad implements Serializable {
     private String nombrefacultad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultad")
     private Collection<Departamento> departamentoCollection;
+    @Transient
+    private String strEstado;
 
     public Facultad() {
     }
@@ -132,6 +138,30 @@ public class Facultad implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Facultad[ idfacultad=" + idfacultad + " ]";
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
 }

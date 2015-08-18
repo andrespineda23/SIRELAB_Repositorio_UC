@@ -30,18 +30,6 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     GestionarAsignaturasBOInterface gestionarAsignaturasBO;
 
     private String parametroNombre, parametroCreditos, parametroCodigo;
-    private List<Departamento> listaDepartamentos;
-    private Departamento parametroDepartamento;
-    private List<Carrera> listaCarreras;
-    private Carrera parametroCarrera;
-    private List<PlanEstudios> listaPlanesEstudios;
-    private PlanEstudios parametroPlanEstudio;
-    private boolean activarDepartamento;
-    private boolean activarCarrera;
-    private boolean activarPlanEstudio;
-    private boolean activarNuevoDepartamento;
-    private boolean activarNuevoCarrera;
-    private boolean activarNuevoPlanEstudio;
     //
     private Map<String, String> filtros;
     //
@@ -56,6 +44,7 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarAsignaturas() {
     }
@@ -63,67 +52,46 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     @PostConstruct
     public void init() {
         cantidadRegistros = "N/A";
-        activarDepartamento = true;
-        activarCarrera = true;
-        activarPlanEstudio = true;
-        activarNuevoDepartamento = true;
-        activarNuevoCarrera = true;
-        activarNuevoPlanEstudio = true;
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
         parametroCreditos = null;
-        parametroDepartamento = new Departamento();
-        parametroCarrera = new Carrera();
-        parametroPlanEstudio = new PlanEstudios();
+        parametroEstado = 1;
         altoTabla = "150";
-        inicializarFiltros();
-        listaPlanesEstudios = null;
-        listaDepartamentos = null;
-        listaCarreras = null;
         listaAsignaturas = null;
         listaAsignaturasTabla = null;
         posicionAsignaturaTabla = 0;
         tamTotalAsignatura = 0;
         bloquearPagAntAsignatura = true;
         bloquearPagSigAsignatura = true;
+        inicializarFiltros();
         BasicConfigurator.configure();
     }
 
     private void inicializarFiltros() {
         filtros = new HashMap<String, String>();
+        filtros.put("parametroCreditos", null);
         filtros.put("parametroNombre", null);
+        filtros.put("parametroEstado", null);
         filtros.put("parametroCodigo", null);
-        filtros.put("parametroDepartamento", null);
-        filtros.put("parametroPlanEstudio", null);
-        filtros.put("parametroCarrera", null);
-        filtros.put("parametroFacultad", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if ((Utilidades.validarNulo(parametroCreditos) == true) && (!parametroCreditos.isEmpty())  && (parametroCreditos.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCreditos) == true) && (!parametroCreditos.isEmpty()) && (parametroCreditos.trim().length() > 0)) {
             filtros.put("parametroCreditos", parametroCreditos.toString());
         }
-        if (Utilidades.validarNulo(parametroDepartamento) == true) {
-            if (parametroDepartamento.getIddepartamento() != null) {
-                filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
-            }
-        }
-        if (Utilidades.validarNulo(parametroCarrera) == true) {
-            if (parametroCarrera.getIdcarrera() != null) {
-                filtros.put("parametroCarrera", parametroCarrera.getIdcarrera().toString());
-            }
-        }
-        if (Utilidades.validarNulo(parametroPlanEstudio) == true) {
-            if (parametroPlanEstudio.getIdplanestudios() != null) {
-                filtros.put("parametroPlanEstudio", parametroPlanEstudio.getIdplanestudios().toString());
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
             }
         }
     }
@@ -219,18 +187,11 @@ public class ControllerAdministrarAsignaturas implements Serializable {
     }
 
     public void limpiarProcesoBusqueda() {
-        activarDepartamento = true;
-        activarCarrera = true;
-        activarPlanEstudio = true;
         activarExport = true;
         parametroNombre = null;
+        parametroCodigo = null;
+        parametroEstado = 1;
         parametroCreditos = null;
-        parametroDepartamento = new Departamento();
-        parametroCarrera = new Carrera();
-        parametroPlanEstudio = new PlanEstudios();
-        listaDepartamentos = null;
-        listaCarreras = null;
-        listaPlanesEstudios = null;
         listaAsignaturas = null;
         listaAsignaturasTabla = null;
         posicionAsignaturaTabla = 0;
@@ -243,20 +204,11 @@ public class ControllerAdministrarAsignaturas implements Serializable {
 
     public void limpiarDatos() {
         cantidadRegistros = "N/A";
-        activarDepartamento = true;
-        activarCarrera = true;
-        activarPlanEstudio = true;
         activarExport = true;
         parametroNombre = null;
+        parametroCodigo = null;
+        parametroEstado = 1;
         parametroCreditos = null;
-        parametroDepartamento = new Departamento();
-        parametroCarrera = new Carrera();
-        parametroPlanEstudio = new PlanEstudios();
-
-        listaDepartamentos = null;
-        listaCarreras = null;
-        listaPlanesEstudios = null;
-
         listaAsignaturas = null;
         listaAsignaturasTabla = null;
         posicionAsignaturaTabla = 0;
@@ -265,37 +217,6 @@ public class ControllerAdministrarAsignaturas implements Serializable {
         bloquearPagSigAsignatura = true;
         inicializarFiltros();
     }
-
-    public void actualizarDepartamentos() {
-        if (Utilidades.validarNulo(parametroDepartamento)) {
-            parametroCarrera = new Carrera();
-            listaCarreras = gestionarAsignaturasBO.consultarCarrerasPorIDDepartamento(parametroDepartamento.getIddepartamento());
-            activarCarrera = false;
-            listaPlanesEstudios = null;
-            parametroPlanEstudio = new PlanEstudios();
-            activarPlanEstudio = true;
-        } else {
-            activarCarrera = true;
-            listaCarreras = null;
-            parametroCarrera = new Carrera();
-            listaPlanesEstudios = null;
-            parametroPlanEstudio = new PlanEstudios();
-            activarPlanEstudio = true;
-        }
-    }
-
-    public void actualizarCarreras() {
-        if (Utilidades.validarNulo(parametroCarrera)) {
-            parametroPlanEstudio = new PlanEstudios();
-            listaPlanesEstudios = gestionarAsignaturasBO.consultarPlanesEstudiosPorIDCarrera(parametroCarrera.getIdcarrera());
-            activarPlanEstudio = false;
-        } else {
-            listaPlanesEstudios = null;
-            parametroPlanEstudio = new PlanEstudios();
-            activarPlanEstudio = true;
-        }
-    }
-
 
     /*
      //EXPORTAR
@@ -338,105 +259,6 @@ public class ControllerAdministrarAsignaturas implements Serializable {
 
     public void setParametroCodigo(String parametroCodigo) {
         this.parametroCodigo = parametroCodigo;
-    }
-
-    public List<Departamento> getListaDepartamentos() {
-        if (listaDepartamentos == null) {
-            listaDepartamentos = gestionarAsignaturasBO.consultarDepartamentosRegistrados();
-        }
-        return listaDepartamentos;
-    }
-
-    public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
-        this.listaDepartamentos = listaDepartamentos;
-    }
-
-    public Departamento getParametroDepartamento() {
-        return parametroDepartamento;
-    }
-
-    public void setParametroDepartamento(Departamento parametroDepartamento) {
-        this.parametroDepartamento = parametroDepartamento;
-    }
-
-    public List<Carrera> getListaCarreras() {
-        return listaCarreras;
-    }
-
-    public void setListaCarreras(List<Carrera> listaCarreras) {
-        this.listaCarreras = listaCarreras;
-    }
-
-    public Carrera getParametroCarrera() {
-        return parametroCarrera;
-    }
-
-    public void setParametroCarrera(Carrera parametroCarrera) {
-        this.parametroCarrera = parametroCarrera;
-    }
-
-    public List<PlanEstudios> getListaPlanesEstudios() {
-        return listaPlanesEstudios;
-    }
-
-    public void setListaPlanesEstudios(List<PlanEstudios> listaPlanesEstudios) {
-        this.listaPlanesEstudios = listaPlanesEstudios;
-    }
-
-    public PlanEstudios getParametroPlanEstudio() {
-        return parametroPlanEstudio;
-    }
-
-    public void setParametroPlanEstudio(PlanEstudios parametroPlanEstudio) {
-        this.parametroPlanEstudio = parametroPlanEstudio;
-    }
-
-    public boolean isActivarDepartamento() {
-        return activarDepartamento;
-    }
-
-    public void setActivarDepartamento(boolean activarDepartamento) {
-        this.activarDepartamento = activarDepartamento;
-    }
-
-    public boolean isActivarCarrera() {
-        return activarCarrera;
-    }
-
-    public void setActivarCarrera(boolean activarCarrera) {
-        this.activarCarrera = activarCarrera;
-    }
-
-    public boolean isActivarPlanEstudio() {
-        return activarPlanEstudio;
-    }
-
-    public void setActivarPlanEstudio(boolean activarPlanEstudio) {
-        this.activarPlanEstudio = activarPlanEstudio;
-    }
-
-    public boolean isActivarNuevoDepartamento() {
-        return activarNuevoDepartamento;
-    }
-
-    public void setActivarNuevoDepartamento(boolean activarNuevoDepartamento) {
-        this.activarNuevoDepartamento = activarNuevoDepartamento;
-    }
-
-    public boolean isActivarNuevoCarrera() {
-        return activarNuevoCarrera;
-    }
-
-    public void setActivarNuevoCarrera(boolean activarNuevoCarrera) {
-        this.activarNuevoCarrera = activarNuevoCarrera;
-    }
-
-    public boolean isActivarNuevoPlanEstudio() {
-        return activarNuevoPlanEstudio;
-    }
-
-    public void setActivarNuevoPlanEstudio(boolean activarNuevoPlanEstudio) {
-        this.activarNuevoPlanEstudio = activarNuevoPlanEstudio;
     }
 
     public Map<String, String> getFiltros() {
@@ -501,6 +323,14 @@ public class ControllerAdministrarAsignaturas implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

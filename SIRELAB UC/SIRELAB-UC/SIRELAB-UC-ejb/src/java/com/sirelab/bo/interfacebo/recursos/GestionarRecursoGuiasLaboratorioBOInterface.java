@@ -6,6 +6,7 @@
 package com.sirelab.bo.interfacebo.recursos;
 
 import com.sirelab.entidades.Asignatura;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.entidades.PlanEstudios;
@@ -25,8 +26,6 @@ public interface GestionarRecursoGuiasLaboratorioBOInterface {
 
     public List<PlanEstudios> consultarPlanesEstidoPorCarrera(BigInteger carrera);
 
-    public List<Asignatura> consultarAsignaturasPorPlanEstudio(BigInteger planEstudio);
-
     public List<GuiaLaboratorio> consultarGuiasLaboratorioPorParametro(Map<String, String> filtros);
 
     public List<Asignatura> consultarAsignaturasRegistradas();
@@ -40,4 +39,6 @@ public interface GestionarRecursoGuiasLaboratorioBOInterface {
     public void modificarGuiaLaboratorio(GuiaLaboratorio guiaLaboratorio);
 
     public void borrarGuiaLaboratorio(GuiaLaboratorio guiaLaboratorio);
+
+    public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudioPorIDPlan(BigInteger plan);
 }

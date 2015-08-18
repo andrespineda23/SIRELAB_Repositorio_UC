@@ -53,6 +53,7 @@ public class ControllerAdministrarSalas implements Serializable {
     private Edificio parametroEdificio;
     private boolean activarLaboratorio;
     private boolean activarEdificio;
+    private int parametroPrivada;
 
     //
     private Map<String, String> filtros;
@@ -99,6 +100,7 @@ public class ControllerAdministrarSalas implements Serializable {
         listaLaboratorios = null;
         listaEdificios = null;
         parametroEstado = 1;
+        parametroPrivada = 1;
         listaSalasLaboratoriosTabla = null;
         listaSalasLaboratorios = null;
         posicionSalaTabla = 0;
@@ -150,6 +152,7 @@ public class ControllerAdministrarSalas implements Serializable {
         filtros.put("parametroDepartamento", null);
         filtros.put("parametroLaboratorio", null);
         filtros.put("parametroEdificio", null);
+        filtros.put("parametroPrivada", null);
         filtros.put("parametroSede", null);
         agregarFiltrosAdicionales();
     }
@@ -162,13 +165,20 @@ public class ControllerAdministrarSalas implements Serializable {
                 filtros.put("parametroEstado", "false");
             }
         }
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if (parametroPrivada == 1 || parametroPrivada == 2) {
+            if (parametroPrivada == 1) {
+                filtros.put("parametroPrivada", "false");
+            } else {
+                filtros.put("parametroPrivada", "true");
+            }
+        }
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCapacidad) == true) && (!parametroCapacidad.isEmpty())  && (parametroCapacidad.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCapacidad) == true) && (!parametroCapacidad.isEmpty()) && (parametroCapacidad.trim().length() > 0)) {
             filtros.put("parametroCapacidad", parametroCapacidad.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
         if (Utilidades.validarNulo(parametroDepartamento)) {
@@ -292,6 +302,7 @@ public class ControllerAdministrarSalas implements Serializable {
         activarEdificio = true;
         activarLaboratorio = true;
         parametroEstado = 1;
+        parametroPrivada = 1;
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
@@ -334,6 +345,7 @@ public class ControllerAdministrarSalas implements Serializable {
         parametroEdificio = new Edificio();
         parametroSede = new Sede();
         listaEdificios = null;
+        parametroPrivada = 1;
         listaLaboratorios = null;
         listaSalasLaboratorios = null;
         listaSalasLaboratoriosTabla = null;
@@ -389,6 +401,11 @@ public class ControllerAdministrarSalas implements Serializable {
     public String cambiarPaginaDetalles() {
         limpiarProcesoBusqueda();
         return "detalles_sala";
+    }
+    
+    public String cambiarPaginaModuloCargado() {
+        limpiarProcesoBusqueda();
+        return "registrar_modulo_cargado";
     }
 
     //GET-SET
@@ -599,6 +616,14 @@ public class ControllerAdministrarSalas implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroPrivada() {
+        return parametroPrivada;
+    }
+
+    public void setParametroPrivada(int parametroPrivada) {
+        this.parametroPrivada = parametroPrivada;
     }
 
 }

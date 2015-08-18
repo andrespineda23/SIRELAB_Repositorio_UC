@@ -72,7 +72,7 @@
                                     <div class="row col-md-12">
                                         <fieldset style="border: black;border-radius: 10px; color: black"> 
                                             <legend class="h5">I. Personal</legend>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="parametroNombre">
                                                         Nombre Facultad
@@ -80,7 +80,7 @@
                                                     <h:inputText maxlength="45" value="#{controllerAdministrarFacultades.parametroNombre}" class="form-control" id="parametroNombre" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="parametroCodigo">
                                                         Codigo Facultad
@@ -88,7 +88,19 @@
                                                     <h:inputText maxlength="10" value="#{controllerAdministrarFacultades.parametroCodigo}" class="form-control" id="parametroCodigo" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="parametroEstado">
+                                                        Estado Facultad
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarFacultades.parametroEstado}"
+                                                                     class="form-control"
+                                                                     id="parametroEstado">
+                                                        <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                        <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                        <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                    </h:selectOneMenu>
+                                                </div>
                                             </div>
                                         </fieldset>
                                     </div> 
@@ -131,6 +143,12 @@
                                                     <h:outputText value="Codigo"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.codigofacultad}"/>
+                                            </h:column>
+                                             <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Estado"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.strEstado}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">

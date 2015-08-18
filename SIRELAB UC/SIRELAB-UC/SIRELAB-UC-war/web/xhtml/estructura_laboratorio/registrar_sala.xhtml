@@ -180,12 +180,23 @@
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="nuevoEdificioSala" style="color: red"/></h6>
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <strong><h:outputText value="Ubicación/Piso Sala*"/></strong>
                                 <h:inputText maxlength="45" disabled="#{controllerRegistrarSala.activarCasillas}" value="#{controllerRegistrarSala.nuevoUbicacionSala}" required="true" class="form-control" id="nuevoUbicacionSala" requiredMessage="El campo Ubicacion es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerRegistrarSala.validarUbicacionSala()}" execute="nuevoUbicacionSala" render="nuevoUbicacionSala msnUbicacionSala" />
                                 </h:inputText>
                                 <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <label for="parametroEstado">
+                                    Tipo de Sala*
+                                </label>
+                                <h:selectOneMenu value="#{controllerRegistrarSala.nuevoTipo}"
+                                                 class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}"
+                                                 id="nuevoTipo">
+                                    <f:selectItem itemLabel="PUBLICA" itemValue="false" />
+                                    <f:selectItem itemLabel="PRIVADA" itemValue="true" />
+                                </h:selectOneMenu>
                             </div>
                         </fieldset>
                         <fieldset>

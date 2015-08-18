@@ -137,6 +137,7 @@ public class ControllerRegistrarSede implements Serializable {
             nuevaSede.setDireccionsede(nuevoDireccion);
             nuevaSede.setNombresede(nuevoNombre);
             nuevaSede.setTelefonosede(nuevoTelefono);
+            nuevaSede.setEstado(true);
             gestionarSedeBO.crearNuevaSede(nuevaSede);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarSede almacenarNuevoSedeEnSistema:  " + e.toString());

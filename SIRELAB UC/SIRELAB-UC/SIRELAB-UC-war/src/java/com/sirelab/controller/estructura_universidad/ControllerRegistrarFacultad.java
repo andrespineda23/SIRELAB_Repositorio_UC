@@ -120,6 +120,7 @@ public class ControllerRegistrarFacultad implements Serializable {
             Facultad nuevaFacultad = new Facultad();
             nuevaFacultad.setCodigofacultad(nuevoCodigo);
             nuevaFacultad.setNombrefacultad(nuevoNombre);
+            nuevaFacultad.setEstado(true);
             gestionarFacultadBO.crearNuevaFacultad(nuevaFacultad);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarFacultad almacenarNuevoFacultadEnSistema:  " + e.toString());

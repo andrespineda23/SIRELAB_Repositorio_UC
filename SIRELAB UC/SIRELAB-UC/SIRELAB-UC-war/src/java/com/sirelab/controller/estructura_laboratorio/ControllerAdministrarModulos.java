@@ -328,6 +328,11 @@ public class ControllerAdministrarModulos implements Serializable {
         limpiarProcesoBusqueda();
         return "detalles_modulo";
     }
+    
+    public String cambiarPaginaEquipoCargado() {
+        limpiarProcesoBusqueda();
+        return "registrar_equipo_cargado";
+    }
 
     // GET - SET
     public String getParametroCodigo() {

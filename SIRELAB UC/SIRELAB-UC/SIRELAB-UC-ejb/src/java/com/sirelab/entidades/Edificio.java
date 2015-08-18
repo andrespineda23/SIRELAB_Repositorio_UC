@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Edificio.findByDireccion", query = "SELECT e FROM Edificio e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Edificio.findByDescripcionedificio", query = "SELECT e FROM Edificio e WHERE e.descripcionedificio = :descripcionedificio")})
 public class Edificio implements Serializable {
+
+    @Column(name = "estado")
+    private Boolean estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "edificio")
     private Collection<SalaLaboratorio> salaLaboratorioCollection;
     private static final long serialVersionUID = 1L;
@@ -58,6 +62,8 @@ public class Edificio implements Serializable {
     @JoinColumn(name = "horarioatencion", referencedColumnName = "idhorarioatencion")
     @ManyToOne(optional = false)
     private HorarioAtencion horarioatencion;
+    @Transient
+    private String strEstado;
 
     public Edificio() {
     }
@@ -139,5 +145,29 @@ public class Edificio implements Serializable {
     public void setSalaLaboratorioCollection(Collection<SalaLaboratorio> salaLaboratorioCollection) {
         this.salaLaboratorioCollection = salaLaboratorioCollection;
     }
-    
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
+    }
+
 }

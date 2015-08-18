@@ -38,6 +38,7 @@ public class ControllerDetallesSede implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesSede() {
     }
@@ -66,6 +67,7 @@ public class ControllerDetallesSede implements Serializable {
     public void asignarValoresVariablesSede() {
         editarDireccion = sedeDetalles.getDireccionsede();
         editarNombre = sedeDetalles.getNombresede();
+        editarEstado = sedeDetalles.getEstado();
         editarTelefono = sedeDetalles.getTelefonosede();
     }
 
@@ -76,7 +78,7 @@ public class ControllerDetallesSede implements Serializable {
     }
 
     public void validarNombreSede() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -91,7 +93,7 @@ public class ControllerDetallesSede implements Serializable {
     }
 
     public void validarDireccionSede() {
-        if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty())  && (editarDireccion.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty()) && (editarDireccion.trim().length() > 0)) {
             if (!Utilidades.validarDirecciones(editarDireccion)) {
                 validacionesDireccion = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
@@ -105,7 +107,7 @@ public class ControllerDetallesSede implements Serializable {
     }
 
     public void validarTelefonoSede() {
-        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty())  && (editarTelefono.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty()) && (editarTelefono.trim().length() > 0)) {
             if (!Utilidades.isNumber(editarTelefono)) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono ingresado es incorrecto."));
@@ -150,6 +152,7 @@ public class ControllerDetallesSede implements Serializable {
             sedeDetalles.setDireccionsede(editarDireccion);
             sedeDetalles.setNombresede(editarNombre);
             sedeDetalles.setTelefonosede(editarTelefono);
+            sedeDetalles.setEstado(editarEstado);
             gestionarSedeBO.modificarInformacionSede(sedeDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesSede almacenarModificacionSedeEnSistema:  " + e.toString());
@@ -212,6 +215,14 @@ public class ControllerDetallesSede implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
     }
 
 }

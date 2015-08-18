@@ -206,6 +206,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             planNuevo.setNombreplanestudio(nuevoNombre);
             planNuevo.setCodigoplanestudio(nuevoCodigo);
             planNuevo.setCarrera(nuevoCarrera);
+            planNuevo.setEstado(true);
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  " + e.toString());

@@ -50,6 +50,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesPlanEstudio() {
     }
@@ -83,6 +84,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     public void asignarValoresVariablesPlanEstudio() {
         editarCarrera = planEstudiosDetalles.getCarrera();
+        editarEstado = planEstudiosDetalles.getEstado();
         editarCodigo = planEstudiosDetalles.getCodigoplanestudio();
         editarDepartamento = planEstudiosDetalles.getCarrera().getDepartamento();
         editarFacultad = planEstudiosDetalles.getCarrera().getDepartamento().getFacultad();
@@ -235,6 +237,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         try {
             planEstudiosDetalles.setNombreplanestudio(editarNombre);
             planEstudiosDetalles.setCodigoplanestudio(editarCodigo);
+            planEstudiosDetalles.setEstado(editarEstado);
             planEstudiosDetalles.setCarrera(editarCarrera);
             gestionarPlanesEstudiosBO.modificarInformacionPlanEstudios(planEstudiosDetalles);
         } catch (Exception e) {
@@ -356,4 +359,13 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         this.colorMensaje = colorMensaje;
     }
 
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
+    }
+
+    
 }

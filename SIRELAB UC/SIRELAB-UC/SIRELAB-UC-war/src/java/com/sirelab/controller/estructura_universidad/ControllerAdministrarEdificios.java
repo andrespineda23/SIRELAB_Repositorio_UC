@@ -10,7 +10,6 @@ import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +49,7 @@ public class ControllerAdministrarEdificios implements Serializable {
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarEdificios() {
     }
@@ -78,19 +78,27 @@ public class ControllerAdministrarEdificios implements Serializable {
         filtros.put("parametroDescripcion", null);
         filtros.put("parametroDireccion", null);
         filtros.put("parametroSede", null);
+        filtros.put("parametroEstado", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroDescripcion) == true) && (!parametroDescripcion.isEmpty())  && (parametroDescripcion.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroDescripcion) == true) && (!parametroDescripcion.isEmpty()) && (parametroDescripcion.trim().length() > 0)) {
             filtros.put("parametroDescripcion", parametroDescripcion.toString());
         }
-        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())  && (parametroDireccion.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty()) && (parametroDireccion.trim().length() > 0)) {
             filtros.put("parametroDireccion", parametroDireccion.toString());
         }
         if (Utilidades.validarNulo(parametroSede) == true) {
             if (parametroSede.getIdsede() != null) {
                 filtros.put("parametroSede", parametroSede.getIdsede().toString());
+            }
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
             }
         }
     }
@@ -194,6 +202,7 @@ public class ControllerAdministrarEdificios implements Serializable {
         listaSedes = null;
         listaEdificiosTabla = null;
         posicionEdificioTabla = 0;
+        parametroEstado = 1;
         cantidadRegistros = "N/A";
         tamTotalEdificio = 0;
         bloquearPagAntEdificio = true;
@@ -211,6 +220,7 @@ public class ControllerAdministrarEdificios implements Serializable {
         cantidadRegistros = "N/A";
         posicionEdificioTabla = 0;
         tamTotalEdificio = 0;
+        parametroEstado = 1;
         bloquearPagAntEdificio = true;
         bloquearPagSigEdificio = true;
         inicializarFiltros();
@@ -334,6 +344,14 @@ public class ControllerAdministrarEdificios implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

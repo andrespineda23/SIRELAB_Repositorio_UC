@@ -205,6 +205,11 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
+                    if ("parametroPrivada".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "salaprivada");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                     if ("parametroCapacidad".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "capacidadsala");
                         wheres.append("= :").append(entry.getKey());
@@ -257,8 +262,11 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
                 if ("parametroEstado".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
+                if ("parametroPrivada".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
+                }
                 if ("parametroCapacidad".equals(entry.getKey())) {
-                    tq.setParameter(entry.getKey(), Integer.valueOf(entry.getValue()).intValue());
+                    tq.setParameter(entry.getKey(), Integer.parseInt(entry.getValue()));
                 }
                 if (("parametroEdificio".equals(entry.getKey()))
                         || ("parametroSede".equals(entry.getKey()))

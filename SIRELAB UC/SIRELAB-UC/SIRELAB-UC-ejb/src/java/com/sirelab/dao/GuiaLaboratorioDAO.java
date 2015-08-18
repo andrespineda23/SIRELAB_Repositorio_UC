@@ -138,7 +138,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
                         camposFiltro++;
                     }
                     if ("parametroAsignatura".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "asignatura.idasignatura");
+                        wheres.append(alias).append("." + "asignaturaporplanestudio.asignatura.idasignatura");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }

@@ -7,10 +7,12 @@ package com.sirelab.bo.recursoslab;
 
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoGuiasLaboratorioBOInterface;
 import com.sirelab.dao.interfacedao.AsignaturaDAOInterface;
+import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.GuiaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.entidades.Asignatura;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.entidades.PlanEstudios;
@@ -35,6 +37,8 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
     CarreraDAOInterface carreraDAO;
     @EJB
     PlanEstudiosDAOInterface planEstudiosDAO;
+    @EJB
+    AsignaturaPorPlanEstudioDAOInterface asignaturaPorPlanEstudioDAO;
 
     @Override
     public List<Carrera> consultarCarrerasRegistradas() {
@@ -54,17 +58,6 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarRecursoGuiasLaboratorioBO consultarPlanesEstidoPorCarrera : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public List<Asignatura> consultarAsignaturasPorPlanEstudio(BigInteger planEstudio) {
-        try {
-            List<Asignatura> lista = asignaturaDAO.consultarAsignaturasPorPlanEstudio(planEstudio);
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarRecursoGuiasLaboratorioBO consultarAsignaturasPorPlanEstudio : " + e.toString());
             return null;
         }
     }
@@ -148,6 +141,17 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             guiaLaboratorioDAO.eliminarGuiaLaboratorio(guiaLaboratorio);
         } catch (Exception e) {
             System.out.println("Error GestionarRecursoGuiasLaboratorioBO borrarGuiaLaboratorio: " + e.toString());
+        }
+    }
+
+    @Override
+    public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudioPorIDPlan(BigInteger plan) {
+        try {
+            List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.consultarAsignaturaPorPlanEstudiosIdPlanEstudio(plan);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarRecursoGuiasLaboratorioBO consultarAsignaturaPorPlanEstudioPorIDPlan: " + e.toString());
+            return null;
         }
     }
 }

@@ -98,8 +98,18 @@
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono" for="editarTelefono" style="color: red"/></h6>
                                 </div>
+                                <div class="form-group">
+                                    <label for="parametroEstado">
+                                        Estado Sede*
+                                    </label>
+                                    <h:selectOneMenu value="#{controllerDetallesSede.editarEstado}"
+                                                     class="form-control"
+                                                     id="editarEstado">
+                                        <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                        <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                    </h:selectOneMenu>
+                                </div>
                             </fieldset>
-                            <br></br>
                             <br></br>
                             <br></br>
                             <br></br>

@@ -45,6 +45,7 @@ public class ControllerDetallesEdificio implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesEdificio() {
     }
@@ -76,6 +77,7 @@ public class ControllerDetallesEdificio implements Serializable {
         editarDescripcion = edificioDetalles.getDescripcionedificio();
         editarDireccion = edificioDetalles.getDireccion();
         editarSede = edificioDetalles.getSede();
+        editarEstado = edificioDetalles.getEstado();
         editarHorario = edificioDetalles.getHorarioatencion();
         listaSedes = gestionarEdificiosBO.consultarSedesRegistradas();
         listaHorariosAtencion = gestionarEdificiosBO.consultarHorariosAtencionRegistrados();
@@ -164,6 +166,7 @@ public class ControllerDetallesEdificio implements Serializable {
             edificioDetalles.setDescripcionedificio(editarDescripcion);
             edificioDetalles.setDireccion(editarDireccion);
             edificioDetalles.setSede(editarSede);
+            edificioDetalles.setEstado(editarEstado);
             edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
@@ -245,4 +248,13 @@ public class ControllerDetallesEdificio implements Serializable {
         this.colorMensaje = colorMensaje;
     }
 
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
+    }
+
+    
 }

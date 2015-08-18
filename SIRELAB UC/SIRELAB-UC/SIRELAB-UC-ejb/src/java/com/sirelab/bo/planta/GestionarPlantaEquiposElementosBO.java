@@ -231,4 +231,15 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return null;
         }
     }
+
+    @Override
+    public ModuloLaboratorio obtenerModuloLaboratorioPorID(BigInteger modulo) {
+        try {
+            ModuloLaboratorio registro = moduloLaboratorioDAO.buscarModuloLaboratorioPorID(modulo);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaElementosEquiposBO obtenerModuloLaboratorioPorID : " + e.toString());
+            return null;
+        }
+    }
 }

@@ -15,12 +15,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "asignatura")
@@ -37,13 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Asignatura.findAll", query = "SELECT a FROM Asignatura a"),
     @NamedQuery(name = "Asignatura.findByIdasignatura", query = "SELECT a FROM Asignatura a WHERE a.idasignatura = :idasignatura"),
     @NamedQuery(name = "Asignatura.findByNombreasignatura", query = "SELECT a FROM Asignatura a WHERE a.nombreasignatura = :nombreasignatura"),
+    @NamedQuery(name = "Asignatura.findByCodigoasignatura", query = "SELECT a FROM Asignatura a WHERE a.codigoasignatura = :codigoasignatura"),
     @NamedQuery(name = "Asignatura.findByNumerocreditos", query = "SELECT a FROM Asignatura a WHERE a.numerocreditos = :numerocreditos")})
 public class Asignatura implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
-    private Collection<ReservaSala> reservaSalaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
-    private Collection<GuiaLaboratorio> guiaLaboratorioCollection;
 
+    @Column(name = "estado")
+    private Boolean estado;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,16 +55,17 @@ public class Asignatura implements Serializable {
     private String nombreasignatura;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "numerocreditos")
-    private int numerocreditos;
-    @JoinColumn(name = "planestudios", referencedColumnName = "idplanestudios")
-    @ManyToOne(optional = false)
-    private PlanEstudios planestudios;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "codigoasignatura")
     private String codigoasignatura;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "numerocreditos")
+    private int numerocreditos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
+    private Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection;
+    @Transient
+    private String strEstado;
 
     public Asignatura() {
     }
@@ -75,9 +74,10 @@ public class Asignatura implements Serializable {
         this.idasignatura = idasignatura;
     }
 
-    public Asignatura(BigInteger idasignatura, String nombreasignatura, int numerocreditos) {
+    public Asignatura(BigInteger idasignatura, String nombreasignatura, String codigoasignatura, int numerocreditos) {
         this.idasignatura = idasignatura;
         this.nombreasignatura = nombreasignatura;
+        this.codigoasignatura = codigoasignatura;
         this.numerocreditos = numerocreditos;
     }
 
@@ -90,14 +90,19 @@ public class Asignatura implements Serializable {
     }
 
     public String getNombreasignatura() {
-        if (null != nombreasignatura) {
-            return nombreasignatura.toUpperCase();
-        }
         return nombreasignatura;
     }
 
     public void setNombreasignatura(String nombreasignatura) {
-        this.nombreasignatura = nombreasignatura.toUpperCase();
+        this.nombreasignatura = nombreasignatura;
+    }
+
+    public String getCodigoasignatura() {
+        return codigoasignatura;
+    }
+
+    public void setCodigoasignatura(String codigoasignatura) {
+        this.codigoasignatura = codigoasignatura;
     }
 
     public int getNumerocreditos() {
@@ -108,12 +113,13 @@ public class Asignatura implements Serializable {
         this.numerocreditos = numerocreditos;
     }
 
-    public PlanEstudios getPlanestudios() {
-        return planestudios;
+    @XmlTransient
+    public Collection<AsignaturaPorPlanEstudio> getAsignaturaPorPlanEstudioCollection() {
+        return asignaturaPorPlanEstudioCollection;
     }
 
-    public void setPlanestudios(PlanEstudios planestudios) {
-        this.planestudios = planestudios;
+    public void setAsignaturaPorPlanEstudioCollection(Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection) {
+        this.asignaturaPorPlanEstudioCollection = asignaturaPorPlanEstudioCollection;
     }
 
     @Override
@@ -141,30 +147,28 @@ public class Asignatura implements Serializable {
         return "com.sirelab.entidades.Asignatura[ idasignatura=" + idasignatura + " ]";
     }
 
-    public String getCodigoasignatura() {
-        return codigoasignatura;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setCodigoasignatura(String codigoasignatura) {
-        this.codigoasignatura = codigoasignatura;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+    
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
     }
 
-    @XmlTransient
-    public Collection<ReservaSala> getReservaSalaCollection() {
-        return reservaSalaCollection;
-    }
-
-    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
-        this.reservaSalaCollection = reservaSalaCollection;
-    }
-
-    @XmlTransient
-    public Collection<GuiaLaboratorio> getGuiaLaboratorioCollection() {
-        return guiaLaboratorioCollection;
-    }
-
-    public void setGuiaLaboratorioCollection(Collection<GuiaLaboratorio> guiaLaboratorioCollection) {
-        this.guiaLaboratorioCollection = guiaLaboratorioCollection;
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
 }

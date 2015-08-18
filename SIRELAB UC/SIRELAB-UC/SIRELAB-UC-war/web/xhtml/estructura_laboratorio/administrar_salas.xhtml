@@ -181,7 +181,20 @@
                                                 <f:converter converterId="ConverterGenerico" />
                                             </h:selectOneMenu>
                                         </div>
-                                        <div class="col-md-4"></div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="parametroEstado">
+                                                    Tipo de Sala
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerAdministrarSalas.parametroPrivada}"
+                                                                 class="form-control"
+                                                                 id="parametroPrivada">
+                                                    <f:selectItem itemLabel="PUBLICA" itemValue="1" />
+                                                    <f:selectItem itemLabel="PRIVADA" itemValue="2" />
+                                                    <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <br></br>
@@ -264,6 +277,18 @@
                                                     <h:outputText value="Edificio"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.edificio.descripcionedificio}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Edificio"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.strPrivada}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Modulo"/>
+                                                </f:facet>
+                                                <h:commandLink value="Adicionar" action="#{controllerAdministrarSalas.cambiarPaginaDetalles()}" actionListener="#{controllerRegistrarModuloCargado.cargarInformacionSalaLaboratorio(item.idsalalaboratorio)}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">

@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,6 +40,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PlanEstudios.findByCodigoplanestudio", query = "SELECT p FROM PlanEstudios p WHERE p.codigoplanestudio = :codigoplanestudio"),
     @NamedQuery(name = "PlanEstudios.findByNombreplanestudio", query = "SELECT p FROM PlanEstudios p WHERE p.nombreplanestudio = :nombreplanestudio")})
 public class PlanEstudios implements Serializable {
+
+    @Column(name = "estado")
+    private Boolean estado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planestudio")
+    private Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planestudios")
     private Collection<Asignatura> asignaturaCollection;
     private static final long serialVersionUID = 1L;
@@ -62,6 +68,8 @@ public class PlanEstudios implements Serializable {
     @JoinColumn(name = "carrera", referencedColumnName = "idcarrera")
     @ManyToOne(optional = false)
     private Carrera carrera;
+    @Transient
+    private String strEstado;
 
     public PlanEstudios() {
     }
@@ -85,7 +93,7 @@ public class PlanEstudios implements Serializable {
     }
 
     public String getCodigoplanestudio() {
-        if(null != codigoplanestudio){
+        if (null != codigoplanestudio) {
             return codigoplanestudio.toUpperCase();
         }
         return codigoplanestudio;
@@ -96,7 +104,7 @@ public class PlanEstudios implements Serializable {
     }
 
     public String getNombreplanestudio() {
-        if(null != nombreplanestudio){
+        if (null != nombreplanestudio) {
             return nombreplanestudio.toUpperCase();
         }
         return nombreplanestudio;
@@ -156,5 +164,38 @@ public class PlanEstudios implements Serializable {
     public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
         this.asignaturaCollection = asignaturaCollection;
     }
-    
+
+    @XmlTransient
+    public Collection<AsignaturaPorPlanEstudio> getAsignaturaPorPlanEstudioCollection() {
+        return asignaturaPorPlanEstudioCollection;
+    }
+
+    public void setAsignaturaPorPlanEstudioCollection(Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection) {
+        this.asignaturaPorPlanEstudioCollection = asignaturaPorPlanEstudioCollection;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
+    }
+
 }

@@ -124,7 +124,7 @@
                                                      id="nuevoAsignatura">
                                         <f:selectItem itemLabel="Seleccione Asignatura" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarGuiaLaboratorio.listaAsignaturas}" var="asignatura"
-                                                       itemLabel="#{asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
+                                                       itemLabel="#{asignatura.asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
                                         <f:converter converterId="ConverterGenerico" />
                                         <f:ajax event="change" listener="#{controllerRegistrarGuiaLaboratorio.actualizarAsignaturas()}" execute="nuevoAsignatura" render="msnAsignatura"/>
                                     </h:selectOneMenu>

@@ -42,6 +42,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesDepartamento() {
     }
@@ -71,6 +72,7 @@ public class ControllerDetallesDepartamento implements Serializable {
         editarFacultad = departamentoDetalles.getFacultad();
         editarCodigo = departamentoDetalles.getCodigodepartamento();
         editarNombre = departamentoDetalles.getNombredepartamento();
+        editarEstado = departamentoDetalles.getEstado();
         listaFacultades = gestionarDepartamentosBO.consultarFacultadesRegistradas();
     }
 
@@ -81,7 +83,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     }
 
     public void validarNombreDepartamento() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -95,7 +97,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     }
 
     public void validarCodigoDepartamento() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(editarCodigo);
                 if (null != registro) {
@@ -156,6 +158,7 @@ public class ControllerDetallesDepartamento implements Serializable {
             departamentoDetalles.setNombredepartamento(editarNombre);
             departamentoDetalles.setFacultad(editarFacultad);
             departamentoDetalles.setCodigodepartamento(editarCodigo);
+            departamentoDetalles.setEstado(editarEstado);
             gestionarDepartamentosBO.modificarInformacionDepartamento(departamentoDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  " + e.toString());
@@ -226,6 +229,14 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
     }
 
 }

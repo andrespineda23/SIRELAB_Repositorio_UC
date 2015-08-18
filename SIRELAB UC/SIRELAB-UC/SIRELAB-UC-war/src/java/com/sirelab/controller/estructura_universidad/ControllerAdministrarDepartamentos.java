@@ -49,6 +49,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarDepartamentos() {
     }
@@ -76,19 +77,27 @@ public class ControllerAdministrarDepartamentos implements Serializable {
         filtros.put("parametroCodigo", null);
         filtros.put("parametroNombre", null);
         filtros.put("parametroFacultad", null);
+        filtros.put("parametroEstado", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
         if (Utilidades.validarNulo(parametroFacultad)) {
             if (parametroFacultad.getIdfacultad() != null) {
                 filtros.put("parametroFacultad", parametroFacultad.getIdfacultad().toString());
+            }
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
             }
         }
     }
@@ -196,6 +205,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
         listaFacultades = null;
         bloquearPagSigDepartamento = true;
         cantidadRegistros = "N/A";
+        parametroEstado = 1;
         inicializarFiltros();
     }
 
@@ -207,6 +217,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
         listaDepartamentos = null;
         listaDepartamentosTabla = null;
         parametroCodigo = null;
+        parametroEstado = 1;
         posicionDepartamentoTabla = 0;
         tamTotalDepartamento = 0;
         bloquearPagAntDepartamento = true;
@@ -331,6 +342,14 @@ public class ControllerAdministrarDepartamentos implements Serializable {
 
     public void setParametroCodigo(String parametroCodigo) {
         this.parametroCodigo = parametroCodigo;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

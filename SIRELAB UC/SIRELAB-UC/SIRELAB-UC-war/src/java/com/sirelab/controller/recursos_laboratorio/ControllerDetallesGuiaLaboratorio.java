@@ -9,7 +9,7 @@ import com.sirelab.bo.interfacebo.recursos.GestionarRecursoGuiasLaboratorioBOInt
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.Carrera;
-import com.sirelab.entidades.Asignatura;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,7 +43,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     private BigInteger idGuiaLaboratorio;
     private List<Carrera> listaCarreras;
     private List<PlanEstudios> listaPlanEstudios;
-    private List<Asignatura> listaAsignaturas;
+    private List<AsignaturaPorPlanEstudio> listaAsignaturas;
     //
     private boolean activarModificacionPlanEstudios;
     private boolean activarModificacionAsignatura;
@@ -51,7 +51,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     private String editarNombre, editarDescripcion;
     private Carrera editarCarrera;
     private PlanEstudios editarPlanEstudios;
-    private Asignatura editarAsignatura;
+    private AsignaturaPorPlanEstudio editarAsignatura;
     //
     private boolean validacionesNombre, validacionesDescripcion, validacionesArchivo;
     private boolean validacionesCarrera, validacionesPlanEstudios, validacionesAsignatura;
@@ -92,11 +92,11 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     }
 
     public void asignarValoresVariablesGuiaLaboratorio() {
-        editarPlanEstudios = guiaLaboratorioDetalle.getAsignatura().getPlanestudios();
+        editarPlanEstudios = guiaLaboratorioDetalle.getAsignaturaporplanestudio().getPlanestudio();
         editarDescripcion = guiaLaboratorioDetalle.getDescripcion();
-        editarCarrera = guiaLaboratorioDetalle.getAsignatura().getPlanestudios().getCarrera();
+        editarCarrera = guiaLaboratorioDetalle.getAsignaturaporplanestudio().getPlanestudio().getCarrera();
         editarNombre = guiaLaboratorioDetalle.getNombreguia();
-        editarAsignatura = guiaLaboratorioDetalle.getAsignatura();
+        editarAsignatura = guiaLaboratorioDetalle.getAsignaturaporplanestudio();
         listaCarreras = gestionarRecursoGuiasLaboratorioBO.consultarCarrerasRegistradas();
         //
         validacionesPlanEstudios = true;
@@ -112,7 +112,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
         }
         activarModificacionAsignatura = false;
         if (Utilidades.validarNulo(editarPlanEstudios)) {
-            listaAsignaturas = gestionarRecursoGuiasLaboratorioBO.consultarAsignaturasPorPlanEstudio(editarPlanEstudios.getIdplanestudios());
+            listaAsignaturas = gestionarRecursoGuiasLaboratorioBO.consultarAsignaturaPorPlanEstudioPorIDPlan(editarPlanEstudios.getIdplanestudios());
         }
     }
 
@@ -147,7 +147,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     public void actualizarPlanEstudios() {
         if (Utilidades.validarNulo(editarPlanEstudios)) {
             editarAsignatura = null;
-            listaAsignaturas = gestionarRecursoGuiasLaboratorioBO.consultarAsignaturasPorPlanEstudio(editarPlanEstudios.getIdplanestudios());
+            listaAsignaturas = gestionarRecursoGuiasLaboratorioBO.consultarAsignaturaPorPlanEstudioPorIDPlan(editarPlanEstudios.getIdplanestudios());
             activarModificacionAsignatura = false;
             validacionesPlanEstudios = true;
         } else {
@@ -169,7 +169,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     }
 
     public void validarNombreGuiaLaboratorio() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -183,7 +183,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     }
 
     public void validarDescripcionGuiaLaboratorio() {
-        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty())  && (editarDescripcion.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty()) && (editarDescripcion.trim().length() > 0)) {
             validacionesDescripcion = true;
         } else {
             validacionesDescripcion = false;
@@ -262,7 +262,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
         try {
             guiaLaboratorioDetalle.setDescripcion(editarDescripcion);
             guiaLaboratorioDetalle.setNombreguia(editarNombre);
-            guiaLaboratorioDetalle.setAsignatura(editarAsignatura);
+            guiaLaboratorioDetalle.setAsignaturaporplanestudio(editarAsignatura);
             if (modificacionArchivo == true) {
                 cargarGuiaAServidor();
                 guiaLaboratorioDetalle.setUbicacionguia(rutaArchivo);
@@ -331,14 +331,6 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
         this.listaPlanEstudios = listaPlanEstudios;
     }
 
-    public List<Asignatura> getListaAsignaturas() {
-        return listaAsignaturas;
-    }
-
-    public void setListaAsignaturas(List<Asignatura> listaAsignaturas) {
-        this.listaAsignaturas = listaAsignaturas;
-    }
-
     public boolean isActivarModificacionPlanEstudios() {
         return activarModificacionPlanEstudios;
     }
@@ -387,11 +379,19 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
         this.editarPlanEstudios = editarPlanEstudios;
     }
 
-    public Asignatura getEditarAsignatura() {
+    public List<AsignaturaPorPlanEstudio> getListaAsignaturas() {
+        return listaAsignaturas;
+    }
+
+    public void setListaAsignaturas(List<AsignaturaPorPlanEstudio> listaAsignaturas) {
+        this.listaAsignaturas = listaAsignaturas;
+    }
+
+    public AsignaturaPorPlanEstudio getEditarAsignatura() {
         return editarAsignatura;
     }
 
-    public void setEditarAsignatura(Asignatura editarAsignatura) {
+    public void setEditarAsignatura(AsignaturaPorPlanEstudio editarAsignatura) {
         this.editarAsignatura = editarAsignatura;
     }
 

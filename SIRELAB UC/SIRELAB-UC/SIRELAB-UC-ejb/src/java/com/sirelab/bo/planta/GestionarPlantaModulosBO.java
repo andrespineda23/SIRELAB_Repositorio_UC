@@ -234,4 +234,14 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
         }
     }
 
+    @Override
+    public SalaLaboratorio obtenerSalaLaboratorioPorID(BigInteger sala) {
+        try {
+            SalaLaboratorio registro = salaLaboratorioDAO.buscarSalaLaboratorioPorID(sala);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO obtenerSalaLaboratorioPorID : " + e.toString());
+            return null;
+        }
+    }
 }

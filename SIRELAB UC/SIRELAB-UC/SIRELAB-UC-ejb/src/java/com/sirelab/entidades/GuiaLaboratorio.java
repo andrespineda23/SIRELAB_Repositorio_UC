@@ -7,7 +7,9 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,7 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GuiaLaboratorio.findByDescripcion", query = "SELECT g FROM GuiaLaboratorio g WHERE g.descripcion = :descripcion"),
     @NamedQuery(name = "GuiaLaboratorio.findByUbicacionguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.ubicacionguia = :ubicacionguia")})
 public class GuiaLaboratorio implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,9 +61,11 @@ public class GuiaLaboratorio implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "ubicacionguia")
     private String ubicacionguia;
-    @JoinColumn(name = "asignatura", referencedColumnName = "idasignatura")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guialaboratorio")
+    private Collection<ReservaSala> reservaSalaCollection;
+    @JoinColumn(name = "asignaturaporplanestudio", referencedColumnName = "idasignaturaporplanestudio")
     @ManyToOne(optional = false)
-    private Asignatura asignatura;
+    private AsignaturaPorPlanEstudio asignaturaporplanestudio;
 
     public GuiaLaboratorio() {
     }
@@ -85,25 +90,19 @@ public class GuiaLaboratorio implements Serializable {
     }
 
     public String getNombreguia() {
-        if (null != nombreguia) {
-            return nombreguia.toUpperCase();
-        }
         return nombreguia;
     }
 
     public void setNombreguia(String nombreguia) {
-        this.nombreguia = nombreguia.toUpperCase();
+        this.nombreguia = nombreguia;
     }
 
     public String getDescripcion() {
-        if (null != descripcion) {
-            return descripcion.toUpperCase();
-        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion.toUpperCase();
+        this.descripcion = descripcion;
     }
 
     public String getUbicacionguia() {
@@ -114,12 +113,21 @@ public class GuiaLaboratorio implements Serializable {
         this.ubicacionguia = ubicacionguia;
     }
 
-    public Asignatura getAsignatura() {
-        return asignatura;
+    @XmlTransient
+    public Collection<ReservaSala> getReservaSalaCollection() {
+        return reservaSalaCollection;
     }
 
-    public void setAsignatura(Asignatura asignatura) {
-        this.asignatura = asignatura;
+    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
+        this.reservaSalaCollection = reservaSalaCollection;
+    }
+
+    public AsignaturaPorPlanEstudio getAsignaturaporplanestudio() {
+        return asignaturaporplanestudio;
+    }
+
+    public void setAsignaturaporplanestudio(AsignaturaPorPlanEstudio asignaturaporplanestudio) {
+        this.asignaturaporplanestudio = asignaturaporplanestudio;
     }
 
     @Override
@@ -146,5 +154,5 @@ public class GuiaLaboratorio implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.GuiaLaboratorio[ idguialaboratorio=" + idguialaboratorio + " ]";
     }
-
+    
 }

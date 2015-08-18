@@ -55,7 +55,7 @@ public class FacultadDAO implements FacultadDAOInterface {
     public List<Facultad> consultarFacultades() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Facultad p");
+            Query query = em.createQuery("SELECT p FROM Facultad p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Facultad> lista = query.getResultList();
             return lista;
@@ -138,6 +138,11 @@ public class FacultadDAO implements FacultadDAOInterface {
                                 .append(") Like :parametroCodigo");
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -160,6 +165,9 @@ public class FacultadDAO implements FacultadDAOInterface {
                         || ("parametroCodigo".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
             }
         }

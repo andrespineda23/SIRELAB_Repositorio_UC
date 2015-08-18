@@ -37,6 +37,7 @@ public class ControllerDetallesFacultad implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesFacultad() {
     }
@@ -61,6 +62,7 @@ public class ControllerDetallesFacultad implements Serializable {
     }
 
     public void asignarValoresVariablesFacultad() {
+        editarEstado = facultadDetalles.getEstado();
         editarCodigo = facultadDetalles.getCodigofacultad();
         editarNombre = facultadDetalles.getNombrefacultad();
     }
@@ -135,6 +137,7 @@ public class ControllerDetallesFacultad implements Serializable {
 
     private void almacenarModificacionFacultadEnSistema() {
         try {
+            facultadDetalles.setEstado(editarEstado);
             facultadDetalles.setCodigofacultad(editarCodigo);
             facultadDetalles.setNombrefacultad(editarNombre);
             gestionarFacultadBO.modificarInformacionFacultad(facultadDetalles);
@@ -185,4 +188,13 @@ public class ControllerDetallesFacultad implements Serializable {
         this.colorMensaje = colorMensaje;
     }
 
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
+    }
+
+    
 }

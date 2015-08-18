@@ -2071,6 +2071,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/xhtml/estructura_laboratorio/administrar_salas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_modulo_cargado</from-outcome>
+            <to-view-id>/xhtml/estructura_laboratorio/registrar_modulo_cargado.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_laboratorio/registrar_modulo_cargado.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_salas</from-outcome>
+            <to-view-id>/xhtml/estructura_laboratorio/administrar_salas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/xhtml/estructura_laboratorio/administrar_modulos.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>detalles_modulo</from-outcome>
@@ -2101,6 +2119,24 @@
         <navigation-case>
             <from-outcome>administrar_equipos</from-outcome>
             <to-view-id>/xhtml/estructura_laboratorio/administrar_equipos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_laboratorio/administrar_modulos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_equipo_cargado</from-outcome>
+            <to-view-id>/xhtml/estructura_laboratorio/registrar_equipo_cargado.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_laboratorio/registrar_equipo_cargado.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_modulos</from-outcome>
+            <to-view-id>/xhtml/estructura_laboratorio/administrar_modulos.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

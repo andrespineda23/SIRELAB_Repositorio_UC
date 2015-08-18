@@ -116,6 +116,18 @@
                                 <strong><h:outputText value="Estado*"/></strong>
                                 <h:inputText readonly="true" value="#{controllerDetallesSala.salaLaboratorioDetalles.strEstado}" required="true" class="form-control" id="estadoSalaLaboratorio" />
                             </div>
+                            <div class="form-group">
+                                <label for="parametroEstado">
+                                    Tipo de Sala*
+                                </label>
+                                <h:selectOneMenu value="#{controllerDetallesSala.editarTipo}"
+                                                 class="form-control" readonly="#{controllerDetallesSala.activarEditar}"
+                                                 id="editarTipo">
+                                    <f:selectItem itemLabel="PUBLICA" itemValue="false" />
+                                    <f:selectItem itemLabel="PRIVADA" itemValue="true" />
+                                    <f:ajax event="change" listener="#{controllerDetallesSala.actualizarTipoSala()}" execute="editarTipo" />
+                                </h:selectOneMenu>
+                            </div>
                         </fieldset>
                         <fieldset>
                             <legend class="text-info">Información Universidad</legend>
@@ -181,7 +193,7 @@
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEdificioSala" for="edificioSalaLaboratorio" style="color: red"/></h6>
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <strong><h:outputText value="Ubicación Piso Sala*"/></strong>
                                 <h:inputText maxlength="45"  value="#{controllerDetallesSala.ubicacionSalaLaboratorio}" required="true" class="form-control" id="ubicacionSalaLaboratorio" readonly="#{controllerDetallesSala.activarEditar}" requiredMessage="El campo Ubicacion es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerDetallesSala.validarUbicacionSala()}" execute="ubicacionSalaLaboratorio" render="ubicacionSalaLaboratorio msnUbicacionSala" />

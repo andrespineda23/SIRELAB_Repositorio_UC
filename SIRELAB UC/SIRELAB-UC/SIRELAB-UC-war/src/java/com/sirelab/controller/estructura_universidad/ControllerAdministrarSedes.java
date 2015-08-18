@@ -49,6 +49,7 @@ public class ControllerAdministrarSedes implements Serializable {
     private Sede sedeEditar;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarSedes() {
     }
@@ -76,18 +77,26 @@ public class ControllerAdministrarSedes implements Serializable {
         filtros.put("parametroNombre", null);
         filtros.put("parametroDireccion", null);
         filtros.put("parametroTelefono", null);
+        filtros.put("parametroEstado", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty())  && (parametroDireccion.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroDireccion) == true) && (!parametroDireccion.isEmpty()) && (parametroDireccion.trim().length() > 0)) {
             filtros.put("parametroDireccion", parametroDireccion.toString());
         }
-        if ((Utilidades.validarNulo(parametroTelefono) == true) && (!parametroTelefono.isEmpty())  && (parametroTelefono.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroTelefono) == true) && (!parametroTelefono.isEmpty()) && (parametroTelefono.trim().length() > 0)) {
             filtros.put("parametroTelefono", parametroTelefono.toString());
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
+            }
         }
     }
 
@@ -189,6 +198,7 @@ public class ControllerAdministrarSedes implements Serializable {
         listaSedes = null;
         listaSedesTabla = null;
         posicionSedeTabla = 0;
+        parametroEstado = 1;
         tamTotalSede = 0;
         bloquearPagAntSede = true;
         cantidadRegistros = "N/A";
@@ -265,6 +275,7 @@ public class ControllerAdministrarSedes implements Serializable {
     public void limpiarEditarSede() {
         sedeEditar = null;
         editarDireccion = null;
+        parametroEstado = 1;
         editarTelefono = null;
         editarNombre = null;
     }
@@ -406,6 +417,14 @@ public class ControllerAdministrarSedes implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

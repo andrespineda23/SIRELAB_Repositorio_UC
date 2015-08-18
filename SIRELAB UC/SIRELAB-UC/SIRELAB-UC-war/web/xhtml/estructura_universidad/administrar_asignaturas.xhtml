@@ -72,67 +72,49 @@
                                     <div class="row col-md-12">
                                         <fieldset style="border: black;border-radius: 10px; color: black"> 
                                             <legend class="h5">I. Personal</legend>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="parametroNombre">
-                                                        Nombre Plan
+                                                        Nombre Asignatura
                                                     </label>
                                                     <h:inputText maxlength="45" value="#{controllerAdministrarAsignaturas.parametroNombre}" class="form-control" id="parametroNombre" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="parametroCodigo">
-                                                        Codigo Plan
+                                                        Codigo Asignatura
                                                     </label>
                                                     <h:inputText maxlength="15" value="#{controllerAdministrarAsignaturas.parametroCodigo}" class="form-control" id="parametroCodigo" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <label for="parametroDepartamento">
-                                                    Departamento
-                                                </label>
-                                                <h:selectOneMenu value="#{controllerAdministrarAsignaturas.parametroDepartamento}"
-                                                                 class="form-control"
-                                                                 id="parametroDepartamento">
-                                                    <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
-                                                    <f:selectItems value="#{controllerAdministrarAsignaturas.listaDepartamentos}" var="departamento"
-                                                                   itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
-                                                    <f:ajax event="change" listener="#{controllerAdministrarAsignaturas.actualizarDepartamentos()}" execute="parametroDepartamento" render="@this parametroCarrera parametroPlanEstudio"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                </h:selectOneMenu>
-                                            </div>
                                         </fieldset>
                                     </div> 
                                     <div class="row col-md-12">
-                                        <div class="col-md-3">
-                                            <label for="parametroCarrera">
-                                                Carrera
-                                            </label>
-                                            <h:selectOneMenu value="#{controllerAdministrarAsignaturas.parametroCarrera}"
-                                                             class="form-control" disabled="#{controllerAdministrarAsignaturas.activarCarrera}"
-                                                             id="parametroCarrera">
-                                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
-                                                <f:selectItems value="#{controllerAdministrarAsignaturas.listaCarreras}" var="carrera"
-                                                               itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
-                                                <f:ajax event="change" listener="#{controllerAdministrarAsignaturas.actualizarCarreras()}" execute="parametroCarrera" render="@this parametroPlanEstudio"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                            </h:selectOneMenu>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="parametroCreditos">
+                                                    Cantidad Creditos
+                                                </label>
+                                                <h:inputText maxlength="1" value="#{controllerAdministrarAsignaturas.parametroCreditos}" class="form-control" id="parametroCreditos" />
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="parametroPlanEstudio">
-                                                Plan de Estudio
-                                            </label>
-                                            <h:selectOneMenu value="#{controllerAdministrarAsignaturas.parametroPlanEstudio}"
-                                                             class="form-control" disabled="#{controllerAdministrarAsignaturas.activarPlanEstudio}"
-                                                             id="parametroPlanEstudio">
-                                                <f:selectItem itemLabel="Seleccione Plan de Estudio" itemValue="null" />
-                                                <f:selectItems value="#{controllerAdministrarAsignaturas.listaPlanesEstudios}" var="plan"
-                                                               itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                            </h:selectOneMenu>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="parametroEstado">
+                                                        Estado Asignatura
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarAsignaturas.parametroEstado}"
+                                                                     class="form-control"
+                                                                     id="parametroEstado">
+                                                        <f:selectItem itemLabel="ACTIVA" itemValue="1" />
+                                                        <f:selectItem itemLabel="INACTIVA" itemValue="2" />
+                                                        <f:selectItem itemLabel="TODAS" itemValue="3" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6"></div>
                                     </div>
                                 </fieldset>
                                 <br></br>
@@ -176,22 +158,16 @@
                                             </h:column>  
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="Departamento"/>
+                                                    <h:outputText value="Creditos"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.planestudios.carrera.departamento.nombredepartamento}"/>
-                                            </h:column>
+                                                <h:outputText value="#{item.numerocreditos}"/>
+                                            </h:column>  
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="Carrera"/>
+                                                    <h:outputText value="Estado"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.planestudios.carrera.nombrecarrera}"/>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Plan de Estudios"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.planestudios.codigoplanestudio}"/>
-                                            </h:column>
+                                                <h:outputText value="#{item.strEstado}"/>
+                                            </h:column>  
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="Detalles"/>

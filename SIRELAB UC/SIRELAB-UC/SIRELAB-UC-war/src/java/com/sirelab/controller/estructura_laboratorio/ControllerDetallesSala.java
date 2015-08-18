@@ -66,6 +66,7 @@ public class ControllerDetallesSala implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarTipo;
 
     public ControllerDetallesSala() {
     }
@@ -110,6 +111,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void asignarValoresVariablesSalaLaboratorio() {
+        editarTipo = salaLaboratorioDetalles.getSalaprivada();
         nombreSalaLaboratorio = salaLaboratorioDetalles.getNombresala();
         codigoSalaLaboratorio = salaLaboratorioDetalles.getCodigosala();
         ubicacionSalaLaboratorio = salaLaboratorioDetalles.getPisoubicacion();
@@ -155,7 +157,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void validarNombreSala() {
-        if (Utilidades.validarNulo(nombreSalaLaboratorio) && (!nombreSalaLaboratorio.isEmpty())  && (nombreSalaLaboratorio.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nombreSalaLaboratorio) && (!nombreSalaLaboratorio.isEmpty()) && (nombreSalaLaboratorio.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nombreSalaLaboratorio)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -170,7 +172,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void validarCodigoSala() {
-        if (Utilidades.validarNulo(codigoSalaLaboratorio) && (!codigoSalaLaboratorio.isEmpty())  && (codigoSalaLaboratorio.trim().length() > 0)) {
+        if (Utilidades.validarNulo(codigoSalaLaboratorio) && (!codigoSalaLaboratorio.isEmpty()) && (codigoSalaLaboratorio.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(codigoSalaLaboratorio)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -185,7 +187,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void validarUbicacionSala() {
-        if (Utilidades.validarNulo(ubicacionSalaLaboratorio) && (!ubicacionSalaLaboratorio.isEmpty())  && (ubicacionSalaLaboratorio.trim().length() > 0)) {
+        if (Utilidades.validarNulo(ubicacionSalaLaboratorio) && (!ubicacionSalaLaboratorio.isEmpty()) && (ubicacionSalaLaboratorio.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(ubicacionSalaLaboratorio)) {
                 validacionesUbicacion = true;
             } else {
@@ -200,7 +202,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void validarCostoAlquilerSala() {
-        if (Utilidades.validarNulo(costoSalaLaboratorio) && (!costoSalaLaboratorio.isEmpty())  && (costoSalaLaboratorio.trim().length() > 0)) {
+        if (Utilidades.validarNulo(costoSalaLaboratorio) && (!costoSalaLaboratorio.isEmpty()) && (costoSalaLaboratorio.trim().length() > 0)) {
             if (Utilidades.isNumber(costoSalaLaboratorio)) {
                 validacionesCosto = true;
             } else {
@@ -215,7 +217,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void validarCapacidadSala() {
-        if (Utilidades.validarNulo(capacidadSalaLaboratorio) && (!capacidadSalaLaboratorio.isEmpty())  && (capacidadSalaLaboratorio.trim().length() > 0)) {
+        if (Utilidades.validarNulo(capacidadSalaLaboratorio) && (!capacidadSalaLaboratorio.isEmpty()) && (capacidadSalaLaboratorio.trim().length() > 0)) {
             if ((Utilidades.isNumber(capacidadSalaLaboratorio)) == false) {
                 validacionesCapacidad = false;
                 FacesContext.getCurrentInstance().addMessage("form:capacidadSalaLaboratorio", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
@@ -230,7 +232,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void validarDescripcionSala() {
-        if (Utilidades.validarNulo(descripcionSalaLaboratorio) && (!descripcionSalaLaboratorio.isEmpty())  && (descripcionSalaLaboratorio.trim().length() > 0)) {
+        if (Utilidades.validarNulo(descripcionSalaLaboratorio) && (!descripcionSalaLaboratorio.isEmpty()) && (descripcionSalaLaboratorio.trim().length() > 0)) {
             if ((Utilidades.validarCaracteresAlfaNumericos(descripcionSalaLaboratorio)) == false) {
                 validacionesDescripcion = false;
                 FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("La descripción se encuentra incorrecta."));
@@ -245,7 +247,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void validarInversionSala() {
-        if (Utilidades.validarNulo(inversionSalaLaboratorio) && (!inversionSalaLaboratorio.isEmpty())  && (inversionSalaLaboratorio.trim().length() > 0)) {
+        if (Utilidades.validarNulo(inversionSalaLaboratorio) && (!inversionSalaLaboratorio.isEmpty()) && (inversionSalaLaboratorio.trim().length() > 0)) {
             if ((Utilidades.isNumber(inversionSalaLaboratorio)) == false) {
                 validacionesInversion = false;
                 FacesContext.getCurrentInstance().addMessage("form:inversionSalaLaboratorio", new FacesMessage("El valor de inversión se encuentra incorrecto."));
@@ -305,6 +307,10 @@ public class ControllerDetallesSala implements Serializable {
             validacionesLaboratorioPorArea = false;
             FacesContext.getCurrentInstance().addMessage("form:laboratorioPorAreaSalaLaboratorio", new FacesMessage("El area de profundización es obligatorio."));
         }
+        modificacionesRegistroSala();
+    }
+
+    public void actualizarTipoSala() {
         modificacionesRegistroSala();
     }
 
@@ -423,6 +429,7 @@ public class ControllerDetallesSala implements Serializable {
             salaLaboratorioDetalles.setCapacidadsala(Integer.parseInt(capacidadSalaLaboratorio));
             salaLaboratorioDetalles.setValorinversion(new BigInteger(inversionSalaLaboratorio));
             salaLaboratorioDetalles.setEdificio(edificioSalaLaboratorio);
+            salaLaboratorioDetalles.setSalaprivada(editarTipo);
             salaLaboratorioDetalles.setLaboratoriosporareas(laboratorioPorAreaSalaLaboratorio);
             gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
         } catch (Exception e) {
@@ -715,6 +722,14 @@ public class ControllerDetallesSala implements Serializable {
 
     public void setActivarLaboratorio(boolean activarLaboratorio) {
         this.activarLaboratorio = activarLaboratorio;
+    }
+
+    public boolean isEditarTipo() {
+        return editarTipo;
+    }
+
+    public void setEditarTipo(boolean editarTipo) {
+        this.editarTipo = editarTipo;
     }
 
 }

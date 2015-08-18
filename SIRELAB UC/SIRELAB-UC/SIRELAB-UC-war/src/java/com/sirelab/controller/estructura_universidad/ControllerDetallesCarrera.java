@@ -46,6 +46,7 @@ public class ControllerDetallesCarrera implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesCarrera() {
     }
@@ -79,6 +80,7 @@ public class ControllerDetallesCarrera implements Serializable {
         editarDepartamento = carreraDetalles.getDepartamento();
         editarFacultad = carreraDetalles.getDepartamento().getFacultad();
         editarNombre = carreraDetalles.getNombrecarrera();
+        editarEstado = carreraDetalles.getEstado();
         activarModificacionDepartamento = false;
         listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
         if (Utilidades.validarNulo(editarFacultad)) {
@@ -93,7 +95,7 @@ public class ControllerDetallesCarrera implements Serializable {
     }
 
     public void validarNombreCarrera() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -107,7 +109,7 @@ public class ControllerDetallesCarrera implements Serializable {
     }
 
     public void validarCodigoCarrera() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -199,6 +201,7 @@ public class ControllerDetallesCarrera implements Serializable {
             carreraDetalles.setNombrecarrera(editarNombre);
             carreraDetalles.setCodigocarrera(editarCodigo);
             carreraDetalles.setDepartamento(editarDepartamento);
+            carreraDetalles.setEstado(editarEstado);
             gestionarCarrerasBO.modificarInformacionCarrera(carreraDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema:  " + e.toString());
@@ -293,6 +296,14 @@ public class ControllerDetallesCarrera implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
     }
 
 }

@@ -129,8 +129,18 @@
                                     </h:selectOneMenu>
                                     <h6><h:message id="msnCarrera" for="editarCarrera" style="color: red"/></h6>
                                 </div>
+                                <div class="form-group">
+                                    <label for="parametroEstado">
+                                        Estado Plan Estudio*
+                                    </label>
+                                    <h:selectOneMenu value="#{controllerDetallesPlanEstudio.editarEstado}"
+                                                     class="form-control"
+                                                     id="editarEstado">
+                                        <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                        <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                    </h:selectOneMenu>
+                                </div>
                             </fieldset>
-                            <br></br>
                             <br></br>
                             <br></br>
                             <br></br>

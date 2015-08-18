@@ -58,7 +58,7 @@ public class SedeDAO implements SedeDAOInterface {
     public List<Sede> consultarSedes() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Sede p");
+            Query query = em.createQuery("SELECT p FROM Sede p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Sede> lista = query.getResultList();
             return lista;
@@ -132,6 +132,11 @@ public class SedeDAO implements SedeDAOInterface {
                                 .append(") Like :parametroTelefono");
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -155,6 +160,9 @@ public class SedeDAO implements SedeDAOInterface {
                         || ("parametroNombre".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
             }
         }

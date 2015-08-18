@@ -55,7 +55,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
     public List<PlanEstudios> consultarPlanesEstudios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM PlanEstudios p");
+            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<PlanEstudios> lista = query.getResultList();
             return lista;
@@ -79,7 +79,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public PlanEstudios buscarPlanEstudiosPorCodigoYCarrera(String codigo, BigInteger carrera) {
         try {
@@ -95,8 +95,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             return null;
         }
     }
-    
-    
+
     @Override
     public PlanEstudios buscarPlanEstudiosPorCodigo(String codigo) {
         try {
@@ -185,6 +184,11 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -212,7 +216,9 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
                 }
-
+                if ("parametroEstado".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
+                }
             }
         }
         return tq;

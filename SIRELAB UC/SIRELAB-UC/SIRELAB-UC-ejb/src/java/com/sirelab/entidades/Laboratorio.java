@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Laboratorio.findByNombrelaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.nombrelaboratorio = :nombrelaboratorio"),
     @NamedQuery(name = "Laboratorio.findByCodigolaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.codigolaboratorio = :codigolaboratorio")})
 public class Laboratorio implements Serializable {
+    @Column(name = "estado")
+    private Boolean estado;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorio")
     private Collection<EncargadoLaboratorio> encargadoLaboratorioCollection;
@@ -63,6 +66,11 @@ public class Laboratorio implements Serializable {
     private Departamento departamento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorio")
     private Collection<LaboratoriosPorAreas> laboratoriosPorAreasCollection;
+     @Transient
+    private String strEstado;
+
+    
+
 
     public Laboratorio() {
     }
@@ -150,6 +158,29 @@ public class Laboratorio implements Serializable {
 
     public void setEncargadoLaboratorioCollection(Collection<EncargadoLaboratorio> encargadoLaboratorioCollection) {
         this.encargadoLaboratorioCollection = encargadoLaboratorioCollection;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
 }

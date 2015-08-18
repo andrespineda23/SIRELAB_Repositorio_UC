@@ -2,11 +2,13 @@ package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarAsignaturasBOInterface;
 import com.sirelab.dao.interfacedao.AsignaturaDAOInterface;
+import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.entidades.Asignatura;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
@@ -34,6 +36,8 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
     CarreraDAOInterface carreraDAO;
     @EJB
     PlanEstudiosDAOInterface planEstudiosDAO;
+    @EJB
+    AsignaturaPorPlanEstudioDAOInterface asignaturaPorPlanEstudioDAO;
 
     @Override
     public List<Departamento> consultarDepartamentosRegistrados() {
@@ -80,15 +84,6 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
     }
 
     @Override
-    public void crearNuevoAsignatura(Asignatura asignatura) {
-        try {
-            asignaturaDAO.crearAsignatura(asignatura);
-        } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO crearNuevoAsignatura : " + e.toString());
-        }
-    }
-
-    @Override
     public void modificarInformacionAsignatura(Asignatura asignatura) {
         try {
             asignaturaDAO.editarAsignatura(asignatura);
@@ -107,14 +102,39 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
             return null;
         }
     }
-    
+
     @Override
-    public Asignatura obtenerAsignaturaPorCodigoYPlanEstudio(String codigo, BigInteger plan) {
+    public Asignatura obtenerAsignaturaPorCodigo(String codigo) {
         try {
-            Asignatura registro = asignaturaDAO.buscarAsignaturaPorCodigoYPlanEstudio(codigo, plan);
+            Asignatura registro = asignaturaDAO.buscarAsignaturaPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarAsignaturasBO obtenerAsignaturaPorCodigoYPlanEstudio : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public void crearAsignaturaPorPlanEstudio(Asignatura asignatura, PlanEstudios planEstudios) {
+        try {
+            asignaturaDAO.crearAsignatura(asignatura);
+            Asignatura nuevo = asignaturaDAO.obtenerUltimaAsignaturaRegistrada();
+            AsignaturaPorPlanEstudio asignaturaPorPlanEstudio = new AsignaturaPorPlanEstudio();
+            asignaturaPorPlanEstudio.setAsignatura(nuevo);
+            asignaturaPorPlanEstudio.setPlanestudio(planEstudios);
+            asignaturaPorPlanEstudioDAO.crearAsignaturaPorPlanEstudio(asignaturaPorPlanEstudio);
+        } catch (Exception e) {
+            System.out.println("Error GestionarAsignaturasBO crearAsignaturaPorPlanEstudio : " + e.toString());
+        }
+    }
+
+    @Override
+    public AsignaturaPorPlanEstudio consultarAsignaturaPorPlanEstudioRegistrado(BigInteger plan, String codigo) {
+        try {
+            AsignaturaPorPlanEstudio registro = asignaturaPorPlanEstudioDAO.buscarAsignaturaPorPlanEstudioPorPlanYAsignatura(plan, codigo);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarAsignaturasBO consultarAsignaturaPorPlanEstudioRegistrado : " + e.toString());
             return null;
         }
     }

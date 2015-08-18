@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SalaLaboratorio.findByCapacidadsala", query = "SELECT s FROM SalaLaboratorio s WHERE s.capacidadsala = :capacidadsala"),
     @NamedQuery(name = "SalaLaboratorio.findByValorinversion", query = "SELECT s FROM SalaLaboratorio s WHERE s.valorinversion = :valorinversion")})
 public class SalaLaboratorio implements Serializable {
+
+    @Column(name = "salaprivada")
+    private Boolean salaprivada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
     private Collection<ReservaSala> reservaSalaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
@@ -99,6 +102,8 @@ public class SalaLaboratorio implements Serializable {
     private Edificio edificio;
     @Transient
     private String strEstado;
+    @Transient
+    private String strPrivada;
 
     public SalaLaboratorio() {
     }
@@ -261,6 +266,30 @@ public class SalaLaboratorio implements Serializable {
 
     public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
         this.reservaSalaCollection = reservaSalaCollection;
+    }
+
+    public Boolean getSalaprivada() {
+        return salaprivada;
+    }
+
+    public void setSalaprivada(Boolean salaprivada) {
+        this.salaprivada = salaprivada;
+    }
+
+    public String getStrPrivada() {
+        getSalaprivada();
+        if (null != salaprivada) {
+            if (salaprivada == true) {
+                strPrivada = "SALA PRIVADA";
+            } else {
+                strPrivada = "SALA PUBLICA";
+            }
+        }
+        return strPrivada;
+    }
+
+    public void setStrPrivada(String strPrivada) {
+        this.strPrivada = strPrivada;
     }
 
 }

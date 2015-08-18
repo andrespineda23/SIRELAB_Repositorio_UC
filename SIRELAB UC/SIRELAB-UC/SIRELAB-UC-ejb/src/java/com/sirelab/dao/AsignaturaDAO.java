@@ -67,21 +67,6 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             return null;
         }
     }
-    
-    @Override
-    public List<Asignatura> consultarAsignaturasPorPlanEstudio(BigInteger planEstudio) {
-        try {
-            em.clear();
-            Query query = em.createQuery("SELECT p FROM Asignatura p WHERE p.planestudios.idplanestudios=:planEstudio");
-            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("planEstudio", planEstudio);
-            List<Asignatura> lista = query.getResultList();
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error consultarAsignaturasPorPlanEstudio AsignaturaDAO : " + e.toString());
-            return null;
-        }
-    }
 
     @Override
     public Asignatura buscarAsignaturaPorID(BigInteger idRegistro) {
@@ -99,17 +84,16 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
     }
 
     @Override
-    public Asignatura buscarAsignaturaPorCodigoYPlanEstudio(String codigo, BigInteger plan) {
+    public Asignatura buscarAsignaturaPorCodigo(String codigo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Asignatura p WHERE p.codigoasignatura=:codigo AND p.planestudios.idplanestudios=:plan");
+            Query query = em.createQuery("SELECT p FROM Asignatura p WHERE p.codigoasignatura=:codigo");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("plan", plan);
             query.setParameter("codigo", codigo);
             Asignatura registro = (Asignatura) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAsignaturaPorID AsignaturaDAO : " + e.toString());
+            System.out.println("Error buscarAsignaturaPorCodigo AsignaturaDAO : " + e.toString());
             return null;
         }
     }
@@ -162,23 +146,8 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-                    if ("parametroPlanEstudio".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "planestudios.idplanestudios");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
-                    if ("parametroCarrera".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "planestudios.carrera.idcarrera");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
-                    if ("parametroDepartamento".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "planestudios.carrera.departamento.iddepartamento");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
-                    if ("parametroFacultad".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "planestudios.carrera.departamento.facultad.idfacultad");
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
@@ -207,17 +176,31 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
                 if ("parametroCreditos".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), Integer.valueOf(entry.getValue()));
                 }
-                if (("parametroDepartamento".equals(entry.getKey()))
-                        || ("parametroPlanEstudio".equals(entry.getKey()))
-                        || ("parametroCarrera".equals(entry.getKey()))
-                        || ("parametroFacultad".equals(entry.getKey()))) {
-                    //
-                    tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
+                if ("parametroEstado".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
-
             }
         }
         return tq;
     }
 
+    @Override
+    public Asignatura obtenerUltimaAsignaturaRegistrada() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Asignatura p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Asignatura> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                Asignatura ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error obtenerUltimaAsignaturaRegistrada AsignaturaDAO : " + e.toString());
+            return null;
+        }
+    }
 }

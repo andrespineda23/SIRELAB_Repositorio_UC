@@ -58,7 +58,7 @@ public class EdificioDAO implements EdificioDAOInterface {
     public List<Edificio> consultarEdificios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Edificio p");
+            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Edificio> lista = query.getResultList();
             return lista;
@@ -146,6 +146,11 @@ public class EdificioDAO implements EdificioDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -171,6 +176,9 @@ public class EdificioDAO implements EdificioDAOInterface {
                 }
                 if ("parametroSede".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
+                }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
             }
         }

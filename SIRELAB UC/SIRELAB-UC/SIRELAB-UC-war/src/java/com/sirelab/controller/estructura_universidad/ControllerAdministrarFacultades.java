@@ -4,7 +4,6 @@ import com.sirelab.bo.interfacebo.universidad.GestionarFacultadesBOInterface;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +40,7 @@ public class ControllerAdministrarFacultades implements Serializable {
     private boolean activarExport;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarFacultades() {
     }
@@ -66,15 +66,23 @@ public class ControllerAdministrarFacultades implements Serializable {
         filtros = new HashMap<String, String>();
         filtros.put("parametroNombre", null);
         filtros.put("parametroCodigo", null);
+        filtros.put("parametroEstado", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
+            }
         }
     }
 
@@ -172,6 +180,7 @@ public class ControllerAdministrarFacultades implements Serializable {
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
+        parametroEstado = 1;
         listaFacultades = null;
         listaFacultadesTabla = null;
         posicionFacultadTabla = 0;
@@ -279,6 +288,14 @@ public class ControllerAdministrarFacultades implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

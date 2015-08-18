@@ -24,7 +24,7 @@
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
         <h:form id="formularioGeneral">
-            
+
             <div class="container">
                 <div class="row">
                     <!-- Navigation -->
@@ -195,6 +195,12 @@
                                                     <h:outputText value="Sala de Laboratorio"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.salalaboratorio.nombresala}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Modulo"/>
+                                                </f:facet>
+                                                <h:commandLink value="Adicionar" action="#{controllerAdministrarModulos.cambiarPaginaEquipoCargado()}" actionListener="#{controllerRegistrarEquipoCargado.cargarInformacionModuloLaboratorio(item.idmodulolaboratorio)}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">

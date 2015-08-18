@@ -60,12 +60,14 @@ public class ControllerRegistrarSala implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean nuevoTipo;
 
     public ControllerRegistrarSala() {
     }
 
     @PostConstruct
     public void init() {
+        nuevoTipo = false;
         activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -104,7 +106,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public void validarNombreSala() {
-        if (Utilidades.validarNulo(nuevoNombreSala) && (!nuevoNombreSala.isEmpty())  && (nuevoNombreSala.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoNombreSala) && (!nuevoNombreSala.isEmpty()) && (nuevoNombreSala.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombreSala)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -119,7 +121,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public void validarCodigoSala() {
-        if (Utilidades.validarNulo(nuevoCodigoSala) && (!nuevoCodigoSala.isEmpty())  && (nuevoCodigoSala.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoCodigoSala) && (!nuevoCodigoSala.isEmpty()) && (nuevoCodigoSala.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoSala)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -133,7 +135,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public void validarUbicacionSala() {
-        if (Utilidades.validarNulo(nuevoUbicacionSala) && (!nuevoUbicacionSala.isEmpty())  && (nuevoUbicacionSala.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoUbicacionSala) && (!nuevoUbicacionSala.isEmpty()) && (nuevoUbicacionSala.trim().length() > 0)) {
             if (Utilidades.validarCaracteresAlfaNumericos(nuevoUbicacionSala)) {
                 validacionesUbicacion = true;
             } else {
@@ -147,7 +149,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public void validarCostoAlquilerSala() {
-        if (Utilidades.validarNulo(nuevoCostoSala) && (!nuevoCostoSala.isEmpty())  && (nuevoCostoSala.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoCostoSala) && (!nuevoCostoSala.isEmpty()) && (nuevoCostoSala.trim().length() > 0)) {
             if (Utilidades.isNumber(nuevoCostoSala)) {
                 validacionesCosto = true;
             } else {
@@ -161,7 +163,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public void validarCapacidadSala() {
-        if (Utilidades.validarNulo(nuevoCapacidadSala) && (!nuevoCapacidadSala.isEmpty())  && (nuevoCapacidadSala.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoCapacidadSala) && (!nuevoCapacidadSala.isEmpty()) && (nuevoCapacidadSala.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCapacidadSala)) == false) {
                 validacionesCapacidad = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadSala", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
@@ -175,7 +177,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public void validarDescripcionSala() {
-        if (Utilidades.validarNulo(nuevoDescripcionSala) && (!nuevoDescripcionSala.isEmpty())  && (nuevoDescripcionSala.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoDescripcionSala) && (!nuevoDescripcionSala.isEmpty()) && (nuevoDescripcionSala.trim().length() > 0)) {
             if ((Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcionSala)) == false) {
                 validacionesDescripcion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("La descripción se encuentra incorrecta."));
@@ -189,7 +191,7 @@ public class ControllerRegistrarSala implements Serializable {
     }
 
     public void validarInversionSala() {
-        if (Utilidades.validarNulo(nuevoInversionSala) && (!nuevoInversionSala.isEmpty())  && (nuevoInversionSala.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoInversionSala) && (!nuevoInversionSala.isEmpty()) && (nuevoInversionSala.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoInversionSala)) == false) {
                 validacionesInversion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoInversionSala", new FacesMessage("El valor de inversión se encuentra incorrecto."));
@@ -278,6 +280,7 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
+        nuevoTipo = false;
         nuevoDescripcionSala = null;
         nuevoCostoSala = null;
         nuevoCapacidadSala = null;
@@ -391,6 +394,7 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
+        nuevoTipo = false;
         nuevoDescripcionSala = null;
         nuevoLaboratorioSala = null;
         nuevoDepartamentoSala = null;
@@ -420,12 +424,13 @@ public class ControllerRegistrarSala implements Serializable {
             SalaLaboratorio salaNuevo = new SalaLaboratorio();
             salaNuevo.setNombresala(nuevoNombreSala);
             salaNuevo.setCodigosala(nuevoCodigoSala);
+            salaNuevo.setSalaprivada(nuevoTipo);
             salaNuevo.setPisoubicacion(nuevoUbicacionSala);
             salaNuevo.setDescripcionsala(nuevoDescripcionSala);
             salaNuevo.setCostoalquiler(Long.parseLong(nuevoCostoSala));
             salaNuevo.setEstadosala(true);
             salaNuevo.setCapacidadsala(Integer.parseInt(nuevoCapacidadSala));
-            if (Utilidades.validarNulo(nuevoInversionSala) && (!nuevoInversionSala.isEmpty())  && (nuevoInversionSala.trim().length() > 0)) {
+            if (Utilidades.validarNulo(nuevoInversionSala) && (!nuevoInversionSala.isEmpty()) && (nuevoInversionSala.trim().length() > 0)) {
                 salaNuevo.setValorinversion(new BigInteger(nuevoInversionSala));
             } else {
                 salaNuevo.setValorinversion(new BigInteger("0"));
@@ -654,6 +659,14 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
         this.listaDepartamentos = listaDepartamentos;
+    }
+
+    public boolean isNuevoTipo() {
+        return nuevoTipo;
+    }
+
+    public void setNuevoTipo(boolean nuevoTipo) {
+        this.nuevoTipo = nuevoTipo;
     }
 
 }

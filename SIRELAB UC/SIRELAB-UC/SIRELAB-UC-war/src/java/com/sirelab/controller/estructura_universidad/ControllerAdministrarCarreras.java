@@ -11,7 +11,6 @@ import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +53,7 @@ public class ControllerAdministrarCarreras implements Serializable {
     private String altoTabla;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarCarreras() {
     }
@@ -85,14 +85,15 @@ public class ControllerAdministrarCarreras implements Serializable {
         filtros.put("parametroCodigo", null);
         filtros.put("parametroDepartamento", null);
         filtros.put("parametroFacultad", null);
+        filtros.put("parametroEstado", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
         if (Utilidades.validarNulo(parametroFacultad) == true) {
@@ -103,6 +104,13 @@ public class ControllerAdministrarCarreras implements Serializable {
         if (Utilidades.validarNulo(parametroDepartamento) == true) {
             if (parametroDepartamento.getIddepartamento() != null) {
                 filtros.put("parametroDepartamento", parametroDepartamento.getIddepartamento().toString());
+            }
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
             }
         }
     }
@@ -211,6 +219,7 @@ public class ControllerAdministrarCarreras implements Serializable {
         listaCarreras = null;
         listaCarrerasTabla = null;
         posicionCarreraTabla = 0;
+        parametroEstado = 1;
         tamTotalCarrera = 0;
         cantidadRegistros = "N/A";
         bloquearPagAntCarrera = true;
@@ -223,6 +232,7 @@ public class ControllerAdministrarCarreras implements Serializable {
         activarExport = true;
         parametroNombre = null;
         parametroCodigo = null;
+        parametroEstado = 1;
         parametroDepartamento = new Departamento();
         parametroFacultad = new Facultad();
         listaDepartamentos = null;
@@ -388,6 +398,14 @@ public class ControllerAdministrarCarreras implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

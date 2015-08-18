@@ -24,7 +24,7 @@
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
         <h:form id="formularioGeneral">
-            
+
             <div class="container">
                 <div class="row">
                     <!-- Navigation -->
@@ -57,7 +57,7 @@
                     <br></br>
                     <br></br> 
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li class="active">Administrar Departamentos</li>
@@ -72,7 +72,7 @@
                                     <div class="row col-md-12">
                                         <fieldset style="border: black;border-radius: 10px; color: black"> 
                                             <legend class="h5">I. Personal</legend>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="parametroNombre">
                                                         Nombre Departamento
@@ -80,13 +80,13 @@
                                                     <h:inputText maxlength="45" value="#{controllerAdministrarDepartamentos.parametroNombre}" class="form-control" id="parametroNombre" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="parametroCodigo">
-                                                        Codigo Departamento
-                                                    </label>
-                                                    <h:inputText maxlength="20" value="#{controllerAdministrarDepartamentos.parametroCodigo}" class="form-control" id="parametroCodigo" />
+                                                    Codigo Departamento
+                                                </label>
+                                                <h:inputText maxlength="20" value="#{controllerAdministrarDepartamentos.parametroCodigo}" class="form-control" id="parametroCodigo" />
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="parametroFacultad">
                                                     Facultad
                                                 </label>
@@ -98,6 +98,20 @@
                                                                    itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
                                                     <f:converter converterId="ConverterGenerico" />
                                                 </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="parametroEstado">
+                                                        Estado Departamento
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarDepartamentos.parametroEstado}"
+                                                                     class="form-control"
+                                                                     id="parametroEstado">
+                                                        <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                        <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                        <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                    </h:selectOneMenu>
+                                                </div>
                                             </div>
                                         </fieldset>
                                     </div> 
@@ -140,6 +154,12 @@
                                                     <h:outputText value="Facultad"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.facultad.nombrefacultad}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Estado"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.strEstado}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">

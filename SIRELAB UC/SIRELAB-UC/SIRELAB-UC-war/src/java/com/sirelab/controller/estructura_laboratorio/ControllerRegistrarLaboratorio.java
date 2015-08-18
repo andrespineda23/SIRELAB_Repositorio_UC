@@ -175,6 +175,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         try {
             Laboratorio laboratorioNuevo = new Laboratorio();
             laboratorioNuevo.setNombrelaboratorio(nuevoNombre);
+            laboratorioNuevo.setEstado(true);
             laboratorioNuevo.setCodigolaboratorio(nuevoCodigo);
             laboratorioNuevo.setDepartamento(nuevoDepartamento);
             gestionarPlantaLaboratoriosBO.crearNuevaLaboratorio(laboratorioNuevo);

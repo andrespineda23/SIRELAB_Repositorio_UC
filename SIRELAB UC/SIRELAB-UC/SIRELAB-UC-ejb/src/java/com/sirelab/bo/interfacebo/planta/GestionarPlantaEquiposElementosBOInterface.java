@@ -56,4 +56,6 @@ public interface GestionarPlantaEquiposElementosBOInterface {
     public EquipoElemento obtenerEquipoElementoPorCodigoYModulo(String codigo, BigInteger modulo);
 
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
+
+    public ModuloLaboratorio obtenerModuloLaboratorioPorID(BigInteger modulo);
 }

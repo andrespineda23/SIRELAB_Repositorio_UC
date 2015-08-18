@@ -47,6 +47,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesLaboratorio() {
     }
@@ -78,6 +79,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
     public void asignarValoresVariablesLaboratorio() {
         editarCodigo = laboratorioDetalles.getCodigolaboratorio();
         editarDepartamento = laboratorioDetalles.getDepartamento();
+        editarEstado = laboratorioDetalles.getEstado();
         editarNombre = laboratorioDetalles.getNombrelaboratorio();
         editarFacultad = laboratorioDetalles.getDepartamento().getFacultad();
         activarModificacionDepartamento = false;
@@ -119,7 +121,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
     }
 
     public void validarNombreLaboratorio() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             if (!Utilidades.validarCaracterString(editarNombre)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
@@ -133,7 +135,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
     }
 
     public void validarCodigoLaboratorio() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                 validacionesCodigo = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
@@ -195,6 +197,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
             laboratorioDetalles.setNombrelaboratorio(editarNombre);
             laboratorioDetalles.setCodigolaboratorio(editarCodigo);
             laboratorioDetalles.setDepartamento(editarDepartamento);
+            laboratorioDetalles.setEstado(editarEstado);
             gestionarPlantaLaboratoriosBO.modificarInformacionLaboratorio(laboratorioDetalles);
             restaurarInformacionLaboratorio();
         } catch (Exception e) {
@@ -291,6 +294,14 @@ public class ControllerDetallesLaboratorio implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
     }
 
 }

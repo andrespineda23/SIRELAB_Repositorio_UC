@@ -55,7 +55,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public List<Departamento> consultarDepartamentos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p");
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Departamento> lista = query.getResultList();
             return lista;
@@ -173,6 +173,11 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -199,6 +204,9 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
                 }
                 if ("parametroFacultad".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
+                }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
             }
         }

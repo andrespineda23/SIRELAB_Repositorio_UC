@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sede.findByDireccionsede", query = "SELECT s FROM Sede s WHERE s.direccionsede = :direccionsede"),
     @NamedQuery(name = "Sede.findByTelefonosede", query = "SELECT s FROM Sede s WHERE s.telefonosede = :telefonosede")})
 public class Sede implements Serializable {
+
+    @Column(name = "estado")
+    private Boolean estado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,6 +64,8 @@ public class Sede implements Serializable {
     private String telefonosede;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sede")
     private Collection<Edificio> edificioCollection;
+    @Transient
+    private String strEstado;
 
     public Sede() {
     }
@@ -144,6 +150,30 @@ public class Sede implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Sede[ idsede=" + idsede + " ]";
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
 }
