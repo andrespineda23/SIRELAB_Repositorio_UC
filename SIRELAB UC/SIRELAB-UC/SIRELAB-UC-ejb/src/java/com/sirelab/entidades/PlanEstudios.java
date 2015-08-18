@@ -7,9 +7,7 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,17 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "planestudios")
@@ -38,15 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PlanEstudios.findAll", query = "SELECT p FROM PlanEstudios p"),
     @NamedQuery(name = "PlanEstudios.findByIdplanestudios", query = "SELECT p FROM PlanEstudios p WHERE p.idplanestudios = :idplanestudios"),
     @NamedQuery(name = "PlanEstudios.findByCodigoplanestudio", query = "SELECT p FROM PlanEstudios p WHERE p.codigoplanestudio = :codigoplanestudio"),
-    @NamedQuery(name = "PlanEstudios.findByNombreplanestudio", query = "SELECT p FROM PlanEstudios p WHERE p.nombreplanestudio = :nombreplanestudio")})
+    @NamedQuery(name = "PlanEstudios.findByNombreplanestudio", query = "SELECT p FROM PlanEstudios p WHERE p.nombreplanestudio = :nombreplanestudio"),
+    @NamedQuery(name = "PlanEstudios.findByEstado", query = "SELECT p FROM PlanEstudios p WHERE p.estado = :estado")})
 public class PlanEstudios implements Serializable {
 
-    @Column(name = "estado")
-    private Boolean estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planestudio")
-    private Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planestudios")
-    private Collection<Asignatura> asignaturaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,8 +54,8 @@ public class PlanEstudios implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nombreplanestudio")
     private String nombreplanestudio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planestudio")
-    private Collection<Estudiante> estudianteCollection;
+    @Column(name = "estado")
+    private Boolean estado;
     @JoinColumn(name = "carrera", referencedColumnName = "idcarrera")
     @ManyToOne(optional = false)
     private Carrera carrera;
@@ -100,7 +91,7 @@ public class PlanEstudios implements Serializable {
     }
 
     public void setCodigoplanestudio(String codigoplanestudio) {
-        this.codigoplanestudio = codigoplanestudio.toUpperCase();
+        this.codigoplanestudio = codigoplanestudio;
     }
 
     public String getNombreplanestudio() {
@@ -111,16 +102,31 @@ public class PlanEstudios implements Serializable {
     }
 
     public void setNombreplanestudio(String nombreplanestudio) {
-        this.nombreplanestudio = nombreplanestudio.toUpperCase();
+        this.nombreplanestudio = nombreplanestudio;
     }
 
-    @XmlTransient
-    public Collection<Estudiante> getEstudianteCollection() {
-        return estudianteCollection;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setEstudianteCollection(Collection<Estudiante> estudianteCollection) {
-        this.estudianteCollection = estudianteCollection;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
     public Carrera getCarrera() {
@@ -154,48 +160,6 @@ public class PlanEstudios implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.PlanEstudios[ idplanestudios=" + idplanestudios + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Asignatura> getAsignaturaCollection() {
-        return asignaturaCollection;
-    }
-
-    public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
-        this.asignaturaCollection = asignaturaCollection;
-    }
-
-    @XmlTransient
-    public Collection<AsignaturaPorPlanEstudio> getAsignaturaPorPlanEstudioCollection() {
-        return asignaturaPorPlanEstudioCollection;
-    }
-
-    public void setAsignaturaPorPlanEstudioCollection(Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection) {
-        this.asignaturaPorPlanEstudioCollection = asignaturaPorPlanEstudioCollection;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public String getStrEstado() {
-        getEstado();
-        if (null != estado) {
-            if (estado == true) {
-                strEstado = "ACTIVO";
-            } else {
-                strEstado = "INACTIVO";
-            }
-        }
-        return strEstado;
-    }
-
-    public void setStrEstado(String strEstado) {
-        this.strEstado = strEstado;
     }
 
 }
