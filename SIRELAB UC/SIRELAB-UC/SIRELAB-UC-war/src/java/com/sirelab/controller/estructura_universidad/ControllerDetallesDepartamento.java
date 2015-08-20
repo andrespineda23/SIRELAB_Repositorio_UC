@@ -84,11 +84,17 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     public void validarNombreDepartamento() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+            int tam = editarNombre.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracterString(editarNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -98,19 +104,25 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     public void validarCodigoDepartamento() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
-                Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(editarCodigo);
-                if (null != registro) {
-                    if (departamentoDetalles.getIddepartamento().equals(registro.getIddepartamento())) {
-                        validacionesCodigo = true;
-                    } else {
-                        validacionesCodigo = false;
-                        FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo ya se encuentra registrado."));
+            int tam = editarCodigo.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
+                    Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(editarCodigo);
+                    if (null != registro) {
+                        if (departamentoDetalles.getIddepartamento().equals(registro.getIddepartamento())) {
+                            validacionesCodigo = true;
+                        } else {
+                            validacionesCodigo = false;
+                            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo ya se encuentra registrado."));
+                        }
                     }
+                } else {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo ingresado es incorrecto."));
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El Codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;

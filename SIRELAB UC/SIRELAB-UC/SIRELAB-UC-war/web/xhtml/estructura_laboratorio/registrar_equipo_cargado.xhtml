@@ -77,61 +77,61 @@
                             <legend class="text-info">Datos Basicos</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="Codigo Inventario Equipo*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoInventarioEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" required="true" class="form-control" id="nuevoInventarioEquipo" requiredMessage="El campo Inventario es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarInventarioEquipo()}" execute="nuevoInventarioEquipo" render="nuevoInventarioEquipo msnInventarioEquipo" />
+                                <h:inputText maxlength="45"  value="#{controllerRegistrarEquipoCargado.nuevoInventarioEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" required="true" class="form-control" id="nuevoInventarioEquipo" requiredMessage="El campo Inventario es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarInventarioEquipo()}" execute="nuevoInventarioEquipo" render="nuevoInventarioEquipo msnInventarioEquipo" />
                                 </h:inputText>
                                 <h6><h:message id="msnInventarioEquipo" for="nuevoInventarioEquipo" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Nombre Equipo*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerRegistrarEquipo.nuevoNombreEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" required="true" class="form-control" id="nuevoDetalleEquipo" requiredMessage="El campo Nombre es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarNombreEquipo()}" execute="nuevoDetalleEquipo" render="nuevoDetalleEquipo msnDetalleEquipo" />
+                                <h:inputText maxlength="45" value="#{controllerRegistrarEquipoCargado.nuevoNombreEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" required="true" class="form-control" id="nuevoDetalleEquipo" requiredMessage="El campo Nombre es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarNombreEquipo()}" execute="nuevoDetalleEquipo" render="nuevoDetalleEquipo msnDetalleEquipo" />
                                 </h:inputText>
                                 <h6><h:message id="msnDetalleEquipo" for="nuevoDetalleEquipo" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Marca Equipo*"/></strong>
-                                <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoMarcaEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" required="true" class="form-control" id="nuevoMarcaEquipo" requiredMessage="El campo Marca es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarMarcaEquipo()}" execute="nuevoMarcaEquipo" render="nuevoMarcaEquipo msnMarcaEquipo" />
+                                <h:inputText maxlength="45"  value="#{controllerRegistrarEquipoCargado.nuevoMarcaEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" required="true" class="form-control" id="nuevoMarcaEquipo" requiredMessage="El campo Marca es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarMarcaEquipo()}" execute="nuevoMarcaEquipo" render="nuevoMarcaEquipo msnMarcaEquipo" />
                                 </h:inputText>
                                 <h6><h:message id="msnMarcaEquipo" for="nuevoMarcaEquipo" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Estado de Equipo*"/></strong>
-                                <h:selectOneMenu  value="#{controllerRegistrarEquipo.nuevoEstadoEquipoEquipo}"
-                                                  class="form-control" disabled="#{controllerRegistrarEquipo.activarCasillas}"
+                                <h:selectOneMenu  value="#{controllerRegistrarEquipoCargado.nuevoEstadoEquipoEquipo}"
+                                                  class="form-control" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}"
                                                   id="nuevoEstadoEquipoEquipo">
                                     <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
-                                    <f:selectItems value="#{controllerRegistrarEquipo.listaEstadosEquipos}" var="estado"
+                                    <f:selectItems value="#{controllerRegistrarEquipoCargado.listaEstadosEquipos}" var="estado"
                                                    itemLabel="#{estado.nombreestadoequipo}" itemValue="#{estado}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarEstadoEquipo()}" execute="nuevoEstadoEquipoEquipo" render="@this msnEstadoEquipoEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEquipoCargado.actualizarEstadoEquipo()}" execute="nuevoEstadoEquipoEquipo" render="@this msnEstadoEquipoEquipo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnEstadoEquipoEquipo" for="nuevoEstadoEquipoEquipo" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Tipo Activo*"/></strong>
-                                <h:selectOneMenu  value="#{controllerRegistrarEquipo.nuevoTipoActivoEquipo}"
-                                                  class="form-control" disabled="#{controllerRegistrarEquipo.activarCasillas}"
+                                <h:selectOneMenu  value="#{controllerRegistrarEquipoCargado.nuevoTipoActivoEquipo}"
+                                                  class="form-control" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}"
                                                   id="nuevoTipoActivoEquipo">
                                     <f:selectItem itemLabel="Seleccione Tipo Activo" itemValue="null" />
-                                    <f:selectItems value="#{controllerRegistrarEquipo.listaTiposActivos}" var="tipo"
+                                    <f:selectItems value="#{controllerRegistrarEquipoCargado.listaTiposActivos}" var="tipo"
                                                    itemLabel="#{tipo.nombretipoactivo}" itemValue="#{tipo}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarTipoActivo()}" execute="nuevoTipoActivoEquipo" render="@this msnTipoActivoEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEquipoCargado.actualizarTipoActivo()}" execute="nuevoTipoActivoEquipo" render="@this msnTipoActivoEquipo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnTipoActivoEquipo" for="nuevoTipoActivoEquipo" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Proveedor*"/></strong>
-                                <h:selectOneMenu  value="#{controllerRegistrarEquipo.nuevoProveedorEquipo}"
-                                                  class="form-control" disabled="#{controllerRegistrarEquipo.activarCasillas}"
+                                <h:selectOneMenu  value="#{controllerRegistrarEquipoCargado.nuevoProveedorEquipo}"
+                                                  class="form-control" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}"
                                                   id="nuevoProveedorEquipo">
                                     <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
-                                    <f:selectItems value="#{controllerRegistrarEquipo.listaProveedores}" var="proveedor"
+                                    <f:selectItems value="#{controllerRegistrarEquipoCargado.listaProveedores}" var="proveedor"
                                                    itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarProveedor()}" execute="nuevoProveedorEquipo" render="@this msnProveedorEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEquipoCargado.actualizarProveedor()}" execute="nuevoProveedorEquipo" render="@this msnProveedorEquipo"/>
                                 </h:selectOneMenu>
                                 <h6><h:message id="msnProveedorEquipo" for="nuevoProveedorEquipo" style="color: red"/></h6>
                             </div>
@@ -139,23 +139,23 @@
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Modelo Equipo"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoModeloEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" class="form-control" id="nuevoModeloEquipo" >
-                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarModeloEquipo()}" execute="nuevoModeloEquipo" render="nuevoModeloEquipo msnModeloEquipo" />
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipoCargado.nuevoModeloEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" class="form-control" id="nuevoModeloEquipo" >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarModeloEquipo()}" execute="nuevoModeloEquipo" render="nuevoModeloEquipo msnModeloEquipo" />
                                     </h:inputText>
                                     <h6><h:message id="msnModeloEquipo" for="nuevoModeloEquipo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Serie Equipo"/></strong>
-                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipo.nuevoSerieEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" class="form-control" id="nuevoSerieEquipo" >
-                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarSerieEquipo()}" execute="nuevoSerieEquipo" render="nuevoSerieEquipo msnSerieEquipo" />
+                                    <h:inputText maxlength="45"  value="#{controllerRegistrarEquipoCargado.nuevoSerieEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" class="form-control" id="nuevoSerieEquipo" >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarSerieEquipo()}" execute="nuevoSerieEquipo" render="nuevoSerieEquipo msnSerieEquipo" />
                                     </h:inputText>
                                     <h6><h:message id="msnSerieEquipo" for="nuevoSerieEquipo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Costo Alquiler"/></strong>
                                     <div class="input-group">
-                                        <h:inputText maxlength="10"  value="#{controllerRegistrarEquipo.nuevoCostoAlquilerEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" class="form-control" id="nuevoCostoAlquilerEquipo" >
-                                            <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarCostoAlquilerEquipo()}" execute="nuevoCostoAlquilerEquipo" render="nuevoCostoAlquilerEquipo msnCostoAlquilerEquipo" />
+                                        <h:inputText maxlength="10"  value="#{controllerRegistrarEquipoCargado.nuevoCostoAlquilerEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" class="form-control" id="nuevoCostoAlquilerEquipo" >
+                                            <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarCostoAlquilerEquipo()}" execute="nuevoCostoAlquilerEquipo" render="nuevoCostoAlquilerEquipo msnCostoAlquilerEquipo" />
                                         </h:inputText>
                                         <span class="input-group-addon">$</span>
                                     </div>
@@ -164,8 +164,8 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Costo Inversión"/></strong>
                                     <div class="input-group">
-                                        <h:inputText maxlength="12"  value="#{controllerRegistrarEquipo.nuevoCostoInversionEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" class="form-control" id="nuevoCostoInversionEquipo" >
-                                            <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarInversionEquipo()}" execute="nuevoCostoInversionEquipo" render="nuevoCostoInversionEquipo msnCostoInversionEquipo" />
+                                        <h:inputText maxlength="12"  value="#{controllerRegistrarEquipoCargado.nuevoCostoInversionEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" class="form-control" id="nuevoCostoInversionEquipo" >
+                                            <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarInversionEquipo()}" execute="nuevoCostoInversionEquipo" render="nuevoCostoInversionEquipo msnCostoInversionEquipo" />
                                         </h:inputText>
                                         <span class="input-group-addon">$</span>
                                     </div>
@@ -173,16 +173,16 @@
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha Adquisición"/></strong>
-                                    <h:inputText  maxlength="10"  value="#{controllerRegistrarEquipo.nuevoFechaAdquisicionEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" class="form-control" id="nuevoFechaAdquisicionEquipo" >
-                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarFechaEquipo()}" execute="nuevoFechaAdquisicionEquipo" render="nuevoFechaAdquisicionEquipo msnFechaAdquisicionEquipo" />
+                                    <h:inputText  maxlength="10"  value="#{controllerRegistrarEquipoCargado.nuevoFechaAdquisicionEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" class="form-control" id="nuevoFechaAdquisicionEquipo" >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarFechaEquipo()}" execute="nuevoFechaAdquisicionEquipo" render="nuevoFechaAdquisicionEquipo msnFechaAdquisicionEquipo" />
                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                     </h:inputText>
                                     <h6><h:message id="msnFechaAdquisicionEquipo" for="nuevoFechaAdquisicionEquipo" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Descripción Equipo"/></strong>
-                                    <h:inputText  maxlength="500"  value="#{controllerRegistrarEquipo.nuevoEspecificacionEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" class="form-control" id="nuevoEspecificacionEquipo" >
-                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarEspecificacionEquipo()}" execute="nuevoEspecificacionEquipo" render="nuevoEspecificacionEquipo msnEspecificacionEquipo" />
+                                    <h:inputText  maxlength="500"  value="#{controllerRegistrarEquipoCargado.nuevoEspecificacionEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" class="form-control" id="nuevoEspecificacionEquipo" >
+                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarEspecificacionEquipo()}" execute="nuevoEspecificacionEquipo" render="nuevoEspecificacionEquipo msnEspecificacionEquipo" />
                                     </h:inputText>
                                     <h6><h:message id="msnEspecificacionEquipo" for="nuevoEspecificacionEquipo" style="color: red"/></h6>
                                 </div>
@@ -192,15 +192,15 @@
                             <legend class="text-info">Información Laboratorio</legend>
                             <div class="form-group">
                                 <strong><h:outputText value="Laboratorio / Area de Profundización*"/></strong>
-                                <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoLaboratorioPorArea.informacionRegistro}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
+                                <h:inputText value="#{controllerRegistrarEquipoCargadoCargado.nuevoLaboratorioPorArea.informacionRegistro}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Sala de Laboratorio*"/></strong>
-                                <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoSalaLaboratorioEquipo.nombresala}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
+                                <h:inputText value="#{controllerRegistrarEquipoCargadoCargado.nuevoSalaLaboratorioEquipo.nombresala}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Modulo/Banco de Trabajo*"/></strong>
-                                <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoModuloLaboratorioEquipo.detallemodulo}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
+                                <h:inputText value="#{controllerRegistrarEquipoCargadoCargado.nuevoModuloLaboratorioEquipo.detallemodulo}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
                             </div>
                         </fieldset>
                         <hr class="intro-divider"/>
@@ -210,24 +210,24 @@
                                     Resultados del Formulario
                                 </h5>
                                 <strong>
-                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEquipo.mensajeFormulario}" style="color: #{controllerRegistrarEquipo.colorMensaje}}"/>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEquipoCargado.mensajeFormulario}" style="color: #{controllerRegistrarEquipoCargado.colorMensaje}}"/>
                                 </strong>
                             </div>
                             <br></br>
                         </div>
                         <hr class="intro-divider"/>
                         <div class="right pull-right">
-                            <h:commandButton class="btn btn-success" disabled="#{controllerRegistrarEquipo.activarAceptar}" value="Registrar" actionListener="#{controllerRegistrarEquipo.registrarNuevoModulo()}">
+                            <h:commandButton class="btn btn-success" disabled="#{controllerRegistrarEquipoCargado.activarAceptar}" value="Registrar" actionListener="#{controllerRegistrarEquipoCargado.registrarNuevoModulo()}">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>
                             <span></span>
-                            <h:commandButton class="btn btn-danger" value="Cancelar" action="administrar_modulos" actionListener="#{controllerRegistrarEquipo.limpiarRegistroEquipoElemento()}" immediate="true">
+                            <h:commandButton class="btn btn-danger" value="Cancelar" action="administrar_modulos" actionListener="#{controllerRegistrarEquipoCargado.limpiarRegistroEquipoElemento()}" immediate="true">
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                             <span></span>
                             <span></span>
-                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarEquipo.activarLimpiar}" actionListener="#{controllerRegistrarEquipo.cambiarActivarCasillas()}" >
+                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarEquipoCargado.activarLimpiar}" actionListener="#{controllerRegistrarEquipoCargado.cambiarActivarCasillas()}" >
                                 <f:ajax execute="@form" render="form" />
                             </h:commandButton>
                         </div>

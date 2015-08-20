@@ -107,11 +107,17 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void validarNombreSala() {
         if (Utilidades.validarNulo(nuevoNombreSala) && (!nuevoNombreSala.isEmpty()) && (nuevoNombreSala.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombreSala)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El nombre ingresado es incorrecto."));
+            int tam = nuevoNombreSala.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombreSala)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El tamaño minimo es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -122,11 +128,17 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void validarCodigoSala() {
         if (Utilidades.validarNulo(nuevoCodigoSala) && (!nuevoCodigoSala.isEmpty()) && (nuevoCodigoSala.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoSala)) {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El codigo ingresado es incorrecto."));
+            int tam = nuevoCodigoSala.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoSala)) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesCodigo = true;
+                }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El tamaño minimo es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;
@@ -136,11 +148,17 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void validarUbicacionSala() {
         if (Utilidades.validarNulo(nuevoUbicacionSala) && (!nuevoUbicacionSala.isEmpty()) && (nuevoUbicacionSala.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoUbicacionSala)) {
-                validacionesUbicacion = true;
+            int tam = nuevoUbicacionSala.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(nuevoUbicacionSala)) {
+                    validacionesUbicacion = true;
+                } else {
+                    validacionesUbicacion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("La ubicación se encuentra incorrecta."));
+                }
             } else {
                 validacionesUbicacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("La ubicación se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("El tamaño minimo es 2 caracteres."));
             }
         } else {
             validacionesUbicacion = false;
@@ -178,11 +196,17 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void validarDescripcionSala() {
         if (Utilidades.validarNulo(nuevoDescripcionSala) && (!nuevoDescripcionSala.isEmpty()) && (nuevoDescripcionSala.trim().length() > 0)) {
-            if ((Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcionSala)) == false) {
-                validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("La descripción se encuentra incorrecta."));
+            int tam = nuevoDescripcionSala.length();
+            if (tam >= 20) {
+                if ((Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcionSala)) == false) {
+                    validacionesDescripcion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("La descripción se encuentra incorrecta."));
+                } else {
+                    validacionesDescripcion = true;
+                }
             } else {
-                validacionesDescripcion = true;
+                validacionesDescripcion = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("El tamaño minimo es 20 caracteres."));
             }
         } else {
             validacionesDescripcion = false;

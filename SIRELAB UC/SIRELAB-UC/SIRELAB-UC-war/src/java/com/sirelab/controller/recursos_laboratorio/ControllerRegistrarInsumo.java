@@ -87,12 +87,18 @@ public class ControllerRegistrarInsumo implements Serializable {
     }
 
     public void validarNombreInsumo() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
+            int tam = nuevoNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -101,12 +107,18 @@ public class ControllerRegistrarInsumo implements Serializable {
     }
 
     public void validarCodigoInsumo() {
-        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())  && (nuevoCodigo.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
-                validacionesCodigo = true;
+        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty()) && (nuevoCodigo.trim().length() > 0)) {
+            int tam = nuevoCodigo.length();
+            if (tam >= 4) {
+                if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
+                    validacionesCodigo = true;
+                } else {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El Codigo ingresado es incorrecto."));
+                }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El Codigo ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;
@@ -116,7 +128,7 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void validarCantidadesInsumo(int tipo) {
         if (tipo == 1) {
-            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty())  && (nuevoCantidadExistencia.trim().length() > 0)) {
+            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty()) && (nuevoCantidadExistencia.trim().length() > 0)) {
                 if ((Utilidades.isNumber(nuevoCantidadExistencia)) == false) {
                     validacionesCantidadExistencia = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadExistencia", new FacesMessage("La cantidad ingresada se encuentra incorrecta."));
@@ -125,7 +137,7 @@ public class ControllerRegistrarInsumo implements Serializable {
                 }
             }
         } else {
-            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty())  && (nuevoCantidadMin.trim().length() > 0)) {
+            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty()) && (nuevoCantidadMin.trim().length() > 0)) {
                 if ((Utilidades.isNumber(nuevoCantidadMin)) == false) {
                     validacionesCantidadMin = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMin", new FacesMessage("La cantidad ingresada se encuentra incorrecta."));
@@ -138,21 +150,32 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void validarMarcaModeloInsumo(int tipo) {
         if (tipo == 1) {
-            if ((Utilidades.validarNulo(nuevoMarca)) && (!nuevoMarca.isEmpty())  && (nuevoMarca.trim().length() > 0)) {
-                if (Utilidades.validarCaracteresAlfaNumericos(nuevoMarca)) {
-                    validacionesMarca = true;
+            if ((Utilidades.validarNulo(nuevoMarca)) && (!nuevoMarca.isEmpty()) && (nuevoMarca.trim().length() > 0)) {
+                int tam = nuevoMarca.length();
+                if (tam >= 2) {
+                    if (Utilidades.validarCaracteresAlfaNumericos(nuevoMarca)) {
+                        validacionesMarca = true;
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoMarca", new FacesMessage("La marca se encuentra incorrecta."));
+                        validacionesMarca = false;
+                    }
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoMarca", new FacesMessage("La marca se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoMarca", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
                     validacionesMarca = false;
                 }
             }
         } else {
-
-            if ((Utilidades.validarNulo(nuevoModelo)) && (!nuevoModelo.isEmpty())  && (nuevoModelo.trim().length() > 0)) {
-                if (Utilidades.validarCaracteresAlfaNumericos(nuevoModelo)) {
-                    validacionesModelo = true;
+            if ((Utilidades.validarNulo(nuevoModelo)) && (!nuevoModelo.isEmpty()) && (nuevoModelo.trim().length() > 0)) {
+                int tam = nuevoModelo.length();
+                if (tam >= 2) {
+                    if (Utilidades.validarCaracteresAlfaNumericos(nuevoModelo)) {
+                        validacionesModelo = true;
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoModelo", new FacesMessage("El modelo se encuentra incorrecto."));
+                        validacionesModelo = false;
+                    }
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoModelo", new FacesMessage("El modelo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoModelo", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
                     validacionesModelo = false;
                 }
             }
@@ -160,12 +183,18 @@ public class ControllerRegistrarInsumo implements Serializable {
     }
 
     public void validarDescripcionInsumo(int tipoReg) {
-        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())  && (nuevoDescripcion.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) {
-                validacionesDescripcion = true;
+        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty()) && (nuevoDescripcion.trim().length() > 0)) {
+            int tam = nuevoDescripcion.length();
+            if (tam >= 20) {
+                if (Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) {
+                    validacionesDescripcion = true;
+                } else {
+                    validacionesDescripcion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción se encuentra incorrecta."));
+                }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
             }
         }
     }
@@ -239,12 +268,12 @@ public class ControllerRegistrarInsumo implements Serializable {
             nuevaInsumo.setNombreinsumo(nuevoNombre);
             nuevaInsumo.setModeloinsumo(nuevoModelo);
             nuevaInsumo.setMarcainsumo(nuevoMarca);
-            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty())  && (nuevoCantidadExistencia.trim().length() > 0)) {
+            if (Utilidades.validarNulo(nuevoCantidadExistencia) && (!nuevoCantidadExistencia.isEmpty()) && (nuevoCantidadExistencia.trim().length() > 0)) {
                 nuevaInsumo.setCantidadexistencia(Integer.valueOf(nuevoCantidadExistencia));
             } else {
                 nuevaInsumo.setCantidadexistencia(Integer.valueOf("0"));
             }
-            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty())  && (nuevoCantidadMin.trim().length() > 0)) {
+            if (Utilidades.validarNulo(nuevoCantidadMin) && (!nuevoCantidadMin.isEmpty()) && (nuevoCantidadMin.trim().length() > 0)) {
                 nuevaInsumo.setCantidadminimia(Integer.valueOf(nuevoCantidadMin));
             } else {
                 nuevaInsumo.setCantidadminimia(Integer.valueOf("0"));

@@ -101,11 +101,17 @@ public class ControllerRegistrarModuloCargado implements Serializable {
 
     public void validarDetalleModulo() {
         if (Utilidades.validarNulo(nuevoDetalleModulo) && (!nuevoDetalleModulo.isEmpty()) && (nuevoDetalleModulo.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDetalleModulo)) {
-                validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto."));
+            int tam = nuevoDetalleModulo.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDetalleModulo)) {
+                    validacionesDetalle = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto."));
+                } else {
+                    validacionesDetalle = true;
+                }
             } else {
-                validacionesDetalle = true;
+                validacionesDetalle = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El tamaño minimo es 4 caracteres."));
             }
         } else {
             validacionesDetalle = false;
@@ -116,11 +122,17 @@ public class ControllerRegistrarModuloCargado implements Serializable {
 
     public void validarCodigoModulo() {
         if (Utilidades.validarNulo(nuevoCodigoModulo) && (!nuevoCodigoModulo.isEmpty()) && (nuevoCodigoModulo.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoModulo)) {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo ingresado es incorrecto."));
+            int tam = nuevoCodigoModulo.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoModulo)) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesCodigo = true;
+                }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El tamaño minimo es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;

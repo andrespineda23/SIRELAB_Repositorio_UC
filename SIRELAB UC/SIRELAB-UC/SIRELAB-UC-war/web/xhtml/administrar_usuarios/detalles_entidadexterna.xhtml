@@ -113,14 +113,14 @@
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Número Telefonico 1"/></strong>
+                                    <strong><h:outputText value="Número Fijo"/></strong>
                                     <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono1EntidadExterna" >
                                         <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(1)}" execute="telefono1EntidadExterna" render="telefono1EntidadExterna msnTelefono1" />
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono1" for="telefono1EntidadExterna" style="color: red"></h:message></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Número Telefonico 2"/></strong>
+                                    <strong><h:outputText value="Número Celular"/></strong>
                                     <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono2EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono2EntidadExterna" >
                                         <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(2)}" execute="telefono2EntidadExterna" render="telefono2EntidadExterna msnTelefono2" />
                                     </h:inputText>

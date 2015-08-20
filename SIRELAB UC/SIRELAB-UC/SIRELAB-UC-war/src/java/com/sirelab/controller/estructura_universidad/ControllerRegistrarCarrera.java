@@ -70,12 +70,18 @@ public class ControllerRegistrarCarrera implements Serializable {
     }
 
     public void validarNombreCarrera() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
+            int tam = nuevoNombre.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracterString(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -84,12 +90,18 @@ public class ControllerRegistrarCarrera implements Serializable {
     }
 
     public void validarCodigoCarrera() {
-        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty())  && (nuevoCodigo.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty()) && (nuevoCodigo.trim().length() > 0)) {
+            int tam = nuevoCodigo.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesCodigo = true;
+                }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;

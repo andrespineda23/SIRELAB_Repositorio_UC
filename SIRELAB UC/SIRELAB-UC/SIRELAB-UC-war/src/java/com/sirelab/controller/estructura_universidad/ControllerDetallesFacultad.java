@@ -74,12 +74,18 @@ public class ControllerDetallesFacultad implements Serializable {
     }
 
     public void validarNombreFacultad() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
+            int tam = editarNombre.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracterString(editarNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -89,22 +95,28 @@ public class ControllerDetallesFacultad implements Serializable {
     }
 
     public void validarCodigoFacultad() {
-        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty())  && (editarCodigo.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
-                Facultad registro = gestionarFacultadBO.obtenerFacultadPorIDCodigo(editarCodigo);
-                if (null == registro) {
-                    validacionesCodigo = true;
-                } else {
-                    if (!facultadDetalles.getIdfacultad().equals(registro.getIdfacultad())) {
-                        validacionesCodigo = false;
-                        FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado ya se encuentra registrado."));
+        if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
+            int tam = editarCodigo.length();
+            if (tam >= 4) {
+                if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
+                    Facultad registro = gestionarFacultadBO.obtenerFacultadPorIDCodigo(editarCodigo);
+                    if (null == registro) {
+                        validacionesCodigo = true;
                     } else {
-                        validacionesCodigo = false;
+                        if (!facultadDetalles.getIdfacultad().equals(registro.getIdfacultad())) {
+                            validacionesCodigo = false;
+                            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado ya se encuentra registrado."));
+                        } else {
+                            validacionesCodigo = false;
+                        }
                     }
+                } else {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;
@@ -196,5 +208,4 @@ public class ControllerDetallesFacultad implements Serializable {
         this.editarEstado = editarEstado;
     }
 
-    
 }

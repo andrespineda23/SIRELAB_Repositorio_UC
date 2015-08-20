@@ -133,14 +133,14 @@
                                 <fieldset>
                                     <legend class="h5 text-info">Datos Opcionales</legend>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Telefonico 1"/></strong>
+                                        <strong><h:outputText value="Número Fijo"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerRegistrarAdministrador.nuevoTelefono1}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" class="form-control" id="nuevoTelefono1" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarDatosNumericosAdministrador(1)}" execute="nuevoTelefono1" render="nuevoTelefono1 msnTelefono1" />
                                         </h:inputText>
                                         <h6><h:message id="msnTelefono1" for="nuevoTelefono1" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Telefonico 2"/></strong>
+                                        <strong><h:outputText value="Número Celular"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerRegistrarAdministrador.nuevoTelefono2}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" class="form-control" id="nuevoTelefono2" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarDatosNumericosAdministrador(2)}" execute="nuevoTelefono2" render="nuevoTelefono2 msnTelefono2" />
                                         </h:inputText>

@@ -64,12 +64,18 @@ public class ControllerDetallesTipoComponente implements Serializable {
     }
 
     public void validarNombre() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())  && (inputNombre.trim().length() > 0)) {
-            if (Utilidades.validarCaracterString(inputNombre)) {
-                validacionesNombre = true;
+        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty()) && (inputNombre.trim().length() > 0)) {
+            int tam = inputNombre.length();
+            if (tam >= 3) {
+                if (Utilidades.validarCaracterString(inputNombre)) {
+                    validacionesNombre = true;
+                } else {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+                }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
             }
         } else {
             validacionesNombre = false;

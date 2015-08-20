@@ -64,11 +64,17 @@ public class ControllerRegistrarDepartamento implements Serializable {
 
     public void validarNombreDepartamento() {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrectp."));
+            int tam = nuevoNombre.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracterString(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrectp."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -78,17 +84,23 @@ public class ControllerRegistrarDepartamento implements Serializable {
 
     public void validarCodigoDepartamento() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty()) && (nuevoCodigo.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
-                Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(nuevoCodigo);
-                if (null != registro) {
-                    validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado esta registrado."));
+            int tam = nuevoCodigo.length();
+            if (tam >= 4) {
+                if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
+                    Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(nuevoCodigo);
+                    if (null != registro) {
+                        validacionesCodigo = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado esta registrado."));
+                    } else {
+                        validacionesCodigo = true;
+                    }
                 } else {
-                    validacionesCodigo = true;
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;

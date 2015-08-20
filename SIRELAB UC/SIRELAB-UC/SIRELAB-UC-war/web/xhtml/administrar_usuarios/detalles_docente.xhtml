@@ -127,14 +127,14 @@
                                         <h6><h:message id="msnEmailOpcional" for="correoOpcionalDocente" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Telefonico 1"/></strong>
+                                        <strong><h:outputText value="Número Fijo"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerDetallesDocente.telefono1Docente}" readonly="#{controllerDetallesDocente.activarEditar}" class="form-control" id="telefono1Docente" >
                                             <f:ajax event="blur" listener="#{controllerDetallesDocente.validarDatosNumericosDocente(1)}" execute="telefono1Docente" render="telefono1Docente msnTelefono1" />
                                         </h:inputText>
                                         <h6><h:message id="msnTelefono1" for="telefono1Docente" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Telefonico 2"/></strong>
+                                        <strong><h:outputText value="Número Celular"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerDetallesDocente.telefono2Docente}" readonly="#{controllerDetallesDocente.activarEditar}" class="form-control" id="telefono2Docente" >
                                             <f:ajax event="blur" listener="#{controllerDetallesDocente.validarDatosNumericosDocente(2)}" execute="telefono2Docente" render="telefono2Docente msnTelefono2" />
                                         </h:inputText>

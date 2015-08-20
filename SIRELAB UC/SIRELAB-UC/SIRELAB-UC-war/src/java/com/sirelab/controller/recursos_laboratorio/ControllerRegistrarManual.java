@@ -72,12 +72,18 @@ public class ControllerRegistrarManual implements Serializable {
     }
 
     public void validarNombreManual() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
+            int tam = nuevoNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -87,8 +93,14 @@ public class ControllerRegistrarManual implements Serializable {
     }
 
     public void validarUbicacionManual() {
-        if (Utilidades.validarNulo(nuevoUbicacion) && (!nuevoUbicacion.isEmpty())  && (nuevoUbicacion.trim().length() > 0)) {
-            validacionesUbicacion = true;
+        if (Utilidades.validarNulo(nuevoUbicacion) && (!nuevoUbicacion.isEmpty()) && (nuevoUbicacion.trim().length() > 0)) {
+            int tam = nuevoUbicacion.length();
+            if (tam >= 7) {
+                validacionesUbicacion = true;
+            } else {
+                validacionesUbicacion = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacion", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+            }
         } else {
             validacionesUbicacion = false;
             FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacion", new FacesMessage("El campo ubicación es obligatorio."));

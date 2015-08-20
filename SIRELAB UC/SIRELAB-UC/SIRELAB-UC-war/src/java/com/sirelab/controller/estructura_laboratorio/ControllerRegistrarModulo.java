@@ -125,12 +125,18 @@ public class ControllerRegistrarModulo implements Serializable {
     }
 
     public void validarDetalleModulo() {
-        if (Utilidades.validarNulo(nuevoDetalleModulo) && (!nuevoDetalleModulo.isEmpty())  && (nuevoDetalleModulo.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDetalleModulo)) {
-                validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoDetalleModulo) && (!nuevoDetalleModulo.isEmpty()) && (nuevoDetalleModulo.trim().length() > 0)) {
+            int tam = nuevoDetalleModulo.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDetalleModulo)) {
+                    validacionesDetalle = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto."));
+                } else {
+                    validacionesDetalle = true;
+                }
             } else {
-                validacionesDetalle = true;
+                validacionesDetalle = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El tamaño minimo es 4 caracteres."));
             }
         } else {
             validacionesDetalle = false;
@@ -140,12 +146,18 @@ public class ControllerRegistrarModulo implements Serializable {
     }
 
     public void validarCodigoModulo() {
-        if (Utilidades.validarNulo(nuevoCodigoModulo) && (!nuevoCodigoModulo.isEmpty())  && (nuevoCodigoModulo.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoModulo)) {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoCodigoModulo) && (!nuevoCodigoModulo.isEmpty()) && (nuevoCodigoModulo.trim().length() > 0)) {
+            int tam = nuevoCodigoModulo.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoModulo)) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesCodigo = true;
+                }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El tamaño minimo es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;
@@ -154,7 +166,7 @@ public class ControllerRegistrarModulo implements Serializable {
     }
 
     public void validarCostoAlquilerModulo() {
-        if (Utilidades.validarNulo(nuevoCostoModulo) && (!nuevoCostoModulo.isEmpty())  && (nuevoCostoModulo.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoCostoModulo) && (!nuevoCostoModulo.isEmpty()) && (nuevoCostoModulo.trim().length() > 0)) {
             if (Utilidades.isNumber(nuevoCostoModulo)) {
                 validacionesCosto = true;
             } else {
@@ -165,7 +177,7 @@ public class ControllerRegistrarModulo implements Serializable {
     }
 
     public void validarCapacidadModulo() {
-        if (Utilidades.validarNulo(nuevoCapacidadModulo) && (!nuevoCapacidadModulo.isEmpty())  && (nuevoCapacidadModulo.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoCapacidadModulo) && (!nuevoCapacidadModulo.isEmpty()) && (nuevoCapacidadModulo.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCapacidadModulo)) == false) {
                 validacionesCapacidad = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadModulo", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
@@ -176,7 +188,7 @@ public class ControllerRegistrarModulo implements Serializable {
     }
 
     public void validarInversionModulo() {
-        if (Utilidades.validarNulo(nuevoInversionModulo) && (!nuevoInversionModulo.isEmpty())  && (nuevoInversionModulo.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoInversionModulo) && (!nuevoInversionModulo.isEmpty()) && (nuevoInversionModulo.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoInversionModulo)) == false) {
                 validacionesInversion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoInversionModulo", new FacesMessage("El valor de inversión se encuentra incorrecto."));

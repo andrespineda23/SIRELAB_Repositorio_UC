@@ -87,12 +87,18 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarNombreProveedor() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
+            int tam = editarNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracterString(editarNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -101,22 +107,28 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarNITProveedor() {
-        if (Utilidades.validarNulo(editarNIT) && (!editarNIT.isEmpty())  && (editarNIT.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(editarNIT)) {
-                Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(editarNIT);
-                if (registro == null) {
-                    validacionesNIT = true;
-                } else {
-                    if (!proveedorDetalle.getIdproveedor().equals(registro.getIdproveedor())) {
-                        validacionesNIT = false;
-                        FacesContext.getCurrentInstance().addMessage("form:editarNIT", new FacesMessage("El NIT ingresado ya esta registrado."));
-                    } else {
+        if (Utilidades.validarNulo(editarNIT) && (!editarNIT.isEmpty()) && (editarNIT.trim().length() > 0)) {
+            int tam = editarNIT.length();
+            if (tam >= 8) {
+                if (Utilidades.validarCaracteresAlfaNumericos(editarNIT)) {
+                    Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(editarNIT);
+                    if (registro == null) {
                         validacionesNIT = true;
+                    } else {
+                        if (!proveedorDetalle.getIdproveedor().equals(registro.getIdproveedor())) {
+                            validacionesNIT = false;
+                            FacesContext.getCurrentInstance().addMessage("form:editarNIT", new FacesMessage("El NIT ingresado ya esta registrado."));
+                        } else {
+                            validacionesNIT = true;
+                        }
                     }
+                } else {
+                    validacionesNIT = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNIT", new FacesMessage("El NIT ingresado es incorrecto."));
                 }
             } else {
                 validacionesNIT = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNIT", new FacesMessage("El NIT ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:editarNIT", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
             }
         } else {
             validacionesNIT = false;
@@ -125,7 +137,7 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarTelefonoProveedor() {
-        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty())  && (editarTelefono.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty()) && (editarTelefono.trim().length() > 0)) {
             if ((Utilidades.isNumber(editarTelefono)) == false) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -139,33 +151,51 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void validarDireccionProveedor() {
-        if ((Utilidades.validarNulo(editarDireccion)) && (!editarDireccion.isEmpty())  && (editarDireccion.trim().length() > 0)) {
-            if (Utilidades.validarDirecciones(editarDireccion)) {
-                validacionesDireccion = true;
+        if ((Utilidades.validarNulo(editarDireccion)) && (!editarDireccion.isEmpty()) && (editarDireccion.trim().length() > 0)) {
+            int tam = editarDireccion.length();
+            if (tam >= 8) {
+                if (Utilidades.validarDirecciones(editarDireccion)) {
+                    validacionesDireccion = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
+                    validacionesDireccion = false;
+                }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
                 validacionesDireccion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
             }
         }
     }
 
     public void validarDatosOpcionales(int tipoReg) {
         if (tipoReg == 1) {
-            if (Utilidades.validarNulo(editarVendedor) && (!editarVendedor.isEmpty())  && (editarVendedor.trim().length() > 0)) {
-                if (Utilidades.validarCaracterString(editarVendedor)) {
-                    validacionesVendedor = true;
+            if (Utilidades.validarNulo(editarVendedor) && (!editarVendedor.isEmpty()) && (editarVendedor.trim().length() > 0)) {
+                int tam = editarVendedor.length();
+                if (tam >= 2) {
+                    if (Utilidades.validarCaracterString(editarVendedor)) {
+                        validacionesVendedor = true;
+                    } else {
+                        validacionesVendedor = false;
+                        FacesContext.getCurrentInstance().addMessage("form:editarVendedor", new FacesMessage("El nombre se encuentra incorrecto."));
+                    }
                 } else {
                     validacionesVendedor = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarVendedor", new FacesMessage("El nombre se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarVendedor", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
                 }
             }
         } else {
-            if (Utilidades.validarNulo(editarTelVendedor) && (!editarTelVendedor.isEmpty())  && (editarTelVendedor.trim().length() > 0)) {
-                if (Utilidades.isNumber(editarTelVendedor)) {
-                    validacionesTelVendedor = true;
+            if (Utilidades.validarNulo(editarTelVendedor) && (!editarTelVendedor.isEmpty()) && (editarTelVendedor.trim().length() > 0)) {
+                int tam = editarTelVendedor.length();
+                if (tam >= 7) {
+                    if (Utilidades.isNumber(editarTelVendedor)) {
+                        validacionesTelVendedor = true;
+                    } else {
+                        validacionesTelVendedor = false;
+                        FacesContext.getCurrentInstance().addMessage("form:editarTelVendedor", new FacesMessage("El telefono se encuentra incorrecto."));
+                    }
                 } else {
                     validacionesTelVendedor = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarTelVendedor", new FacesMessage("El telefono se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarTelVendedor", new FacesMessage("El tamaño minimo permitido es 7 caracteres."));
                 }
             }
         }

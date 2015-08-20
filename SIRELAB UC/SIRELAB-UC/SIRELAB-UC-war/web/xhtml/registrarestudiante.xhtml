@@ -111,14 +111,14 @@
                                     <h6><h:message id="msnEmailOpcional" for="inputEmailOpcional" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Número Telefonico 1"/></strong>
+                                    <strong><h:outputText value="Número Fijo"/></strong>
                                     <h:inputText maxlength="20"  value="#{controllerRegistrarEstudiante.inputTelefono1}" disabled="#{controllerRegistrarEstudiante.activarCasillas}" class="form-control" id="inputTelefono1"  >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarDatosNumericosEstudiante(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1"/>
                                     </h:inputText>
                                     <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Número Telefonico 2"/></strong>
+                                    <strong><h:outputText value="Número Celular"/></strong>
                                     <h:inputText maxlength="20"  value="#{controllerRegistrarEstudiante.inputTelefono2}" disabled="#{controllerRegistrarEstudiante.activarCasillas}" class="form-control" id="inputTelefono2" >
                                         <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarDatosNumericosEstudiante(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2"/>
                                     </h:inputText>

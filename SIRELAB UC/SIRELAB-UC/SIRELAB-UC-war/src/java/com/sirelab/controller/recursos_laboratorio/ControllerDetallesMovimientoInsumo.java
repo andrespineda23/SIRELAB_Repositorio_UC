@@ -76,12 +76,18 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     }
 
     public void validarTipoMovimiento() {
-        if (Utilidades.validarNulo(editarTipoMovimiento) && (!editarTipoMovimiento.isEmpty())  && (editarTipoMovimiento.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarTipoMovimiento)) {
-                validacionesTipo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarTipoMovimiento", new FacesMessage("El tipo ingresado es incorrecto."));
+        if (Utilidades.validarNulo(editarTipoMovimiento) && (!editarTipoMovimiento.isEmpty()) && (editarTipoMovimiento.trim().length() > 0)) {
+            int tam = editarTipoMovimiento.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracterString(editarTipoMovimiento)) {
+                    validacionesTipo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarTipoMovimiento", new FacesMessage("El tipo ingresado es incorrecto."));
+                } else {
+                    validacionesTipo = true;
+                }
             } else {
-                validacionesTipo = true;
+                validacionesTipo = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarTipoMovimiento", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesTipo = false;
@@ -91,7 +97,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     }
 
     public void validarCantidadMovimiento() {
-        if (Utilidades.validarNulo(editarCantidadMovimiento) && (!editarCantidadMovimiento.isEmpty())  && (editarCantidadMovimiento.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarCantidadMovimiento) && (!editarCantidadMovimiento.isEmpty()) && (editarCantidadMovimiento.trim().length() > 0)) {
             if (!Utilidades.isNumber(editarCantidadMovimiento)) {
                 validacionesCantidad = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCantidadMovimiento", new FacesMessage("La cantidad se encuentra incorrecta."));
@@ -106,7 +112,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     }
 
     public void validarCostoMovimiento() {
-        if (Utilidades.validarNulo(editarCostoMovimiento) && (!editarCostoMovimiento.isEmpty())  && (editarCostoMovimiento.trim().length() > 0)) {
+        if (Utilidades.validarNulo(editarCostoMovimiento) && (!editarCostoMovimiento.isEmpty()) && (editarCostoMovimiento.trim().length() > 0)) {
             if ((Utilidades.isNumber(editarCostoMovimiento)) == false) {
                 validacionesCosto = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto."));

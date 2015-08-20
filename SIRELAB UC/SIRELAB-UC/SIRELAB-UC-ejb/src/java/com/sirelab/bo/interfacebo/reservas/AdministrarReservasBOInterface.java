@@ -6,7 +6,8 @@
 package com.sirelab.bo.interfacebo.reservas;
 
 import com.sirelab.entidades.Docente;
-import com.sirelab.entidades.Reserva;
+import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.ReservaSala;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -16,7 +17,9 @@ import java.util.List;
  */
 public interface AdministrarReservasBOInterface {
 
-    public List<Reserva> consultarReservasPorPersona(BigInteger persona);
+    public List<ReservaSala> consultarReservasSalaPorPersona(BigInteger persona);
 
     public Docente consultarDocentePorID(BigInteger idRegistro);
+
+    public Persona obtenerPersonaConsultarReservas(String tipoUsuario, BigInteger idPersona);
 }

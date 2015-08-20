@@ -115,14 +115,14 @@
                                 <fieldset>
                                     <legend class="h5 text-info">Datos Opcionales</legend>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Telefonico 1"/></strong>
+                                        <strong><h:outputText value="Número Fijo"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerDetallesAdministrador.telefono1Administrador}" readonly="#{controllerDetallesAdministrador.activarEditar}" class="form-control" id="telefono1Administrador" >
                                             <f:ajax event="blur" listener="#{controllerDetallesAdministrador.validarDatosNumericosAdministrador(1)}" execute="telefono1Administrador" render="telefono1Administrador msnTelefono1" />
                                         </h:inputText>
                                         <h6><h:message id="msnTelefono1" for="telefono1Administrador" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Telefonico 2"/></strong>
+                                        <strong><h:outputText value="Número Celular"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerDetallesAdministrador.telefono2Administrador}" readonly="#{controllerDetallesAdministrador.activarEditar}" class="form-control" id="telefono2Administrador" >
                                             <f:ajax event="blur" listener="#{controllerDetallesAdministrador.validarDatosNumericosAdministrador(2)}" execute="telefono2Administrador" render="telefono2Administrador msnTelefono2" />
                                         </h:inputText>

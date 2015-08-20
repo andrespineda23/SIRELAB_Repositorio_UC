@@ -68,12 +68,18 @@ public class ControllerRegistrarEdificio implements Serializable {
     }
 
     public void validarDescripcionEdificio() {
-        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty())  && (nuevoDescripcion.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) {
-                validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
+        if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty()) && (nuevoDescripcion.trim().length() > 0)) {
+            int tam = nuevoDescripcion.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) {
+                    validacionesDescripcion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
+                } else {
+                    validacionesDescripcion = true;
+                }
             } else {
-                validacionesDescripcion = true;
+                validacionesDescripcion = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesDescripcion = false;
@@ -82,12 +88,18 @@ public class ControllerRegistrarEdificio implements Serializable {
     }
 
     public void validarDireccionEdificio() {
-        if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty())  && (nuevoDireccion.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nuevoDireccion)) {
-                validacionesDireccion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+        if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty()) && (nuevoDireccion.trim().length() > 0)) {
+            int tam = nuevoDireccion.length();
+            if (tam >= 7) {
+                if (!Utilidades.validarCaracterString(nuevoDireccion)) {
+                    validacionesDireccion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+                } else {
+                    validacionesDireccion = true;
+                }
             } else {
-                validacionesDireccion = true;
+                validacionesDireccion = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 7 caracteres."));
             }
         }
     }

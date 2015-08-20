@@ -90,12 +90,18 @@ public class ControllerDetallesEdificio implements Serializable {
     }
 
     public void validarDescripcionEdificio() {
-        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty())  && (editarDescripcion.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(editarDescripcion)) {
-                validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
+        if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty()) && (editarDescripcion.trim().length() > 0)) {
+            int tam = editarDescripcion.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarDescripcion)) {
+                    validacionesDescripcion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
+                } else {
+                    validacionesDescripcion = true;
+                }
             } else {
-                validacionesDescripcion = true;
+                validacionesDescripcion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesDescripcion = false;
@@ -104,12 +110,18 @@ public class ControllerDetallesEdificio implements Serializable {
     }
 
     public void validarDireccionEdificio() {
-        if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty())  && (editarDireccion.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarDireccion)) {
-                validacionesDireccion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+        if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty()) && (editarDireccion.trim().length() > 0)) {
+            int tam = editarDireccion.length();
+            if (tam >= 7) {
+                if (!Utilidades.validarCaracterString(editarDireccion)) {
+                    validacionesDireccion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+                } else {
+                    validacionesDireccion = true;
+                }
             } else {
-                validacionesDireccion = true;
+                validacionesDireccion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 7 caracteres."));
             }
         }
     }
@@ -256,5 +268,4 @@ public class ControllerDetallesEdificio implements Serializable {
         this.editarEstado = editarEstado;
     }
 
-    
 }

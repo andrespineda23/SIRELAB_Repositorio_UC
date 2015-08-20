@@ -79,12 +79,18 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     }
 
     public void validarDetalle() {
-        if (Utilidades.validarNulo(inputDetalle) && (!inputDetalle.isEmpty())  && (inputDetalle.trim().length() > 0)) {
-            if (Utilidades.validarCaracterString(inputDetalle)) {
-                validacionesDetalle = true;
+        if (Utilidades.validarNulo(inputDetalle) && (!inputDetalle.isEmpty()) && (inputDetalle.trim().length() > 0)) {
+            int tam = inputDetalle.length();
+            if (tam >= 4) {
+                if (Utilidades.validarCaracterString(inputDetalle)) {
+                    validacionesDetalle = true;
+                } else {
+                    validacionesDetalle = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto."));
+                }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesDetalle = false;

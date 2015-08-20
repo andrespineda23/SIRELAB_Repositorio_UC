@@ -89,11 +89,17 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     public void validarNombreGuiaLaboratorio() {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+            int tam = nuevoNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -104,7 +110,13 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     public void validarDescripcionGuiaLaboratorio() {
         if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty()) && (nuevoDescripcion.trim().length() > 0)) {
-            validacionesDescripcion = true;
+            int tam = nuevoDescripcion.length();
+            if (tam >= 20) {
+                validacionesDescripcion = true;
+            } else {
+                validacionesDescripcion = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
+            }
         } else {
             validacionesDescripcion = false;
             FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción es obligatoria."));

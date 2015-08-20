@@ -96,11 +96,17 @@ public class ControllerDetallesCarrera implements Serializable {
 
     public void validarNombreCarrera() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+            int tam = editarNombre.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracterString(editarNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -110,11 +116,17 @@ public class ControllerDetallesCarrera implements Serializable {
 
     public void validarCodigoCarrera() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+            int tam = editarCodigo.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesCodigo = true;
+                }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesCodigo = false;

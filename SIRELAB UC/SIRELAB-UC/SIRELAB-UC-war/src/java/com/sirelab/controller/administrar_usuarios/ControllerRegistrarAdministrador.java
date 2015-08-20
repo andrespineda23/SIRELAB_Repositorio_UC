@@ -78,12 +78,18 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarNombreAdministrador() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
+            int tam = nuevoNombre.length();
+            if (tam >= 2) {
+                if (!Utilidades.validarCaracterString(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -93,12 +99,18 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarApellidoAdministrador() {
-        if (Utilidades.validarNulo(nuevoApellido) && (!nuevoApellido.isEmpty())  && (nuevoApellido.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nuevoApellido)) {
-                validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoApellido) && (!nuevoApellido.isEmpty()) && (nuevoApellido.trim().length() > 0)) {
+            int tam = nuevoApellido.length();
+            if (tam >= 2) {
+                if (!Utilidades.validarCaracterString(nuevoApellido)) {
+                    validacionesApellido = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido ingresado es incorrecto."));
+                } else {
+                    validacionesApellido = true;
+                }
             } else {
-                validacionesApellido = true;
+                validacionesApellido = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesApellido = false;
@@ -107,19 +119,25 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarCorreoAdministrador() {
-        if (Utilidades.validarNulo(nuevoCorreo) && (!nuevoCorreo.isEmpty())  && (nuevoCorreo.trim().length() > 0)) {
-            String correoAdministrador = nuevoCorreo + "@ucentral.edu.co";
-            if (Utilidades.validarCorreoElectronico(correoAdministrador)) {
-                Persona registro = administrarAdministradoresBO.obtenerAdministradorPorCorreo(nuevoCorreo);
-                if (null == registro) {
-                    validacionesCorreo = true;
+        if (Utilidades.validarNulo(nuevoCorreo) && (!nuevoCorreo.isEmpty()) && (nuevoCorreo.trim().length() > 0)) {
+            int tam = nuevoCorreo.length();
+            if (tam >= 4) {
+                String correoAdministrador = nuevoCorreo + "@ucentral.edu.co";
+                if (Utilidades.validarCorreoElectronico(correoAdministrador)) {
+                    Persona registro = administrarAdministradoresBO.obtenerAdministradorPorCorreo(nuevoCorreo);
+                    if (null == registro) {
+                        validacionesCorreo = true;
+                    } else {
+                        validacionesCorreo = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo ya se encuentra registrado."));
+                    }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo ya se encuentra registrado."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo se encuentra incorrecto."));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCorreo = false;
@@ -128,18 +146,24 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarIdentificacionAdministrador() {
-        if (Utilidades.validarNulo(nuevoDocumento) && (!nuevoDocumento.isEmpty())  && (nuevoDocumento.trim().length() > 0)) {
-            if (Utilidades.validarNumeroIdentificacion(nuevoDocumento)) {
-                Persona registro = administrarAdministradoresBO.obtenerAdministradorPorDocumento(nuevoDocumento);
-                if (null == registro) {
-                    validacionesID = true;
+        if (Utilidades.validarNulo(nuevoDocumento) && (!nuevoDocumento.isEmpty()) && (nuevoDocumento.trim().length() > 0)) {
+            int tam = nuevoDocumento.length();
+            if (tam >= 8) {
+                if (Utilidades.validarNumeroIdentificacion(nuevoDocumento)) {
+                    Persona registro = administrarAdministradoresBO.obtenerAdministradorPorDocumento(nuevoDocumento);
+                    if (null == registro) {
+                        validacionesID = true;
+                    } else {
+                        validacionesID = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El documento ya se encuentra registrado."));
+                    }
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El documento ya se encuentra registrado."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El numero identificación se encuentra incorrecto."));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El numero identificación se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
             }
         } else {
             validacionesID = false;
@@ -149,40 +173,64 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void validarDatosNumericosAdministrador(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(nuevoTelefono1) && (!nuevoTelefono1.isEmpty())  && (nuevoTelefono1.trim().length() > 0)) {
-                if ((Utilidades.isNumber(nuevoTelefono1)) == false) {
+            if (Utilidades.validarNulo(nuevoTelefono1) && (!nuevoTelefono1.isEmpty()) && (nuevoTelefono1.trim().length() > 0)) {
+                int tam = nuevoTelefono1.length();
+                if (tam == 7) {
+                    if ((Utilidades.isNumber(nuevoTelefono1)) == false) {
+                        validacionesTel1 = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    } else {
+                        validacionesTel1 = true;
+                    }
+                } else {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto."));
-                } else {
-                    validacionesTel1 = true;
                 }
             }
         } else {
-            if (Utilidades.validarNulo(nuevoTelefono2) && (!nuevoTelefono2.isEmpty())  && (nuevoTelefono2.trim().length() > 0)) {
-                if ((Utilidades.isNumber(nuevoTelefono2)) == false) {
+            if (Utilidades.validarNulo(nuevoTelefono2) && (!nuevoTelefono2.isEmpty()) && (nuevoTelefono2.trim().length() > 0)) {
+                int tam = nuevoTelefono2.length();
+                if (tam == 10) {
+                    if ((Utilidades.isNumber(nuevoTelefono2)) == false) {
+                        validacionesTel2 = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    } else {
+                        validacionesTel2 = true;
+                    }
+                } else {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto."));
-                } else {
-                    validacionesTel2 = true;
                 }
             }
         }
     }
 
     public void validarDireccionAdministrador() {
-        if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty())  && (nuevoDireccion.trim().length() > 0)) {
-            if (Utilidades.validarDirecciones(nuevoDireccion)) {
-                validacionesDireccion = true;
+        if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty()) && (nuevoDireccion.trim().length() > 0)) {
+            int tam = nuevoDireccion.length();
+            if (tam >= 8) {
+                if (Utilidades.validarDirecciones(nuevoDireccion)) {
+                    validacionesDireccion = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
+                    validacionesDireccion = false;
+                }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
                 validacionesDireccion = false;
             }
         }
     }
 
     public void validarContraseniaAdministrador() {
-        if ((Utilidades.validarNulo(nuevoContrasenia)) && (!nuevoContrasenia.isEmpty())  && (nuevoContrasenia.trim().length() > 0)) {
-            validacionesPassw = true;
+        if ((Utilidades.validarNulo(nuevoContrasenia)) && (!nuevoContrasenia.isEmpty()) && (nuevoContrasenia.trim().length() > 0)) {
+            int tam = nuevoContrasenia.length();
+            if (tam >= 6) {
+                validacionesPassw = true;
+            } else {
+                FacesContext.getCurrentInstance().addMessage("form:nuevoContrasenia", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
+                validacionesPassw = false;
+            }
         } else {
             FacesContext.getCurrentInstance().addMessage("form:nuevoContrasenia", new FacesMessage("La contraseña es obligatoria."));
             validacionesPassw = false;
@@ -191,7 +239,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void validarContraseniaConfirmaAdministrador() {
         if ((Utilidades.validarNulo(nuevoContrasenia)) && (Utilidades.validarNulo(nuevoContraseniaConfirma))
-                && (!nuevoContrasenia.isEmpty()) && (!nuevoContraseniaConfirma.isEmpty())  && (nuevoContraseniaConfirma.trim().length() > 0)) {
+                && (!nuevoContrasenia.isEmpty()) && (!nuevoContraseniaConfirma.isEmpty()) && (nuevoContraseniaConfirma.trim().length() > 0)) {
             if (nuevoContrasenia.equals(nuevoContraseniaConfirma)) {
                 validacionesPassw2 = true;
             } else {
@@ -205,13 +253,19 @@ public class ControllerRegistrarAdministrador implements Serializable {
     }
 
     public void validarUsuarioAdministrador() {
-        if (Utilidades.validarNulo(nuevoUsuario) && (!nuevoUsuario.isEmpty())  && (nuevoUsuario.trim().length() > 0)) {
-            Persona registro = administrarAdministradoresBO.obtenerAdministradorPorUsuario(nuevoUsuario);
-            if (null == registro) {
-                validacionesUsuario = true;
+        if (Utilidades.validarNulo(nuevoUsuario) && (!nuevoUsuario.isEmpty()) && (nuevoUsuario.trim().length() > 0)) {
+            int tam = nuevoUsuario.length();
+            if (tam >= 4) {
+                Persona registro = administrarAdministradoresBO.obtenerAdministradorPorUsuario(nuevoUsuario);
+                if (null == registro) {
+                    validacionesUsuario = true;
+                } else {
+                    validacionesUsuario = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoUsuario", new FacesMessage("El usuario ya se encuentra registrado."));
+                }
             } else {
                 validacionesUsuario = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoUsuario", new FacesMessage("El usuario ya se encuentra registrado."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoUsuario", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesUsuario = false;

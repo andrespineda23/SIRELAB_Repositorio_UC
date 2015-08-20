@@ -68,12 +68,18 @@ public class ControllerRegistrarProveedor implements Serializable {
     }
 
     public void validarNombreProveedor() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
+            int tam = nuevoNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracterString(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -82,18 +88,24 @@ public class ControllerRegistrarProveedor implements Serializable {
     }
 
     public void validarNITProveedor() {
-        if (Utilidades.validarNulo(nuevoNIT) && (!nuevoNIT.isEmpty())  && (nuevoNIT.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(nuevoNIT)) {
-                Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(nuevoVendedor);
-                if (registro == null) {
-                    validacionesNIT = true;
+        if (Utilidades.validarNulo(nuevoNIT) && (!nuevoNIT.isEmpty()) && (nuevoNIT.trim().length() > 0)) {
+            int tam = nuevoNIT.length();
+            if (tam >= 8) {
+                if (Utilidades.validarCaracteresAlfaNumericos(nuevoNIT)) {
+                    Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(nuevoVendedor);
+                    if (registro == null) {
+                        validacionesNIT = true;
+                    } else {
+                        validacionesNIT = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoNIT", new FacesMessage("El NIT ingresado ya esta registrado."));
+                    }
                 } else {
                     validacionesNIT = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNIT", new FacesMessage("El NIT ingresado ya esta registrado."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNIT", new FacesMessage("El NIT ingresado es incorrecto."));
                 }
             } else {
                 validacionesNIT = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNIT", new FacesMessage("El NIT ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNIT", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
             }
         } else {
             validacionesNIT = false;
@@ -102,7 +114,7 @@ public class ControllerRegistrarProveedor implements Serializable {
     }
 
     public void validarTelefonoProveedor() {
-        if (Utilidades.validarNulo(nuevoTelefono) && (!nuevoTelefono.isEmpty())  && (nuevoTelefono.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoTelefono) && (!nuevoTelefono.isEmpty()) && (nuevoTelefono.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoTelefono)) == false) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono", new FacesMessage("El numero telefonico se encuentra incorrecto."));
@@ -116,11 +128,17 @@ public class ControllerRegistrarProveedor implements Serializable {
     }
 
     public void validarDireccionProveedor() {
-        if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty())  && (nuevoDireccion.trim().length() > 0)) {
-            if (Utilidades.validarDirecciones(nuevoDireccion)) {
-                validacionesDireccion = true;
+        if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty()) && (nuevoDireccion.trim().length() > 0)) {
+            int tam = nuevoDireccion.length();
+            if (tam >= 8) {
+                if (Utilidades.validarDirecciones(nuevoDireccion)) {
+                    validacionesDireccion = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
+                    validacionesDireccion = false;
+                }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
                 validacionesDireccion = false;
             }
         }
@@ -128,21 +146,33 @@ public class ControllerRegistrarProveedor implements Serializable {
 
     public void validarDatosOpcionales(int tipoReg) {
         if (tipoReg == 1) {
-            if (Utilidades.validarNulo(nuevoVendedor) && (!nuevoVendedor.isEmpty())  && (nuevoVendedor.trim().length() > 0)) {
-                if (Utilidades.validarCaracterString(nuevoVendedor)) {
-                    validacionesVendedor = true;
+            if (Utilidades.validarNulo(nuevoVendedor) && (!nuevoVendedor.isEmpty()) && (nuevoVendedor.trim().length() > 0)) {
+                int tam = nuevoVendedor.length();
+                if (tam >= 2) {
+                    if (Utilidades.validarCaracterString(nuevoVendedor)) {
+                        validacionesVendedor = true;
+                    } else {
+                        validacionesVendedor = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoVendedor", new FacesMessage("El nombre se encuentra incorrecto."));
+                    }
                 } else {
                     validacionesVendedor = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoVendedor", new FacesMessage("El nombre se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoVendedor", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
                 }
             }
         } else {
-            if (Utilidades.validarNulo(nuevoTelVendedor) && (!nuevoTelVendedor.isEmpty())  && (nuevoTelVendedor.trim().length() > 0)) {
-                if (Utilidades.isNumber(nuevoTelVendedor)) {
-                    validacionesTelVendedor = true;
+            if (Utilidades.validarNulo(nuevoTelVendedor) && (!nuevoTelVendedor.isEmpty()) && (nuevoTelVendedor.trim().length() > 0)) {
+                int tam = nuevoTelVendedor.length();
+                if (tam >= 7) {
+                    if (Utilidades.isNumber(nuevoTelVendedor)) {
+                        validacionesTelVendedor = true;
+                    } else {
+                        validacionesTelVendedor = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelVendedor", new FacesMessage("El telefono se encuentra incorrecto."));
+                    }
                 } else {
                     validacionesTelVendedor = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoTelVendedor", new FacesMessage("El telefono se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoTelVendedor", new FacesMessage("El tamaño minimo permitido es 7 caracteres."));
                 }
             }
         }

@@ -170,11 +170,17 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
 
     public void validarNombreGuiaLaboratorio() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+            int tam = editarNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -184,7 +190,13 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
 
     public void validarDescripcionGuiaLaboratorio() {
         if (Utilidades.validarNulo(editarDescripcion) && (!editarDescripcion.isEmpty()) && (editarDescripcion.trim().length() > 0)) {
-            validacionesDescripcion = true;
+            int tam = editarDescripcion.length();
+            if (tam >= 20) {
+                validacionesDescripcion = true;
+            } else {
+                validacionesDescripcion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
+            }
         } else {
             validacionesDescripcion = false;
             FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));

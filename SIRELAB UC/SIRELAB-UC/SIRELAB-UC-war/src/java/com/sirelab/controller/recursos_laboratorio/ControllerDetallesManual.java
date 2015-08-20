@@ -102,12 +102,18 @@ public class ControllerDetallesManual implements Serializable {
     }
 
     public void validarNombreManual() {
-        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty())  && (editarNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
+            int tam = editarNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -116,8 +122,14 @@ public class ControllerDetallesManual implements Serializable {
     }
 
     public void validarUbicacionManual() {
-        if (Utilidades.validarNulo(editarUbicacion) && (!editarUbicacion.isEmpty())  && (editarUbicacion.trim().length() > 0)) {
-            validacionesUbicacion = true;
+        if (Utilidades.validarNulo(editarUbicacion) && (!editarUbicacion.isEmpty()) && (editarUbicacion.trim().length() > 0)) {
+            int tam = editarUbicacion.length();
+            if (tam >= 7) {
+                validacionesUbicacion = true;
+            } else {
+                validacionesUbicacion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+            }
         } else {
             validacionesUbicacion = false;
             FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El campo ubicación es obligatorio."));

@@ -158,11 +158,17 @@ public class ControllerDetallesSala implements Serializable {
 
     public void validarNombreSala() {
         if (Utilidades.validarNulo(nombreSalaLaboratorio) && (!nombreSalaLaboratorio.isEmpty()) && (nombreSalaLaboratorio.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(nombreSalaLaboratorio)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre ingresado es incorrecto."));
+            int tam = nombreSalaLaboratorio.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nombreSalaLaboratorio)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -173,11 +179,17 @@ public class ControllerDetallesSala implements Serializable {
 
     public void validarCodigoSala() {
         if (Utilidades.validarNulo(codigoSalaLaboratorio) && (!codigoSalaLaboratorio.isEmpty()) && (codigoSalaLaboratorio.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(codigoSalaLaboratorio)) {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El codigo ingresado es incorrecto."));
+            int tam = codigoSalaLaboratorio.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(codigoSalaLaboratorio)) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesCodigo = true;
+                }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;
@@ -188,11 +200,17 @@ public class ControllerDetallesSala implements Serializable {
 
     public void validarUbicacionSala() {
         if (Utilidades.validarNulo(ubicacionSalaLaboratorio) && (!ubicacionSalaLaboratorio.isEmpty()) && (ubicacionSalaLaboratorio.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(ubicacionSalaLaboratorio)) {
-                validacionesUbicacion = true;
+            int tam = ubicacionSalaLaboratorio.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(ubicacionSalaLaboratorio)) {
+                    validacionesUbicacion = true;
+                } else {
+                    validacionesUbicacion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("La ubicación se encuentra incorrecta."));
+                }
             } else {
                 validacionesUbicacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("La ubicación se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesUbicacion = false;
@@ -233,11 +251,17 @@ public class ControllerDetallesSala implements Serializable {
 
     public void validarDescripcionSala() {
         if (Utilidades.validarNulo(descripcionSalaLaboratorio) && (!descripcionSalaLaboratorio.isEmpty()) && (descripcionSalaLaboratorio.trim().length() > 0)) {
-            if ((Utilidades.validarCaracteresAlfaNumericos(descripcionSalaLaboratorio)) == false) {
-                validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("La descripción se encuentra incorrecta."));
+            int tam = descripcionSalaLaboratorio.length();
+            if (tam >= 20) {
+                if ((Utilidades.validarCaracteresAlfaNumericos(descripcionSalaLaboratorio)) == false) {
+                    validacionesDescripcion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("La descripción se encuentra incorrecta."));
+                } else {
+                    validacionesDescripcion = true;
+                }
             } else {
-                validacionesDescripcion = true;
+                validacionesDescripcion = false;
+                FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
             }
         } else {
             validacionesDescripcion = false;

@@ -265,12 +265,18 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarNombreEquipo() {
-        if (Utilidades.validarNulo(nombreEquipoElemento) && (!nombreEquipoElemento.isEmpty())  && (nombreEquipoElemento.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nombreEquipoElemento)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nombreEquipoElemento) && (!nombreEquipoElemento.isEmpty()) && (nombreEquipoElemento.trim().length() > 0)) {
+            int tam = nombreEquipoElemento.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracterString(nombreEquipoElemento)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -280,12 +286,18 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarInventarioEquipo() {
-        if (Utilidades.validarNulo(inventarioEquipoElemento) && (!inventarioEquipoElemento.isEmpty())  && (inventarioEquipoElemento.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(inventarioEquipoElemento)) {
-                validacionesInventario = false;
-                FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo ingresado es incorrecto."));
+        if (Utilidades.validarNulo(inventarioEquipoElemento) && (!inventarioEquipoElemento.isEmpty()) && (inventarioEquipoElemento.trim().length() > 0)) {
+            int tam = inventarioEquipoElemento.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(inventarioEquipoElemento)) {
+                    validacionesInventario = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesInventario = true;
+                }
             } else {
-                validacionesInventario = true;
+                validacionesInventario = false;
+                FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesInventario = false;
@@ -294,12 +306,18 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarMarcaEquipo() {
-        if (Utilidades.validarNulo(marcaEquipoElemento) && (!marcaEquipoElemento.isEmpty())  && (marcaEquipoElemento.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(marcaEquipoElemento)) {
-                validacionesMarca = false;
-                FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca ingresada es incorrecta."));
+        if (Utilidades.validarNulo(marcaEquipoElemento) && (!marcaEquipoElemento.isEmpty()) && (marcaEquipoElemento.trim().length() > 0)) {
+            int tam = marcaEquipoElemento.length();
+            if (tam >= 2) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(marcaEquipoElemento)) {
+                    validacionesMarca = false;
+                    FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca ingresada es incorrecta."));
+                } else {
+                    validacionesMarca = true;
+                }
             } else {
-                validacionesMarca = true;
+                validacionesMarca = false;
+                FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesMarca = false;
@@ -335,29 +353,41 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarModeloEquipo() {
-        if (Utilidades.validarNulo(modeloEquipoElemento) && (!modeloEquipoElemento.isEmpty())  && (modeloEquipoElemento.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(modeloEquipoElemento)) {
-                validacionesModelo = true;
+        if (Utilidades.validarNulo(modeloEquipoElemento) && (!modeloEquipoElemento.isEmpty()) && (modeloEquipoElemento.trim().length() > 0)) {
+            int tam = modeloEquipoElemento.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(modeloEquipoElemento)) {
+                    validacionesModelo = true;
+                } else {
+                    validacionesModelo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:modeloEquipoElemento", new FacesMessage("El modelo se encuentra incorrecto."));
+                }
             } else {
-                validacionesModelo = false;
-                FacesContext.getCurrentInstance().addMessage("form:modeloEquipoElemento", new FacesMessage("El modelo se encuentra incorrecto."));
+                validacionesMarca = false;
+                FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         }
     }
 
     public void validarSerieEquipo() {
-        if (Utilidades.validarNulo(serieEquipoElemento) && (!serieEquipoElemento.isEmpty())  && (serieEquipoElemento.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(serieEquipoElemento)) {
-                validacionesSerie = true;
+        if (Utilidades.validarNulo(serieEquipoElemento) && (!serieEquipoElemento.isEmpty()) && (serieEquipoElemento.trim().length() > 0)) {
+            int tam = serieEquipoElemento.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(serieEquipoElemento)) {
+                    validacionesSerie = true;
+                } else {
+                    validacionesSerie = false;
+                    FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("La serie se encuentra incorrecta."));
+                }
             } else {
                 validacionesSerie = false;
-                FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("La serie se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         }
     }
 
     public void validarCostoAlquilerEquipo() {
-        if (Utilidades.validarNulo(alquilerEquipoElemento) && (!alquilerEquipoElemento.isEmpty())  && (alquilerEquipoElemento.trim().length() > 0)) {
+        if (Utilidades.validarNulo(alquilerEquipoElemento) && (!alquilerEquipoElemento.isEmpty()) && (alquilerEquipoElemento.trim().length() > 0)) {
             if (Utilidades.isNumber(alquilerEquipoElemento)) {
                 validacionesCosto = true;
             } else {
@@ -368,7 +398,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarInversionEquipo() {
-        if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())  && (inversionEquipoElemento.trim().length() > 0)) {
+        if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty()) && (inversionEquipoElemento.trim().length() > 0)) {
             if ((Utilidades.isNumber(inversionEquipoElemento)) == false) {
                 validacionesInversion = false;
                 FacesContext.getCurrentInstance().addMessage("form:inversionEquipoElemento", new FacesMessage("El valor de inversión se encuentra incorrecto."));
@@ -390,12 +420,18 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void validarEspecificacionEquipo() {
-        if (Utilidades.validarNulo(especificacionEquipoElemento) && (!especificacionEquipoElemento.isEmpty())  && (especificacionEquipoElemento.trim().length() > 0)) {
-            if ((Utilidades.validarCaracteresAlfaNumericos(especificacionEquipoElemento)) == false) {
-                validacionesEspecificacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("La especificación ingresada se encuentra incorrecta."));
+        if (Utilidades.validarNulo(especificacionEquipoElemento) && (!especificacionEquipoElemento.isEmpty()) && (especificacionEquipoElemento.trim().length() > 0)) {
+            int tam = especificacionEquipoElemento.length();
+            if (tam >= 20) {
+                if ((Utilidades.validarCaracteresAlfaNumericos(especificacionEquipoElemento)) == false) {
+                    validacionesEspecificacion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("La especificación ingresada se encuentra incorrecta."));
+                } else {
+                    validacionesEspecificacion = true;
+                }
             } else {
-                validacionesEspecificacion = true;
+                validacionesEspecificacion = false;
+                FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
             }
         }
     }
@@ -499,12 +535,12 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setFechaadquisicion(fechaEquipoElemento);
 
             equipoElementoDetalles.setCantidadequipo(Integer.valueOf(cantidadEquipoElemento).intValue());
-            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())  && (inversionEquipoElemento.trim().length() > 0)) {
+            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty()) && (inversionEquipoElemento.trim().length() > 0)) {
                 equipoElementoDetalles.setCostoadquisicion(Integer.valueOf(inversionEquipoElemento));
             } else {
                 equipoElementoDetalles.setCostoadquisicion(Integer.valueOf("0"));
             }
-            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty())  && (inversionEquipoElemento.trim().length() > 0)) {
+            if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty()) && (inversionEquipoElemento.trim().length() > 0)) {
                 equipoElementoDetalles.setCostoalquiler(Integer.valueOf(alquilerEquipoElemento));
             } else {
                 equipoElementoDetalles.setCostoalquiler(Integer.valueOf("0"));

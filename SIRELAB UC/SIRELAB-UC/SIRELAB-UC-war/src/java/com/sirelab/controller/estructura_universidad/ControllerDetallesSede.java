@@ -79,11 +79,17 @@ public class ControllerDetallesSede implements Serializable {
 
     public void validarNombreSede() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+            int tam = editarNombre.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracterString(editarNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -94,11 +100,17 @@ public class ControllerDetallesSede implements Serializable {
 
     public void validarDireccionSede() {
         if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty()) && (editarDireccion.trim().length() > 0)) {
-            if (!Utilidades.validarDirecciones(editarDireccion)) {
-                validacionesDireccion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+            int tam = editarDireccion.length();
+            if (tam >= 8) {
+                if (!Utilidades.validarDirecciones(editarDireccion)) {
+                    validacionesDireccion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+                } else {
+                    validacionesDireccion = true;
+                }
             } else {
-                validacionesDireccion = true;
+                validacionesDireccion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
             }
         } else {
             validacionesDireccion = false;

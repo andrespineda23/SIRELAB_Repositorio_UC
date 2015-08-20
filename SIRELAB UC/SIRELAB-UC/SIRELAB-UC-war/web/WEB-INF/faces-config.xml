@@ -548,6 +548,31 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_iniciales/inicio_docente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_iniciales/inicio_docente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultar_reservas_sala</from-outcome>
+            <to-view-id>/xhtml/proceso_reservas/consultar_reservas_sala.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proceso_reservas/consultar_reservas_sala.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_docente</from-outcome>
+            <to-view-id>/xhtml/paginas_iniciales/inicio_docente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>

@@ -59,12 +59,18 @@ public class ControllerRegistrarSede implements Serializable {
     }
 
     public void validarNombreSede() {
-        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty())  && (nuevoNombre.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nuevoNombre)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
+            int tam = nuevoNombre.length();
+            if (tam >= 6) {
+                if (!Utilidades.validarCaracterString(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -74,12 +80,18 @@ public class ControllerRegistrarSede implements Serializable {
     }
 
     public void validarDireccionSede() {
-        if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty())  && (nuevoDireccion.trim().length() > 0)) {
-            if (!Utilidades.validarDirecciones(nuevoDireccion)) {
-                validacionesDireccion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+        if (Utilidades.validarNulo(nuevoDireccion) && (!nuevoDireccion.isEmpty()) && (nuevoDireccion.trim().length() > 0)) {
+            int tam = nuevoDireccion.length();
+            if (tam >= 8) {
+                if (!Utilidades.validarDirecciones(nuevoDireccion)) {
+                    validacionesDireccion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+                } else {
+                    validacionesDireccion = true;
+                }
             } else {
-                validacionesDireccion = true;
+                validacionesDireccion = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
             }
         } else {
             validacionesDireccion = false;
@@ -88,7 +100,7 @@ public class ControllerRegistrarSede implements Serializable {
     }
 
     public void validarTelefonoSede() {
-        if (Utilidades.validarNulo(nuevoTelefono) && (!nuevoTelefono.isEmpty())  && (nuevoTelefono.trim().length() > 0)) {
+        if (Utilidades.validarNulo(nuevoTelefono) && (!nuevoTelefono.isEmpty()) && (nuevoTelefono.trim().length() > 0)) {
             if (!Utilidades.isNumber(nuevoTelefono)) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono", new FacesMessage("El telefono ingresado es incorrecto."));

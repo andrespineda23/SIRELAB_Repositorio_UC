@@ -86,12 +86,18 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarNombreComponente() {
-        if (Utilidades.validarNulo(editarNombreComponente) && (!editarNombreComponente.isEmpty())  && (editarNombreComponente.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(editarNombreComponente)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(editarNombreComponente) && (!editarNombreComponente.isEmpty()) && (editarNombreComponente.trim().length() > 0)) {
+            int tam = editarNombreComponente.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracterString(editarNombreComponente)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -101,12 +107,18 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarCodigoComponente() {
-        if (Utilidades.validarNulo(editarCodigoComponente) && (!editarCodigoComponente.isEmpty())  && (editarCodigoComponente.trim().length() > 0)) {
-            if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigoComponente)) {
-                validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El codigo ingresado es incorrecto."));
+        if (Utilidades.validarNulo(editarCodigoComponente) && (!editarCodigoComponente.isEmpty()) && (editarCodigoComponente.trim().length() > 0)) {
+            int tam = editarCodigoComponente.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigoComponente)) {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El codigo ingresado es incorrecto."));
+                } else {
+                    validacionesCodigo = true;
+                }
             } else {
-                validacionesCodigo = true;
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;
@@ -116,12 +128,18 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarMarcaComponente() {
-        if (Utilidades.validarNulo(editarMarcaComponente) && (!editarMarcaComponente.isEmpty())  && (editarMarcaComponente.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(editarMarcaComponente)) {
-                validacionesMarca = true;
+        if (Utilidades.validarNulo(editarMarcaComponente) && (!editarMarcaComponente.isEmpty()) && (editarMarcaComponente.trim().length() > 0)) {
+            int tam = editarCodigoComponente.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(editarMarcaComponente)) {
+                    validacionesMarca = true;
+                } else {
+                    validacionesMarca = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("La marca se encuentra incorrecta."));
+                }
             } else {
                 validacionesMarca = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("La marca se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesMarca = false;
@@ -131,12 +149,18 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarSerialComponente() {
-        if (Utilidades.validarNulo(editarSerialComponente) && (!editarSerialComponente.isEmpty())  && (editarSerialComponente.trim().length() > 0)) {
-            if (Utilidades.validarCaracteresAlfaNumericos(editarSerialComponente)) {
-                validacionesSerial = true;
+        if (Utilidades.validarNulo(editarSerialComponente) && (!editarSerialComponente.isEmpty()) && (editarSerialComponente.trim().length() > 0)) {
+            int tam = editarSerialComponente.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(editarSerialComponente)) {
+                    validacionesSerial = true;
+                } else {
+                    validacionesSerial = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El serial se encuentra incorrecto."));
+                }
             } else {
                 validacionesSerial = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El serial se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesSerial = false;
@@ -146,12 +170,18 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarModeloComponente() {
-        if (Utilidades.validarNulo(editarModeloComponente) && (!editarModeloComponente.isEmpty())  && (editarModeloComponente.trim().length() > 0)) {
-            if ((Utilidades.validarCaracteresAlfaNumericos(editarModeloComponente)) == false) {
-                validacionesModelo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
+        if (Utilidades.validarNulo(editarModeloComponente) && (!editarModeloComponente.isEmpty()) && (editarModeloComponente.trim().length() > 0)) {
+            int tam = editarModeloComponente.length();
+            if (tam >= 2) {
+                if ((Utilidades.validarCaracteresAlfaNumericos(editarModeloComponente)) == false) {
+                    validacionesModelo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
+                } else {
+                    validacionesModelo = true;
+                }
             } else {
-                validacionesModelo = true;
+                validacionesModelo = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesModelo = false;
@@ -161,12 +191,18 @@ public class ControllerDetallesComponente implements Serializable {
     }
 
     public void validarDescripcionComponente() {
-        if (Utilidades.validarNulo(editarDescripcionComponente) && (!editarDescripcionComponente.isEmpty())  && (editarDescripcionComponente.trim().length() > 0)) {
-            if ((Utilidades.validarCaracteresAlfaNumericos(editarDescripcionComponente)) == false) {
-                validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("La descripción se encuentra incorrecta."));
+        if (Utilidades.validarNulo(editarDescripcionComponente) && (!editarDescripcionComponente.isEmpty()) && (editarDescripcionComponente.trim().length() > 0)) {
+            int tam = editarDescripcionComponente.length();
+            if (tam >= 20) {
+                if ((Utilidades.validarCaracteresAlfaNumericos(editarDescripcionComponente)) == false) {
+                    validacionesDescripcion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("La descripción se encuentra incorrecta."));
+                } else {
+                    validacionesDescripcion = true;
+                }
             } else {
-                validacionesDescripcion = true;
+                validacionesDescripcion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
             }
         } else {
             validacionesDescripcion = false;
