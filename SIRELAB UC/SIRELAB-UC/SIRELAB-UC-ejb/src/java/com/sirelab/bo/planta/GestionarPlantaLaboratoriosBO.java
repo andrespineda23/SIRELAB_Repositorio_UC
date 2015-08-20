@@ -5,10 +5,12 @@ import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
+import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.LaboratoriosPorAreas;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,8 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
     LaboratorioDAOInterface laboratorioDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+    @EJB
+    LaboratoriosPorAreasDAOInterface laboratoriosPorAreasDAO;
 
     @Override
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
@@ -122,6 +126,21 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaLaboratorioBO obtenerLaboratorioPorCodigo : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoLaboratorio(BigInteger laboratorio) {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasPorLaboratorios(laboratorio);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratorioBO validarCambioEstadoLaboratorio : " + e.toString());
             return null;
         }
     }

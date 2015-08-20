@@ -1,7 +1,9 @@
 package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarSedeBOInterface;
+import com.sirelab.dao.interfacedao.EdificioDAOInterface;
 import com.sirelab.dao.interfacedao.SedeDAOInterface;
+import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.Sede;
 import java.math.BigInteger;
 import java.util.List;
@@ -18,6 +20,8 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
 
     @EJB
     SedeDAOInterface sedeDAO;
+    @EJB
+    EdificioDAOInterface edificioDAO;
 
     @Override
     public List<Sede> consultarSedesPorParametro(Map<String, String> filtros) {
@@ -55,6 +59,21 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarSedeBO obtenerSedePorIDSede : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarcambioEstadoSede(BigInteger sede) {
+        try {
+            List<Edificio> lista = edificioDAO.buscarEdificiosPorIDSede(sede);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarSedeBO validarcambioEstadoSede : " + e.toString());
             return null;
         }
     }

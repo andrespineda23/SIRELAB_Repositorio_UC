@@ -35,4 +35,6 @@ public interface GestionarRecursoAreasProfundizacionBOInterface {
 
     public AreaProfundizacion obtenerAreaProfundizacionPorCodigo(String codigo);
 
+    public Boolean validarCambioEstadoArea(BigInteger area);
+
 }

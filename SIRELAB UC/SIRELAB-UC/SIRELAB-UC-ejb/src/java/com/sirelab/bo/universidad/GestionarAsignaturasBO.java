@@ -123,4 +123,19 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
         }
     }
 
+    @Override
+    public Boolean validarCambioEstadoAsignatura(BigInteger asignatura) {
+        try {
+            List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.consultarAsignaturaPorPlanEstudiosIdAsignatura(asignatura);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarAsignaturasBO validarCambioEstadoAsignatura : " + e.toString());
+            return null;
+        }
+    }
+
 }

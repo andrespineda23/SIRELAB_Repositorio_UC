@@ -160,6 +160,21 @@ public class ControllerDetallesLaboratorio implements Serializable {
         }
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        if (editarEstado == false) {
+            Boolean validacion = gestionarPlantaLaboratoriosBO.validarCambioEstadoLaboratorio(laboratorioDetalles.getIdlaboratorio());
+            if (null != validacion) {
+                if (validacion == true) {
+                    retorno = true;
+                } else {
+                    retorno = false;
+                }
+            }
+        }
+        return retorno;
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
@@ -191,9 +206,14 @@ public class ControllerDetallesLaboratorio implements Serializable {
     public void registrarModificacionLaboratorio() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenarModificacionLaboratorioEnSistema();
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarCambioEstado() == true) {
+                    almacenarModificacionLaboratorioEnSistema();
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "Existen areas asociadas. Imposible cambiar el estado del laboratorio.";
+                }
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el departamento seleccionado.";

@@ -16,6 +16,8 @@ public interface GestionarSedeBOInterface {
     public void crearNuevaSede(Sede sede);
 
     public void modificarInformacionSede(Sede sede);
-    
+
     public Sede obtenerSedePorIDSede(BigInteger idSede);
+
+    public Boolean validarcambioEstadoSede(BigInteger sede);
 }

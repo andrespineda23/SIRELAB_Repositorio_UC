@@ -158,6 +158,21 @@ public class ControllerDetallesCarrera implements Serializable {
         }
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        if (editarEstado == false) {
+            Boolean validacion = gestionarCarrerasBO.validarCambioEstadoCarrera(carreraDetalles.getIdcarrera());
+            if (null != validacion) {
+                if (validacion == true) {
+                    retorno = true;
+                } else {
+                    retorno = false;
+                }
+            }
+        }
+        return retorno;
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
@@ -190,10 +205,15 @@ public class ControllerDetallesCarrera implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (Utilidades.validarNulo(editarDepartamento)) {
                 if (validarCodigoRepetido() == true) {
-                    almacenarModificacionCarreraEnSistema();
-                    recibirIDCarrerasDetalles(this.idCarrera);
-                    colorMensaje = "green";
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    if (validarCambioEstado() == true) {
+                        almacenarModificacionCarreraEnSistema();
+                        recibirIDCarrerasDetalles(this.idCarrera);
+                        colorMensaje = "green";
+                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    } else {
+                        colorMensaje = "red";
+                        mensajeFormulario = "Existen asociados planes de estudio. Imposible cambiar el estado de la carrera.";
+                    }
                 } else {
                     colorMensaje = "red";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";

@@ -10,10 +10,12 @@ import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
+import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.LaboratoriosPorAreas;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,8 @@ public class GestionarRecursoAreasProfundizacionBO implements GestionarRecursoAr
     LaboratorioDAOInterface laboratorioDAO;
     @EJB
     AreaProfundizacionDAOInterface areaProfundizacionDAO;
+    @EJB
+    LaboratoriosPorAreasDAOInterface laboratoriosPorAreasDAO;
 
     @Override
     public List<Facultad> consultarFacultadesRegistradas() {
@@ -116,6 +120,21 @@ public class GestionarRecursoAreasProfundizacionBO implements GestionarRecursoAr
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaAreaProfundizacionBO obtenerAreaProfundizacionPorCodigo : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoArea(BigInteger area) {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasPorArea(area);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaAreaProfundizacionBO validarCambioEstadoArea : " + e.toString());
             return null;
         }
     }

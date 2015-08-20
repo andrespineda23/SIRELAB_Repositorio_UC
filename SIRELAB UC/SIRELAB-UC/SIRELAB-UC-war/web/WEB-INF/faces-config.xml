@@ -1072,6 +1072,24 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</from-view-id>
         <navigation-case>
+            <from-outcome>administrar_planasignatura</from-outcome>
+            <to-view-id>/xhtml/estructura_universidad/administrar_planasignatura.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_universidad/administrar_planasignatura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio_administrador</from-outcome>
+            <to-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginas_administrador/inicio_administrador.xhtml</from-view-id>
+        <navigation-case>
             <from-outcome>administrar_planesestudio</from-outcome>
             <to-view-id>/xhtml/estructura_universidad/administrar_planesestudio.xhtml</to-view-id>
             <redirect />
@@ -1784,6 +1802,42 @@
         <navigation-case>
             <from-outcome>administrar_sedes</from-outcome>
             <to-view-id>/xhtml/estructura_universidad/administrar_sedes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_universidad/administrar_planasignatura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrar_planasignatura</from-outcome>
+            <to-view-id>/xhtml/estructura_universidad/registrar_planasignatura.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_universidad/registrar_planasignatura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_planasignatura</from-outcome>
+            <to-view-id>/xhtml/estructura_universidad/administrar_planasignatura.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_universidad/administrar_planasignatura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalles_planasignatura</from-outcome>
+            <to-view-id>/xhtml/estructura_universidad/detalles_planasignatura.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructura_universidad/detalles_planasignatura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar_planasignatura</from-outcome>
+            <to-view-id>/xhtml/estructura_universidad/administrar_planasignatura.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

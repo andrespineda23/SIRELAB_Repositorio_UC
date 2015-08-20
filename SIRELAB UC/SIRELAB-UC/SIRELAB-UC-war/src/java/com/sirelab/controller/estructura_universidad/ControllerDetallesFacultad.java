@@ -135,12 +135,32 @@ public class ControllerDetallesFacultad implements Serializable {
         return retorno;
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorna = true;
+        if (editarEstado == false) {
+            Boolean cambioEstado = gestionarFacultadBO.validarCambioEstadoFacultad(facultadDetalles.getIdfacultad());
+            if (null != cambioEstado) {
+                if (cambioEstado == true) {
+                    retorna = true;
+                } else {
+                    retorna = false;
+                }
+            }
+        }
+        return retorna;
+    }
+
     public void registrarModificacionFacultad() {
         if (validarResultadosValidacion() == true) {
-            almacenarModificacionFacultadEnSistema();
-            recibirIDFacultadesDetalles(this.idFacultad);
-            colorMensaje = "green";
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            if (validarCambioEstado() == true) {
+                almacenarModificacionFacultadEnSistema();
+                recibirIDFacultadesDetalles(this.idFacultad);
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            } else {
+                colorMensaje = "red";
+                mensajeFormulario = "La facultad tiene departamentos asociados. Es imposible cambiar el estado.";
+            }
         } else {
             colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";

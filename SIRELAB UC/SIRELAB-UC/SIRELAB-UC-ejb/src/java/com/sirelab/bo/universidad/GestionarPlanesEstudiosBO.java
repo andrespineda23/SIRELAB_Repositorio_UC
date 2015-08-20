@@ -1,10 +1,12 @@
 package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarPlanesEstudiosBOInterface;
+import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
@@ -30,6 +32,8 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
     CarreraDAOInterface carreraDAO;
     @EJB
     PlanEstudiosDAOInterface planEstudiosDAO;
+    @EJB
+    AsignaturaPorPlanEstudioDAOInterface asignaturaPorPlanEstudioDAO;
 
     @Override
     public List<Facultad> consultarFacultadesRegistradas() {
@@ -111,6 +115,21 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarPlanesEstudiosBO obtenerPlanEstudioPorCodigo : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoPlan(BigInteger plan) {
+        try {
+            List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.consultarAsignaturaPorPlanEstudiosIdPlanEstudio(plan);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlanesEstudiosBO validarCambioEstadoPlan : " + e.toString());
             return null;
         }
     }

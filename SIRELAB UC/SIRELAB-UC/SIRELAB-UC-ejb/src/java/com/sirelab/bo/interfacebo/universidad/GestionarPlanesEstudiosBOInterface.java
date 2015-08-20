@@ -35,4 +35,6 @@ public interface GestionarPlanesEstudiosBOInterface {
 
     public PlanEstudios obtenerPlanEstudioPorCodigo(String codigo);
 
+    public Boolean validarCambioEstadoPlan(BigInteger plan);
+
 }

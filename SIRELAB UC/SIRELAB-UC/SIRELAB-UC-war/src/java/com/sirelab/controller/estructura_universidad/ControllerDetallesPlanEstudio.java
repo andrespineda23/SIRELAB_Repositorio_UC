@@ -192,6 +192,21 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         }
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        if (editarEstado == false) {
+            Boolean validaciones = gestionarPlanesEstudiosBO.validarCambioEstadoPlan(planEstudiosDetalles.getIdplanestudios());
+            if (null != validaciones) {
+                if (validaciones == true) {
+                    retorno = true;
+                } else {
+                    retorno = false;
+                }
+            }
+        }
+        return retorno;
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
@@ -227,10 +242,15 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         if (validarResultadosValidacion() == true) {
             if (Utilidades.validarNulo(editarCarrera)) {
                 if (validarCodigoRepetido() == true) {
-                    almacenarModificacionPlanEstudioEnSistema();
-                    recibirIDPlanesEstudioDetalles(this.idPlanEstudios);
-                    colorMensaje = "green";
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    if (validarCambioEstado() == true) {
+                        almacenarModificacionPlanEstudioEnSistema();
+                        recibirIDPlanesEstudioDetalles(this.idPlanEstudios);
+                        colorMensaje = "green";
+                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    } else {
+                        colorMensaje = "red";
+                        mensajeFormulario = "Existen asignaturas asociadas. Imposible cambiar el estado del plan de estudio.";
+                    }
                 } else {
                     colorMensaje = "red";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";

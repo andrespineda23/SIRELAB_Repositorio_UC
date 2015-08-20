@@ -84,6 +84,21 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
             return null;
         }
     }
+    
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorArea(BigInteger area) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM LaboratoriosPorAreas p WHERE p.areaprofundizacion.idareaprofundizacion=:area");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("area", area);
+            List<LaboratoriosPorAreas> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarLaboratoriosPorAreasPorArea LaboratoriosPorAreasDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public LaboratoriosPorAreas buscarLaboratoriosPorAreasPorID(BigInteger idRegistro) {

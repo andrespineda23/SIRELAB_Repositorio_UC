@@ -1,8 +1,10 @@
 package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarDepartamentosBOInterface;
+import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
+import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import java.math.BigInteger;
@@ -22,6 +24,8 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
     DepartamentoDAOInterface departamentoDAO;
     @EJB
     FacultadDAOInterface facultadDAO;
+    @EJB
+    CarreraDAOInterface carreraDAO;
 
     //@Override
     public List<Facultad> consultarFacultadesRegistradas() {
@@ -81,6 +85,21 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoDepartamento(BigInteger departamento) {
+        try {
+            List<Carrera> lista = carreraDAO.consultarCarrerasPorDepartamento(departamento);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString());
             return null;
         }
     }

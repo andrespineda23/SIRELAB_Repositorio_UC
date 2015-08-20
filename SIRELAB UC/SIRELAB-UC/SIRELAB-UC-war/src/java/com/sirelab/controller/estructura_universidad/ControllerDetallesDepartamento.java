@@ -122,7 +122,7 @@ public class ControllerDetallesDepartamento implements Serializable {
                 }
             } else {
                 validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCodigo = false;
@@ -137,6 +137,21 @@ public class ControllerDetallesDepartamento implements Serializable {
             validacionesFacultad = false;
             FacesContext.getCurrentInstance().addMessage("form:editarFacultad", new FacesMessage("La facultad es obligatoria."));
         }
+    }
+
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        if (editarEstado == false) {
+            Boolean validar = gestionarDepartamentosBO.validarCambioEstadoDepartamento(departamentoDetalles.getIddepartamento());
+            if (null != validar) {
+                if (validar == true) {
+                    retorno = true;
+                } else {
+                    retorno = false;
+                }
+            }
+        }
+        return retorno;
     }
 
     private boolean validarResultadosValidacion() {
@@ -155,10 +170,15 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     public void registrarModificacionDepartamento() {
         if (validarResultadosValidacion() == true) {
-            almacenarModificacionDepartamentoEnSistema();
-            recibirIDDepartamentosDetalles(this.idDepartamento);
-            colorMensaje = "green";
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            if (validarCambioEstado() == true) {
+                almacenarModificacionDepartamentoEnSistema();
+                recibirIDDepartamentosDetalles(this.idDepartamento);
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            } else {
+                colorMensaje = "red";
+                mensajeFormulario = "Existen carreras asociadas. Imposible cambiar el estado del departamento.";
+            }
         } else {
             colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";

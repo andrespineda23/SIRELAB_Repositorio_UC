@@ -1,7 +1,9 @@
 package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarFacultadesBOInterface;
+import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
+import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import java.math.BigInteger;
 import java.util.List;
@@ -18,6 +20,8 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
 
     @EJB
     FacultadDAOInterface facultadDAO;
+    @EJB
+    DepartamentoDAOInterface departamentoDAO;
 
     @Override
     public List<Facultad> consultarFacultadesPorParametro(Map<String, String> filtros) {
@@ -58,7 +62,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             return null;
         }
     }
-    
+
     @Override
     public Facultad obtenerFacultadPorIDCodigo(String codigo) {
         try {
@@ -66,6 +70,21 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarFacultadBO obtenerFacultadPorIDCodigo : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoFacultad(BigInteger facultad) {
+        try {
+            List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarFacultadBO Override : " + e.toString());
             return null;
         }
     }

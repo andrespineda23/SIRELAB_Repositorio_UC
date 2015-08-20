@@ -25,4 +25,6 @@ public interface GestionarFacultadesBOInterface {
     public Facultad obtenerFacultadPorIDFacultad(BigInteger idFacultad);
 
     public Facultad obtenerFacultadPorIDCodigo(String codigo);
+
+    public Boolean validarCambioEstadoFacultad(BigInteger facultad);
 }

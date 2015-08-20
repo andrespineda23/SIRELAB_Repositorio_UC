@@ -132,6 +132,21 @@ public class ControllerDetallesSede implements Serializable {
         }
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        if (editarEstado == false) {
+            Boolean validacion = gestionarSedeBO.validarcambioEstadoSede(sedeDetalles.getIdsede());
+            if (null != validacion) {
+                if (validacion == true) {
+                    retorno = true;
+                } else {
+                    retorno = false;
+                }
+            }
+        }
+        return retorno;
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesDireccion == false) {
@@ -149,10 +164,15 @@ public class ControllerDetallesSede implements Serializable {
 
     public void registrarModificacionSede() {
         if (validarResultadosValidacion() == true) {
-            almacenarModificacionSedeEnSistema();
-            recibirIDSedesDetalles(this.idSede);
-            colorMensaje = "green";
-            mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            if (validarCambioEstado() == true) {
+                almacenarModificacionSedeEnSistema();
+                recibirIDSedesDetalles(this.idSede);
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+            } else {
+                colorMensaje = "red";
+                mensajeFormulario = "Existen edificios asociados. Imposible cambiar estado de sede.";
+            }
         } else {
             colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";

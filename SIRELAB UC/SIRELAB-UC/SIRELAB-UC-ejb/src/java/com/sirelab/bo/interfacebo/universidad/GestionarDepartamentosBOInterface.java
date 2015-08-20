@@ -29,4 +29,6 @@ public interface GestionarDepartamentosBOInterface {
     public Departamento obtenerDepartamentoPorCodigo(String codigo);
 
     public Departamento obtenerDepartamentoPorIDDepartamento(BigInteger idDepartamento);
+
+    public Boolean validarCambioEstadoDepartamento(BigInteger departamento);
 }

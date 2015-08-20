@@ -4,9 +4,11 @@ import com.sirelab.bo.interfacebo.universidad.GestionarCarrerasBOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
+import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.PlanEstudios;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,8 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
     DepartamentoDAOInterface departamentoDAO;
     @EJB
     CarreraDAOInterface carreraDAO;
+    @EJB
+    PlanEstudiosDAOInterface planEstudiosDAO;
 
     //@Override
     public List<Facultad> consultarFacultadesRegistradas() {
@@ -96,6 +100,21 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarCarrerasBO obtenerCarreraPorCodigoYDepartamento : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoCarrera(BigInteger carrera) {
+        try {
+            List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(carrera);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarCarrerasBO validarCambioEstadoCarrera : " + e.toString());
             return null;
         }
     }

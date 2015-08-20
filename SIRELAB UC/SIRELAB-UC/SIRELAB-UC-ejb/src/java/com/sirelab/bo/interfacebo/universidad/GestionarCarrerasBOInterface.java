@@ -31,4 +31,6 @@ public interface GestionarCarrerasBOInterface {
     public Carrera obtenerCarreraPorIDCarrera(BigInteger idCarrera);
 
     public Carrera obtenerCarreraPorCodigo(String codigo);
+
+    public Boolean validarCambioEstadoCarrera(BigInteger carrera);
 }

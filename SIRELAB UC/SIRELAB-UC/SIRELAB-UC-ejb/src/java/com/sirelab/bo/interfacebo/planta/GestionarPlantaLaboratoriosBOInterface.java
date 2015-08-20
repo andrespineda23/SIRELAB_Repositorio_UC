@@ -36,4 +36,7 @@ public interface GestionarPlantaLaboratoriosBOInterface {
     public Laboratorio obtenerLaboratorioPorCodigo(String codigo);
 
     public Departamento consultarDepartamentoPorNombre(String nombre);
+
+    public Boolean validarCambioEstadoLaboratorio(BigInteger laboratorio);
+
 }

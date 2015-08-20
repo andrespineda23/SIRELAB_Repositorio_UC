@@ -111,13 +111,12 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio."));
         }
     }
-
+    
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
             retorno = false;
         }
-
         if (validacionesNombre == false) {
             retorno = false;
         }
