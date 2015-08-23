@@ -48,6 +48,7 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesLaboratorioPorArea() {
     }
@@ -79,6 +80,7 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
         editarArea = laboratorioPorAreaDetalles.getAreaprofundizacion();
         editarDepartamento = laboratorioPorAreaDetalles.getLaboratorio().getDepartamento();
         editarLaboratorio = laboratorioPorAreaDetalles.getLaboratorio();
+        editarEstado = laboratorioPorAreaDetalles.getEstado();
         activarLaboratorio = false;
         listaAreasProfundizacion = gestionarPlantaLaboratoriosPorAreasBO.consultarAreasProfundizacionRegistradas();
         listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosRegistrados();
@@ -152,13 +154,33 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
         return retorno;
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        if (editarEstado == false) {
+            Boolean validacion = gestionarPlantaLaboratoriosPorAreasBO.validarCambioEstadoRegistro(laboratorioPorAreaDetalles.getIdlaboratoriosporareas());
+            if (null != validacion) {
+                if (validacion == true) {
+                    retorno = true;
+                } else {
+                    retorno = false;
+                }
+            }
+        }
+        return retorno;
+    }
+
     public void registrarModificarLaboratorioPorArea() {
         if (validarResultadosValidacion() == true) {
             if (Utilidades.validarNulo(editarLaboratorio)) {
                 if (validarRegistroRepetido() == true) {
-                    almacenarModificarLaboratorioPorAreaEnSistema();
-                    colorMensaje = "green";
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    if (validarCambioEstado() == true) {
+                        almacenarModificarLaboratorioPorAreaEnSistema();
+                        colorMensaje = "green";
+                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    } else {
+                        colorMensaje = "red";
+                        mensajeFormulario = "Existen salas de laboratorio asociadas. Imposible cambiar el estado.";
+                    }
                 } else {
                     colorMensaje = "red";
                     mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
@@ -177,6 +199,7 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
         try {
             laboratorioPorAreaDetalles.setAreaprofundizacion(editarArea);
             laboratorioPorAreaDetalles.setLaboratorio(editarLaboratorio);
+            laboratorioPorAreaDetalles.setEstado(editarEstado);
             gestionarPlantaLaboratoriosPorAreasBO.editarLaboratoriosPorAreas(laboratorioPorAreaDetalles);;
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificarLaboratorioPorAreaEnSistema:  " + e.toString());
@@ -272,6 +295,14 @@ public class ControllerDetallesLaboratorioPorArea implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
     }
 
 }

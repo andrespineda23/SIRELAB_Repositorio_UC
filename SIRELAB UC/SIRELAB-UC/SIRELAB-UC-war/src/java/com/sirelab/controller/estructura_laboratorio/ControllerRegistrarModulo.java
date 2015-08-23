@@ -316,6 +316,20 @@ public class ControllerRegistrarModulo implements Serializable {
         return retorno;
     }
 
+    private boolean validarCantidadModulosSala() {
+        boolean retorno = true;
+        int cantidadActual = gestionarPlantaModulosBO.validarCantidadModulosSala(nuevoSalaLaboratorioModulo.getIdsalalaboratorio());
+        if (cantidadActual != -1) {
+            int cantidadMax = nuevoSalaLaboratorioModulo.getCapacidadsala();
+            if (cantidadActual < cantidadMax) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+        }
+        return retorno;
+    }
+
     /**
      * Metodo encargado de realizar el registro y validaciones de la información
      * del nuevo docente
@@ -323,13 +337,18 @@ public class ControllerRegistrarModulo implements Serializable {
     public void registrarNuevoModulo() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenaNuevoModuloEnSistema();
-                limpiarFormulario();
-                activarLimpiar = false;
-                activarAceptar = true;
-                activarCasillas = true;
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarCantidadModulosSala() == true) {
+                    almacenaNuevoModuloEnSistema();
+                    limpiarFormulario();
+                    activarLimpiar = false;
+                    activarAceptar = true;
+                    activarCasillas = true;
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "La sala ya se encuentra llena. No es posible crear el modulo. Capacidad maxima (" + nuevoSalaLaboratorioModulo.getCapacidadsala() + ").";
+                }
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";

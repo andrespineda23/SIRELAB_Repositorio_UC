@@ -80,7 +80,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Carrera*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarPlanAsignatura.nuevoCarrera}"
-                                                     class="form-control" 
+                                                     class="form-control" disabled="#{controllerRegistrarPlanAsignatura.activarCasillas}"
                                                      id="nuevoCarrera">
                                         <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarPlanAsignatura.listaCarreras}" var="carrera"
@@ -106,7 +106,7 @@
                                 <div class="form-group">
                                     <strong><h:outputText value="Asignatura*"/></strong>
                                     <h:selectOneMenu value="#{controllerRegistrarPlanAsignatura.nuevoAsignatura}"
-                                                     class="form-control" 
+                                                     class="form-control"  disabled="#{controllerRegistrarPlanAsignatura.activarCasillas}"
                                                      id="nuevoAsignatura">
                                         <f:selectItem itemLabel="Seleccione Asignatura" itemValue="null" />
                                         <f:selectItems value="#{controllerRegistrarPlanAsignatura.listaAsignaturas}" var="carrera"

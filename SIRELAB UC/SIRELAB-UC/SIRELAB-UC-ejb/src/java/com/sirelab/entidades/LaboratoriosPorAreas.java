@@ -37,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LaboratoriosPorAreas.findByIdlaboratoriosporareas", query = "SELECT l FROM LaboratoriosPorAreas l WHERE l.idlaboratoriosporareas = :idlaboratoriosporareas")})
 public class LaboratoriosPorAreas implements Serializable {
 
+    @Column(name = "estado")
+    private Boolean estado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +56,8 @@ public class LaboratoriosPorAreas implements Serializable {
     private AreaProfundizacion areaprofundizacion;
     @Transient
     private String informacionRegistro;
+    @Transient
+    private String strEstado;
 
     public LaboratoriosPorAreas() {
     }
@@ -98,7 +103,7 @@ public class LaboratoriosPorAreas implements Serializable {
         getAreaprofundizacion();
         getLaboratorio();
         if (null != areaprofundizacion && null != laboratorio) {
-            informacionRegistro = laboratorio.getNombrelaboratorio()+ " - " + areaprofundizacion.getNombrearea();
+            informacionRegistro = laboratorio.getNombrelaboratorio() + " - " + areaprofundizacion.getNombrearea();
         } else {
             informacionRegistro = "";
         }
@@ -132,6 +137,30 @@ public class LaboratoriosPorAreas implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.LaboratoriosPorAreas[ idlaboratoriosporareas=" + idlaboratoriosporareas + " ]";
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (estado != null) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
 }

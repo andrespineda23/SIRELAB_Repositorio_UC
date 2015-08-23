@@ -151,6 +151,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         try {
             LaboratoriosPorAreas laboratorioNuevo = new LaboratoriosPorAreas();
             laboratorioNuevo.setAreaprofundizacion(nuevoArea);
+            laboratorioNuevo.setEstado(true);
             laboratorioNuevo.setLaboratorio(nuevoLaboratorio);
             gestionarPlantaLaboratoriosPorAreasBO.crearLaboratoriosPorAreas(laboratorioNuevo);
         } catch (Exception e) {

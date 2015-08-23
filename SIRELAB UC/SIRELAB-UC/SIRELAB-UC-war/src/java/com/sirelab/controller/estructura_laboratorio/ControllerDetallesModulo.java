@@ -370,13 +370,32 @@ public class ControllerDetallesModulo implements Serializable {
         return retorno;
     }
 
+    private boolean validarCantidadModulosSala() {
+        boolean retorno = true;
+        int cantidadActual = gestionarPlantaModulosBO.validarCantidadModulosSala(salaModuloLaboratorio.getIdsalalaboratorio());
+        if (cantidadActual != -1) {
+            int cantidadMax = salaModuloLaboratorio.getCapacidadsala();
+            if (cantidadActual < cantidadMax) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+        }
+        return retorno;
+    }
+
     public void almacenarModificacionesModulo() {
         if (modificacionRegistro == true) {
             if (validarResultadosValidacion() == true) {
                 if (validarCodigoRepetido() == true) {
-                    modificarInformacionModuloLaboratorio();
-                    colorMensaje = "green";
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    if (validarCantidadModulosSala() == true) {
+                        modificarInformacionModuloLaboratorio();
+                        colorMensaje = "green";
+                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    } else {
+                        colorMensaje = "red";
+                        mensajeFormulario = "La sala ya se encuentra llena. No es posible crear el modulo. Capacidad maxima (" + salaModuloLaboratorio.getCapacidadsala() + ").";
+                    }
                 } else {
                     colorMensaje = "red";
                     mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";

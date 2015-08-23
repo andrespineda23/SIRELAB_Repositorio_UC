@@ -99,7 +99,7 @@
                                 <h6><h:message id="msnCostoSala" for="costoSalaLaboratorio" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
-                                <strong><h:outputText value="Capacidad Maxima (Cantidad Usuarios)*"/></strong>
+                                <strong><h:outputText value="Capacidad Maxima (Cantidad Modulos)*"/></strong>
                                 <h:inputText maxlength="2"  value="#{controllerDetallesSala.capacidadSalaLaboratorio}" required="true" class="form-control" id="capacidadSalaLaboratorio" requiredMessage="El campo Capacidada es obligatorio." readonly="#{controllerDetallesSala.activarEditar}">
                                     <f:ajax event="blur" listener="#{controllerDetallesSala.validarCapacidadSala()}" execute="capacidadSalaLaboratorio" render="capacidadSalaLaboratorio msnCapacidadSala" />
                                 </h:inputText>

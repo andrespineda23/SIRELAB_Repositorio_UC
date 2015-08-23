@@ -59,6 +59,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
     private boolean perfilConsulta;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarLaboratoriosPorAreas() {
     }
@@ -67,6 +68,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
     public void init() {
         cantidadRegistros = "N/A";
         activarLaboratorio = true;
+        parametroEstado = 1;
         parametroDepartamento = new Departamento();
         parametroLaboratorio = new Laboratorio();
         listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosRegistrados();
@@ -119,6 +121,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         filtros.put("parametroDepartamento", null);
         filtros.put("parametroLaboratorio", null);
         filtros.put("parametroArea", null);
+        filtros.put("parametroEstado", null);
         agregarFiltrosAdicionales();
     }
 
@@ -136,6 +139,13 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         if (Utilidades.validarNulo(parametroArea)) {
             if (parametroArea.getIdareaprofundizacion() != null) {
                 filtros.put("parametroArea", parametroArea.getIdareaprofundizacion().toString());
+            }
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
             }
         }
     }
@@ -238,6 +248,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         listaLaboratorios = null;
         listaDepartamentos = null;
         listaAreasProfundizacion = null;
+        parametroEstado = 1;
 
         listaLaboratoriosPorAreas = null;
         listaLaboratoriosPorAreasTabla = null;
@@ -256,6 +267,7 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
         parametroArea = new AreaProfundizacion();
         parametroLaboratorio = new Laboratorio();
         inicializarFiltros();
+        parametroEstado = 1;
         listaLaboratorios = null;
         listaLaboratoriosPorAreas = null;
         listaLaboratoriosPorAreasTabla = null;
@@ -405,6 +417,14 @@ public class ControllerAdministrarLaboratoriosPorAreas implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

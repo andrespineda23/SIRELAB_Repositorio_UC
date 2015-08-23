@@ -49,6 +49,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
     private String paginaAnterior;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
+    private int parametroEstado;
 
     public ControllerAdministrarAreasProfundizacion() {
     }
@@ -58,6 +59,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
         cantidadRegistros = "N/A";
         activarExport = true;
         parametroNombre = null;
+        parametroEstado = 1;
         parametroCodigo = null;
         altoTabla = "150";
         inicializarFiltros();
@@ -76,17 +78,25 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
 
     private void inicializarFiltros() {
         filtros = new HashMap<String, String>();
+        filtros.put("parametroEstado", null);
         filtros.put("parametroNombre", null);
         filtros.put("parametroCodigo", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
+        }
+        if (1 == parametroEstado) {
+            filtros.put("parametroEstado", "true");
+        } else {
+            if (parametroEstado == 2) {
+                filtros.put("parametroEstado", "false");
+            }
         }
     }
 
@@ -187,6 +197,7 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
         listaAreasProfundizacion = null;
         listaAreasProfundizacionTabla = null;
         posicionAreaProfundizacionTabla = 0;
+        parametroEstado = 1;
         tamTotalAreaProfundizacion = 0;
         bloquearPagAntAreaProfundizacion = true;
         bloquearPagSigAreaProfundizacion = true;
@@ -291,6 +302,14 @@ public class ControllerAdministrarAreasProfundizacion implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public int getParametroEstado() {
+        return parametroEstado;
+    }
+
+    public void setParametroEstado(int parametroEstado) {
+        this.parametroEstado = parametroEstado;
     }
 
 }

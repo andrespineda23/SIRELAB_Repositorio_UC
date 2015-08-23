@@ -39,4 +39,6 @@ public interface GestionarPlantaLaboratoriosPorAreasBOInterface {
     public LaboratoriosPorAreas consultarLaboratorioPorAreaPorLabYArea(BigInteger laboratorio, BigInteger area);
 
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
+
+    public Boolean validarCambioEstadoRegistro(BigInteger laboratorioporarea);
 }

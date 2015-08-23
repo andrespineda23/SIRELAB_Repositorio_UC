@@ -142,6 +142,7 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
             AreaProfundizacion areaNuevo = new AreaProfundizacion();
             areaNuevo.setNombrearea(nuevoNombre);
             areaNuevo.setCodigoarea(nuevoCodigo);
+            areaNuevo.setEstado(true);
             gestionarRecursoAreaProfundizacionBO.crearNuevaAreaProfundizacion(areaNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAreaProfundizacion almacenarNuevoAreaProfundizacionEnSistema:  " + e.toString());

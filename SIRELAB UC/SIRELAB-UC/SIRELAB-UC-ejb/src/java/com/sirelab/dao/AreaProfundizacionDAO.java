@@ -158,6 +158,11 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
                                 .append(") Like :parametroCodigo");
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -178,6 +183,11 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
                         || ("parametroCodigo".equals(entry.getKey()))) {
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    //
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
+                }
+
             }
         }
         return tq;

@@ -71,7 +71,7 @@ public class ControllerRegistrarPlanAsignatura implements Serializable {
             nuevoPlan = null;
             listaPlanEstudios = gestionarPlanAsignaturaBO.obtenerPlanEstudiosPorCarrera(nuevoCarrera.getIdcarrera());
             activarPlan = false;
-            validacionesPlanEstudio = true;
+            validacionesCarrera = true;
         } else {
             validacionesCarrera = false;
             validacionesPlanEstudio = false;

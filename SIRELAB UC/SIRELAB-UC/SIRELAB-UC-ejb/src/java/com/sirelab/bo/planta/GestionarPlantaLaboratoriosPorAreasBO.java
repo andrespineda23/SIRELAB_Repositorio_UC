@@ -11,11 +11,13 @@ import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
+import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.LaboratoriosPorAreas;
+import com.sirelab.entidades.SalaLaboratorio;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,8 @@ public class GestionarPlantaLaboratoriosPorAreasBO implements GestionarPlantaLab
     AreaProfundizacionDAOInterface areaProfundizacionDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+    @EJB
+    SalaLaboratorioDAOInterface salaLaboratorioDAO;
 
     @Override
     public LaboratoriosPorAreas consultarLaboratorioPorAreaPorID(BigInteger idRegistro) {
@@ -141,6 +145,21 @@ public class GestionarPlantaLaboratoriosPorAreasBO implements GestionarPlantaLab
             laboratoriosPorAreasDAO.eliminarLaboratoriosPorAreas(registro);
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO eliminarLaboratoriosPorAreas : " + e.toString());
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoRegistro(BigInteger laboratorioporarea) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioArea(laboratorioporarea);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO validarCambioEstadoRegistro : " + e.toString());
+            return null;
         }
     }
 }

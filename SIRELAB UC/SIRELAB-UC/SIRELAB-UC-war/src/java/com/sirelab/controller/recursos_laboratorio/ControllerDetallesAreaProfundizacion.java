@@ -37,6 +37,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean editarEstado;
 
     public ControllerDetallesAreaProfundizacion() {
     }
@@ -63,6 +64,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
     public void asignarValoresVariablesAreaProfundizacion() {
         editarCodigo = areaProfundizacionDetalle.getCodigoarea();
         editarNombre = areaProfundizacionDetalle.getNombrearea();
+        editarEstado = areaProfundizacionDetalle.getEstado();
     }
 
     public void recibirIDAreasProfundizacionDetalles(BigInteger idArea) {
@@ -111,7 +113,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio."));
         }
     }
-    
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
@@ -134,13 +136,33 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
         return retorno;
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        if (editarEstado == false) {
+            Boolean validacion = gestionarRecursoAreaProfundizacionBO.validarCambioEstadoArea(areaProfundizacionDetalle.getIdareaprofundizacion());
+            if (null != validacion) {
+                if (validacion == true) {
+                    retorno = true;
+                } else {
+                    retorno = false;
+                }
+            }
+        }
+        return retorno;
+    }
+
     public void modificarInformacionAreaProfundizacion() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenarModificacionAreaProfundizacion();
-                recibirIDAreasProfundizacionDetalles(this.idAreaProfundizacion);
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarCambioEstado() == true) {
+                    almacenarModificacionAreaProfundizacion();
+                    recibirIDAreasProfundizacionDetalles(this.idAreaProfundizacion);
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "Existen asociaciones con laboratorios. Imposible cambiar el estado.";
+                }
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
@@ -201,6 +223,14 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
     }
 
 }

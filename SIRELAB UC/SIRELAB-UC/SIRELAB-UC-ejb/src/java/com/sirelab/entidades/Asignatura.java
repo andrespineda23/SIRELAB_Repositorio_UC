@@ -90,19 +90,19 @@ public class Asignatura implements Serializable {
     }
 
     public String getNombreasignatura() {
-        return nombreasignatura;
+        return nombreasignatura.toUpperCase();
     }
 
     public void setNombreasignatura(String nombreasignatura) {
-        this.nombreasignatura = nombreasignatura;
+        this.nombreasignatura = nombreasignatura.toUpperCase();
     }
 
     public String getCodigoasignatura() {
-        return codigoasignatura;
+        return codigoasignatura.toUpperCase();
     }
 
     public void setCodigoasignatura(String codigoasignatura) {
-        this.codigoasignatura = codigoasignatura;
+        this.codigoasignatura = codigoasignatura.toUpperCase();
     }
 
     public int getNumerocreditos() {

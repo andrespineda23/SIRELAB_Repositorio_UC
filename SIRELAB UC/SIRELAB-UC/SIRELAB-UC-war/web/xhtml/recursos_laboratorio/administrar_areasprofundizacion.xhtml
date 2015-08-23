@@ -71,7 +71,7 @@
                                     <div class="row col-md-12">
                                         <fieldset style="border: black;border-radius: 10px; color: black"> 
                                             <legend class="h5">I. Personal</legend>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="parametroNombre">
                                                         Nombre Area Profundización
@@ -79,12 +79,26 @@
                                                     <h:inputText maxlength="45" value="#{controllerAdministrarAreasProfundizacion.parametroNombre}" class="form-control" id="parametroNombre" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="parametroCodigo">
                                                         Codigo Area Profundización
                                                     </label>
                                                     <h:inputText maxlength="20" value="#{controllerAdministrarAreasProfundizacion.parametroCodigo}" class="form-control" id="parametroCodigo" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="parametroEstado">
+                                                        Estado Area Profundización
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarAreasProfundizacion.parametroEstado}"
+                                                                     class="form-control"
+                                                                     id="parametroEstado">
+                                                        <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                        <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                        <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                    </h:selectOneMenu>
                                                 </div>
                                             </div>
                                         </fieldset>

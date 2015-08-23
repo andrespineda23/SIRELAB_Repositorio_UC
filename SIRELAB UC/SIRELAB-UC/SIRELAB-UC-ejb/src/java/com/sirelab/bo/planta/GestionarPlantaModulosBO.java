@@ -244,4 +244,20 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             return null;
         }
     }
+
+    @Override
+    public int validarCantidadModulosSala(BigInteger sala) {
+        try {
+            List<ModuloLaboratorio> lista = moduloLaboratorioDAO.buscarModuloLaboratorioPorIDSalaLaboratorio(sala);
+            if (null != lista) {
+                int tam = lista.size();
+                return tam;
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO validarCantidadModulosSala : " + e.toString());
+            return -1;
+        }
+    }
 }

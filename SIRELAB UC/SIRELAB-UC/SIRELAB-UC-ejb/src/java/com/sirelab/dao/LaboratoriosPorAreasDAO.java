@@ -84,7 +84,7 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
             return null;
         }
     }
-    
+
     @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorArea(BigInteger area) {
         try {
@@ -176,6 +176,11 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
                 }
             }
         }
@@ -197,6 +202,10 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
                         || ("parametroLaboratorio".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
+                }
+                if ("parametroEstado".equals(entry.getKey())) {
+                    //
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
 
             }

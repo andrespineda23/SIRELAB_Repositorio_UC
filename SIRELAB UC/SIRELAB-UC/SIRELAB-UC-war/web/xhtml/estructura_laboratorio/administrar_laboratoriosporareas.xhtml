@@ -113,6 +113,25 @@
                                             </div>
                                         </fieldset>
                                     </div> 
+                                    <div class="row col-md-12">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="parametroEstado">
+                                                    Estado Registro
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerAdministrarLaboratoriosPorAreas.parametroEstado}"
+                                                                 class="form-control"
+                                                                 id="parametroEstado">
+                                                    <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                    <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                    <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            
+                                        </div>
+                                    </div>
                                 </fieldset>
                                 <br></br>
                                 <div class="col-md-12">
