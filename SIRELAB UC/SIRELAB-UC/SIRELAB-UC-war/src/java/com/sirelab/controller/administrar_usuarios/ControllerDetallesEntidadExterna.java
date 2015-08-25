@@ -40,13 +40,12 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     private boolean modificacionRegistro;
     private boolean disabledActivar, disabledInactivar;
     private boolean visibleGuardar;
-    private String nombreEntidadExterna, apellidoEntidadExterna, correoEntidadExterna, identificacionEntidadExterna;
+    private String nombreEntidadExterna, sectorEntidadExterna, correoEntidadExterna, correoOpcEntidadExterna, identificacionEntidadExterna;
     private String telefono1EntidadExterna, telefono2EntidadExterna, direccionEntidadExterna;
-    private String idUnicoEntidadExterna, nombreUnicoEntidadExterna, emailUnicoEntidadExterna;
     //
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
+    private boolean validacionesNombre, validacionesSector, validacionesCorreo, validacionesCorreoOpc;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
-    private boolean validacionesDireccion, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
+    private boolean validacionesDireccion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
@@ -58,15 +57,13 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     public void init() {
         colorMensaje = "black";
         validacionesNombre = true;
-        validacionesApellido = true;
+        validacionesSector = true;
         validacionesCorreo = true;
+        validacionesCorreoOpc = true;
         validacionesID = true;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesIDEntidad = true;
-        validacionesEmailEntidad = true;
-        validacionesNombreEntidad = true;
         mensajeFormulario = "N/A";
         //
         activarEditar = true;
@@ -87,16 +84,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
      * visualizado
      */
     public void asignarValoresVariablesEntidadExterna() {
-        idUnicoEntidadExterna = entidadExternaDetalles.getIdentificacionentidad();
         nombreEntidadExterna = entidadExternaDetalles.getPersona().getNombrespersona();
-        apellidoEntidadExterna = entidadExternaDetalles.getPersona().getApellidospersona();
+        sectorEntidadExterna = entidadExternaDetalles.getSector();
         correoEntidadExterna = entidadExternaDetalles.getPersona().getEmailpersona();
         identificacionEntidadExterna = entidadExternaDetalles.getPersona().getIdentificacionpersona();
         telefono1EntidadExterna = entidadExternaDetalles.getPersona().getTelefono1persona();
         telefono2EntidadExterna = entidadExternaDetalles.getPersona().getTelefono2persona();
         direccionEntidadExterna = entidadExternaDetalles.getPersona().getDireccionpersona();
-        nombreUnicoEntidadExterna = entidadExternaDetalles.getNombreentidad();
-        emailUnicoEntidadExterna = entidadExternaDetalles.getEmailentidad();
+        correoOpcEntidadExterna = entidadExternaDetalles.getPersona().getEmailsecundario();
     }
 
     /**
@@ -149,27 +144,30 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         modificacionRegistro = false;
         visibleGuardar = false;
         validacionesNombre = true;
-        validacionesApellido = true;
+        validacionesSector = true;
         validacionesCorreo = true;
         validacionesID = true;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesIDEntidad = true;
-        validacionesEmailEntidad = true;
-        validacionesNombreEntidad = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         return "administrar_entidadesxternas";
     }
 
     public void validarNombreEntidadExterna() {
-        if (Utilidades.validarNulo(nombreEntidadExterna) && (!nombreEntidadExterna.isEmpty())  && (nombreEntidadExterna.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(nombreEntidadExterna)) {
-                validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
+        if (Utilidades.validarNulo(nombreEntidadExterna) && (!nombreEntidadExterna.isEmpty()) && (nombreEntidadExterna.trim().length() > 0)) {
+            int tam = nombreEntidadExterna.length();
+            if (tam >= 2) {
+                if (!Utilidades.validarCaracterString(nombreEntidadExterna)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
             } else {
-                validacionesNombre = true;
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
             validacionesNombre = false;
@@ -178,38 +176,50 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         modificacionesRegistroEntidadExterna();
     }
 
-    public void validarApellidoEntidadExterna() {
-        if (Utilidades.validarNulo(apellidoEntidadExterna) && (!apellidoEntidadExterna.isEmpty())  && (apellidoEntidadExterna.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(apellidoEntidadExterna)) {
-                validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:apellidoEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
+    public void validarSectorEntidadExterna() {
+        if (Utilidades.validarNulo(sectorEntidadExterna) && (!sectorEntidadExterna.isEmpty()) && (sectorEntidadExterna.trim().length() > 0)) {
+            int tam = sectorEntidadExterna.length();
+            if (tam >= 2) {
+                if (!Utilidades.validarCaracterString(sectorEntidadExterna)) {
+                    validacionesSector = false;
+                    FacesContext.getCurrentInstance().addMessage("form:sectorEntidadExterna", new FacesMessage("El sector ingresado es incorrecto."));
+                } else {
+                    validacionesSector = true;
+                }
             } else {
-                validacionesApellido = true;
+                validacionesSector = false;
+                FacesContext.getCurrentInstance().addMessage("form:sectorEntidadExterna", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
-            validacionesApellido = false;
-            FacesContext.getCurrentInstance().addMessage("form:apellidoEntidadExterna", new FacesMessage("El nombre es obligatorio."));
+            validacionesSector = false;
+            FacesContext.getCurrentInstance().addMessage("form:sectorEntidadExterna", new FacesMessage("El nombre es obligatorio."));
         }
         modificacionesRegistroEntidadExterna();
     }
 
     public void validarCorreoEntidadExterna() {
-        if (Utilidades.validarNulo(correoEntidadExterna) && (!correoEntidadExterna.isEmpty())  && (correoEntidadExterna.trim().length() > 0)) {
-            if (Utilidades.validarCorreoElectronico(correoEntidadExterna)) {
-                EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorCorreo(correoEntidadExterna);
-                if (null == registro) {
-                    validacionesCorreo = true;
-                } else {
-                    if (!entidadExternaDetalles.getIdentidadexterna().equals(registro.getIdentidadexterna())) {
-                        validacionesCorreo = false;
-                        FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo ya se encuentra registrado."));
-                    } else {
+        if (Utilidades.validarNulo(correoEntidadExterna) && (!correoEntidadExterna.isEmpty()) && (correoEntidadExterna.trim().length() > 0)) {
+            int tam = correoEntidadExterna.length();
+            if (tam >= 15) {
+                if (Utilidades.validarCorreoElectronico(correoEntidadExterna)) {
+                    EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorCorreo(correoEntidadExterna);
+                    if (null == registro) {
                         validacionesCorreo = true;
+                    } else {
+                        if (!entidadExternaDetalles.getIdentidadexterna().equals(registro.getIdentidadexterna())) {
+                            validacionesCorreo = false;
+                            FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo ya se encuentra registrado."));
+                        } else {
+                            validacionesCorreo = true;
+                        }
                     }
+                } else {
+                    validacionesCorreo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo se encuentra incorrecto."));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
             }
         } else {
             validacionesCorreo = false;
@@ -218,23 +228,47 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         modificacionesRegistroEntidadExterna();
     }
 
-    public void validarIdentificacionEntidadExterna() {
-        if (Utilidades.validarNulo(identificacionEntidadExterna) && (!identificacionEntidadExterna.isEmpty())  && (identificacionEntidadExterna.trim().length() > 0)) {
-            if (Utilidades.validarNumeroIdentificacion(identificacionEntidadExterna)) {
-                EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorDocumento(identificacionEntidadExterna);
-                if (null == registro) {
-                    validacionesID = true;
+    public void validarCorreoOpcEntidadExterna() {
+        if (Utilidades.validarNulo(correoOpcEntidadExterna) && (!correoOpcEntidadExterna.isEmpty()) && (correoOpcEntidadExterna.trim().length() > 0)) {
+            int tam = correoOpcEntidadExterna.length();
+            if (tam >= 15) {
+                if (Utilidades.validarCorreoElectronico(correoOpcEntidadExterna)) {
+                    validacionesCorreoOpc = true;
                 } else {
-                    if (!entidadExternaDetalles.getIdentidadexterna().equals(registro.getIdentidadexterna())) {
-                        validacionesID = false;
-                        FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El documento ya se encuentra registrado."));
-                    } else {
+                    validacionesCorreoOpc = false;
+                    FacesContext.getCurrentInstance().addMessage("form:correoOpcEntidadExterna", new FacesMessage("El correo se encuentra incorrecto."));
+                }
+            } else {
+                validacionesCorreoOpc = false;
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcEntidadExterna", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
+            }
+        }
+        modificacionesRegistroEntidadExterna();
+    }
+
+    public void validarIdentificacionEntidadExterna() {
+        if (Utilidades.validarNulo(identificacionEntidadExterna) && (!identificacionEntidadExterna.isEmpty()) && (identificacionEntidadExterna.trim().length() > 0)) {
+            int tam = identificacionEntidadExterna.length();
+            if (tam >= 8) {
+                if (Utilidades.validarNumeroIdentificacion(identificacionEntidadExterna)) {
+                    EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorDocumento(identificacionEntidadExterna);
+                    if (null == registro) {
                         validacionesID = true;
+                    } else {
+                        if (!entidadExternaDetalles.getIdentidadexterna().equals(registro.getIdentidadexterna())) {
+                            validacionesID = false;
+                            FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El documento ya se encuentra registrado."));
+                        } else {
+                            validacionesID = true;
+                        }
                     }
+                } else {
+                    validacionesID = false;
+                    FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El numero identificación se encuentra incorrecto."));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El numero identificación se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
             }
         } else {
             validacionesID = false;
@@ -245,21 +279,33 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     public void validarDatosNumericosEntidadExterna(int tipoTel) {
         if (tipoTel == 1) {
-            if (Utilidades.validarNulo(telefono1EntidadExterna) && (!telefono1EntidadExterna.isEmpty())  && (telefono1EntidadExterna.trim().length() > 0)) {
-                if ((Utilidades.isNumber(telefono1EntidadExterna)) == false) {
+            if (Utilidades.validarNulo(telefono1EntidadExterna) && (!telefono1EntidadExterna.isEmpty()) && (telefono1EntidadExterna.trim().length() > 0)) {
+                int tam = telefono1EntidadExterna.length();
+                if (tam == 7) {
+                    if ((Utilidades.isNumber(telefono1EntidadExterna)) == false) {
+                        validacionesTel1 = false;
+                        FacesContext.getCurrentInstance().addMessage("form:telefono1EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    } else {
+                        validacionesTel1 = true;
+                    }
+                } else {
                     validacionesTel1 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono1EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
-                } else {
-                    validacionesTel1 = true;
                 }
             }
         } else {
-            if (Utilidades.validarNulo(telefono2EntidadExterna) && (!telefono2EntidadExterna.isEmpty())  && (telefono2EntidadExterna.trim().length() > 0)) {
-                if ((Utilidades.isNumber(telefono2EntidadExterna)) == false) {
+            if (Utilidades.validarNulo(telefono2EntidadExterna) && (!telefono2EntidadExterna.isEmpty()) && (telefono2EntidadExterna.trim().length() > 0)) {
+                int tam = telefono2EntidadExterna.length();
+                if (tam == 10) {
+                    if ((Utilidades.isNumber(telefono2EntidadExterna)) == false) {
+                        validacionesTel2 = false;
+                        FacesContext.getCurrentInstance().addMessage("form:telefono2EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    } else {
+                        validacionesTel2 = true;
+                    }
+                } else {
                     validacionesTel2 = false;
                     FacesContext.getCurrentInstance().addMessage("form:telefono2EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
-                } else {
-                    validacionesTel2 = true;
                 }
             }
         }
@@ -267,59 +313,18 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     }
 
     public void validarDireccionEntidadExterna() {
-        if ((Utilidades.validarNulo(direccionEntidadExterna)) && (!direccionEntidadExterna.isEmpty())  && (direccionEntidadExterna.trim().length() > 0)) {
-            if (Utilidades.validarDirecciones(direccionEntidadExterna)) {
-                validacionesDireccion = true;
+        if ((Utilidades.validarNulo(direccionEntidadExterna)) && (!direccionEntidadExterna.isEmpty()) && (direccionEntidadExterna.trim().length() > 0)) {
+            int tam = direccionEntidadExterna.length();
+            if (tam >= 8) {
+                if (Utilidades.validarDirecciones(direccionEntidadExterna)) {
+                    validacionesDireccion = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("La dirección se encuentra incorrecta."));
+                    validacionesDireccion = false;
+                }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("La dirección se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
                 validacionesDireccion = false;
-            }
-        }
-        modificacionesRegistroEntidadExterna();
-    }
-
-    public void validarDatosEntidadExterna(int tipo) {
-        if (tipo == 1) {
-            if (Utilidades.validarNulo(idUnicoEntidadExterna) && (!idUnicoEntidadExterna.isEmpty())  && (idUnicoEntidadExterna.trim().length() > 0)) {
-                if (Utilidades.validarCaracteresAlfaNumericos(idUnicoEntidadExterna)) {
-                    EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorIdentificacion(idUnicoEntidadExterna);
-                    if (null == registro) {
-                        validacionesIDEntidad = true;
-                    } else {
-                        if (!entidadExternaDetalles.getIdentidadexterna().equals(registro.getIdentidadexterna())) {
-                            validacionesIDEntidad = false;
-                            FacesContext.getCurrentInstance().addMessage("form:idUnicoEntidadExterna", new FacesMessage("El documento ya se encuentra registrado."));
-                        } else {
-                            validacionesIDEntidad = true;
-                        }
-                    }
-                } else {
-                    validacionesIDEntidad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:idUnicoEntidadExterna", new FacesMessage("El numero identificación se encuentra incorrecto."));
-                }
-            } else {
-                validacionesIDEntidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:idUnicoEntidadExterna", new FacesMessage("El numero identificación es obligatorio."));
-            }
-        }
-        if (tipo == 2) {
-            if (Utilidades.validarNulo(nombreUnicoEntidadExterna) && (!nombreUnicoEntidadExterna.isEmpty())  && (nombreUnicoEntidadExterna.trim().length() > 0)) {
-                if (!Utilidades.validarCaracterString(nombreUnicoEntidadExterna)) {
-                    validacionesNombreEntidad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreUnicoEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
-                } else {
-                    validacionesNombreEntidad = true;
-                }
-            }
-        }
-        if (tipo == 3) {
-            if (Utilidades.validarNulo(emailUnicoEntidadExterna) && (!emailUnicoEntidadExterna.isEmpty())  && (emailUnicoEntidadExterna.trim().length() > 0)) {
-                if (Utilidades.validarCorreoElectronico(emailUnicoEntidadExterna)) {
-                    validacionesEmailEntidad = true;
-                } else {
-                    validacionesEmailEntidad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:emailUnicoEntidadExterna", new FacesMessage("El correo se encuentra incorrecto."));
-                }
             }
         }
         modificacionesRegistroEntidadExterna();
@@ -327,13 +332,13 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
-        if (validacionesApellido == false) {
-            retorno = false;
-        }
-        if (validacionesEmailEntidad == false) {
+        if (validacionesSector == false) {
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            retorno = false;
+        }
+        if (validacionesCorreoOpc == false) {
             retorno = false;
         }
         if (validacionesDireccion == false) {
@@ -343,12 +348,6 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             retorno = false;
         }
         if (validacionesNombre == false) {
-            retorno = false;
-        }
-        if (validacionesIDEntidad == false) {
-            retorno = false;
-        }
-        if (validacionesNombreEntidad == false) {
             retorno = false;
         }
         if (validacionesTel1 == false) {
@@ -386,16 +385,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
      */
     public void modificarInformacionEntidadExterna() {
         try {
-            entidadExternaDetalles.getPersona().setApellidospersona(apellidoEntidadExterna);
+            entidadExternaDetalles.getPersona().setApellidospersona(nombreEntidadExterna);
             entidadExternaDetalles.getPersona().setDireccionpersona(direccionEntidadExterna);
             entidadExternaDetalles.getPersona().setEmailpersona(correoEntidadExterna);
             entidadExternaDetalles.getPersona().setIdentificacionpersona(identificacionEntidadExterna);
             entidadExternaDetalles.getPersona().setNombrespersona(nombreEntidadExterna);
             entidadExternaDetalles.getPersona().setTelefono1persona(telefono1EntidadExterna);
             entidadExternaDetalles.getPersona().setTelefono2persona(telefono2EntidadExterna);
-            entidadExternaDetalles.setNombreentidad(nombreUnicoEntidadExterna);
-            entidadExternaDetalles.setEmailentidad(emailUnicoEntidadExterna);
-            entidadExternaDetalles.setIdentificacionentidad(idUnicoEntidadExterna);
+            entidadExternaDetalles.setSector(sectorEntidadExterna);
             administrarEntidadesExternasBO.actualizarInformacionPersona(entidadExternaDetalles.getPersona());
             administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
             restaurarInformacionEntidadExterna();
@@ -414,18 +411,30 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         }
     }
 
+    private boolean validarCambioEstado() {
+        boolean retorno = true;
+        Boolean validacion = administrarEntidadesExternasBO.validarCambioEstadoEntidad(entidadExternaDetalles.getIdentidadexterna());
+        if (null != validacion) {
+            if (validacion == true) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+        }
+        return retorno;
+    }
+
     /**
      * Metodo encargado de activar la entidad externa
      */
     public void activarEntidadExterna() {
         try {
             if (modificacionRegistro == false) {
-                Boolean bool = new Boolean(true);
-                entidadExternaDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
+                entidadExternaDetalles.setEstado(true);
+                administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
                 restaurarInformacionEntidadExterna();
                 colorMensaje = "green";
-                mensajeFormulario = "Se ha activado la entidad/convenio.";
+                mensajeFormulario = "Se ha activado la entidad externa.";
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
@@ -442,13 +451,17 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     public void inactivarEntidadExterna() {
         try {
             if (modificacionRegistro == false) {
-                Boolean bool = new Boolean(false);
-                entidadExternaDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
-                entidadExternaDetalles = new EntidadExterna();
-                restaurarInformacionEntidadExterna();
-                colorMensaje = "green";
-                mensajeFormulario = "Se ha inactivado la entidad/convenio.";
+                if (validarCambioEstado() == true) {
+                    entidadExternaDetalles.setEstado(false);
+                    administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
+                    entidadExternaDetalles = new EntidadExterna();
+                    restaurarInformacionEntidadExterna();
+                    colorMensaje = "green";
+                    mensajeFormulario = "Se ha inactivado la entidad externa.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "Existen convenios asociados. Imposible cambiar de estado.";
+                }
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
@@ -532,14 +545,6 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         this.nombreEntidadExterna = nombreEntidadExterna;
     }
 
-    public String getApellidoEntidadExterna() {
-        return apellidoEntidadExterna;
-    }
-
-    public void setApellidoEntidadExterna(String apellidoEntidadExterna) {
-        this.apellidoEntidadExterna = apellidoEntidadExterna;
-    }
-
     public String getCorreoEntidadExterna() {
         return correoEntidadExterna;
     }
@@ -580,30 +585,6 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         this.direccionEntidadExterna = direccionEntidadExterna;
     }
 
-    public String getIdUnicoEntidadExterna() {
-        return idUnicoEntidadExterna;
-    }
-
-    public void setIdUnicoEntidadExterna(String idUnicoEntidadExterna) {
-        this.idUnicoEntidadExterna = idUnicoEntidadExterna;
-    }
-
-    public String getNombreUnicoEntidadExterna() {
-        return nombreUnicoEntidadExterna;
-    }
-
-    public void setNombreUnicoEntidadExterna(String nombreUnicoEntidadExterna) {
-        this.nombreUnicoEntidadExterna = nombreUnicoEntidadExterna;
-    }
-
-    public String getEmailUnicoEntidadExterna() {
-        return emailUnicoEntidadExterna;
-    }
-
-    public void setEmailUnicoEntidadExterna(String emailUnicoEntidadExterna) {
-        this.emailUnicoEntidadExterna = emailUnicoEntidadExterna;
-    }
-
     public String getMensajeFormulario() {
         return mensajeFormulario;
     }
@@ -620,4 +601,19 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         this.colorMensaje = colorMensaje;
     }
 
+    public String getSectorEntidadExterna() {
+        return sectorEntidadExterna;
+    }
+
+    public void setSectorEntidadExterna(String sectorEntidadExterna) {
+        this.sectorEntidadExterna = sectorEntidadExterna;
+    }
+
+    public String getCorreoOpcEntidadExterna() {
+        return correoOpcEntidadExterna;
+    }
+
+    public void setCorreoOpcEntidadExterna(String correoOpcEntidadExterna) {
+        this.correoOpcEntidadExterna = correoOpcEntidadExterna;
+    }
 }

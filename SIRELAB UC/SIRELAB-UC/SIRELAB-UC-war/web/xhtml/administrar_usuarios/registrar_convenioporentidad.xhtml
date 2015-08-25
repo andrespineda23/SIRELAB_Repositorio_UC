@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a><p class="navbar-text pull-left ">
+                                    Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                </p>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Administrar Entidades Externas</a></li>
+                        <li><a href="#">Administrar Convenios con Entidades Externas</a></li>
+                        <li class="active">Registrar Nuevo Registro</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="row col-md-12">
+                            <h2 class="info">
+                                Información Registro
+                            </h2>
+                            <p>
+                                Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                            </p>
+                            <p>
+                                Este registro es unicamente para generar asociaciones entre convenios y entidades externas.
+                            </p>
+                        </div>
+
+                        <div class="col-md-12 row">
+                            <fieldset>
+                                <legend class="text-info">Datos Basicos</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Entidad Externa*"/></strong>
+                                    <h:selectOneMenu value="#{controllerRegistrarConvenioPorEntidad.inputEntidadExterna}"
+                                                     class="form-control" disabled="#{controllerRegistrarConvenioPorEntidad.activarCasillas}"
+                                                     id="inputEntidadExterna">
+                                        <f:selectItem itemLabel="Seleccione Entidad Externa" itemValue="null" />
+                                        <f:selectItems value="#{controllerRegistrarConvenioPorEntidad.listaEntidadesExternas}" var="entidad"
+                                                       itemLabel="#{entidad.persona.nombrespersona}" itemValue="#{entidad}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerRegistrarConvenioPorEntidad.validarEntidadExterna()}" execute="inputEntidadExterna" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Convenio*"/></strong>
+                                    <h:selectOneMenu value="#{controllerRegistrarConvenioPorEntidad.inputConvenio}"
+                                                     class="form-control" disabled="#{controllerRegistrarConvenioPorEntidad.activarCasillas}"
+                                                     id="inputConvenio">
+                                        <f:selectItem itemLabel="Seleccione Convenio" itemValue="null" />
+                                        <f:selectItems value="#{controllerRegistrarConvenioPorEntidad.listaConvenios}" var="convenio"
+                                                       itemLabel="#{convenio.nombreconvenio}" itemValue="#{convenio}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerRegistrarConvenioPorEntidad.validarConvenio()}" execute="inputConvenio" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </fieldset>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarConvenioPorEntidad.mensajeFormulario}" style="color: #{controllerRegistrarConvenioPorEntidad.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
+                            </div>
+                            <hr class="intro-divider"/>
+                            <div class="right pull-right">
+                                <h:commandButton value="Registrar" disabled="#{controllerRegistrarConvenioPorEntidad.activarAceptar}" actionListener="#{controllerRegistrarConvenioPorEntidad.registrarNuevoConvenioPorEntidad()}" class="btn btn-success" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="administrar_convenioporentidad" actionListener="#{controllerRegistrarConvenioPorEntidad.cancelarRegistroConvenioPorEntidad()}" immediate="true">
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                                <span></span>
+                                <span></span>
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarConvenioPorEntidad.activarLimpiar}" actionListener="#{controllerRegistrarConvenioPorEntidad.cambiarActivarCasillas()}" >
+                                    <f:ajax execute="@form" render="form" />
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted small">Copyright; Your Company 2014. All Rights Reserved</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="right">
+                                <img alt="300x400" class="img-responsive img-rounded" src="../../img/logo_sirelab.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- jQuery -->
+            <script src="../../recursos/js/jquery.js"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="../../recursos/js/bootstrap.min.js"></script>
+        </h:form>
+    </h:body>
+</html>

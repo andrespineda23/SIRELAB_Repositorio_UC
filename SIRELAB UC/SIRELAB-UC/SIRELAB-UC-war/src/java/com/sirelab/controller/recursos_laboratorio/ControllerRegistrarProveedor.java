@@ -115,7 +115,7 @@ public class ControllerRegistrarProveedor implements Serializable {
 
     public void validarTelefonoProveedor() {
         if (Utilidades.validarNulo(nuevoTelefono) && (!nuevoTelefono.isEmpty()) && (nuevoTelefono.trim().length() > 0)) {
-            if ((Utilidades.isNumber(nuevoTelefono)) == false) {
+            if ((Utilidades.validarCaracteresAlfaNumericos(nuevoTelefono)) == false) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono", new FacesMessage("El numero telefonico se encuentra incorrecto."));
             } else {
@@ -164,7 +164,7 @@ public class ControllerRegistrarProveedor implements Serializable {
             if (Utilidades.validarNulo(nuevoTelVendedor) && (!nuevoTelVendedor.isEmpty()) && (nuevoTelVendedor.trim().length() > 0)) {
                 int tam = nuevoTelVendedor.length();
                 if (tam >= 7) {
-                    if (Utilidades.isNumber(nuevoTelVendedor)) {
+                    if (Utilidades.validarCaracteresAlfaNumericos(nuevoTelVendedor)) {
                         validacionesTelVendedor = true;
                     } else {
                         validacionesTelVendedor = false;

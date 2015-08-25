@@ -39,13 +39,12 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     AdministrarEntidadesExternasBOInterface administrarEntidadesExternasBO;
     //
 
-    private String inputNombre, inputApellido, inputID, inputEmail, inputTelefono1, inputTelefono2, inputDireccion;
-    private String inputIDEntidad, inputNombreEntidad, inputEmailEntidad;
+    private String inputNombre, inputSector, inputID, inputEmail, inputTelefono1, inputTelefono2, inputDireccion, inputEmailOpc;
     private String paginaAnterior;
     //
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
+    private boolean validacionesNombre, validacionesSector, validacionesCorreo, validacionesCorreoOpc;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
-    private boolean validacionesDireccion, validacionesIDEntidad, validacionesNombreEntidad, validacionesEmailEntidad;
+    private boolean validacionesDireccion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -64,24 +63,19 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         validacionesNombre = false;
-        validacionesApellido = false;
+        validacionesSector = false;
         validacionesCorreo = false;
         validacionesID = false;
         validacionesTel1 = true;
+        validacionesCorreoOpc = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesIDEntidad = false;
-        validacionesEmailEntidad = false;
-        validacionesNombreEntidad = false;
         //
-        inputNombreEntidad = null;
-        inputEmailEntidad = null;
-        inputApellido = null;
+        inputSector = null;
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
-        inputIDEntidad = null;
         BasicConfigurator.configure();
     }
 
@@ -106,30 +100,30 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     }
 
-    public void validarApellidoEntidadExterna() {
-        if (Utilidades.validarNulo(inputApellido) && (!inputApellido.isEmpty()) && (inputApellido.trim().length() > 0)) {
-            int tam = inputApellido.length();
+    public void validarSectorEntidadExterna() {
+        if (Utilidades.validarNulo(inputSector) && (!inputSector.isEmpty()) && (inputSector.trim().length() > 0)) {
+            int tam = inputSector.length();
             if (tam >= 2) {
-                if (!Utilidades.validarCaracterString(inputApellido)) {
-                    validacionesApellido = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputApellido", new FacesMessage("El nombre ingresado es incorrecto."));
+                if (!Utilidades.validarCaracterString(inputSector)) {
+                    validacionesSector = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputSector", new FacesMessage("El sector ingresado es incorrecto."));
                 } else {
-                    validacionesApellido = true;
+                    validacionesSector = true;
                 }
             } else {
-                validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputApellido", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                validacionesSector = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputSector", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
             }
         } else {
-            validacionesApellido = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputApellido", new FacesMessage("El nombre es obligatorio."));
+            validacionesSector = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputSector", new FacesMessage("El sector es obligatorio."));
         }
     }
 
     public void validarCorreoEntidadExterna() {
         if (Utilidades.validarNulo(inputEmail) && (!inputEmail.isEmpty()) && (inputEmail.trim().length() > 0)) {
             int tam = inputEmail.length();
-            if (tam >= 4) {
+            if (tam >= 15) {
                 if (Utilidades.validarCorreoElectronico(inputEmail)) {
                     EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorCorreo(inputEmail);
                     if (null == registro) {
@@ -144,11 +138,28 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
             }
         } else {
             validacionesCorreo = false;
             FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El correo es obligatorio."));
+        }
+    }
+
+    public void validarCorreoOpcEntidadExterna() {
+        if (Utilidades.validarNulo(inputEmailOpc) && (!inputEmailOpc.isEmpty()) && (inputEmailOpc.trim().length() > 0)) {
+            int tam = inputEmailOpc.length();
+            if (tam >= 15) {
+                if (Utilidades.validarCorreoElectronico(inputEmailOpc)) {
+                    validacionesCorreo = true;
+                } else {
+                    validacionesCorreo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El correo se encuentra incorrecto."));
+                }
+            } else {
+                validacionesCorreo = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
+            }
         }
     }
 
@@ -229,54 +240,12 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         }
     }
 
-    public void validarDatosEntidadExterna(int tipo) {
-        if (tipo == 1) {
-            if (Utilidades.validarNulo(inputIDEntidad) && (!inputIDEntidad.isEmpty()) && (inputIDEntidad.trim().length() > 0)) {
-                if (Utilidades.validarCaracteresAlfaNumericos(inputIDEntidad)) {
-                    EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorIdentificacion(inputIDEntidad);
-                    if (null == registro) {
-                        validacionesIDEntidad = true;
-                    } else {
-                        validacionesIDEntidad = false;
-                        FacesContext.getCurrentInstance().addMessage("form:inputIDEntidad", new FacesMessage("El documento ya se encuentra registrado."));
-                    }
-                } else {
-                    validacionesIDEntidad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputIDEntidad", new FacesMessage("El numero identificación se encuentra incorrecto."));
-                }
-            } else {
-                validacionesIDEntidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputIDEntidad", new FacesMessage("El numero identificación es obligatorio."));
-            }
-        }
-        if (tipo == 2) {
-            if (Utilidades.validarNulo(inputNombreEntidad) && (!inputNombreEntidad.isEmpty()) && (inputNombreEntidad.trim().length() > 0)) {
-                if (!Utilidades.validarCaracterString(inputNombreEntidad)) {
-                    validacionesNombreEntidad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputNombreEntidad", new FacesMessage("El nombre ingresado es incorrecto."));
-                } else {
-                    validacionesNombreEntidad = true;
-                }
-            }
-        }
-        if (tipo == 3) {
-            if (Utilidades.validarNulo(inputEmailEntidad) && (!inputEmailEntidad.isEmpty()) && (inputEmailEntidad.trim().length() > 0)) {
-                if (Utilidades.validarCorreoElectronico(inputEmailEntidad)) {
-                    validacionesEmailEntidad = true;
-                } else {
-                    validacionesEmailEntidad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputEmailEntidad", new FacesMessage("El correo se encuentra incorrecto."));
-                }
-            }
-        }
-    }
-
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
-        if (validacionesApellido == false) {
+        if (validacionesSector == false) {
             retorno = false;
         }
-        if (validacionesEmailEntidad == false) {
+        if (validacionesCorreoOpc == false) {
             retorno = false;
         }
         if (validacionesCorreo == false) {
@@ -289,13 +258,6 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             retorno = false;
         }
         if (validacionesNombre == false) {
-            retorno = false;
-        }
-
-        if (validacionesIDEntidad == false) {
-            retorno = false;
-        }
-        if (validacionesNombreEntidad == false) {
             retorno = false;
         }
         if (validacionesTel1 == false) {
@@ -330,26 +292,22 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void limpiarFormulario() {
         validacionesNombre = false;
-        validacionesApellido = false;
+        validacionesSector = false;
         validacionesCorreo = false;
         validacionesID = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
+        validacionesCorreoOpc = true;
         validacionesDireccion = true;
-        validacionesIDEntidad = false;
-        validacionesEmailEntidad = false;
-        validacionesNombreEntidad = false;
         mensajeFormulario = "";
-        inputApellido = null;
+        inputSector = null;
         inputDireccion = null;
+        inputEmailOpc = null;
         inputTelefono1 = null;
         inputTelefono2 = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
-        inputIDEntidad = null;
-        inputNombreEntidad = null;
-        inputEmailEntidad = null;
     }
 
     /**
@@ -362,26 +320,22 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         validacionesNombre = false;
-        validacionesApellido = false;
+        validacionesSector = false;
         validacionesCorreo = false;
         validacionesID = false;
         validacionesTel1 = true;
+        validacionesCorreoOpc = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesIDEntidad = false;
-        validacionesEmailEntidad = false;
-        validacionesNombreEntidad = false;
         mensajeFormulario = "";
-        inputApellido = null;
+        inputSector = null;
         inputDireccion = null;
         inputTelefono1 = null;
+        inputEmailOpc = null;
         inputTelefono2 = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
-        inputIDEntidad = null;
-        inputNombreEntidad = null;
-        inputEmailEntidad = null;
     }
 
     /**
@@ -398,11 +352,11 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             EncriptarContrasenia obj = new EncriptarContrasenia();
             usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
             Persona personaNueva = new Persona();
-            personaNueva.setApellidospersona(inputApellido);
             personaNueva.setEmailpersona(inputEmail);
-            personaNueva.setEmailsecundario(inputEmail);
+            personaNueva.setEmailsecundario(inputEmailOpc);
             personaNueva.setIdentificacionpersona(inputID);
             personaNueva.setNombrespersona(inputNombre);
+            personaNueva.setApellidospersona(inputNombre);
             if ((Utilidades.validarNulo(inputTelefono1)) && (!inputTelefono1.isEmpty()) && (inputTelefono1.trim().length() > 0)) {
                 personaNueva.setTelefono1persona(inputTelefono1);
             } else {
@@ -419,17 +373,8 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
                 personaNueva.setDireccionpersona("");
             }
             EntidadExterna entidadexternaNueva = new EntidadExterna();
-            if ((Utilidades.validarNulo(inputEmailEntidad)) && (!inputEmailEntidad.isEmpty()) && (inputEmailEntidad.trim().length() > 0)) {
-                entidadexternaNueva.setEmailentidad(inputEmailEntidad);
-            } else {
-                entidadexternaNueva.setEmailentidad("");
-            }
-            entidadexternaNueva.setIdentificacionentidad(inputIDEntidad);
-            if ((Utilidades.validarNulo(inputNombreEntidad)) && (!inputNombreEntidad.isEmpty()) && (inputNombreEntidad.trim().length() > 0)) {
-                entidadexternaNueva.setNombreentidad(inputNombreEntidad);
-            } else {
-                entidadexternaNueva.setNombreentidad("");
-            }
+            entidadexternaNueva.setEstado(true);
+            entidadexternaNueva.setSector(inputSector);
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(usuarioNuevo, personaNueva, entidadexternaNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString());
@@ -468,12 +413,12 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         this.inputNombre = inputNombre;
     }
 
-    public String getInputApellido() {
-        return inputApellido;
+    public String getInputSector() {
+        return inputSector;
     }
 
-    public void setInputApellido(String inputApellido) {
-        this.inputApellido = inputApellido;
+    public void setInputSector(String inputSector) {
+        this.inputSector = inputSector;
     }
 
     public String getInputID() {
@@ -514,30 +459,6 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     public void setInputDireccion(String inputDireccion) {
         this.inputDireccion = inputDireccion;
-    }
-
-    public String getInputIDEntidad() {
-        return inputIDEntidad;
-    }
-
-    public void setInputIDEntidad(String inputIDEntidad) {
-        this.inputIDEntidad = inputIDEntidad;
-    }
-
-    public String getInputNombreEntidad() {
-        return inputNombreEntidad;
-    }
-
-    public void setInputNombreEntidad(String inputNombreEntidad) {
-        this.inputNombreEntidad = inputNombreEntidad;
-    }
-
-    public String getInputEmailEntidad() {
-        return inputEmailEntidad;
-    }
-
-    public void setInputEmailEntidad(String inputEmailEntidad) {
-        this.inputEmailEntidad = inputEmailEntidad;
     }
 
     public String getPaginaAnterior() {
@@ -588,4 +509,13 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         this.activarAceptar = activarAceptar;
     }
 
+    public String getInputEmailOpc() {
+        return inputEmailOpc;
+    }
+
+    public void setInputEmailOpc(String inputEmailOpc) {
+        this.inputEmailOpc = inputEmailOpc;
+    }
+
+    
 }

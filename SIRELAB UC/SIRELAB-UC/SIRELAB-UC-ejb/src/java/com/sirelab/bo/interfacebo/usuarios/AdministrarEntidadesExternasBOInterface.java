@@ -33,4 +33,6 @@ public interface AdministrarEntidadesExternasBOInterface {
 
     public EntidadExterna obtenerEntidadExternaPorCorreo(String correo);
 
+    public Boolean validarCambioEstadoEntidad(BigInteger entidad);
+
 }

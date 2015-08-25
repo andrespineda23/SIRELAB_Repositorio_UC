@@ -72,6 +72,14 @@
                             <p>
                                 Este registro es unicamente para las sedes que pertenencen a la universidad.
                             </p>
+                            <p class="right">
+                                <h4 style="color: #66afe9; text-transform: uppercase">
+                                    Instructivo de ingreso de información
+                                </h4>
+                                CODIGO - Longitud (Min. 4 - Max. 20). Ejemplo: <strong><h:outputText value=" 11010" style="color: darkblue;"/></strong>
+                                <br></br>
+                                NOMBRE - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Prueba de Ingreso" style="color: darkblue;"/></strong>
+                            </p>
                         </div>
 
                         <div class="col-md-12 row">
@@ -79,7 +87,7 @@
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Codigo Area Profundización*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarAreaProfundizacion.nuevoCodigo}" disabled="#{controllerRegistrarAreaProfundizacion.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                    <h:inputText maxlength="20" value="#{controllerRegistrarAreaProfundizacion.nuevoCodigo}" disabled="#{controllerRegistrarAreaProfundizacion.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarAreaProfundizacion.validarCodigoAreaProfundizacion()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
                                     </h:inputText>
                                     <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>

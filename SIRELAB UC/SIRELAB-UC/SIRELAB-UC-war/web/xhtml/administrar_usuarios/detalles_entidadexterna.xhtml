@@ -71,23 +71,36 @@
                         <p>
                             Este registro es unicamente para entidades externas. 
                         </p>
+                        <p class="right">
+                            <h4 style="color: #66afe9; text-transform: uppercase">
+                                Instructivo de ingreso de información
+                            </h4>
+                            NOMBRE - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" Empresa Y" style="color: darkblue;"/></strong>
+                            <br></br>
+                            NÚMERO IDENTIFICACIÓN - Longitud (Min. 8 - Max. 45). Ejemplo: <strong><h:outputText value=" 990088721" style="color: darkblue;"/></strong>
+                            <br></br> 
+                            CORREO CONTACTO. - Longitud (Min. 15 - Max. 45). Ejemplo: <strong><h:outputText value=" empresay@empresay.com" style="color: darkblue;"/></strong>
+                            <br></br>
+                            CORREO ADICIONAL. - Longitud (Min. 15 - Max. 60). Ejemplo: <strong><h:outputText value=" empresay2@empresay.com" style="color: darkblue;"/></strong>
+                            <br></br>
+                            NUMERO FIJO - Longitud Longitud 7. Ejemplo: <strong><h:outputText value=" 7653210" style="color: darkblue;"/></strong>
+                            <br></br>
+                            NUMERO CELULAR - Longitud 10. Ejemplo: <strong><h:outputText value=" 3007653210" style="color: darkblue;"/></strong>
+                            <br></br>
+                            DIRECCIÓN - Longitud (Min. 8 - Max.45). Formato:   <strong><h:outputText value=" Av Cra 75 # 11-11" style="color: darkblue;"/></strong>
+                            <br></br>
+                            SECTOR - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" WEB SERVICE" style="color: darkblue;"/></strong>
+                        </p>
                     </div>
                     <div class="col-md-12 row">
                         <fieldset>
                             <legend class="text-info">Datos Personales</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Nombre Inicial Entidad*"/></strong>
+                                <strong><h:outputText value="Nombre Entidad Externa*"/></strong>
                                 <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.nombreEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" required="true" class="form-control" id="nombreEntidadExterna" requiredMessage="El campo Nombre Inicial es obligatorio.">
                                     <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarNombreEntidadExterna()}" execute="nombreEntidadExterna" render="nombreEntidadExterna msnNombre" />
                                 </h:inputText>
                                 <h6><h:message id="msnNombre" for="nombreEntidadExterna" style="color: red"></h:message></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Nombre Secundario Entidad*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.apellidoEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" required="true" class="form-control" id="apellidoEntidadExterna" requiredMessage="El campo Nombre Secundario es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarApellidoEntidadExterna()}" execute="apellidoEntidadExterna" render="apellidoEntidadExterna msnApellido" />
-                                </h:inputText>
-                                <h6><h:message id="msnApellido" for="apellidoEntidadExterna" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Número Identificación*"/></strong>
@@ -107,11 +120,21 @@
                                 <h6><h:message id="msnEmail" for="correoEntidadExterna" style="color: red"></h:message></h6>
                             </div>
                             <div class="form-group">
-                                <strong><h:outputText value="Estado Usuario*"/></strong>
-                                <h:inputText readonly="true" value="#{controllerDetallesEntidadExterna.entidadExternaDetalles.persona.usuario.strEstado}" class="form-control" id="estadoEntidad" />
+                                <strong><h:outputText value="Estado Entidad Externa*"/></strong>
+                                <h:inputText readonly="true" value="#{controllerDetallesEntidadExterna.entidadExternaDetalles.strEstado}" class="form-control" id="estadoEntidad" />
                             </div>    
                             <fieldset>
                                 <legend class="h5 text-info">Datos Opcionales</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Correo Contacto*"/></strong>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="60" value="#{controllerDetallesEntidadExterna.correoOpcEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="correoOpcEntidadExterna">
+                                            <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarCorreoOpcEntidadExterna()}" execute="correoOpcEntidadExterna" render="correoOpcEntidadExterna msnEmailOpc" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">@</span>
+                                    </div>
+                                    <h6><h:message id="msnEmailOpc" for="correoOpcEntidadExterna" style="color: red"></h:message></h6>
+                                </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Número Fijo"/></strong>
                                     <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono1EntidadExterna" >
@@ -127,7 +150,7 @@
                                     <h6><h:message id="msnTelefono2" for="telefono2EntidadExterna" style="color: red"></h:message></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Dirección Residencia"/></strong>
+                                    <strong><h:outputText value="Dirección"/></strong>
                                     <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.direccionEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="direccionEntidadExterna" >
                                         <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDireccionEntidadExterna()}" execute="direccionEntidadExterna" render="direccionEntidadExterna msnDireccion" />
                                     </h:inputText>
@@ -138,28 +161,11 @@
                         <fieldset>
                             <legend class="text-info">Información Entidad Externa</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="ID Entidad Externa*"/></strong>
-                                <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.idUnicoEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" required="true" class="form-control" id="idUnicoEntidadExterna" requiredMessage="El campo ID Entidad Externa es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosEntidadExterna(1)}" execute="idUnicoEntidadExterna" render="idUnicoEntidadExterna msnIDEntidad" />
+                                <strong><h:outputText value="Sector Entidad Externa*"/></strong>
+                                <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.sectorEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" required="true" class="form-control" id="sectorEntidadExterna" requiredMessage="El campo Sector es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarSectorEntidadExterna()}" execute="sectorEntidadExterna" render="sectorEntidadExterna msnSector" />
                                 </h:inputText>
-                                <h6><h:message id="msnIDEntidad" for="idUnicoEntidadExterna" style="color: red"></h:message></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Nombre Contacto"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.nombreUnicoEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="nombreUnicoEntidadExterna" >
-                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosEntidadExterna(2)}" execute="nombreUnicoEntidadExterna" render="nombreUnicoEntidadExterna msnNombreEntidad" />
-                                </h:inputText>
-                                <h6><h:message id="msnNombreEntidad" for="nombreUnicoEntidadExterna" style="color: red"></h:message></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Email Contacto"/></strong>
-                                <div class="input-group">
-                                    <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.emailUnicoEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="emailUnicoEntidadExterna" >
-                                        <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosEntidadExterna(3)}" execute="emailUnicoEntidadExterna" render="emailUnicoEntidadExterna msnEmailEntidad" />
-                                    </h:inputText>
-                                    <span class="input-group-addon">@</span>
-                                </div>
-                                <h6><h:message id="msnEmailEntidad" for="emailUnicoEntidadExterna" style="color: red"></h:message></h6>
+                                <h6><h:message id="msnSector" for="sectorEntidadExterna" style="color: red"></h:message></h6>
                             </div>
                         </fieldset>
                     </div>

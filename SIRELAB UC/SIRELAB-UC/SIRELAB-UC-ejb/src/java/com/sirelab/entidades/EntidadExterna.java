@@ -5,9 +5,12 @@
  */
 package com.sirelab.entidades;
 
+import java.awt.AlphaComposite;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +20,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "entidadexterna")
@@ -32,9 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EntidadExterna.findAll", query = "SELECT e FROM EntidadExterna e"),
     @NamedQuery(name = "EntidadExterna.findByIdentidadexterna", query = "SELECT e FROM EntidadExterna e WHERE e.identidadexterna = :identidadexterna"),
-    @NamedQuery(name = "EntidadExterna.findByIdentificacionentidad", query = "SELECT e FROM EntidadExterna e WHERE e.identificacionentidad = :identificacionentidad"),
-    @NamedQuery(name = "EntidadExterna.findByNombreentidad", query = "SELECT e FROM EntidadExterna e WHERE e.nombreentidad = :nombreentidad"),
-    @NamedQuery(name = "EntidadExterna.findByEmailentidad", query = "SELECT e FROM EntidadExterna e WHERE e.emailentidad = :emailentidad")})
+    @NamedQuery(name = "EntidadExterna.findBySector", query = "SELECT e FROM EntidadExterna e WHERE e.sector = :sector"),
+    @NamedQuery(name = "EntidadExterna.findByEstado", query = "SELECT e FROM EntidadExterna e WHERE e.estado = :estado")})
 public class EntidadExterna implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,18 +50,20 @@ public class EntidadExterna implements Serializable {
     private BigInteger identidadexterna;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "identificacionentidad")
-    private String identificacionentidad;
-    @Size(max = 45)
-    @Column(name = "nombreentidad")
-    private String nombreentidad;
-    @Size(max = 45)
-    @Column(name = "emailentidad")
-    private String emailentidad;
+    @Size(min = 1, max = 45)
+    @Column(name = "sector")
+    private String sector;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "estado")
+    private boolean estado;
     @JoinColumn(name = "persona", referencedColumnName = "idpersona")
     @ManyToOne(optional = false)
     private Persona persona;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entidadexterna")
+    private Collection<ConvenioPorEntidad> convenioPorEntidadCollection;
+    @Transient
+    private String strEstado;
 
     public EntidadExterna() {
     }
@@ -65,9 +72,10 @@ public class EntidadExterna implements Serializable {
         this.identidadexterna = identidadexterna;
     }
 
-    public EntidadExterna(BigInteger identidadexterna, String identificacionentidad) {
+    public EntidadExterna(BigInteger identidadexterna, String sector, boolean estado) {
         this.identidadexterna = identidadexterna;
-        this.identificacionentidad = identificacionentidad;
+        this.sector = sector;
+        this.estado = estado;
     }
 
     public BigInteger getIdentidadexterna() {
@@ -78,34 +86,37 @@ public class EntidadExterna implements Serializable {
         this.identidadexterna = identidadexterna;
     }
 
-    public String getIdentificacionentidad() {
-        if (null != identificacionentidad) {
-            return identificacionentidad.toUpperCase();
+    public String getSector() {
+        if (null != sector) {
+            return sector.toUpperCase();
         }
-        return identificacionentidad;
+        return sector;
     }
 
-    public void setIdentificacionentidad(String identificacionentidad) {
-        this.identificacionentidad = identificacionentidad.toUpperCase();
+    public void setSector(String sector) {
+        this.sector = sector.toUpperCase();
     }
 
-    public String getNombreentidad() {
-        if (null != nombreentidad) {
-            return nombreentidad.toUpperCase();
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (estado == true) {
+            strEstado = "ACTIVO";
+        } else {
+            strEstado = "INACTIVO";
         }
-        return nombreentidad;
+        return strEstado;
     }
 
-    public void setNombreentidad(String nombreentidad) {
-        this.nombreentidad = nombreentidad.toUpperCase();
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
-    public String getEmailentidad() {
-        return emailentidad;
-    }
-
-    public void setEmailentidad(String emailentidad) {
-        this.emailentidad = emailentidad;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public Persona getPersona() {
@@ -114,6 +125,15 @@ public class EntidadExterna implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    @XmlTransient
+    public Collection<ConvenioPorEntidad> getConvenioPorEntidadCollection() {
+        return convenioPorEntidadCollection;
+    }
+
+    public void setConvenioPorEntidadCollection(Collection<ConvenioPorEntidad> convenioPorEntidadCollection) {
+        this.convenioPorEntidadCollection = convenioPorEntidadCollection;
     }
 
     @Override

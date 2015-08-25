@@ -35,9 +35,8 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     @EJB
     AdministrarEntidadesExternasBOInterface administrarEntidadesExternasBO;
 
-    private String parametroNombre, parametroApellido, parametroDocumento, parametroCorreo;
+    private String parametroNombre, parametroSector, parametroDocumento, parametroCorreo;
     private int parametroEstado;
-    private String parametroIDEntidad, parametroNombreEntidad, parametroEmailEntidad;
     private Map<String, String> filtros;
     //
     private boolean activarExport;
@@ -60,12 +59,9 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         cantidadRegistros = "N/A";
         activarExport = true;
         parametroNombre = null;
-        parametroApellido = null;
+        parametroSector = null;
         parametroDocumento = null;
         parametroCorreo = null;
-        parametroIDEntidad = null;
-        parametroNombreEntidad = null;
-        parametroEmailEntidad = null;
         inicializarFiltros();
         listaEntidadesExternas = null;
         listaEntidadesExternasTabla = null;
@@ -87,13 +83,10 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     private void inicializarFiltros() {
         filtros = new HashMap<String, String>();
         filtros.put("parametroNombre", null);
-        filtros.put("parametroApellido", null);
+        filtros.put("parametroSector", null);
         filtros.put("parametroDocumento", null);
         filtros.put("parametroCorreo", null);
-        filtros.put("parametroIDEntidad", null);
         filtros.put("parametroEstado", null);
-        filtros.put("parametroNombreEntidad", null);
-        filtros.put("parametroEmailEntidad", null);
         agregarFiltrosAdicionales();
     }
 
@@ -101,16 +94,16 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
      * Metodo encargado de agregar los valores al filtro de busqueda
      */
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre);
         }
-        if ((Utilidades.validarNulo(parametroApellido) == true) && (!parametroApellido.isEmpty())  && (parametroApellido.trim().length() > 0)) {
-            filtros.put("parametroApellido", parametroApellido);
+        if ((Utilidades.validarNulo(parametroSector) == true) && (!parametroSector.isEmpty()) && (parametroSector.trim().length() > 0)) {
+            filtros.put("parametroSector", parametroSector);
         }
-        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty())  && (parametroDocumento.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty()) && (parametroDocumento.trim().length() > 0)) {
             filtros.put("parametroDocumento", parametroDocumento);
         }
-        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())  && (parametroCorreo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty()) && (parametroCorreo.trim().length() > 0)) {
             filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
@@ -119,15 +112,6 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
             if (parametroEstado == 2) {
                 filtros.put("parametroEstado", "false");
             }
-        }
-        if ((Utilidades.validarNulo(parametroIDEntidad) == true) && (!parametroIDEntidad.isEmpty())  && (parametroIDEntidad.trim().length() > 0)) {
-            filtros.put("parametroIDEntidad", parametroIDEntidad);
-        }
-        if ((Utilidades.validarNulo(parametroNombreEntidad) == true) && (!parametroNombreEntidad.isEmpty())  && (parametroNombreEntidad.trim().length() > 0)) {
-            filtros.put("parametroNombreEntidad", parametroNombreEntidad);
-        }
-        if ((Utilidades.validarNulo(parametroEmailEntidad) == true) && (!parametroEmailEntidad.isEmpty())  && (parametroEmailEntidad.trim().length() > 0)) {
-            filtros.put("parametroEmailEntidad", parametroEmailEntidad);
         }
     }
 
@@ -232,12 +216,9 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     public String limpiarProcesoBusqueda() {
         activarExport = true;
         parametroNombre = null;
-        parametroApellido = null;
+        parametroSector = null;
         parametroDocumento = null;
         parametroCorreo = null;
-        parametroEmailEntidad = null;
-        parametroNombreEntidad = null;
-        parametroIDEntidad = null;
         parametroEstado = 1;
         inicializarFiltros();
         listaEntidadesExternas = null;
@@ -248,6 +229,23 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         tamTotalEntidadExterna = 0;
         cantidadRegistros = "N/A";
         return paginaAnterior;
+    }
+
+    public void limpiarDatos() {
+        activarExport = true;
+        parametroNombre = null;
+        parametroSector = null;
+        parametroDocumento = null;
+        parametroCorreo = null;
+        parametroEstado = 1;
+        inicializarFiltros();
+        listaEntidadesExternas = null;
+        listaEntidadesExternasTabla = null;
+        bloquearPagAntEntidadExterna = true;
+        bloquearPagSigEntidadExterna = true;
+        posicionEntidadExternaTabla = 0;
+        tamTotalEntidadExterna = 0;
+        cantidadRegistros = "N/A";
     }
 
     /**
@@ -285,12 +283,12 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         this.parametroNombre = parametroNombre;
     }
 
-    public String getParametroApellido() {
-        return parametroApellido;
+    public String getParametroSector() {
+        return parametroSector;
     }
 
-    public void setParametroApellido(String parametroApellido) {
-        this.parametroApellido = parametroApellido;
+    public void setParametroSector(String parametroSector) {
+        this.parametroSector = parametroSector;
     }
 
     public String getParametroDocumento() {
@@ -315,30 +313,6 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
 
     public void setParametroEstado(int parametroEstado) {
         this.parametroEstado = parametroEstado;
-    }
-
-    public String getParametroIDEntidad() {
-        return parametroIDEntidad;
-    }
-
-    public void setParametroIDEntidad(String parametroIDEntidad) {
-        this.parametroIDEntidad = parametroIDEntidad;
-    }
-
-    public String getParametroNombreEntidad() {
-        return parametroNombreEntidad;
-    }
-
-    public void setParametroNombreEntidad(String parametroNombreEntidad) {
-        this.parametroNombreEntidad = parametroNombreEntidad;
-    }
-
-    public String getParametroEmailEntidad() {
-        return parametroEmailEntidad;
-    }
-
-    public void setParametroEmailEntidad(String parametroEmailEntidad) {
-        this.parametroEmailEntidad = parametroEmailEntidad;
     }
 
     public Map<String, String> getFiltros() {

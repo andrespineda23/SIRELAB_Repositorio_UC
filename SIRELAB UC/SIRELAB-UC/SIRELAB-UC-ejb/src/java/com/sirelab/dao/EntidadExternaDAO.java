@@ -84,7 +84,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
     public EntidadExterna buscarEntidadExternaPorIdentificacionEntidad(String identificacion) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.identificacionentidad=:identificacion");
+            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.persona.identificacionpersona=:identificacion");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("identificacion", identificacion);
             EntidadExterna registro = (EntidadExterna) query.getSingleResult();
@@ -187,7 +187,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
                         wheres.append(" AND ");
                     }
                     if ("parametroEstado".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "persona.usuario.estado");
+                        wheres.append(alias).append("." + ".estado");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
@@ -197,10 +197,10 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
                                 .append(") Like :parametroNombre");
                         camposFiltro++;
                     }
-                    if ("parametroApellido".equals(entry.getKey())) {
+                    if ("parametroSector".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".persona.apellidospersona")
-                                .append(") Like :parametroApellido");
+                                .append(".sector")
+                                .append(") Like :parametroSector");
                         camposFiltro++;
                     }
                     if ("parametroDocumento".equals(entry.getKey())) {
@@ -213,24 +213,6 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
                         wheres.append("UPPER(").append(alias)
                                 .append(".persona.emailpersona")
                                 .append(") Like :parametroCorreo");
-                        camposFiltro++;
-                    }
-                    if ("parametroIDEntidad".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
-                                .append(".identificacionentidad")
-                                .append(") Like :parametroIDEntidad");
-                        camposFiltro++;
-                    }
-                    if ("parametroNombreEntidad".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
-                                .append(".nombreentidad")
-                                .append(") Like :parametroNombreEntidad");
-                        camposFiltro++;
-                    }
-                    if ("parametroEmailEntidad".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
-                                .append(".emailentidad")
-                                .append(") Like :parametroEmailEntidad");
                         camposFiltro++;
                     }
                 }
@@ -252,12 +234,9 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             if (null != entry.getValue() && !entry.getValue().isEmpty()) {
                 if (("parametroCorreo".equals(entry.getKey()))
+                        || ("parametroSector".equals(entry.getKey()))
                         || ("parametroDocumento".equals(entry.getKey()))
-                        || ("parametroNombre".equals(entry.getKey()))
-                        || ("parametroApellido".equals(entry.getKey()))
-                        || ("parametroIDEntidad".equals(entry.getKey()))
-                        || ("parametroNombreEntidad".equals(entry.getKey()))
-                        || ("parametroEmailEntidad".equals(entry.getKey()))) {
+                        || ("parametroNombre".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }

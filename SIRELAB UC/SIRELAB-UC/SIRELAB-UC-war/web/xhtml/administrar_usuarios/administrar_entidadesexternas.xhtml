@@ -57,7 +57,7 @@
                     <br></br>
                     <br></br> 
                 </div>
-                 <div class="row">
+                <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Inicio</a></li>
                         <li class="active">Administrar Entidades Externas</li>
@@ -71,85 +71,51 @@
                                     <h3><legend style="color: darkblue"><strong>INFORMACIÓN ENTIDAD EXTERNA</strong></legend></h3>
                                     <div class="row col-md-12">
                                         <fieldset style="border: black;border-radius: 10px; color: black"> 
-                                            <legend class="h5">I. Personal</legend>
-                                            <div class="col-md-2">
+                                            <legend class="h5">I. Basica</legend>
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="parametroNombre">
-                                                        Primer Nombre Entidad
+                                                        Nombre Entidad Externa
                                                     </label>
                                                     <h:inputText maxlength="45" value="#{controllerAdministrarEntidadesExternas.parametroNombre}" class="form-control" id="parametroNombre" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="parametroApellido">
-                                                        Segundo Nombre Entidad
-                                                    </label>
-                                                    <h:inputText maxlength="45" value="#{controllerAdministrarEntidadesExternas.parametroApellido}" class="form-control" id="parametroApellido" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="parametroDocumento">
-                                                        Número Identificación
+                                                        Identificación Entidad Externa
                                                     </label>
                                                     <h:inputText maxlength="20" value="#{controllerAdministrarEntidadesExternas.parametroDocumento}" class="form-control" id="parametroDocumento" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <label for="parametroCorreo">
-                                                    Correo Contacto
-                                                </label>
-                                                <div class="input-group">
-                                                    <h:inputText maxlength="45" value="#{controllerAdministrarEntidadesExternas.parametroCorreo}" class="form-control" id="parametroCorreo" />
-                                                    <span class="input-group-addon">@</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="parametroEstado">
-                                                        Estado Entidad
-                                                    </label>
-                                                    <h:selectOneMenu value="#{controllerAdministrarEntidadesExternas.parametroEstado}"
-                                                                     class="form-control"
-                                                                     id="parametroEstado">
-                                                        <f:selectItem itemLabel="ACTIVO" itemValue="1" />
-                                                        <f:selectItem itemLabel="INACTIVO" itemValue="2" />
-                                                        <f:selectItem itemLabel="TODOS" itemValue="3" />
-                                                    </h:selectOneMenu>
-                                                </div>
-                                            </div>
                                         </fieldset>
                                     </div> 
-                                    <div id="parametrosEspeciales" class="row col-md-12">
-                                        <fieldset style="border: black;border-radius: 10px; color: black"> 
-                                            <legend class="h5">I. Especial</legend>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="parametroIDEntidad">
-                                                        ID Entidad Externa
-                                                    </label>
-                                                    <h:inputText maxlength="20" value="#{controllerAdministrarEntidadesExternas.parametroIDEntidad}" class="form-control" id="parametroIDEntidad" />
-                                                </div>
+                                    <div class="row col-md-12">
+                                        <div class="col-md-4">
+                                            <label for="parametroCorreo">
+                                                Correo Contacto
+                                            </label>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="45" value="#{controllerAdministrarEntidadesExternas.parametroCorreo}" class="form-control" id="parametroCorreo" />
+                                                <span class="input-group-addon">@</span>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="parametroNombreEntidad">
-                                                        Nombre Encargado
-                                                    </label>
-                                                    <h:inputText maxlength="45" value="#{controllerAdministrarEntidadesExternas.parametroNombreEntidad}" class="form-control" id="parametroNombreEntidad" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="parametroEmailEntidad">
-                                                    Email Encargado
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="parametroEstado">
+                                                    Estado Entidad
                                                 </label>
-                                                <div class="input-group">
-                                                    <h:inputText maxlength="45" value="#{controllerAdministrarEntidadesExternas.parametroEmailEntidad}" class="form-control" id="parametroEmailEntidad" />
-                                                    <span class="input-group-addon">@</span>
-                                                </div>
+                                                <h:selectOneMenu value="#{controllerAdministrarEntidadesExternas.parametroEstado}"
+                                                                 class="form-control"
+                                                                 id="parametroEstado">
+                                                    <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                    <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                    <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                </h:selectOneMenu>
                                             </div>
-                                        </fieldset>
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <br></br>
@@ -205,27 +171,9 @@
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="ID Entidad"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.identificacionentidad}"/>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Nombre Encargado"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.nombreentidad}"/>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Email Encargado"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.emailentidad}"/>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">
                                                     <h:outputText value="Estado"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.persona.usuario.strEstado}"/>
+                                                <h:outputText value="#{item.strEstado}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">
@@ -259,9 +207,12 @@
                 <br></br>
                 <div class="row">
                     <div class="col-md-1">
+                        <h:commandButton value="Convenios" action="administrar_conveniosporentidad" actionListener="#{controllerAdministrarEntidadesExternas.limpiarDatos()}" id="administrar_conveniosporentidad" class="btn btn-info"/>
+                    </div>
+                    <div class="col-md-1">
                         <h:commandButton value="Nueva Entidad" action="registrar_entidadexterna" actionListener="#{controllerAdministrarEntidadesExternas.limpiarProcesoBusqueda()}" id="nuevoEntidad" class="btn btn-success"/>
                     </div>
-                    <div class="col-md-10"></div>
+                    <div class="col-md-9"></div>
                     <div class="col-md-1">
                         <h:commandButton value="Atras" action="#{controllerAdministrarEntidadesExternas.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
                     </div>

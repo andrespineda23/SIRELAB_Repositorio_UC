@@ -1,10 +1,12 @@
 package com.sirelab.bo.usuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEntidadesExternasBOInterface;
+import com.sirelab.dao.interfacedao.ConvenioPorEntidadDAOInterface;
 import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
+import com.sirelab.entidades.ConvenioPorEntidad;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.TipoUsuario;
@@ -30,6 +32,8 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
     PersonaDAOInterface personaDAO;
     @EJB
     EntidadExternaDAOInterface entidadExternaDAO;
+    @EJB
+    ConvenioPorEntidadDAOInterface convenioPorEntidadDAO;
 
     @Override
     public List<EntidadExterna> consultarEntidadesExternasPorParametro(Map<String, String> filtros) {
@@ -143,6 +147,21 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             entidadExternaDAO.crearEntidadExterna(entidadNueva);
         } catch (Exception e) {
             System.out.println("Error AdministrarEntidadesExternasBO almacenarNuevaEntidadExternaEnSistema : " + e.toString());
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoEntidad(BigInteger entidad) {
+        try {
+            List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidadPorEntidad(entidad);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEntidadesExternasBO validarCambioEstadoEntidad : " + e.toString());
+            return null;
         }
     }
 

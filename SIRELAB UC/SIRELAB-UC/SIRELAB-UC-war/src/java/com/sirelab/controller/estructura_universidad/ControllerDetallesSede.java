@@ -120,7 +120,7 @@ public class ControllerDetallesSede implements Serializable {
 
     public void validarTelefonoSede() {
         if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty()) && (editarTelefono.trim().length() > 0)) {
-            if (!Utilidades.isNumber(editarTelefono)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(editarTelefono)) {
                 validacionesTelefono = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono ingresado es incorrecto."));
             } else {
