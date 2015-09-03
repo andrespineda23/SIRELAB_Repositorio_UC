@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Administrar Entidades Externas</a></li>
+                                <li><a href="#">Administrar Convenios con Entidades Externas</a></li>
+                                <li class="active">Registrar Nuevo Registro</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="row col-md-12">
+                                    <h2 class="info">
+                                        Información Registro
+                                    </h2>
+                                    <p>
+                                        Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                    </p>
+                                    <p>
+                                        Este registro es unicamente para generar asociaciones entre convenios y entidades externas.
+                                    </p>
+                                </div>
+
+                                <div class="col-md-12 row">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Entidad Externa*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarConvenioPorEntidad.inputEntidadExterna}"
+                                                             class="form-control" disabled="#{controllerRegistrarConvenioPorEntidad.activarCasillas}"
+                                                             id="inputEntidadExterna">
+                                                <f:selectItem itemLabel="Seleccione Entidad Externa" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarConvenioPorEntidad.listaEntidadesExternas}" var="entidad"
+                                                               itemLabel="#{entidad.persona.nombrespersona}" itemValue="#{entidad}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarConvenioPorEntidad.validarEntidadExterna()}" execute="inputEntidadExterna" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Convenio*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarConvenioPorEntidad.inputConvenio}"
+                                                             class="form-control" disabled="#{controllerRegistrarConvenioPorEntidad.activarCasillas}"
+                                                             id="inputConvenio">
+                                                <f:selectItem itemLabel="Seleccione Convenio" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarConvenioPorEntidad.listaConvenios}" var="convenio"
+                                                               itemLabel="#{convenio.nombreconvenio}" itemValue="#{convenio}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarConvenioPorEntidad.validarConvenio()}" execute="inputConvenio" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </fieldset>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarConvenioPorEntidad.mensajeFormulario}" style="color: #{controllerRegistrarConvenioPorEntidad.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarConvenioPorEntidad.activarAceptar}" actionListener="#{controllerRegistrarConvenioPorEntidad.registrarNuevoConvenioPorEntidad()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarconvenioporentidad" actionListener="#{controllerRegistrarConvenioPorEntidad.cancelarRegistroConvenioPorEntidad()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarConvenioPorEntidad.activarLimpiar}" actionListener="#{controllerRegistrarConvenioPorEntidad.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

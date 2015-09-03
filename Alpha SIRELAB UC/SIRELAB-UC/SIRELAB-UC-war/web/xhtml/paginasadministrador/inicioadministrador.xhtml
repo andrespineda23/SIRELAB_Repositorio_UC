@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templateinicio.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!-- HEADER SECTION END-->
+                    <!--HOME SECTION START  -->
+                    <div id="home">
+                        <div class="overlay">
+                            <div class="container">
+                                <div class="row " >
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h1>SIRELAB</h1>
+                                        <h4>
+                                            Universidad Central - Bogotá, Colombia.
+                                        </h4>
+                                        <h2 style="color: white">
+                                            Bienvenido Usuario: <strong>#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</strong>
+                                        </h2>
+                                        <span></span>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <h:commandButton value="Configurar Cuenta" class="btn btn-custom btn-two"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <h:commandButton value="Cerrar Sesión" action="#{controllerPaginaInicial.cerrarSession()}" class="btn btn-custom btn-two"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="usuarios">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h2 class="head-line">Control de <strong>Usuarios</strong></h2>
+                                    <p>
+                                        Por medio de la siguiente funcionalidad el usuario puede admininistrar la información relacionada con los 
+                                        usuarios del sistema <strong>(Estudiante - Docente - Administrador - Personal de Laboratorio - Entidades Externas - Personal Asociado a Entidad Externa)</strong>. 
+                                        A traves de estas funciones usted podra crear un nuevo usuario,
+                                        consultar los usuarios registrados y modificar su información.
+                                    </p>
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row pad-bottom">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Estudiante" actionListener="#{controllerAdministrarEstudiantes.recibirPaginaAnterior('inicioadministrador')}" action="administrarestudiantes" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Docente" actionListener="#{controllerAdministrarDocentes.recibirPaginaAnterior('inicioadministrador')}" action="administrardocentes" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Entidad Externa" actionListener="#{controllerAdministrarEntidadesExternas.recibirPaginaAnterior('inicioadministrador')}" action="administrarentidadesexternas" class="btn btn-block btn-info"/>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-person"></i>
+                                                            <h4>Usuarios</h4>
+                                                        </div>                   
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Personal Ent. Ext." class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Laboratorista" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('inicioadministrador')}" action="administrarencargadoslaboratorios" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Administrador" action="administraradministradores" class="btn btn-block btn-info"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                                    <img src="../../assets/img/imagenprueba.jpg" class="img-side img-responsive center-block " style="border: #101010" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="universidades">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                                    <img src="../../assets/img/inventarioequipo.png" class="img-side img-responsive" alt="" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h2 class="head-line">Control de <strong>Infraestructura Universidad</strong></h2>
+                                    <p>
+                                        Por medio de la siguiente funcionalidad usted puede controlar infraestructura de la universidad. Por medio de estos modulos usted puede controlar información relacionada con facultad, departamentos, sedes, entre otros.
+                                        Usted podra consultar la información registrada en el sistema, registrar un nuevo elemento de universidad al sistema o editar algun registro del sistema.
+                                    </p>
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row pad-bottom">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Facultad" action="administrarfacultades" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Departamento" action="administrardepartamentos" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Carrera" action="administrarcarreras" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Asignatura" action="administrarasignaturas" class="btn btn-block btn-success"/>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-university"></i>
+                                                        </div>                   
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Plan de Estudio" action="administrarplanesestudio" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Sede" action="administrarsedes" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Edificio" action="administraredificios" class="btn btn-block btn-danger"/>
+                                                    </div>
+                                                </div>
+                                                <br></br>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <h:commandButton value="Asociación Asignatura x Plan Estudio" action="administrarplanasignatura" class="btn btn-block btn-success"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="laboratorios">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h2 class="head-line">Control de <strong>Laboratorios</strong></h2>
+                                    <p>
+                                        Por medio de la siguiente funcionalidad usted puede administrar los elementos relacionados con los laboratorios de la universidad. 
+                                        Usted podra agregar nueva información al sistema, modificar algun elemento ya registrado o registrar nueva información de los laboratorios.
+                                        Adicionalmente podra activar o inactivar algun elemento de laboratorio que se requiera.
+                                    </p>
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row pad-bottom">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Laboratorio" actionListener="#{controllerAdministrarLaboratorios.recibirPaginaAnterior('inicioadministrador')}" action="administrarlaboratorios" class="btn btn-block btn-info"/>
+                                                        <br></br>
+                                                        <h:commandButton value="Sala de Laboratorio" actionListener="#{controllerAdministrarSalas.recibirPaginaAnterior('inicioadministrador')}" action="administrarsalas" class="btn btn-block btn-info"/>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-thermometer"></i>
+                                                        </div>                   
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Modulo/Banco de Trabajo" actionListener="#{controllerAdministrarModulos.recibirPaginaAnterior('inicioadministrador')}" action="administrarmodulos" class="btn btn-block btn-danger"/>
+                                                        <br></br>
+                                                        <h:commandButton value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipos.recibirPaginaAnterior('inicioadministrador')}" action="administrarequipos" class="btn btn-block btn-danger"/>
+                                                    </div>
+                                                </div>
+                                                <br></br>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <h:commandButton value="Asociación Laboratorios - Áreas Profundización" actionListener="#{controllerAdministrarLaboratoriosPorAreas.recibirPaginaAnterior('inicioadministrador')}" action="administrarlaboratoriosporareas" class="btn btn-block btn-success"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br></br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                                    <img src="../../assets/img/objetivoclientereporte.jpg" class="img-side img-responsive" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="recursos">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                                    <img src="../../assets/img/objetivoclientereporte.jpg" class="img-side img-responsive" alt="" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h2 class="head-line">Control de <strong>Recursos de Laboratorio</strong></h2>
+                                    <p>
+                                        Por medio de la siguiente funcionalidad usted puede administrar la información realacionada con los recursos asociados a un laboratorio 
+                                        <strong>(Proveedores - Insumos - Guías de Laboratorio - Manuales de Equipo - Áreas de Profundización)</strong>
+                                        Usted podra consultar la información registrada en el sistema, registrar un nuevo recurso de laboratorio o editar la información de algun recurso registrado en el sistema.
+                                    </p>
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row pad-bottom">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Insumo" actionListener="#{controllerAdministrarInsumos.recibirPaginaAnterior('inicioadministrador')}" action="administrarinsumos" class="btn btn-block btn-info"/>
+                                                        <br></br>
+                                                        <h:commandButton value="Proveedor" actionListener="#{controllerAdministrarProveedores.recibirPaginaAnterior('inicioadministrador')}" action="administrarproveedores" class="btn btn-block btn-info"/>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-ios-refresh-outline"></i>
+                                                        </div>                   
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h:commandButton value="Manual de Equipo" actionListener="#{controllerAdministrarManuales.recibirPaginaAnterior('inicioadministrador')}" action="administrarmanuales" class="btn btn-block btn-danger"/>
+                                                        <br></br>
+                                                        <h:commandButton value="Guía de Laboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.recibirPaginaAnterior('inicioadministrador')}" action="administrarguiaslaboratorio" class="btn btn-block btn-danger"/>
+                                                    </div>
+                                                </div>
+                                                <br></br>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <h:commandButton value="Área de Profundización" actionListener="#{controllerAdministrarAreasProfundizacion.recibirPaginaAnterior('inicioadministrador')}" action="administrarareasprofundizacion" class="btn btn-block btn-success"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br></br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ABOUT SECTION END-->
+                    <!-- FEATURES SECTION START-->
+                    <section id="features">
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <div class="icon-wrapper">
+                                        <i class="ion-person-add"></i>
+                                    </div>
+                                    <h4><h:commandLink value="Variables de Usuario" actionListener="#{controllerVariablesUsuario.iniciarInformacionTablas()}" action="variablesusuario"/></h4>
+                                    <p>
+                                        Variable de Usuario
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <h2 class="head-line">
+                                        <strong><h:outputText value="Variables del Sistema"/></strong>
+                                    </h2>
+                                    <div class="icon-wrapper">
+                                        <i class="ion-mouse"></i>
+                                    </div>
+                                    <h4><h:commandLink value="Variable de Inventario" actionListener="#{controllerVariablesInventario.iniciarInformacionTablas()}" action="variablesinventario"/></h4>
+                                    <p>
+                                        Variable de Inventario
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="icon-wrapper">
+                                        <i class="ion-bookmark"></i>
+                                    </div>
+                                    <h4><h:commandLink value="Variable de Reserva" actionListener="#{controllerVariablesReserva.iniciarInformacionTablas()}" action="variablesreserva"/></h4>
+                                    <p>
+                                        Variable de Reserva
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

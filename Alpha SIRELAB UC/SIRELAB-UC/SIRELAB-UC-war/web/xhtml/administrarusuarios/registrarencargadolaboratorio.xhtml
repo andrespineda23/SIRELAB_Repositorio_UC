@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Administrar Encargados Laboratorio</a></li>
+                                <li class="active">Registrar Encargado Laboratorio</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <h2 class="info">
+                                    Información Registro
+                                </h2>
+                                <p>
+                                    Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                </p>
+                                <p>
+                                    Este registro es unicamente para encargados de laboratorio, al momento de ser registrado en el sistema su estado sera ACTIVO, para su activación es necesario que un personal de laboratorio o administrador del sistema gestione el proceso. 
+                                </p>
+                                <p class="right">
+                                    <h4 style="color: #66afe9; text-transform: uppercase">
+                                        Instructivo de ingreso de información
+                                    </h4>
+                                    NOMBRE - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" Pedro" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    APELLIDO - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" Ruiz" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    NÚMERO IDENTIFICACIÓN - Longitud (Min. 8 - Max. 45). Ejemplo: <strong><h:outputText value=" 990088721" style="color: darkblue;"/></strong>
+                                    <br></br> 
+                                    CORREO INST. - Longitud (Min. 4 - Max. 29). Ejemplo: <strong><h:outputText value=" pruizn1" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    CORREO PERSONAL - Longitud (Min. 15 - Max. 60). Ejemplo: <strong><h:outputText value=" pedro.ruiz.1@gmail.com" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    NUMERO FIJO - Longitud Longitud 7. Ejemplo: <strong><h:outputText value=" 7653210" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    NUMERO CELULAR - Longitud 10. Ejemplo: <strong><h:outputText value=" 3007653210" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    DIRECCIÓN - Longitud (Min. 8 - Max.45). Formato:   <strong><h:outputText value=" Av Cra 75 # 11-11" style="color: darkblue;"/></strong>
+                                </p>
+                            </div>
+                            <div class="col-md-12 row">
+                                <fieldset>
+                                    <legend class="text-info">Datos Personales</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Nombre(s) Encargado*"/></strong>
+                                        <h:inputText maxlength="45" value="#{controllerRegistrarEncargadoLaboratorio.inputNombre}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre el obligatorio.">
+                                            <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarNombreEncargadoLaboratorio()}" execute="inputNombre" render="inputNombre msnNombre" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Apellido(s) Encargado*"/></strong>
+                                        <h:inputText maxlength="45"  value="#{controllerRegistrarEncargadoLaboratorio.inputApellido}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio.">
+                                            <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarApellidoEncargadoLaboratorio()}" execute="inputApellido" render="inputApellido msnApellido" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnApellido" for="inputApellido" style="color: red"></h:message></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Número Identificación*"/></strong>
+                                        <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputID}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputID" requiredMessage="El campo Identificación es obligatorio.">
+                                            <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarIdentificacionEncargadoLaboratorio()}" execute="inputID" render="inputID msnID" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnID" for="inputID" style="color: red"></h:message></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Correo Institucional*"/></strong>
+                                        <div class="input-group">
+                                            <h:inputText maxlength="29"  value="#{controllerRegistrarEncargadoLaboratorio.inputEmail}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarCorreoEncargadoLaboratorio()}" execute="inputEmail" render="inputEmail msnEmail" />
+                                            </h:inputText>
+                                            <span class="input-group-addon">@ucentral.edu.co</span>
+                                        </div>
+                                        <h6><h:message id="msnEmail" for="inputEmail" style="color: red"></h:message></h6>
+                                    </div>
+                                    <fieldset>
+                                        <legend class="h5 text-info">Datos Opcionales</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Correo Personal"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="60"  value="#{controllerRegistrarEncargadoLaboratorio.inputEmailOpcional}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputEmailOpcional">
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarCorreoOpcionalEncargadoLaboratorio()}" execute="inputEmailOpcional" render="inputEmailOcional msnEmailOpcional" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">@</span>
+                                            </div>
+                                            <h6><h:message id="msnEmailOpcional" for="inputEmailOpcional" style="color: red"></h:message></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Número Fijo"/></strong>
+                                            <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono1}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono1" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDatosNumericosEncargadoLaboratorio(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"></h:message></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Número Celular"/></strong>
+                                            <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono2}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono2" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDatosNumericosEncargadoLaboratorio(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"></h:message></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Dirección Residencia"/></strong>
+                                            <h:inputText maxlength="45"  value="#{controllerRegistrarEncargadoLaboratorio.inputDireccion}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputDireccion" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDireccionEncargadoLaboratorio()}" execute="inputDireccion" render="inputDireccion msnDireccion" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnDireccion" for="inputDireccion" style="color: red"></h:message></h6>
+                                        </div>
+                                    </fieldset>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="text-info">Información Universidad</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Facultad*"/></strong>
+                                        <h:selectOneMenu value="#{controllerRegistrarEncargadoLaboratorio.inputFacultad}"
+                                                         class="form-control" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}"
+                                                         id="inputFacultad">
+                                            <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                            <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaFacultades}" var="facultad"
+                                                           itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarEncargadoLaboratorio.actualizarFacultades()}" execute="inputFacultad" render="@this inputDepartamento inputLaboratorio msnFacultad"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnFacultad" for="inputFacultad" style="color: red"></h:message></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Departamento*"/></strong>
+                                        <h:selectOneMenu disabled="#{controllerRegistrarEncargadoLaboratorio.activarDepartamento}" value="#{controllerRegistrarEncargadoLaboratorio.inputDepartamento}"
+                                                         class="form-control"
+                                                         id="inputDepartamento">
+                                            <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                            <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaDepartamentos}" var="departamento"
+                                                           itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarEncargadoLaboratorio.actualizarDepartamentos()}" execute="inputDepartamento" render="@this inputLaboratorio msnDepartamento"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnDepartamento" for="inputDepartamento" style="color: red"></h:message></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Laboratorio*"/></strong>
+                                        <h:selectOneMenu disabled="#{controllerRegistrarEncargadoLaboratorio.activarLaboratorio}" value="#{controllerRegistrarEncargadoLaboratorio.inputLaboratorio}"
+                                                         class="form-control"
+                                                         id="inputLaboratorio">
+                                            <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                            <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaLaboratorios}" var="laboratorio"
+                                                           itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarEncargadoLaboratorio.actualizarLaboratorio()}" execute="inputLaboratorio" render="msnLaboratorio"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnLaboratorio" for="inputLaboratorio" style="color: red"></h:message></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Tipo Perfil*"/></strong>
+                                        <h:selectOneMenu value="#{controllerRegistrarEncargadoLaboratorio.inputPerfil}"
+                                                         class="form-control" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}"
+                                                         id="inputPerfil">
+                                            <f:selectItem itemLabel="Seleccione Tipo Perfil" itemValue="null" />
+                                            <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaTiposPerfiles}" var="perfil"
+                                                           itemLabel="#{perfil.informacionPerfil}" itemValue="#{perfil}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarEncargadoLaboratorio.actualizarTipoPerfil()}" execute="inputPerfil" render="msnPerfil"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnPerfil" for="inputPerfil" style="color: red"></h:message></h6>
+                                    </div>
+                                </fieldset>
+                                <hr class="intro-divider"/>
+                                <div class="row col-md-12">
+                                    <div class="text-center">
+                                        <h5>
+                                            Resultados del Formulario
+                                        </h5>
+                                        <strong>
+                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEncargadoLaboratorio.mensajeFormulario}" style="color: #{controllerRegistrarEncargadoLaboratorio.colorMensaje}}"/>
+                                        </strong>
+                                    </div>
+                                    <br></br>
+                                </div>
+                                <hr class="intro-divider"/>
+                                <div class="right pull-right">
+                                    <h:commandButton value="Registrar" disabled="#{controllerRegistrarEncargadoLaboratorio.activarAceptar}" actionListener="#{controllerRegistrarEncargadoLaboratorio.registrarNuevoEncargadoLaboratorio()}" class="btn btn-success">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                    <span></span>
+                                    <span></span>
+                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarencargadoslaboratorios" actionListener="#{controllerRegistrarEncargadoLaboratorio.cancelarRegistroEncargadoLaboratorio()}" immediate="true">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                    <span></span>
+                                    <span></span>
+                                    <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarEncargadoLaboratorio.activarLimpiar}" actionListener="#{controllerRegistrarEncargadoLaboratorio.cambiarActivarCasillas()}" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Footer -->
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

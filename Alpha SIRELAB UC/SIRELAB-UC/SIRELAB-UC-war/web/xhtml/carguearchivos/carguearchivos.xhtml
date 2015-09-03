@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Cargue de Archivos</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="section">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <fieldset>
+                                                <legend class="text-info">Tipo del proceso de cargue</legend>
+                                                <div class="form-group">
+                                                    <strong><h:outputText value="Seleccione el tipo del cargue:"/></strong>
+                                                    <h:selectOneMenu value="#{controllerCargueArchivos.tipoCargue}" 
+                                                                     class="form-control" 
+                                                                     id="tipoCargue">
+                                                        <f:selectItem itemLabel="Seleccione registro" itemValue="0" />
+                                                        <f:selectItem itemLabel="Estudiante" itemValue="1" />
+                                                        <f:selectItem itemLabel="Plan Estudio" itemValue="2" />
+                                                        <f:selectItem itemLabel="Asignatura" itemValue="3" />
+                                                        <f:selectItem itemLabel="Horario" itemValue="4" />
+                                                        <f:ajax event="change" listener="#{controllerCargueArchivos.actualizarTipoCargue()}" execute="tipoCargue" render="@this resultados archivo btnAceptar"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="form-group">
+                                                    <strong><h:outputText value="Seleccione el archivo:"/></strong>
+                                                    <h:inputFile disabled="#{controllerCargueArchivos.disableAcciones}" value="#{controllerCargueArchivos.archivo}" class="form-control" id="archivo"  >
+                                                        <f:ajax event="change" listener="#{controllerCargueArchivos.validarArchivoCargue()}" render="btnAceptar resultados"/>
+                                                    </h:inputFile>
+                                                </div>
+                                                <div class="right pull-right">
+                                                    <h:commandButton value="Aceptar" disabled="#{controllerCargueArchivos.disabledAceptar}" id="btnAceptar" actionListener="#{controllerCargueArchivos.imprimirArchivo()}" class="btn btn-success" >
+                                                        <f:ajax execute="@form" render="form" />
+                                                    </h:commandButton>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <h2 class="info">
+                                                        Resultado del Cargue
+                                                    </h2>
+                                                    <h:inputText id="resultados" readonly="true" value="#{controllerCargueArchivos.mensajeValidacion}" class="form-control resizableArea">
+
+                                                    </h:inputText>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h1><center>Formatos para el cargue</center></h1>
+                                            <p>
+                                                A continuación se encuentran los templates de los procesos de cargue masivo.
+                                            </p>
+                                            <div class="center-block">
+                                                <div class="col-md-3">
+                                                    <div class="center-block">
+                                                        <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
+                                                        <br></br>
+                                                        <h:commandButton value="Estudiante" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="center-block">
+                                                        <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
+                                                        <br></br>
+                                                        <h:commandButton value="Plan Estudio" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="center-block">
+                                                        <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
+                                                        <br></br>
+                                                        <h:commandButton value="Asignatura" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="center-block">
+                                                        <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
+                                                        <br></br>
+                                                        <h:commandButton value="Horarios" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerCargueArchivos.regresarPaginaAnterior()}"  class="btn btn-primary"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

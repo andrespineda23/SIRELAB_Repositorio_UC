@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Administrar Asignaturas - Planes de Estudio</li>
+                                <li class="active">Detalles Asignatura - Plan de Estudio</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="row col-md-12">
+                                    <h2 class="info">
+                                        Información Registro
+                                    </h2>
+                                    <p>
+                                        Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                    </p>
+                                    <p>
+                                        Este registro es unicamente para los planes y asignaturas registrados en la universidad.
+                                    </p>
+                                </div>
+
+                                <div class="col-md-12 row">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Carrera*"/></strong>
+                                            <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarCarrera}"
+                                                             class="form-control" 
+                                                             id="editarCarrera">
+                                                <f:selectItems value="#{controllerDetallesPlanAsignatura.listaCarreras}" var="carrera"
+                                                               itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerDetallesPlanAsignatura.actualizarCarrera()}" execute="editarCarrera" render="msnCarrera editarPlan"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnCarrera" for="editarCarrera" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Plan Estudio*"/></strong>
+                                            <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarPlan}"
+                                                             class="form-control" disabled="#{controllerDetallesPlanAsignatura.activarModificacionPlan}"
+                                                             id="editarPlan">
+                                                <f:selectItem itemLabel="Seleccione Plan Estudio" itemValue="null" />
+                                                <f:selectItems value="#{controllerDetallesPlanAsignatura.listaPlanEstudios}" var="plan"
+                                                               itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerDetallesPlanAsignatura.validarPlan()}" execute="editarPlan" render="msnPlan"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnPlan" for="editarPlan" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Asignatura*"/></strong>
+                                            <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarAsignatura}"
+                                                             class="form-control" 
+                                                             id="editarAsignatura">
+                                                <f:selectItems value="#{controllerDetallesPlanAsignatura.listaAsignaturas}" var="carrera"
+                                                               itemLabel="#{carrera.nombreasignatura}" itemValue="#{carrera}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerDetallesPlanAsignatura.validarAsignatura()}" execute="editarAsignatura" render="msnAsignatura editarAsignatura"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnAsignatura" for="editarAsignatura" style="color: red"/></h6>
+                                        </div>
+                                    </fieldset>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesPlanAsignatura.mensajeFormulario}" style="color: #{controllerDetallesPlanAsignatura.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesPlanAsignatura.registrarModificacionPlanEstudio()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarplanasignatura" actionListener="#{controllerDetallesPlanAsignatura.restaurarInformacionPlanEstudio()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

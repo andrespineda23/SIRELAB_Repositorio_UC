@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!--[if IE]>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <![endif]-->
+        <!-- Favicon Icon -->
+        <link rel="icon" href="assets/img/favicon2.ico" />
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+        <!-- BOOTSTRAP CORE CSS -->
+        <link href="assets/css/bootstrap.css" rel="stylesheet" />
+        <!-- ION ICONS STYLES -->
+        <link href="assets/css/ionicons.css" rel="stylesheet" />
+        <!-- FONT AWESOME ICONS STYLES -->
+        <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM CSS -->
+        <link href="assets/css/style.css" rel="stylesheet" />
+        <!-- IE10 viewport hack  -->
+        <script src="assets/js/ie-10-view-port.js"></script>
+        <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <!-- HEADER SECTION START-->
+            <header id="header">
+                <div class="container" >
+                    <div class="row"  >
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 logo-wrapper">
+                            <img src="assets/img/logo-universidad-central.png" alt="" />
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right" >
+                            <div class="menu-links ">
+                                <a href="#header"> <i class="ion-ios-home-outline"></i> </a>
+                                <a href="#about"> <i class="ion-ios-camera-outline"></i> </a>
+                            </div>                    
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </header>
+            <!-- HEADER SECTION END-->
+            <!--HOME SECTION START  -->
+            <div id="home">
+                <div class="overlay">
+                    <div class="container">
+                        <div class="row " >
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <h1>SIRELAB</h1>
+                                <h4>
+                                    Universidad Central - Bogotá, Colombia.
+                                </h4>
+                                <div class="form-group">
+                                    <label for="usuario" style="color:white">User</label>
+                                    <h:inputText class="form-control" value="#{controllerIndex.usuarioLogin}" id="usuarioLogin">
+                                        <f:ajax event="blur" listener="#{controllerIndex.validarUsuario()}" execute="usuarioLogin"  />
+                                    </h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contrasenia" style="color:white">Password</label>
+                                    <h:inputSecret class="form-control" value="#{controllerIndex.passwordLogin}" id="passwordLogin">
+                                        <f:ajax event="blur" listener="#{controllerIndex.validarContrasenia()}" />
+                                    </h:inputSecret>
+                                </div>
+                                <span></span>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <h:commandButton value="Ingresar" action="#{controllerIndex.retornarPaginaSiguiente()}" class="btn btn-success">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12" style="color: white">
+                                        <h:outputText value="#{controllerIndex.mensajeFormulario}"/>    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h:commandLink value="Recuperar Contraseña" action="recuperarcontrasenia" actionListener="#{controllerIndex.limpiarProcesoControlador()}">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandLink>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <!--HOME SECTION END  -->
+            <!-- ABOUT SECTION START-->
+            <section id="about">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <h2 class="head-line">Que es <strong>SIRELAB</strong>?</h2>
+                            <p >
+                                Morbi mollis lectus et ipsum sollicitudin varius.
+                                Aliquam tempus ante placerat, consectetur tellus nec, porttitor nulla.
+                                Maecenas a quam erat. Praesent vehicula ut magna sit amet ultrices.
+                            </p>
+                            <div class="row text-center">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row pad-bottom">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="icon-wrapper">
+                                                <i class="ion-tshirt-outline"></i>
+                                            </div>                   
+                                            <h4>Control de Usuarios</h4>
+                                            Algo relacionado con persnal humano.
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="icon-wrapper">
+                                                <i class="ion-monitor"></i>
+                                            </div>
+                                            <h4>Control de Inventario</h4>
+                                            Algo de uso de tecnologia.
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="icon-wrapper">
+                                                <i class="ion-clipboard"></i>
+                                            </div>
+                                            <h4>Control de Reservas</h4>
+                                            Algo relacionado con solución de problemas
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                            <img src="assets/img/phone.png" class="img-side" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ABOUT SECTION END-->
+            <!-- FEATURES SECTION START-->
+            <section id="features">
+                <div class="container">
+
+                    <div class="row text-center">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                            <div class="icon-wrapper">
+
+
+                                <i class="ion-chatboxes"></i>
+                            </div>
+                            <h4>Stable relaese  </h4>
+                            Consectetur adipiscing elit felis dolor .
+
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                            <h2 class="head-line">Great Resource Found</h2>
+                            <p>
+                                Integer vehicula efficitur dictum. Integer pharetra venenatis enim non porta.
+
+                            </p>
+                            <a href="#header" class="btn btn-custom btn-three" >Nothing To Hide Here</a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <div class="icon-wrapper">
+                                <i class="ion-email-unread"></i>
+                            </div>
+                            <h4>Stable relaese  </h4>
+                            Consectetur adipiscing elit felis dolor .
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+            <!-- FEATURES SECTION END-->     
+            <footer>
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            &#169; 2015 - Andrés Pineda | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Pineda Software </a> 
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- FOOTER SECTION END-->
+
+            <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+            <!-- CORE JQUERY  SCRIPTS -->
+            <script src="assets/js/jquery-1.11.1.js"></script>
+            <!-- BOOTSTRAP SCRIPTS  -->
+            <script src="assets/js/bootstrap.js"></script>
+            <!-- SCROLLING SCRIPTS PLUGIN  -->
+            <script src="assets/js/jquery.easing.min.js"></script>
+            <!-- CUSTOM SCRIPTS   -->
+            <script src="assets/js/custom.js"></script>
+        </h:form>
+
+    </h:body>
+</html>

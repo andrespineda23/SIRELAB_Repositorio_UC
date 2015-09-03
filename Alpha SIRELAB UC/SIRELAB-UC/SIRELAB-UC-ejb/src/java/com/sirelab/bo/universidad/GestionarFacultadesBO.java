@@ -1,0 +1,92 @@
+package com.sirelab.bo.universidad;
+
+import com.sirelab.bo.interfacebo.universidad.GestionarFacultadesBOInterface;
+import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
+import com.sirelab.dao.interfacedao.FacultadDAOInterface;
+import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Facultad;
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author ANDRES PINEDA
+ */
+@Stateless
+public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
+
+    @EJB
+    FacultadDAOInterface facultadDAO;
+    @EJB
+    DepartamentoDAOInterface departamentoDAO;
+
+    @Override
+    public List<Facultad> consultarFacultadesPorParametro(Map<String, String> filtros) {
+        try {
+            List<Facultad> lista = facultadDAO.buscarFacultadesPorFiltrado(filtros);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarFacultadBO consultarFacultadesPorParametro : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public void crearNuevaFacultad(Facultad facultad) {
+        try {
+            facultadDAO.crearFacultad(facultad);
+        } catch (Exception e) {
+            System.out.println("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString());
+        }
+    }
+
+    @Override
+    public void modificarInformacionFacultad(Facultad facultad) {
+        try {
+            facultadDAO.editarFacultad(facultad);
+        } catch (Exception e) {
+            System.out.println("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString());
+        }
+    }
+
+    @Override
+    public Facultad obtenerFacultadPorIDFacultad(BigInteger idFacultad) {
+        try {
+            Facultad registro = facultadDAO.buscarFacultadPorID(idFacultad);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarFacultadBO obtenerFacultadPorIDFacultad : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Facultad obtenerFacultadPorIDCodigo(String codigo) {
+        try {
+            Facultad registro = facultadDAO.buscarFacultadPorCodigo(codigo);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarFacultadBO obtenerFacultadPorIDCodigo : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarCambioEstadoFacultad(BigInteger facultad) {
+        try {
+            List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
+            if (null == lista) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarFacultadBO Override : " + e.toString());
+            return null;
+        }
+    }
+
+}

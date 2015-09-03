@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <div class="row">
+                            <div class="text-center">
+                                <h1>Variables de Usuario</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Variables Usuario</li>
+                            </ol>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="container">
+                                <div id="resultadosBusquedaTP" class="row clearfix">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>TIPOS PERFILES REGISTRADOS</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTableTP" var="itemTP" 
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerVariablesUsuario.listaTiposPerfilesTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTP.nombre}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Codigo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTP.codigo}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre Registro"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTP.nombreregistro}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Codigo Registro"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTP.codigoregistro}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" rendered="#{((itemTP.idtipoperfil eq 1) or (itemTP.idtipoperfil eq 2))}" action="detallestipoperfil" actionListener="#{controllerDetallesTipoPerfil.recibirIDDetalleTipoPerfil(itemTP.idtipoperfil)}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorTipoPerfil()}" disabled="#{controllerVariablesUsuario.bloquearPagAntTipoPerfil}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteTipoPerfil()}" disabled="#{controllerVariablesUsuario.bloquearPagSigTipoPerfil}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                                <br></br>
+                                <div class="left pull-left">
+                                    <h:commandButton value="Nuevo Tipo Perfil" action="registrartipoperfil" class="btn btn-success"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br></br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr></hr>
+                                </div>
+                            </div>
+                            <br></br>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="container">
+                                <div id="resultadosBusquedaTU" class="row clearfix">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>TIPOS USUARIO REGISTRADOS</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTableTU" var="itemTU" 
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerVariablesUsuario.listaTiposUsuarioTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTU.nombretipousuario}"/>
+                                                </h:column>  
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorTipoUsuario()}" disabled="#{controllerVariablesUsuario.bloquearPagAntTipoUsuario}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteTipoUsuario()}" disabled="#{controllerVariablesUsuario.bloquearPagSigTipoUsuario}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                                <br></br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br></br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr></hr>
+                                </div>
+                            </div>
+                            <br></br>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="container">
+                                <div id="resultadosBusquedaTP" class="row clearfix">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>TIPOS CARGOS REGISTRADOS</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTableTC2" var="itemTC2" 
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerVariablesUsuario.listaTiposCargosTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTC2.nombrecargo}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="detallestipocargo" actionListener="#{controllerDetallesTipoCargo.recibirIDDetalleTipoCargo(itemTC2.idtipocargo)}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorTipoCargo()}" disabled="#{controllerVariablesUsuario.bloquearPagAntTipoCargo}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteTipoCargo()}" disabled="#{controllerVariablesUsuario.bloquearPagSigTipoCargo}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                                <br></br>
+                                <div class="left pull-left">
+                                    <h:commandButton value="Nuevo Tipo Cargo" action="registrartipocargo" class="btn btn-success"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br></br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr></hr>
+                                </div>
+                            </div>
+                            <br></br>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="container">
+                                <div id="resultadosBusquedaTP" class="row clearfix">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>CONVENIOS REGISTRADOS</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTableTC3" var="itemTC2" 
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerVariablesUsuario.listaConveniosTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTC2.nombreconvenio}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Valor/Costo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTC2.valor}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Estado"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTC2.strEstado}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha Inicio"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTC2.fechainicial}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha Fin"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemTC2.fechafinal}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="detallesconvenio" actionListener="#{controllerDetallesConvenio.recibirIDDetalleConvenio(itemTC2.idtipocargo)}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorConvenio()}" disabled="#{controllerVariablesUsuario.bloquearPagAntConvenio}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteConvenio()}" disabled="#{controllerVariablesUsuario.bloquearPagSigConvenio}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                                <br></br>
+                                <div class="left pull-left">
+                                    <h:commandButton value="Nuevo Convenio" action="registrarconvenio" class="btn btn-success"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br></br>
+                            <br></br>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="inicioadministrador" actionListener="#{controllerVariablesUsuario.limpiarInformacion()}" class="btn btn-primary" immediate="true">
+                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

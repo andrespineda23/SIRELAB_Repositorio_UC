@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Administrar Insumos</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN INSUMOS</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Basica</legend>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="parametroNombre">
+                                                                Nombre Insumo
+                                                            </label>
+                                                            <h:inputText maxlength="45" value="#{controllerAdministrarInsumos.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="parametroCodigo">
+                                                                Codigo Insumo
+                                                            </label>
+                                                            <h:inputText maxlength="20" value="#{controllerAdministrarInsumos.parametroCodigo}" class="form-control" id="parametroCodigo" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="parametroModelo">
+                                                                Modelo Insumo
+                                                            </label>
+                                                            <h:inputText maxlength="45" value="#{controllerAdministrarInsumos.parametroModelo}" class="form-control" id="parametroModelo" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="parametroMarca">
+                                                            Marca Insumo
+                                                        </label>
+                                                        <h:inputText maxlength="45" value="#{controllerAdministrarInsumos.parametroMarca}" class="form-control" id="parametroMarca" />
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3">
+                                                    <label for="parametroProveedor">
+                                                        Proveedor del Insumo
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarInsumos.parametroProveedor}"
+                                                                     class="form-control"
+                                                                     id="parametroProveedor">
+                                                        <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
+                                                        <f:selectItems value="#{controllerAdministrarInsumos.listaProveedores}" var="proveedor"
+                                                                       itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
+                                                        <f:converter converterId="ConverterGenerico" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="col-md-9">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarInsumos.cantidadRegistros}"/>
+                                            </div>
+                                            <div class="col-md-8">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarInsumos.buscarInsumosPorParametros()}">
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarInsumos.limpiarDatos()}" class="btn btn-default right" >
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item" 
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerAdministrarInsumos.listaInsumosTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Nombre"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.nombreinsumo}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Codigo"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.codigoinsumo}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Marca"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.marcainsumo}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Modelo"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.modeloinsumo}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Proveedor"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.proveedor.nombreproveedor}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="detallesinsumo" actionListener="#{controllerDetallesInsumo.recibirIDInsumosDetalles(item.idinsumo)}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarInsumos.cargarPaginaAnteriorInsumo()}" disabled="#{controllerAdministrarInsumos.bloquearPagAntInsumo}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarInsumos.cargarPaginaSiguienteInsumo()}" disabled="#{controllerAdministrarInsumos.bloquearPagSigInsumo}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <h:commandButton value="Nuevo Insumo" class="btn btn-success" action="registrarinsumo" actionListener="#{controllerAdministrarInsumos.limpiarProcesoBusqueda()}"/>
+                            </div>
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerAdministrarInsumos.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

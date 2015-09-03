@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"       xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../recursos/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../../recursos/css/landing-page.css" />
+
+        <!-- Custom Fonts -->
+        <link href="../../recursos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;" >
+        <h:form id="form">
+            <div class="container">
+                <div class="row">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                        <div class="container topnav">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand">
+                                    <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                    <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                </a>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                    </nav>
+                </div>
+                <div class="row">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row clearfix">
+                            <div class="col-md-12 column">
+                                <div class="tabbable" id="tabs-553557">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#panelBasico" data-toggle="tab">Configuración Basica</a>
+                                        </li>
+                                        <li >
+                                            <a href="#panelSeguridad" data-toggle="tab">Seguridad</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="panelBasico">
+                                            <div class="col-md-12 row">
+                                                <h:form id="form1">
+                                                    <fieldset>
+                                                        <legend class="text-info">Datos Personales</legend>
+                                                        <div class="form-group">
+                                                            <strong><h:outputText value="#{controllerConfigurarUsuario.mensajeNombre}*"/></strong>
+                                                            <h:inputText maxlength="45" value="#{controllerConfigurarUsuario.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio." >
+                                                                <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarNombrePersona()}" execute="inputNombre" render="inputNombre msnNombre" />
+                                                            </h:inputText>
+                                                            <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <strong><h:outputText value="#{controllerConfigurarUsuario.mensajeNombre}*"/></strong>
+                                                            <h:inputText maxlength="45"  value="#{controllerConfigurarUsuario.inputApellido}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio."  >
+                                                                <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarApellidoPersona()}" execute="inputApellido" render="inputApellido msnApellido"/>
+                                                            </h:inputText>
+                                                            <h6><h:message id="msnApellido" for="inputApellido" style="color: red"></h:message></h6>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <strong><h:outputText value="Número Identificación*"/></strong>
+                                                            <h:inputText maxlength="20"  value="#{controllerConfigurarUsuario.inputID}" required="true" class="form-control" id="inputID" requiredMessage="El campo Documento es obligatorio." >
+                                                                <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarIdentificacionPersona()}" execute="inputID" render="inputID msnID"/>
+                                                            </h:inputText>
+                                                            <h6><h:message id="msnID" for="inputID" style="color: red"/></h6>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <strong><h:outputText value="Correo Contacto*"/></strong>
+                                                            <h:inputText maxlength="29" readonly="#{controllerConfigurarUsuario.activarEmail}" value="#{controllerConfigurarUsuario.inputEmail}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio."/>
+                                                            <h6><h:message id="msnEmail" for="inputEmail" style="color: red"/></h6>
+                                                        </div>
+                                                        <fieldset>
+                                                            <legend class="h5 text-info">Datos Opcionales</legend>
+                                                            <div class="form-group">
+                                                                <strong><h:outputText value="Número Fijo"/></strong>
+                                                                <h:inputText maxlength="20"  value="#{controllerConfigurarUsuario.inputTelefono1}"  class="form-control" id="inputTelefono1"  >
+                                                                    <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarDatosNumericosPersona(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1"/>
+                                                                </h:inputText>
+                                                                <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"/></h6>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <strong><h:outputText value="Número Celular"/></strong>
+                                                                <h:inputText maxlength="20"  value="#{controllerConfigurarUsuario.inputTelefono2}"  class="form-control" id="inputTelefono2" >
+                                                                    <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarDatosNumericosPersona(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2"/>
+                                                                </h:inputText>
+                                                                <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"/></h6>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <strong><h:outputText value="Dirección Residencia"/></strong>
+                                                                <h:inputText maxlength="45"  value="#{controllerConfigurarUsuario.inputDireccion}"  class="form-control" id="inputDireccion" >
+                                                                    <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarDireccionPersona()}" execute="inputDireccion" render="inputDireccion msnDireccion"/>
+                                                                </h:inputText>
+                                                                <h6><h:message id="msnDireccion" for="inputDireccion" style="color: red"/></h6>
+                                                            </div>
+                                                        </fieldset>
+                                                    </fieldset>
+                                                    <div class="row col-md-12">
+                                                        <div class="left pull-left">
+                                                            <strong><h:outputText id="mensajeFormulario1" class="text-uppercase" value="#{controllerConfigurarUsuario.mensajeFormulario1}"/></strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right pull-right">
+                                                        <h:commandButton value="Aceptar" id="aceptar" actionListener="#{controllerConfigurarUsuario.registrarModificacionUsuario()}" class="btn btn-success" >
+                                                            <f:ajax execute="@form" render="form" />
+                                                        </h:commandButton>
+                                                        <span></span>
+                                                        <span></span>
+                                                        <h:commandButton value="Cancelar" id="cancelar" class="btn btn-danger" actionListener="#{controllerConfigurarUsuario.cancelarModificacionUsuario()}" immediate="true">
+                                                            <f:ajax execute="@form" render="form" />
+                                                        </h:commandButton>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="panelSeguridad">
+                                            <div class="row col-md-12">
+                                                <h:form id="form2">
+                                                    <fieldset>
+                                                        <legend class="text-info">Cambio de Contraseña</legend>
+                                                        <div class="form-group">
+                                                            <strong><h:outputText value="Contraseña Anterior*"/></strong>
+                                                            <h:inputSecret maxlength="20" value="#{controllerConfigurarUsuario.inputContrasenia}" required="true" class="form-control" id="inputContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
+                                                                <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarContraseniaPersona()}" execute="inputContrasenia" render="msnContrasenia" />
+                                                            </h:inputSecret>
+                                                            <h6><h:message id="msnContrasenia" for="inputContrasenia" style="color: red"/></h6>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <strong><h:outputText value="Nueva Contraseña*"/></strong>
+                                                            <h:inputSecret maxlength="20" value="#{controllerConfigurarUsuario.inputContraseniaNueva}" required="true" class="form-control" id="inputContraseniaNueva" requiredMessage="El campo Contraseña es obligatorio.">
+                                                                <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarContraseniaNuevaPersona()}" execute="inputContraseniaNueva" render="msnContraseniaNueva" />
+                                                            </h:inputSecret>
+                                                            <h6><h:message id="msnContraseniaNueva" for="inputContraseniaNueva" style="color: red"/></h6>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <strong><h:outputText value="Confirmar Contraseña*"/></strong>
+                                                            <h:inputSecret maxlength="20" value="#{controllerConfigurarUsuario.inputContraseniaConfirma}" required="true" class="form-control" id="inputContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
+                                                                <f:ajax event="blur" listener="#{controllerConfigurarUsuario.validarContraseniaConfirmaPersona()}" execute="inputContraseniaConfirma" render="msnContraseniaConfirma" />
+                                                            </h:inputSecret>
+                                                            <h6><h:message id="msnContraseniaConfirma" for="inputContraseniaConfirma" style="color: red"/></h6>
+                                                        </div>
+
+                                                        <div class="row col-md-12">
+                                                            <div class="left pull-left">
+                                                                <strong><h:outputText id="mensajeFormulario2" class="text-uppercase" value="#{controllerConfigurarUsuario.mensajeFormulario2}"/></strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="right pull-right">
+                                                            <h:commandButton value="Aceptar" id="aceptar2" actionListener="#{controllerConfigurarUsuario.actualizarContrasenia()}" class="btn btn-success" >
+                                                                <f:ajax execute="@form" render="form" />
+                                                            </h:commandButton>
+                                                            <span></span>
+                                                            <span></span>
+                                                            <h:commandButton value="Cancelar" id="cancelar2" class="btn btn-danger" actionListener="#{controllerConfigurarUsuario.cancelarActualizarContrasenia()}" immediate="true">
+                                                                <f:ajax execute="@form" render="form" />
+                                                            </h:commandButton>
+                                                        </div>
+                                                    </fieldset>
+                                                </h:form>
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-11"></div>
+                    <div class="col-md-1">
+                        <h:commandButton value="Atras" action="#{controllerConfigurarUsuario.cancelarProcesosModificacion()}"  immediate="true" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <br></br><div id="footer">
+	    	<ui:insert name="footer" >
+	    	  <ui:include src="/xhtml/footer.xhtml" />
+	    	</ui:insert>
+    	    </div>
+        </h:form>
+    </h:body>
+</html>

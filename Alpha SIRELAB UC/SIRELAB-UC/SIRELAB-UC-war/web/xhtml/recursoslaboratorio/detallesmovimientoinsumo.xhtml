@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Administrar Insumos</a></li>
+                                <li><a href="#">Detalles Insumo</a></li>
+                                <li><a href="#">Administrar Movimientos</a></li>
+                                <li class="active">Detalle Movimiento</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <h2 class="info">
+                                    Información Registro
+                                </h2>
+                                <p>
+                                    Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                </p>
+                                <p>
+                                    Este registro es unicamente para movimientos de los insumos de los laboratorios.
+                                </p>
+                            </div>
+                            <div class="col-md-12 row">
+                                <fieldset>
+                                    <legend class="text-info">Datos Basicos</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Tipo Movimiento*"/></strong>
+                                        <h:inputText maxlength="45" value="#{controllerDetallesMovimientoInsumo.editarTipoMovimiento}" required="true" class="form-control" id="editarTipoMovimiento"  requiredMessage="El campo Tipo es obligatorio.">
+                                            <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarTipoMovimiento()}" execute="editarTipoMovimiento" render="editarTipoMovimiento msnTipoMovimiento" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnTipoMovimiento" for="editarTipoMovimiento" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Costo Movimiento*"/></strong>
+                                        <h:inputText maxlength="10"  value="#{controllerDetallesMovimientoInsumo.editarCostoMovimiento}" required="true" class="form-control" id="editarCostoMovimiento" requiredMessage="El campo Costo es obligatorio-">
+                                            <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarCostoMovimiento()}" execute="editarCostoMovimiento" render="editarCostoMovimiento msnCostoMovimiento" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnCostoMovimiento" for="editarCostoMovimiento" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Cantidad*"/></strong>
+                                        <h:inputText maxlength="2"  value="#{controllerDetallesMovimientoInsumo.editarCantidadMovimiento}" required="true" class="form-control" id="editarCantidadMovimiento" requiredMessage="El campo Descripción es obligatorio.">
+                                            <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarCantidadMovimiento()}" execute="editarCantidadMovimiento" render="editarCantidadMovimiento msnCantidadMovimiento" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnCantidadMovimiento" for="editarCantidadMovimiento" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Fecha Movimiento*"/></strong>
+                                        <h:inputText value="#{controllerDetallesMovimientoInsumo.editarFechaMovimiento}" required="true" class="form-control" id="editarFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
+                                            <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarFechaMovimiento()}" execute="editarFechaMovimiento" render="editarFechaMovimiento msnFechaMovimiento" />
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnFechaMovimiento" for="editarFechaMovimiento" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Insumo Asociado*"/></strong>
+                                        <h:inputText readonly="true"  value="#{controllerDetallesMovimientoInsumo.editarInsumo.nombreinsumo}" class="form-control" id="editarInsumoMovimiento" />
+                                    </div>
+                                </fieldset>
+                                <hr class="intro-divider"/>
+                                <div class="row col-md-12">
+                                    <div class="text-center">
+                                        <h5>
+                                            Resultados del Formulario
+                                        </h5>
+                                        <strong>
+                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesMovimientoInsumo.mensajeFormulario}" style="color: #{controllerDetallesMovimientoInsumo.colorMensaje}}"/>
+                                        </strong>
+                                    </div>
+                                    <br></br>
+                                </div>
+                                <hr class="intro-divider"/>
+                                <div class="right pull-right">
+                                    <h:commandButton class="btn btn-success" value="Modificar" actionListener="#{controllerDetallesMovimientoInsumo.registrarModificacionMovimiento()}">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                    <span></span>
+                                    <span></span>
+                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesMovimientoInsumo.limpiarRegistroMovimientoLaboratorio()}" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerDetallesMovimientoInsumo.editarInsumo.idinsumo)}" immediate="true">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Administrar Insumos</a></li>
+                                <li><a href="#">Detalles Insumo</a></li>
+                                <li class="active">Administrar Movimientos</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN INSUMO</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Basica</legend>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroNombre">
+                                                                Nombre Insumo
+                                                            </label>
+                                                            <h:inputText readonly="true" value="#{controllerAdministrarMovimientoInsumo.insumoDetalle.nombreinsumo}" class="form-control" id="parametroNombre" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroCodigo">
+                                                                Codigo Insumo
+                                                            </label>
+                                                            <h:inputText readonly="true" value="#{controllerAdministrarMovimientoInsumo.insumoDetalle.codigoinsumo}" class="form-control" id="parametroCodigo" />
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                            <div class="row col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="parametroProveedor">
+                                                            Proveedor Insumo
+                                                        </label>
+                                                        <h:inputText readonly="true" value="#{controllerAdministrarMovimientoInsumo.insumoDetalle.proveedor.nombreproveedor}" class="form-control" id="parametroProveedor" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="parametroNit">
+                                                            NIT Proveedor
+                                                        </label>
+                                                        <h:inputText readonly="true" value="#{controllerAdministrarMovimientoInsumo.insumoDetalle.proveedor.nitproveedor}" class="form-control" id="parametroNit" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br></br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <h:outputText value="Cantidad de registros: #{controllerAdministrarMovimientoInsumo.cantidadRegistros}"/>
+                                        </div>
+                                        <div class="col-md-10">
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>MOVIMIENTOS DEL INSUMO</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item"  
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerAdministrarMovimientoInsumo.listaMovimientosInsumoTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Tipo Movimiento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.tipomovimiento}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Cantidad"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.cantidadmovimiento}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Fecha"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.fechamovimiento}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                        </h:outputText>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Costo del Movimiento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.costomovimiento}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarMovimientoInsumo.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesMovimientoInsumo.recibirIDMovimientoInsumo(item.idmovimientoinsumo)}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarMovimientoInsumo.cargarPaginaAnteriorMovimientoInsumo()}" disabled="#{controllerAdministrarMovimientoInsumo.bloquearPagAntMovimiento}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarMovimientoInsumo.cargarPaginaSiguienteMovimientoInsumo()}" disabled="#{controllerAdministrarMovimientoInsumo.bloquearPagSigMovimiento}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <h:commandButton value="Nuevo Movimiento" action="#{controllerAdministrarMovimientoInsumo.registrarNuevoMovimiento()}" actionListener="#{controllerRegistrarMovimientoInsumo.recibirIDInsumo(controllerAdministrarMovimientoInsumo.insumoDetalle.idinsumo)}" class="btn btn-success"/>
+                            </div>
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerAdministrarMovimientoInsumo.limpiarProcesoBusqueda()}"  class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Administrar Administradores</a></li>
+                                <li class="active">Registrar Administrador</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="row col-md-12">
+                                    <h2 class="info">
+                                        Información Registro
+                                    </h2>
+                                    <p>
+                                        Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                    </p>
+                                    <p>
+                                        Este registro es unicamente para administrador, al momento de ser registrado en el sistema su estado sera ACTIVO, en caso contrario es necesario que un administrador del sistema gestione el proceso de activación. 
+                                    </p>
+                                    <p class="right">
+                                        <h4 style="color: #66afe9; text-transform: uppercase">
+                                            Instructivo de ingreso de información
+                                        </h4>
+                                        NOMBRE - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" Pedro" style="color: darkblue;"/></strong>
+                                        <br></br>
+                                        APELLIDO - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" Ruiz" style="color: darkblue;"/></strong>
+                                        <br></br>
+                                        NÚMERO IDENTIFICACIÓN - Longitud (Min. 8 - Max. 45). Ejemplo: <strong><h:outputText value=" 990088721" style="color: darkblue;"/></strong>
+                                        <br></br> 
+                                        CORREO INST. - Longitud (Min. 4 - Max. 29). Ejemplo: <strong><h:outputText value=" pruizn1" style="color: darkblue;"/></strong>
+                                        <br></br>
+                                        CORREO PERSONAL - Longitud (Min. 15 - Max. 60). Ejemplo: <strong><h:outputText value=" pedro.ruiz.1@gmail.com" style="color: darkblue;"/></strong>
+                                        <br></br>
+                                        NUMERO FIJO - Longitud Longitud 7. Ejemplo: <strong><h:outputText value=" 7653210" style="color: darkblue;"/></strong>
+                                        <br></br>
+                                        NUMERO CELULAR - Longitud 10. Ejemplo: <strong><h:outputText value=" 3007653210" style="color: darkblue;"/></strong>
+                                        <br></br>
+                                        DIRECCIÓN - Longitud (Min. 8 - Max.45). Formato:   <strong><h:outputText value=" Av Cra 75 # 11-11" style="color: darkblue;"/></strong>
+                                    </p>
+                                </div>
+
+                                <div class="col-md-12 row">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Personales</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre(s) Administrador*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarAdministrador.nuevoNombre}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarNombreAdministrador()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Apellido(s) Administrador*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarAdministrador.nuevoApellido}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoApellido" requiredMessage="El campo Apellido es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarApellidoAdministrador()}" execute="nuevoApellido" render="nuevoApellido msnApellido" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnApellido" for="nuevoApellido" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Número Identificación*"/></strong>
+                                            <h:inputText maxlength="20" value="#{controllerRegistrarAdministrador.nuevoDocumento}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoDocumento" requiredMessage="El campo Documento es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarIdentificacionAdministrador()}" execute="nuevoDocumento" render="nuevoDocumento msnID" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnID" for="nuevoDocumento" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Correo Institucional*"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="29" value="#{controllerRegistrarAdministrador.nuevoCorreo}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoCorreo" requiredMessage="El campo Correo es obligatorio.">
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarCorreoAdministrador()}" execute="nuevoCorreo" render="nuevoCorreo msnCorreo" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">@ucentral.edu.co</span>
+                                            </div>
+                                            <h6><h:message id="msnCorreo" for="nuevoCorreo" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Usuario*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarAdministrador.nuevoUsuario}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoUsuario" requiredMessage="El campo Usuario es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarUsuarioAdministrador()}" execute="nuevoUsuario" render="nuevoUsuario msnUsuario" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnUsuario" for="nuevoUsuario" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Contraseña*"/></strong>
+                                            <h:inputSecret maxlength="45" value="#{controllerRegistrarAdministrador.nuevoContrasenia}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarContraseniaAdministrador()}" execute="nuevoContrasenia" render="msnContrasenia" />
+                                            </h:inputSecret>
+                                            <h6><h:message id="msnContrasenia" for="nuevoContrasenia" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Confirmar Contraseña*"/></strong>
+                                            <h:inputSecret maxlength="45" value="#{controllerRegistrarAdministrador.nuevoContraseniaConfirma}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarContraseniaConfirmaAdministrador()}" execute="nuevoContraseniaConfirma" render="msnContraseniaConfirma" />
+                                            </h:inputSecret>
+                                            <h6><h:message id="msnContraseniaConfirma" for="nuevoContraseniaConfirma" style="color: red"/></h6>
+                                        </div>
+                                        <fieldset>
+                                            <legend class="h5 text-info">Datos Opcionales</legend>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Número Fijo"/></strong>
+                                                <h:inputText maxlength="20" value="#{controllerRegistrarAdministrador.nuevoTelefono1}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" class="form-control" id="nuevoTelefono1" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarDatosNumericosAdministrador(1)}" execute="nuevoTelefono1" render="nuevoTelefono1 msnTelefono1" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnTelefono1" for="nuevoTelefono1" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Número Celular"/></strong>
+                                                <h:inputText maxlength="20" value="#{controllerRegistrarAdministrador.nuevoTelefono2}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" class="form-control" id="nuevoTelefono2" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarDatosNumericosAdministrador(2)}" execute="nuevoTelefono2" render="nuevoTelefono2 msnTelefono2" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnTelefono2" for="nuevoTelefono2" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Dirección Residencia"/></strong>
+                                                <h:inputText maxlength="45" value="#{controllerRegistrarAdministrador.nuevoDireccion}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" class="form-control" id="nuevoDireccion" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarDireccionAdministrador()}" execute="nuevoDireccion" render="nuevoDireccion msnDireccion" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnDireccion" for="nuevoDireccion" style="color: red"/></h6>
+                                            </div>
+                                        </fieldset>
+                                    </fieldset>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarAdministrador.mensajeFormulario}" style="color: #{controllerRegistrarAdministrador.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarAdministrador.activarAceptar}" actionListener="#{controllerRegistrarAdministrador.registrarNuevoAdministrador()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administraradministradores" actionListener="#{controllerRegistrarAdministrador.cancelarRegistroAdministrador()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarAdministrador.activarLimpiar}" actionListener="#{controllerRegistrarAdministrador.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

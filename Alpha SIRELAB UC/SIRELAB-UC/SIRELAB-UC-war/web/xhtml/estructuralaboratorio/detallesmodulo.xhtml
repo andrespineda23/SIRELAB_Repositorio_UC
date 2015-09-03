@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Administrar Modulos/Bancos</a></li>
+                                <li class="active">Detalles Modulo/Banco</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <h2 class="info">
+                                    Información Registro
+                                </h2>
+                                <p>
+                                    Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                </p>
+                                <p>
+                                    Este registro es unicamente para modulo/bancos de trabajo de una sala de laboratorio de la universidad, al momento de ser registrada en el sistema su estado sera ACTIVO, para su activación es necesario que un personal de laboratorio o administrador del sistema gestione el proceso. 
+                                </p>
+                                <p class="right">
+                                    <h4 style="color: #66afe9; text-transform: uppercase">
+                                        Instructivo de ingreso de información
+                                    </h4>
+                                    CODIGO - Longitud (Min. 4 - Max. 20). Ejemplo: <strong><h:outputText value=" 784512" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    NOMBRE - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Modulo de Trabajo I" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    COSTO ALQUILER - Longitud (Max. 15). Ejemplo: <strong><h:outputText value=" 1250000" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    COSTO INVERSIÓN - Longitud (Max. 12). Ejemplo: <strong><h:outputText value=" 23000000" style="color: darkblue;"/></strong>
+                                    <br></br>
+                                    CAPACIDAD - Longitud (Max. 2). Ejemplo: <strong><h:outputText value=" 24" style="color: darkblue;"/></strong>
+                                </p>
+                            </div>
+                            <div class="col-md-12 row">
+                                <fieldset>
+                                    <legend class="text-info">Datos Basicos</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Codigo Modulo*"/></strong>
+                                        <h:inputText maxlength="20" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.codigoModuloLaboratorio}" required="true" class="form-control" id="codigoModuloLaboratorio" requiredMessage="El campo Codigo es obligatorio.">
+                                            <f:ajax event="blur" listener="#{controllerDetallesModulo.validarCodigoModulo()}" execute="codigoModuloLaboratorio" render="codigoModuloLaboratorio msnCodigoModulo" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnCodigoModulo" for="codigoModuloLaboratorio" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Detalle Modulo*"/></strong>
+                                        <h:inputText maxlength="45" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.detalleModuloLaboratorio}" required="true" class="form-control" id="detalleModuloLaboratorio" requiredMessage="El campo Detalle es obligatorio.">
+                                            <f:ajax event="blur" listener="#{controllerDetallesModulo.validarDetalleModulo()}" execute="detalleModuloLaboratorio" render="detalleModuloLaboratorio msnDetalleModulo" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnDetalleModulo" for="detalleModuloLaboratorio" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Estado*"/></strong>
+                                        <h:inputText readonly="true" value="#{controllerDetallesModulo.moduloLaboratorioDetalles.strEstado}" required="true" class="form-control" id="estadoModuloLaboratorio" />
+                                    </div>
+                                    <fieldset>
+                                        <legend class="h5 text-info">Datos Opcionales</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Costo Alquiler"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="10" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.costoModuloLaboratorio}" required="true" class="form-control" id="costoModuloLaboratorio" >
+                                                    <f:ajax event="blur" listener="#{controllerDetallesModulo.validarCostoAlquilerModulo()}" execute="costoModuloLaboratorio" render="costoModuloLaboratorio msnCostoModulo" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">$</span>
+                                            </div>
+                                            <h6><h:message id="msnCostoModulo" for="costoModuloLaboratorio" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Costo Inversión"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="12" readonly="#{controllerDetallesModulo.activarEditar}"  value="#{controllerDetallesModulo.inversionModuloLaboratorio}" class="form-control" id="inversionModuloLaboratorio" >
+                                                    <f:ajax event="blur" listener="#{controllerDetallesModulo.validarInversionModulo()}" execute="inversionModuloLaboratorio" render="inversionModuloLaboratorio msnInversionModulo" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">$</span>
+                                            </div>
+                                            <h6><h:message id="msnInversionModulo" for="inversionModuloLaboratorio" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Capacidad Modulo (Cantidad Usuarios)"/></strong>
+                                            <h:inputText maxlength="2" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.capacidadModuloLaboratorio}" class="form-control" id="capacidadModuloLaboratorio" >
+                                                <f:ajax event="blur" listener="#{controllerDetallesModulo.validarCapacidadModulo()}" execute="capacidadModuloLaboratorio" render="capacidadModuloLaboratorio msnCapacidadModulo" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCapacidadModulo" for="capacidadModuloLaboratorio" style="color: red"/></h6>
+                                        </div>
+                                    </fieldset>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="text-info">Información Laboratorio</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Departamento*"/></strong>
+                                        <h:selectOneMenu value="#{controllerDetallesModulo.departamentoModuloLaboratorio}"
+                                                         class="form-control" readonly="#{controllerDetallesModulo.activarEditar}"
+                                                         id="departamentoSalaLaboratorio">
+                                            <f:selectItems value="#{controllerDetallesModulo.listaDepartamentos}" var="departamento"
+                                                           itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarDepartamentos()}" execute="departamentoModuloLaboratorio" render="laboratorioModuloLaboratorio laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnDepartamentoModulo"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnDepartamentoModulo" for="departamentoSalaLaboratorio" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Laboratorio*"/></strong>
+                                        <h:selectOneMenu value="#{controllerDetallesModulo.laboratorioModuloLaboratorio}"
+                                                         class="form-control" disabled="#{controllerDetallesModulo.activarLaboratorio}"
+                                                         id="laboratorioModuloLaboratorio">
+                                            <f:selectItems value="#{controllerDetallesModulo.listaLaboratorios}" var="laboratorio"
+                                                           itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratorios()}" execute="laboratorioModuloLaboratorio" render="laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnLaboratorioModulo"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnLaboratorioModulo" for="laboratorioModuloLaboratorio" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Area de Profundización*"/></strong>
+                                        <h:selectOneMenu value="#{controllerDetallesModulo.laboratorioPorAreaModuloLaboratorio}"
+                                                         class="form-control" disabled="#{controllerDetallesModulo.activarLabPorArea}"
+                                                         id="laboratorioPorAreaModuloLaboratorio">
+                                            <f:selectItems value="#{controllerDetallesModulo.listaLaboratoriosPorAreas}" var="area"
+                                                           itemLabel="#{area.areaprofundizacion.nombrearea}" itemValue="#{area}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratoriosPorAreas()}" execute="laboratorioPorAreaModuloLaboratorio" render="salaModuloLaboratorio msnLaboratorioPorAreaModulo"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnLaboratorioPorAreaModulo" for="laboratorioPorAreaModuloLaboratorio" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Sala de Laboratorio*"/></strong>
+                                        <h:selectOneMenu disabled="#{controllerDetallesModulo.activarSala}" value="#{controllerDetallesModulo.salaModuloLaboratorio}"
+                                                         class="form-control"
+                                                         id="salaModuloLaboratorio">
+                                            <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
+                                            <f:selectItems value="#{controllerDetallesModulo.listaSalasLaboratorio}" var="sala"
+                                                           itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarSalasLaboratorio()}" execute="salaModuloLaboratorio" render="msnSalaLaboratorioModulo"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnSalaLaboratorioModulo" for="salaModuloLaboratorio" style="color: red"/></h6>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="text-center">
+                                    <h5>
+                                        Resultados del Formulario
+                                    </h5>
+                                    <strong>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesModulo.mensajeFormulario}" style="color: #{controllerDetallesModulo.colorMensaje}}"/>
+                                    </strong>
+                                </div>
+                                <br></br>
+                            </div>
+                            <hr class="intro-divider"/>
+                            <div class="row col-md-12">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    <h:commandButton id="buttonActivar" disabled="#{controllerDetallesModulo.disabledActivar}" value="ACTIVAR" actionListener="#{controllerDetallesModulo.activarModuloLaboratorio()}" class="btn btn-primary right" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="col-md-2">
+                                    <h:commandButton id="buttonInactivar" disabled="#{controllerDetallesModulo.disabledInactivar}" value="INACTIVAR" actionListener="#{controllerDetallesModulo.inactivarModuloLaboratorio()}" class="btn btn-default right" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="col-md-2">
+                                    <h:commandButton id="buttonEditar" disabled="#{controllerDetallesModulo.disabledEditar}" value="EDITAR" actionListener="#{controllerDetallesModulo.activarEditarRegistro()}" class="btn btn-primary right" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="col-md-2">
+                                    <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesModulo.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesModulo.restaurarInformacionModuloLaboratorio()}" class="btn btn-default right" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="col-md-2">
+                                    <h:commandButton id="buttonGuardar" rendered="#{controllerDetallesModulo.visibleGuardar}" value="GUARDAR" actionListener="#{controllerDetallesModulo.almacenarModificacionesModulo()}" class="btn btn-primary right" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                            <div class="row col-md-12">
+                                <div class="col-md-11"></div>
+                                <div class="col-md-1">
+                                    <h:commandButton value="Atras" class="btn btn-danger" action="#{controllerDetallesModulo.restaurarInformacionModuloLaboratorio()}" actionListener="#{controllerAdministrarModulos.limpiarDatos()}" immediate="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

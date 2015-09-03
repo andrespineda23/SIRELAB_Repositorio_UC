@@ -92,7 +92,7 @@ public class ControllerRegistrarProveedor implements Serializable {
             int tam = nuevoNIT.length();
             if (tam >= 8) {
                 if (Utilidades.validarCaracteresAlfaNumericos(nuevoNIT)) {
-                    Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(nuevoVendedor);
+                    Proveedor registro = gestionarRecursoProveedoresBO.obtenerProveedorPorNIT(nuevoNIT);
                     if (registro == null) {
                         validacionesNIT = true;
                     } else {

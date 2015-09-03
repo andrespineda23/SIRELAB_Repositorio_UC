@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Administrar Equipos</a></li>
+                                <li><a href="#">Detalle Equipo</a></li>
+                                <li class="active">Administrar Hoja Vida</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN EQUIPO DE TRABAJO ASOCIADO</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Basica</legend>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroNombre">
+                                                                Nombre Componente
+                                                            </label>
+                                                            <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.nombreequipo}" class="form-control" id="parametroNombre" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroCodigo">
+                                                                Codigo Inventario Componente
+                                                            </label>
+                                                            <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.inventarioequipo}" class="form-control" id="parametroCodigo" />
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                            <div class="row col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="parametroModulo">
+                                                            Modelo Componente
+                                                        </label>
+                                                        <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.modulolaboratorio.detallemodulo}" class="form-control" id="parametroModulo" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="parametroSala">
+                                                            Serie Componente
+                                                        </label>
+                                                        <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.modulolaboratorio.salalaboratorio.nombresala}" class="form-control" id="parametroSala" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br></br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <h:outputText value="Cantidad de registros: #{controllerHojaVidaEquipo.cantidadRegistros}"/>
+                                        </div>
+                                        <div class="col-md-10">
+                                        </div> 
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>HISTORIAL DEL EQUIPO</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item"  
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerHojaVidaEquipo.listaHojasVidaEquiposTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Fecha Evento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.fechaevento}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                        </h:outputText>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Fecha Registro"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.fecharegistro}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                        </h:outputText>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalle del Evento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.detalleevento}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Tipo de Evento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.tipoevento.detalleevento}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="detalleshojavidaequipo" actionListener="#{controllerDetallesHojaVidaEquipo.recibirIDHojaVidaEquipo(item.idhojavidaequipo)}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerHojaVidaEquipo.cargarPaginaAnteriorHojaVidaEquipo()}" disabled="#{controllerHojaVidaEquipo.bloquearPagAntHojaVida}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerHojaVidaEquipo.cargarPaginaSiguienteHojaVidaEquipo()}" disabled="#{controllerHojaVidaEquipo.bloquearPagSigHojaVida}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <h:commandButton value="Nuevo Reporte HV" action="#{controllerHojaVidaEquipo.registrarNuevoHojaVida()}" actionListener="#{controllerRegistrarHojaVidaEquipo.recibirIDEquipo(controllerHojaVidaEquipo.equipoElementoDetalle.idequipoelemento)}" class="btn btn-success"/>
+                            </div>
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerHojaVidaEquipo.limpiarProcesoBusqueda()}"  class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

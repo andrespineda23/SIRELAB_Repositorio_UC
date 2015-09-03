@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Administrar Guías Laboratorio</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN GUÍAS LABORATORIO</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Basica</legend>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="parametroNombre">
+                                                                Nombre Guía
+                                                            </label>
+                                                            <h:inputText maxlength="100" value="#{controllerAdministrarManuales.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="parametroTipo">
+                                                                Tipo
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarManuales.parametroTipo}"
+                                                                             class="form-control"
+                                                                             id="parametroTipo">
+                                                                <f:selectItem itemLabel="Seleccione Tipo" itemValue="null" />
+                                                                <f:selectItem itemLabel="DIGITAL" itemValue="DIGITAL" />
+                                                                <f:selectItem itemLabel="FISICO" itemValue="FISICO" />
+                                                                <f:ajax event="blur" listener="#{controllerAdministrarManuales.actualizarTipo()}" execute="parametroTipo" render="parametroUbicacion" />
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="parametroUbicacion">
+                                                                Ubicación
+                                                            </label>
+                                                            <h:inputText maxlength="256" value="#{controllerAdministrarManuales.parametroUbicacion}" disabled="#{controllerAdministrarManuales.activarUbicacion}" class="form-control" id="parametroUbicacion" />
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarManuales.cantidadRegistros}"/>
+                                            </div>
+                                            <div class="col-md-8">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarManuales.buscarManualesPorParametros()}">
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarManuales.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item" 
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerAdministrarManuales.listaManualesTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Nombre"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.nombremanual}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Nombre"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.tipomanual}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Ubicación"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.ubicacionmanual}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="detallesmanual" actionListener="#{controllerDetallesManual.recibirIDManualesDetalles(item.idmanual)}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarManuales.cargarPaginaAnteriorManual()}" disabled="#{controllerAdministrarManuales.bloquearPagAntManual}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarManuales.cargarPaginaSiguienteManual()}" disabled="#{controllerAdministrarManuales.bloquearPagSigManual}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <h:commandButton value="Nueva Manual" class="btn btn-success" action="registrarmanual" actionListener="#{controllerAdministrarManuales.limpiarProcesoBusqueda()}"/>
+                            </div>
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerAdministrarManuales.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

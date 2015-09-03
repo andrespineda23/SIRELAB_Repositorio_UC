@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">A. Entidades Externas</a></li>
+                                <li><a href="#">A. Convenio -  Entidad Externa</a></li>
+                                <li class="active">Administrar Personas Contacto</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN PERSONAS CONTACTO</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Basica</legend>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroEntidad">
+                                                                Entidad Externa
+                                                            </label>
+                                                        </div>
+                                                        <h:inputText id="parametroEntidad" readonly="true" class="form-control" value="#{controllerAdministrarPersonaContacto.convenioPorEntidad.entidadexterna.persona.nombrespersona}"/>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroSector">
+                                                                Sector
+                                                            </label>
+                                                        </div>
+                                                        <h:inputText id="parametroSector" readonly="true" class="form-control" value="#{controllerAdministrarPersonaContacto.convenioPorEntidad.entidadexterna.sector}"/>
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                            <div class="row col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="parametroConvenio">
+                                                            Convenio
+                                                        </label>
+                                                    </div>
+                                                    <h:inputText id="parametroConvenio" readonly="true" class="form-control" value="#{controllerAdministrarPersonaContacto.convenioPorEntidad.convenio.nombreconvenio}"/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="parametroEstado">
+                                                            Estado Convenio-Entidad
+                                                        </label>
+                                                    </div>
+                                                    <h:inputText id="parametroEstado" readonly="true" class="form-control" value="#{controllerAdministrarPersonaContacto.convenioPorEntidad.strEstado}"/>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarPersonaContacto.cantidadRegistros}"/>
+                                            </div>
+                                            <div class="col-md-10">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item" 
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerAdministrarPersonaContacto.listaPersonasContactoTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Nombres"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.nombre}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Apellidos"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.apellido}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Identificación"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.identificacion}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Correo"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.correo}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Usuario"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.nombreusuario}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarPersonaContacto.verDetallesPersonaContacto()}" actionListener="#{controllerDetallesPersonaContacto.recibirIDPersonaContactoDetalles(item.idpersonacontacto)}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarPersonaContacto.cargarPaginaAnteriorPersonaContacto()}" disabled="#{controllerAdministrarPersonaContacto.bloquearPagAntPersonaContacto}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarPersonaContacto.cargarPaginaSiguientePersonaContacto()}" disabled="#{controllerAdministrarPersonaContacto.bloquearPagSigPersonaContacto}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <h:commandButton value="Nueva Persona" action="#{controllerAdministrarPersonaContacto.paginaNuevoRegistro()}" actionListener="#{controllerRegistrarPersonaContacto.recibirConvenioPorEntidad(controllerAdministrarPersonaContacto.convenioPorEntidad.idconvenioporentidad)}" id="nuevoRegistro" class="btn btn-success"/>
+                            </div>
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerAdministrarPersonaContacto.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

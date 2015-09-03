@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Administrar Asignaturas</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN ASIGNATURA</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Basica</legend>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroNombre">
+                                                                Nombre Asignatura
+                                                            </label>
+                                                            <h:inputText maxlength="45" value="#{controllerAdministrarAsignaturas.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="parametroCodigo">
+                                                                Codigo Asignatura
+                                                            </label>
+                                                            <h:inputText maxlength="15" value="#{controllerAdministrarAsignaturas.parametroCodigo}" class="form-control" id="parametroCodigo" />
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                            <div class="row col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="parametroCreditos">
+                                                            Cantidad Creditos
+                                                        </label>
+                                                        <h:inputText maxlength="1" value="#{controllerAdministrarAsignaturas.parametroCreditos}" class="form-control" id="parametroCreditos" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label for="parametroEstado">
+                                                                Estado Asignatura
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarAsignaturas.parametroEstado}"
+                                                                             class="form-control"
+                                                                             id="parametroEstado">
+                                                                <f:selectItem itemLabel="ACTIVA" itemValue="1" />
+                                                                <f:selectItem itemLabel="INACTIVA" itemValue="2" />
+                                                                <f:selectItem itemLabel="TODAS" itemValue="3" />
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarAsignaturas.cantidadRegistros}"/>
+                                            </div>
+                                            <div class="col-md-8">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarAsignaturas.buscarAsignaturasPorParametros()}">
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarAsignaturas.limpiarDatos()}" class="btn btn-default right" >
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item" 
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerAdministrarAsignaturas.listaAsignaturasTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Nombre"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.nombreasignatura}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Codigo"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.codigoasignatura}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Creditos"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.numerocreditos}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Estado"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.strEstado}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="detallesasignatura" actionListener="#{controllerDetallesAsignatura.recibirIDAsignaturasDetalles(item.idasignatura)}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarAsignaturas.cargarPaginaAnteriorAsignatura()}" disabled="#{controllerAdministrarAsignaturas.bloquearPagAntAsignatura}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarAsignaturas.cargarPaginaSiguienteAsignatura()}" disabled="#{controllerAdministrarAsignaturas.bloquearPagSigAsignatura}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <h:commandButton value="Nueva Asignatura" class="btn btn-success" action="registrarasignatura" actionListener="#{controllerAdministrarAsignaturas.limpiarProcesoBusqueda()}"/>
+                            </div>
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="inicioadministrador" actionListener="#{controllerAdministrarAsignaturas.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Administrar Encargados Laboratorio</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN ENCARGADO LABORATORIO</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Personal</legend>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="parametroNombre">
+                                                                Nombre(s) Encargado
+                                                            </label>
+                                                            <h:inputText maxlength="45" value="#{controllerAdministrarEncargadosLaboratorios.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="parametroApellido">
+                                                                Apellido(s) Encargado
+                                                            </label>
+                                                            <h:inputText maxlength="45" value="#{controllerAdministrarEncargadosLaboratorios.parametroApellido}" class="form-control" id="parametroApellido" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="parametroDocumento">
+                                                                Número Identificación
+                                                            </label>
+                                                            <h:inputText maxlength="20" value="#{controllerAdministrarEncargadosLaboratorios.parametroDocumento}" class="form-control" id="parametroDocumento" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="parametroCorreo">
+                                                            Correo Institucional
+                                                        </label>
+                                                        <div class="input-group">
+                                                            <h:inputText maxlength="29" value="#{controllerAdministrarEncargadosLaboratorios.parametroCorreo}" class="form-control" id="parametroCorreo" />
+                                                            <span class="input-group-addon">@ucentral.edu.co</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="parametroEstado">
+                                                                Estado Encargado
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarEncargadosLaboratorios.parametroEstado}"
+                                                                             class="form-control"
+                                                                             id="parametroEstado">
+                                                                <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                                <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                                <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                            <div id="parametrosEspeciales" class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Especial</legend>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="parametroFacultad">
+                                                                Facultad
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarEncargadosLaboratorios.parametroFacultad}"
+                                                                             class="form-control"
+                                                                             id="parametroFacultad">
+                                                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaFacultades}" var="facultad"
+                                                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                                                <f:converter converterId="ConverterGenerico" />
+                                                                <f:ajax event="change" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarDepartamentos()}" execute="parametroFacultad" render="@this parametroDepartamento parametroLaboratorio"/>
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="parametroDepartamento">
+                                                                Departamento
+                                                            </label>
+                                                            <h:selectOneMenu disabled="#{controllerAdministrarEncargadosLaboratorios.activoDepartamento}" value="#{controllerAdministrarEncargadosLaboratorios.parametroDepartamento}"
+                                                                             class="form-control"
+                                                                             id="parametroDepartamento">
+                                                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaDepartamentos}" var="departameto"
+                                                                               itemLabel="#{departameto.nombredepartamento}" itemValue="#{departameto}"/>
+                                                                <f:converter converterId="ConverterGenerico" />
+                                                                <f:ajax event="change" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarDepartamentos()}" execute="parametroDepartamento" render="@this parametroLaboratorio"/>
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="parametroLaboratorio">
+                                                                Laboratorio
+                                                            </label>
+                                                            <h:selectOneMenu disabled="#{controllerAdministrarEncargadosLaboratorios.activoLaboratorio}" value="#{controllerAdministrarEncargadosLaboratorios.parametroLaboratorio}"
+                                                                             class="form-control"
+                                                                             id="parametroLaboratorio">
+                                                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaLaboratorios}" var="laboratorio"
+                                                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                                                <f:converter converterId="ConverterGenerico" />
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarEncargadosLaboratorios.cantidadRegistros}"/>
+                                            </div>
+                                            <div class="col-md-8">
+                                            </div> 
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarEncargadosLaboratorios.buscarEncargadosLaboratoriosPorParametros()}">
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarEncargadosLaboratorios.limpiarDatos()}" class="btn btn-default right" >
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item" 
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerAdministrarEncargadosLaboratorios.listaEncargadosLaboratoriosTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Nombre"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.persona.nombrespersona}"/>
+                                                    </h:column>  
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Apellido"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.persona.apellidospersona}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="N. Documento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.persona.identificacionpersona}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Correo"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.persona.emailpersona}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Facultad"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.laboratorio.departamento.facultad.nombrefacultad}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Departamento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.laboratorio.departamento.nombredepartamento}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Laboratorio"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.laboratorio.nombrelaboratorio}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Estado"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.persona.usuario.strEstado}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarEncargadosLaboratorios.verDetallesEncargadoLaboratorio()}" actionListener="#{controllerDetallesEncargadoLaboratorio.recibirIDEncargadosLaboratoriosDetalles(item.idencargadolaboratorio)}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarEncargadosLaboratorios.cargarPaginaAnteriorEncargadoLaboratorio()}" disabled="#{controllerAdministrarEncargadosLaboratorios.bloquearPagAntEncargadoLaboratorio}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarEncargadosLaboratorios.cargarPaginaSiguienteEncargadoLaboratorio()}" disabled="#{controllerAdministrarEncargadosLaboratorios.bloquearPagSigEncargadoLaboratorio}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <h:commandButton class="btn btn-success" value="Nuevo Personal" action="registrarencargadolaboratorio"/>
+                            </div>
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerAdministrarEncargadosLaboratorios.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>
