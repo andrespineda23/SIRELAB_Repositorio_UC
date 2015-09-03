@@ -134,7 +134,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Personal"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Personal" action="#{controllerAdministrarConvenioPorEntidad.verPersonaContacto()}" actionListener="#{controllerAdministrarPersonaContacto.recibirconvenioPorEntidad(item.idconvenioporentidad)}"/>
+                                                        <h:commandLink value="Nuevo" action="#{controllerAdministrarConvenioPorEntidad.verPersonaContacto()}" actionListener="#{controllerRegistrarPersonaContactoCargado.recibirConvenioPorEntidad(item.idconvenioporentidad)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>

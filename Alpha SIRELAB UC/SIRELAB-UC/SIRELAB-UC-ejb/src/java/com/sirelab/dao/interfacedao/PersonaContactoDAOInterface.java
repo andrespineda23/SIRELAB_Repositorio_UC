@@ -8,6 +8,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.PersonaContacto;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -28,4 +29,6 @@ public interface PersonaContactoDAOInterface {
     public List<PersonaContacto> consultarPersonasContactoPorConvenioEntidad(BigInteger convenioentidad);
 
     public PersonaContacto buscarPersonaContactoPorUsuario(String usuario);
+
+    public List<PersonaContacto> buscarPersonasContactoPorFiltrado(Map<String, String> filters);
 }

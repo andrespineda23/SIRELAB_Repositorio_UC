@@ -9,10 +9,12 @@ import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
 import com.sirelab.entidades.PersonaContacto;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -111,5 +113,114 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             System.out.println("Error consultarPersonasContactoPorConvenioEntidad PersonaContactoDAO : " + e.toString());
             return null;
         }
+    }
+    
+    @Override
+    public List<PersonaContacto> buscarPersonasContactoPorFiltrado(Map<String, String> filters) {
+        try {
+            final String alias = "a";
+            final StringBuilder jpql = new StringBuilder();
+            String jpql2;
+            jpql.append("SELECT a FROM ").append(PersonaContacto.class.getSimpleName()).append(" " + alias);
+            //
+            jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
+            //
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".identificacion ASC";
+            System.out.println("consulta : " + consulta);
+            TypedQuery<PersonaContacto> tq = em.createQuery(consulta, PersonaContacto.class);
+            tq = asignarValores(tq, filters);
+            return tq.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error buscarPersonasContactoPorFiltrado PersonaContactoDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    private String adicionarFiltros(String jpql, Map<String, String> filters, String alias) {
+        final StringBuilder wheres = new StringBuilder();
+        int camposFiltro = 0;
+
+        if (null != filters && !filters.isEmpty()) {
+            wheres.append(" WHERE ");
+            for (Map.Entry<String, String> entry : filters.entrySet()) {
+                if (null != entry.getValue() && !entry.getValue().isEmpty()) {
+                    if (camposFiltro > 0) {
+                        wheres.append(" AND ");
+                    }
+                    if ("parametroEntidad".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "convenioporentidad.entidadexterna.identidadexterna");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
+                    if ("parametroConvenio".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "convenioporentidad.convenio.idconvenio");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "convenioporentidad.entidadexterna.persona.usuario.estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
+                    if ("parametroNombre".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".nombre")
+                                .append(") Like :parametroNombre");
+                        camposFiltro++;
+                    }
+                    if ("parametroApellido".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".apellido")
+                                .append(") Like :parametroApellido");
+                        camposFiltro++;
+                    }
+                    if ("parametroDocumento".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".identificacion")
+                                .append(") Like :parametroDocumento");
+                        camposFiltro++;
+                    }
+                    if ("parametroCorreo".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".correo")
+                                .append(") Like :parametroCorreo");
+                        camposFiltro++;
+                    }
+                }
+            }
+        }
+        jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
+
+        System.out.println(jpql);
+
+        if (jpql.trim()
+                .endsWith("WHERE")) {
+            jpql = jpql.replace("WHERE", "");
+        }
+        return jpql;
+    }
+
+    private TypedQuery<PersonaContacto> asignarValores(TypedQuery<PersonaContacto> tq, Map<String, String> filters) {
+
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            if (null != entry.getValue() && !entry.getValue().isEmpty()) {
+                if (("parametroConvenio".equals(entry.getKey()))
+                        || ("parametroEntidad".equals(entry.getKey()))) {
+                    //
+                    tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
+                }
+                if (("parametroCorreo".equals(entry.getKey()))
+                        || ("parametroDocumento".equals(entry.getKey()))
+                        || ("parametroNombre".equals(entry.getKey()))
+                        || ("parametroApellido".equals(entry.getKey()))) {
+                    //
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
+                if (("parametroEstado".equals(entry.getKey()))) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
+                }
+            }
+        }
+        return tq;
     }
 }

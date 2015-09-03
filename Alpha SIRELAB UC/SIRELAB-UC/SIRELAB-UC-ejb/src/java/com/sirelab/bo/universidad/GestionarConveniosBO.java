@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sirelab.bo.variables;
+package com.sirelab.bo.universidad;
 
-import com.sirelab.bo.interfacebo.variables.GestionarVariableConveniosBOInterface;
+import com.sirelab.bo.interfacebo.universidad.GestionarConveniosBOInterface;
 import com.sirelab.dao.interfacedao.ConvenioDAOInterface;
 import com.sirelab.dao.interfacedao.ConvenioPorEntidadDAOInterface;
 import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.ConvenioPorEntidad;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
@@ -20,7 +21,7 @@ import javax.ejb.Stateful;
  * @author ELECTRONICA
  */
 @Stateful
-public class GestionarVariableConveniosBO implements GestionarVariableConveniosBOInterface {
+public class GestionarConveniosBO implements GestionarConveniosBOInterface {
 
     @EJB
     ConvenioDAOInterface convenioDAO;
@@ -28,11 +29,22 @@ public class GestionarVariableConveniosBO implements GestionarVariableConveniosB
     ConvenioPorEntidadDAOInterface convenioPorEntidadDAO;
 
     @Override
+    public List<Convenio> consultarConveniosPorParametro(Map<String, String> filtros) {
+        try {
+            List<Convenio> lista = convenioDAO.buscarConvenioPorFiltrado(filtros);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarConveniosBO consultarConveniosPorParametro : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
     public void crearConvenio(Convenio convenio) {
         try {
             convenioDAO.crearConvenio(convenio);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableConveniosBO crearConvenio : " + e.toString());
+            System.out.println("Error GestionarConveniosBO crearConvenio : " + e.toString());
         }
     }
 
@@ -41,7 +53,7 @@ public class GestionarVariableConveniosBO implements GestionarVariableConveniosB
         try {
             convenioDAO.editarConvenio(convenio);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableConveniosBO editarConvenio : " + e.toString());
+            System.out.println("Error GestionarConveniosBO editarConvenio : " + e.toString());
         }
     }
 
@@ -50,7 +62,7 @@ public class GestionarVariableConveniosBO implements GestionarVariableConveniosB
         try {
             convenioDAO.eliminarConvenio(convenio);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableConveniosBO borrarConvenio : " + e.toString());
+            System.out.println("Error GestionarConveniosBO borrarConvenio : " + e.toString());
         }
     }
 
@@ -60,7 +72,7 @@ public class GestionarVariableConveniosBO implements GestionarVariableConveniosB
             Convenio registro = convenioDAO.buscarConvenioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableConveniosBO consultarConvenioPorID : " + e.toString());
+            System.out.println("Error GestionarConveniosBO consultarConvenioPorID : " + e.toString());
             return null;
         }
     }
@@ -71,7 +83,7 @@ public class GestionarVariableConveniosBO implements GestionarVariableConveniosB
             List<Convenio> lista = convenioDAO.consultarConvenios();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableConveniosBO consultarConveniosRegistrados : " + e.toString());
+            System.out.println("Error GestionarConveniosBO consultarConveniosRegistrados : " + e.toString());
             return null;
         }
     }
@@ -86,7 +98,7 @@ public class GestionarVariableConveniosBO implements GestionarVariableConveniosB
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableConveniosBO validarCambioEstadoConvenio : " + e.toString());
+            System.out.println("Error GestionarConveniosBO validarCambioEstadoConvenio : " + e.toString());
             return null;
         }
     }

@@ -5,11 +5,9 @@
  */
 package com.sirelab.controller.variables;
 
-import com.sirelab.bo.interfacebo.variables.GestionarVariableConveniosBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposCargosBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposUsuarioBOInterface;
-import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.TipoCargo;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.TipoUsuario;
@@ -35,8 +33,6 @@ public class ControllerVariablesUsuario implements Serializable {
     GestionarVariableTiposPerfilesBOInterface gestionarVariableTiposPerfilesBO;
     @EJB
     GestionarVariableTiposCargosBOInterface gestionarVariableTiposCargosBO;
-    @EJB
-    GestionarVariableConveniosBOInterface gestionarVariableConveniosBO;
 
     private List<TipoPerfil> listaTiposPerfiles;
     private List<TipoPerfil> listaTiposPerfilesTabla;
@@ -44,14 +40,11 @@ public class ControllerVariablesUsuario implements Serializable {
     private List<TipoUsuario> listaTiposUsuarioTabla;
     private List<TipoCargo> listaTiposCargos;
     private List<TipoCargo> listaTiposCargosTabla;
-    private List<Convenio> listaConvenios;
-    private List<Convenio> listaConveniosTabla;
-    private int posicionTipoPerfilTabla, posicionTipoUsuarioTabla, posicionTipoCargoTabla, posicionConvenioTabla;
-    private int tamTotalTipoPerfil, tamTotalTipoUsuario, tamTotalTipoCargo, tamTotalConvenio;
+    private int posicionTipoPerfilTabla, posicionTipoUsuarioTabla, posicionTipoCargoTabla;
+    private int tamTotalTipoPerfil, tamTotalTipoUsuario, tamTotalTipoCargo;
     private boolean bloquearPagSigTipoPerfil, bloquearPagAntTipoPerfil;
     private boolean bloquearPagSigTipoUsuario, bloquearPagAntTipoUsuario;
     private boolean bloquearPagSigTipoCargo, bloquearPagAntTipoCargo;
-    private boolean bloquearPagSigConvenio, bloquearPagAntConvenio;
 
     public ControllerVariablesUsuario() {
     }
@@ -82,28 +75,6 @@ public class ControllerVariablesUsuario implements Serializable {
         }
         posicionTipoCargoTabla = 0;
         cargarDatosTablaTipoCargo();
-        listaConvenios = gestionarVariableConveniosBO.consultarConveniosRegistrados();
-        if (null != listaConvenios) {
-            listaConveniosTabla = new ArrayList<Convenio>();
-            tamTotalConvenio = listaConvenios.size();
-        }
-        cargarDatosTablaConvenio();
-    }
-
-    private void cargarDatosTablaConvenio() {
-        if (tamTotalConvenio < 10) {
-            for (int i = 0; i < tamTotalConvenio; i++) {
-                listaConveniosTabla.add(listaConvenios.get(i));
-            }
-            bloquearPagSigConvenio = true;
-            bloquearPagAntConvenio = true;
-        } else {
-            for (int i = 0; i < 10; i++) {
-                listaConveniosTabla.add(listaConvenios.get(i));
-            }
-            bloquearPagSigConvenio = false;
-            bloquearPagAntConvenio = true;
-        }
     }
 
     private void cargarDatosTablaTipoCargo() {
@@ -158,65 +129,21 @@ public class ControllerVariablesUsuario implements Serializable {
         listaTiposUsuario = null;
         listaTiposPerfiles = null;
         listaTiposCargos = null;
-        listaConvenios = null;
         posicionTipoPerfilTabla = 0;
-        posicionConvenioTabla = 0;
         posicionTipoUsuarioTabla = 0;
         posicionTipoCargoTabla = 0;
         tamTotalTipoPerfil = 0;
-        tamTotalConvenio = 0;
         tamTotalTipoCargo = 0;
         tamTotalTipoUsuario = 0;
         listaTiposPerfilesTabla = null;
         listaTiposCargosTabla = null;
         listaTiposUsuarioTabla = null;
-        listaConveniosTabla = null;
         bloquearPagSigTipoPerfil = true;
-        bloquearPagSigConvenio = true;
         bloquearPagSigTipoCargo = true;
         bloquearPagAntTipoPerfil = true;
         bloquearPagSigTipoUsuario = true;
         bloquearPagAntTipoUsuario = true;
-        bloquearPagAntConvenio = true;
         bloquearPagAntTipoCargo = true;
-    }
-
-    public void cargarPaginaSiguienteConvenio() {
-        listaConveniosTabla = new ArrayList<Convenio>();
-        posicionConvenioTabla = posicionConvenioTabla + 10;
-        int diferencia = tamTotalConvenio - posicionConvenioTabla;
-        if (diferencia > 10) {
-            for (int i = posicionConvenioTabla; i < (posicionConvenioTabla + 10); i++) {
-                listaConveniosTabla.add(listaConvenios.get(i));
-            }
-            bloquearPagSigConvenio = false;
-            bloquearPagAntConvenio = false;
-        } else {
-            for (int i = posicionConvenioTabla; i < (posicionConvenioTabla + diferencia); i++) {
-                listaConveniosTabla.add(listaConvenios.get(i));
-            }
-            bloquearPagSigConvenio = true;
-            bloquearPagAntConvenio = false;
-        }
-    }
-
-    public void cargarPaginaAnteriorConvenio() {
-        listaConveniosTabla = new ArrayList<Convenio>();
-        posicionConvenioTabla = posicionConvenioTabla - 10;
-        int diferencia = tamTotalConvenio - posicionConvenioTabla;
-        if (diferencia == tamTotalConvenio) {
-            for (int i = posicionConvenioTabla; i < (posicionConvenioTabla + 10); i++) {
-                listaConveniosTabla.add(listaConvenios.get(i));
-            }
-            bloquearPagSigConvenio = false;
-            bloquearPagAntConvenio = true;
-        } else {
-            for (int i = posicionConvenioTabla; i < (posicionConvenioTabla + 10); i++) {
-                listaConveniosTabla.add(listaConvenios.get(i));
-            }
-            bloquearPagSigConvenio = false;
-            bloquearPagAntConvenio = false;
-        }
     }
 
     public void cargarPaginaSiguienteTipoCargo() {
@@ -428,38 +355,6 @@ public class ControllerVariablesUsuario implements Serializable {
 
     public void setBloquearPagAntTipoCargo(boolean bloquearPagAntTipoCargo) {
         this.bloquearPagAntTipoCargo = bloquearPagAntTipoCargo;
-    }
-
-    public List<Convenio> getListaConvenios() {
-        return listaConvenios;
-    }
-
-    public void setListaConvenios(List<Convenio> listaConvenios) {
-        this.listaConvenios = listaConvenios;
-    }
-
-    public List<Convenio> getListaConveniosTabla() {
-        return listaConveniosTabla;
-    }
-
-    public void setListaConveniosTabla(List<Convenio> listaConveniosTabla) {
-        this.listaConveniosTabla = listaConveniosTabla;
-    }
-
-    public boolean isBloquearPagSigConvenio() {
-        return bloquearPagSigConvenio;
-    }
-
-    public void setBloquearPagSigConvenio(boolean bloquearPagSigConvenio) {
-        this.bloquearPagSigConvenio = bloquearPagSigConvenio;
-    }
-
-    public boolean isBloquearPagAntConvenio() {
-        return bloquearPagAntConvenio;
-    }
-
-    public void setBloquearPagAntConvenio(boolean bloquearPagAntConvenio) {
-        this.bloquearPagAntConvenio = bloquearPagAntConvenio;
     }
 
 }

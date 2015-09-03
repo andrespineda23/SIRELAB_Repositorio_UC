@@ -18,7 +18,7 @@ and open the template in the editor.
                     <div class="container">
                         <div class="row">
                             <ol class="breadcrumb">
-                                li><a href="#">Inicio</a></li>
+                                <li><a href="#">Inicio</a></li>
                                 <li><a href="#">...</a></li>
                                 <li><a href="#">Administrar Personas Contacto</a></li>
                                 <li class="active">Registrar Persona</li>
@@ -74,7 +74,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número Identificación*"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContacto.inputID}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" required="true" class="form-control" id="inputID" requiredMessage="El campo Documento es obligatorio.">
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarPersonaContacto.inputID}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" required="true" class="form-control" id="inputID" requiredMessage="El campo Documento es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarPersonaContacto.validarIdentificacionPersonaContacto()}" execute="inputID" render="inputID msnID" />
                                             </h:inputText>
                                             <h6><h:message id="msnID" for="inputID" style="color: red"/></h6>
@@ -100,14 +100,14 @@ and open the template in the editor.
                                             <legend class="h5 text-info">Datos Opcionales</legend>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número Fijo"/></strong>
-                                                <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContacto.inputTelefono1}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" class="form-control" id="inputTelefono1" >
+                                                <h:inputText maxlength="8" value="#{controllerRegistrarPersonaContacto.inputTelefono1}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" class="form-control" id="inputTelefono1" >
                                                     <f:ajax event="blur" listener="#{controllerRegistrarPersonaContacto.validarDatosNumericosPersonaContacto(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"/></h6>
                                             </div>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número Celular"/></strong>
-                                                <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContacto.inputTelefono2}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" class="form-control" id="inputTelefono2" >
+                                                <h:inputText maxlength="11" value="#{controllerRegistrarPersonaContacto.inputTelefono2}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" class="form-control" id="inputTelefono2" >
                                                     <f:ajax event="blur" listener="#{controllerRegistrarPersonaContacto.validarDatosNumericosPersonaContacto(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"/></h6>
@@ -117,12 +117,30 @@ and open the template in the editor.
                                     <fieldset>
                                         <legend class="text-info">Información Convenio-Entidad</legend>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Convenio*"/></strong>
-                                            <h:inputText value="#{controllerRegistrarPersonaContacto.convenioPorEntidad.convenio.nombreconvenio}" disabled="true" class="form-control"  />
+                                            <strong><h:outputText value="Entidad Externa*"/></strong>
+                                            <h:selectOneMenu disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" value="#{controllerRegistrarPersonaContacto.inputEntidadExterna}"
+                                                             class="form-control"
+                                                             id="inputEntidadExterna">
+                                                <f:selectItem itemLabel="Seleccione Entidad" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarPersonaContacto.listaEntidadesExternas}" var="entidad"
+                                                               itemLabel="#{entidad.persona.nombrespersona}" itemValue="#{entidad}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarPersonaContacto.validarEntidadPersonaContacto()}" execute="inputEntidadExterna" render="msnEntidad"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnEntidad" for="inputEntidadExterna" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Entidad Externa*"/></strong>
-                                            <h:inputText value="#{controllerRegistrarPersonaContacto.convenioPorEntidad.entidadexterna.persona.nombrespersona}" disabled="true" class="form-control" />
+                                            <strong><h:outputText value="Convenio*"/></strong>
+                                            <h:selectOneMenu disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" value="#{controllerRegistrarPersonaContacto.inputConvenio}"
+                                                             class="form-control"
+                                                             id="inputConvenio">
+                                                <f:selectItem itemLabel="Seleccione Convenio" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarPersonaContacto.listaConvenios}" var="convenio"
+                                                               itemLabel="#{convenio.nombreconvenio}" itemValue="#{convenio}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarPersonaContacto.validarConvenioPersonaContacto()}" execute="inputConvenio" render="msnConvenio"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnConvenio" for="inputConvenio" style="color: red"/></h6>
                                         </div>
                                     </fieldset>
                                     <hr class="intro-divider"/>

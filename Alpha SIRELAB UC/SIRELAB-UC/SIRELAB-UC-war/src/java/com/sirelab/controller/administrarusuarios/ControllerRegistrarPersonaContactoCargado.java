@@ -6,15 +6,13 @@
 package com.sirelab.controller.administrarusuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarPersonasContactoBOInterface;
-import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.ConvenioPorEntidad;
-import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigInteger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -30,22 +28,19 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerRegistrarPersonaContacto implements Serializable {
+public class ControllerRegistrarPersonaContactoCargado implements Serializable {
 
     //
     @EJB
     AdministrarPersonasContactoBOInterface administrarPersonasContactoBO;
     //
+
     private ConvenioPorEntidad convenioPorEntidad;
-    private List<Convenio> listaConvenios;
-    private Convenio inputConvenio;
-    private List<EntidadExterna> listaEntidadesExternas;
-    private EntidadExterna inputEntidadExterna;
     private String inputNombre, inputApellido, inputID, inputEmail, inputTelefono1, inputTelefono2, inputUsuario;
 
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
-    private boolean validacionesUsuario, validacionesEntidad, validacionesConvenio;
+    private boolean validacionesUsuario;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -53,7 +48,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
 
-    public ControllerRegistrarPersonaContacto() {
+    public ControllerRegistrarPersonaContactoCargado() {
     }
 
     @PostConstruct
@@ -70,10 +65,6 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesUsuario = false;
-        validacionesEntidad = false;
-        validacionesConvenio = false;
-        inputConvenio = null;
-        inputEntidadExterna = null;
         inputApellido = null;
         inputUsuario = null;
         inputTelefono1 = null;
@@ -84,21 +75,8 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         BasicConfigurator.configure();
     }
 
-    public void validarEntidadPersonaContacto() {
-        if (Utilidades.validarNulo(inputEntidadExterna)) {
-            validacionesEntidad = true;
-        } else {
-            validacionesEntidad = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputEntidadExterna", new FacesMessage("La entidad externa es obligatoria."));
-        }
-    }
-    public void validarConvenioPersonaContacto() {
-        if (Utilidades.validarNulo(inputConvenio)) {
-            validacionesConvenio = true;
-        } else {
-            validacionesConvenio = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputConvenio", new FacesMessage("El convenio es obligatorio."));
-        }
+    public void recibirConvenioPorEntidad(BigInteger idregistro) {
+        convenioPorEntidad = administrarPersonasContactoBO.buscarConvenioPorEntidadPorId(idregistro);
     }
 
     public void validarNombrePersonaContacto() {
@@ -255,12 +233,6 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         if (validacionesID == false) {
             retorno = false;
         }
-        if (validacionesConvenio == false) {
-            retorno = false;
-        }
-        if (validacionesEntidad == false) {
-            retorno = false;
-        }
         if (validacionesNombre == false) {
             retorno = false;
         }
@@ -273,29 +245,19 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         return retorno;
     }
 
-    private boolean validarConvenioPorEntidad() {
-        boolean retorno = true;
-        convenioPorEntidad = administrarPersonasContactoBO.buscarConvenioPorEntidadPorEntidadYConvenio(inputEntidadExterna.getIdentidadexterna(), inputConvenio.getIdconvenio());
-        if (!Utilidades.validarNulo(convenioPorEntidad)) {
-            retorno = false;
-        }
-        return retorno;
-    }
-
+    /**
+     * Metodo encargado de realizar el registro y validaciones de la información
+     * del nuevo docente
+     */
     public void registrarNuevoPersonaContacto() {
         if (validarResultadosValidacion() == true) {
-            if (validarConvenioPorEntidad() == true) {
-                almacenarNuevoPersonaContactoEnSistema();
-                limpiarFormulario();
-                activarLimpiar = false;
-                activarAceptar = true;
-                activarCasillas = true;
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
-            } else {
-                colorMensaje = "red";
-                mensajeFormulario = "No existe asociación entre el convenio y la entidad seleccionada.";
-            }
+            almacenarNuevoPersonaContactoEnSistema();
+            limpiarFormulario();
+            activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
@@ -319,10 +281,6 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         validacionesTel2 = true;
         validacionesUsuario = false;
         //
-        validacionesEntidad = false;
-        validacionesConvenio = false;
-        inputConvenio = null;
-        inputEntidadExterna = null;
         inputApellido = null;
         inputUsuario = null;
         inputEmail = null;
@@ -330,8 +288,6 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         inputTelefono2 = null;
         inputID = null;
         inputNombre = null;
-        listaConvenios = null;
-        listaEntidadesExternas = null;
     }
 
     public void limpiarFormulario() {
@@ -343,10 +299,6 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         validacionesTel2 = true;
         validacionesUsuario = false;
         //
-        validacionesEntidad = false;
-        validacionesConvenio = false;
-        inputConvenio = null;
-        inputEntidadExterna = null;
         inputApellido = null;
         inputUsuario = null;
         inputTelefono1 = null;
@@ -507,43 +459,4 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
     }
-
-    public List<Convenio> getListaConvenios() {
-        if (null == listaConvenios) {
-            listaConvenios = administrarPersonasContactoBO.obtenerConveniosRegistradas();
-        }
-        return listaConvenios;
-    }
-
-    public void setListaConvenios(List<Convenio> listaConvenios) {
-        this.listaConvenios = listaConvenios;
-    }
-
-    public Convenio getInputConvenio() {
-        return inputConvenio;
-    }
-
-    public void setInputConvenio(Convenio inputConvenio) {
-        this.inputConvenio = inputConvenio;
-    }
-
-    public List<EntidadExterna> getListaEntidadesExternas() {
-        if (null == listaEntidadesExternas) {
-            listaEntidadesExternas = administrarPersonasContactoBO.obtenerEntidadesExternasRegistradas();
-        }
-        return listaEntidadesExternas;
-    }
-
-    public void setListaEntidadesExternas(List<EntidadExterna> listaEntidadesExternas) {
-        this.listaEntidadesExternas = listaEntidadesExternas;
-    }
-
-    public EntidadExterna getInputEntidadExterna() {
-        return inputEntidadExterna;
-    }
-
-    public void setInputEntidadExterna(EntidadExterna inputEntidadExterna) {
-        this.inputEntidadExterna = inputEntidadExterna;
-    }
-
 }

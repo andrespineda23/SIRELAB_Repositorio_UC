@@ -72,7 +72,7 @@ and open the template in the editor.
                                                         </div>                   
                                                     </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Personal Ent. Ext." class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Personal Ent. Ext." actionListener="#{controllerAdministrarPersonaContacto.recibirPaginaAnterior('inicioadministrador')}" action="administrarpersonacontacto" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Laboratorista" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('inicioadministrador')}" action="administrarencargadoslaboratorios" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Administrador" action="administraradministradores" class="btn btn-block btn-info"/>
                                                     </div>
@@ -107,7 +107,7 @@ and open the template in the editor.
                                                         <h:commandButton value="Facultad" action="administrarfacultades" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Departamento" action="administrardepartamentos" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Carrera" action="administrarcarreras" class="btn btn-block btn-info"/>
-                                                        <h:commandButton value="Asignatura" action="administrarasignaturas" class="btn btn-block btn-success"/>
+                                                        <h:commandButton value="Asignatura" action="administrarasignaturas" class="btn btn-block btn-info"/>
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                         <div class="icon-wrapper">
@@ -118,6 +118,7 @@ and open the template in the editor.
                                                         <h:commandButton value="Plan de Estudio" action="administrarplanesestudio" class="btn btn-block btn-danger"/>
                                                         <h:commandButton value="Sede" action="administrarsedes" class="btn btn-block btn-danger"/>
                                                         <h:commandButton value="Edificio" action="administraredificios" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Convenio" action="administrarconvenios" class="btn btn-block btn-danger"/>
                                                     </div>
                                                 </div>
                                                 <br></br>

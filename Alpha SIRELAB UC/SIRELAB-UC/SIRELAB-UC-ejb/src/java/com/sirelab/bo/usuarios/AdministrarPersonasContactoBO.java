@@ -6,14 +6,19 @@
 package com.sirelab.bo.usuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarPersonasContactoBOInterface;
+import com.sirelab.dao.interfacedao.ConvenioDAOInterface;
 import com.sirelab.dao.interfacedao.ConvenioPorEntidadDAOInterface;
+import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
+import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.ConvenioPorEntidad;
+import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
@@ -30,6 +35,10 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
     ConvenioPorEntidadDAOInterface convenioPorEntidadDAO;
     @EJB
     UsuarioDAOInterface usuarioDAO;
+    @EJB
+    ConvenioDAOInterface convenioDAO;
+    @EJB
+    EntidadExternaDAOInterface entidadExternaDAO;
 
     @Override
     public ConvenioPorEntidad buscarConvenioPorEntidadPorId(BigInteger idRegistro) {
@@ -38,6 +47,17 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarPersonasContactoBO buscarConvenioPorEntidadPorId: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<PersonaContacto> consultarPersonasContactoPorParametro(Map<String, String> filtros) {
+        try {
+            List<PersonaContacto> lista = personaContactoDAO.buscarPersonasContactoPorFiltrado(filtros);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarPersonasContactoBO consultarPersonasContactoPorParametro : " + e.toString());
             return null;
         }
     }
@@ -108,6 +128,50 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
             System.out.println("Error AdministrarPersonasContactoBO editarUsuario: " + e.toString());
+        }
+    }
+
+    @Override
+    public List<EntidadExterna> obtenerEntidadesExternasRegistradas() {
+        try {
+            List<EntidadExterna> lista = entidadExternaDAO.consultarEntidadesExternas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarPersonasContactoBO obtenerEntidadesExternasRegistradas: " + e.toString());
+            return null;
+        }
+    }
+
+    //@Override
+    public List<Convenio> obtenerConveniosRegistradas() {
+        try {
+            List<Convenio> lista = convenioDAO.consultarConvenios();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosRegistradas: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public ConvenioPorEntidad buscarConvenioPorEntidadPorEntidadYConvenio(BigInteger entidad, BigInteger convenio) {
+        try {
+            ConvenioPorEntidad registro = convenioPorEntidadDAO.buscarConvenioPorEntidadPorParametros(entidad, convenio);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarPersonasContactoBO buscarConvenioPorEntidadPorEntidadYConvenio: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<ConvenioPorEntidad> obtenerConveniosPorEntidadRegistrados() {
+        try {
+            List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidad();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosPorEntidadRegistrados: " + e.toString());
+            return null;
         }
     }
 }

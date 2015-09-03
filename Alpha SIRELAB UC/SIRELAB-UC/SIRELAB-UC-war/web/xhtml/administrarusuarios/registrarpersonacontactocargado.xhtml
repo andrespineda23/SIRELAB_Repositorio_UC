@@ -21,7 +21,7 @@ and open the template in the editor.
                                 li><a href="#">Inicio</a></li>
                                 <li><a href="#">...</a></li>
                                 <li><a href="#">Administrar Personas Contacto</a></li>
-                                <li class="active">Detalles Persona</li>
+                                <li class="active">Registrar Persona</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -60,30 +60,30 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Personales</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre(s) Persona*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesPersonaContacto.inputNombre}"  required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio."  title="Nombre(s) PersonaContacto*">
-                                                <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarNombrePersonaContacto()}" execute="inputNombre" render="inputNombre msnNombre" />
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarPersonaContactoCargado.inputNombre}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio."  title="Nombre(s) PersonaContacto*">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarNombrePersonaContacto()}" execute="inputNombre" render="inputNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Apellido(s) Persona*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesPersonaContacto.inputApellido}"  required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarApellidoPersonaContacto()}" execute="inputApellido" render="inputApellido msnApellido" />
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarPersonaContactoCargado.inputApellido}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" required="true" class="form-control" id="inputApellido" requiredMessage="El campo Apellido es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarApellidoPersonaContacto()}" execute="inputApellido" render="inputApellido msnApellido" />
                                             </h:inputText>
                                             <h6><h:message id="msnApellido" for="inputApellido" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número Identificación*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesPersonaContacto.inputID}"  required="true" class="form-control" id="inputID" requiredMessage="El campo Documento es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarIdentificacionPersonaContacto()}" execute="inputID" render="inputID msnID" />
+                                            <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContactoCargado.inputID}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" required="true" class="form-control" id="inputID" requiredMessage="El campo Documento es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarIdentificacionPersonaContacto()}" execute="inputID" render="inputID msnID" />
                                             </h:inputText>
                                             <h6><h:message id="msnID" for="inputID" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Correo Contacto*"/></strong>
                                             <div class="input-group">
-                                                <h:inputText maxlength="45" value="#{controllerDetallesPersonaContacto.inputEmail}"  required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
-                                                    <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarCorreoPersonaContacto()}" execute="inputEmail" render="inputEmail msnEmail" />
+                                                <h:inputText maxlength="45" value="#{controllerRegistrarPersonaContactoCargado.inputEmail}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarCorreoPersonaContacto()}" execute="inputEmail" render="inputEmail msnEmail" />
                                                 </h:inputText>
                                                 <span class="input-group-addon">@ucentral.edu.co</span>
                                             </div>
@@ -91,33 +91,24 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre Usuario"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerDetallesPersonaContacto.inputUsuario}" readonly="true" class="form-control" id="inputUsuario" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputEstado">
-                                                Estado Persona*
-                                            </label>
-                                            <h:selectOneMenu value="#{controllerDetallesPersonaContacto.inputEstado}"
-                                                             class="form-control" disabled="#{controllerDetallesPersonaContacto.activarEstado}"
-                                                             id="inputEstado">
-                                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
-                                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
-                                                <f:ajax event="change" listener="#{controllerDetallesPersonaContacto.actualizarEstado()}" execute="inputEstado" />
-                                            </h:selectOneMenu>
+                                            <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContactoCargado.inputUsuario}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" class="form-control" required="true" id="inputUsuario" requiredMessage="El campo Usuario es obligatorio." >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarUsuarioPersonaContacto()}" execute="inputUsuario" render="inputUsuario msnUsuario" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnUsuario" for="inputUsuario" style="color: red"/></h6>
                                         </div>
                                         <fieldset>
                                             <legend class="h5 text-info">Datos Opcionales</legend>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número Fijo"/></strong>
-                                                <h:inputText maxlength="8" value="#{controllerDetallesPersonaContacto.inputTelefono1}"  class="form-control" id="inputTelefono1" >
-                                                    <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarDatosNumericosPersonaContacto(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
+                                                <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContactoCargado.inputTelefono1}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" class="form-control" id="inputTelefono1" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarDatosNumericosPersonaContacto(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"/></h6>
                                             </div>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número Celular"/></strong>
-                                                <h:inputText maxlength="11" value="#{controllerDetallesPersonaContacto.inputTelefono2}"  class="form-control" id="inputTelefono2" >
-                                                    <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarDatosNumericosPersonaContacto(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
+                                                <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContactoCargado.inputTelefono2}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" class="form-control" id="inputTelefono2" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarDatosNumericosPersonaContacto(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"/></h6>
                                             </div>
@@ -126,16 +117,12 @@ and open the template in the editor.
                                     <fieldset>
                                         <legend class="text-info">Información Convenio-Entidad</legend>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Convenio con Entidad Externa*"/></strong>
-                                            <h:selectOneMenu value="#{controllerDetallesPersonaContacto.inputConvenioPorEntidad}"
-                                                             class="form-control"
-                                                             id="inputConvenioPorEntidad">
-                                                <f:selectItems value="#{controllerDetallesPersonaContacto.listaCoveniosPorEntidad}" var="convenio"
-                                                               itemLabel="#{convenio.strEntidadConvenio}" itemValue="#{convenio}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerDetallesPersonaContacto.validarConvenioPersonaContacto()}" execute="inputConvenioPorEntidad" render="msnConvenio"/>
-                                            </h:selectOneMenu>
-                                            <h6><h:message id="msnConvenio" for="inputConvenioPorEntidad" style="color: red"/></h6>
+                                            <strong><h:outputText value="Convenio*"/></strong>
+                                            <h:inputText value="#{controllerRegistrarPersonaContactoCargado.convenioPorEntidad.convenio.nombreconvenio}" disabled="true" class="form-control"  />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Entidad Externa*"/></strong>
+                                            <h:inputText value="#{controllerRegistrarPersonaContactoCargado.convenioPorEntidad.entidadexterna.persona.nombrespersona}" disabled="true" class="form-control" />
                                         </div>
                                     </fieldset>
                                     <hr class="intro-divider"/>
@@ -145,19 +132,24 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesPersonaContacto.mensajeFormulario}" style="color: #{controllerDetallesPersonaContacto.colorMensaje}}"/>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPersonaContactoCargado.mensajeFormulario}" style="color: #{controllerRegistrarPersonaContactoCargado.colorMensaje}}"/>
                                             </strong>
                                         </div>
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
                                     <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesPersonaContacto.registrarModificacionPersonaContacto()}" class="btn btn-success" >
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarPersonaContactoCargado.activarAceptar}" actionListener="#{controllerRegistrarPersonaContactoCargado.registrarNuevoPersonaContacto()}" class="btn btn-success" >
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarpersonacontacto" actionListener="#{controllerDetallesPersonaContacto.restaurarInformacionPersonaContacto()}" immediate="true">
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarconvenioporentidad" actionListener="#{controllerRegistrarPersonaContactoCargado.cancelarRegistroPersonaContacto()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarPersonaContactoCargado.activarLimpiar}" actionListener="#{controllerRegistrarPersonaContactoCargado.cambiarActivarCasillas()}" >
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                     </div>

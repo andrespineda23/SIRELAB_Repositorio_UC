@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado"),
     @NamedQuery(name = "Usuario.findByNumeroconexiones", query = "SELECT u FROM Usuario u WHERE u.numeroconexiones = :numeroconexiones")})
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +62,8 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "tipousuario", referencedColumnName = "idtipousuario")
     @ManyToOne(optional = false)
     private TipoUsuario tipousuario;
+    @Transient
+    private String strEstado;
 
     public Usuario() {
     }
@@ -146,5 +150,21 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.Usuario[ idusuario=" + idusuario + " ]";
     }
-    
+
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == null) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
+    }
+
 }

@@ -424,36 +424,54 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/variablesentorno/registrarconvenio.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructurauniversidad/registrarconvenio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>variablesusuario</from-outcome>
-            <to-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</to-view-id>
+            <from-outcome>administrarconvenios</from-outcome>
+            <to-view-id>/xhtml/estructurauniversidad/administrarconvenios.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructurauniversidad/administrarconvenios.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrarconvenio</from-outcome>
-            <to-view-id>/xhtml/variablesentorno/registrarconvenio.xhtml</to-view-id>
+            <to-view-id>/xhtml/estructurauniversidad/registrarconvenio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/variablesentorno/detallesconvenio.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructurauniversidad/detallesconvenio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>variablesusuario</from-outcome>
-            <to-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</to-view-id>
+            <from-outcome>administrarconvenios</from-outcome>
+            <to-view-id>/xhtml/estructurauniversidad/administrarconvenios.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructurauniversidad/administrarconvenios.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>detallesconvenio</from-outcome>
-            <to-view-id>/xhtml/variablesentorno/detallesconvenio.xhtml</to-view-id>
+            <to-view-id>/xhtml/estructurauniversidad/detallesconvenio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarconvenios</from-outcome>
+            <to-view-id>/xhtml/estructurauniversidad/administrarconvenios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructurauniversidad/administrarconvenios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministrador</from-outcome>
+            <to-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -1738,16 +1756,51 @@
     <navigation-rule>
         <from-view-id>/xhtml/administrarusuarios/administrarpersonacontacto.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarconveniosporentidad</from-outcome>
-            <to-view-id>/xhtml/administrarusuarios/administrarconvenioporentidad.xhtml</to-view-id>
+            <from-outcome>inicioadministrador</from-outcome>
+            <to-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/administrarusuarios/administrarconvenioporentidad.xhtml</from-view-id>
+        <from-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrarpersonacontacto</from-outcome>
             <to-view-id>/xhtml/administrarusuarios/administrarpersonacontacto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administrarpersonacontacto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciolaboratorista</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarpersonacontacto</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administrarpersonacontacto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administrarconvenioporentidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarpersonacontacto</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/registrarpersonacontactocargada.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/registrarpersonacontactocargada.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarconvenioporentidad</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administrarconvenioporentidad.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

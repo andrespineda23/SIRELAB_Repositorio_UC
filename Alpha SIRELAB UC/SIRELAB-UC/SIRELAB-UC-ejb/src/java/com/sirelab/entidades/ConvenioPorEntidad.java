@@ -59,6 +59,8 @@ public class ConvenioPorEntidad implements Serializable {
     private Convenio convenio;
     @Transient
     private String strEstado;
+    @Transient
+    private String strEntidadConvenio;
 
     public ConvenioPorEntidad() {
     }
@@ -150,6 +152,17 @@ public class ConvenioPorEntidad implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.ConvenioPorEntidad[ idconvenioporentidad=" + idconvenioporentidad + " ]";
+    }
+
+    public String getStrEntidadConvenio() {
+        getConvenio();
+        getEntidadexterna();
+        strEntidadConvenio = entidadexterna.getPersona().getNombrespersona() + " - " + convenio.getNombreconvenio();
+        return strEntidadConvenio.toUpperCase();
+    }
+
+    public void setStrEntidadConvenio(String strEntidadConvenio) {
+        this.strEntidadConvenio = strEntidadConvenio;
     }
 
 }

@@ -6,11 +6,15 @@
 package com.sirelab.controller.administrarusuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarPersonasContactoBOInterface;
+import com.sirelab.entidades.Convenio;
+import com.sirelab.entidades.ConvenioPorEntidad;
+import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -39,12 +43,14 @@ public class ControllerDetallesPersonaContacto implements Serializable {
     private boolean inputEstado;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
-    private boolean validacionesUsuario;
+    private boolean validacionesUsuario, validacionesConvenioPorEntidad;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean modificacionRegistro;
     private boolean activarEstado;
+    private List<ConvenioPorEntidad> listaCoveniosPorEntidad;
+    private ConvenioPorEntidad inputConvenioPorEntidad;
 
     public ControllerDetallesPersonaContacto() {
     }
@@ -79,10 +85,12 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         validacionesID = true;
         validacionesTel1 = true;
         validacionesTel2 = true;
+        validacionesConvenioPorEntidad = true;
         validacionesUsuario = true;
         modificacionRegistro = false;
         colorMensaje = "black";
         mensajeFormulario = "N/A";
+        inputConvenioPorEntidad = personaContactoEditar.getConvenioporentidad();
         inputApellido = personaContactoEditar.getApellido();
         inputEmail = personaContactoEditar.getCorreo();
         inputEstado = personaContactoEditar.getConvenioporentidad().getEntidadexterna().getPersona().getUsuario().getEstado();
@@ -90,6 +98,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         inputTelefono1 = personaContactoEditar.getTelefonofijo();
         inputTelefono2 = personaContactoEditar.getTelefonocelular();
         inputUsuario = personaContactoEditar.getNombreusuario();
+        listaCoveniosPorEntidad = administrarPersonasContactoBO.obtenerConveniosPorEntidadRegistrados();
     }
 
     /**
@@ -227,12 +236,25 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         modificacionRegistro = true;
     }
 
+    public void validarConvenioPersonaContacto() {
+        if (Utilidades.validarNulo(inputConvenioPorEntidad)) {
+            validacionesConvenioPorEntidad = true;
+        } else {
+            validacionesConvenioPorEntidad = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputConvenioPorEntidad", new FacesMessage("El convenio y su asociación con entidad es obligatorio."));
+        }
+        modificacionRegistro = true;
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesApellido == false) {
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            retorno = false;
+        }
+        if (validacionesConvenioPorEntidad == false) {
             retorno = false;
         }
         if (validacionesUsuario == false) {
@@ -287,6 +309,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
             personaContactoEditar.setNombre(inputNombre);
             personaContactoEditar.setTelefonofijo(inputTelefono1);
             personaContactoEditar.setTelefonocelular(inputTelefono2);
+            personaContactoEditar.setConvenioporentidad(inputConvenioPorEntidad);
             if (activarEstado == false) {
                 administrarPersonasContactoBO.editarUsuario(personaContactoEditar.getConvenioporentidad().getEntidadexterna().getPersona().getUsuario());
             }
@@ -408,6 +431,22 @@ public class ControllerDetallesPersonaContacto implements Serializable {
 
     public void setActivarEstado(boolean activarEstado) {
         this.activarEstado = activarEstado;
+    }
+
+    public List<ConvenioPorEntidad> getListaCoveniosPorEntidad() {
+        return listaCoveniosPorEntidad;
+    }
+
+    public void setListaCoveniosPorEntidad(List<ConvenioPorEntidad> listaCoveniosPorEntidad) {
+        this.listaCoveniosPorEntidad = listaCoveniosPorEntidad;
+    }
+
+    public ConvenioPorEntidad getInputConvenioPorEntidad() {
+        return inputConvenioPorEntidad;
+    }
+
+    public void setInputConvenioPorEntidad(ConvenioPorEntidad inputConvenioPorEntidad) {
+        this.inputConvenioPorEntidad = inputConvenioPorEntidad;
     }
 
 }

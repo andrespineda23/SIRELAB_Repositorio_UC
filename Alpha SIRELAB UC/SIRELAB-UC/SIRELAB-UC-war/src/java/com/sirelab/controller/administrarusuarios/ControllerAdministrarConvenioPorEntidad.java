@@ -229,7 +229,7 @@ public class ControllerAdministrarConvenioPorEntidad implements Serializable {
     
     public String verPersonaContacto() {
         limpiarProcesoBusqueda();
-        return "administrarpersonacontacto";
+        return "registrarpersonacontacto";
     }
 
     /*

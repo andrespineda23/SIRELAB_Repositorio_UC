@@ -8,6 +8,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.Convenio;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -22,6 +23,8 @@ public interface ConvenioDAOInterface {
     public void eliminarConvenio(Convenio convenio);
 
     public List<Convenio> consultarConvenios();
+
+    public List<Convenio> buscarConvenioPorFiltrado(Map<String, String> filters);
 
     public Convenio buscarConvenioPorID(BigInteger idRegistro);
 }

@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sirelab.controller.variables;
+package com.sirelab.controller.estructurauniversidad;
 
-import com.sirelab.bo.interfacebo.variables.GestionarVariableConveniosBOInterface;
+import com.sirelab.bo.interfacebo.universidad.GestionarConveniosBOInterface;
 import com.sirelab.entidades.Convenio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,53 +25,42 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerDetallesConvenio implements Serializable {
+public class ControllerRegistrarConvenio implements Serializable {
 
     @EJB
-    GestionarVariableConveniosBOInterface gestionarVariableConveniosBO;
+    GestionarConveniosBOInterface gestionarConvenioBO;
 
-    private Convenio convenioEditar;
-    private BigInteger idConvenio;
     private String inputNombre, inputDescripcion, inputValor;
     private Date inputFechaInicio, inputFechaFin;
     private boolean validacionesNombre, validacionesDescripcion, validacionesValor, validacionesFechaInicio, validacionesFechaFin;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
     private String colorMensaje;
-    private boolean modificacionesRegistro;
-    private boolean estadoConvenio;
+    private boolean activarLimpiar;
+    private boolean activarAceptar;
 
-    public ControllerDetallesConvenio() {
+    public ControllerRegistrarConvenio() {
     }
 
     @PostConstruct
     public void init() {
-        BasicConfigurator.configure();
-    }
-
-    public void recibirIDDetalleConvenio(BigInteger idRegistro) {
-        this.idConvenio = idRegistro;
-        cargarInformacionRegistro();
-        mensajeFormulario = "N/A";
+        inputNombre = null;
+        inputDescripcion = null;
+        inputValor = "0";
+        inputFechaInicio = new Date();
+        inputFechaFin = null;
+        validacionesNombre = false;
+        validacionesDescripcion = false;
+        validacionesValor = true;
+        validacionesFechaFin = true;
+        validacionesFechaInicio = false;
+        activarLimpiar = true;
         colorMensaje = "black";
-    }
-
-    private void cargarInformacionRegistro() {
-        convenioEditar = gestionarVariableConveniosBO.consultarConvenioPorID(idConvenio);
-        if (null != convenioEditar) {
-            inputNombre = convenioEditar.getNombreconvenio();
-            inputDescripcion = convenioEditar.getDescripcion();
-            inputValor = String.valueOf(convenioEditar.getValor());
-            inputFechaInicio = convenioEditar.getFechainicial();
-            inputFechaFin = convenioEditar.getFechafinal();
-            estadoConvenio = convenioEditar.getEstado();
-            validacionesNombre = true;
-            validacionesDescripcion = true;
-            validacionesValor = true;
-            validacionesFechaFin = true;
-            validacionesFechaInicio = true;
-            modificacionesRegistro = false;
-        }
+        activarAceptar = false;
+        activarCasillas = false;
+        mensajeFormulario = "N/A";
+        BasicConfigurator.configure();
     }
 
     public void validarNombre() {
@@ -93,7 +81,6 @@ public class ControllerDetallesConvenio implements Serializable {
             validacionesNombre = false;
             FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
         }
-        modificacionesRegistro = true;
     }
 
     public void validarDescripcion() {
@@ -114,7 +101,6 @@ public class ControllerDetallesConvenio implements Serializable {
             validacionesDescripcion = false;
             FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción es obligatoria."));
         }
-        modificacionesRegistro = true;
     }
 
     public void validarValor() {
@@ -129,7 +115,6 @@ public class ControllerDetallesConvenio implements Serializable {
             validacionesValor = true;
             FacesContext.getCurrentInstance().addMessage("form:inputValor", new FacesMessage("El valor es obligatoria."));
         }
-        modificacionesRegistro = true;
     }
 
     public void validarFechaInicio() {
@@ -144,7 +129,6 @@ public class ControllerDetallesConvenio implements Serializable {
             validacionesFechaInicio = false;
             FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
         }
-        modificacionesRegistro = true;
     }
 
     public void validarFechaFin() {
@@ -156,19 +140,14 @@ public class ControllerDetallesConvenio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
             }
         }
-        modificacionesRegistro = true;
-    }
-
-    public void actualizarEstado() {
-        modificacionesRegistro = true;
     }
 
     private boolean validarValidacionesRegistro() {
         boolean retorno = true;
-        if (validacionesDescripcion == false) {
+        if (validacionesValor == false) {
             retorno = false;
         }
-        if (validacionesValor == false) {
+        if (validacionesDescripcion == false) {
             retorno = false;
         }
         if (validacionesNombre == false) {
@@ -199,7 +178,10 @@ public class ControllerDetallesConvenio implements Serializable {
         if (validarValidacionesRegistro() == true) {
             if (validarFechasRegistro() == true) {
                 almacenarRegistroNuevo();
-                recibirIDDetalleConvenio(this.idConvenio);
+                restaurarFormulario();
+                activarLimpiar = false;
+                activarAceptar = true;
+                activarCasillas = true;
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
@@ -214,13 +196,14 @@ public class ControllerDetallesConvenio implements Serializable {
 
     private void almacenarRegistroNuevo() {
         try {
-            convenioEditar.setNombreconvenio(inputNombre);
-            convenioEditar.setValor(Integer.valueOf(inputValor));
-            convenioEditar.setEstado(estadoConvenio);
-            convenioEditar.setDescripcion(inputDescripcion);
-            convenioEditar.setFechafinal(inputFechaFin);
-            convenioEditar.setFechainicial(inputFechaInicio);
-            gestionarVariableConveniosBO.editarConvenio(convenioEditar);
+            Convenio convenioNuevo = new Convenio();
+            convenioNuevo.setNombreconvenio(inputNombre);
+            convenioNuevo.setValor(Integer.valueOf(inputValor));
+            convenioNuevo.setEstado(true);
+            convenioNuevo.setDescripcion(inputDescripcion);
+            convenioNuevo.setFechafinal(inputFechaFin);
+            convenioNuevo.setFechainicial(inputFechaInicio);
+            gestionarConvenioBO.crearConvenio(convenioNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo:  " + e.toString());
             System.out.println("Error ControllerRegistrarConvenio almacenarRegistroNuevo: " + e.toString());
@@ -239,31 +222,41 @@ public class ControllerDetallesConvenio implements Serializable {
         validacionesFechaFin = true;
         validacionesFechaInicio = false;
         mensajeFormulario = "N/A";
+        activarAceptar = false;
+        activarLimpiar = true;
         colorMensaje = "black";
+        activarCasillas = false;
     }
 
     public String cerrarPagina() {
         cancelarConvenio();
-        return "variablesusuario";
+        return "administrarconvenios";
+    }
+
+    private void restaurarFormulario() {
+        inputNombre = null;
+        inputValor = "0";
+        inputDescripcion = null;
+        inputFechaInicio = new Date();
+        inputFechaFin = null;
+        validacionesNombre = false;
+        validacionesDescripcion = false;
+        validacionesValor = true;
+        validacionesFechaFin = true;
+        validacionesFechaInicio = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarAceptar = false;
+        activarLimpiar = true;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
-    public Convenio getConvenioEditar() {
-        return convenioEditar;
-    }
-
-    public void setConvenioEditar(Convenio convenioEditar) {
-        this.convenioEditar = convenioEditar;
-    }
-
-    public BigInteger getIdConvenio() {
-        return idConvenio;
-    }
-
-    public void setIdConvenio(BigInteger idConvenio) {
-        this.idConvenio = idConvenio;
-    }
-
     public String getInputNombre() {
         return inputNombre;
     }
@@ -312,6 +305,14 @@ public class ControllerDetallesConvenio implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
+    }
+
     public String getColorMensaje() {
         return colorMensaje;
     }
@@ -320,12 +321,20 @@ public class ControllerDetallesConvenio implements Serializable {
         this.colorMensaje = colorMensaje;
     }
 
-    public boolean isEstadoConvenio() {
-        return estadoConvenio;
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
     }
 
-    public void setEstadoConvenio(boolean estadoConvenio) {
-        this.estadoConvenio = estadoConvenio;
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

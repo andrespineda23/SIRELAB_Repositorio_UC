@@ -5,17 +5,22 @@
  */
 package com.sirelab.bo.interfacebo.usuarios;
 
+import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.ConvenioPorEntidad;
+import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author ELECTRONICA
  */
 public interface AdministrarPersonasContactoBOInterface {
+
+    public List<PersonaContacto> consultarPersonasContactoPorParametro(Map<String, String> filtros);
 
     public ConvenioPorEntidad buscarConvenioPorEntidadPorId(BigInteger idRegistro);
 
@@ -33,4 +38,11 @@ public interface AdministrarPersonasContactoBOInterface {
 
     public void editarUsuario(Usuario usuario);
 
+    public List<EntidadExterna> obtenerEntidadesExternasRegistradas();
+
+    public List<Convenio> obtenerConveniosRegistradas();
+
+    public ConvenioPorEntidad buscarConvenioPorEntidadPorEntidadYConvenio(BigInteger entidad, BigInteger convenio);
+
+    public List<ConvenioPorEntidad> obtenerConveniosPorEntidadRegistrados();
 }
