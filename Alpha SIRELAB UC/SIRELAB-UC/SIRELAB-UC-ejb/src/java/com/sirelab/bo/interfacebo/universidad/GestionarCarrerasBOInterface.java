@@ -33,4 +33,8 @@ public interface GestionarCarrerasBOInterface {
     public Carrera obtenerCarreraPorCodigo(String codigo);
 
     public Boolean validarCambioEstadoCarrera(BigInteger carrera);
+
+    public List<Facultad> consultarFacultadesActivosRegistradas();
+
+    public List<Departamento> consultarDepartamentosActivosPorIDFacultad(BigInteger facultad);
 }

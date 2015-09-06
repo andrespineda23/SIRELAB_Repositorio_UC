@@ -79,11 +79,31 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorio(BigInteger laboratorio) {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasActivosPorLaboratorios(laboratorio);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarLaboratoriosPorAreasPorLaboratorio : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Departamento> consultarDepartamentosRegistrados() {
         try {
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarDepartamentosRegistrados : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Departamento> consultarDepartamentosActivosRegistrados() {
+        try {
+            List<Departamento> lista = departamentoDAO.consultarDepartamentosActivos();
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaSalasBO consultarDepartamentosRegistrados : " + e.toString());
@@ -101,11 +121,31 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+    @Override
+    public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento) {
+        try {
+            List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(departamento);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<AreaProfundizacion> consultarAreasProfundizacionRegistradas() {
         try {
             List<AreaProfundizacion> lista = areaProfundizacionDAO.consultarAreasProfundizacion();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarAreasProfundizacionRegistradas : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<AreaProfundizacion> consultarAreasProfundizacionActivosRegistradas() {
+        try {
+            List<AreaProfundizacion> lista = areaProfundizacionDAO.consultarAreasProfundizacionActivos();
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaSalasBO consultarAreasProfundizacionRegistradas : " + e.toString());
@@ -123,11 +163,31 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+    @Override
+    public List<Sede> consultarSedesActivosRegistradas() {
+        try {
+            List<Sede> lista = sedeDAO.consultarSedesActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarSedesRegistradas : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Edificio> consultarEdificiosPorIDSede(BigInteger sede) {
         try {
             List<Edificio> lista = edificioDAO.buscarEdificiosPorIDSede(sede);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO consultarEdificiosPorIDSede : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Edificio> consultarEdificiosActivosPorIDSede(BigInteger sede) {
+        try {
+            List<Edificio> lista = edificioDAO.buscarEdificiosActivosPorIDSede(sede);
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaSalasBO consultarEdificiosPorIDSede : " + e.toString());

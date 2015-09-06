@@ -141,6 +141,16 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             return null;
         }
     }
+    @Override
+    public List<EntidadExterna> obtenerEntidadesExternasActivosRegistradas() {
+        try {
+            List<EntidadExterna> lista = entidadExternaDAO.consultarEntidadesExternasActivas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarPersonasContactoBO obtenerEntidadesExternasActivosRegistradas: " + e.toString());
+            return null;
+        }
+    }
 
     //@Override
     public List<Convenio> obtenerConveniosRegistradas() {
@@ -149,6 +159,16 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosRegistradas: " + e.toString());
+            return null;
+        }
+    }
+    //@Override
+    public List<Convenio> obtenerConveniosActivosRegistradas() {
+        try {
+            List<Convenio> lista = convenioDAO.consultarConveniosActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosActivosRegistradas: " + e.toString());
             return null;
         }
     }

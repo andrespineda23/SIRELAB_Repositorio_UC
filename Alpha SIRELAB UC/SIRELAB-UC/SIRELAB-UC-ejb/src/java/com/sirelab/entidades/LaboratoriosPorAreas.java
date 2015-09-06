@@ -58,6 +58,8 @@ public class LaboratoriosPorAreas implements Serializable {
     private String informacionRegistro;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public LaboratoriosPorAreas() {
     }
@@ -161,6 +163,17 @@ public class LaboratoriosPorAreas implements Serializable {
 
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
+    }
+
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getInformacionRegistro();
+        strNombreEstado = informacionRegistro + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

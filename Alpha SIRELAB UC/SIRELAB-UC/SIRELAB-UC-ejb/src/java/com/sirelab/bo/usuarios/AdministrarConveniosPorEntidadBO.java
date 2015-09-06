@@ -41,6 +41,16 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             return null;
         }
     }
+    @Override
+    public List<Convenio> consultarConveniosActivosRegistrados() {
+        try {
+            List<Convenio> lista = convenioDAOInterface.consultarConveniosActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarConveniosPorEntidadBO consultarConveniosRegistrados: " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<EntidadExterna> consultarEntidadesExternasRegistradas() {
@@ -49,6 +59,16 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarConveniosPorEntidadBO consultarEntidadesExternasRegistradas: " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<EntidadExterna> consultarEntidadesExternasActivasRegistradas() {
+        try {
+            List<EntidadExterna> lista = entidadExternaDAO.consultarEntidadesExternasActivas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarConveniosPorEntidadBO consultarEntidadesExternasActivasRegistradas: " + e.toString());
             return null;
         }
     }

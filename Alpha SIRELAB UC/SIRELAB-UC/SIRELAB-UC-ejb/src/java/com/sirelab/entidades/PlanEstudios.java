@@ -61,6 +61,8 @@ public class PlanEstudios implements Serializable {
     private Carrera carrera;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public PlanEstudios() {
     }
@@ -160,6 +162,17 @@ public class PlanEstudios implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.PlanEstudios[ idplanestudios=" + idplanestudios + " ]";
+    }
+
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getCodigoplanestudio();
+        strNombreEstado = codigoplanestudio + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

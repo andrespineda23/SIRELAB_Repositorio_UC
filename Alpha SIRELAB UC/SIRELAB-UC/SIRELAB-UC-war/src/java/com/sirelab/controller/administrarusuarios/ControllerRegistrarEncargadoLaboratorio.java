@@ -113,7 +113,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             if (Utilidades.validarNulo(inputFacultad)) {
                 activarDepartamento = false;
                 inputDepartamento = null;
-                listaDepartamentos = administrarEncargadosLaboratoriosBO.obtenerDepartamentosPorIDFacultad(inputFacultad.getIdfacultad());
+                listaDepartamentos = administrarEncargadosLaboratoriosBO.obtenerDepartamentosActivosPorIDFacultad(inputFacultad.getIdfacultad());
                 activarLaboratorio = true;
                 inputLaboratorio = null;
                 listaLaboratorios = null;
@@ -145,7 +145,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             if (Utilidades.validarNulo(inputDepartamento)) {
                 activarLaboratorio = false;
                 inputLaboratorio = null;
-                listaLaboratorios = administrarEncargadosLaboratoriosBO.obtenerLaboratoriosPorIDDepartamento(inputDepartamento.getIddepartamento());
+                listaLaboratorios = administrarEncargadosLaboratoriosBO.obtenerLaboratoriosActivosPorIDDepartamento(inputDepartamento.getIddepartamento());
                 validacionesDepartamento = true;
             } else {
                 validacionesDepartamento = false;
@@ -599,7 +599,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     public List<Facultad> getListaFacultades() {
         if (listaFacultades == null) {
-            listaFacultades = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
+            listaFacultades = administrarEncargadosLaboratoriosBO.obtenerListaFacultadesActivos();
         }
         return listaFacultades;
     }

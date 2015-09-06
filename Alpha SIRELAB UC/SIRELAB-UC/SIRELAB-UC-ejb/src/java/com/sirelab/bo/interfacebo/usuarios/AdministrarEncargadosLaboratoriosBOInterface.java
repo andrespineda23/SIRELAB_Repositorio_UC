@@ -25,6 +25,7 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio(BigInteger idEncargadoLaboratorio);
 
     public List<Facultad> obtenerListaFacultades();
+    public List<Facultad> obtenerListaFacultadesActivos();
 
     public List<Departamento> obtenerDepartamentosPorIDFacultad(BigInteger idFacultad);
 
@@ -36,6 +37,8 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
 
     public void almacenarNuevoEncargadoLaboratorioEnSistema(Usuario usuarioNuevo, Persona personaNuevo, EncargadoLaboratorio personalNuevo);
 
+    public List<Laboratorio> obtenerLaboratoriosActivosPorIDDepartamento(BigInteger idDepartamento);
+
     public void actualizarInformacionPersona(Persona persona);
 
     public void actualizarInformacionUsuario(Usuario usuario);
@@ -43,6 +46,8 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorCorreo(String correo);
 
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorDocumento(String documento);
+
+    public List<Departamento> obtenerDepartamentosActivosPorIDFacultad(BigInteger idFacultad);
 
     public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro);
 

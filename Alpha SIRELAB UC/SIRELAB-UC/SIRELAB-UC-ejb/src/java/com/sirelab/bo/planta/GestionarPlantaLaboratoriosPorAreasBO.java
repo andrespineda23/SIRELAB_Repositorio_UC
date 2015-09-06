@@ -100,12 +100,34 @@ public class GestionarPlantaLaboratoriosPorAreasBO implements GestionarPlantaLab
     }
 
     @Override
+    public List<Departamento> consultarDepartamentosActivosRegistrados() {
+        try {
+            List<Departamento> lista = departamentoDAO.consultarDepartamentosActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO consultarDepartamentosRegistrados : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento) {
         try {
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento) {
+        try {
+            List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(departamento);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO consultarLaboratoriosActivosPorIDDepartamento : " + e.toString());
             return null;
         }
     }
@@ -155,7 +177,17 @@ public class GestionarPlantaLaboratoriosPorAreasBO implements GestionarPlantaLab
             if (null == lista) {
                 return true;
             } else {
-                return false;
+                int contador = 0;
+                for (int i = 0; i < lista.size(); i++) {
+                    if (lista.get(i).getEstadosala() == true) {
+                        contador++;
+                    }
+                }
+                if (contador == 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO validarCambioEstadoRegistro : " + e.toString());

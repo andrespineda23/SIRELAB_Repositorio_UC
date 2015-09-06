@@ -27,4 +27,6 @@ public interface SedeDAOInterface {
     public Sede buscarSedePorID(BigInteger idRegistro);
 
     public List<Sede> buscarSedesPorFiltrado(Map<String, String> filters);
+
+    public List<Sede> consultarSedesActivos();
 }

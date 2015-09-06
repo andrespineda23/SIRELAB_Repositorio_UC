@@ -183,7 +183,7 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
     //GET - SET
     public List<EntidadExterna> getListaEntidadesExternas() {
         if (null == listaEntidadesExternas) {
-            listaEntidadesExternas = administrarConveniosPorEntidadBO.consultarEntidadesExternasRegistradas();
+            listaEntidadesExternas = administrarConveniosPorEntidadBO.consultarEntidadesExternasActivasRegistradas();
         }
         return listaEntidadesExternas;
     }

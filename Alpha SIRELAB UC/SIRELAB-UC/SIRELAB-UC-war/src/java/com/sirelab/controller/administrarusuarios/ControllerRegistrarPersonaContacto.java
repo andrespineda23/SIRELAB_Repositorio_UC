@@ -92,6 +92,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:inputEntidadExterna", new FacesMessage("La entidad externa es obligatoria."));
         }
     }
+
     public void validarConvenioPersonaContacto() {
         if (Utilidades.validarNulo(inputConvenio)) {
             validacionesConvenio = true;
@@ -510,7 +511,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
 
     public List<Convenio> getListaConvenios() {
         if (null == listaConvenios) {
-            listaConvenios = administrarPersonasContactoBO.obtenerConveniosRegistradas();
+            listaConvenios = administrarPersonasContactoBO.obtenerConveniosActivosRegistradas();
         }
         return listaConvenios;
     }
@@ -529,7 +530,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
 
     public List<EntidadExterna> getListaEntidadesExternas() {
         if (null == listaEntidadesExternas) {
-            listaEntidadesExternas = administrarPersonasContactoBO.obtenerEntidadesExternasRegistradas();
+            listaEntidadesExternas = administrarPersonasContactoBO.obtenerEntidadesExternasActivosRegistradas();
         }
         return listaEntidadesExternas;
     }

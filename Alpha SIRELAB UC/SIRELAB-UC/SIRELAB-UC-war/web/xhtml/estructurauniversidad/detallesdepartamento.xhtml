@@ -68,7 +68,7 @@ and open the template in the editor.
                                                              class="form-control"
                                                              id="editarFacultad">
                                                 <f:selectItems value="#{controllerDetallesDepartamento.listaFacultades}" var="facultad"
-                                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                                               itemLabel="#{facultad.strNombreEstado}" itemValue="#{facultad}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesDepartamento.validarFacultadDepartamento()}" execute="editarFacultad" render="msnFacultad"/>
                                             </h:selectOneMenu>

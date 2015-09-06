@@ -61,6 +61,8 @@ public class AreaProfundizacion implements Serializable {
     private Collection<LaboratoriosPorAreas> laboratoriosPorAreasCollection;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public AreaProfundizacion() {
     }
@@ -156,4 +158,16 @@ public class AreaProfundizacion implements Serializable {
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
     }
+
+    public String getStrNombreEstado() {
+        getNombrearea();
+        getStrEstado();
+        strNombreEstado = nombrearea + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
+    }
+
 }

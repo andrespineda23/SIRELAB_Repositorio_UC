@@ -67,7 +67,7 @@ and open the template in the editor.
                                                              class="form-control"
                                                              id="editarSede">
                                                 <f:selectItems value="#{controllerDetallesEdificio.listaSedes}" var="sede"
-                                                               itemLabel="#{sede.nombresede}" itemValue="#{sede}"/>
+                                                               itemLabel="#{sede.strNombreEstado}" itemValue="#{sede}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesEdificio.validarSedeEdificio()}" execute="editarSede" render="msnSede"/>
                                             </h:selectOneMenu>

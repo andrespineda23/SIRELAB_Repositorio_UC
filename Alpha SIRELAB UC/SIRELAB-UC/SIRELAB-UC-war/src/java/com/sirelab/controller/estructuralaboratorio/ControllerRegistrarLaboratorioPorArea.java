@@ -73,7 +73,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     public void actualizarDepartamentos() {
         if (Utilidades.validarNulo(nuevoDepartamento)) {
             nuevoLaboratorio = new Laboratorio();
-            listaLaboratorios = gestionarPlantaLaboratoriosPorAreasBO.consultarLaboratoriosPorIDDepartamento(nuevoDepartamento.getIddepartamento());
+            listaLaboratorios = gestionarPlantaLaboratoriosPorAreasBO.consultarLaboratoriosActivosPorIDDepartamento(nuevoDepartamento.getIddepartamento());
             activarLaboratorio = false;
             validacionesDepartamento = true;
         } else {
@@ -202,7 +202,7 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     //GET-SET
     public List<Departamento> getListaDepartamentos() {
         if (listaDepartamentos == null) {
-            listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosRegistrados();
+            listaDepartamentos = gestionarPlantaLaboratoriosPorAreasBO.consultarDepartamentosActivosRegistrados();
         }
         return listaDepartamentos;
     }

@@ -64,6 +64,8 @@ public class Edificio implements Serializable {
     private HorarioAtencion horarioatencion;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public Edificio() {
     }
@@ -168,6 +170,17 @@ public class Edificio implements Serializable {
 
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
+    }
+
+    public String getStrNombreEstado() {
+        getDescripcionedificio();
+        getStrEstado();
+        strNombreEstado = descripcionedificio + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

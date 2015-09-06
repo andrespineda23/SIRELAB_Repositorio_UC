@@ -38,6 +38,18 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
         }
     }
 
+    //@Override
+
+    public List<Facultad> consultarFacultadesActivosRegistradas() {
+        try {
+            List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString());
+            return null;
+        }
+    }
+
     @Override
     public List<Departamento> consultarDepartamentosPorParametro(Map<String, String> filtros) {
         try {
@@ -96,7 +108,17 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             if (null == lista) {
                 return true;
             } else {
-                return false;
+                int contador = 0;
+                for (int i = 0; i < lista.size(); i++) {
+                    if (lista.get(i).getEstado() == true) {
+                        contador++;
+                    }
+                }
+                if (contador == 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (Exception e) {
             System.out.println("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString());

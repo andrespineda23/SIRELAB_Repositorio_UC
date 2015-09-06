@@ -102,7 +102,7 @@ public class ControllerRegistrarDocente implements Serializable {
             if (Utilidades.validarNulo(inputFacultad)) {
                 activarDepartamento = false;
                 inputDepartamento = null;
-                listaDepartamentos = administrarDocentesBO.obtenerDepartamentosPorIDFacultad(inputFacultad.getIdfacultad());
+                listaDepartamentos = administrarDocentesBO.obtenerDepartamentosActivosPorIDFacultad(inputFacultad.getIdfacultad());
                 validacionesFacultad = true;
             } else {
                 validacionesDepartamento = false;
@@ -560,7 +560,7 @@ public class ControllerRegistrarDocente implements Serializable {
 
     public List<Facultad> getListaFacultades() {
         if (listaFacultades == null) {
-            listaFacultades = administrarDocentesBO.obtenerListaFacultades();
+            listaFacultades = administrarDocentesBO.obtenerListaFacultadesActivas();
         }
         return listaFacultades;
     }

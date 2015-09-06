@@ -125,6 +125,20 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<PlanEstudios> consultarPlanesEstudiosActivosPorCarrera(BigInteger idCarrera) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.carrera.idcarrera=:idCarrera AND p.estado=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idCarrera", idCarrera);
+            List<PlanEstudios> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarPlanesEstudiosActivosPorCarrera PlanEstudiosDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<PlanEstudios> buscarPlanesEstudiosPorFiltrado(Map<String, String> filters) {

@@ -110,6 +110,20 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<ModuloLaboratorio> buscarModuloLaboratorioActivosPorIDSalaLaboratorio(BigInteger idSala) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.salalaboratorio.idsalalaboratorio=:idSala AND p.estadomodulo=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idSala", idSala);
+            List<ModuloLaboratorio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error buscarModuloLaboratorioActivosPorIDSalaLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<ModuloLaboratorio> buscarModulosLaboratoriosPorFiltrado(Map<String, String> filters) {

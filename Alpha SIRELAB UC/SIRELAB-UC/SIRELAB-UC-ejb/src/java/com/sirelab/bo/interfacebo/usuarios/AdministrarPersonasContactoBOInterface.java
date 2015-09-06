@@ -45,4 +45,8 @@ public interface AdministrarPersonasContactoBOInterface {
     public ConvenioPorEntidad buscarConvenioPorEntidadPorEntidadYConvenio(BigInteger entidad, BigInteger convenio);
 
     public List<ConvenioPorEntidad> obtenerConveniosPorEntidadRegistrados();
+
+    public List<EntidadExterna> obtenerEntidadesExternasActivosRegistradas();
+
+    public List<Convenio> obtenerConveniosActivosRegistradas();
 }

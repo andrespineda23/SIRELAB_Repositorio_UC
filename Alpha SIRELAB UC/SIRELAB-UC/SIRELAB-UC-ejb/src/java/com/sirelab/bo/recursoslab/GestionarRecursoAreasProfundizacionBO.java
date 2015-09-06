@@ -131,7 +131,17 @@ public class GestionarRecursoAreasProfundizacionBO implements GestionarRecursoAr
             if (null == lista) {
                 return true;
             } else {
-                return false;
+                int contador = 0;
+                for (int i = 0; i < lista.size(); i++) {
+                    if (lista.get(i).getEstado() == true) {
+                        contador++;
+                    }
+                }
+                if (contador == 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaAreaProfundizacionBO validarCambioEstadoArea : " + e.toString());

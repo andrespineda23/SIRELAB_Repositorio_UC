@@ -37,4 +37,10 @@ public interface GestionarPlanesEstudiosBOInterface {
 
     public Boolean validarCambioEstadoPlan(BigInteger plan);
 
+    public List<Facultad> consultarFacultadesActivosRegistradas();
+
+    public List<Departamento> consultarDepartamentosActivosPorIDFacultad(BigInteger facultad);
+
+    public List<Carrera> consultarCarrerasActivosPorIDDepartamento(BigInteger departamentos);
+
 }

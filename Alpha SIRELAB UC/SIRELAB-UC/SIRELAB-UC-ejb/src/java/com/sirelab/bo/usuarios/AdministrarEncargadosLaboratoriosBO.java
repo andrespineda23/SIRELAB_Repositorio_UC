@@ -94,11 +94,31 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             return null;
         }
     }
+    //@Override
+    public List<Facultad> obtenerListaFacultadesActivos() {
+        try {
+            List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerListaFacultadesActivos : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Departamento> obtenerDepartamentosPorIDFacultad(BigInteger idFacultad) {
         try {
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(idFacultad);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerDepartamentosPorIDFacultad : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Departamento> obtenerDepartamentosActivosPorIDFacultad(BigInteger idFacultad) {
+        try {
+            List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(idFacultad);
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerDepartamentosPorIDFacultad : " + e.toString());
@@ -113,6 +133,16 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Laboratorio> obtenerLaboratoriosActivosPorIDDepartamento(BigInteger idDepartamento) {
+        try {
+            List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(idDepartamento);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerLaboratoriosActivosPorIDDepartamento : " + e.toString());
             return null;
         }
     }

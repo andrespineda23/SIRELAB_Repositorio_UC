@@ -69,6 +69,19 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<AreaProfundizacion> consultarAreasProfundizacionActivos() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM AreaProfundizacion p WHERE p.estado=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<AreaProfundizacion> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarAreasProfundizacion AreaProfundizacionDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public AreaProfundizacion buscarAreaProfundizacionPorID(BigInteger idRegistro) {

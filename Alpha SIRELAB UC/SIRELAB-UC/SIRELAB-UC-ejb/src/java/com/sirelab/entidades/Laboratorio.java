@@ -69,6 +69,8 @@ public class Laboratorio implements Serializable {
     private Collection<LaboratoriosPorAreas> laboratoriosPorAreasCollection;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public Laboratorio() {
     }
@@ -180,6 +182,17 @@ public class Laboratorio implements Serializable {
 
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
+    }
+
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getNombrelaboratorio();
+        strNombreEstado = nombrelaboratorio + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

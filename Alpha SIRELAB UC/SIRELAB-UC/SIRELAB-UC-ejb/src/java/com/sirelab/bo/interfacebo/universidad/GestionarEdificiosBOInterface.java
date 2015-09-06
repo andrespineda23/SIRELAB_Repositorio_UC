@@ -30,4 +30,6 @@ public interface GestionarEdificiosBOInterface {
 
     public List<HorarioAtencion> consultarHorariosAtencionRegistrados();
 
+    public List<Sede> consultarSedesActivosRegistradas();
+
 }

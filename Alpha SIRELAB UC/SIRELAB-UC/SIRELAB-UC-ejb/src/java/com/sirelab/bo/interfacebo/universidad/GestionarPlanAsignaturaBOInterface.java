@@ -34,4 +34,10 @@ public interface GestionarPlanAsignaturaBOInterface {
     public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanPorParametro(Map<String, String> filtros);
 
     public AsignaturaPorPlanEstudio buscarAsignaturaPorPlanEstudioPorIDS(BigInteger plan, BigInteger asignatura);
+
+    public List<Carrera> obtenerCarrerasActivasRegistradas();
+
+    public List<PlanEstudios> obtenerPlanEstudiosActivosPorCarrera(BigInteger carrera);
+
+    public List<Asignatura> consultarAsignaturasActivosRegistradas();
 }

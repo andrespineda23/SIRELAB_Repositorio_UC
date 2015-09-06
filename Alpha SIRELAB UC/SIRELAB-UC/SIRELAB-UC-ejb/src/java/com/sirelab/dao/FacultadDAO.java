@@ -55,6 +55,19 @@ public class FacultadDAO implements FacultadDAOInterface {
     public List<Facultad> consultarFacultades() {
         try {
             em.clear();
+            Query query = em.createQuery("SELECT p FROM Facultad p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Facultad> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarFacultades FacultadDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Facultad> consultarFacultadesActivas() {
+        try {
+            em.clear();
             Query query = em.createQuery("SELECT p FROM Facultad p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Facultad> lista = query.getResultList();

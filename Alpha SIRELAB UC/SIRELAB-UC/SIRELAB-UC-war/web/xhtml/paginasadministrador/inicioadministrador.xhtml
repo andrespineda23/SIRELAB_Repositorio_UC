@@ -11,10 +11,9 @@ and open the template in the editor.
     <h:head>        
     </h:head>
     <h:body>
-        <ui:composition template="/xhtml/templateinicio.xhtml">
+        <ui:composition template="/xhtml/templatepaginaadmi.xhtml">
             <ui:define name="body">
                 <h:form id="form">
-                    <!-- HEADER SECTION END-->
                     <!--HOME SECTION START  -->
                     <div id="home">
                         <div class="overlay">
@@ -34,7 +33,7 @@ and open the template in the editor.
                                                 <h:commandButton value="Configurar Cuenta" class="btn btn-custom btn-two"/>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <h:commandButton value="Cerrar Sesión" action="#{controllerPaginaInicial.cerrarSession()}" class="btn btn-custom btn-two"/>
+                                                <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
                                             </div>
                                         </div>
                                     </div>

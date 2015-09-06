@@ -37,6 +37,16 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
             return null;
         }
     }
+    //@Override
+    public List<Sede> consultarSedesActivosRegistradas() {
+        try {
+            List<Sede> lista = sedeDAO.consultarSedesActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarEdificioBO consultarSedesRegistradas : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<HorarioAtencion> consultarHorariosAtencionRegistrados() {

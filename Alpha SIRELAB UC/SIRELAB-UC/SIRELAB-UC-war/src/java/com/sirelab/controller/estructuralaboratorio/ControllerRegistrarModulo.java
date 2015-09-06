@@ -201,7 +201,7 @@ public class ControllerRegistrarModulo implements Serializable {
     public void actualizarDepartamentos() {
         if (Utilidades.validarNulo(nuevoDepartamentoModulo)) {
             nuevoLaboratorioModulo = new Laboratorio();
-            listaLaboratorios = gestionarPlantaModulosBO.consultarLaboratoriosPorIDDepartamento(nuevoDepartamentoModulo.getIddepartamento());
+            listaLaboratorios = gestionarPlantaModulosBO.consultarLaboratoriosActivosPorIDDepartamento(nuevoDepartamentoModulo.getIddepartamento());
             activarNuevoLaboratorio = false;
             validacionesDepartamento = true;
         } else {
@@ -227,7 +227,7 @@ public class ControllerRegistrarModulo implements Serializable {
     public void actualizarLaboratorios() {
         if (Utilidades.validarNulo(nuevoLaboratorioModulo)) {
             nuevoLaboratorioPorAreaModulo = new LaboratoriosPorAreas();
-            listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasPorLaboratorio(nuevoLaboratorioModulo.getIdlaboratorio());
+            listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasActivosPorLaboratorio(nuevoLaboratorioModulo.getIdlaboratorio());
             activarNuevoLabPorArea = false;
             validacionesLaboratorio = true;
         } else {
@@ -250,7 +250,7 @@ public class ControllerRegistrarModulo implements Serializable {
     public void actualizarLaboratoriosPorAreas() {
         if (Utilidades.validarNulo(nuevoLaboratorioPorAreaModulo)) {
             nuevoSalaLaboratorioModulo = new SalaLaboratorio();
-            listaSalasLaboratorios = gestionarPlantaModulosBO.consultarSalasLaboratoriosPorIDLaboratorioArea(nuevoLaboratorioPorAreaModulo.getIdlaboratoriosporareas());
+            listaSalasLaboratorios = gestionarPlantaModulosBO.consultarSalasLaboratoriosActivosPorIDLaboratorioArea(nuevoLaboratorioPorAreaModulo.getIdlaboratoriosporareas());
             activarNuevoSala = false;
             validacionesLaboratorioPorArea = true;
         } else {

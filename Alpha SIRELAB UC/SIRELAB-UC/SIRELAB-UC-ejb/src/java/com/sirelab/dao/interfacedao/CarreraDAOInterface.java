@@ -29,4 +29,8 @@ public interface CarreraDAOInterface {
 
     public List<Carrera> buscarCarrerasPorFiltrado(Map<String, String> filters);
 
+    public List<Carrera> consultarCarrerasActivos();
+
+    public List<Carrera> consultarCarrerasActivosPorDepartamento(BigInteger idDepartamento);
+
 }

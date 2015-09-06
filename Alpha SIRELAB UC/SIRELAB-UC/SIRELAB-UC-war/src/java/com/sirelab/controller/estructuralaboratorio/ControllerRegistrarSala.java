@@ -228,7 +228,7 @@ public class ControllerRegistrarSala implements Serializable {
     public void actualizarDepartamentos() {
         if (Utilidades.validarNulo(nuevoDepartamentoSala)) {
             validacionesDepartamento = true;
-            listaLaboratorios = gestionarPlantaSalasBO.consultarLaboratoriosPorIDDepartamento(nuevoDepartamentoSala.getIddepartamento());
+            listaLaboratorios = gestionarPlantaSalasBO.consultarLaboratoriosActivosPorIDDepartamento(nuevoDepartamentoSala.getIddepartamento());
             nuevoLaboratorioSala = null;
             activarNuevoLaboratorio = false;
         } else {
@@ -250,7 +250,7 @@ public class ControllerRegistrarSala implements Serializable {
         if (Utilidades.validarNulo(nuevoLaboratorioSala)) {
             validacionesLaboratorio = true;
             nuevoLaboratorioPorArea = null;
-            listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasPorLaboratorio(nuevoLaboratorioSala.getIdlaboratorio());
+            listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasActivosPorLaboratorio(nuevoLaboratorioSala.getIdlaboratorio());
             activarNuevoLabPorArea = false;
         } else {
             activarNuevoLabPorArea = true;
@@ -274,7 +274,7 @@ public class ControllerRegistrarSala implements Serializable {
     public void actualizarNuevoSede() {
         if (Utilidades.validarNulo(nuevoSedeSala)) {
             nuevoEdificioSala = null;
-            listaEdificios = gestionarPlantaSalasBO.consultarEdificiosPorIDSede(nuevoSedeSala.getIdsede());
+            listaEdificios = gestionarPlantaSalasBO.consultarEdificiosActivosPorIDSede(nuevoSedeSala.getIdsede());
             activarNuevoEdificio = false;
             validacionesSede = true;
         } else {
@@ -577,7 +577,7 @@ public class ControllerRegistrarSala implements Serializable {
 
     public List<Sede> getListaSedes() {
         if (listaSedes == null) {
-            listaSedes = gestionarPlantaSalasBO.consultarSedesRegistradas();
+            listaSedes = gestionarPlantaSalasBO.consultarSedesActivosRegistradas();
         }
         return listaSedes;
     }
@@ -676,7 +676,7 @@ public class ControllerRegistrarSala implements Serializable {
 
     public List<Departamento> getListaDepartamentos() {
         if (null == listaDepartamentos) {
-            listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosRegistrados();
+            listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosActivosRegistrados();
         }
         return listaDepartamentos;
     }

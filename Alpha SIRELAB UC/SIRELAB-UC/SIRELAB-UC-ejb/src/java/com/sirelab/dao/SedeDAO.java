@@ -58,6 +58,19 @@ public class SedeDAO implements SedeDAOInterface {
     public List<Sede> consultarSedes() {
         try {
             em.clear();
+            Query query = em.createQuery("SELECT p FROM Sede p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Sede> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarSedes SedeDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Sede> consultarSedesActivos() {
+        try {
+            em.clear();
             Query query = em.createQuery("SELECT p FROM Sede p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Sede> lista = query.getResultList();

@@ -27,6 +27,8 @@ public interface AdministrarDocentesBOInterface {
 
     public List<Facultad> obtenerListaFacultades();
 
+    public List<Facultad> obtenerListaFacultadesActivas();
+
     public List<Departamento> obtenerDepartamentosPorIDFacultad(BigInteger idFacultad);
 
     public Docente obtenerDocentePorCorreoNumDocumento(String correo, String documento);
@@ -44,4 +46,6 @@ public interface AdministrarDocentesBOInterface {
     public Docente obtenerDocentePorDocumento(String documento);
 
     public List<TipoCargo> obtenerListaTiposCargos();
+
+    public List<Departamento> obtenerDepartamentosActivosPorIDFacultad(BigInteger idFacultad);
 }

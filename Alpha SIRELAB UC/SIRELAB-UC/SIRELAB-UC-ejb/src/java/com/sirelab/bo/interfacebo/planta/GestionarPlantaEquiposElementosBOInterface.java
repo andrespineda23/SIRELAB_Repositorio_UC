@@ -43,6 +43,8 @@ public interface GestionarPlantaEquiposElementosBOInterface {
 
     public List<Proveedor> consultarProveedoresRegistrados();
 
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosRegistradas();
+
     public List<TipoActivo> consultarTiposActivosRegistrador();
 
     public List<EstadoEquipo> consultarEstadosEquiposRegistrados();
@@ -58,4 +60,8 @@ public interface GestionarPlantaEquiposElementosBOInterface {
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 
     public ModuloLaboratorio obtenerModuloLaboratorioPorID(BigInteger modulo);
+
+    public List<SalaLaboratorio> consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion(BigInteger laboratorio);
+
+    public List<ModuloLaboratorio> consultarModulosLaboratorioActivosPorIDSalaLaboratorio(BigInteger salaLaboratorio);
 }

@@ -39,4 +39,8 @@ public interface GestionarPlantaLaboratoriosBOInterface {
 
     public Boolean validarCambioEstadoLaboratorio(BigInteger laboratorio);
 
+    public List<Facultad> consultarFacultadesActivosRegistradas();
+
+    public List<Departamento> consultarDepartamentosActivosPorIDFacultad(BigInteger facultad);
+
 }

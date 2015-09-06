@@ -119,11 +119,31 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             return null;
         }
     }
+    @Override
+    public List<Carrera> obtenerListasCarrerasActivos() {
+        try {
+            List<Carrera> lista = carreraDAO.consultarCarrerasActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarLoginSistemaBO obtenerListasCarreras : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<PlanEstudios> obtenerListasPlanesEstudioPorCarrera(BigInteger idCarrera) {
         try {
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(idCarrera);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarLoginSistemaBO obtenerListasPlanesEstudioPorCarrera : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<PlanEstudios> obtenerListasPlanesEstudioActivosPorCarrera(BigInteger idCarrera) {
+        try {
+            List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosActivosPorCarrera(idCarrera);
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarLoginSistemaBO obtenerListasPlanesEstudioPorCarrera : " + e.toString());

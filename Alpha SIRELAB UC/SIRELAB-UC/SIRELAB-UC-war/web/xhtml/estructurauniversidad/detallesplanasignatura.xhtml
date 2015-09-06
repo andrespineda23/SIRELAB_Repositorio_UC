@@ -46,7 +46,7 @@ and open the template in the editor.
                                                              class="form-control" 
                                                              id="editarCarrera">
                                                 <f:selectItems value="#{controllerDetallesPlanAsignatura.listaCarreras}" var="carrera"
-                                                               itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
+                                                               itemLabel="#{carrera.strNombreEstado}" itemValue="#{carrera}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesPlanAsignatura.actualizarCarrera()}" execute="editarCarrera" render="msnCarrera editarPlan"/>
                                             </h:selectOneMenu>
@@ -59,7 +59,7 @@ and open the template in the editor.
                                                              id="editarPlan">
                                                 <f:selectItem itemLabel="Seleccione Plan Estudio" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesPlanAsignatura.listaPlanEstudios}" var="plan"
-                                                               itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
+                                                               itemLabel="#{plan.strNombreEstado}" itemValue="#{plan}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesPlanAsignatura.validarPlan()}" execute="editarPlan" render="msnPlan"/>
                                             </h:selectOneMenu>
@@ -71,7 +71,7 @@ and open the template in the editor.
                                                              class="form-control" 
                                                              id="editarAsignatura">
                                                 <f:selectItems value="#{controllerDetallesPlanAsignatura.listaAsignaturas}" var="carrera"
-                                                               itemLabel="#{carrera.nombreasignatura}" itemValue="#{carrera}"/>
+                                                               itemLabel="#{carrera.strNombreEstado}" itemValue="#{carrera}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesPlanAsignatura.validarAsignatura()}" execute="editarAsignatura" render="msnAsignatura editarAsignatura"/>
                                             </h:selectOneMenu>

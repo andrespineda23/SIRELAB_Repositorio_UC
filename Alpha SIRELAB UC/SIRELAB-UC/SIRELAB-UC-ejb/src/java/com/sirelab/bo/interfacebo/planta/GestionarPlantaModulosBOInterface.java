@@ -61,4 +61,12 @@ public interface GestionarPlantaModulosBOInterface {
     public SalaLaboratorio obtenerSalaLaboratorioPorID(BigInteger sala);
 
     public int validarCantidadModulosSala(BigInteger sala);
+
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorio(BigInteger laboratorio);
+
+    public List<Departamento> consultarDepartamentosActivosRegistrados();
+
+    public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento);
+
+    public List<SalaLaboratorio> consultarSalasLaboratoriosActivosPorIDLaboratorioArea(BigInteger laboratorioArea);
 }

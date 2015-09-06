@@ -66,6 +66,8 @@ public class Asignatura implements Serializable {
     private Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public Asignatura() {
     }
@@ -154,7 +156,7 @@ public class Asignatura implements Serializable {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
-    
+
     public String getStrEstado() {
         getEstado();
         if (null != estado) {
@@ -169,6 +171,17 @@ public class Asignatura implements Serializable {
 
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
+    }
+
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getNombreasignatura();
+        strNombreEstado = nombreasignatura + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

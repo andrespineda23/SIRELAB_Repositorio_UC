@@ -86,6 +86,16 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             return null;
         }
     }
+    @Override
+    public List<Facultad> obtenerListaFacultadesActivas() {
+        try {
+            List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarDocentesBO obtenerListaFacultadesActivas : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Departamento> obtenerDepartamentosPorIDFacultad(BigInteger idFacultad) {
@@ -94,6 +104,16 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarDocentesBO obtenerDepartamentosPorIDFacultad : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Departamento> obtenerDepartamentosActivosPorIDFacultad(BigInteger idFacultad) {
+        try {
+            List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(idFacultad);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarDocentesBO obtenerDepartamentosActivosPorIDFacultad : " + e.toString());
             return null;
         }
     }

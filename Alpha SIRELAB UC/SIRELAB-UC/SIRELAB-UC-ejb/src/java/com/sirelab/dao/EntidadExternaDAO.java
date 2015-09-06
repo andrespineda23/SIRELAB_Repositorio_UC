@@ -64,6 +64,19 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<EntidadExterna> consultarEntidadesExternasActivas() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.estado=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<EntidadExterna> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarEntidadExternas EntidadExternaDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public EntidadExterna buscarEntidadExternaPorID(BigInteger idRegistro) {

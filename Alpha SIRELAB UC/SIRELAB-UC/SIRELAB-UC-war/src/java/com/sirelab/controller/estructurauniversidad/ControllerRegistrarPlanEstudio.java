@@ -80,7 +80,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
         if (Utilidades.validarNulo(nuevoFacultad)) {
             nuevoDepartamento = null;
-            listaDepartamentos = gestionarPlanesEstudiosBO.consultarDepartamentosPorIDFacultad(nuevoFacultad.getIdfacultad());
+            listaDepartamentos = gestionarPlanesEstudiosBO.consultarDepartamentosActivosPorIDFacultad(nuevoFacultad.getIdfacultad());
             activarNuevoDepartamento = false;
             nuevoCarrera = null;
             activarNuevoCarrera = true;
@@ -102,7 +102,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     public void actualizarDepartamento() {
         if (Utilidades.validarNulo(nuevoDepartamento)) {
             nuevoCarrera = null;
-            listaCarreras = gestionarPlanesEstudiosBO.consultarCarrerasPorIDDepartamento(nuevoDepartamento.getIddepartamento());
+            listaCarreras = gestionarPlanesEstudiosBO.consultarCarrerasActivosPorIDDepartamento(nuevoDepartamento.getIddepartamento());
             activarNuevoCarrera = false;
             validacionesDepartamento = true;
         } else {
@@ -278,7 +278,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     //GET-SET
     public List<Facultad> getListaFacultades() {
         if (listaFacultades == null) {
-            listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesRegistradas();
+            listaFacultades = gestionarPlanesEstudiosBO.consultarFacultadesActivosRegistradas();
         }
         return listaFacultades;
     }

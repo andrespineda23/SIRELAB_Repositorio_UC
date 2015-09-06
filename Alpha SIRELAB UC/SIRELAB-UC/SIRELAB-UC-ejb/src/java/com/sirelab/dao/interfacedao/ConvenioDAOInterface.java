@@ -27,4 +27,6 @@ public interface ConvenioDAOInterface {
     public List<Convenio> buscarConvenioPorFiltrado(Map<String, String> filters);
 
     public Convenio buscarConvenioPorID(BigInteger idRegistro);
+
+    public List<Convenio> consultarConveniosActivos();
 }

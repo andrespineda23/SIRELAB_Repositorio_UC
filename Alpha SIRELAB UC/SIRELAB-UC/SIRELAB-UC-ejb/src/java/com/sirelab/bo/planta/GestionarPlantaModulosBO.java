@@ -61,6 +61,16 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             return null;
         }
     }
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorio(BigInteger laboratorio) {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasActivosPorLaboratorios(laboratorio);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Departamento> consultarDepartamentosRegistrados() {
@@ -72,11 +82,31 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             return null;
         }
     }
+    @Override
+    public List<Departamento> consultarDepartamentosActivosRegistrados() {
+        try {
+            List<Departamento> lista = departamentoDAO.consultarDepartamentosActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarDepartamentosRegistrados : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento) {
         try {
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento) {
+        try {
+            List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
@@ -227,6 +257,16 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
     public List<SalaLaboratorio> consultarSalasLaboratoriosPorIDLaboratorioArea(BigInteger laboratorioArea) {
         try {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioArea(laboratorioArea);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarSalasLaboratoriosPorIDLaboratorioArea : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<SalaLaboratorio> consultarSalasLaboratoriosActivosPorIDLaboratorioArea(BigInteger laboratorioArea) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosActivosPorLaboratorioArea(laboratorioArea);
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaModulosBO consultarSalasLaboratoriosPorIDLaboratorioArea : " + e.toString());

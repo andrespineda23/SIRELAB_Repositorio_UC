@@ -109,7 +109,7 @@ and open the template in the editor.
                                                          class="form-control" readonly="#{controllerDetallesModulo.activarEditar}"
                                                          id="departamentoSalaLaboratorio">
                                             <f:selectItems value="#{controllerDetallesModulo.listaDepartamentos}" var="departamento"
-                                                           itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                                           itemLabel="#{departamento.strNombreEstado}" itemValue="#{departamento}"/>
                                             <f:converter converterId="ConverterGenerico" />
                                             <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarDepartamentos()}" execute="departamentoModuloLaboratorio" render="laboratorioModuloLaboratorio laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnDepartamentoModulo"/>
                                         </h:selectOneMenu>
@@ -121,7 +121,7 @@ and open the template in the editor.
                                                          class="form-control" disabled="#{controllerDetallesModulo.activarLaboratorio}"
                                                          id="laboratorioModuloLaboratorio">
                                             <f:selectItems value="#{controllerDetallesModulo.listaLaboratorios}" var="laboratorio"
-                                                           itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                                           itemLabel="#{laboratorio.strNombreEstado}" itemValue="#{laboratorio}"/>
                                             <f:converter converterId="ConverterGenerico" />
                                             <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratorios()}" execute="laboratorioModuloLaboratorio" render="laboratorioPorAreaModuloLaboratorio salaModuloLaboratorio msnLaboratorioModulo"/>
                                         </h:selectOneMenu>
@@ -133,7 +133,7 @@ and open the template in the editor.
                                                          class="form-control" disabled="#{controllerDetallesModulo.activarLabPorArea}"
                                                          id="laboratorioPorAreaModuloLaboratorio">
                                             <f:selectItems value="#{controllerDetallesModulo.listaLaboratoriosPorAreas}" var="area"
-                                                           itemLabel="#{area.areaprofundizacion.nombrearea}" itemValue="#{area}"/>
+                                                           itemLabel="#{area.areaprofundizacion.strNombreEstado}" itemValue="#{area}"/>
                                             <f:converter converterId="ConverterGenerico" />
                                             <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarLaboratoriosPorAreas()}" execute="laboratorioPorAreaModuloLaboratorio" render="salaModuloLaboratorio msnLaboratorioPorAreaModulo"/>
                                         </h:selectOneMenu>
@@ -146,7 +146,7 @@ and open the template in the editor.
                                                          id="salaModuloLaboratorio">
                                             <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
                                             <f:selectItems value="#{controllerDetallesModulo.listaSalasLaboratorio}" var="sala"
-                                                           itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                                           itemLabel="#{sala.strNombreEstado}" itemValue="#{sala}"/>
                                             <f:converter converterId="ConverterGenerico" />
                                             <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarSalasLaboratorio()}" execute="salaModuloLaboratorio" render="msnSalaLaboratorioModulo"/>
                                         </h:selectOneMenu>

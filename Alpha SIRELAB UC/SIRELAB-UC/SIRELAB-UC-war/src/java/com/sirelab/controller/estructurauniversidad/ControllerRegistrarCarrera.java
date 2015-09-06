@@ -121,7 +121,7 @@ public class ControllerRegistrarCarrera implements Serializable {
     public void actualizarFacultad() {
         if (Utilidades.validarNulo(nuevoFacultad)) {
             nuevoDepartamento = null;
-            listaDepartamentos = gestionarCarrerasBO.consultarDepartamentosPorIDFacultad(nuevoFacultad.getIdfacultad());
+            listaDepartamentos = gestionarCarrerasBO.consultarDepartamentosActivosPorIDFacultad(nuevoFacultad.getIdfacultad());
             activarNuevoDepartamento = false;
             validacionesFacultad = true;
         } else {
@@ -238,7 +238,7 @@ public class ControllerRegistrarCarrera implements Serializable {
     //GET-SET
     public List<Facultad> getListaFacultades() {
         if (listaFacultades == null) {
-            listaFacultades = gestionarCarrerasBO.consultarFacultadesRegistradas();
+            listaFacultades = gestionarCarrerasBO.consultarFacultadesActivosRegistradas();
         }
         return listaFacultades;
     }

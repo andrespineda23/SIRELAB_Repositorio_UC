@@ -97,6 +97,20 @@ public class EdificioDAO implements EdificioDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<Edificio> buscarEdificiosActivosPorIDSede(BigInteger idSede) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.sede.idsede=:idSede AND p.estado=true");
+            query.setParameter("idSede", idSede);
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Edificio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Edificio> buscarEdificiosPorFiltrado(Map<String, String> filters) {

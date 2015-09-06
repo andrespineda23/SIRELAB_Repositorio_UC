@@ -104,6 +104,8 @@ public class SalaLaboratorio implements Serializable {
     private String strEstado;
     @Transient
     private String strPrivada;
+    @Transient
+    private String strNombreEstado;
 
     public SalaLaboratorio() {
     }
@@ -290,6 +292,17 @@ public class SalaLaboratorio implements Serializable {
 
     public void setStrPrivada(String strPrivada) {
         this.strPrivada = strPrivada;
+    }
+
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getNombresala();
+        strNombreEstado = nombresala + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

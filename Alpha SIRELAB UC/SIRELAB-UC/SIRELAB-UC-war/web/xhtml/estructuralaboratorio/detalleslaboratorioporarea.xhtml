@@ -46,7 +46,7 @@ and open the template in the editor.
                                                              class="form-control"
                                                              id="editarDepartamento">
                                                 <f:selectItems value="#{controllerDetallesLaboratorioPorArea.listaDepartamentos}" var="departamento"
-                                                               itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                                               itemLabel="#{departamento.strNombreEstado}" itemValue="#{departamento}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesLaboratorioPorArea.actualizarDepartamentos()}" execute="editarDepartamento" render="msnDepartamento editarLaboratorio"/>
                                             </h:selectOneMenu>
@@ -59,7 +59,7 @@ and open the template in the editor.
                                                              id="editarLaboratorio">
                                                 <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesLaboratorioPorArea.listaLaboratorios}" var="laboratorio"
-                                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                                               itemLabel="#{laboratorio.strNombreEstado}" itemValue="#{laboratorio}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesLaboratorioPorArea.actualizarLaboratorios()}" execute="editarLaboratorio" render="msnLaboratorio"/>
                                             </h:selectOneMenu>
@@ -71,7 +71,7 @@ and open the template in the editor.
                                                              class="form-control"
                                                              id="editarArea">
                                                 <f:selectItems value="#{controllerDetallesLaboratorioPorArea.listaAreasProfundizacion}" var="area"
-                                                               itemLabel="#{area.nombrearea}" itemValue="#{area}"/>
+                                                               itemLabel="#{area.strNombreEstado}" itemValue="#{area}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesLaboratorioPorArea.actualizarDepartamentos()}" execute="editarArea" render="msnArea"/>
                                             </h:selectOneMenu>

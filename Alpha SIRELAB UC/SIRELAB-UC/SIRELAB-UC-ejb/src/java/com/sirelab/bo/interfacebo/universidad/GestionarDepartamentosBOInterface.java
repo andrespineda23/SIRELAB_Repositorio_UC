@@ -31,4 +31,6 @@ public interface GestionarDepartamentosBOInterface {
     public Departamento obtenerDepartamentoPorIDDepartamento(BigInteger idDepartamento);
 
     public Boolean validarCambioEstadoDepartamento(BigInteger departamento);
+
+    public List<Facultad> consultarFacultadesActivosRegistradas();
 }

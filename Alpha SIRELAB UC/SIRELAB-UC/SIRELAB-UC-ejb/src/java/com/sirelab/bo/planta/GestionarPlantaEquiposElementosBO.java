@@ -81,6 +81,16 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return null;
         }
     }
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosRegistradas() {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaElementosEquiposBO consultarLaboratoriosPorAreasRegistradas : " + e.toString());
+            return null;
+        }
+    }
 
     //@Override
     public List<Laboratorio> consultarLaboratoriosRegistrados() {
@@ -158,6 +168,16 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return null;
         }
     }
+    @Override
+    public List<SalaLaboratorio> consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion(BigInteger laboratorio) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosActivosPorLaboratorioArea(laboratorio);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaElementosEquiposBO consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<SalaLaboratorio> consultarSalasLaboratorioPorIDLaboratorio(BigInteger laboratorio) {
@@ -177,6 +197,16 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaElementosEquiposBO consultarModulosLaboratorioPorIDSalaLaboratorio : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<ModuloLaboratorio> consultarModulosLaboratorioActivosPorIDSalaLaboratorio(BigInteger salaLaboratorio) {
+        try {
+            List<ModuloLaboratorio> lista = moduloLaboratorioDAO.buscarModuloLaboratorioActivosPorIDSalaLaboratorio(salaLaboratorio);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaElementosEquiposBO consultarModulosLaboratorioActivosPorIDSalaLaboratorio : " + e.toString());
             return null;
         }
     }

@@ -31,4 +31,6 @@ public interface AreaProfundizacionDAOInterface {
     public List<AreaProfundizacion> buscarAreaProfundizacionPorIDLaboratorio(BigInteger idLaboratorio);
 
     public List<AreaProfundizacion> buscarAreasProfundizacionPorFiltrado(Map<String, String> filters);
+
+    public List<AreaProfundizacion> consultarAreasProfundizacionActivos();
 }

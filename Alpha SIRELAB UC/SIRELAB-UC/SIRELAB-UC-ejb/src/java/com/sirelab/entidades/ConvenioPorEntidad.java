@@ -61,6 +61,8 @@ public class ConvenioPorEntidad implements Serializable {
     private String strEstado;
     @Transient
     private String strEntidadConvenio;
+    @Transient
+    private String strNombreEstado;
 
     public ConvenioPorEntidad() {
     }
@@ -163,6 +165,17 @@ public class ConvenioPorEntidad implements Serializable {
 
     public void setStrEntidadConvenio(String strEntidadConvenio) {
         this.strEntidadConvenio = strEntidadConvenio;
+    }
+
+    public String getStrNombreEstado() {
+        getStrEntidadConvenio();
+        getStrEstado();
+        strNombreEstado = strEntidadConvenio + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

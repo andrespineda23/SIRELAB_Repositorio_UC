@@ -29,6 +29,7 @@ public interface GestionarLoginSistemaBOInterface {
     public List<Departamento> obtenerListasDepartamentos();
 
     public List<Carrera> obtenerListasCarreras();
+    public List<Carrera> obtenerListasCarrerasActivos();
 
     public List<PlanEstudios> obtenerListasPlanesEstudioPorCarrera(BigInteger idCarrera);
 
@@ -46,4 +47,5 @@ public interface GestionarLoginSistemaBOInterface {
 
     public Object obtenerUsuarioFinalLogin(BigInteger idTipoUsuario, BigInteger idPersona);
 
+    public List<PlanEstudios> obtenerListasPlanesEstudioActivosPorCarrera(BigInteger idCarrera);
 }

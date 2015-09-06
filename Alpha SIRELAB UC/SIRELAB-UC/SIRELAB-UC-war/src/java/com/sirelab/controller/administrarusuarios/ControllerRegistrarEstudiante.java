@@ -108,7 +108,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
             if (Utilidades.validarNulo(inputCarrera)) {
                 activarPlanEstudio = false;
                 inputPlanEstudio = null;
-                listaPlanesEstudios = gestionarLoginSistemaBO.obtenerListasPlanesEstudioPorCarrera(inputCarrera.getIdcarrera());
+                listaPlanesEstudios = gestionarLoginSistemaBO.obtenerListasPlanesEstudioActivosPorCarrera(inputCarrera.getIdcarrera());
                 validacionesCarrera = true;
             } else {
                 validacionesCarrera = false;
@@ -540,7 +540,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
 
     public List<Carrera> getListaCarreras() {
         if (listaCarreras == null) {
-            listaCarreras = gestionarLoginSistemaBO.obtenerListasCarreras();
+            listaCarreras = gestionarLoginSistemaBO.obtenerListasCarrerasActivos();
         }
         return listaCarreras;
     }

@@ -19,6 +19,10 @@ public interface AdministrarConveniosPorEntidadBOInterface {
 
     public List<Convenio> consultarConveniosRegistrados();
 
+    public List<Convenio> consultarConveniosActivosRegistrados();
+
+    public List<EntidadExterna> consultarEntidadesExternasActivasRegistradas();
+
     public List<EntidadExterna> consultarEntidadesExternasRegistradas();
 
     public List<ConvenioPorEntidad> buscarConveniosPorEntidadPorIdEntidad(BigInteger entidad);

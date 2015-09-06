@@ -55,6 +55,19 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public List<Departamento> consultarDepartamentos() {
         try {
             em.clear();
+            Query query = em.createQuery("SELECT p FROM Departamento p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Departamento> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.err.println("Error consultarDepartamentos DepartamentoDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Departamento> consultarDepartamentosActivos() {
+        try {
+            em.clear();
             Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Departamento> lista = query.getResultList();
@@ -115,6 +128,20 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
         try {
             em.clear();
             Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.facultad.idfacultad=:idFacultad");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idFacultad", idFacultad);
+            List<Departamento> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.err.println("Error buscarDepartamentosPorIDFacultad DepartamentoDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Departamento> buscarDepartamentosActivosPorIDFacultad(BigInteger idFacultad) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.facultad.idfacultad=:idFacultad AND p.estado=true");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idFacultad", idFacultad);
             List<Departamento> registro = query.getResultList();

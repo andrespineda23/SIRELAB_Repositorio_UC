@@ -244,7 +244,7 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     public List<Sede> getListaSedes() {
         if (listaSedes == null) {
-            listaSedes = gestionarEdificiosBO.consultarSedesRegistradas();
+            listaSedes = gestionarEdificiosBO.consultarSedesActivosRegistradas();
         }
         return listaSedes;
     }

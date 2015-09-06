@@ -29,4 +29,6 @@ public interface EdificioDAOInterface {
     public List<Edificio> buscarEdificiosPorFiltrado(Map<String, String> filters);
 
     public List<Edificio> buscarEdificiosPorIDSede(BigInteger idSede);
+
+    public List<Edificio> buscarEdificiosActivosPorIDSede(BigInteger idSede);
 }

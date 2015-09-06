@@ -66,6 +66,8 @@ public class Carrera implements Serializable {
     private Collection<PlanEstudios> planEstudiosCollection;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public Carrera() {
     }
@@ -175,4 +177,16 @@ public class Carrera implements Serializable {
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
     }
+
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getNombrecarrera();
+        strNombreEstado = nombrecarrera + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
+    }
+
 }

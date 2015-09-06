@@ -69,7 +69,7 @@ public class ControllerRegistrarPlanAsignatura implements Serializable {
     public void actualizarCarreras() {
         if (Utilidades.validarNulo(nuevoCarrera)) {
             nuevoPlan = null;
-            listaPlanEstudios = gestionarPlanAsignaturaBO.obtenerPlanEstudiosPorCarrera(nuevoCarrera.getIdcarrera());
+            listaPlanEstudios = gestionarPlanAsignaturaBO.obtenerPlanEstudiosActivosPorCarrera(nuevoCarrera.getIdcarrera());
             activarPlan = false;
             validacionesCarrera = true;
         } else {
@@ -196,7 +196,7 @@ public class ControllerRegistrarPlanAsignatura implements Serializable {
     //GET-SET
     public List<Carrera> getListaCarreras() {
         if (null == listaCarreras) {
-            listaCarreras = gestionarPlanAsignaturaBO.obtenerCarrerasRegistradas();
+            listaCarreras = gestionarPlanAsignaturaBO.obtenerCarrerasActivasRegistradas();
         }
         return listaCarreras;
     }
@@ -239,7 +239,7 @@ public class ControllerRegistrarPlanAsignatura implements Serializable {
 
     public List<Asignatura> getListaAsignaturas() {
         if (null == listaAsignaturas) {
-            listaAsignaturas = gestionarPlanAsignaturaBO.consultarAsignaturasRegistradas();
+            listaAsignaturas = gestionarPlanAsignaturaBO.consultarAsignaturasActivosRegistradas();
         }
         return listaAsignaturas;
     }

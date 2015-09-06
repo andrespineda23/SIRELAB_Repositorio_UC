@@ -69,6 +69,19 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<Convenio> consultarConveniosActivos() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Convenio p WHERE p.estado=true ORDER BY p.nombreconvenio ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Convenio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarConveniosActivos ConvenioDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public Convenio buscarConvenioPorID(BigInteger idRegistro) {

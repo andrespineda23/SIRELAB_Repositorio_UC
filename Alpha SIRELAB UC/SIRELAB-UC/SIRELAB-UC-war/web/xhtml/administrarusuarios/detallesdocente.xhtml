@@ -150,7 +150,7 @@ and open the template in the editor.
                                                              class="form-control" readonly="#{controllerDetallesDocente.activarEditar}"
                                                              id="facultadDocente">
                                                 <f:selectItems value="#{controllerDetallesDocente.listaFacultad}" var="facultad"
-                                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                                               itemLabel="#{facultad.strNombreEstado}" itemValue="#{facultad}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesDocente.actualizarFacultades()}" execute="facultadDocente" render="@this departamentoDocente msnFacultad"/>
                                             </h:selectOneMenu>
@@ -163,7 +163,7 @@ and open the template in the editor.
                                                              id="departamentoDocente">
                                                 <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesDocente.listaDepartamento}" var="departamento"
-                                                               itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                                               itemLabel="#{departamento.strNombreEstado}" itemValue="#{departamento}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesDocente.actualizarDepartamentos()}" execute="departamentoDocente" render="msnDepartamento"/>
                                             </h:selectOneMenu>

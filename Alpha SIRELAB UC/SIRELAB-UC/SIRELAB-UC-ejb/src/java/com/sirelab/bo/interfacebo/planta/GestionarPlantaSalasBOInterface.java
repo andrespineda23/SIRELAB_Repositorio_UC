@@ -49,4 +49,15 @@ public interface GestionarPlantaSalasBOInterface {
 
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
 
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorio(BigInteger laboratorio);
+
+    public List<Departamento> consultarDepartamentosActivosRegistrados();
+
+    public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento);
+
+    public List<AreaProfundizacion> consultarAreasProfundizacionActivosRegistradas();
+
+    public List<Sede> consultarSedesActivosRegistradas();
+
+    public List<Edificio> consultarEdificiosActivosPorIDSede(BigInteger sede);
 }

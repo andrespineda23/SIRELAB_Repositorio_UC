@@ -55,6 +55,19 @@ public class CarreraDAO implements CarreraDAOInterface {
     public List<Carrera> consultarCarreras() {
         try {
             em.clear();
+            Query query = em.createQuery("SELECT p FROM Carrera p ");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Carrera> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarCarreras CarreraDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Carrera> consultarCarrerasActivos() {
+        try {
+            em.clear();
             Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Carrera> lista = query.getResultList();
@@ -116,6 +129,20 @@ public class CarreraDAO implements CarreraDAOInterface {
         try {
             em.clear();
             Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.departamento.iddepartamento=:idDepartamento");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idDepartamento", idDepartamento);
+            List<Carrera> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarCarreras CarreraDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Carrera> consultarCarrerasActivosPorDepartamento(BigInteger idDepartamento) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.departamento.iddepartamento=:idDepartamento AND p.estado=true");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idDepartamento", idDepartamento);
             List<Carrera> lista = query.getResultList();

@@ -23,6 +23,8 @@ public interface FacultadDAOInterface {
     public void eliminarFacultad(Facultad facultad);
 
     public List<Facultad> consultarFacultades();
+    
+    public List<Facultad> consultarFacultadesActivas();
 
     public Facultad buscarFacultadPorCodigo(String codigo);
 

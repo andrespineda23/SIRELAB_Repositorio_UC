@@ -46,6 +46,16 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             return null;
         }
     }
+    @Override
+    public List<Carrera> obtenerCarrerasActivasRegistradas() {
+        try {
+            List<Carrera> lista = carreraDAO.consultarCarrerasActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlanAsignaturaBO obtenerCarrerasRegistradas: " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<PlanEstudios> obtenerPlanEstudiosPorCarrera(BigInteger carrera) {
@@ -58,11 +68,33 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
 
         }
     }
+    @Override
+    public List<PlanEstudios> obtenerPlanEstudiosActivosPorCarrera(BigInteger carrera) {
+        try {
+            List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosActivosPorCarrera(carrera);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlanAsignaturaBO obtenerPlanEstudiosPorCarrera: " + e.toString());
+            return null;
+
+        }
+    }
 
     @Override
     public List<Asignatura> consultarAsignaturasRegistradas() {
         try {
             List<Asignatura> lista = asignaturaDAO.consultarAsignaturas();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlanAsignaturaBO consultarAsignaturasRegistradas: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Asignatura> consultarAsignaturasActivosRegistradas() {
+        try {
+            List<Asignatura> lista = asignaturaDAO.consultarAsignaturasActivos();
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlanAsignaturaBO consultarAsignaturasRegistradas: " + e.toString());

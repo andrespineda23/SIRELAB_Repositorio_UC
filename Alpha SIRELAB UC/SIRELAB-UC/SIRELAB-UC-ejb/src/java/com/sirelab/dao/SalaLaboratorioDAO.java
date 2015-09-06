@@ -135,7 +135,21 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             List<SalaLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarSalasLaboratoriosPorEdificio SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error buscarSalasLaboratoriosPorLaboratorioArea SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+     public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorioArea(BigInteger laboratorioArea) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratoriosporareas.idlaboratoriosporareas=:laboratorioArea AND p.estadosala=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorioArea", laboratorioArea);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarSalasLaboratoriosActivosPorLaboratorioArea SalaLaboratorioDAO : " + e.toString());
             return null;
         }
     }

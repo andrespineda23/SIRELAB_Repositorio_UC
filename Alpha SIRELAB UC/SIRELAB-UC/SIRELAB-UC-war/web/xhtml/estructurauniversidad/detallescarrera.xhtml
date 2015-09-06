@@ -67,7 +67,7 @@ and open the template in the editor.
                                                              class="form-control"
                                                              id="editarFacultad">
                                                 <f:selectItems value="#{controllerDetallesCarrera.listaFacultades}" var="facultad"
-                                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                                               itemLabel="#{facultad.strNombreEstado}" itemValue="#{facultad}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesCarrera.actualizarFacultad()}" execute="editarFacultad" render="msnFacultad editarDepartamento"/>
                                             </h:selectOneMenu>
@@ -80,7 +80,7 @@ and open the template in the editor.
                                                              id="editarDepartamento">
                                                 <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesCarrera.listaDepartamentos}" var="departamento"
-                                                               itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                                               itemLabel="#{departamento.strNombreEstado}" itemValue="#{departamento}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesCarrera.validarDepartamentoCarrera()}" execute="editarDepartamento" render="msnDepartamento"/>
                                             </h:selectOneMenu>

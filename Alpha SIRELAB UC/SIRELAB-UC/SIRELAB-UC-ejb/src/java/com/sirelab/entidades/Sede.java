@@ -66,6 +66,8 @@ public class Sede implements Serializable {
     private Collection<Edificio> edificioCollection;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public Sede() {
     }
@@ -174,6 +176,17 @@ public class Sede implements Serializable {
 
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
+    }
+
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getNombresede();
+        strNombreEstado = nombresede + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
     }
 
 }

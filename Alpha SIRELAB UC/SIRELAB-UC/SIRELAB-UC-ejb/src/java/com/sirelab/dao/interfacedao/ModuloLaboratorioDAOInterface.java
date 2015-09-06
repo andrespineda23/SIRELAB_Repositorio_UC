@@ -31,4 +31,6 @@ public interface ModuloLaboratorioDAOInterface {
     public List<ModuloLaboratorio> buscarModulosLaboratoriosPorFiltrado(Map<String, String> filters);
 
     public ModuloLaboratorio buscarModuloLaboratorioPorCodigoYSala(String codigo, BigInteger sala);
+
+    public List<ModuloLaboratorio> buscarModuloLaboratorioActivosPorIDSalaLaboratorio(BigInteger idSala);
 }

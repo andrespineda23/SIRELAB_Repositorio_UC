@@ -98,10 +98,6 @@ public class ControllerRegistrarEquipo implements Serializable {
         //
         activarNuevoModuloLaboratorio = true;
         activarNuevoSalaLaboratorio = true;
-        listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
-        listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
-        listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
-        listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
         listaModulosLaboratorios = null;
         listaSalasLaboratorios = null;
         BasicConfigurator.configure();
@@ -282,7 +278,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     public void actualizarNuevoLaboratorioPorArea() {
         if (Utilidades.validarNulo(nuevoLaboratorioPorArea)) {
             nuevoSalaLaboratorioEquipo = null;
-            listaSalasLaboratorios = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion(nuevoLaboratorioPorArea.getIdlaboratoriosporareas());
+            listaSalasLaboratorios = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion(nuevoLaboratorioPorArea.getIdlaboratoriosporareas());
             activarNuevoSalaLaboratorio = false;
 
             nuevoModuloLaboratorioEquipo = null;
@@ -309,7 +305,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     public void actualizarNuevoSalaLaboratorio() {
         if (Utilidades.validarNulo(nuevoSalaLaboratorioEquipo)) {
             nuevoModuloLaboratorioEquipo = null;
-            listaModulosLaboratorios = gestionarPlantaEquiposElementosBO.consultarModulosLaboratorioPorIDSalaLaboratorio(nuevoSalaLaboratorioEquipo.getIdsalalaboratorio());
+            listaModulosLaboratorios = gestionarPlantaEquiposElementosBO.consultarModulosLaboratorioActivosPorIDSalaLaboratorio(nuevoSalaLaboratorioEquipo.getIdsalalaboratorio());
             activarNuevoModuloLaboratorio = false;
             validacionesSala = true;
         } else {
@@ -538,6 +534,9 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     //GET - SET
     public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
+        if (null == listaLaboratoriosPorAreas) {
+            listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasActivosRegistradas();
+        }
         return listaLaboratoriosPorAreas;
     }
 
@@ -562,6 +561,9 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public List<TipoActivo> getListaTiposActivos() {
+        if (null == listaTiposActivos) {
+            listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
+        }
         return listaTiposActivos;
     }
 
@@ -570,6 +572,9 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public List<Proveedor> getListaProveedores() {
+        if (null == listaProveedores) {
+            listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
+        }
         return listaProveedores;
     }
 
@@ -578,6 +583,9 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public List<EstadoEquipo> getListaEstadosEquipos() {
+        if (null == listaEstadosEquipos) {
+            listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
+        }
         return listaEstadosEquipos;
     }
 

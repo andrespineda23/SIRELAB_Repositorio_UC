@@ -125,6 +125,21 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             return null;
         }
     }
+    
+    @Override
+    public List<Laboratorio> buscarLaboratorioActivosPorIDDepartamento(BigInteger idDepartamento) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.departamento.iddepartamento=:idDepartamento AND p.estado=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idDepartamento", idDepartamento);
+            List<Laboratorio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error buscarLaboratorioActivosPorIDDepartamento LaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<Laboratorio> buscarLaboratoriosPorFiltrado(Map<String, String> filters) {

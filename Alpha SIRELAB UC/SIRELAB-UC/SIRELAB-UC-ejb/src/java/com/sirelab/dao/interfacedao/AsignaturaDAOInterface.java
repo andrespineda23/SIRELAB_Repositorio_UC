@@ -32,4 +32,6 @@ public interface AsignaturaDAOInterface {
 
     public Asignatura obtenerUltimaAsignaturaRegistrada();
 
+    public List<Asignatura> consultarAsignaturasActivos();
+
 }

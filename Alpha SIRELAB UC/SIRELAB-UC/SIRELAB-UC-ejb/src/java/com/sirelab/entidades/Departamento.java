@@ -69,6 +69,8 @@ public class Departamento implements Serializable {
     private Collection<Docente> docenteCollection;
     @Transient
     private String strEstado;
+    @Transient
+    private String strNombreEstado;
 
     public Departamento() {
     }
@@ -193,4 +195,16 @@ public class Departamento implements Serializable {
         this.strEstado = strEstado;
     }
 
+    public String getStrNombreEstado() {
+        getStrEstado();
+        getNombredepartamento();
+        strNombreEstado = nombredepartamento + " - " + strEstado;
+        return strNombreEstado;
+    }
+
+    public void setStrNombreEstado(String strNombreEstado) {
+        this.strNombreEstado = strNombreEstado;
+    }
+
+;
 }

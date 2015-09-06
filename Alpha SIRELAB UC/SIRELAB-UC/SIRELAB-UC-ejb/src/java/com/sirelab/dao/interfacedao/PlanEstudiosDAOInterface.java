@@ -22,6 +22,8 @@ public interface PlanEstudiosDAOInterface {
 
     public void editarPlanEstudios(PlanEstudios planestudios);
 
+    public List<PlanEstudios> consultarPlanesEstudiosActivosPorCarrera(BigInteger idCarrera);
+
     public void eliminarPlanEstudios(PlanEstudios planestudios);
 
     public List<PlanEstudios> consultarPlanesEstudios();
