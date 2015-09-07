@@ -234,5 +234,25 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
         }
         return tq;
     }
+    
+    @Override
+    public Laboratorio obtenerUltimaLaboratorioRegistrada() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Laboratorio p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Laboratorio> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                Laboratorio ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error obtenerUltimaLaboratorioRegistrada LaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
 
 }

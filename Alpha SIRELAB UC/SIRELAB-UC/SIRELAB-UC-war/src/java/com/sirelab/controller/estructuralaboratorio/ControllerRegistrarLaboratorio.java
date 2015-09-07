@@ -5,13 +5,15 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.AsociacionLaboratorioArea;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -48,6 +50,8 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private List<AsociacionLaboratorioArea> listaAsociacionLaboratorioArea;
+    private List<AreaProfundizacion> listaAreaProfundizacion;
 
     public ControllerRegistrarLaboratorio() {
     }
@@ -70,6 +74,20 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         BasicConfigurator.configure();
+        cargarInformacionAsociacion();
+    }
+
+    private void cargarInformacionAsociacion() {
+        listaAreaProfundizacion = gestionarPlantaLaboratoriosBO.obtenerAreasProfundizacionRegistradas();
+        if (Utilidades.validarNulo(listaAreaProfundizacion)) {
+            listaAsociacionLaboratorioArea = new ArrayList<AsociacionLaboratorioArea>();
+            for (int i = 0; i < listaAreaProfundizacion.size(); i++) {
+                AsociacionLaboratorioArea nuevo = new AsociacionLaboratorioArea();
+                nuevo.setActivo(false);
+                nuevo.setAreaProfundizacion(listaAreaProfundizacion.get(i));
+                listaAsociacionLaboratorioArea.add(nuevo);
+            }
+        }
     }
 
     public void actualizarFacultades() {
@@ -163,16 +181,33 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         return retorno;
     }
 
+    private boolean validarAsociacionArea() {
+        boolean retorno = false;
+        if (Utilidades.validarNulo(listaAsociacionLaboratorioArea)) {
+            for (int i = 0; i < listaAsociacionLaboratorioArea.size(); i++) {
+                if (listaAsociacionLaboratorioArea.get(i).isActivo() == true) {
+                    retorno = true;
+                }
+            }
+        }
+        return retorno;
+    }
+
     public void registrarNuevoLaboratorio() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenarNuevoLaboratorioEnSistema();
-                limpiarFormulario();
-                activarLimpiar = false;
-                activarAceptar = true;
-                activarCasillas = true;
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarAsociacionArea() == true) {
+                    almacenarNuevoLaboratorioEnSistema();
+                    limpiarFormulario();
+                    activarLimpiar = false;
+                    activarAceptar = true;
+                    activarCasillas = true;
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "El laboratorio debe tener asociado al menos una área de profundización.";
+                }
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el departamento seleccionado.";
@@ -190,12 +225,26 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             laboratorioNuevo.setEstado(true);
             laboratorioNuevo.setCodigolaboratorio(nuevoCodigo);
             laboratorioNuevo.setDepartamento(nuevoDepartamento);
-            gestionarPlantaLaboratoriosBO.crearNuevaLaboratorio(laboratorioNuevo);
+            List<AreaProfundizacion> lista = cargarAreasProfundizacion();
+            gestionarPlantaLaboratoriosBO.crearNuevaLaboratorio(laboratorioNuevo, lista);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema:  " + e.toString());
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString());
 
         }
+    }
+
+    private List<AreaProfundizacion> cargarAreasProfundizacion() {
+        List<AreaProfundizacion> lista = null;
+        if (Utilidades.validarNulo(listaAsociacionLaboratorioArea)) {
+            lista = new ArrayList<AreaProfundizacion>();
+            for (int i = 0; i < listaAsociacionLaboratorioArea.size(); i++) {
+                if (listaAsociacionLaboratorioArea.get(i).isActivo() == true) {
+                    lista.add(listaAsociacionLaboratorioArea.get(i).getAreaProfundizacion());
+                }
+            }
+        }
+        return lista;
     }
 
     public void limpiarFormulario() {
@@ -209,6 +258,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
+        cargarInformacionAsociacion();
         mensajeFormulario = "";
     }
 
@@ -230,6 +280,8 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
+        listaAreaProfundizacion = null;
+        listaAsociacionLaboratorioArea = null;
     }
 
     public void cambiarActivarCasillas() {
@@ -340,6 +392,22 @@ public class ControllerRegistrarLaboratorio implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public List<AsociacionLaboratorioArea> getListaAsociacionLaboratorioArea() {
+        return listaAsociacionLaboratorioArea;
+    }
+
+    public void setListaAsociacionLaboratorioArea(List<AsociacionLaboratorioArea> listaAsociacionLaboratorioArea) {
+        this.listaAsociacionLaboratorioArea = listaAsociacionLaboratorioArea;
+    }
+
+    public List<AreaProfundizacion> getListaAreaProfundizacion() {
+        return listaAreaProfundizacion;
+    }
+
+    public void setListaAreaProfundizacion(List<AreaProfundizacion> listaAreaProfundizacion) {
+        this.listaAreaProfundizacion = listaAreaProfundizacion;
     }
 
 }

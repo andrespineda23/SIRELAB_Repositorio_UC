@@ -9,6 +9,7 @@ import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -48,6 +49,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
+    private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
 
     public ControllerDetallesLaboratorio() {
     }
@@ -87,6 +89,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
         if (Utilidades.validarNulo(editarFacultad)) {
             listaDepartamentos = gestionarPlantaLaboratoriosBO.consultarDepartamentosPorIDFacultad(editarFacultad.getIdfacultad());
         }
+        listaLaboratoriosPorAreas = gestionarPlantaLaboratoriosBO.obtenerLaboratoriosPorAreasPorIdLaboratorio(idLaboratorio);
     }
 
     public void recibirIDLaboratoriosDetalles(BigInteger idRegistro) {
@@ -203,16 +206,42 @@ public class ControllerDetallesLaboratorio implements Serializable {
         return retorno;
     }
 
+    private boolean validarAsociacionLaboratorioArea() {
+        boolean retorno = true;
+        int antiguos = validarRegistroAntiguosAsociacion();
+        if (antiguos == 0) {
+            retorno = false;
+        }
+        return retorno;
+    }
+
+    private int validarRegistroAntiguosAsociacion() {
+        int cantidad = 0;
+        if (Utilidades.validarNulo(listaLaboratoriosPorAreas)) {
+            for (int i = 0; i < listaLaboratoriosPorAreas.size(); i++) {
+                if (listaLaboratoriosPorAreas.get(i).getEstado() == true) {
+                    cantidad++;
+                }
+            }
+        }
+        return cantidad;
+    }
+
     public void registrarModificacionLaboratorio() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                if (validarCambioEstado() == true) {
-                    almacenarModificacionLaboratorioEnSistema();
-                    colorMensaje = "green";
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarAsociacionLaboratorioArea() == true) {
+                    if (validarCambioEstado() == true) {
+                        almacenarModificacionLaboratorioEnSistema();
+                        colorMensaje = "green";
+                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    } else {
+                        colorMensaje = "red";
+                        mensajeFormulario = "Existen areas asociadas. Imposible cambiar el estado del laboratorio.";
+                    }
                 } else {
                     colorMensaje = "red";
-                    mensajeFormulario = "Existen areas asociadas. Imposible cambiar el estado del laboratorio.";
+                    mensajeFormulario = "Es necesario que exista al menos una área de profundización asociado.";
                 }
             } else {
                 colorMensaje = "red";
@@ -231,6 +260,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
             laboratorioDetalles.setDepartamento(editarDepartamento);
             laboratorioDetalles.setEstado(editarEstado);
             gestionarPlantaLaboratoriosBO.modificarInformacionLaboratorio(laboratorioDetalles);
+            gestionarPlantaLaboratoriosBO.modificarLaboratorioPorArea(listaLaboratoriosPorAreas);
             restaurarInformacionLaboratorio();
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema:  " + e.toString());
@@ -334,6 +364,14 @@ public class ControllerDetallesLaboratorio implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
+        return listaLaboratoriosPorAreas;
+    }
+
+    public void setListaLaboratoriosPorAreas(List<LaboratoriosPorAreas> listaLaboratoriosPorAreas) {
+        this.listaLaboratoriosPorAreas = listaLaboratoriosPorAreas;
     }
 
 }

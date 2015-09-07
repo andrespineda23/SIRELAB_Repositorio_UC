@@ -35,4 +35,6 @@ public interface PlanEstudiosDAOInterface {
     public List<PlanEstudios> buscarPlanesEstudiosPorFiltrado(Map<String, String> filters);
 
     public PlanEstudios buscarPlanEstudiosPorCodigo(String codigo);
+
+    public PlanEstudios obtenerUltimaPlanEstudiosRegistrada();
 }

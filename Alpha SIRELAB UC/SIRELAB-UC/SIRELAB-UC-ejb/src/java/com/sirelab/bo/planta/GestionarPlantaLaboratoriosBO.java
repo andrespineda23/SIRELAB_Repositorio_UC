@@ -1,11 +1,13 @@
 package com.sirelab.bo.planta;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
+import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
@@ -15,13 +17,13 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 
 /**
  *
  * @author ANDRES PINEDA
  */
-@Stateless
+@Stateful
 public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratoriosBOInterface {
 
     @EJB
@@ -34,6 +36,8 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
     LaboratoriosPorAreasDAOInterface laboratoriosPorAreasDAO;
+    @EJB
+    AreaProfundizacionDAOInterface areaProfundizacionDAO;
 
     @Override
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
@@ -113,9 +117,19 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
     }
 
     @Override
-    public void crearNuevaLaboratorio(Laboratorio laboratorio) {
+    public void crearNuevaLaboratorio(Laboratorio laboratorio, List<AreaProfundizacion> lista) {
         try {
             laboratorioDAO.crearLaboratorio(laboratorio);
+            Laboratorio nuevo = laboratorioDAO.obtenerUltimaLaboratorioRegistrada();
+            if (null != lista) {
+                for (int i = 0; i < lista.size(); i++) {
+                    LaboratoriosPorAreas registro = new LaboratoriosPorAreas();
+                    registro.setEstado(true);
+                    registro.setAreaprofundizacion(lista.get(i));
+                    registro.setLaboratorio(nuevo);
+                    laboratoriosPorAreasDAO.crearLaboratoriosPorAreas(registro);
+                }
+            }
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaLaboratorioBO crearNuevaLaboratorio : " + e.toString());
         }
@@ -173,6 +187,41 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             }
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaLaboratorioBO validarCambioEstadoLaboratorio : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<AreaProfundizacion> obtenerAreasProfundizacionRegistradas() {
+        try {
+            List<AreaProfundizacion> lista = areaProfundizacionDAO.consultarAreasProfundizacionActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratorioBO obtenerAreasProfundizacionRegistradas : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public void modificarLaboratorioPorArea(List<LaboratoriosPorAreas> lista) {
+        try {
+            if (null != lista) {
+                for (int i = 0; i < lista.size(); i++) {
+                    laboratoriosPorAreasDAO.editarLaboratoriosPorAreas(lista.get(i));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratorioBO modificarLaboratorioPorArea : " + e.toString());
+        }
+    }
+
+    @Override
+    public List<LaboratoriosPorAreas> obtenerLaboratoriosPorAreasPorIdLaboratorio(BigInteger laboratorio) {
+        try {
+            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasPorLaboratorios(laboratorio);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratorioBO obtenerLaboratoriosPorAreasPorIdLaboratorio : " + e.toString());
             return null;
         }
     }

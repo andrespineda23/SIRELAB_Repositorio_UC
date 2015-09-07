@@ -103,8 +103,27 @@ and open the template in the editor.
                                         </div>
                                     </fieldset>
                                     <br></br>
-                                    <br></br>
-                                    <br></br>
+                                    <fieldset>
+                                        <legend class="text-info">Asignaturas Registradas (ACTIVAS)</legend>
+                                        <div class="row" >
+                                            <h:dataTable id="dataTable" var="item" 
+                                                         styleClass="table table-condensed table-responsive"  
+                                                         value="#{controllerRegistrarPlanEstudio.listaAsociacionPlanAsignatura}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre Asignatura"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.asignatura.nombreasignatura}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Desea Asociar la Asignatura"/>
+                                                    </f:facet>
+                                                    <h:selectBooleanCheckbox disabled="#{controllerRegistrarPlanEstudio.activarCasillas}" value="#{item.activo}"/>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </div>
+                                    </fieldset>
                                     <br></br>
                                     <hr class="intro-divider"/>
                                     <div class="row col-md-12">

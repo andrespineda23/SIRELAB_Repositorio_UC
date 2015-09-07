@@ -1,11 +1,13 @@
 package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarPlanesEstudiosBOInterface;
+import com.sirelab.dao.interfacedao.AsignaturaDAOInterface;
 import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
+import com.sirelab.entidades.Asignatura;
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
@@ -34,6 +36,8 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
     PlanEstudiosDAOInterface planEstudiosDAO;
     @EJB
     AsignaturaPorPlanEstudioDAOInterface asignaturaPorPlanEstudioDAO;
+    @EJB
+    AsignaturaDAOInterface asignaturaDAO;
 
     @Override
     public List<Facultad> consultarFacultadesRegistradas() {
@@ -113,9 +117,19 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
     }
 
     @Override
-    public void crearNuevoPlanEstudio(PlanEstudios planEstudio) {
+    public void crearNuevoPlanEstudio(PlanEstudios planEstudio, List<Asignatura> lista) {
         try {
             planEstudiosDAO.crearPlanEstudios(planEstudio);
+            if (null != lista) {
+                PlanEstudios nuevo = planEstudiosDAO.obtenerUltimaPlanEstudiosRegistrada();
+                for (int i = 0; i < lista.size(); i++) {
+                    AsignaturaPorPlanEstudio registro = new AsignaturaPorPlanEstudio();
+                    registro.setEstado(true);
+                    registro.setAsignatura(lista.get(i));
+                    registro.setPlanestudio(nuevo);
+                    asignaturaPorPlanEstudioDAO.crearAsignaturaPorPlanEstudio(registro);
+                }
+            }
         } catch (Exception e) {
             System.out.println("Error GestionarPlanesEstudiosBO crearNuevoPlanEstudio : " + e.toString());
         }
@@ -127,6 +141,17 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             planEstudiosDAO.editarPlanEstudios(planEstudio);
         } catch (Exception e) {
             System.out.println("Error GestionarPlanesEstudiosBO modificarInformacionPlanEstudios : " + e.toString());
+        }
+    }
+    
+    @Override
+    public void modificarInformacionAsignaturaPorPlanEstudio(List<AsignaturaPorPlanEstudio> lista) {
+        try {
+            for(int i = 0;i<lista.size();i++){
+                asignaturaPorPlanEstudioDAO.editarAsignaturaPorPlanEstudio(lista.get(i));
+            }
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlanesEstudiosBO modificarInformacionAsignaturaPorPlanEstudio : " + e.toString());
         }
     }
 
@@ -177,4 +202,25 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
         }
     }
 
+    @Override
+    public List<Asignatura> obtenerAsignaturasRegistradas() {
+        try {
+            List<Asignatura> lista = asignaturaDAO.consultarAsignaturasActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlanesEstudiosBO obtenerAsignaturasRegistradas : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<AsignaturaPorPlanEstudio> obtenerAsignaturaPorPlanEstudioPorIdPlan(BigInteger plan) {
+        try {
+            List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.consultarAsignaturaPorPlanEstudiosIdPlanEstudio(plan);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlanesEstudiosBO obtenerAsignaturaPorPlanEstudioPorIdPlan : " + e.toString());
+            return null;
+        }
+    }
 }

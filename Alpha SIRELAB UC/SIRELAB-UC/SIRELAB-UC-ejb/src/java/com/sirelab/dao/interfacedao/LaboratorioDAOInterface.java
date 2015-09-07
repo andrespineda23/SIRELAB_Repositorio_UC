@@ -36,4 +36,5 @@ public interface LaboratorioDAOInterface {
 
     public List<Laboratorio> buscarLaboratorioActivosPorIDDepartamento(BigInteger idDepartamento);
 
+    public Laboratorio obtenerUltimaLaboratorioRegistrada();
 }

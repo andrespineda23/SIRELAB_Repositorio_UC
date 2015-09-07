@@ -5,10 +5,12 @@
  */
 package com.sirelab.bo.interfacebo.planta;
 
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.LaboratoriosPorAreas;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ public interface GestionarPlantaLaboratoriosBOInterface {
 
     public List<Laboratorio> consultarLaboratoriosPorParametro(Map<String, String> filtros);
 
-    public void crearNuevaLaboratorio(Laboratorio laboratorio);
+    public void crearNuevaLaboratorio(Laboratorio laboratorio, List<AreaProfundizacion> lista);
 
     public Laboratorio obtenerLaboratorioPorIDLaboratorio(BigInteger idLaboratorio);
 
@@ -43,4 +45,9 @@ public interface GestionarPlantaLaboratoriosBOInterface {
 
     public List<Departamento> consultarDepartamentosActivosPorIDFacultad(BigInteger facultad);
 
+    public List<AreaProfundizacion> obtenerAreasProfundizacionRegistradas();
+
+    public void modificarLaboratorioPorArea(List<LaboratoriosPorAreas> lista);
+
+    public List<LaboratoriosPorAreas> obtenerLaboratoriosPorAreasPorIdLaboratorio(BigInteger laboratorio);
 }

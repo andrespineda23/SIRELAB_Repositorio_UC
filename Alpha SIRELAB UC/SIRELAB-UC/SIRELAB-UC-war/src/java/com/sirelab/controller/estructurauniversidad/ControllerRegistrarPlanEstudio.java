@@ -5,13 +5,16 @@
  */
 package com.sirelab.controller.estructurauniversidad;
 
+import com.sirelab.ayuda.AsociacionPlanAsignatura;
 import com.sirelab.bo.interfacebo.universidad.GestionarPlanesEstudiosBOInterface;
+import com.sirelab.entidades.Asignatura;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -42,6 +45,8 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     private Facultad nuevoFacultad;
     private Departamento nuevoDepartamento;
     private Carrera nuevoCarrera;
+    private List<Asignatura> listaAsignaturas;
+    private List<AsociacionPlanAsignatura> listaAsociacionPlanAsignatura;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesFacultad, validacionesDepartamento, validacionesCarrera;
     private String mensajeFormulario;
@@ -74,6 +79,20 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
+        cargarAsociacionPlanAsignatura();
+    }
+
+    private void cargarAsociacionPlanAsignatura() {
+        listaAsignaturas = gestionarPlanesEstudiosBO.obtenerAsignaturasRegistradas();
+        if (null != listaAsignaturas) {
+            listaAsociacionPlanAsignatura = new ArrayList<AsociacionPlanAsignatura>();
+            for (int i = 0; i < listaAsignaturas.size(); i++) {
+                AsociacionPlanAsignatura nuevo = new AsociacionPlanAsignatura();
+                nuevo.setActivo(false);
+                nuevo.setAsignatura(listaAsignaturas.get(i));
+                listaAsociacionPlanAsignatura.add(nuevo);
+            }
+        }
     }
 
     public void actualizarFacultad() {
@@ -192,16 +211,33 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         return retorno;
     }
 
+    private boolean validarAsociacionAsignatura() {
+        boolean retorno = false;
+        if (Utilidades.validarNulo(listaAsociacionPlanAsignatura)) {
+            for (int i = 0; i < listaAsociacionPlanAsignatura.size(); i++) {
+                if (listaAsociacionPlanAsignatura.get(i).isActivo() == true) {
+                    retorno = true;
+                }
+            }
+        }
+        return retorno;
+    }
+
     public void registrarNuevoPlanEstudio() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenarNuevoPlanEstudioEnSistema();
-                limpiarFormulario();
-                activarAceptar = true;
-                activarLimpiar = false;
-                activarCasillas = true;
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarAsociacionAsignatura() == true) {
+                    almacenarNuevoPlanEstudioEnSistema();
+                    limpiarFormulario();
+                    activarAceptar = true;
+                    activarLimpiar = false;
+                    activarCasillas = true;
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "Es necesario asociar al menos una asignatura al plan de estudio.";
+                }
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
@@ -219,11 +255,25 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             planNuevo.setCodigoplanestudio(nuevoCodigo);
             planNuevo.setCarrera(nuevoCarrera);
             planNuevo.setEstado(true);
-            gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo);
+            List<Asignatura> lista = cargarAsignaturas();
+            gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo, lista);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString());
         }
+    }
+
+    private List<Asignatura> cargarAsignaturas() {
+        List<Asignatura> lista = null;
+        if (Utilidades.validarNulo(listaAsociacionPlanAsignatura)) {
+            lista = new ArrayList<Asignatura>();
+            for (int i = 0; i < listaAsociacionPlanAsignatura.size(); i++) {
+                if (listaAsociacionPlanAsignatura.get(i).isActivo() == true) {
+                    lista.add(listaAsociacionPlanAsignatura.get(i).getAsignatura());
+                }
+            }
+        }
+        return lista;
     }
 
     public void limpiarFormulario() {
@@ -240,6 +290,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "";
+        cargarAsociacionPlanAsignatura();
     }
 
     public void cancelarRegistroPlanEstudio() {
@@ -247,6 +298,8 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         activarNuevoDepartamento = true;
         nuevoCarrera = null;
         nuevoCodigo = null;
+        listaAsignaturas = null;
+        listaAsociacionPlanAsignatura = null;
         nuevoDepartamento = null;
         nuevoFacultad = null;
         nuevoNombre = null;
@@ -397,6 +450,22 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public List<Asignatura> getListaAsignaturas() {
+        return listaAsignaturas;
+    }
+
+    public void setListaAsignaturas(List<Asignatura> listaAsignaturas) {
+        this.listaAsignaturas = listaAsignaturas;
+    }
+
+    public List<AsociacionPlanAsignatura> getListaAsociacionPlanAsignatura() {
+        return listaAsociacionPlanAsignatura;
+    }
+
+    public void setListaAsociacionPlanAsignatura(List<AsociacionPlanAsignatura> listaAsociacionPlanAsignatura) {
+        this.listaAsociacionPlanAsignatura = listaAsociacionPlanAsignatura;
     }
 
 }

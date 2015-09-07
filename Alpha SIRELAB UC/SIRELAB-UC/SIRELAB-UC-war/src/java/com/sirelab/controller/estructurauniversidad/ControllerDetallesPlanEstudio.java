@@ -6,6 +6,7 @@
 package com.sirelab.controller.estructurauniversidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarPlanesEstudiosBOInterface;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
@@ -51,6 +52,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
+    private List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudio;
 
     public ControllerDetallesPlanEstudio() {
     }
@@ -98,6 +100,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         if (Utilidades.validarNulo(editarDepartamento)) {
             listaCarreras = gestionarPlanesEstudiosBO.consultarCarrerasPorIDDepartamento(editarDepartamento.getIddepartamento());
         }
+        listaAsignaturaPorPlanEstudio = gestionarPlanesEstudiosBO.obtenerAsignaturaPorPlanEstudioPorIdPlan(idPlanEstudios);
     }
 
     public void recibirIDPlanesEstudioDetalles(BigInteger idRegistro) {
@@ -238,18 +241,44 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         return retorno;
     }
 
+    private boolean validarAsociacionPlanAsignatura() {
+        boolean retorno = true;
+        int antiguos = validarRegistroAntiguosAsociacion();
+        if (antiguos == 0) {
+            retorno = false;
+        }
+        return retorno;
+    }
+
+    private int validarRegistroAntiguosAsociacion() {
+        int cantidad = 0;
+        if (Utilidades.validarNulo(listaAsignaturaPorPlanEstudio)) {
+            for (int i = 0; i < listaAsignaturaPorPlanEstudio.size(); i++) {
+                if (listaAsignaturaPorPlanEstudio.get(i).getEstado() == true) {
+                    cantidad++;
+                }
+            }
+        }
+        return cantidad;
+    }
+
     public void registrarModificacionPlanEstudio() {
         if (validarResultadosValidacion() == true) {
             if (Utilidades.validarNulo(editarCarrera)) {
                 if (validarCodigoRepetido() == true) {
-                    if (validarCambioEstado() == true) {
-                        almacenarModificacionPlanEstudioEnSistema();
-                        recibirIDPlanesEstudioDetalles(this.idPlanEstudios);
-                        colorMensaje = "green";
-                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    if (validarAsociacionPlanAsignatura() == true) {
+                        if (validarCambioEstado() == true) {
+                            almacenarModificacionPlanEstudioEnSistema();
+                            restaurarInformacionPlanEstudio();
+                            colorMensaje = "green";
+                            mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                        } else {
+                            colorMensaje = "red";
+                            mensajeFormulario = "Existen asignaturas asociadas. Imposible cambiar el estado del plan de estudio.";
+                        }
                     } else {
                         colorMensaje = "red";
-                        mensajeFormulario = "Existen asignaturas asociadas. Imposible cambiar el estado del plan de estudio.";
+                        mensajeFormulario = "Es necesario que al menos una asignatura se encuentre asociada al plan de estudio.";
                     }
                 } else {
                     colorMensaje = "red";
@@ -272,6 +301,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             planEstudiosDetalles.setEstado(editarEstado);
             planEstudiosDetalles.setCarrera(editarCarrera);
             gestionarPlanesEstudiosBO.modificarInformacionPlanEstudios(planEstudiosDetalles);
+            gestionarPlanesEstudiosBO.modificarInformacionAsignaturaPorPlanEstudio(listaAsignaturaPorPlanEstudio);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema:  " + e.toString());
             System.out.println("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema : " + e.toString());
@@ -397,6 +427,14 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public List<AsignaturaPorPlanEstudio> getListaAsignaturaPorPlanEstudio() {
+        return listaAsignaturaPorPlanEstudio;
+    }
+
+    public void setListaAsignaturaPorPlanEstudio(List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudio) {
+        this.listaAsignaturaPorPlanEstudio = listaAsignaturaPorPlanEstudio;
     }
 
 }

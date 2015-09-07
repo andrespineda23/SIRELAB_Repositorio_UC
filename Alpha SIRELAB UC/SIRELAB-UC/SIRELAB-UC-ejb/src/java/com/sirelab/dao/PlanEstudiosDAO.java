@@ -125,6 +125,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             return null;
         }
     }
+
     @Override
     public List<PlanEstudios> consultarPlanesEstudiosActivosPorCarrera(BigInteger idCarrera) {
         try {
@@ -238,4 +239,23 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
         return tq;
     }
 
+    @Override
+    public PlanEstudios obtenerUltimaPlanEstudiosRegistrada() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PlanEstudios p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<PlanEstudios> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                PlanEstudios ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error obtenerUltimaPlanEstudiosRegistrada PlanEstudiosDAO : " + e.toString());
+            return null;
+        }
+    }
 }
