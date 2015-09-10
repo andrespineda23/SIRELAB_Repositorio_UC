@@ -61,10 +61,7 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Cantidad*"/></strong>
-                                        <h:inputText maxlength="2"  value="#{controllerDetallesMovimientoInsumo.editarCantidadMovimiento}" required="true" class="form-control" id="editarCantidadMovimiento" requiredMessage="El campo Descripción es obligatorio.">
-                                            <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarCantidadMovimiento()}" execute="editarCantidadMovimiento" render="editarCantidadMovimiento msnCantidadMovimiento" />
-                                        </h:inputText>
-                                        <h6><h:message id="msnCantidadMovimiento" for="editarCantidadMovimiento" style="color: red"/></h6>
+                                        <h:inputText value="#{controllerDetallesMovimientoInsumo.editarCantidadMovimiento}" readonly="true" class="form-control" id="editarCantidadMovimiento" />>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Fecha Movimiento*"/></strong>
