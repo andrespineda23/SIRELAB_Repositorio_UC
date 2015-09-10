@@ -6,7 +6,6 @@
 package com.sirelab.bo.interfacebo.recursos;
 
 import com.sirelab.entidades.Insumo;
-import com.sirelab.entidades.Proveedor;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,5 @@ public interface GestionarRecursoInsumosBOInterface {
 
     public Insumo obtenerInsumoPorIDInsumo(BigInteger idInsumo);
 
-    public List<Proveedor> consultarProveedoresRegistrados();
-
-    public Insumo obtenerInsumoPorIDCodigoYProveedor(String codigo, BigInteger proveedor);
+    public Insumo obtenerInsumoPorCodigo(String codigo);
 }

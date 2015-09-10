@@ -97,6 +97,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             return null;
         }
     }
+
     @Override
     public List<Edificio> buscarEdificiosActivosPorIDSede(BigInteger idSede) {
         try {

@@ -327,7 +327,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     public void validarDireccionEncargadoLaboratorio() {
         if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty()) && (inputDireccion.trim().length() > 0)) {
             int tam = inputDireccion.length();
-            if (tam == 7) {
+            if (tam > 7) {
                 if (Utilidades.validarDirecciones(inputDireccion)) {
                     validacionesDireccion = true;
                 } else {

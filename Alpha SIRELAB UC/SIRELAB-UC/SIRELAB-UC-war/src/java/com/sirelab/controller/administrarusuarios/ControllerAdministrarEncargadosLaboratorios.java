@@ -115,16 +115,16 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
      * Metodo encargado de agregar los valores al filtro de busqueda
      */
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre);
         }
-        if ((Utilidades.validarNulo(parametroApellido) == true) && (!parametroApellido.isEmpty())  && (parametroApellido.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroApellido) == true) && (!parametroApellido.isEmpty()) && (parametroApellido.trim().length() > 0)) {
             filtros.put("parametroApellido", parametroApellido);
         }
-        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty())  && (parametroDocumento.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty()) && (parametroDocumento.trim().length() > 0)) {
             filtros.put("parametroDocumento", parametroDocumento);
         }
-        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty())  && (parametroCorreo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCorreo) == true) && (!parametroCorreo.isEmpty()) && (parametroCorreo.trim().length() > 0)) {
             filtros.put("parametroCorreo", parametroCorreo);
         }
         if (1 == parametroEstado) {
@@ -295,6 +295,11 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         bloquearPagAntEncargadoLaboratorio = true;
         bloquearPagSigEncargadoLaboratorio = true;
         cantidadRegistros = "N/A";
+    }
+
+    public String registrarNuevoEncargado() {
+        limpiarProcesoBusqueda();
+        return "registrarencargadolaboratorio";
     }
 
     /**

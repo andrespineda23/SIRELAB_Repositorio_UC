@@ -15,8 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "insumo")
@@ -44,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Insumo.findByMarcainsumo", query = "SELECT i FROM Insumo i WHERE i.marcainsumo = :marcainsumo"),
     @NamedQuery(name = "Insumo.findByModeloinsumo", query = "SELECT i FROM Insumo i WHERE i.modeloinsumo = :modeloinsumo")})
 public class Insumo implements Serializable {
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private Collection<MovimientoInsumo> movimientoInsumoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,11 +73,6 @@ public class Insumo implements Serializable {
     @Size(max = 45)
     @Column(name = "modeloinsumo")
     private String modeloinsumo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private Collection<MovimientoInsumo> movimientoInsumoCollection;
-    @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
-    @ManyToOne(optional = false)
-    private Proveedor proveedor;
 
     public Insumo() {
     }
@@ -172,23 +166,6 @@ public class Insumo implements Serializable {
         this.modeloinsumo = modeloinsumo.toUpperCase();
     }
 
-    @XmlTransient
-    public Collection<MovimientoInsumo> getMovimientoInsumoCollection() {
-        return movimientoInsumoCollection;
-    }
-
-    public void setMovimientoInsumoCollection(Collection<MovimientoInsumo> movimientoInsumoCollection) {
-        this.movimientoInsumoCollection = movimientoInsumoCollection;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -214,4 +191,13 @@ public class Insumo implements Serializable {
         return "com.sirelab.entidades.Insumo[ idinsumo=" + idinsumo + " ]";
     }
 
+    @XmlTransient
+    public Collection<MovimientoInsumo> getMovimientoInsumoCollection() {
+        return movimientoInsumoCollection;
+    }
+
+    public void setMovimientoInsumoCollection(Collection<MovimientoInsumo> movimientoInsumoCollection) {
+        this.movimientoInsumoCollection = movimientoInsumoCollection;
+    }
+    
 }

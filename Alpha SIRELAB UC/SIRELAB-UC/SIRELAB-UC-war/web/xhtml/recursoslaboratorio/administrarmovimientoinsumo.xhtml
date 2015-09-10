@@ -51,24 +51,6 @@ and open the template in the editor.
                                                     </div>
                                                 </fieldset>
                                             </div> 
-                                            <div class="row col-md-12">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="parametroProveedor">
-                                                            Proveedor Insumo
-                                                        </label>
-                                                        <h:inputText readonly="true" value="#{controllerAdministrarMovimientoInsumo.insumoDetalle.proveedor.nombreproveedor}" class="form-control" id="parametroProveedor" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="parametroNit">
-                                                            NIT Proveedor
-                                                        </label>
-                                                        <h:inputText readonly="true" value="#{controllerAdministrarMovimientoInsumo.insumoDetalle.proveedor.nitproveedor}" class="form-control" id="parametroNit" />
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </fieldset>
                                         <br></br>
                                     </div>
@@ -91,7 +73,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Tipo Movimiento"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.tipomovimiento}"/>
+                                                        <h:outputText value="#{item.tipomovimiento.nombretipo}"/>
                                                     </h:column>  
                                                     <h:column>
                                                         <f:facet name="header">

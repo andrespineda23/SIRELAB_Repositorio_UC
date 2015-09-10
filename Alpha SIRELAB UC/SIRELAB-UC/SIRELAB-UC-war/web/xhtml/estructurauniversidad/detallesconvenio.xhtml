@@ -35,20 +35,6 @@ and open the template in the editor.
                                     <p>
                                         Este registro es unicamente para el ingreso de convenios.
                                     </p>
-                                    <p class="right">
-                                        <h4 style="color: #66afe9; text-transform: uppercase">
-                                            Instructivo de ingreso de información
-                                        </h4>
-                                        NOMBRE - Longitud (Min. 3 - Max. 45). Ejemplo: <strong><h:outputText value=" Convenio Educacion UCDIT" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        DESCRIPCIÓN - Longitud (Min. 3 - Max. 45). Ejemplo: <strong><h:outputText value=" Este es una descripcion de prueba del convenio creado" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        COSTO/VALOR - Ejemplo: <strong><h:outputText value=" 2000000" style="color: darkblue;"/></strong>
-                                        <br></br> 
-                                        FECHA INICIO - Ejemplo: <strong><h:outputText value=" 11/08/2015" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        FECHA FINALIZACIÓN - Ejemplo: <strong><h:outputText value=" 11/08/2015" style="color: darkblue;"/></strong>
-                                    </p>
                                 </div>
 
                                 <div class="col-md-12 row">
@@ -77,10 +63,22 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                            <h:inputText value="#{controllerDetallesConvenio.inputFechaInicio}"  required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
-                                                <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
-                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                            </h:inputText>
+                                            <div class="input-group">
+                                                <h:inputText value="#{controllerDetallesConvenio.inputFechaInicio}"  required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
+                                                    <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerDetallesConvenio.fechaDiferida}">
+                                                        <f:ajax event="change" listener="#{controllerDetallesConvenio.validarFechaInicio()}" execute="fechaDiferida" render="@this inputFechaInicio msnFechaInicio" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
                                             <h6><h:message id="msnFechaInicio" for="inputFechaInicio" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">

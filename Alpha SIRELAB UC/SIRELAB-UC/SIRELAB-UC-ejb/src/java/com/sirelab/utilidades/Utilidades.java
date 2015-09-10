@@ -52,7 +52,7 @@ public final class Utilidades {
      * @return true-Palabra correcta / false-Palabra incorrecta
      */
     public static boolean validarCaracterString(String str) {
-        System.out.println("validarCaracterString data : "+str);
+        System.out.println("validarCaracterString data : " + str);
         boolean respuesta = false;
         Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[ÁÉÍÓÚ]|[áéíóú]|[ñÑ]|\\s)+");
         Matcher matcher = pattern.matcher(str);
@@ -74,7 +74,7 @@ public final class Utilidades {
         respuesta = matcher.matches();
         return respuesta;
     }
-    
+
     public static boolean validarDirecciones(String str) {
         boolean respuesta = false;
         Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[0-9]|[-]|[.]|[#]|[o]|\\s)+");
@@ -92,7 +92,7 @@ public final class Utilidades {
      */
     public static boolean isNumber(String numero) {
         try {
-            System.out.println("numero : "+numero);
+            System.out.println("numero : " + numero);
             boolean respuesta = false;
             Pattern pattern = Pattern.compile("([0-9])+");
             Matcher matcher = pattern.matcher(numero);
@@ -102,7 +102,7 @@ public final class Utilidades {
             return false;
         }
     }
-    
+
     public static boolean validarNumeroIdentificacion(String id) {
         try {
             boolean respuesta = false;
@@ -146,14 +146,41 @@ public final class Utilidades {
         try {
             boolean retorno = true;
             Date fechaDia = new Date();
-            if (fechaValidar.getDay() < fechaDia.getDay()) {
+            if (fechaValidar.after(fechaDia) || fechaValidar.equals(fechaDia)) {
+                retorno = true;
+            } else {
                 retorno = false;
             }
-            if (fechaValidar.getMonth() < fechaDia.getMonth()) {
-                retorno = false;
-            }
-            if (fechaValidar.getYear() < fechaDia.getYear()) {
-                retorno = false;
+            /*
+             if (fechaValidar.getDay() < fechaDia.getDay()) {
+             retorno = false;
+             }
+             if (fechaValidar.getMonth() < fechaDia.getMonth()) {
+             retorno = false;
+             }
+             if (fechaValidar.getYear() < fechaDia.getYear()) {
+             retorno = false;
+             }
+            */
+            return retorno;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Metodo encargado de validar si una fecha ingresada es mayor a la fecha
+     * actual
+     *
+     * @param fechaValidar Fecha a validar
+     * @return true - fecha correcta / false - fecha incorrecta (fecha mayor)
+     */
+    public static boolean fechaDiferidaIngresadaCorrecta(Date fechaValidar) {
+        try {
+            boolean retorno = false;
+            Date fechaDia = new Date();
+            if (fechaDia.after(fechaValidar)) {
+                retorno = true;
             }
             return retorno;
         } catch (Exception e) {

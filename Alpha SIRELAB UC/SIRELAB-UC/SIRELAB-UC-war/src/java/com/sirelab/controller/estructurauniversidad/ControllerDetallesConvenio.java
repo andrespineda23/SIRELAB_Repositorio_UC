@@ -41,6 +41,7 @@ public class ControllerDetallesConvenio implements Serializable {
     private String colorMensaje;
     private boolean modificacionesRegistro;
     private boolean estadoConvenio;
+    private boolean fechaDiferida;
 
     public ControllerDetallesConvenio() {
     }
@@ -72,6 +73,7 @@ public class ControllerDetallesConvenio implements Serializable {
             validacionesFechaFin = true;
             validacionesFechaInicio = true;
             modificacionesRegistro = false;
+            fechaDiferida = true;
         }
     }
 
@@ -134,11 +136,21 @@ public class ControllerDetallesConvenio implements Serializable {
 
     public void validarFechaInicio() {
         if (Utilidades.validarNulo(inputFechaInicio)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
-                validacionesFechaInicio = true;
+            if (fechaDiferida == true) {
+                inputFechaInicio = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
+                    validacionesFechaInicio = true;
+                } else {
+                    validacionesFechaInicio = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             } else {
-                validacionesFechaInicio = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaInicio)) {
+                    validacionesFechaInicio = true;
+                } else {
+                    validacionesFechaInicio = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             }
         } else {
             validacionesFechaInicio = false;
@@ -196,19 +208,24 @@ public class ControllerDetallesConvenio implements Serializable {
     }
 
     public void registrarConvenio() {
-        if (validarValidacionesRegistro() == true) {
-            if (validarFechasRegistro() == true) {
-                almacenarRegistroNuevo();
-                recibirIDDetalleConvenio(this.idConvenio);
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+        if (modificacionesRegistro == true) {
+            if (validarValidacionesRegistro() == true) {
+                if (validarFechasRegistro() == true) {
+                    almacenarRegistroNuevo();
+                    recibirIDDetalleConvenio(this.idConvenio);
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
+                }
             } else {
                 colorMensaje = "red";
-                mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "black";
+            mensajeFormulario = "No existen modificaciones para ser almacenadas en el sistema.";
         }
     }
 
@@ -240,6 +257,7 @@ public class ControllerDetallesConvenio implements Serializable {
         validacionesFechaInicio = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        fechaDiferida = true;
     }
 
     public String cerrarPagina() {
@@ -326,6 +344,14 @@ public class ControllerDetallesConvenio implements Serializable {
 
     public void setEstadoConvenio(boolean estadoConvenio) {
         this.estadoConvenio = estadoConvenio;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

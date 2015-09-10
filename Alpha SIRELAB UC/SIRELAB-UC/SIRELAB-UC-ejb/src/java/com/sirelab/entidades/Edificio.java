@@ -39,6 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Edificio.findByDireccion", query = "SELECT e FROM Edificio e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Edificio.findByDescripcionedificio", query = "SELECT e FROM Edificio e WHERE e.descripcionedificio = :descripcionedificio")})
 public class Edificio implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "edificio")
+    private Collection<EncargadoPorEdificio> encargadoPorEdificioCollection;
 
     @Column(name = "estado")
     private Boolean estado;
@@ -181,6 +183,15 @@ public class Edificio implements Serializable {
 
     public void setStrNombreEstado(String strNombreEstado) {
         this.strNombreEstado = strNombreEstado;
+    }
+
+    @XmlTransient
+    public Collection<EncargadoPorEdificio> getEncargadoPorEdificioCollection() {
+        return encargadoPorEdificioCollection;
+    }
+
+    public void setEncargadoPorEdificioCollection(Collection<EncargadoPorEdificio> encargadoPorEdificioCollection) {
+        this.encargadoPorEdificioCollection = encargadoPorEdificioCollection;
     }
 
 }

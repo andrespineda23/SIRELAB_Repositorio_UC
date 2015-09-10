@@ -42,9 +42,15 @@ and open the template in the editor.
                                     <legend class="text-info">Datos Basicos</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Tipo Movimiento*"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerRegistrarMovimientoInsumo.nuevoTipoMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoTipoMovimiento"  requiredMessage="El campo Tipo es obligatorio.">
-                                            <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarTipoMovimiento()}" execute="nuevoTipoMovimiento" render="nuevoTipoMovimiento msnTipoMovimiento" />
-                                        </h:inputText>
+                                        <h:selectOneMenu value="#{controllerRegistrarMovimientoInsumo.nuevoTipoMovimiento}"
+                                                         class="form-control"  disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}"
+                                                         id="nuevoTipoMovimiento">
+                                            <f:selectItem itemLabel="Seleccione Movimiento" itemValue="null" />
+                                            <f:selectItems value="#{controllerRegistrarMovimientoInsumo.listaTipoMovimiento}" var="movimiento"
+                                                           itemLabel="#{movimiento.nombretipo}" itemValue="#{movimiento}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.validarTipoMovimiento()}" execute="nuevoTipoMovimiento" render="msnTipoMovimiento"/>
+                                        </h:selectOneMenu>
                                         <h6><h:message id="msnTipoMovimiento" for="nuevoTipoMovimiento" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
@@ -63,15 +69,51 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Fecha Movimiento*"/></strong>
-                                        <h:inputText value="#{controllerRegistrarMovimientoInsumo.nuevoFechaMovimiento}" required="true" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" class="form-control" id="nuevoFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
-                                            <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="nuevoFechaMovimiento" render="nuevoFechaMovimiento msnFechaMovimiento" />
-                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                        </h:inputText>
+                                        <div class="input-group">
+                                            <h:inputText value="#{controllerRegistrarMovimientoInsumo.nuevoFechaMovimiento}" required="true" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" class="form-control" id="nuevoFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="nuevoFechaMovimiento" render="nuevoFechaMovimiento msnFechaMovimiento" />
+                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            </h:inputText>
+                                            <span class="input-group-addon">
+                                                <h:outputText value="Fecha Actual"/>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarMovimientoInsumo.fechaDiferida}">
+                                                    <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="fechaDiferida" render="@this nuevoFechaMovimiento msnFechaMovimiento" />
+                                                </h:selectBooleanCheckbox>
+                                            </span>
+                                        </div>
                                         <h6><h:message id="msnFechaMovimiento" for="nuevoFechaMovimiento" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Insumo Asociado*"/></strong>
                                         <h:inputText readonly="true"  value="#{controllerRegistrarMovimientoInsumo.insumoRegistro.nombreinsumo}" class="form-control" id="nuevoInsumoMovimiento" />
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="¿El movimiento esta asociado a algun equipo?"/></strong>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <h:outputText value="¿Asociar Equipo?"/>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectBooleanCheckbox id="asociarEquipo" value="#{controllerRegistrarMovimientoInsumo.asociarEquipo}">
+                                                    <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.actualizarAsocioEquipo()}" execute="asociarEquipo" render="@this equipoElemento" />
+                                                </h:selectBooleanCheckbox>
+                                            </span>
+                                            <h:selectOneMenu value="#{controllerRegistrarMovimientoInsumo.equipoElemento}"
+                                                             class="form-control" disabled="#{controllerRegistrarMovimientoInsumo.asociarEquipo}"
+                                                             id="equipoElemento">
+                                                <f:selectItem itemLabel="Seleccione Equipo" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarMovimientoInsumo.listaEquiposElementos}" var="equpo"
+                                                               itemLabel="#{equpo.nombreequipo}" itemValue="#{equpo}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" execute="nuevoTipoMovimiento" />
+                                            </h:selectOneMenu>
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <hr class="intro-divider"/>

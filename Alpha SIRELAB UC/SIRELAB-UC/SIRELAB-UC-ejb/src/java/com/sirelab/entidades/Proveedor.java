@@ -43,6 +43,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Proveedor implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
     private Collection<EquipoElemento> equipoElementoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
+    private Collection<IngresoInsumo> ingresoInsumoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,8 +78,6 @@ public class Proveedor implements Serializable {
     @Size(max = 45)
     @Column(name = "telefonovendedor")
     private String telefonovendedor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
-    private Collection<Insumo> insumoCollection;
 
     public Proveedor() {
     }
@@ -168,15 +168,6 @@ public class Proveedor implements Serializable {
         this.telefonovendedor = telefonovendedor.toUpperCase();
     }
 
-    @XmlTransient
-    public Collection<Insumo> getInsumoCollection() {
-        return insumoCollection;
-    }
-
-    public void setInsumoCollection(Collection<Insumo> insumoCollection) {
-        this.insumoCollection = insumoCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -200,6 +191,15 @@ public class Proveedor implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Proveedor[ idproveedor=" + idproveedor + " ]";
+    }
+
+    @XmlTransient
+    public Collection<IngresoInsumo> getIngresoInsumoCollection() {
+        return ingresoInsumoCollection;
+    }
+
+    public void setIngresoInsumoCollection(Collection<IngresoInsumo> ingresoInsumoCollection) {
+        this.ingresoInsumoCollection = ingresoInsumoCollection;
     }
 
     @XmlTransient

@@ -73,6 +73,7 @@ public class ControllerDetallesEquipo implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean fechaDiferida;
 
     public ControllerDetallesEquipo() {
     }
@@ -148,6 +149,8 @@ public class ControllerDetallesEquipo implements Serializable {
         listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
         listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
         listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
+        
+        fechaDiferida = true;
 
     }
 
@@ -410,11 +413,21 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void validarFechaEquipo() {
         if (Utilidades.validarNulo(fechaEquipoElemento)) {
-            if ((Utilidades.fechaIngresadaCorrecta(fechaEquipoElemento)) == false) {
-                validacionesFecha = false;
-                FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            if (fechaDiferida == true) {
+                fechaEquipoElemento = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(fechaEquipoElemento)) {
+                    validacionesFecha = true;
+                } else {
+                    validacionesFecha = true;
+                    FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             } else {
-                validacionesFecha = true;
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(fechaEquipoElemento)) {
+                    validacionesFecha = true;
+                } else {
+                    validacionesFecha = true;
+                    FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             }
         }
     }
@@ -821,5 +834,15 @@ public class ControllerDetallesEquipo implements Serializable {
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
     }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
+    }
+    
+    
 
 }

@@ -25,6 +25,7 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio(BigInteger idEncargadoLaboratorio);
 
     public List<Facultad> obtenerListaFacultades();
+
     public List<Facultad> obtenerListaFacultadesActivos();
 
     public List<Departamento> obtenerDepartamentosPorIDFacultad(BigInteger idFacultad);

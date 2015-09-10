@@ -6,10 +6,16 @@
 package com.sirelab.bo.recursoslab;
 
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
+import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.InsumoDAOInterface;
+import com.sirelab.dao.interfacedao.MovimientoInsumoAEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.MovimientoInsumoDAOInterface;
+import com.sirelab.dao.interfacedao.TipoMovimientoDAOInterface;
+import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.Insumo;
 import com.sirelab.entidades.MovimientoInsumo;
+import com.sirelab.entidades.MovimientoInsumoAEquipo;
+import com.sirelab.entidades.TipoMovimiento;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,6 +32,12 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
     MovimientoInsumoDAOInterface movimientoInsumoDAO;
     @EJB
     InsumoDAOInterface insumoDAO;
+    @EJB
+    TipoMovimientoDAOInterface tipoMovimientoDAO;
+    @EJB
+    EquipoElementoDAOInterface equipoElementoDAO;
+    @EJB
+    MovimientoInsumoAEquipoDAOInterface movimientoInsumoAEquipoDAO;
 
     @Override
     public List<MovimientoInsumo> consultarMovimientosInsumoPorIDInsumo(BigInteger insumo) {
@@ -64,6 +76,27 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
     public void crearMovimientoInsumo(MovimientoInsumo movimientoInsumo) {
         try {
             movimientoInsumoDAO.crearMovimientoInsumo(movimientoInsumo);
+            Insumo registro = movimientoInsumo.getInsumo();
+            int cantidad = registro.getCantidadexistencia() - movimientoInsumo.getCantidadmovimiento();
+            registro.setCantidadexistencia(cantidad);
+            insumoDAO.editarInsumo(registro);
+        } catch (Exception e) {
+            System.out.println("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
+        }
+    }
+    @Override
+    public void crearMovimientoInsumoAEquipo(MovimientoInsumo movimientoInsumo, EquipoElemento equipo) {
+        try {
+            movimientoInsumoDAO.crearMovimientoInsumo(movimientoInsumo);
+            Insumo registro = movimientoInsumo.getInsumo();
+            int cantidad = registro.getCantidadexistencia() - movimientoInsumo.getCantidadmovimiento();
+            registro.setCantidadexistencia(cantidad);
+            insumoDAO.editarInsumo(registro);
+            MovimientoInsumo movimiento = movimientoInsumoDAO.obtenerUltimaMovimientoInsumoRegistrada();
+            MovimientoInsumoAEquipo movimientoInsumoAEquipo = new MovimientoInsumoAEquipo();
+            movimientoInsumoAEquipo.setEquipo(equipo);
+            movimientoInsumoAEquipo.setMovimientoinsumo(movimiento);
+            movimientoInsumoAEquipoDAO.crearMovimientoInsumoAEquipo(movimientoInsumoAEquipo);
         } catch (Exception e) {
             System.out.println("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
         }
@@ -75,6 +108,28 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             movimientoInsumoDAO.editarMovimientoInsumo(movimientoInsumo);
         } catch (Exception e) {
             System.out.println("GestionarRecursoMovimientosInsumoBO editarMovimientoInsumo: " + e.toString());
+        }
+    }
+
+    @Override
+    public List<TipoMovimiento> obtenerTipoMovimientoRegistrado() {
+        try {
+            List<TipoMovimiento> lista = tipoMovimientoDAO.consultarTiposMovimientos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("GestionarRecursoMovimientosInsumoBO obtenerTipoMovimientoRegistrado: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<EquipoElemento> obtenerEquipoElementoRegistrado() {
+        try {
+            List<EquipoElemento> lista = equipoElementoDAO.consultarEquiposElementos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("GestionarRecursoMovimientosInsumoBO obtenerEquipoElementoRegistrado: " + e.toString());
+            return null;
         }
     }
 }

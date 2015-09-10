@@ -5,8 +5,10 @@
  */
 package com.sirelab.bo.interfacebo.recursos;
 
+import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.Insumo;
 import com.sirelab.entidades.MovimientoInsumo;
+import com.sirelab.entidades.TipoMovimiento;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -25,4 +27,10 @@ public interface GestionarRecursoMovimientosInsumoBOInterface {
     public void crearMovimientoInsumo(MovimientoInsumo movimientoInsumo);
 
     public void editarMovimientoInsumo(MovimientoInsumo movimientoInsumo);
+
+    public List<TipoMovimiento> obtenerTipoMovimientoRegistrado();
+
+    public List<EquipoElemento> obtenerEquipoElementoRegistrado();
+
+    public void crearMovimientoInsumoAEquipo(MovimientoInsumo movimientoInsumo, EquipoElemento equipo);
 }

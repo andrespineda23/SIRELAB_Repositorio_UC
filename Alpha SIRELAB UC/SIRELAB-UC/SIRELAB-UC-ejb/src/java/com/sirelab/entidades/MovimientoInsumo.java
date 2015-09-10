@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sirelab.entidades;
 
 import java.io.Serializable;
@@ -23,12 +22,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "movimientoinsumo")
@@ -36,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MovimientoInsumo.findAll", query = "SELECT m FROM MovimientoInsumo m"),
     @NamedQuery(name = "MovimientoInsumo.findByIdmovimientoinsumo", query = "SELECT m FROM MovimientoInsumo m WHERE m.idmovimientoinsumo = :idmovimientoinsumo"),
-    @NamedQuery(name = "MovimientoInsumo.findByTipomovimiento", query = "SELECT m FROM MovimientoInsumo m WHERE m.tipomovimiento = :tipomovimiento"),
     @NamedQuery(name = "MovimientoInsumo.findByFechamovimiento", query = "SELECT m FROM MovimientoInsumo m WHERE m.fechamovimiento = :fechamovimiento"),
     @NamedQuery(name = "MovimientoInsumo.findByCantidadmovimiento", query = "SELECT m FROM MovimientoInsumo m WHERE m.cantidadmovimiento = :cantidadmovimiento"),
     @NamedQuery(name = "MovimientoInsumo.findByCostomovimiento", query = "SELECT m FROM MovimientoInsumo m WHERE m.costomovimiento = :costomovimiento")})
@@ -47,11 +44,6 @@ public class MovimientoInsumo implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmovimientoinsumo")
     private BigInteger idmovimientoinsumo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "tipomovimiento")
-    private String tipomovimiento;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechamovimiento")
@@ -65,6 +57,9 @@ public class MovimientoInsumo implements Serializable {
     @NotNull
     @Column(name = "costomovimiento")
     private long costomovimiento;
+    @JoinColumn(name = "tipomovimiento", referencedColumnName = "idtipomovimiento")
+    @ManyToOne(optional = false)
+    private TipoMovimiento tipomovimiento;
     @JoinColumn(name = "insumo", referencedColumnName = "idinsumo")
     @ManyToOne(optional = false)
     private Insumo insumo;
@@ -76,9 +71,8 @@ public class MovimientoInsumo implements Serializable {
         this.idmovimientoinsumo = idmovimientoinsumo;
     }
 
-    public MovimientoInsumo(BigInteger idmovimientoinsumo, String tipomovimiento, Date fechamovimiento, int cantidadmovimiento, long costomovimiento) {
+    public MovimientoInsumo(BigInteger idmovimientoinsumo, Date fechamovimiento, int cantidadmovimiento, long costomovimiento) {
         this.idmovimientoinsumo = idmovimientoinsumo;
-        this.tipomovimiento = tipomovimiento;
         this.fechamovimiento = fechamovimiento;
         this.cantidadmovimiento = cantidadmovimiento;
         this.costomovimiento = costomovimiento;
@@ -90,17 +84,6 @@ public class MovimientoInsumo implements Serializable {
 
     public void setIdmovimientoinsumo(BigInteger idmovimientoinsumo) {
         this.idmovimientoinsumo = idmovimientoinsumo;
-    }
-
-    public String getTipomovimiento() {
-        if(null != tipomovimiento){
-            return tipomovimiento.toUpperCase();
-        }
-        return tipomovimiento;
-    }
-
-    public void setTipomovimiento(String tipomovimiento) {
-        this.tipomovimiento = tipomovimiento.toUpperCase();
     }
 
     public Date getFechamovimiento() {
@@ -125,6 +108,14 @@ public class MovimientoInsumo implements Serializable {
 
     public void setCostomovimiento(long costomovimiento) {
         this.costomovimiento = costomovimiento;
+    }
+
+    public TipoMovimiento getTipomovimiento() {
+        return tipomovimiento;
+    }
+
+    public void setTipomovimiento(TipoMovimiento tipomovimiento) {
+        this.tipomovimiento = tipomovimiento;
     }
 
     public Insumo getInsumo() {

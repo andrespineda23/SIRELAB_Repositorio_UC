@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sirelab.entidades;
 
 import java.io.Serializable;
@@ -32,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author ELECTRONICA
  */
 @Entity
 @Table(name = "equipoelemento")
@@ -51,14 +50,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EquipoElemento.findByCostoadquisicion", query = "SELECT e FROM EquipoElemento e WHERE e.costoadquisicion = :costoadquisicion"),
     @NamedQuery(name = "EquipoElemento.findByFechaadquisicion", query = "SELECT e FROM EquipoElemento e WHERE e.fechaadquisicion = :fechaadquisicion")})
 public class EquipoElemento implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
-    private Collection<ManualHasEquipo> manualHasEquipoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
-    private Collection<ReservaEquipoElemento> reservaEquipoElementoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
-    private Collection<HojaVidaEquipo> hojaVidaEquipoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
-    private Collection<ComponenteEquipo> componenteEquipoCollection;
+    @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
+    @ManyToOne(optional = false)
+    private Proveedor proveedor;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipo")
+    private Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,9 +99,6 @@ public class EquipoElemento implements Serializable {
     @JoinColumn(name = "tipoactivo", referencedColumnName = "idtipoactivo")
     @ManyToOne(optional = false)
     private TipoActivo tipoactivo;
-    @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
-    @ManyToOne(optional = false)
-    private Proveedor proveedor;
     @JoinColumn(name = "modulolaboratorio", referencedColumnName = "idmodulolaboratorio")
     @ManyToOne(optional = false)
     private ModuloLaboratorio modulolaboratorio;
@@ -242,14 +235,6 @@ public class EquipoElemento implements Serializable {
         this.tipoactivo = tipoactivo;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
     public ModuloLaboratorio getModulolaboratorio() {
         return modulolaboratorio;
     }
@@ -292,39 +277,20 @@ public class EquipoElemento implements Serializable {
     }
 
     @XmlTransient
-    public Collection<ComponenteEquipo> getComponenteEquipoCollection() {
-        return componenteEquipoCollection;
+    public Collection<MovimientoInsumoAEquipo> getMovimientoInsumoAEquipoCollection() {
+        return movimientoInsumoAEquipoCollection;
     }
 
-    public void setComponenteEquipoCollection(Collection<ComponenteEquipo> componenteEquipoCollection) {
-        this.componenteEquipoCollection = componenteEquipoCollection;
+    public void setMovimientoInsumoAEquipoCollection(Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection) {
+        this.movimientoInsumoAEquipoCollection = movimientoInsumoAEquipoCollection;
     }
 
-    @XmlTransient
-    public Collection<HojaVidaEquipo> getHojaVidaEquipoCollection() {
-        return hojaVidaEquipoCollection;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setHojaVidaEquipoCollection(Collection<HojaVidaEquipo> hojaVidaEquipoCollection) {
-        this.hojaVidaEquipoCollection = hojaVidaEquipoCollection;
-    }
-
-    @XmlTransient
-    public Collection<ReservaEquipoElemento> getReservaEquipoElementoCollection() {
-        return reservaEquipoElementoCollection;
-    }
-
-    public void setReservaEquipoElementoCollection(Collection<ReservaEquipoElemento> reservaEquipoElementoCollection) {
-        this.reservaEquipoElementoCollection = reservaEquipoElementoCollection;
-    }
-
-    @XmlTransient
-    public Collection<ManualHasEquipo> getManualHasEquipoCollection() {
-        return manualHasEquipoCollection;
-    }
-
-    public void setManualHasEquipoCollection(Collection<ManualHasEquipo> manualHasEquipoCollection) {
-        this.manualHasEquipoCollection = manualHasEquipoCollection;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
     
 }

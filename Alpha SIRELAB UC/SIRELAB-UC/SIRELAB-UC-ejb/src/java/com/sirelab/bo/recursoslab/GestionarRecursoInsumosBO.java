@@ -7,9 +7,7 @@ package com.sirelab.bo.recursoslab;
 
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoInsumosBOInterface;
 import com.sirelab.dao.interfacedao.InsumoDAOInterface;
-import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
 import com.sirelab.entidades.Insumo;
-import com.sirelab.entidades.Proveedor;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +21,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInterface {
 
-    @EJB
-    ProveedorDAOInterface proveedorDAO;
+    
     @EJB
     InsumoDAOInterface insumoDAO;
 
@@ -69,23 +66,12 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
     }
     
     @Override 
-    public Insumo obtenerInsumoPorIDCodigoYProveedor(String codigo, BigInteger proveedor) {
+    public Insumo obtenerInsumoPorCodigo(String codigo) {
         try {
-            Insumo registro = insumoDAO.buscarInsumoPorCodigoYProveedor(codigo, proveedor);
+            Insumo registro = insumoDAO.buscarInsumoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoInsumosBO obtenerInsumoPorIDCodigoYProveedor : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public List<Proveedor> consultarProveedoresRegistrados() {
-        try {
-            List<Proveedor> lista = proveedorDAO.consultarProveedores();
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarRecursoInsumosBO consultarProveedoresRegistrados : " + e.toString());
+            System.out.println("Error GestionarRecursoInsumosBO obtenerInsumoPorCodigo : " + e.toString());
             return null;
         }
     }

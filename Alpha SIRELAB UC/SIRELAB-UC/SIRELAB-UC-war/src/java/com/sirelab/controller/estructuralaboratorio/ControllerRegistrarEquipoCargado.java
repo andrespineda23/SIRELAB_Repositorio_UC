@@ -62,6 +62,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean fechaDiferida;
 
     public ControllerRegistrarEquipoCargado() {
     }
@@ -70,6 +71,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     public void init() {
         activarAceptar = false;
         activarLimpiar = true;
+        fechaDiferida = true;
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
@@ -89,9 +91,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         validacionesSerie = true;
         validacionesTipo = false;
         //
-        listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
-        listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
-        listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
+
         BasicConfigurator.configure();
     }
 
@@ -249,11 +249,21 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
 
     public void validarFechaEquipo() {
         if (Utilidades.validarNulo(nuevoFechaAdquisicionEquipo)) {
-            if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
-                validacionesFecha = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            if (fechaDiferida == true) {
+                nuevoFechaAdquisicionEquipo = new Date();
+                if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
+                    validacionesFecha = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                } else {
+                    validacionesFecha = true;
+                }
             } else {
-                validacionesFecha = true;
+                if ((Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
+                    validacionesFecha = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                } else {
+                    validacionesFecha = true;
+                }
             }
         }
     }
@@ -395,6 +405,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         nuevoEstadoEquipoEquipo = null;
         nuevoProveedorEquipo = null;
         //
+        fechaDiferida = true;
         validacionesCosto = true;
         validacionesEspecificacion = true;
         validacionesEstado = false;
@@ -437,6 +448,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         validacionesMarca = true;
         validacionesModelo = true;
         validacionesNombre = false;
+        fechaDiferida = true;
         validacionesProveedor = false;
         validacionesSerie = true;
         validacionesTipo = false;
@@ -455,6 +467,9 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
 
     //GET - SET
     public List<TipoActivo> getListaTiposActivos() {
+        if (null == listaTiposActivos) {
+            listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
+        }
         return listaTiposActivos;
     }
 
@@ -463,6 +478,9 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     }
 
     public List<Proveedor> getListaProveedores() {
+        if (null == listaProveedores) {
+            listaProveedores = gestionarPlantaEquiposElementosBO.consultarProveedoresRegistrados();
+        }
         return listaProveedores;
     }
 
@@ -471,6 +489,9 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     }
 
     public List<EstadoEquipo> getListaEstadosEquipos() {
+        if (null == listaEstadosEquipos) {
+            listaEstadosEquipos = gestionarPlantaEquiposElementosBO.consultarEstadosEquiposRegistrados();
+        }
         return listaEstadosEquipos;
     }
 
@@ -637,4 +658,13 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
     }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
+    }
+
 }

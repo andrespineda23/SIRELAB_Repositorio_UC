@@ -95,7 +95,7 @@ and open the template in the editor.
                                                                 <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaFacultades}" var="facultad"
                                                                                itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
                                                                 <f:converter converterId="ConverterGenerico" />
-                                                                <f:ajax event="change" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarDepartamentos()}" execute="parametroFacultad" render="@this parametroDepartamento parametroLaboratorio"/>
+                                                                <f:ajax event="change" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarFacultades()}" execute="parametroFacultad" render="@this parametroDepartamento parametroLaboratorio"/>
                                                             </h:selectOneMenu>
                                                         </div>
                                                     </div>
@@ -242,7 +242,7 @@ and open the template in the editor.
                         <br></br>
                         <div class="row">
                             <div class="col-md-1">
-                                <h:commandButton class="btn btn-success" value="Nuevo Personal" action="registrarencargadolaboratorio"/>
+                                <h:commandButton class="btn btn-success" value="Nuevo Personal" action="#{controllerAdministrarEncargadosLaboratorios.registrarNuevoEncargado()}"/>
                             </div>
                             <div class="col-md-10"></div>
                             <div class="col-md-1">

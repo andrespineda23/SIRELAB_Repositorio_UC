@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Registrar Ingreso Insumo</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="row col-md-12">
+                                    <h2 class="info">
+                                        Información Registro
+                                    </h2>
+                                    <p>
+                                        Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                    </p>
+                                    <p>
+                                        Este registro es unicamente para el ingreso de un insumo al sistema.
+                                    </p>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Insumo</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Ingreso*"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="10" value="#{controllerRegistrarIngresoInsumo.nuevoFecha}" disabled="#{controllerRegistrarIngresoInsumo.activarAceptar}" required="true" class="form-control" id="nuevoFecha" requiredMessage="El campo Fecha es obligatorio.">
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarFechaIngresoInsumo()}" execute="nuevoFecha" render="nuevoFecha msnFecha" />
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarIngresoInsumo.fechaDiferida}">
+                                                        <f:ajax event="change" listener="#{controllerRegistrarIngresoInsumo.validarFechaIngresoInsumo()}" execute="fechaDiferida" render="@this nuevoFecha msnFecha" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
+                                            <h6><h:message id="msnFecha" for="nuevoFecha" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Cantidad a Ingresar*"/></strong>
+                                            <h:inputText maxlength="4" value="#{controllerRegistrarIngresoInsumo.nuevoCantidad}" disabled="#{controllerRegistrarIngresoInsumo.activarAceptar}" required="true" class="form-control" id="nuevoCantidad" requiredMessage="El campo Cantidad es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarCantidadIngresoInsumo()}" execute="nuevoCantidad" render="nuevoCantidad msnCantidad" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCantidad" for="nuevoCantidad" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Proveedor*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarIngresoInsumo.nuevoProveedor}"
+                                                             class="form-control"  disabled="#{controllerRegistrarIngresoInsumo.activarCasillas}"
+                                                             id="nuevoProveedor">
+                                                <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarIngresoInsumo.listaProveedores}" var="proveedor"
+                                                               itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarIngresoInsumo.validarProveedorIngresoInsumo()}" execute="nuevoProveedor" render="msnProveedor"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnProveedor" for="nuevoProveedor" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Costo de la Compra"/></strong>
+                                            <h:inputText maxlength="12" value="#{controllerRegistrarIngresoInsumo.nuevoCosto}" disabled="#{controllerRegistrarIngresoInsumo.activarAceptar}" class="form-control" id="nuevoCosto" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarCostoIngresoInsumo()}" execute="nuevoCosto" render="nuevoCosto msnCosto" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCosto" for="nuevoCosto" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Insumo*"/></strong>
+                                            <div class="input-group">
+                                                <h:selectOneMenu value="#{controllerRegistrarIngresoInsumo.nuevoInsumo}" readonly="#{controllerRegistrarIngresoInsumo.activarInsumo}"
+                                                                 class="form-control"  disabled="#{controllerRegistrarIngresoInsumo.activarCasillas}"
+                                                                 id="nuevoInsumo">
+                                                    <f:selectItem itemLabel="Seleccione Insumo" itemValue="null" />
+                                                    <f:selectItems value="#{controllerRegistrarIngresoInsumo.listaInsumos}" var="insumo"
+                                                                   itemLabel="#{insumo.nombreinsumo}" itemValue="#{insumo}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarIngresoInsumo.validarInsumoIngresoInsumo()}" execute="nuevoInsumo" render="msnInsumo"/>
+                                                </h:selectOneMenu>
+                                                <div class="input-group-addon">
+
+                                                </div>
+                                                <span class="input-group-addon">
+                                                    <h:selectBooleanCheckbox value="#{controllerRegistrarIngresoInsumo.elInsumoEsNuevo}">
+                                                        <label>¿Insumo Registrado?</label>
+                                                        <f:ajax execute="@form" render="form" listener="#{controllerRegistrarIngresoInsumo.actualizarInformacionInsumo()}" immediate="true"/>
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
+
+                                            <h6><h:message id="msnInsumo" for="nuevoInsumo" style="color: red"/></h6>
+                                        </div>
+                                    </fieldset>
+                                    <br></br>
+                                    <fieldset>
+                                        <legend class="text-info">Datos Insumo</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Codigo Insumo*"/></strong>
+                                            <h:inputText maxlength="20" value="#{controllerRegistrarIngresoInsumo.nuevoCodigo}" disabled="#{controllerRegistrarIngresoInsumo.elInsumoEsNuevo}" class="form-control" id="nuevoCodigo" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarCodigoInsumo()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Insumo*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarIngresoInsumo.nuevoNombre}" disabled="#{controllerRegistrarIngresoInsumo.elInsumoEsNuevo}" class="form-control" id="nuevoNombre" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarNombreInsumo()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
+                                        </div>
+                                        <fieldset>
+                                            <legend class="h5 text-info">Datos Opcionales</legend>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Marca Insumo"/></strong>
+                                                <h:inputText maxlength="45" value="#{controllerRegistrarIngresoInsumo.nuevoMarca}" disabled="#{controllerRegistrarIngresoInsumo.elInsumoEsNuevo}" class="form-control" id="nuevoMarca" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarMarcaModeloInsumo(1)}" execute="nuevoMarca" render="nuevoMarca msnMarca" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnMarca" for="nuevoMarca" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Modelo Insumo"/></strong>
+                                                <h:inputText maxlength="45" value="#{controllerRegistrarIngresoInsumo.nuevoModelo}" disabled="#{controllerRegistrarIngresoInsumo.elInsumoEsNuevo}" class="form-control" id="nuevoModelo" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarMarcaModeloInsumo(2)}" execute="nuevoModelo" render="nuevoModelo msnModelo" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnModelo" for="nuevoModelo" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Cantidad Minima"/></strong>
+                                                <h:inputText maxlength="2" value="#{controllerRegistrarIngresoInsumo.nuevoCantidadMin}" disabled="#{controllerRegistrarIngresoInsumo.elInsumoEsNuevo}" class="form-control" id="nuevoCantidadMin" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarCantidadesInsumo(2)}" execute="nuevoCantidadMin" render="nuevoCantidadMin msnCantidadMin" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnCantidadMin" for="nuevoCantidadMin" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Descripción del Insumo"/></strong>
+                                                <h:inputText maxlength="500" value="#{controllerRegistrarIngresoInsumo.nuevoDescripcion}" disabled="#{controllerRegistrarIngresoInsumo.elInsumoEsNuevo}" class="form-control" id="nuevoDescripcion" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarCantidadesInsumo(2)}" execute="nuevoDescripcion" render="nuevoDescripcion msnDescripcion" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnDescripcion" for="nuevoDescripcion" style="color: red"/></h6>
+                                            </div>
+                                        </fieldset>
+                                    </fieldset>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarIngresoInsumo.mensajeFormulario}" style="color: #{controllerRegistrarIngresoInsumo.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarIngresoInsumo.activarAceptar}" actionListener="#{controllerRegistrarIngresoInsumo.almacenarElementosEnBaseDatos()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarIngresoInsumo.cancelarRegistroIngresoInsumo()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarIngresoInsumo.activarLimpiar}" actionListener="#{controllerRegistrarIngresoInsumo.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -35,24 +35,6 @@ and open the template in the editor.
                                     <p>
                                         Este registro es unicamente para proveedores.
                                     </p>
-                                    <p class="right">
-                                        <h4 style="color: #66afe9; text-transform: uppercase">
-                                            Instructivo de ingreso de información
-                                        </h4>
-                                        CODIGO - Longitud (Min. 4 - Max. 20). Ejemplo: <strong><h:outputText value=" 101010" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        NOMBRE - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" CABLE DE TELEFONO" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        MARCA - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" GENERICO" style="color: darkblue;"/></strong>
-                                        <br></br> 
-                                        MODELO - Longitud (Min. 2 - Max. 29). Ejemplo: <strong><h:outputText value=" NN" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        CANTIDAD EXISTENTE - Ejemplo: <strong><h:outputText value=" 100" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        CANTIDAD MINIMA - Ejemplo: <strong><h:outputText value=" 20" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        DESCRIPCIÓN - Longitud (Min. 20 - Max. 500). Ejemplo: <strong><h:outputText value=" Esta es una prueba del ingreso de un insumo nuevo" style="color: darkblue;"/></strong>
-                                    </p>
                                 </div>
                                 <div class="col-md-12 row">
                                     <fieldset>
@@ -70,18 +52,6 @@ and open the template in the editor.
                                                 <f:ajax event="blur" listener="#{controllerDetallesInsumo.validarNombreInsumo()}" execute="editarNombre" render="editarNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Proveedor*"/></strong>
-                                            <h:selectOneMenu value="#{controllerDetallesInsumo.editarProveedor}"
-                                                             class="form-control" 
-                                                             id="editarProveedor">
-                                                <f:selectItems value="#{controllerDetallesInsumo.listaProveedores}" var="proveedor"
-                                                               itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerDetallesInsumo.validarProveedorInsumo()}" execute="editarProveedor" render="msnProveedor"/>
-                                            </h:selectOneMenu>
-                                            <h6><h:message id="msnProveedor" for="editarProveedor" style="color: red"/></h6>
                                         </div>
                                         <fieldset>
                                             <legend class="h5 text-info">Datos Opcionales</legend>
@@ -137,10 +107,9 @@ and open the template in the editor.
                                     <hr class="intro-divider"/>
                                     <div class="row col-md-12">
                                         <div class="left pull-left">
-                                            <!-- <h:commandButton value="MOVIMIENTO INSUMO" action="administrarmovimientoinsumo" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerDetallesInsumo.insumoDetalles.idinsumo)}" class="btn btn-primary" >
+                                             <h:commandButton value="MOVIMIENTO INSUMO" action="administrarmovimientoinsumo" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerDetallesInsumo.insumoDetalles.idinsumo)}" class="btn btn-primary" >
                                                 <f:ajax execute="@form" render="form" />
-                                            </h:commandButton> -->
-                                            <h:commandButton value="MOVIMIENTO INSUMO"  class="btn btn-primary" />
+                                            </h:commandButton> 
                                         </div>
                                         <div class="right pull-right">
                                             <h:commandButton value="Modificar" actionListener="#{controllerDetallesInsumo.registrarModificacionInsumo()}" class="btn btn-success" >

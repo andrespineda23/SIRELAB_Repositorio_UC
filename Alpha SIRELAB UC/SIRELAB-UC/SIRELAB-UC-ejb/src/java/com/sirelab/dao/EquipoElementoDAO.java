@@ -183,11 +183,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-                    if ("parametroProveedor".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "proveedor.idproveedor");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
+                   
                     if ("parametroTipoActivo".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "tipoactivo.idtipoactivo");
                         wheres.append("= :").append(entry.getKey());
@@ -219,7 +215,6 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
                         || ("parametroModuloLaboratorio".equals(entry.getKey()))
                         || ("parametroSalaLaboratorio".equals(entry.getKey()))
                         || ("parametroLaboratorioPorArea".equals(entry.getKey()))
-                        || ("parametroProveedor".equals(entry.getKey()))
                         || ("parametroTipoActivo".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
@@ -227,5 +222,25 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             }
         }
         return tq;
+    }
+    
+    @Override
+    public EquipoElemento obtenerUltimaEquipoElementoRegistrada() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM EquipoElemento p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<EquipoElemento> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                EquipoElemento ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error obtenerUltimaEquipoElementoRegistrada EquipoElementoDAO : " + e.toString());
+            return null;
+        }
     }
 }

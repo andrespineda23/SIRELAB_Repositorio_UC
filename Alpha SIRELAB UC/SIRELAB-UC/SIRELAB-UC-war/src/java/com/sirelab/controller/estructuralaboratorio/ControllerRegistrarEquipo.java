@@ -66,6 +66,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean fechaDiferida;
 
     public ControllerRegistrarEquipo() {
     }
@@ -249,12 +250,23 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void validarFechaEquipo() {
         if (Utilidades.validarNulo(nuevoFechaAdquisicionEquipo)) {
-            if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
-                validacionesFecha = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            if (fechaDiferida == true) {
+                nuevoFechaAdquisicionEquipo = new Date();
+                if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
+                    validacionesFecha = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                } else {
+                    validacionesFecha = true;
+                }
             } else {
-                validacionesFecha = true;
+                if ((Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
+                    validacionesFecha = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                } else {
+                    validacionesFecha = true;
+                }
             }
+
         }
     }
 
@@ -443,6 +455,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void limpiarFormulario() {
+        fechaDiferida = true;
         activarNuevoModuloLaboratorio = true;
         activarNuevoSalaLaboratorio = true;
         nuevoNombreEquipo = null;
@@ -482,6 +495,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         activarAceptar = false;
+        fechaDiferida = true;
         colorMensaje = "black";
         activarCasillas = false;
         activarNuevoModuloLaboratorio = true;
@@ -767,6 +781,14 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

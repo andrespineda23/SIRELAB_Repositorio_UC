@@ -32,7 +32,6 @@ public class ControllerDetallesInsumo implements Serializable {
     @EJB
     GestionarRecursoInsumosBOInterface gestionarRecursoInsumosBO;
 
-    private List<Proveedor> listaProveedores;
 
     private Insumo insumoDetalles;
     private BigInteger idInsumo;
@@ -40,11 +39,10 @@ public class ControllerDetallesInsumo implements Serializable {
     private String editarNombre, editarCodigo, editarMarca, editarModelo;
     private String editarCantidadMin, editarCantidadExistencia;
     private String editarDescripcion;
-    private Proveedor editarProveedor;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesMarca, validacionesModelo;
     private boolean validacionesCantidadMin, validacionesCantidadExistencia;
-    private boolean validacionesDescripcion, validacionesProveedor;
+    private boolean validacionesDescripcion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
@@ -56,7 +54,6 @@ public class ControllerDetallesInsumo implements Serializable {
     public void init() {
         validacionesCodigo = true;
         validacionesNombre = true;
-        validacionesProveedor = true;
         validacionesCantidadExistencia = true;
         validacionesCantidadMin = true;
         validacionesDescripcion = true;
@@ -70,7 +67,6 @@ public class ControllerDetallesInsumo implements Serializable {
     public String restaurarInformacionInsumo() {
         validacionesCodigo = true;
         validacionesNombre = true;
-        validacionesProveedor = true;
         validacionesCantidadExistencia = true;
         validacionesCantidadMin = true;
         validacionesDescripcion = true;
@@ -91,8 +87,6 @@ public class ControllerDetallesInsumo implements Serializable {
         editarMarca = insumoDetalles.getMarcainsumo();
         editarModelo = insumoDetalles.getModeloinsumo();
         editarNombre = insumoDetalles.getNombreinsumo();
-        editarProveedor = insumoDetalles.getProveedor();
-        listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
     }
 
     public void recibirIDInsumosDetalles(BigInteger idDetalle) {
@@ -101,14 +95,7 @@ public class ControllerDetallesInsumo implements Serializable {
         asignarValoresVariablesInsumo();
     }
 
-    public void validarProveedorInsumo() {
-        if (Utilidades.validarNulo(editarProveedor)) {
-            validacionesProveedor = true;
-        } else {
-            validacionesProveedor = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarProveedor", new FacesMessage("El proveedor es obligatorio."));
-        }
-    }
+  
 
     public void validarNombreInsumo() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
@@ -246,15 +233,13 @@ public class ControllerDetallesInsumo implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesProveedor == false) {
-            retorno = false;
-        }
+       
         return retorno;
     }
 
     public boolean validarCodigoRepetido() {
         boolean retorno = true;
-        Insumo registro = gestionarRecursoInsumosBO.obtenerInsumoPorIDCodigoYProveedor(editarCodigo, editarProveedor.getIdproveedor());
+        Insumo registro = gestionarRecursoInsumosBO.obtenerInsumoPorCodigo(editarCodigo);
         if (null != registro) {
             if (!insumoDetalles.getIdinsumo().equals(registro.getIdinsumo())) {
                 retorno = false;
@@ -272,7 +257,7 @@ public class ControllerDetallesInsumo implements Serializable {
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
-                mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el proveedor seleccionado.";
+                mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
             colorMensaje = "red";
@@ -297,7 +282,6 @@ public class ControllerDetallesInsumo implements Serializable {
                 insumoDetalles.setCantidadminimia(Integer.valueOf("0"));
             }
             insumoDetalles.setDescripcioninsumo(editarDescripcion);
-            insumoDetalles.setProveedor(editarProveedor);
             gestionarRecursoInsumosBO.modificarInformacionInsumo(insumoDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema:  " + e.toString());
@@ -306,14 +290,7 @@ public class ControllerDetallesInsumo implements Serializable {
     }
 
     //GET-SET
-    public List<Proveedor> getListaProveedores() {
-        return listaProveedores;
-    }
-
-    public void setListaProveedores(List<Proveedor> listaProveedores) {
-        this.listaProveedores = listaProveedores;
-    }
-
+   
     public Insumo getInsumoDetalles() {
         return insumoDetalles;
     }
@@ -378,14 +355,7 @@ public class ControllerDetallesInsumo implements Serializable {
         this.editarDescripcion = editarDescripcion;
     }
 
-    public Proveedor getEditarProveedor() {
-        return editarProveedor;
-    }
-
-    public void setEditarProveedor(Proveedor editarProveedor) {
-        this.editarProveedor = editarProveedor;
-    }
-
+  
     public String getMensajeFormulario() {
         return mensajeFormulario;
     }

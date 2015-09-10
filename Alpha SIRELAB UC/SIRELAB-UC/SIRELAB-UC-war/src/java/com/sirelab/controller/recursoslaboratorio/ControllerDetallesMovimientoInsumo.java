@@ -8,10 +8,12 @@ package com.sirelab.controller.recursoslaboratorio;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
 import com.sirelab.entidades.Insumo;
 import com.sirelab.entidades.MovimientoInsumo;
+import com.sirelab.entidades.TipoMovimiento;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -32,7 +34,9 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     @EJB
     GestionarRecursoMovimientosInsumoBOInterface gestionarRecursoMovimientosInsumoBO;
 
-    private String editarTipoMovimiento, editarCantidadMovimiento, editarCostoMovimiento;
+    private String editarCantidadMovimiento, editarCostoMovimiento;
+    private List<TipoMovimiento> listaTipoMovimiento;
+    private TipoMovimiento editarTipoMovimiento;
     private Date editarFechaMovimiento;
     private Insumo editarInsumo;
     private boolean validacionesTipo, validacionesCantidad, validacionesCosto, validacionesFecha;
@@ -42,6 +46,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean fechaDiferida;
 
     public ControllerDetallesMovimientoInsumo() {
     }
@@ -66,32 +71,22 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
             editarFechaMovimiento = movimientoInsumoDetalle.getFechamovimiento();
             editarInsumo = movimientoInsumoDetalle.getInsumo();
             editarTipoMovimiento = movimientoInsumoDetalle.getTipomovimiento();
-
+            listaTipoMovimiento = gestionarRecursoMovimientosInsumoBO.obtenerTipoMovimientoRegistrado();
             validacionesCantidad = true;
             validacionesCosto = true;
             validacionesTipo = true;
             validacionesFecha = true;
+            fechaDiferida = true;
         }
         modificacionesRegistro = false;
     }
 
     public void validarTipoMovimiento() {
-        if (Utilidades.validarNulo(editarTipoMovimiento) && (!editarTipoMovimiento.isEmpty()) && (editarTipoMovimiento.trim().length() > 0)) {
-            int tam = editarTipoMovimiento.length();
-            if (tam >= 4) {
-                if (!Utilidades.validarCaracterString(editarTipoMovimiento)) {
-                    validacionesTipo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarTipoMovimiento", new FacesMessage("El tipo ingresado es incorrecto."));
-                } else {
-                    validacionesTipo = true;
-                }
-            } else {
-                validacionesTipo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarTipoMovimiento", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
-            }
+        if (Utilidades.validarNulo(editarTipoMovimiento)) {
+            validacionesTipo = true;
         } else {
             validacionesTipo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarTipoMovimiento", new FacesMessage("El tipo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarTipoMovimiento", new FacesMessage("El tipo movimiento es obligatorio."));
         }
         modificacionesRegistro = true;
     }
@@ -128,11 +123,21 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
 
     public void validarFechaMovimiento() {
         if (Utilidades.validarNulo(editarFechaMovimiento)) {
-            if ((Utilidades.fechaIngresadaCorrecta(editarFechaMovimiento)) == false) {
-                validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+            if (fechaDiferida == true) {
+                editarFechaMovimiento = new Date();
+                if ((Utilidades.fechaIngresadaCorrecta(editarFechaMovimiento)) == false) {
+                    validacionesCosto = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                } else {
+                    validacionesCosto = true;
+                }
             } else {
-                validacionesCosto = true;
+                if ((Utilidades.fechaDiferidaIngresadaCorrecta(editarFechaMovimiento)) == false) {
+                    validacionesCosto = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                } else {
+                    validacionesCosto = true;
+                }
             }
         } else {
             validacionesCosto = false;
@@ -153,6 +158,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         validacionesFecha = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        fechaDiferida = true;
         idMovimiento = null;
         movimientoInsumoDetalle = null;
         modificacionesRegistro = false;
@@ -212,11 +218,19 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     }
 
     //GET-SET
-    public String getEditarTipoMovimiento() {
+    public List<TipoMovimiento> getListaTipoMovimiento() {
+        return listaTipoMovimiento;
+    }
+
+    public void setListaTipoMovimiento(List<TipoMovimiento> listaTipoMovimiento) {
+        this.listaTipoMovimiento = listaTipoMovimiento;
+    }
+
+    public TipoMovimiento getEditarTipoMovimiento() {
         return editarTipoMovimiento;
     }
 
-    public void setEditarTipoMovimiento(String editarTipoMovimiento) {
+    public void setEditarTipoMovimiento(TipoMovimiento editarTipoMovimiento) {
         this.editarTipoMovimiento = editarTipoMovimiento;
     }
 
@@ -274,6 +288,14 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

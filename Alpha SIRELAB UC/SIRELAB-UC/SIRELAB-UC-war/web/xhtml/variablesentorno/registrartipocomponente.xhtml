@@ -14,88 +14,83 @@ and open the template in the editor.
     <h:body>
         <ui:composition template="/xhtml/templatepaginas.xhtml">
             <ui:define name="body">
-                <div class="container">
-                    <div class="row">
-                        <ol class="breadcrumb">
-                            <li><a href="#">Inicio</a></li>
-                            <li><a href="#">Variables Inventario/Recursos</a></li>
-                            <li class="active">Registrar Tipo Componente</li>
-                        </ol>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 row">
-                            <div class="row col-md-12">
-                                <h2 class="info">
-                                    Información Registro
-                                </h2>
-                                <p>
-                                    Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
-                                </p>
-                                <p>
-                                    Este registro es unicamente para el ingreso de tipos activos.
-                                </p>
-                                <p class="right">
-                                    <h4 style="color: #66afe9; text-transform: uppercase">
-                                        Instructivo de ingreso de información
-                                    </h4>
-                                    NOMBRE - Longitud (Min. 3 - Max. 45). Ejemplo: <strong><h:outputText value=" PRUEBA DE INGRESO" style="color: darkblue;"/></strong>
-                                </p>
-                            </div>
-
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Variables Inventario/Recursos</a></li>
+                                <li class="active">Registrar Tipo Componente</li>
+                            </ol>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12 row">
-                                <fieldset>
-                                    <legend class="text-info">Datos Basicos</legend>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Nombre Tipo Componente*"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerRegistrarTipoComponente.inputNombre}" disabled="#{controllerRegistrarTipoComponente.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                            <f:ajax event="blur" listener="#{controllerRegistrarTipoComponente.validarNombre()}" execute="inputNombre" render="inputNombre msnNombre" />
-                                        </h:inputText>
-                                        <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
-                                    </div>
-                                </fieldset>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <hr class="intro-divider"/>
                                 <div class="row col-md-12">
-                                    <div class="text-center">
-                                        <h5>
-                                            Resultados del Formulario
-                                        </h5>
-                                        <strong>
-                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarTipoComponente.mensajeFormulario}" style="color: #{controllerRegistrarTipoComponente.colorMensaje}}"/>
-                                        </strong>
-                                    </div>
-                                    <br></br>
+                                    <h2 class="info">
+                                        Información Registro
+                                    </h2>
+                                    <p>
+                                        Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                    </p>
+                                    <p>
+                                        Este registro es unicamente para el ingreso de tipos activos.
+                                    </p>
                                 </div>
-                                <hr class="intro-divider"/>
-                                <div class="right pull-right">
-                                    <h:commandButton value="Registrar" actionListener="#{controllerRegistrarTipoComponente.registrarTipoComponente()}" class="btn btn-success" >
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
-                                    <span></span>
-                                    <span></span>
-                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarTipoComponente.cerrarPagina()}" actionListener="#{controllerVariablesInventario.iniciarInformacionTablas()}" immediate="true">
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
-                                    <span></span>
-                                    <span></span>
-                                    <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarTipoComponente.activarLimpiar}" actionListener="#{controllerRegistrarTipoComponente.cambiarActivarCasillas()}" >
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
+
+                                <div class="col-md-12 row">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Tipo Componente*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarTipoComponente.inputNombre}" disabled="#{controllerRegistrarTipoComponente.activarCasillas}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarTipoComponente.validarNombre()}" execute="inputNombre" render="inputNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
+                                        </div>
+                                    </fieldset>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarTipoComponente.mensajeFormulario}" style="color: #{controllerRegistrarTipoComponente.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" actionListener="#{controllerRegistrarTipoComponente.registrarTipoComponente()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarTipoComponente.cerrarPagina()}" actionListener="#{controllerVariablesInventario.iniciarInformacionTablas()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarTipoComponente.activarLimpiar}" actionListener="#{controllerRegistrarTipoComponente.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </h:form>
             </ui:define>  
         </ui:composition>

@@ -26,4 +26,6 @@ public interface MovimientoInsumoDAOInterface {
     public List<MovimientoInsumo> consultarMovimientosInsumoPorInsumo(BigInteger insumo);
 
     public MovimientoInsumo buscarMovimientoInsumoPorID(BigInteger idRegistro);
+
+    public MovimientoInsumo obtenerUltimaMovimientoInsumoRegistrada();
 }

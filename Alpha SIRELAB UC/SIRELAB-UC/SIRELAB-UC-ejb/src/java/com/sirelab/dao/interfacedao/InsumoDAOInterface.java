@@ -20,8 +20,8 @@ public interface InsumoDAOInterface {
 
     public void editarInsumo(Insumo insumo);
 
-    public Insumo buscarInsumoPorCodigoYProveedor(String codigo, BigInteger proveedor);
-            
+    public Insumo buscarInsumoPorCodigo(String codigo);
+
     public void eliminarInsumo(Insumo insumo);
 
     public List<Insumo> consultarInsumos();
@@ -29,4 +29,7 @@ public interface InsumoDAOInterface {
     public Insumo buscarInsumoPorID(BigInteger idRegistro);
 
     public List<Insumo> buscarInsumosPorFiltrado(Map<String, String> filters);
+
+    public Insumo obtenerUltimaInsumoRegistrada();
+
 }

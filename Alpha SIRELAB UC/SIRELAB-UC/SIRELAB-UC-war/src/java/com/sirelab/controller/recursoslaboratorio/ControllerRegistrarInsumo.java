@@ -31,16 +31,14 @@ public class ControllerRegistrarInsumo implements Serializable {
     @EJB
     GestionarRecursoInsumosBOInterface gestionarRecursoInsumosBO;
 
-    private List<Proveedor> listaProveedores;
     //
     private String nuevoNombre, nuevoCodigo, nuevoMarca, nuevoModelo;
     private String nuevoCantidadMin, nuevoCantidadExistencia;
     private String nuevoDescripcion;
-    private Proveedor nuevoProveedor;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesMarca, validacionesModelo;
     private boolean validacionesCantidadMin, validacionesCantidadExistencia;
-    private boolean validacionesDescripcion, validacionesProveedor;
+    private boolean validacionesDescripcion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -61,10 +59,8 @@ public class ControllerRegistrarInsumo implements Serializable {
         nuevoMarca = null;
         nuevoModelo = null;
         nuevoNombre = null;
-        nuevoProveedor = null;
         validacionesCodigo = false;
         validacionesNombre = false;
-        validacionesProveedor = false;
         validacionesCantidadExistencia = true;
         validacionesCantidadMin = true;
         validacionesDescripcion = true;
@@ -75,15 +71,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
-    }
-
-    public void validarProveedorInsumo() {
-        if (Utilidades.validarNulo(nuevoProveedor)) {
-            validacionesProveedor = true;
-        } else {
-            validacionesProveedor = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoProveedor", new FacesMessage("El proveedor es obligatorio."));
-        }
     }
 
     public void validarNombreInsumo() {
@@ -222,15 +209,13 @@ public class ControllerRegistrarInsumo implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesProveedor == false) {
-            retorno = false;
-        }
+
         return retorno;
     }
 
     public boolean validarCodigoRepetido() {
         boolean retorno = true;
-        Insumo registro = gestionarRecursoInsumosBO.obtenerInsumoPorIDCodigoYProveedor(nuevoCodigo, nuevoProveedor.getIdproveedor());
+        Insumo registro = gestionarRecursoInsumosBO.obtenerInsumoPorCodigo(nuevoCodigo);
         if (null != registro) {
             retorno = false;
         }
@@ -253,7 +238,7 @@ public class ControllerRegistrarInsumo implements Serializable {
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
-                mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el proveedor seleccionado.";
+                mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
             colorMensaje = "red";
@@ -279,7 +264,6 @@ public class ControllerRegistrarInsumo implements Serializable {
                 nuevaInsumo.setCantidadminimia(Integer.valueOf("0"));
             }
             nuevaInsumo.setDescripcioninsumo(nuevoDescripcion);
-            nuevaInsumo.setProveedor(nuevoProveedor);
             gestionarRecursoInsumosBO.crearNuevoInsumo(nuevaInsumo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema:  " + e.toString());
@@ -295,10 +279,8 @@ public class ControllerRegistrarInsumo implements Serializable {
         nuevoMarca = null;
         nuevoModelo = null;
         nuevoNombre = null;
-        nuevoProveedor = null;
         validacionesCodigo = false;
         validacionesNombre = false;
-        validacionesProveedor = false;
         validacionesCantidadExistencia = true;
         validacionesCantidadMin = true;
         validacionesDescripcion = true;
@@ -314,11 +296,9 @@ public class ControllerRegistrarInsumo implements Serializable {
         nuevoMarca = null;
         nuevoModelo = null;
         nuevoNombre = null;
-        nuevoProveedor = null;
         validacionesCodigo = false;
         activarAceptar = false;
         validacionesNombre = false;
-        validacionesProveedor = false;
         validacionesCantidadExistencia = true;
         validacionesCantidadMin = true;
         validacionesDescripcion = true;
@@ -327,7 +307,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
-        listaProveedores = null;
     }
 
     public void cambiarActivarCasillas() {
@@ -341,17 +320,6 @@ public class ControllerRegistrarInsumo implements Serializable {
     }
 
     //GET-SET
-    public List<Proveedor> getListaProveedores() {
-        if (listaProveedores == null) {
-            listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
-        }
-        return listaProveedores;
-    }
-
-    public void setListaProveedores(List<Proveedor> listaProveedores) {
-        this.listaProveedores = listaProveedores;
-    }
-
     public String getNuevoNombre() {
         return nuevoNombre;
     }
@@ -408,28 +376,12 @@ public class ControllerRegistrarInsumo implements Serializable {
         this.nuevoDescripcion = nuevoDescripcion;
     }
 
-    public Proveedor getNuevoInsumo() {
-        return nuevoProveedor;
-    }
-
-    public void setNuevoInsumo(Proveedor nuevoProveedor) {
-        this.nuevoProveedor = nuevoProveedor;
-    }
-
     public String getMensajeFormulario() {
         return mensajeFormulario;
     }
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
-    }
-
-    public Proveedor getNuevoProveedor() {
-        return nuevoProveedor;
-    }
-
-    public void setNuevoProveedor(Proveedor nuevoProveedor) {
-        this.nuevoProveedor = nuevoProveedor;
     }
 
     public boolean isActivarCasillas() {

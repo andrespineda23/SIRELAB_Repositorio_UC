@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByDireccionpersona", query = "SELECT p FROM Persona p WHERE p.direccionpersona = :direccionpersona")})
 public class Persona implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    private Collection<AdministradorEdificio> administradorEdificioCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private Collection<Reserva> reservaCollection;
 
     private static final long serialVersionUID = 1L;
@@ -272,6 +274,15 @@ public class Persona implements Serializable {
 
     public void setReservaCollection(Collection<Reserva> reservaCollection) {
         this.reservaCollection = reservaCollection;
+    }
+
+    @XmlTransient
+    public Collection<AdministradorEdificio> getAdministradorEdificioCollection() {
+        return administradorEdificioCollection;
+    }
+
+    public void setAdministradorEdificioCollection(Collection<AdministradorEdificio> administradorEdificioCollection) {
+        this.administradorEdificioCollection = administradorEdificioCollection;
     }
 
 }

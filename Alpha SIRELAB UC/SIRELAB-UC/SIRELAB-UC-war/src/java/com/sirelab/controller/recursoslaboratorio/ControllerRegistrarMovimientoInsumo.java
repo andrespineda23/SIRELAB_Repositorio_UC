@@ -6,12 +6,15 @@
 package com.sirelab.controller.recursoslaboratorio;
 
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
+import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.MovimientoInsumo;
 import com.sirelab.entidades.Insumo;
+import com.sirelab.entidades.TipoMovimiento;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -32,7 +35,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     @EJB
     GestionarRecursoMovimientosInsumoBOInterface gestionarRecursoMovimientosInsumoBO;
 
-    private String nuevoTipoMovimiento, nuevoCantidadMovimiento, nuevoCostoMovimiento;
+    private String nuevoCantidadMovimiento, nuevoCostoMovimiento;
     private Date nuevoFechaMovimiento;
     private boolean validacionesTipo, validacionesCantidad, validacionesCosto, validacionesFecha;
     private String mensajeFormulario;
@@ -42,12 +45,20 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean fechaDiferida;
+    private TipoMovimiento nuevoTipoMovimiento;
+    private List<TipoMovimiento> listaTipoMovimiento;
+    private List<EquipoElemento> listaEquiposElementos;
+    private EquipoElemento equipoElemento;
+    private boolean asociarEquipo;
 
     public ControllerRegistrarMovimientoInsumo() {
     }
 
     @PostConstruct
     public void init() {
+        asociarEquipo = true;
+        fechaDiferida = true;
         validacionesCantidad = false;
         validacionesCosto = false;
         validacionesTipo = false;
@@ -69,23 +80,18 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         insumoRegistro = gestionarRecursoMovimientosInsumoBO.obtenerInsumoPorID(idRegistro);
     }
 
+    public void actualizarAsocioEquipo() {
+        if (asociarEquipo == true) {
+            equipoElemento = null;
+        }
+    }
+
     public void validarTipoMovimiento() {
-        if (Utilidades.validarNulo(nuevoTipoMovimiento) && (!nuevoTipoMovimiento.isEmpty()) && (nuevoTipoMovimiento.trim().length() > 0)) {
-            int tam = nuevoTipoMovimiento.length();
-            if (tam >= 4) {
-                if (!Utilidades.validarCaracterString(nuevoTipoMovimiento)) {
-                    validacionesTipo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoTipoMovimiento", new FacesMessage("El tipo ingresado es incorrecto."));
-                } else {
-                    validacionesTipo = true;
-                }
-            } else {
-                validacionesTipo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoTipoMovimiento", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
-            }
+        if (Utilidades.validarNulo(nuevoTipoMovimiento)) {
+            validacionesTipo = true;
         } else {
             validacionesTipo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoTipoMovimiento", new FacesMessage("El tipo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoTipoMovimiento", new FacesMessage("El tipo movimiento es obligatorio."));
         }
 
     }
@@ -96,7 +102,13 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
                 validacionesCantidad = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad se encuentra incorrecta."));
             } else {
-                validacionesCantidad = true;
+                int cantidad = insumoRegistro.getCantidadexistencia() - Integer.valueOf(nuevoCantidadMovimiento);
+                if (cantidad < insumoRegistro.getCantidadminimia()) {
+                    validacionesCantidad = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad es menor a la cantidad minima de insumo (" + insumoRegistro.getCantidadminimia() + ")."));
+                } else {
+                    validacionesCantidad = true;
+                }
             }
         } else {
             validacionesCantidad = false;
@@ -120,11 +132,21 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
 
     public void validarFechaMovimiento() {
         if (Utilidades.validarNulo(nuevoFechaMovimiento)) {
-            if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
-                validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+            if (fechaDiferida == true) {
+                nuevoFechaMovimiento = new Date();
+                if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
+                    validacionesCosto = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                } else {
+                    validacionesCosto = true;
+                }
             } else {
-                validacionesCosto = true;
+                if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
+                    validacionesCosto = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                } else {
+                    validacionesCosto = true;
+                }
             }
         } else {
             validacionesCosto = false;
@@ -145,7 +167,12 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         activarAceptar = false;
+        listaTipoMovimiento = null;
         colorMensaje = "black";
+        fechaDiferida = true;
+        asociarEquipo = true;
+        listaEquiposElementos = null;
+        equipoElemento = null;
         activarCasillas = false;
         return "administrarmovimientoinsumo";
     }
@@ -163,6 +190,11 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         }
         if (validacionesFecha == false) {
             retorno = false;
+        }
+        if (asociarEquipo == false) {
+            if (!Utilidades.validarNulo(equipoElemento)) {
+                retorno = false;
+            }
         }
         return retorno;
     }
@@ -194,7 +226,11 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             movimientoNuevo.setCostomovimiento(Long.parseLong(nuevoCostoMovimiento));
             movimientoNuevo.setFechamovimiento(nuevoFechaMovimiento);
             movimientoNuevo.setInsumo(insumoRegistro);
-            gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumo(movimientoNuevo);
+            if (asociarEquipo == true) {
+                gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumo(movimientoNuevo);
+            } else {
+                gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumoAEquipo(movimientoNuevo, equipoElemento);
+            }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString());
@@ -206,9 +242,12 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         nuevoCantidadMovimiento = null;
         nuevoFechaMovimiento = new Date();
         nuevoCostoMovimiento = null;
+        asociarEquipo = true;
+        equipoElemento = null;
         //
         validacionesCantidad = false;
         validacionesCosto = false;
+        fechaDiferida = true;
         validacionesTipo = false;
         validacionesFecha = false;
     }
@@ -224,12 +263,23 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     }
 
     //GET-SET
-    public String getNuevoTipoMovimiento() {
+    public TipoMovimiento getNuevoTipoMovimiento() {
         return nuevoTipoMovimiento;
     }
 
-    public void setNuevoTipoMovimiento(String nuevoTipoMovimiento) {
+    public void setNuevoTipoMovimiento(TipoMovimiento nuevoTipoMovimiento) {
         this.nuevoTipoMovimiento = nuevoTipoMovimiento;
+    }
+
+    public List<TipoMovimiento> getListaTipoMovimiento() {
+        if (null == listaTipoMovimiento) {
+            listaTipoMovimiento = gestionarRecursoMovimientosInsumoBO.obtenerTipoMovimientoRegistrado();
+        }
+        return listaTipoMovimiento;
+    }
+
+    public void setListaTipoMovimiento(List<TipoMovimiento> listaTipoMovimiento) {
+        this.listaTipoMovimiento = listaTipoMovimiento;
     }
 
     public String getNuevoCantidadMovimiento() {
@@ -302,6 +352,41 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
+    }
+
+    public List<EquipoElemento> getListaEquiposElementos() {
+        if (null == listaEquiposElementos) {
+            listaEquiposElementos = gestionarRecursoMovimientosInsumoBO.obtenerEquipoElementoRegistrado();
+        }
+        return listaEquiposElementos;
+    }
+
+    public void setListaEquiposElementos(List<EquipoElemento> listaEquiposElementos) {
+        this.listaEquiposElementos = listaEquiposElementos;
+    }
+
+    public EquipoElemento getEquipoElemento() {
+        return equipoElemento;
+    }
+
+    public void setEquipoElemento(EquipoElemento equipoElemento) {
+        this.equipoElemento = equipoElemento;
+    }
+
+    public boolean isAsociarEquipo() {
+        return asociarEquipo;
+    }
+
+    public void setAsociarEquipo(boolean asociarEquipo) {
+        this.asociarEquipo = asociarEquipo;
     }
 
 }

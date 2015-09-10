@@ -29,4 +29,6 @@ public interface EquipoElementoDAOInterface {
     public List<EquipoElemento> buscarEquiposElementosPorFiltrado(Map<String, String> filters);
 
     public EquipoElemento buscarEquipoElementoPorCodigoYModulo(String codigo, BigInteger modulo);
+
+    public EquipoElemento obtenerUltimaEquipoElementoRegistrada();
 }

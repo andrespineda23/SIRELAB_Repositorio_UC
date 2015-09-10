@@ -86,17 +86,16 @@ public class InsumoDAO implements InsumoDAOInterface {
     }
 
     @Override
-    public Insumo buscarInsumoPorCodigoYProveedor(String codigo, BigInteger proveedor) {
+    public Insumo buscarInsumoPorCodigo(String codigo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Insumo p WHERE p.codigoinsumo=:codigo AND p.proveedor.idproveedor=:proveedor");
+            Query query = em.createQuery("SELECT p FROM Insumo p WHERE p.codigoinsumo=:codigo");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("codigo", codigo);
-            query.setParameter("proveedor", proveedor);
             Insumo registro = (Insumo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarInsumoPorCodigoYProveedor InsumoDAO : " + e.toString());
+            System.out.println("Error buscarInsumoPorCodigo InsumoDAO : " + e.toString());
             return null;
         }
     }
@@ -156,11 +155,6 @@ public class InsumoDAO implements InsumoDAOInterface {
                                 .append(") Like :parametroModelo");
                         camposFiltro++;
                     }
-                    if ("parametroProveedor".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "proveedor.idproveedor");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
                 }
             }
         }
@@ -183,14 +177,29 @@ public class InsumoDAO implements InsumoDAOInterface {
                     //
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
-
-                if ("parametroProveedor".equals(entry.getKey())) {
-                    //
-                    tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
-                }
             }
         }
         return tq;
+    }
+    
+    @Override
+    public Insumo obtenerUltimaInsumoRegistrada() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Insumo p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Insumo> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                Insumo ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error obtenerUltimaInsumoRegistrada InsumoDAO : " + e.toString());
+            return null;
+        }
     }
 
 }

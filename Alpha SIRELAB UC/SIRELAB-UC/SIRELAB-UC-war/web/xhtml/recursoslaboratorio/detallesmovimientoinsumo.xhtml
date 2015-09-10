@@ -42,9 +42,14 @@ and open the template in the editor.
                                     <legend class="text-info">Datos Basicos</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Tipo Movimiento*"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerDetallesMovimientoInsumo.editarTipoMovimiento}" required="true" class="form-control" id="editarTipoMovimiento"  requiredMessage="El campo Tipo es obligatorio.">
-                                            <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarTipoMovimiento()}" execute="editarTipoMovimiento" render="editarTipoMovimiento msnTipoMovimiento" />
-                                        </h:inputText>
+                                        <h:selectOneMenu value="#{controllerDetallesMovimientoInsumo.editarTipoMovimiento}"
+                                                         class="form-control"  
+                                                         id="editarTipoMovimiento">
+                                            <f:selectItems value="#{controllerDetallesMovimientoInsumo.listaTipoMovimiento}" var="movimiento"
+                                                           itemLabel="#{movimiento.nombretipo}" itemValue="#{movimiento}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerDetallesMovimientoInsumo.validarTipoMovimiento()}" execute="editarTipoMovimiento" render="msnTipoMovimiento"/>
+                                        </h:selectOneMenu>
                                         <h6><h:message id="msnTipoMovimiento" for="editarTipoMovimiento" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
@@ -63,10 +68,22 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Fecha Movimiento*"/></strong>
-                                        <h:inputText value="#{controllerDetallesMovimientoInsumo.editarFechaMovimiento}" required="true" class="form-control" id="editarFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
-                                            <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarFechaMovimiento()}" execute="editarFechaMovimiento" render="editarFechaMovimiento msnFechaMovimiento" />
-                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                        </h:inputText>
+                                        <div class="input-group">
+                                            <h:inputText value="#{controllerDetallesMovimientoInsumo.editarFechaMovimiento}" required="true" class="form-control" id="editarFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesMovimientoInsumo.validarFechaMovimiento()}" execute="editarFechaMovimiento" render="editarFechaMovimiento msnFechaMovimiento" />
+                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            </h:inputText>
+                                            <span class="input-group-addon">
+                                                <h:outputText value="Fecha Actual"/>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerDetallesMovimientoInsumo.fechaDiferida}">
+                                                    <f:ajax event="change" listener="#{controllerDetallesMovimientoInsumo.validarFechaMovimiento()}" execute="fechaDiferida" render="@this editarFechaMovimiento msnFechaMovimiento" />
+                                                </h:selectBooleanCheckbox>
+                                            </span>
+                                        </div>
                                         <h6><h:message id="msnFechaMovimiento" for="editarFechaMovimiento" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">

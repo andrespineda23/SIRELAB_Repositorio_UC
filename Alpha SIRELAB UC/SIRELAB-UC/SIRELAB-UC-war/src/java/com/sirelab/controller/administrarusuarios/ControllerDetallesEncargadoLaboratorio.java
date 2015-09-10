@@ -71,29 +71,10 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     @PostConstruct
     public void init() {
         colorMensaje = "black";
-        validacionesPerfil = true;
-        validacionesNombre = true;
-        validacionesApellido = true;
-        validacionesCorreo = true;
-        validacionesID = true;
-        validacionesTel1 = true;
-        validacionesCorreoOpcional = true;
-        validacionesTel2 = true;
-        validacionesDireccion = true;
-        validacionesFacultad = true;
-        validacionesDepartamento = true;
-        validacionesLaboratorio = true;
-        mensajeFormulario = "N/A";
-        //
-        activoDepartamento = true;
-        activoLaboratorio = true;
-        activarEditar = true;
-        disabledEditar = false;
-        modificacionRegistro = false;
-        visibleGuardar = false;
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionUsuario");
+        mensajeFormulario = "N/A";
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             disabledEditar = false;
         }
@@ -125,6 +106,26 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         if (departamentoEncargadoLaboratorio != null) {
             listaLaboratorio = administrarEncargadosLaboratoriosBO.obtenerLaboratoriosPorIDDepartamento(departamentoEncargadoLaboratorio.getIddepartamento());
         }
+
+        validacionesPerfil = true;
+        validacionesNombre = true;
+        validacionesApellido = true;
+        validacionesCorreo = true;
+        validacionesID = true;
+        validacionesTel1 = true;
+        validacionesCorreoOpcional = true;
+        validacionesTel2 = true;
+        validacionesDireccion = true;
+        validacionesFacultad = true;
+        validacionesDepartamento = true;
+        validacionesLaboratorio = true;
+        //
+        activoDepartamento = true;
+        activoLaboratorio = true;
+        activarEditar = true;
+        disabledEditar = false;
+        modificacionRegistro = false;
+        visibleGuardar = false;
     }
 
     /**

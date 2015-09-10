@@ -64,23 +64,6 @@ and open the template in the editor.
                                                     </div>
                                                 </fieldset>
                                             </div> 
-                                            <div class="row col-md-12">
-                                                <div class="col-md-3">
-                                                    <label for="parametroProveedor">
-                                                        Proveedor del Insumo
-                                                    </label>
-                                                    <h:selectOneMenu value="#{controllerAdministrarInsumos.parametroProveedor}"
-                                                                     class="form-control"
-                                                                     id="parametroProveedor">
-                                                        <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
-                                                        <f:selectItems value="#{controllerAdministrarInsumos.listaProveedores}" var="proveedor"
-                                                                       itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
-                                                        <f:converter converterId="ConverterGenerico" />
-                                                    </h:selectOneMenu>
-                                                </div>
-                                                <div class="col-md-9">
-                                                </div>
-                                            </div>
                                         </fieldset>
                                         <br></br>
                                         <div class="col-md-12">
@@ -132,12 +115,6 @@ and open the template in the editor.
                                                             <h:outputText value="Modelo"/>
                                                         </f:facet>
                                                         <h:outputText value="#{item.modeloinsumo}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Proveedor"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.proveedor.nombreproveedor}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">

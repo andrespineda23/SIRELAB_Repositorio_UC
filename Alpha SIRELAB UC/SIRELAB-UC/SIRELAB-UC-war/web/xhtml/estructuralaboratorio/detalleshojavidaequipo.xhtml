@@ -37,16 +37,6 @@ and open the template in the editor.
                                     <p>
                                         Este registro es unicamente para el ingreso de periodos academicos.
                                     </p>
-                                    <p class="right">
-                                        <h4 style="color: #66afe9; text-transform: uppercase">
-                                            Instructivo de ingreso de información
-                                        </h4>
-                                        CODIGO - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Mantenimiento Mensual" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        FECHA INICIO - Ejemplo: <strong><h:outputText value=" 01/07/2015" style="color: darkblue;"/></strong>
-                                        <br></br>
-                                        FECHA FIN- Ejemplo: <strong><h:outputText value=" 01/07/2015" style="color: darkblue;"/></strong>
-                                    </p>
                                 </div>
 
                                 <div class="col-md-12 row">
@@ -61,18 +51,42 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Evento*"/></strong>
-                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputFechaEvento}" required="true" class="form-control" id="inputFechaEvento" requiredMessage="La Fecha Inicial es obligatoria.">
-                                                <f:ajax event="blur" listener="#{controllerDetallesHojaVidaEquipo.validarFechaEvento()}" execute="inputFechaEvento" render="inputFechaEvento msnFechaEvento" />
-                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                            </h:inputText>
+                                            <div class="input-group">
+                                                <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputFechaEvento}" required="true" class="form-control" id="inputFechaEvento" requiredMessage="La Fecha Inicial es obligatoria.">
+                                                    <f:ajax event="blur" listener="#{controllerDetallesHojaVidaEquipo.validarFechaEvento()}" execute="inputFechaEvento" render="inputFechaEvento msnFechaEvento" />
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferidaEvento" value="#{controllerDetallesHojaVidaEquipo.fechaDiferidaEvento}">
+                                                        <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.validarFechaEvento()}" execute="fechaDiferidaEvento" render="@this inputFechaEvento msnFechaEvento" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
                                             <h6><h:message id="msnFechaEvento" for="inputFechaEvento" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Registro*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesHojaVidaEquipo.inputFechaRegistro}" required="true" class="form-control" id="inputFechaRegistro" requiredMessage="La Fecha Final es obligatoria.">
-                                                <f:ajax event="blur" listener="#{controllerDetallesHojaVidaEquipo.validarFechaRegistro()}" execute="inputFechaRegistro" render="inputFechaRegistro msnFechaRegistro" />
-                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                            </h:inputText>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="45" value="#{controllerDetallesHojaVidaEquipo.inputFechaRegistro}" required="true" class="form-control" id="inputFechaRegistro" requiredMessage="La Fecha Final es obligatoria.">
+                                                    <f:ajax event="blur" listener="#{controllerDetallesHojaVidaEquipo.validarFechaRegistro()}" execute="inputFechaRegistro" render="inputFechaRegistro msnFechaRegistro" />
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferidaRegistro" value="#{controllerDetallesHojaVidaEquipo.fechaDiferidaRegistro}">
+                                                        <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.validarFechaRegistro()}" execute="fechaDiferidaRegistro" render="@this inputFechaRegistro msnFechaRegistro" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
                                             <h6><h:message id="msnFechaRegistro" for="inputFechaRegistro" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">

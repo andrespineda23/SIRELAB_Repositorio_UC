@@ -97,4 +97,25 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
             return null;
         }
     }
+    
+    
+    @Override
+    public MovimientoInsumo obtenerUltimaMovimientoInsumoRegistrada() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM MovimientoInsumo p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<MovimientoInsumo> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                MovimientoInsumo ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error obtenerUltimaMovimientoInsumoRegistrada MovimientoInsumoDAO : " + e.toString());
+            return null;
+        }
+    }
 }

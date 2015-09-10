@@ -35,8 +35,6 @@ public class ControllerAdministrarInsumos implements Serializable {
 
     private String parametroNombre, parametroCodigo, parametroMarca, parametroModelo;
     private Map<String, String> filtros;
-    private List<Proveedor> listaProveedores;
-    private Proveedor parametroProveedor;
     //
     private List<Insumo> listaInsumos;
     private List<Insumo> listaInsumosTabla;
@@ -62,7 +60,6 @@ public class ControllerAdministrarInsumos implements Serializable {
         parametroCodigo = null;
         parametroModelo = null;
         parametroMarca = null;
-        parametroProveedor = null;
         altoTabla = "150";
         inicializarFiltros();
         listaInsumos = null;
@@ -85,28 +82,23 @@ public class ControllerAdministrarInsumos implements Serializable {
         filtros.put("parametroMarca", null);
         filtros.put("parametroModelo", null);
         filtros.put("parametroCodigo", null);
-        filtros.put("parametroProveedor", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
-        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty())  && (parametroCodigo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
             filtros.put("parametroCodigo", parametroCodigo.toString());
         }
-        if ((Utilidades.validarNulo(parametroMarca) == true) && (!parametroMarca.isEmpty())  && (parametroMarca.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroMarca) == true) && (!parametroMarca.isEmpty()) && (parametroMarca.trim().length() > 0)) {
             filtros.put("parametroMarca", parametroMarca.toString());
         }
-        if ((Utilidades.validarNulo(parametroModelo) == true) && (!parametroModelo.isEmpty())  && (parametroModelo.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroModelo) == true) && (!parametroModelo.isEmpty()) && (parametroModelo.trim().length() > 0)) {
             filtros.put("parametroModelo", parametroModelo.toString());
         }
-        if ((Utilidades.validarNulo(parametroProveedor) == true)) {
-            if (parametroProveedor.getIdproveedor() != null) {
-                filtros.put("parametroProveedor", parametroProveedor.getIdproveedor().toString());
-            }
-        }
+
     }
 
     public void buscarInsumosPorParametros() {
@@ -205,7 +197,6 @@ public class ControllerAdministrarInsumos implements Serializable {
         parametroCodigo = null;
         parametroModelo = null;
         parametroMarca = null;
-        parametroProveedor = null;
         listaInsumos = null;
         listaInsumosTabla = null;
         posicionInsumoTabla = 0;
@@ -223,8 +214,6 @@ public class ControllerAdministrarInsumos implements Serializable {
         cantidadRegistros = "N/A";
         parametroModelo = null;
         parametroMarca = null;
-        parametroProveedor = null;
-        listaProveedores = null;
         listaInsumos = null;
         listaInsumosTabla = null;
         posicionInsumoTabla = 0;
@@ -291,25 +280,6 @@ public class ControllerAdministrarInsumos implements Serializable {
 
     public void setFiltros(Map<String, String> filtros) {
         this.filtros = filtros;
-    }
-
-    public List<Proveedor> getListaProveedores() {
-        if (listaProveedores == null) {
-            listaProveedores = gestionarRecursoInsumosBO.consultarProveedoresRegistrados();
-        }
-        return listaProveedores;
-    }
-
-    public void setListaProveedores(List<Proveedor> listaProveedores) {
-        this.listaProveedores = listaProveedores;
-    }
-
-    public Proveedor getParametroProveedor() {
-        return parametroProveedor;
-    }
-
-    public void setParametroProveedor(Proveedor parametroProveedor) {
-        this.parametroProveedor = parametroProveedor;
     }
 
     public List<Insumo> getListaInsumos() {

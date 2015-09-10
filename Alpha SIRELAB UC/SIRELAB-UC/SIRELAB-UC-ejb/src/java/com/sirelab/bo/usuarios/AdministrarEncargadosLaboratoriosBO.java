@@ -219,7 +219,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             personaDAO.crearPersona(personaNuevo);
             Persona personaRegistrada = personaDAO.obtenerUltimaPersonaRegistrada();
             personalNuevo.setPersona(personaRegistrada);
-            encargadoLaboratorioDAO.editarEncargadoLaboratorio(personalNuevo);
+            encargadoLaboratorioDAO.crearEncargadoLaboratorio(personalNuevo);
         } catch (Exception e) {
             System.out.println("Error AdministrarEncargadosLaboratoriosBO almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
         }
@@ -246,7 +246,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     @Override
     public Departamento obtenerDepartamentoPorCodigo(String codigo) {
         try {
-            Departamento registro = departamentoDAO.buscarDepartamentoPorID(BigInteger.ZERO);
+            Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarValidadorTipoUsuario obtenerDepartamentoPorCodigo: " + e.toString());

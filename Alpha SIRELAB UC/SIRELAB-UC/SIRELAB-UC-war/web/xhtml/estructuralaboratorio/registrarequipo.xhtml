@@ -34,28 +34,6 @@ and open the template in the editor.
                                 <p>
                                     Este registro es unicamente para elementos de un banco o modulo de trabajo de un laboratorio de la universidad, al momento de ser registrada en el sistema su estado sera ACTIVO, para su activación es necesario que un personal de laboratorio o administrador del sistema gestione el proceso. 
                                 </p>
-                                <p class="right">
-                                    <h4 style="color: #66afe9; text-transform: uppercase">
-                                        Instructivo de ingreso de información
-                                    </h4>
-                                    CODIGO - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" UC 149693" style="color: darkblue;"/></strong>
-                                    <br></br>
-                                    NOMBRE - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Computador de Trabajo" style="color: darkblue;"/></strong>
-                                    <br></br>
-                                    MARCA - Longitud (Min. 20 - Max. 45). Ejemplo: <strong><h:outputText value=" DELL" style="color: darkblue;"/></strong>
-                                    <br></br> 
-                                    MODELO - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" NN" style="color: darkblue;"/></strong>
-                                    <br></br>
-                                    SERIE - Longitud (Min. 2 - Max. 45). Ejemplo: <strong><h:outputText value=" NN" style="color: darkblue;"/></strong>
-                                    <br></br>
-                                    COSTO ADQUISICIÓN - Ejemplo: <strong><h:outputText value=" 1500000" style="color: darkblue;"/></strong>
-                                    <br></br>
-                                    COSTO ALQUILER - Ejemplo: <strong><h:outputText value=" 20000" style="color: darkblue;"/></strong>
-                                    <br></br>
-                                    FECHA - Ejemplo: <strong><h:outputText value=" 01/07/2015" style="color: darkblue;"/></strong>
-                                    <br></br>
-                                    DESCRIPCIÓN - Longitud (Min. 20 - Max. 500). Ejemplo: <strong><h:outputText value=" Esta es una prueba de ingreso de un equipo al sistema" style="color: darkblue;"/></strong>
-                                </p>
                             </div>
                             <div class="col-md-12 row">
 
@@ -159,10 +137,22 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Adquisición"/></strong>
-                                            <h:inputText  maxlength="10"  value="#{controllerRegistrarEquipo.nuevoFechaAdquisicionEquipo}" disabled="#{controllerRegistrarEquipo.activarCasillas}" class="form-control" id="nuevoFechaAdquisicionEquipo" >
-                                                <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarFechaEquipo()}" execute="nuevoFechaAdquisicionEquipo" render="nuevoFechaAdquisicionEquipo msnFechaAdquisicionEquipo" />
-                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                            </h:inputText>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="10" disabled="#{controllerRegistrarEquipo.activarCasillas}" value="#{controllerRegistrarEquipo.nuevoFechaAdquisicionEquipo}" class="form-control" id="nuevoFechaAdquisicionEquipo">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    <f:ajax event="blur" listener="#{disabled.validarFechaEquipo()}" execute="nuevoFechaAdquisicionEquipo" render="nuevoFechaAdquisicionEquipo msnFechaAdquisicionEquipo" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarEquipo.fechaDiferida}">
+                                                        <f:ajax event="change" listener="#{controllerRegistrarEquipo.validarFechaEquipo()}" execute="fechaDiferida" render="@this nuevoFechaAdquisicionEquipo msnFechaAdquisicionEquipo" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
                                             <h6><h:message id="msnFechaAdquisicionEquipo" for="nuevoFechaAdquisicionEquipo" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">

@@ -45,6 +45,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private boolean fechaDiferidaEvento, fechaDiferidaRegistro;
 
     public ControllerDetallesHojaVidaEquipo() {
     }
@@ -75,6 +76,8 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             validacionesTipo = true;
             inputTipoEvento = hojaVidaEquipoDetalle.getTipoevento();
             listaTiposEventos = gestionarPlantaHojasVidaEquiposBO.consultarTiposEventosRegistrados();
+            fechaDiferidaEvento = true;
+            fechaDiferidaRegistro = true;
         }
     }
 
@@ -101,11 +104,21 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void validarFechaEvento() {
         if (Utilidades.validarNulo(inputFechaEvento)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaEvento)) {
-                validacionesFechaEvento = true;
+            if (fechaDiferidaEvento == true) {
+                inputFechaEvento = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(inputFechaEvento)) {
+                    validacionesFechaEvento = true;
+                } else {
+                    validacionesFechaEvento = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             } else {
-                validacionesFechaEvento = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaEvento)) {
+                    validacionesFechaEvento = true;
+                } else {
+                    validacionesFechaEvento = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             }
         } else {
             validacionesFechaEvento = false;
@@ -116,11 +129,21 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void validarFechaRegistro() {
         if (Utilidades.validarNulo(inputFechaRegistro)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaRegistro)) {
-                validacionesFechaRegistro = true;
+            if (fechaDiferidaRegistro == true) {
+                inputFechaRegistro = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(inputFechaRegistro)) {
+                    validacionesFechaRegistro = true;
+                } else {
+                    validacionesFechaRegistro = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             } else {
-                validacionesFechaRegistro = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaRegistro)) {
+                    validacionesFechaRegistro = true;
+                } else {
+                    validacionesFechaRegistro = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                }
             }
         } else {
             validacionesFechaRegistro = false;
@@ -193,6 +216,8 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void cancelarHojaVidaEquipo() {
         inputDetalle = null;
+        fechaDiferidaEvento = true;
+        fechaDiferidaRegistro = true;
         inputTipoEvento = null;
         inputFechaEvento = new Date();
         inputFechaRegistro = new Date();
@@ -288,6 +313,22 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isFechaDiferidaEvento() {
+        return fechaDiferidaEvento;
+    }
+
+    public void setFechaDiferidaEvento(boolean fechaDiferidaEvento) {
+        this.fechaDiferidaEvento = fechaDiferidaEvento;
+    }
+
+    public boolean isFechaDiferidaRegistro() {
+        return fechaDiferidaRegistro;
+    }
+
+    public void setFechaDiferidaRegistro(boolean fechaDiferidaRegistro) {
+        this.fechaDiferidaRegistro = fechaDiferidaRegistro;
     }
 
 }

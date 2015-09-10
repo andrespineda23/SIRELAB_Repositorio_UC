@@ -125,7 +125,7 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
         }
     }
 
-    @Override
+    //@Override
     public List<Proveedor> consultarProveedoresRegistrados() {
         try {
             List<Proveedor> lista = proveedorDAO.consultarProveedores();
@@ -135,7 +135,7 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return null;
         }
     }
-
+   
     @Override
     public List<AreaProfundizacion> consultarAreasProfundizacionPorIDLaboratorio(BigInteger laboratorio) {
         try {
