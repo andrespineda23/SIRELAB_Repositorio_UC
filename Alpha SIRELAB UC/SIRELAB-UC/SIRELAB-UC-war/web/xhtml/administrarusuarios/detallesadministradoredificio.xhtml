@@ -145,35 +145,14 @@ and open the template in the editor.
                                             </div>
                                         </fieldset>
                                     </fieldset>
-                                    <fieldset>
-                                        <legend class="text-info">Información Universidad</legend>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Sede*"/></strong>
-                                            <h:selectOneMenu value="#{controllerDetallesAdministradorEdificio.sedeAdministradorEdificio}"
-                                                             class="form-control" readonly="#{controllerDetallesAdministradorEdificio.activarEditar}"
-                                                             id="sedeAdministradorEdificio">
-                                                <f:selectItems value="#{controllerDetallesAdministradorEdificio.listaSede}" var="sede"
-                                                               itemLabel="#{sede.strNombreEstado}" itemValue="#{sede}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerDetallesAdministradorEdificio.actualizarSedes()}" execute="sedeAdministradorEdificio" render="@this edificioAdministradorEdificio msnSede"/>
-                                            </h:selectOneMenu>
-                                            <h6><h:message id="msnSede" for="sedeAdministradorEdificio" style="color: red"></h:message></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Edificio*"/></strong>
-                                            <h:selectOneMenu disabled="#{controllerDetallesAdministradorEdificio.activoEdificio}" 
-                                                             value="#{controllerDetallesAdministradorEdificio.edificioAdministradorEdificio}"
-                                                             class="form-control"
-                                                             id="edificioAdministradorEdificio">
-                                                <f:selectItem itemLabel="Seleccione Edificio" itemValue="null" />
-                                                <f:selectItems value="#{controllerDetallesAdministradorEdificio.listaEdificio}" var="edificio"
-                                                               itemLabel="#{edificio.strNombreEstado}" itemValue="#{edificio}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerDetallesAdministradorEdificio.actualizarEdificios()}" execute="edificioAdministradorEdificio" render="@this laboratorioAdministradorEdificio msnEdificio"/>
-                                            </h:selectOneMenu>
-                                            <h6><h:message id="msnEdificio" for="edificioAdministradorEdificio" style="color: red"></h:message></h6>
-                                        </div>
-                                    </fieldset>
+                                    <br></br>
+                                    <div class="col-md-2">
+                                        <h:commandButton class="btn btn-block" value="Historial de Edificios" action="#{controllerDetallesAdministradorEdificio.paginaHistorialEdificio()}" 
+                                                         actionListener="#{controllerHistorialEdificios.recibirIdAdministradorEdificio(controllerDetallesAdministradorEdificio.encargadoPorEdificioDetalles.administradoredificio.idadministradoredificio)}" immediate="true"/>
+                                    </div>
+                                    <div class="col-md-10">
+
+                                    </div>
                                 </div>
                                 <hr class="intro-divider"/>
                                 <div class="row col-md-12">

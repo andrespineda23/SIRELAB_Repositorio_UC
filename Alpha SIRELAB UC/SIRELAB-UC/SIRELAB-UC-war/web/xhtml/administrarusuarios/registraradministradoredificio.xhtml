@@ -128,7 +128,7 @@ and open the template in the editor.
                                             <f:selectItems value="#{controllerRegistrarAdministradorEdificio.listaEdificios}" var="departamento"
                                                            itemLabel="#{departamento.descripcionedificio}" itemValue="#{departamento}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarAdministradorEdificio.actualizarEdificios()}" execute="inputEdificio" render="@this inputLaboratorio msnEdificio"/>
+                                            <f:ajax event="change" listener="#{controllerRegistrarAdministradorEdificio.actualizarEdificios()}" execute="inputEdificio" render="@this msnEdificio"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnEdificio" for="inputEdificio" style="color: red"></h:message></h6>
                                     </div>

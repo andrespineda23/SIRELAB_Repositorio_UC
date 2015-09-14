@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Navigation -->
+                            <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+                                <div class="container topnav">
+                                    <!-- Brand and toggle get grouped for better mobile display -->
+                                    <div class="navbar-header">
+                                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                        <a class="navbar-brand">
+                                            <img alt="500x100" height="50" width="100" class="img-responsive" src="../../img/logo-universidad-central.png" />
+                                            <a class="navbar-brand topnav" href="#">SIRELAB</a>    
+                                        </a><p class="navbar-text pull-left ">
+                                            Conectado como: <label class="text-uppercase" style="color: darkblue;text-transform: uppercase">#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</label>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- /.container -->
+                            </nav>
+                        </div>
+                        <div class="row">
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                        </div>
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">...</a></li>
+                                <li class="active">Historial Edificios</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="col-md-12 row">
+                                    <h2 class="info">
+                                        Información Registro
+                                    </h2>
+                                    <p>
+                                        La pagina actual posee el historia de edificios asociados al administrado de edificio.
+                                    </p>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>Historial Edificios Asociados</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTable" var="item" 
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerHistorialEdificios.listaEncargadosPorEdificioTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.administradoredificio.persona.nombrespersona}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Apellido"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.administradoredificio.persona.apellidospersona}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Sede"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.edificio.sede.nombresede}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Edificio"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.edificio.descripcionedificio}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Estado Administración"/>
+                                                    </f:facet>
+                                                    <h:selectBooleanCheckbox value="#{item.estado}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerHistorialEdificios.cargarPaginaAnteriorEncargadoPorEdificio()}" disabled="#{controllerHistorialEdificios.bloquearPagAntEncargadoPorEdificio}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerHistorialEdificios.cargarPaginaSiguienteEncargadoPorEdificio()}" disabled="#{controllerHistorialEdificios.bloquearPagSigEncargadoPorEdificio}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                    <br></br>
+                                    <fieldset>
+                                        <legend class="text-info">Nuevo Registro</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Desea asociar el nuevo edificio al personal"/></strong>
+                                            <h:selectBooleanCheckbox value="#{controllerHistorialEdificios.activarNuevoRegistro}">
+                                                <f:ajax event="change" listener="#{controllerHistorialEdificios.actualizarNuevoRegistro()}" execute="@this" render="@this inputEdificio inputEdificio"/>
+                                            </h:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Sede*"/></strong>
+                                            <h:selectOneMenu value="#{controllerHistorialEdificios.sedeNuevo}"
+                                                             class="form-control" disabled="#{controllerHistorialEdificios.activarNuevoRegistro}"
+                                                             id="inputSede">
+                                                <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
+                                                <f:selectItems value="#{controllerHistorialEdificios.listaSedes}" var="facultad"
+                                                               itemLabel="#{facultad.nombresede}" itemValue="#{facultad}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerHistorialEdificios.actualizarSedes()}" execute="inputSede" render="@this inputEdificio msnSede"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnSede" for="inputSede" style="color: red"></h:message></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Edificio*"/></strong>
+                                            <h:selectOneMenu disabled="#{controllerHistorialEdificios.activarEdificio}" value="#{controllerHistorialEdificios.edificioNuevo}"
+                                                             class="form-control"
+                                                             id="inputEdificio">
+                                                <f:selectItem itemLabel="Seleccione Edificio" itemValue="null" />
+                                                <f:selectItems value="#{controllerHistorialEdificios.listaEdificios}" var="departamento"
+                                                               itemLabel="#{departamento.descripcionedificio}" itemValue="#{departamento}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerHistorialEdificios.actualizarEdificios()}" execute="inputEdificio" render="@this msnEdificio"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnEdificio" for="inputEdificio" style="color: red"></h:message></h6>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <hr class="intro-divider"/>
+                                <div class="row col-md-12">
+                                    <div class="text-center">
+                                        <h5>
+                                            Resultados del Formulario
+                                        </h5>
+                                        <strong>
+                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerHistorialEdificios.mensajeFormulario}" style="color: #{controllerHistorialEdificios.colorMensaje}}"/>
+                                        </strong>
+                                    </div>
+                                    <br></br>
+                                </div>
+                                <hr class="intro-divider"/>
+                                <div class="right pull-right">
+                                    <h:commandButton value="Registrar" actionListener="#{controllerHistorialEdificios.guardarCambiosPagina()}" class="btn btn-success" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                    <span></span>
+                                    <span></span>
+                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="detallesadministradoredificio" actionListener="#{controllerHistorialEdificios.cancelarRegistro()}" immediate="true">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

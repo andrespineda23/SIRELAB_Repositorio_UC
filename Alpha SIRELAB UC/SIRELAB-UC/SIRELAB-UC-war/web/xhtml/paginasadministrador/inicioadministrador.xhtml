@@ -63,7 +63,6 @@ and open the template in the editor.
                                                         <h:commandButton value="Estudiante" actionListener="#{controllerAdministrarEstudiantes.recibirPaginaAnterior('inicioadministrador')}" action="administrarestudiantes" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Docente" actionListener="#{controllerAdministrarDocentes.recibirPaginaAnterior('inicioadministrador')}" action="administrardocentes" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Entidad Externa" actionListener="#{controllerAdministrarEntidadesExternas.recibirPaginaAnterior('inicioadministrador')}" action="administrarentidadesexternas" class="btn btn-block btn-info"/>
-                                                        <h:commandButton value="Admi. Edificio" actionListener="#{controllerAdministrarAdministradoresEdificio.recibirPaginaAnterior('inicioadministrador')}" action="administraradministradoresedificio" class="btn btn-block btn-info"/>
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                         <div class="icon-wrapper">
@@ -72,9 +71,14 @@ and open the template in the editor.
                                                         </div>                   
                                                     </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Personal Ent. Ext." actionListener="#{controllerAdministrarPersonaContacto.recibirPaginaAnterior('inicioadministrador')}" action="administrarpersonacontacto" class="btn btn-block btn-info"/>
-                                                        <h:commandButton value="Laboratorista" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('inicioadministrador')}" action="administrarencargadoslaboratorios" class="btn btn-block btn-info"/>
-                                                        <h:commandButton value="Administrador" action="administraradministradores" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Personal Entidad Externa" actionListener="#{controllerAdministrarPersonaContacto.recibirPaginaAnterior('inicioadministrador')}" action="administrarpersonacontacto" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Laboratorista" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('inicioadministrador')}" action="administrarencargadoslaboratorios" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Administrador" action="administraradministradores" class="btn btn-block btn-danger"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <h:commandButton value="Administradores de Edificio (Personal de Laboratorio)" actionListener="#{controllerAdministrarAdministradoresEdificio.recibirPaginaAnterior('inicioadministrador')}" action="administraradministradoresedificio" class="btn btn-block btn-success"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,14 +218,11 @@ and open the template in the editor.
                                                         <h:commandButton value="Manual de Equipo" actionListener="#{controllerAdministrarManuales.recibirPaginaAnterior('inicioadministrador')}" action="administrarmanuales" class="btn btn-block btn-danger"/>
                                                         <br></br>
                                                         <h:commandButton value="Guía de Laboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.recibirPaginaAnterior('inicioadministrador')}" action="administrarguiaslaboratorio" class="btn btn-block btn-danger"/>
+                                                        <br></br>
+                                                        <h:commandButton value="Área de Profundización" actionListener="#{controllerAdministrarAreasProfundizacion.recibirPaginaAnterior('inicioadministrador')}" action="administrarareasprofundizacion" class="btn btn-block btn-danger"/>
                                                     </div>
                                                 </div>
-                                                <br></br>
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <h:commandButton value="Área de Profundización" actionListener="#{controllerAdministrarAreasProfundizacion.recibirPaginaAnterior('inicioadministrador')}" action="administrarareasprofundizacion" class="btn btn-block btn-success"/>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             <br></br>
                                         </div>

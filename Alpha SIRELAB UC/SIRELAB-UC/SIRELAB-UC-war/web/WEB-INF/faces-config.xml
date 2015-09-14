@@ -2352,6 +2352,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/detallesadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>historialedificios</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/historialedificios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/historialedificios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/detallesadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/xhtml/estructuralaboratorio/administrarsalas.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrarsala</from-outcome>

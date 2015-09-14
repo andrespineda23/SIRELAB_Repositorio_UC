@@ -7,14 +7,11 @@ package com.sirelab.controller.administrarusuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresEdificioBOInterface;
 import com.sirelab.entidades.AdministradorEdificio;
-import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoPorEdificio;
-import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -42,17 +39,12 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
     private boolean modificacionRegistro;
     private boolean disabledActivar, disabledInactivar;
     private boolean visibleGuardar;
-    private List<Sede> listaSede;
-    private Sede sedeAdministradorEdificio;
-    private List<Edificio> listaEdificio;
-    private Edificio edificioAdministradorEdificio;
-    private boolean activoEdificio;
     private String numAtencionAdministradorEdificio;
     private String nombreAdministradorEdificio, apellidoAdministradorEdificio, correoAdministradorEdificio, correoOpcionalAdministradorEdificio, identificacionAdministradorEdificio;
     private String telefono1AdministradorEdificio, telefono2AdministradorEdificio, direccionAdministradorEdificio;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
     private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesNAtencion;
-    private boolean validacionesDireccion, validacionesSede, validacionesEdificio;
+    private boolean validacionesDireccion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
@@ -86,13 +78,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         telefono1AdministradorEdificio = encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getTelefono1persona();
         telefono2AdministradorEdificio = encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getTelefono2persona();
         direccionAdministradorEdificio = encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getDireccionpersona();
-        sedeAdministradorEdificio = encargadoPorEdificioDetalles.getEdificio().getSede();
-        edificioAdministradorEdificio = encargadoPorEdificioDetalles.getEdificio();
         numAtencionAdministradorEdificio = encargadoPorEdificioDetalles.getAdministradoredificio().getNumeroatencion();
-        listaSede = administrarAdministradoresEdificioBO.obtenerListaSedes();
-        if (null != sedeAdministradorEdificio) {
-            listaEdificio = administrarAdministradoresEdificioBO.obtenerEdificiosPorIDSede(sedeAdministradorEdificio.getIdsede());
-        }
         validacionesNAtencion = true;
         validacionesNombre = true;
         validacionesApellido = true;
@@ -102,10 +88,6 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         validacionesCorreoOpcional = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesSede = true;
-        validacionesEdificio = true;
-        //
-        activoEdificio = true;
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
@@ -139,7 +121,6 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         disabledEditar = true;
         modificacionRegistro = false;
         visibleGuardar = true;
-        activoEdificio = false;
         colorMensaje = "black";
         mensajeFormulario = "N/A";
     }
@@ -162,9 +143,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         disabledEditar = false;
         modificacionRegistro = false;
         visibleGuardar = false;
-        activoEdificio = true;
-        listaEdificio = null;
-        listaSede = null;
+
         validacionesCorreoOpcional = true;
         validacionesNAtencion = true;
         validacionesNombre = true;
@@ -174,57 +153,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesSede = true;
-        validacionesEdificio = true;
+
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         asignarValoresVariablesAdministradorEdificio();
         return "administraradministradoresedificio";
-    }
-
-    /**
-     * Metodo encargado de actualizar la sede y obtener la informacion de los
-     * departaments relacionados
-     */
-    public void actualizarSedes() {
-        try {
-            if (Utilidades.validarNulo(sedeAdministradorEdificio)) {
-                activoEdificio = false;
-                edificioAdministradorEdificio = null;
-                listaEdificio = administrarAdministradoresEdificioBO.obtenerEdificiosPorIDSede(sedeAdministradorEdificio.getIdsede());
-                validacionesSede = true;
-            } else {
-                validacionesEdificio = false;
-                validacionesSede = false;
-                activoEdificio = true;
-                edificioAdministradorEdificio = null;
-                listaEdificio = null;
-                FacesContext.getCurrentInstance().addMessage("form:sedeAdministradorEdificio", new FacesMessage("El campo Sede es obligatorio."));
-            }
-            modificacionesRegistroAdministradorEdificio();
-        } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio actualizarSedes:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministradorEdificio actualizarSedes : " + e.toString());
-        }
-    }
-
-    /**
-     * Metodo encargado de actualizar los edificios y obtener la informacion de
-     * las carreras relacionadas
-     */
-    public void actualizarEdificios() {
-        try {
-            if (Utilidades.validarNulo(edificioAdministradorEdificio)) {
-                validacionesEdificio = true;
-            } else {
-                validacionesEdificio = false;
-                FacesContext.getCurrentInstance().addMessage("form:edificioAdministradorEdificio", new FacesMessage("El campo Edificio es obligatorio."));
-            }
-            modificacionesRegistroAdministradorEdificio();
-        } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio actualizarEdificios:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministradorEdificio actualizarEdificios : " + e.toString());
-        }
     }
 
     public void validarNAtencionAdministradorEdificio() {
@@ -420,9 +353,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         if (validacionesApellido == false) {
             retorno = false;
         }
-        if (validacionesEdificio == false) {
-            retorno = false;
-        }
+
         if (validacionesCorreo == false) {
             retorno = false;
         }
@@ -438,9 +369,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesSede == false) {
-            retorno = false;
-        }
+
         if (validacionesTel1 == false) {
             retorno = false;
         }
@@ -548,6 +477,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         }
     }
 
+    public String paginaHistorialEdificio() {
+        restaurarInformacionAdministradorEdificio();
+        return "historialedificios";
+    }
+
     // GET - SET
     public EncargadoPorEdificio getEncargadoPorEdificioDetalles() {
         return encargadoPorEdificioDetalles;
@@ -611,46 +545,6 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
 
     public void setVisibleGuardar(boolean visibleGuardar) {
         this.visibleGuardar = visibleGuardar;
-    }
-
-    public List<Sede> getListaSede() {
-        return listaSede;
-    }
-
-    public void setListaSede(List<Sede> listaSede) {
-        this.listaSede = listaSede;
-    }
-
-    public Sede getSedeAdministradorEdificio() {
-        return sedeAdministradorEdificio;
-    }
-
-    public void setSedeAdministradorEdificio(Sede sedeAdministradorEdificio) {
-        this.sedeAdministradorEdificio = sedeAdministradorEdificio;
-    }
-
-    public List<Edificio> getListaEdificio() {
-        return listaEdificio;
-    }
-
-    public void setListaEdificio(List<Edificio> listaEdificio) {
-        this.listaEdificio = listaEdificio;
-    }
-
-    public Edificio getEdificioAdministradorEdificio() {
-        return edificioAdministradorEdificio;
-    }
-
-    public void setEdificioAdministradorEdificio(Edificio edificioAdministradorEdificio) {
-        this.edificioAdministradorEdificio = edificioAdministradorEdificio;
-    }
-
-    public boolean isActivoEdificio() {
-        return activoEdificio;
-    }
-
-    public void setActivoEdificio(boolean activoEdificio) {
-        this.activoEdificio = activoEdificio;
     }
 
     public String getNumAtencionAdministradorEdificio() {
