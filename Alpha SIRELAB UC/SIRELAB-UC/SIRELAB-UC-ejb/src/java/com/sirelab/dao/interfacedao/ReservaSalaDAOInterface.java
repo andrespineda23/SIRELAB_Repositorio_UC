@@ -7,6 +7,7 @@ package com.sirelab.dao.interfacedao;
 
 import com.sirelab.entidades.ReservaSala;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,4 +27,6 @@ public interface ReservaSalaDAOInterface {
     public ReservaSala buscarReservaSalaPorID(BigInteger idRegistro);
 
     public List<ReservaSala> buscarReservaSalasSalaPorPersona(BigInteger persona);
+
+    public ReservaSala buscarReservaSalaPorFechaHoraSala(Date fecha, String horaInicio, BigInteger sala);
 }

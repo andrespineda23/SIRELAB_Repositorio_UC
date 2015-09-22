@@ -5,12 +5,164 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head> 
+    </h:head>
+    <h:body >
+        <ui:composition template="/xhtml/template/templateresponsive.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Reserva - Paso 2</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>Información de la Reserva</strong></legend></h3>
+                                            <br></br>
+                                            <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Día a reservar
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control" value="#{controllerPaso2Reserva.reservaSala.fechaReserva}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                        </h:inputText>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Hora de Inicio
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso2Reserva.reservaSala.horaInicio}:00"/>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Laboratorio
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso2Reserva.reservaSala.salaLaboratorio.laboratoriosporareas.laboratorio.nombrelaboratorio}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Sala de Laboratorio
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso2Reserva.reservaSala.salaLaboratorio.nombresala}"/>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Tipo de Reserva
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerPaso2Reserva.parametroTipoReserva}"
+                                                                     class="form-control"
+                                                                     id="parametroTipoReserva">
+                                                        <f:selectItem itemLabel="Seleccione Tipo Reserva" itemValue="null" />
+                                                        <f:selectItems value="#{controllerPaso2Reserva.listaTipoReserva}" var="tipo"
+                                                                       itemLabel="#{tipo.nombretiporeserva}" itemValue="#{tipo}"/>
+                                                        <f:converter converterId="ConverterGenerico" />
+                                                        <f:ajax event="change" listener="#{controllerPaso2Reserva.actualizarTipo()}" execute="@this" render="@this"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>
+                                                        Plan de Estudio
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerPaso2Reserva.parametroPlanEstudios}"
+                                                                     class="form-control"
+                                                                     id="parametroPlanEstudios">
+                                                        <f:selectItem itemLabel="Seleccione Plan de Estudios" itemValue="null" />
+                                                        <f:selectItems value="#{controllerPaso2Reserva.listaPlanEstudios}" var="plan"
+                                                                       itemLabel="#{plan.strNombreCodigo}" itemValue="#{plan}"/>
+                                                        <f:converter converterId="ConverterGenerico" />
+                                                        <f:ajax event="change" listener="#{controllerPaso2Reserva.actualizarPlanEstudios()}" execute="@this" render="@this parametroAsignaturaPorPlanEstudio parametroGuiaLaboratorio"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>
+                                                        Asignatura
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerPaso2Reserva.parametroAsignaturaPorPlanEstudio}"
+                                                                     class="form-control" disabled="#{controllerPaso2Reserva.activarAsignatura}"
+                                                                     id="parametroAsignaturaPorPlanEstudio">
+                                                        <f:selectItem itemLabel="Seleccione Asignatura" itemValue="null" />
+                                                        <f:selectItems value="#{controllerPaso2Reserva.listaAsignaturaPorPlanEstudio}" var="asignatura"
+                                                                       itemLabel="#{asignatura.asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
+                                                        <f:converter converterId="ConverterGenerico" />
+                                                        <f:ajax event="change" listener="#{controllerPaso2Reserva.actualizaAsignatura()}" execute="@this" render="@this parametroGuiaLaboratorio"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>
+                                                        Guía de Laboratorio
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerPaso2Reserva.parametroGuiaLaboratorio}"
+                                                                     class="form-control" disabled="#{controllerPaso2Reserva.activarGuia}"
+                                                                     id="parametroGuiaLaboratorio">
+                                                        <f:selectItem itemLabel="Seleccione Guía Laboratorio" itemValue="null" />
+                                                        <f:selectItems value="#{controllerPaso2Reserva.listaGuiaLaboratorio}" var="guia"
+                                                                       itemLabel="#{guia.nombreguia}" itemValue="#{guia}"/>
+                                                        <f:converter converterId="ConverterGenerico" />
+                                                        <f:ajax event="change" listener="#{controllerPaso2Reserva.actualizarGuia()}" execute="@this" render="@this"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-11">
+                                                        ¿Desea adicionar equipos adicionales a su reserva?
+                                                    </label>
+                                                    <h:selectBooleanCheckbox class="col-xs-1" value="#{controllerPaso2Reserva.adicionarElementos}"/>
+                                                </div>
+                                            </div> 
+                                        </fieldset>
+                                        <br></br>
+                                        <hr class="intro-divider"/>
+                                        <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                            <div class="text-center">
+                                                <h5>
+                                                    Resultados de la Reserva
+                                                </h5>
+                                                <strong>
+                                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerPaso2Reserva.mensajeFormulario}" style="color: #{controllerPaso2Reserva.colorMensaje}}"/>
+                                                </strong>
+                                            </div>
+                                            <br></br>
+                                        </div>
+                                        <hr class="intro-divider"/>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Continuar" action="#{controllerPaso2Reserva.finalizarProcesoReserva()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="iniciodocente" actionListener="#{controllerPaso2Reserva.cancelarReserva()}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
 </html>

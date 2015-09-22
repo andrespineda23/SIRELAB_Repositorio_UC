@@ -8,6 +8,7 @@ package com.sirelab.dao;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
 import com.sirelab.entidades.PeriodoAcademico;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -75,6 +76,21 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
             Query query = em.createQuery("SELECT p FROM PeriodoAcademico p WHERE p.idperiodoacademico=:idRegistro");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idRegistro", idRegistro);
+            PeriodoAcademico registro = (PeriodoAcademico) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarPeriodoAcademicoPorID PeriodoAcademicoDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public PeriodoAcademico buscarPeriodoAcademicoActual() {
+        try {
+            em.clear();
+            Date hoy = new Date();
+            Query query = em.createQuery("SELECT p FROM PeriodoAcademico p WHERE p.fechafinal >=:hoy AND p.fechainicial <=:hoy");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("hoy", hoy);
             PeriodoAcademico registro = (PeriodoAcademico) query.getSingleResult();
             return registro;
         } catch (Exception e) {

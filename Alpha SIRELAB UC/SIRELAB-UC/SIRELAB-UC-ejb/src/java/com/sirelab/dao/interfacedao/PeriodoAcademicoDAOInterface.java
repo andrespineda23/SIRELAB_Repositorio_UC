@@ -25,4 +25,6 @@ public interface PeriodoAcademicoDAOInterface {
 
     public PeriodoAcademico buscarPeriodoAcademicoPorID(BigInteger idRegistro);
 
+    public PeriodoAcademico buscarPeriodoAcademicoActual();
+
 }

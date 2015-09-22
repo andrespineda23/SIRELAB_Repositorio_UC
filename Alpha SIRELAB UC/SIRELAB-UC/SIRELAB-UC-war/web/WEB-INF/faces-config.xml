@@ -2654,6 +2654,60 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+
+        
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/paso1reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>paso2reserva</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/paso2reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/paso1reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciodocente</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>paso1reserva</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/paso1reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/paso2reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>paso3reserva</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/paso3reserva.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/paso2reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciodocente</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/paso3reserva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciodocente</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
 </faces-config>

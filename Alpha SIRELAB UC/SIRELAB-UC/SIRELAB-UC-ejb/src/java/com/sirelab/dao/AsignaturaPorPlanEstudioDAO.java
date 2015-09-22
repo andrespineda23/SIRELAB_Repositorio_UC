@@ -87,6 +87,20 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
             return null;
         }
     }
+    @Override
+    public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosActivoIdPlanEstudio(BigInteger planEstudio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p WHERE p.planestudio.idplanestudios=:planEstudio AND p.estado=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("planEstudio", planEstudio);
+            List<AsignaturaPorPlanEstudio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarAsignaturaPorPlanEstudiosIdPlanEstudio consultarAsignaturaPorPlanEstudiosActivoIdPlanEstudio : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosIdAsignatura(BigInteger asignatura) {

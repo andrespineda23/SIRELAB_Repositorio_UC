@@ -39,4 +39,6 @@ public interface SalaLaboratorioDAOInterface {
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorio(BigInteger laboratorio);
 
     public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorioArea(BigInteger laboratorioArea);
+
+    public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorio(BigInteger laboratorio);
 }

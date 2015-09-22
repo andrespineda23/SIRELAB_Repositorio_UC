@@ -29,4 +29,6 @@ public interface GuiaLaboratorioDAOInterface {
     public List<GuiaLaboratorio> consultarGuiasLaboratorio();
 
     public GuiaLaboratorio buscarGuiaLaboratorioPorID(BigInteger idRegistro);
+
+    public List<GuiaLaboratorio> consultarGuiasLaboratorioPorIdAreaPlan(BigInteger areaPlan);
 }

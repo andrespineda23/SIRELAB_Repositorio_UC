@@ -11,140 +11,168 @@ and open the template in the editor.
     <h:head>        
     </h:head>
     <h:body>
-        <ui:composition template="/xhtml/templateiniciodocente.xhtml">
+        <ui:composition template="/xhtml/template/templateiniciodocente.xhtml">
             <ui:define name="body">
                 <h:form id="form">
-                    <div class="container">
-                        <section id="info">
+                    <div id="home">
+                        <div class="overlay">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-                                        <h1>Noticias de tu interes</h1>
-                                        <p>
+                                <div class="row " >
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h1>SIRELAB</h1>
+                                        <h4>
+                                            Universidad Central - Bogotá, Colombia.
+                                        </h4>
+                                        <h2 style="color: white">
+                                            Bienvenido Usuario: <strong>#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</strong>
+                                        </h2>
+                                        <span></span>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <h:commandButton value="Configurar Cuenta" class="btn btn-custom btn-two"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                        </p>
-                                        <div class="bs-example">
-                                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                                <!-- Carousel indicators -->
-                                                <ol class="carousel-indicators">
-                                                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                                                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                                                </ol>   
-                                                <!-- Wrapper for carousel items -->
-                                                <div class="carousel-inner">
-                                                    <div class="item slide active">
-                                                        <aside>
-                                                            <img src="../../img/carousel1.jpg" class="img-responsive" alt="First Slide"></img>
-                                                        </aside>
-                                                        <div class="carousel-caption">
-                                                            <h3>Universidades piensan la ciudad</h3>
-                                                            <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
-                                                            <p>
-                                                                <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
-                                                                    Leer más...		
-                                                                </a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item slide">
-                                                        <aside>
-                                                            <img src="../../img/carousel2.jpg" class="img-responsive" alt="Second Slide"></img>
-                                                        </aside>
-                                                        <div class="carousel-caption">
-                                                            <h3>Universidades piensan la ciudad</h3>
-                                                            <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
-                                                            <p>
-                                                                <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
-                                                                    Leer más...		
-                                                                </a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item slide">
-                                                        <aside>
-                                                            <img src="../../img/carousel3.jpg" class="img-responsive" alt="Third Slide"></img>
-                                                        </aside>
-                                                        <div class="carousel-caption">
-                                                            <h3>Universidades piensan la ciudad</h3>
-                                                            <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
-                                                            <p>
-                                                                <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
-                                                                    Leer más...		
-                                                                </a>
-                                                            </p>
-                                                        </div>
+                    </div>
+                    <section id="info">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
+                                    <h1>Noticias de tu interes</h1>
+                                    <p>
+
+                                    </p>
+                                    <div class="bs-example">
+                                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                            <!-- Carousel indicators -->
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                                            </ol>   
+                                            <!-- Wrapper for carousel items -->
+                                            <div class="carousel-inner">
+                                                <div class="item slide active">
+                                                    <aside>
+                                                        <img src="../../img/carousel1.jpg" class="img-responsive" alt="First Slide"></img>
+                                                    </aside>
+                                                    <div class="carousel-caption">
+                                                        <h3>Universidades piensan la ciudad</h3>
+                                                        <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
+                                                        <p>
+                                                            <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
+                                                                Leer más...		
+                                                            </a>
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <!-- Carousel controls -->
-                                                <a class="carousel-control left" href="#myCarousel" data-slide="prev">
-                                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                                </a>
-                                                <a class="carousel-control right" href="#myCarousel" data-slide="next">
-                                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                                </a>
+                                                <div class="item slide">
+                                                    <aside>
+                                                        <img src="../../img/carousel2.jpg" class="img-responsive" alt="Second Slide"></img>
+                                                    </aside>
+                                                    <div class="carousel-caption">
+                                                        <h3>Universidades piensan la ciudad</h3>
+                                                        <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
+                                                        <p>
+                                                            <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
+                                                                Leer más...		
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="item slide">
+                                                    <aside>
+                                                        <img src="../../img/carousel3.jpg" class="img-responsive" alt="Third Slide"></img>
+                                                    </aside>
+                                                    <div class="carousel-caption">
+                                                        <h3>Universidades piensan la ciudad</h3>
+                                                        <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
+                                                        <p>
+                                                            <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
+                                                                Leer más...		
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <!-- Carousel controls -->
+                                            <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                            </a>
+                                            <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                            </a>
                                         </div>
-                                        <script>
-                                            $(function () {
-                                                $('.carousel').carousel({
-                                                    interval: 1000
-                                                });
+                                    </div>
+                                    <script>
+                                        $(function () {
+                                            $('.carousel').carousel({
+                                                interval: 1000
                                             });
-                                        </script>
+                                        });
+                                    </script>
+                                </div>
+                                <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+                                    <h1>Instructivo de reserva</h1>
+                                    <p>
+                                        A continuación se encuentra un video instructivo en el cual se realizao un proceso de 
+                                        solicitud de prestamo de un elemento de laboratorio.x x x x x x x
+                                    </p>
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/wo8V6526Cuc" frameborder="0" allowfullscreen=""></iframe>
                                     </div>
-                                    <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
-                                        <h1>Instructivo de reserva</h1>
-                                        <p>
-                                            A continuación se encuentra un video instructivo en el cual se realizao un proceso de 
-                                            solicitud de prestamo de un elemento de laboratorio.x x x x x x x
-                                        </p>
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/wo8V6526Cuc" frameborder="0" allowfullscreen=""></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="reservas">
+                        <div class="container">
+                            <div class="content-section-b">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                                            <hr class="section-heading-spacer"/>
+                                            <div class="clearfix"></div>
+                                            <h2 class="section-heading">¿Qué es SIRELAB?</h2>
+                                            <p class="lead">Es una herramienta que permite administrar las funciones de los laboratorios de ingenieria de la Universidad, administrando los procesos de usuarios, recursos, prestamos e indicadores.</p>
+                                        </div>
+                                        <div class="col-lg-5 col-lg-offset-2 col-md-offset-2 col-md-5 hidden-xs col-sm-6">
+                                            <img src="../../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                        <section id="reservas">
-                            <div class="container">
-                                <div class="content-section-b">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                                                <hr class="section-heading-spacer"/>
-                                                <div class="clearfix"></div>
-                                                <h2 class="section-heading">¿Qué es SIRELAB?</h2>
-                                                <p class="lead">Es una herramienta que permite administrar las funciones de los laboratorios de ingenieria de la Universidad, administrando los procesos de usuarios, recursos, prestamos e indicadores.</p>
-                                            </div>
-                                            <div class="col-lg-5 col-lg-offset-2 col-md-offset-2 col-md-5 hidden-xs col-sm-6">
-                                                <img src="../../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
-                                            </div>
+                            <br></br>
+                            <div class="content-section-b">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                                            <hr class="section-heading-spacer"/>
+                                            <div class="clearfix"></div>
+                                            <h2 class="section-heading">Reservas</h2>
+                                            <p class="lead">En este nodulo puede consultar las reservas solicitadas</p>
+                                            <p>
+                                                <h:commandButton class="btn btn-success" value="Consultar Reservas Sala" action="consultarreservassala" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
+                                            </p>
+                                            <p>
+                                                <h:commandButton class="btn btn-success" value="Realizar Reserva Sala" action="paso1reserva" />
+                                            </p>
                                         </div>
-                                    </div>
-                                </div>
-                                <br></br>
-                                <div class="content-section-b">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                                                <hr class="section-heading-spacer"/>
-                                                <div class="clearfix"></div>
-                                                <h2 class="section-heading">Consultar Reservas</h2>
-                                                <p class="lead">En este nodulo puede consultar las reservas solicitadas</p>
-                                                <p>
-                                                    <h:commandButton class="btn btn-success" value="Reservas Sala" action="consultar_reservas_sala" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
-                                                </p>
-                                            </div>
-                                            <div class="col-lg-5 col-lg-offset-2 col-md-offset-2 col-md-5 hidden-xs col-sm-6">
-                                                <img src="../../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
-                                            </div>
+                                        <div class="col-lg-5 col-lg-offset-2 col-md-offset-2 col-md-5 hidden-xs col-sm-6">
+                                            <img src="../../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                    </div> 
+                        </div>
+                    </section>
                 </h:form>
             </ui:define>  
         </ui:composition>

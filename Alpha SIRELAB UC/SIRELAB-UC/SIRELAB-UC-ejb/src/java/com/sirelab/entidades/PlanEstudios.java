@@ -63,6 +63,8 @@ public class PlanEstudios implements Serializable {
     private String strEstado;
     @Transient
     private String strNombreEstado;
+    @Transient
+    private String strNombreCodigo;
 
     public PlanEstudios() {
     }
@@ -173,6 +175,17 @@ public class PlanEstudios implements Serializable {
 
     public void setStrNombreEstado(String strNombreEstado) {
         this.strNombreEstado = strNombreEstado;
+    }
+
+    public String getStrNombreCodigo() {
+        getCodigoplanestudio();
+        getNombreplanestudio();
+        strNombreCodigo = nombreplanestudio + " - " + codigoplanestudio;
+        return strNombreCodigo;
+    }
+
+    public void setStrNombreCodigo(String strNombreCodigo) {
+        this.strNombreCodigo = strNombreCodigo;
     }
 
 }

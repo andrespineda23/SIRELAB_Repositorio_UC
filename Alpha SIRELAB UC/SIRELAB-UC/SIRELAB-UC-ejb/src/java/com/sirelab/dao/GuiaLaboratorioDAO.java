@@ -69,6 +69,20 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<GuiaLaboratorio> consultarGuiasLaboratorioPorIdAreaPlan(BigInteger areaPlan) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM GuiaLaboratorio p WHERE p.asignaturaporplanestudio.idasignaturaporplanestudio=:areaPlan");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("areaPlan", areaPlan);
+            List<GuiaLaboratorio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public GuiaLaboratorio buscarGuiaLaboratorioPorID(BigInteger idRegistro) {

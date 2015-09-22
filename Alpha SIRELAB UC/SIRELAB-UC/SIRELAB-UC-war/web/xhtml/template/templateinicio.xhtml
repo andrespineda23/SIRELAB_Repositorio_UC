@@ -33,25 +33,11 @@
         <![endif]-->
     </h:head>
     <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;">
-        <header id="header">
-            <div class="container" >
-                <div class="row"  >
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 logo-wrapper">
-                        <img src="../../assets/img/logo-universidad-central.png" alt=""/>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right" >
-                        <div class="menu-links scroll-me">
-                            <a href="#header"> <i class="ion-ios-home-outline"></i> </a>
-                            <a href="#usuarios"> <i class="ion-person"></i> </a>
-                            <a href="#universidades"> <i class="ion-university"></i> </a>
-                            <a href="#laboratorios"> <i class="ion-thermometer"></i> </a>
-                            <a href="#recursos"> <i class="ion-wifi"></i> </a>
-                            <a href="#features"> <i class="ion-bookmark"></i> </a>
-                        </div>                    
-                    </div>
-                </div>
-            </div>
-        </header>
+        <div id="header">
+            <ui:insert name="header" >
+                <ui:include src="/xhtml/template/headermenuinicial.xhtml" />
+            </ui:insert>
+        </div>
         <div>
             <div id="content">
                 <ui:insert name="body" />
@@ -60,7 +46,7 @@
         <br></br>
         <div id="footer">
             <ui:insert name="footer" >
-                <ui:include src="/xhtml/footer.xhtml" />
+                <ui:include src="/xhtml/template/footer.xhtml" />
             </ui:insert>
         </div>
         <!-- FOOTER SECTION END-->

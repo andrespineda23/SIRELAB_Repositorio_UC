@@ -25,6 +25,7 @@ public interface AsignaturaPorPlanEstudioDAOInterface {
     public List<AsignaturaPorPlanEstudio> consultarAsignaturasPorPlanEstudio();
 
     public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosIdPlanEstudio(BigInteger planEstudio);
+    public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosActivoIdPlanEstudio(BigInteger planEstudio);
 
     public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosIdAsignatura(BigInteger asignatura);
 

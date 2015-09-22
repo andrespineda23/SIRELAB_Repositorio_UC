@@ -8,6 +8,7 @@ package com.sirelab.dao;
 import com.sirelab.dao.interfacedao.ReservaSalaDAOInterface;
 import com.sirelab.entidades.ReservaSala;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -79,6 +80,23 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             return registro;
         } catch (Exception e) {
             System.out.println("Error buscarReservaSalaPorID ReservaSalaDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public ReservaSala buscarReservaSalaPorFechaHoraSala(Date fecha, String horaInicio, BigInteger sala) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio =:sala AND p.reserva.fechareserva =:fecha AND p.reserva.horainicio=:horaInicio");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("fecha", fecha);
+            query.setParameter("horaInicio", horaInicio);
+            query.setParameter("sala", sala);
+            ReservaSala registro = (ReservaSala) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarReservaSalaPorFechaHoraSala ReservaSalaDAO : " + e.toString());
             return null;
         }
     }

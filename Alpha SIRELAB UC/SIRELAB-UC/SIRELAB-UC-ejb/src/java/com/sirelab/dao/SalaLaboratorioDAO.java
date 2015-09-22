@@ -109,6 +109,20 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorio(BigInteger laboratorio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratoriosporareas.laboratorio.idlaboratorio=:laboratorio AND p.estadosala=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarSalasLaboratoriosPorAreaProfundizacion SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorEdificio(BigInteger edificio) {
