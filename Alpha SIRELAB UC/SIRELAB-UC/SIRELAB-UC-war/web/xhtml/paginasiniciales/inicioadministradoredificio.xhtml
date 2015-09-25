@@ -60,9 +60,9 @@ and open the template in the editor.
                                             <div class="row pad-bottom">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Estudiante" actionListener="#{controllerAdministrarEstudiantes.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarestudiantes" class="btn btn-block btn-info"/>
-                                                        <h:commandButton value="Docente" actionListener="#{controllerAdministrarDocentes.recibirPaginaAnterior('iniciolaboratorista')}" action="administrardocentes" class="btn btn-block btn-info"/>
-                                                        <h:commandButton value="Entidad Externa" actionListener="#{controllerAdministrarEntidadesExternas.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarentidadesexternas" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Estudiante" actionListener="#{controllerAdministrarEstudiantes.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarestudiantes" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Docente" actionListener="#{controllerAdministrarDocentes.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrardocentes" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Entidad Externa" actionListener="#{controllerAdministrarEntidadesExternas.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarentidadesexternas" class="btn btn-block btn-info"/>
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                         <div class="icon-wrapper">
@@ -71,13 +71,13 @@ and open the template in the editor.
                                                         </div>                   
                                                     </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Personal Entidad Externa" actionListener="#{controllerAdministrarPersonaContacto.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarpersonacontacto" class="btn btn-block btn-danger"/>
-                                                        <h:commandButton value="Laboratorista" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarencargadoslaboratorios" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Personal Entidad Externa" actionListener="#{controllerAdministrarPersonaContacto.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarpersonacontacto" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Laboratorista" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarencargadoslaboratorios" class="btn btn-block btn-danger"/>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <h:commandButton value="Administradores de Edificio (Personal de Laboratorio)" actionListener="#{controllerAdministrarAdministradoresEdificio.recibirPaginaAnterior('iniciolaboratorista')}" action="administraradministradoresedificio" class="btn btn-block btn-success"/>
+                                                        <h:commandButton value="Administradores de Edificio (Personal de Laboratorio)" actionListener="#{controllerAdministrarAdministradoresEdificio.recibirPaginaAnterior('inicioadministradoredificio')}" action="administraradministradoresedificio" class="btn btn-block btn-success"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,9 +108,9 @@ and open the template in the editor.
                                             <div class="row pad-bottom">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Laboratorio" actionListener="#{controllerAdministrarLaboratorios.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarlaboratorios" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Laboratorio" actionListener="#{controllerAdministrarLaboratorios.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarlaboratorios" class="btn btn-block btn-info"/>
                                                         <br></br>
-                                                        <h:commandButton value="Sala de Laboratorio" actionListener="#{controllerAdministrarSalas.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarsalas" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Sala de Laboratorio" actionListener="#{controllerAdministrarSalas.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarsalas" class="btn btn-block btn-info"/>
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                         <div class="icon-wrapper">
@@ -118,15 +118,15 @@ and open the template in the editor.
                                                         </div>                   
                                                     </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Modulo/Banco de Trabajo" actionListener="#{controllerAdministrarModulos.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarmodulos" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Modulo/Banco de Trabajo" actionListener="#{controllerAdministrarModulos.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarmodulos" class="btn btn-block btn-danger"/>
                                                         <br></br>
-                                                        <h:commandButton value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipos.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarequipos" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipos.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarequipos" class="btn btn-block btn-danger"/>
                                                     </div>
                                                 </div>
                                                 <br></br>
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <h:commandButton value="Asociación Laboratorios - Áreas Profundización" actionListener="#{controllerAdministrarLaboratoriosPorAreas.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarlaboratoriosporareas" class="btn btn-block btn-success"/>
+                                                        <h:commandButton value="Asociación Laboratorios - Áreas Profundización" actionListener="#{controllerAdministrarLaboratoriosPorAreas.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarlaboratoriosporareas" class="btn btn-block btn-success"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,11 +152,11 @@ and open the template in the editor.
                                             <div class="row pad-bottom">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Insumo" actionListener="#{controllerAdministrarInsumos.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarinsumos" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Insumo" actionListener="#{controllerAdministrarInsumos.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarinsumos" class="btn btn-block btn-info"/>
                                                         <br></br>
-                                                        <h:commandButton value="Proveedor" actionListener="#{controllerAdministrarProveedores.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarproveedores" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Proveedor" actionListener="#{controllerAdministrarProveedores.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarproveedores" class="btn btn-block btn-info"/>
                                                         <br></br>
-                                                        <h:commandButton value="Ingreso Compra Insumo" actionListener="#{controllerRegistrarIngresoInsumo.recibirPaginaAnterior('iniciolaboratorista')}" action="registraringresoinsumo" class="btn btn-block btn-info"/>
+                                                        <h:commandButton value="Ingreso Compra Insumo" actionListener="#{controllerRegistrarIngresoInsumo.recibirPaginaAnterior('inicioadministradoredificio')}" action="registraringresoinsumo" class="btn btn-block btn-info"/>
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                         <div class="icon-wrapper">
@@ -164,11 +164,11 @@ and open the template in the editor.
                                                         </div>                   
                                                     </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <h:commandButton value="Manual de Equipo" actionListener="#{controllerAdministrarManuales.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarmanuales" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Manual de Equipo" actionListener="#{controllerAdministrarManuales.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarmanuales" class="btn btn-block btn-danger"/>
                                                         <br></br>
-                                                        <h:commandButton value="Guía de Laboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarguiaslaboratorio" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Guía de Laboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarguiaslaboratorio" class="btn btn-block btn-danger"/>
                                                         <br></br>
-                                                        <h:commandButton value="Área de Profundización" actionListener="#{controllerAdministrarAreasProfundizacion.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarareasprofundizacion" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Área de Profundización" actionListener="#{controllerAdministrarAreasProfundizacion.recibirPaginaAnterior('inicioadministradoredificio')}" action="administrarareasprofundizacion" class="btn btn-block btn-danger"/>
                                                     </div>
                                                 </div>
 
@@ -183,7 +183,6 @@ and open the template in the editor.
                             </div>
                         </div>
                     </section>
-                    <!-- ABOUT SECTION END-->
                 </h:form>
             </ui:define>  
         </ui:composition>

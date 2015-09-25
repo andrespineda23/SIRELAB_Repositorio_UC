@@ -37,6 +37,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "HorarioAtencion.findByCodigohorario", query = "SELECT h FROM HorarioAtencion h WHERE h.codigohorario = :codigohorario"),
     @NamedQuery(name = "HorarioAtencion.findByDescripcionhorario", query = "SELECT h FROM HorarioAtencion h WHERE h.descripcionhorario = :descripcionhorario")})
 public class HorarioAtencion implements Serializable {
+    @Size(max = 2)
+    @Column(name = "horaaperturasabado")
+    private String horaaperturasabado;
+    @Size(max = 2)
+    @Column(name = "horacierresabado")
+    private String horacierresabado;
+    @Size(max = 2)
+    @Column(name = "horaapertura")
+    private String horaapertura;
+    @Size(max = 2)
+    @Column(name = "horacierre")
+    private String horacierre;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -125,6 +137,38 @@ public class HorarioAtencion implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.HorarioAtencion[ idhorarioatencion=" + idhorarioatencion + " ]";
+    }
+
+    public String getHoraapertura() {
+        return horaapertura;
+    }
+
+    public void setHoraapertura(String horaapertura) {
+        this.horaapertura = horaapertura;
+    }
+
+    public String getHoracierre() {
+        return horacierre;
+    }
+
+    public void setHoracierre(String horacierre) {
+        this.horacierre = horacierre;
+    }
+
+    public String getHoraaperturasabado() {
+        return horaaperturasabado;
+    }
+
+    public void setHoraaperturasabado(String horaaperturasabado) {
+        this.horaaperturasabado = horaaperturasabado;
+    }
+
+    public String getHoracierresabado() {
+        return horacierresabado;
+    }
+
+    public void setHoracierresabado(String horacierresabado) {
+        this.horacierresabado = horacierresabado;
     }
     
 }

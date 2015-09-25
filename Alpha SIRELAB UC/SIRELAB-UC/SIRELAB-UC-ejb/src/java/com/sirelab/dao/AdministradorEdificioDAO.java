@@ -21,7 +21,7 @@ import javax.persistence.TypedQuery;
  * @author ELECTRONICA
  */
 @Stateless
-public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterface{
+public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterface {
 
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
@@ -33,6 +33,8 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
     public void crearAdministradorEdificio(AdministradorEdificio administradoredificio) {
         try {
             em.persist(administradoredificio);
+            System.out.println("Creo el administradoedificio");
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
         }
@@ -146,20 +148,22 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
         }
     }
 
-    
-    
     @Override
     public AdministradorEdificio obtenerUltimaAdministradorEdificioRegistrada() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM AdministradorEdificio p");
+            Query query = em.createQuery("SELECT p FROM AdministradorEdificio p ORDER BY p.idadministradoredificio DESC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<AdministradorEdificio> registros = query.getResultList();
             if (registros != null) {
-                int tam = registros.size();
-                AdministradorEdificio ultimoRegistro = registros.get(tam - 1);
+                System.out.println("Hay datos : "+registros.size());
+                for (int i = 0; i < registros.size(); i++) {
+                    System.out.println("registros: i: " + registros.get(i));
+                }
+                AdministradorEdificio ultimoRegistro = registros.get(0);
                 return ultimoRegistro;
             } else {
+                System.out.println("No Hay datos");
                 return null;
             }
         } catch (Exception e) {

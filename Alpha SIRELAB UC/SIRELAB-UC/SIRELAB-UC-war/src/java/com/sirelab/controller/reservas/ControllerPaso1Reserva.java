@@ -11,7 +11,6 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,38 +41,26 @@ public class ControllerPaso1Reserva implements Serializable {
     private SalaLaboratorio parametroSala;
     private boolean activarSala;
     private String mensajeFormulario, colorMensaje;
+    private boolean activarHora;
 
     public ControllerPaso1Reserva() {
     }
 
     @PostConstruct
     public void init() {
+        activarHora = true;
         activarSala = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         fecha = null;
-        cargarHoras();
         parametroLaboratorio = null;
         parametroSala = null;
-    }
-
-    private void cargarHoras() {
-        horaIngreso = null;
-        listaHora = new ArrayList<Integer>();
-        listaHora.add(7);
-        listaHora.add(9);
-        listaHora.add(11);
-        listaHora.add(13);
-        listaHora.add(15);
-        listaHora.add(18);
-        listaHora.add(20);
     }
 
     private boolean validarFecha() {
         boolean retorno = true;
         if (Utilidades.validarNulo(fecha)) {
             if (!Utilidades.fechaIngresadaCorrecta(fecha)) {
-                System.out.println("fecha : " + fecha);
                 retorno = false;
             }
         } else {
@@ -103,7 +90,33 @@ public class ControllerPaso1Reserva implements Serializable {
         if (!Utilidades.validarNulo(parametroSala)) {
             retorno = false;
         }
+        activarHoraReserva();
         return retorno;
+    }
+
+    public void activarHoraReserva() {
+        if ((Utilidades.validarNulo(parametroSala) == true) && (Utilidades.validarNulo(fecha))) {
+            int diaSemana = fecha.getDay();
+            if (diaSemana != 0) {
+                if (diaSemana == 6) {
+                    Integer horaInicio = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoraaperturasabado());
+                    Integer horaFin = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoracierresabado());
+                    horaIngreso = null;
+                    listaHora = new ArrayList<Integer>();
+                    for (int i = horaInicio; i < horaFin - 2; i++) {
+                        listaHora.add(i);
+                    }
+                } else {
+                    Integer horaInicio = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoraapertura());
+                    Integer horaFin = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoracierre());
+                    horaIngreso = null;
+                    listaHora = new ArrayList<Integer>();
+                    for (int i = horaInicio; i < horaFin - 2; i++) {
+                        listaHora.add(i);
+                    }
+                }
+            }
+        }
     }
 
     private boolean validarCamposReserva() {
@@ -112,7 +125,6 @@ public class ControllerPaso1Reserva implements Serializable {
             retorno = false;
         }
         if (validarFecha() == false) {
-            System.out.println("Error");
             retorno = false;
         }
         if (validarLaboratorio() == false) {
@@ -160,8 +172,8 @@ public class ControllerPaso1Reserva implements Serializable {
             listaSalaLaboratorio = null;
         }
     }
-    
-    public void cancelarProcesoReserva(){
+
+    public void cancelarProcesoReserva() {
         activarSala = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
@@ -172,6 +184,7 @@ public class ControllerPaso1Reserva implements Serializable {
         parametroLaboratorio = null;
         parametroSala = null;
         horaIngreso = null;
+        activarHora = true;
     }
 
     public Date getFecha() {
@@ -255,6 +268,14 @@ public class ControllerPaso1Reserva implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarHora() {
+        return activarHora;
+    }
+
+    public void setActivarHora(boolean activarHora) {
+        this.activarHora = activarHora;
     }
 
 }

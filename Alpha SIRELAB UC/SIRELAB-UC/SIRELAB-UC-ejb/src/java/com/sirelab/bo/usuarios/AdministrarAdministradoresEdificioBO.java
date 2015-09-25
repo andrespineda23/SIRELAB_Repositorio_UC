@@ -191,6 +191,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             administradorEdificioDAO.crearAdministradorEdificio(personalNuevo);
             //
             AdministradorEdificio ultimoAdministradorEdificio = administradorEdificioDAO.obtenerUltimaAdministradorEdificioRegistrada();
+            System.out.println("ultimoAdministradorEdificio : "+ultimoAdministradorEdificio);
             EncargadoPorEdificio encargadoPorEdificio = new EncargadoPorEdificio();
             encargadoPorEdificio.setEstado(true);
             encargadoPorEdificio.setEdificio(edificio);

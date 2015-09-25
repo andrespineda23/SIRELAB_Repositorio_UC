@@ -282,9 +282,9 @@ public class SalaLaboratorio implements Serializable {
         getSalaprivada();
         if (null != salaprivada) {
             if (salaprivada == true) {
-                strPrivada = "SALA PRIVADA";
+                strPrivada = "PRIVADA";
             } else {
-                strPrivada = "SALA PUBLICA";
+                strPrivada = "PUBLICA";
             }
         }
         return strPrivada;

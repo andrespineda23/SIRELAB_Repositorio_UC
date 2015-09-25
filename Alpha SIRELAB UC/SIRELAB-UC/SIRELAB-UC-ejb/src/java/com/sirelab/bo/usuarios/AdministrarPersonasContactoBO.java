@@ -141,6 +141,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             return null;
         }
     }
+
     @Override
     public List<EntidadExterna> obtenerEntidadesExternasActivosRegistradas() {
         try {
@@ -162,7 +163,9 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             return null;
         }
     }
+
     //@Override
+
     public List<Convenio> obtenerConveniosActivosRegistradas() {
         try {
             List<Convenio> lista = convenioDAO.consultarConveniosActivos();

@@ -139,7 +139,7 @@ public class ControllerDetallesEquipo implements Serializable {
         moduloEquipoElemento = equipoElementoDetalles.getModulolaboratorio();
 
         listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
-        listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDAreaProfundizacion(laboratorioPorAreaEquipoElemento.getIdlaboratoriosporareas());
+        listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion(laboratorioPorAreaEquipoElemento.getIdlaboratoriosporareas());
         listaModulosLaboratorio = gestionarPlantaEquiposElementosBO.consultarModulosLaboratorioPorIDSalaLaboratorio(salaEquipoElemento.getIdsalalaboratorio());
 
         tipoActivoEquipoElemento = equipoElementoDetalles.getTipoactivo();

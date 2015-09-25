@@ -10,6 +10,8 @@ import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -38,6 +40,16 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
     private HorarioAtencion horarioAtencionDetalles;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private List<Integer> listaHoraApertura;
+    private Integer horaApertura;
+    private List<Integer> listaHoraCierre;
+    private Integer horaCierre;
+    private boolean validacionesHoraCierre;
+    private List<Integer> listaHoraAperturaSabado;
+    private Integer horaAperturaSabado;
+    private List<Integer> listaHoraCierreSabado;
+    private Integer horaCierreSabado;
+    private boolean validacionesHoraCierreSabado;
 
     public ControllerDetallesHorarioAtencion() {
     }
@@ -61,7 +73,70 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
             inputCodigo = horarioAtencionDetalles.getCodigohorario();
             validacionesDescripcion = true;
             validacionesCodigo = true;
+            validacionesHoraCierre = true;
+            validacionesHoraCierreSabado = true;
             modificacionesRegistro = false;
+            horaApertura = Integer.valueOf(horarioAtencionDetalles.getHoraapertura());
+            horaCierre = Integer.valueOf(horarioAtencionDetalles.getHoracierre());
+            horaAperturaSabado = Integer.valueOf(horarioAtencionDetalles.getHoraaperturasabado());
+            horaCierreSabado = Integer.valueOf(horarioAtencionDetalles.getHoracierresabado());
+
+            cargarListasHoras();
+        }
+    }
+
+    private void cargarListasHoras() {
+        listaHoraApertura = new ArrayList<Integer>();
+        for (int i = horaApertura; i < 8; i++) {
+            listaHoraApertura.add(i);
+        }
+        listaHoraCierre = new ArrayList<Integer>();
+        horaCierre = null;
+        for (int i = (horaApertura + 1); i < 22; i++) {
+            listaHoraCierre.add(i);
+        }
+        listaHoraAperturaSabado = new ArrayList<Integer>();
+        for (int i = horaAperturaSabado; i < 8; i++) {
+            listaHoraAperturaSabado.add(i);
+        }
+        listaHoraCierreSabado = new ArrayList<Integer>();
+        horaCierreSabado = null;
+        for (int i = (horaAperturaSabado + 1); i < 16; i++) {
+            listaHoraCierreSabado.add(i);
+        }
+    }
+
+    public void actualizarHoraApertura() {
+        listaHoraCierre = new ArrayList<Integer>();
+        horaCierre = null;
+        for (int i = (horaApertura + 1); i < 22; i++) {
+            listaHoraCierre.add(i);
+        }
+        validacionesHoraCierre = false;
+    }
+
+    public void validarHoraCierre() {
+        if (Utilidades.validarNulo(horaCierre)) {
+            validacionesHoraCierre = true;
+        } else {
+            validacionesHoraCierre = false;
+        }
+    }
+
+    public void actualizarHoraAperturaSabado() {
+        listaHoraCierreSabado = new ArrayList<Integer>();
+        horaCierreSabado = null;
+        for (int i = (horaAperturaSabado + 1); i < 16; i++) {
+            listaHoraCierreSabado.add(i);
+        }
+        validacionesHoraCierreSabado = false;
+    }
+
+    public void validarHoraCierreSabado() {
+        if (Utilidades.validarNulo(horaCierreSabado)) {
+            validacionesHoraCierreSabado = true;
+        } else {
+            validacionesHoraCierreSabado = false;
         }
     }
 
@@ -115,6 +190,12 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
         if (validacionesDescripcion == false) {
             retorno = false;
         }
+        if (validacionesHoraCierre == false) {
+            retorno = false;
+        }
+        if (validacionesHoraCierreSabado == false) {
+            retorno = false;
+        }
         return retorno;
     }
 
@@ -155,6 +236,10 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
         try {
             horarioAtencionDetalles.setCodigohorario(inputCodigo);
             horarioAtencionDetalles.setDescripcionhorario(inputDescripcion);
+            horarioAtencionDetalles.setHoraapertura(horaApertura.toString());
+            horarioAtencionDetalles.setHoracierre(horaCierre.toString());
+            horarioAtencionDetalles.setHoraaperturasabado(horaAperturaSabado.toString());
+            horarioAtencionDetalles.setHoracierresabado(horaCierreSabado.toString());
             gestionarVariableHorariosAtencionBO.editarHorarioAtencion(horarioAtencionDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro:  " + e.toString());
@@ -172,11 +257,14 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
         inputCodigo = null;
         validacionesDescripcion = false;
         validacionesCodigo = false;
+        validacionesHoraCierreSabado = false;
+        validacionesHoraCierre = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         idHorarioAtencion = null;
         modificacionesRegistro = false;
         horarioAtencionDetalles = null;
+        cargarListasHoras();
     }
 
     //GET-SET
@@ -210,6 +298,78 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public HorarioAtencion getHorarioAtencionDetalles() {
+        return horarioAtencionDetalles;
+    }
+
+    public void setHorarioAtencionDetalles(HorarioAtencion horarioAtencionDetalles) {
+        this.horarioAtencionDetalles = horarioAtencionDetalles;
+    }
+
+    public List<Integer> getListaHoraApertura() {
+        return listaHoraApertura;
+    }
+
+    public void setListaHoraApertura(List<Integer> listaHoraApertura) {
+        this.listaHoraApertura = listaHoraApertura;
+    }
+
+    public Integer getHoraApertura() {
+        return horaApertura;
+    }
+
+    public void setHoraApertura(Integer horaApertura) {
+        this.horaApertura = horaApertura;
+    }
+
+    public List<Integer> getListaHoraCierre() {
+        return listaHoraCierre;
+    }
+
+    public void setListaHoraCierre(List<Integer> listaHoraCierre) {
+        this.listaHoraCierre = listaHoraCierre;
+    }
+
+    public Integer getHoraCierre() {
+        return horaCierre;
+    }
+
+    public void setHoraCierre(Integer horaCierre) {
+        this.horaCierre = horaCierre;
+    }
+
+    public List<Integer> getListaHoraAperturaSabado() {
+        return listaHoraAperturaSabado;
+    }
+
+    public void setListaHoraAperturaSabado(List<Integer> listaHoraAperturaSabado) {
+        this.listaHoraAperturaSabado = listaHoraAperturaSabado;
+    }
+
+    public Integer getHoraAperturaSabado() {
+        return horaAperturaSabado;
+    }
+
+    public void setHoraAperturaSabado(Integer horaAperturaSabado) {
+        this.horaAperturaSabado = horaAperturaSabado;
+    }
+
+    public List<Integer> getListaHoraCierreSabado() {
+        return listaHoraCierreSabado;
+    }
+
+    public void setListaHoraCierreSabado(List<Integer> listaHoraCierreSabado) {
+        this.listaHoraCierreSabado = listaHoraCierreSabado;
+    }
+
+    public Integer getHoraCierreSabado() {
+        return horaCierreSabado;
+    }
+
+    public void setHoraCierreSabado(Integer horaCierreSabado) {
+        this.horaCierreSabado = horaCierreSabado;
     }
 
 }

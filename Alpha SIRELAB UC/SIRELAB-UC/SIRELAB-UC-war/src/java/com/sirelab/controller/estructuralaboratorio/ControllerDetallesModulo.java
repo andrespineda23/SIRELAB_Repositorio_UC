@@ -115,14 +115,14 @@ public class ControllerDetallesModulo implements Serializable {
         costoModuloLaboratorio = moduloLaboratorioDetalles.getCostoalquiler().toString();
         capacidadModuloLaboratorio = moduloLaboratorioDetalles.getCapacidadmodulo().toString();
         inversionModuloLaboratorio = moduloLaboratorioDetalles.getCostomodulo().toString();
+        laboratorioPorAreaModuloLaboratorio = moduloLaboratorioDetalles.getSalalaboratorio().getLaboratoriosporareas();
         salaModuloLaboratorio = moduloLaboratorioDetalles.getSalalaboratorio();
         laboratorioModuloLaboratorio = moduloLaboratorioDetalles.getSalalaboratorio().getLaboratoriosporareas().getLaboratorio();
         departamentoModuloLaboratorio = moduloLaboratorioDetalles.getSalalaboratorio().getLaboratoriosporareas().getLaboratorio().getDepartamento();
-        laboratorioPorAreaModuloLaboratorio = moduloLaboratorioDetalles.getSalalaboratorio().getLaboratoriosporareas();
         listaDepartamentos = gestionarPlantaModulosBO.consultarDepartamentosRegistrados();
         listaLaboratorios = gestionarPlantaModulosBO.consultarLaboratoriosPorIDDepartamento(departamentoModuloLaboratorio.getIddepartamento());
         listaLaboratoriosPorAreas = gestionarPlantaModulosBO.consultarLaboratoriosPorAreasPorLaboratorio(laboratorioModuloLaboratorio.getIdlaboratorio());
-        listaSalasLaboratorio = gestionarPlantaModulosBO.consultarSalasLaboratorioPorIDArea(laboratorioPorAreaModuloLaboratorio.getIdlaboratoriosporareas());
+        listaSalasLaboratorio = gestionarPlantaModulosBO.consultarSalasLaboratoriosActivosPorIDLaboratorioArea(laboratorioPorAreaModuloLaboratorio.getIdlaboratoriosporareas());
     }
 
     public void activarEditarRegistro() {

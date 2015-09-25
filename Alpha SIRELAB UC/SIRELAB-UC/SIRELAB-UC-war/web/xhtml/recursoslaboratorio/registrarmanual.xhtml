@@ -54,7 +54,7 @@ and open the template in the editor.
                                                              id="parametroTipo">
                                                 <f:selectItem itemLabel="FISICO" itemValue="FISICO" />
                                                 <f:selectItem itemLabel="DIGITAL" itemValue="DIGITAL" />
-                                                <f:ajax event="blur" listener="#{controllerRegistrarManual.actualizarTipo()}" execute="parametroTipo" render="parametroUbicacion archivo" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarManual.actualizarTipo()}" execute="parametroTipo" render="parametroUbicacion archivo" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="form-group">

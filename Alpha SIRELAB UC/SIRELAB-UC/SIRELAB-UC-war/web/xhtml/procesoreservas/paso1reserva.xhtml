@@ -41,11 +41,13 @@ and open the template in the editor.
                                                         <label for="date">
                                                             Día de la reserva
                                                         </label>
-                                                        <b:datepicker class="form-group" id="date" placeholder="dd/mm/yy" value="#{controllerPaso1Reserva.fecha}" />
+                                                        <b:datepicker class="form-group" disabled="true" id="fecha" firstDay="1" showButtonPanel="true" changeMonth="true" changeYear="true" placeholder="dd/mm/yy" value="#{controllerPaso1Reserva.fecha}" >
+                                                            <f:ajax event="change" listener="#{controllerPaso1Reserva.activarHoraReserva()}" render="horaIngreso"/>
+                                                        </b:datepicker>
                                                         <script id="date_js" type="text/javascript">
                                                             $(function () {
-                                                                $('#date').datepicker({dateFormat: 'dd/mm/yyyy'});
-                                                                $('#date').datepicker("option", $.datepicker.regional["es"]);
+                                                                $('#fecha').datepicker({dateFormat: 'dd/mm/yyyy'});
+                                                                $('#fecha').datepicker("option", $.datepicker.regional["es"]);
                                                             });
                                                         </script>
                                                     </div>
@@ -56,7 +58,7 @@ and open the template in the editor.
                                                             Hora de Ingreso
                                                         </label>
                                                         <h:selectOneMenu value="#{controllerPaso1Reserva.horaIngreso}"
-                                                                         class="form-control" 
+                                                                         class="form-control"  disabled="#{controllerPaso1Reserva.activarHora}"
                                                                          id="horaIngreso">
                                                             <f:selectItem itemLabel="Seleccione Hora" itemValue="null" />
                                                             <f:selectItems value="#{controllerPaso1Reserva.listaHora}" var="hora"

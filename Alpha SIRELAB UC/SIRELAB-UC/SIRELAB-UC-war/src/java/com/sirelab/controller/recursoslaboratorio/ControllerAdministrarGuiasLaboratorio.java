@@ -9,6 +9,10 @@ import com.sirelab.bo.interfacebo.recursos.GestionarRecursoGuiasLaboratorioBOInt
 import com.sirelab.entidades.Asignatura;
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.utilidades.Utilidades;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +22,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -84,7 +91,7 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
     }
 
     private void agregarFiltrosAdicionales() {
-        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty())  && (parametroNombre.trim().length() > 0)) {
+        if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
         }
         if ((Utilidades.validarNulo(parametroAsignatura) == true)) {
@@ -212,6 +219,28 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
         bloquearPagSigGuiaLaboratorio = true;
         cantidadRegistros = "N/A";
         inicializarFiltros();
+    }
+
+    public void descargarGuiaLaboratorio(String ruta) throws FileNotFoundException, IOException {
+        File ficheroPDF = new File(ruta);
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        FileInputStream fis = new FileInputStream(ficheroPDF);
+        byte[] bytes = new byte[1000];
+        int read = 0;
+        if (!ctx.getResponseComplete()) {
+            String fileName = ficheroPDF.getName();
+            String contentType = "application/pdf";
+            HttpServletResponse response = (HttpServletResponse) ctx.getExternalContext().getResponse();
+            response.setContentType(contentType);
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+            ServletOutputStream out = response.getOutputStream();
+            while ((read = fis.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+            ctx.responseComplete();
+        }
     }
 
     // GET - SET

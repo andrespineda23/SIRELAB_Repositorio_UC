@@ -7,6 +7,7 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>        
@@ -135,7 +136,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Adquisición"/></strong>
                                             <div class="input-group">
-                                                <h:inputText maxlength="10" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.fechaEquipoElemento}" class="form-control" id="fechaEquipoElemento">
+                                                <h:inputText maxlength="10" readonly="#{controllerDetallesEquipo.activarEditar}" disabled="#{controllerDetallesEquipo.fechaDiferida}" value="#{controllerDetallesEquipo.fechaEquipoElemento}" class="form-control" id="fechaEquipoElemento">
                                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                                     <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarFechaEquipo()}" execute="fechaEquipoElemento" render="fechaEquipoElemento msnFechaAdquisicionEquipo" />
                                                 </h:inputText>
@@ -145,7 +146,7 @@ and open the template in the editor.
                                                     <span></span>
                                                     <span></span>
                                                     <span></span>
-                                                    <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerDetallesEquipo.fechaDiferida}">
+                                                    <h:selectBooleanCheckbox id="fechaDiferida" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.fechaDiferida}">
                                                         <f:ajax event="change" listener="#{controllerDetallesEquipo.validarFechaEquipo()}" execute="fechaDiferida" render="@this fechaEquipoElemento msnFechaAdquisicionEquipo" />
                                                     </h:selectBooleanCheckbox>
                                                 </span>

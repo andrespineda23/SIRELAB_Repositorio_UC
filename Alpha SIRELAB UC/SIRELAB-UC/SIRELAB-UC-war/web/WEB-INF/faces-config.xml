@@ -23,6 +23,14 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
             <from-outcome>iniciodocente</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
             <redirect />
@@ -316,6 +324,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/xhtml/variablesentorno/registrartipoevento.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variablesinventario</from-outcome>
+            <to-view-id>/xhtml/variablesentorno/variablesinventario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variablesentorno/variablesinventario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrartipoevento</from-outcome>
+            <to-view-id>/xhtml/variablesentorno/registrartipoevento.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/xhtml/variablesentorno/registrartipocomponente.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>variablesinventario</from-outcome>
@@ -585,6 +611,14 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
@@ -635,21 +669,29 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasadministrador/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>configurarusuario</from-outcome>
+            <to-view-id>/xhtml/seguridad/configurarusuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
         <from-view-id>/xhtml/seguridad/configurarusuario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>paginainicioA</from-outcome>
-            <to-view-id>/xhtml/paginasiniciales/inicioadministrador.xhtml</to-view-id>
+            <to-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/paginasiniciales/configurarusuario.xhtml</from-view-id>
+        <from-view-id>/xhtml/seguridad/configurarusuario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>configurarusuarioL</from-outcome>
-            <to-view-id>/xhtml/seguridad/iniciolaboratorista.xhtml</to-view-id>
+            <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -691,6 +733,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>carguearchivo</from-outcome>
+            <to-view-id>/xhtml/carguearchivos/carguearchivos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/carguearchivos/carguearchivos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -724,6 +782,22 @@
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarentidadesexternas</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administrarentidadesexternas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administrarentidadesexternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -763,6 +837,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrardocentes</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administrardocentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administrardocentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -796,6 +886,22 @@
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarestudiantes</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administrarestudiantes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administrarestudiantes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -835,6 +941,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarlaboratorios</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -868,6 +990,22 @@
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarlaboratoriosporareas</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -907,6 +1045,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarsalas</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarsalas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarsalas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -943,6 +1097,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarmodulos</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarmodulos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarmodulos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -976,6 +1146,22 @@
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarequipos</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarequipos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarequipos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -1159,6 +1345,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarguiaslaboratorio</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarguiaslaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarguiaslaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -1192,6 +1394,22 @@
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarmanuales</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarmanuales.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarmanuales.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -1249,6 +1467,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarproveedores</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarproveedores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarproveedores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -1285,6 +1519,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarinsumos</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarinsumos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarinsumos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -1318,6 +1568,22 @@
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarareasprofundizacion</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -1764,6 +2030,22 @@
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarpersonacontacto</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administrarpersonacontacto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administrarpersonacontacto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>administrarpersonacontacto</from-outcome>
             <to-view-id>/xhtml/administrarusuarios/administrarpersonacontacto.xhtml</to-view-id>
@@ -2241,6 +2523,22 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarencargadoslaboratorios</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administrarencargadoslaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administrarencargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     
     <navigation-rule>
@@ -2310,6 +2608,22 @@
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administraradministradoresedificio</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administraradministradoresedificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/administrarusuarios/administraradministradoresedificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

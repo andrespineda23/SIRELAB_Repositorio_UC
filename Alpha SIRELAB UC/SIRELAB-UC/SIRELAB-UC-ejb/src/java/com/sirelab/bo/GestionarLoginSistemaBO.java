@@ -1,6 +1,7 @@
 package com.sirelab.bo;
 
 import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
+import com.sirelab.dao.interfacedao.AdministradorEdificioDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
@@ -54,6 +55,8 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     EntidadExternaDAOInterface entidadExternaDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+    @EJB
+    AdministradorEdificioDAOInterface administradorEdificioDAO;
 
     private final String NUMEROS = "0123456789";
     private final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -119,6 +122,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             return null;
         }
     }
+
     @Override
     public List<Carrera> obtenerListasCarrerasActivos() {
         try {
@@ -140,6 +144,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             return null;
         }
     }
+
     @Override
     public List<PlanEstudios> obtenerListasPlanesEstudioActivosPorCarrera(BigInteger idCarrera) {
         try {
@@ -252,7 +257,12 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
                     if (secuencia.equals(idTipoUsuario)) {
                         registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorIDPersona(idPersona);
                     } else {
-                        registro = entidadExternaDAO.buscarEntidadExternaPorIDPersona(idPersona);
+                        secuencia = new BigInteger("5");
+                        if (secuencia.equals(idTipoUsuario)) {
+                            registro = entidadExternaDAO.buscarEntidadExternaPorIDPersona(idPersona);
+                        } else {
+                            registro = administradorEdificioDAO.buscarAdministradorEdificioPorIDPersona(idPersona);
+                        }
                     }
                 }
             }

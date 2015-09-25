@@ -81,7 +81,7 @@ and open the template in the editor.
                                         <fieldset style="border: black;border-radius: 10px;">
                                             <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
                                             <div class="row">
-                                                <h:dataTable id="dataTable" var="item" 
+                                                <h:dataTable id="dataTable" var="item"  
                                                              styleClass="table table-striped table-hover table-responsive" 
                                                              value="#{controllerAdministrarGuiasLaboratorio.listaGuiasLaboratorioTabla}">
                                                     <h:column>
@@ -95,6 +95,13 @@ and open the template in the editor.
                                                             <h:outputText value="Asignatura"/>
                                                         </f:facet>
                                                         <h:outputText value="#{item.asignaturaporplanestudio.asignatura.nombreasignatura}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Descargar"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Descargar" actionListener=""/>
+                                                        <h:outputText value="#{controllerAdministrarGuiasLaboratorio.descargarGuiaLaboratorio(item.ubicacionguia)}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">

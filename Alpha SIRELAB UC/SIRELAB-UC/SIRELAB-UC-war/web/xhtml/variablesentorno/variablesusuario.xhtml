@@ -64,7 +64,7 @@ and open the template in the editor.
                                                     <f:facet name="header">
                                                         <h:outputText value="Detalles"/>
                                                     </f:facet>
-                                                    <h:commandLink value="Ver" rendered="#{((itemTP.idtipoperfil eq 1) or (itemTP.idtipoperfil eq 2))}" action="detallestipoperfil" actionListener="#{controllerDetallesTipoPerfil.recibirIDDetalleTipoPerfil(itemTP.idtipoperfil)}"/>
+                                                    <h:commandLink value="Ver" rendered="#{((itemTP.idtipoperfil ne 1) and (itemTP.idtipoperfil ne 2))}" action="detallestipoperfil" actionListener="#{controllerDetallesTipoPerfil.recibirIDDetalleTipoPerfil(itemTP.idtipoperfil)}"/>
                                                 </h:column>
                                                 <f:facet name="footer">
                                                     <nav>

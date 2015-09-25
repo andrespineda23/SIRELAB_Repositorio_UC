@@ -33,7 +33,7 @@ and open the template in the editor.
                                         Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
                                     </p>
                                     <p>
-                                        Este registro es unicamente para el ingreso de tipos reservas.
+                                        Este registro es unicamente para el ingreso de horarios de atención de los edificios.
                                     </p>
                                 </div>
 
@@ -54,16 +54,53 @@ and open the template in the editor.
                                             </h:inputText>
                                             <h6><h:message id="msnDescripcion" for="inputDescripcion" style="color: red"/></h6>
                                         </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Apertura Lunes a Viernes*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerRegistrarHorarioAtencion.horaApertura}"
+                                                              class="form-control" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}"
+                                                              id="horaApertura">
+                                                <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraApertura}" var="aprt"
+                                                               itemLabel="#{aprt}" itemValue="#{aprt}"/>
+                                                <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.actualizarHoraApertura()}" execute="horaApertura" render="@this msnApertura"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnApertura" for="horaApertura" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Cierre Lunes a Viernes*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerRegistrarHorarioAtencion.horaCierre}"
+                                                              class="form-control" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}"
+                                                              id="horaCierre">
+                                                <f:selectItem itemLabel="Seleccione Hora Cierre" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraCierre}" var="cierr"
+                                                               itemLabel="#{cierr}" itemValue="#{cierr}"/>
+                                                <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.validarHoraCierre()}" execute="horaCierre" render="@this msnCierre"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnCierre" for="horaCierre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Apertura Sabados*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerRegistrarHorarioAtencion.horaAperturaSabado}"
+                                                              class="form-control" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}"
+                                                              id="horaAperturaSabado">
+                                                <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraAperturaSabado}" var="aprt2"
+                                                               itemLabel="#{aprt2}" itemValue="#{aprt2}"/>
+                                                <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.actualizarHoraAperturaSabado()}" execute="horaAperturaSabado" render="@this msnAperturaS"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnAperturaS" for="horaAperturaSabado" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Cierre Sabados*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerRegistrarHorarioAtencion.horaCierreSabado}"
+                                                              class="form-control" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}"
+                                                              id="horaCierreSabado">
+                                                <f:selectItem itemLabel="Seleccione Hora Cierre" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraCierreSabado}" var="cierrS"
+                                                               itemLabel="#{cierrS}" itemValue="#{cierrS}"/>
+                                                <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.validarHoraCierreSabado()}" execute="horaCierreSabado" render="@this msnCierreS"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnCierreS" for="horaCierreSabado" style="color: red"/></h6>
+                                        </div>
                                     </fieldset>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
                                     <hr class="intro-divider"/>
                                     <div class="row col-md-12">
                                         <div class="text-center">

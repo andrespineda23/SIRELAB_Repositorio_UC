@@ -90,19 +90,25 @@ public class GuiaLaboratorio implements Serializable {
     }
 
     public String getNombreguia() {
+        if(null != nombreguia){
+            return nombreguia.toUpperCase();
+        }
         return nombreguia;
     }
 
     public void setNombreguia(String nombreguia) {
-        this.nombreguia = nombreguia;
+        this.nombreguia = nombreguia.toUpperCase();
     }
 
     public String getDescripcion() {
+         if(null != descripcion){
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public String getUbicacionguia() {

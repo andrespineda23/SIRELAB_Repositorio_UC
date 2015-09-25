@@ -9,6 +9,7 @@ import com.sirelab.ayuda.AyudaReservaSala;
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.ReservaEquipoElemento;
+import com.sirelab.utilidades.UsuarioLogin;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -47,17 +49,22 @@ public class ControllerPaso3Reserva implements Serializable {
 
     private void obtenerCostoFinalReserva() {
         valorReserva = 0;
-        List<ReservaEquipoElemento> lista = administrarReservasBO.obtenerReservasEquipoPorIdReserva(reservaPersona.getIdreserva());
-        if (null != lista) {
-            Integer costo = 0;
-            for (int i = 0; i < lista.size(); i++) {
-                costo = costo + (lista.get(i).getEquipoelemento().getCostoalquiler() * lista.get(i).getEquipoelemento().getCantidadequipo());
+        FacesContext faceContext = FacesContext.getCurrentInstance();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionUsuario");
+        if (("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) || ("PERSONACONTACTO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario()))) {
+            List<ReservaEquipoElemento> lista = administrarReservasBO.obtenerReservasEquipoPorIdReserva(reservaPersona.getIdreserva());
+            if (null != lista) {
+                Integer costo = 0;
+                for (int i = 0; i < lista.size(); i++) {
+                    costo = costo + (lista.get(i).getEquipoelemento().getCostoalquiler() * lista.get(i).getEquipoelemento().getCantidadequipo());
+                }
+                valorReserva = valorReserva + costo;
             }
-            valorReserva = valorReserva + costo;
+            valorReserva = valorReserva + Long.valueOf(reservaSala.getSalaLaboratorio().getCostoalquiler()).intValue();
+            reservaPersona.setValorreserva(valorReserva);
+            administrarReservasBO.actualizarValorReserva(reservaPersona);
         }
-        valorReserva = valorReserva + Long.valueOf(reservaSala.getSalaLaboratorio().getCostoalquiler()).intValue();
-        reservaPersona.setValorreserva(valorReserva);
-        administrarReservasBO.actualizarValorReserva(reservaPersona);
     }
 
     public void cerrarDatosReserva() {

@@ -33,7 +33,7 @@ and open the template in the editor.
                                         Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
                                     </p>
                                     <p>
-                                        Este registro es unicamente para el ingreso de tipos reservas.
+                                        Este registro es unicamente para el ingreso de horarios de atención de los edificios.
                                     </p>
                                 </div>
                                 <div class="col-md-12 row">
@@ -53,16 +53,52 @@ and open the template in the editor.
                                             </h:inputText>
                                             <h6><h:message id="msnDescripcion" for="inputDescripcion" style="color: red"/></h6>
                                         </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Apertura*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerDetallesHorarioAtencion.horaApertura}"
+                                                              class="form-control" 
+                                                              id="horaApertura">
+                                                <f:selectItems value="#{controllerDetallesHorarioAtencion.listaHoraApertura}" var="aprt"
+                                                               itemLabel="#{aprt}" itemValue="#{aprt}"/>
+                                                <f:ajax event="change" listener="#{controllerDetallesHorarioAtencion.actualizarHoraApertura()}" execute="horaApertura" render="@this msnApertura"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnApertura" for="horaApertura" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Cierre*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerDetallesHorarioAtencion.horaCierre}"
+                                                              class="form-control" 
+                                                              id="horaCierre">
+                                                <f:selectItems value="#{controllerDetallesHorarioAtencion.listaHoraCierre}" var="cierr"
+                                                               itemLabel="#{cierr}" itemValue="#{cierr}"/>
+                                                <f:ajax event="change" listener="#{controllerDetallesHorarioAtencion.validarHoraCierre()}" execute="horaCierre" render="@this msnCierre"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnCierre" for="horaCierre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Apertura Sabados*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerDetallesHorarioAtencion.horaAperturaSabado}"
+                                                              class="form-control" 
+                                                              id="horaAperturaSabado">
+                                                <f:selectItems value="#{controllerDetallesHorarioAtencion.listaHoraAperturaSabado}" var="aprt2"
+                                                               itemLabel="#{aprt2}" itemValue="#{aprt2}"/>
+                                                <f:ajax event="change" listener="#{controllerDetallesHorarioAtencion.actualizarHoraAperturaSabado()}" execute="horaAperturaSabado" render="@this msnAperturaS"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnAperturaS" for="horaAperturaSabado" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Hora Cierre Sabados*"/></strong>
+                                            <h:selectOneMenu  value="#{controllerDetallesHorarioAtencion.horaCierreSabado}"
+                                                              class="form-control" 
+                                                              id="horaCierreSabado">
+                                                <f:selectItem itemLabel="Seleccione Hora Cierre" itemValue="null" />
+                                                <f:selectItems value="#{controllerDetallesHorarioAtencion.listaHoraCierreSabado}" var="cierrS"
+                                                               itemLabel="#{cierrS}" itemValue="#{cierrS}"/>
+                                                <f:ajax event="change" listener="#{controllerDetallesHorarioAtencion.validarHoraCierreSabado()}" execute="horaCierreSabado" render="@this msnCierreS"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnCierreS" for="horaCierreSabado" style="color: red"/></h6>
+                                        </div>
                                     </fieldset>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
                                     <hr class="intro-divider"/>
                                     <div class="row col-md-12">
                                         <div class="text-center">
