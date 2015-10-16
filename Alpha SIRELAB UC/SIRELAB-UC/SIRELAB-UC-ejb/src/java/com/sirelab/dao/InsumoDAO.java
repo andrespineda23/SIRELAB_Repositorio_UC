@@ -33,6 +33,7 @@ public class InsumoDAO implements InsumoDAOInterface {
     public void crearInsumo(Insumo insumo) {
         try {
             em.persist(insumo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearInsumo InsumoDAO : " + e.toString());
         }

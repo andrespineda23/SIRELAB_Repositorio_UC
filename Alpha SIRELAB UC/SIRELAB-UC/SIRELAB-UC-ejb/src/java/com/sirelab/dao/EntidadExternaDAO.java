@@ -28,6 +28,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
     public void crearEntidadExterna(EntidadExterna entidadexterna) {
         try {
             em.persist(entidadexterna);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEntidadExterna EntidadExternaDAO : " + e.toString());
         }

@@ -14,11 +14,13 @@ import com.sirelab.dao.interfacedao.EstadoReservaDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
 import com.sirelab.dao.interfacedao.GuiaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
+import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaEquipoElementoDAOInterface;
+import com.sirelab.dao.interfacedao.ReservaModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaSalaDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.TipoReservaDAOInterface;
@@ -29,11 +31,13 @@ import com.sirelab.entidades.EstadoReserva;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.ReservaEquipoElemento;
+import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoReserva;
@@ -82,6 +86,10 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
     PeriodoAcademicoDAOInterface periodoAcademicoDAO;
     @EJB
     ReservaEquipoElementoDAOInterface reservaEquipoElementoDAO;
+    @EJB
+    ReservaModuloLaboratorioDAOInterface reservaModuloLaboratorioDAO;
+    @EJB
+    ModuloLaboratorioDAOInterface moduloLaboratorioDAO;
 
     @Override
     public List<ReservaSala> consultarReservasSalaPorPersona(BigInteger persona) {
@@ -90,6 +98,17 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarReservasBO consultarReservasSalaPorPersona: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<ReservaModuloLaboratorio> consultarReservasModuloPorPersona(BigInteger persona) {
+        try {
+            List<ReservaModuloLaboratorio> lista = reservaModuloLaboratorioDAO.buscarReservaModuloPorPersona(persona);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO consultarReservasModuloPorPersona: " + e.toString());
             return null;
         }
     }
@@ -162,6 +181,32 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             }
         } catch (Exception e) {
             System.out.println("Error AdministrarReservasBO validarReservaSalaDisposible: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarReservaModuloSalaDisposible(Date fecha, String horaInicio, BigInteger sala) {
+        try {
+            ReservaModuloLaboratorio registro = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorFechaHoraSala(fecha, horaInicio, sala);
+            if (null == registro) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO validarReservaModuloSalaDisposible: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<ReservaModuloLaboratorio> obtenerCantidadReservasModuloPorParametros(Date fecha, String horaInicio, BigInteger sala) {
+        try {
+            List<ReservaModuloLaboratorio> registro = reservaModuloLaboratorioDAO.buscarCantidadReservaModuloLaboratorioPorParametros(fecha, horaInicio, sala);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO obtenerCantidadReservasModuloPorParametros: " + e.toString());
             return null;
         }
     }
@@ -247,6 +292,20 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
     }
 
     @Override
+    public Reserva registrarNuevaReservaModulo(Reserva reserva, ReservaModuloLaboratorio reservaModuloLaboratorio) {
+        try {
+            reservaDAO.crearReserva(reserva);
+            Reserva nuevaReserva = reservaDAO.buscarUltimaReservaPersona(reserva.getPersona().getIdpersona(), reserva.getHorainicio(), reserva.getFechareserva());
+            reservaModuloLaboratorio.setReserva(nuevaReserva);
+            reservaModuloLaboratorioDAO.crearReservaModuloLaboratorio(reservaModuloLaboratorio);
+            return nuevaReserva;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO registrarNuevaReservaModulo: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
     public List<ReservaEquipoElemento> obtenerReservasEquipoPorIdReserva(BigInteger reserva) {
         try {
             List<ReservaEquipoElemento> lista = reservaEquipoElementoDAO.buscarReservaEquipoElementosPorReserva(reserva);
@@ -263,6 +322,70 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             reservaDAO.editarReserva(reserva);;
         } catch (Exception e) {
             System.out.println("Error AdministrarReservasBO actualizarValorReserva: " + e.toString());
+        }
+    }
+
+    @Override
+    public List<ModuloLaboratorio> obtenerModuloLaboratoriosPorSala(BigInteger sala) {
+        try {
+            List<ModuloLaboratorio> lista = moduloLaboratorioDAO.buscarModuloLaboratorioActivosPorIDSalaLaboratorio(sala);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO obtenerModuloLaboratoriosPorSala: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public ReservaSala obtenerReservaSalaPorId(BigInteger idReserva) {
+        try {
+            ReservaSala registro = reservaSalaDAO.buscarReservaSalaPorID(idReserva);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO obtenerReservaSalaPorId: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Reserva obtenerReservaPorId(BigInteger idReserva) {
+        try {
+            Reserva registro = reservaDAO.buscarReservaPorID(idReserva);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO obtenerReservaPorId: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public ReservaModuloLaboratorio obtenerReservaModuloLaboratorioPorId(BigInteger idRegistro) {
+        try {
+            ReservaModuloLaboratorio registro = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO obtenerReservaModuloLaboratorioPorId: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public void actualizarGuiaLaboratorioReserva(ReservaSala reservaSala) {
+        try {
+            reservaSalaDAO.editarReservaSala(reservaSala);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO actualizarGuiaLaboratorioReserva: " + e.toString());
+        }
+    }
+
+    @Override
+    public TipoReserva obtenerTipoReservaPorId(BigInteger idRegistro) {
+        try {
+            TipoReserva registro = tipoReservaDAO.buscarTipoReservaPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarReservasBO actualizarGuiaLaboratorioReserva: " + e.toString());
+            return null;
         }
     }
 }

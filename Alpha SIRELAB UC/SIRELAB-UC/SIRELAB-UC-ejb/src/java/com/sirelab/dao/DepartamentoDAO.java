@@ -28,6 +28,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public void crearDepartamento(Departamento departamento) {
         try {
             em.persist(departamento);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearDepartamento DepartamentoDAO : " + e.toString());
         }

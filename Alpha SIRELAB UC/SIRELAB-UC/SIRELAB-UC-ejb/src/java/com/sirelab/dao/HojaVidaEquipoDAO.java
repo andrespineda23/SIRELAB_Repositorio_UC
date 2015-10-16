@@ -31,6 +31,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
     public void crearHojaVidaEquipo(HojaVidaEquipo hojavidaequipo) {
         try {
             em.persist(hojavidaequipo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
         }

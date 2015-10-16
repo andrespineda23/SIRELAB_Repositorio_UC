@@ -33,6 +33,7 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
     public void crearLaboratoriosPorAreas(LaboratoriosPorAreas laboratorioPorArea) {
         try {
             em.persist(laboratorioPorArea);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearLaboratoriosPorAreas LaboratoriosPorAreasDAO : " + e.toString());
         }

@@ -29,6 +29,7 @@ public class SedeDAO implements SedeDAOInterface {
         try {
             em.clear();
             em.persist(sede);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearSede SedeDAO : " + e.toString());
         }

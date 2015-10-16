@@ -58,6 +58,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     private boolean activarAceptar;
     private final String pathArchivo = "C:\\SIRELAB\\Guias Laboratorio\\";
     private String rutaArchivo;
+    private String paginaAnterior;
 
     public ControllerRegistrarGuiaLaboratorio() {
     }
@@ -85,6 +86,22 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
+    }
+
+    public void recibirPaginaAnterior(String page) {
+        this.paginaAnterior = page;
+    }
+
+    public String retornarPaginaAnterior() {
+        if (null != paginaAnterior) {
+            if (!paginaAnterior.isEmpty()) {
+                return paginaAnterior;
+            } else {
+                return "administrarguiaslaboratorio";
+            }
+        } else {
+            return "administrarguiaslaboratorio";
+        }
     }
 
     public void validarNombreGuiaLaboratorio() {

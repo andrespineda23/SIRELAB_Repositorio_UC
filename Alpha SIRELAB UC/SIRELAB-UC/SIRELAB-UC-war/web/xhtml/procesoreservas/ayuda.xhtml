@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+        <link href="../../assets/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+
+        <script src="../../assets/js/bootstrap.js"></script>
+        <!-- SCROLLING SCRIPTS PLUGIN  -->
+        <script src="../../assets/js/jquery.easing.min.js"></script>
+
+        <script src="../../assets/js/jquery-1.11.1.js" type="text/javascript"></script>
+
+        <link href="../../assets/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/js/jquery-ui.js" type="text/javascript"></script>
+
+
+        <script type="text/javascript">
+            function DisabledDomingo(date) {
+                var day = date.getDay();
+                // If day == 1 then it is MOnday
+                if (day == 0) {
+                    return [false];
+                } else {
+                    return [true];
+                }
+            }
+            $(function () {
+                $("#form\\:dateOfExpense").datepicker({
+                    dateFormat: "dd/mm/yy",
+                    beforeShowDay: DisabledDomingo
+                });
+            });
+            // Traducción al español
+            $(function ($) {
+                $.datepicker.regional['es'] = {
+                    closeText: 'Cerrar',
+                    prevText: 'Ant',
+                    nextText: 'Sig',
+                    currentText: 'Hoy',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                    weekHeader: 'Sm',
+                    dateFormat: 'dd/mm/yy',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: ''
+                };
+                $.datepicker.setDefaults($.datepicker.regional['es']);
+            });
+        </script>
+
+    </h:head>
+    <h:body >
+        <h:form id="form">
+            <div class="container">
+                <h:inputText size="10" value="#{controllerReservaSala1.fecha}" class="form-control" id="dateOfExpense">
+                    <f:ajax event="blur" listener="#{controllerReservaSala1.activarHoraReserva()}" />
+                    <f:ajax event="blur" listener="#{controllerReservaSala1.activarHoraReserva()}" />
+                </h:inputText>
+            </div>
+        </h:form>
+    </h:body>
+</html>

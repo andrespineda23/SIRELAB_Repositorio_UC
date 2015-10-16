@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/template/templateresponsive.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <fieldset>
+                                    <legend class="text-info">Cancelación de Reserva</legend>
+                                    <br></br>
+                                    <p>
+                                        <strong>
+                                        Recuerde que para cancelar una reserva se debe realizar con un día como minimo de antelación.
+                                        En caso contrario el sistema no permitira realizar este proceso de cancelación de reserva. 
+                                        </strong>
+                                    </p>
+                                    <div class="form-group">
+                                        <p class="text-uppercase">
+                                            ¿Esta seguro de cancelar la reserva asignada para el dia <strong><h:outputText value="#{controllerCancelarReserva.reservaCancelar.fechareserva}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" /></h:outputText></strong> a la hora <strong><h:outputText value="#{controllerCancelarReserva.reservaCancelar.horainicio}:00 - #{controllerCancelarReserva.reservaCancelar.horafin}:00"/></strong> ?
+                                        </p>
+                                        <h:commandButton value="Aceptar" class="btn btn-danger btn-block"/>
+                                    </div>
+                                </fieldset>
+                                <br></br>
+                                <br></br>
+                                <div class="right pull-right">
+                                    <h:commandButton value="Atras" class="btn btn-primary" action="iniciodocente" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

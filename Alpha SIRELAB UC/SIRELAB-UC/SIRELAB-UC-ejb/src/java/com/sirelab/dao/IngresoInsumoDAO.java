@@ -31,6 +31,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
     public void crearIngresoInsumo(IngresoInsumo insumo) {
         try {
             em.persist(insumo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearIngresoInsumo IngresoInsumoDAO : " + e.toString());
         }

@@ -16,6 +16,9 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form" enctype="multipart/form-data">
                     <div class="container">
+                         <br></br>
+                        <br></br>
+                        <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
@@ -122,7 +125,7 @@ and open the template in the editor.
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarguiaslaboratorio" actionListener="#{controllerRegistrarGuiaLaboratorio.cancelarRegistroGuiaLaboratorio()}" immediate="true">
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarGuiaLaboratorio.retornarPaginaAnterior()}" actionListener="#{controllerRegistrarGuiaLaboratorio.cancelarRegistroGuiaLaboratorio()}" immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                         <span></span>

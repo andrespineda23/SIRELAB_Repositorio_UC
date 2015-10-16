@@ -11,9 +11,10 @@ and open the template in the editor.
     <h:head>        
     </h:head>
     <h:body>
-        <ui:composition template="/xhtml/template/templateiniciodocente.xhtml">
+        <ui:composition template="/xhtml/template/templatepaginauser.xhtml">
             <ui:define name="body">
                 <h:form id="form">
+                    <!--HOME SECTION START  -->
                     <div id="home">
                         <div class="overlay">
                             <div class="container">
@@ -28,11 +29,17 @@ and open the template in the editor.
                                         </h2>
                                         <span></span>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="col-lg-6 col-md-6  hidden-sm hidden-xs">
                                                 <h:commandButton value="Configurar Cuenta" class="btn btn-custom btn-two"/>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 hidden-sm hidden-xs">
                                                 <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
+                                            </div>
+                                            <div class="hidden-md hidden-lg  col-sm-6 col-xs-6">
+                                                <h:commandButton value="Configurar Cuenta" class="btn btn-block btn-info"/>
+                                            </div>
+                                            <div class="hidden-md hidden-lg col-sm-6 col-xs-6">
+                                                <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-block btn-danger"/>
                                             </div>
                                         </div>
                                     </div>
@@ -41,11 +48,13 @@ and open the template in the editor.
                         </div>
 
                     </div>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
                     <section id="info">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-                                    <h1>Noticias de tu interes</h1>
+                                    <h2 class="head-line">Noticias de tu interes</h2>
                                     <p>
 
                                     </p>
@@ -88,7 +97,7 @@ and open the template in the editor.
                                                     </div>
                                                 </div>
                                                 <div class="item slide">
-                                                    <aside>
+                                                    <aside> 
                                                         <img src="../../img/carousel3.jpg" class="img-responsive" alt="Third Slide"></img>
                                                     </aside>
                                                     <div class="carousel-caption">
@@ -120,7 +129,7 @@ and open the template in the editor.
                                     </script>
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
-                                    <h1>Instructivo de reserva</h1>
+                                    <h2 class="head-line">Instructivo de reserva</h2>
                                     <p>
                                         A continuación se encuentra un video instructivo en el cual se realizao un proceso de 
                                         solicitud de prestamo de un elemento de laboratorio.x x x x x x x
@@ -128,51 +137,61 @@ and open the template in the editor.
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/wo8V6526Cuc" frameborder="0" allowfullscreen=""></iframe>
                                     </div>
+                                    <p>
+                                        Recuerda siempre que tengas dudas acerca de como realizar un proceso de reserva o cancelación revisar esta información para que realices tu proceso de una forma rapida y sencilla.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    <section id="reservas">
-                        <div class="container">
-                            <div class="content-section-b">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                                            <hr class="section-heading-spacer"/>
-                                            <div class="clearfix"></div>
-                                            <h2 class="section-heading">¿Qué es SIRELAB?</h2>
-                                            <p class="lead">Es una herramienta que permite administrar las funciones de los laboratorios de ingenieria de la Universidad, administrando los procesos de usuarios, recursos, prestamos e indicadores.</p>
-                                        </div>
-                                        <div class="col-lg-5 col-lg-offset-2 col-md-offset-2 col-md-5 hidden-xs col-sm-6">
-                                            <img src="../../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br></br>
-                            <div class="content-section-b">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                                            <hr class="section-heading-spacer"/>
-                                            <div class="clearfix"></div>
-                                            <h2 class="section-heading">Reservas</h2>
-                                            <p class="lead">En este nodulo puede consultar las reservas solicitadas</p>
-                                            <p>
-                                                <h:commandButton class="btn btn-success" value="Consultar Reservas Sala" action="consultarreservassala" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
-                                            </p>
-                                            <p>
-                                                <h:commandButton class="btn btn-success" value="Realizar Reserva Sala" action="paso1reserva" />
-                                            </p>
-                                        </div>
-                                        <div class="col-lg-5 col-lg-offset-2 col-md-offset-2 col-md-5 hidden-xs col-sm-6">
-                                            <img src="../../img/hd-widescreen-wallpaper-3.jpg" class="img-responsive" alt="image-inicial"/>
+                    <div class="container">
+                        <div class="content-section-b">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                        <hr class="section-heading-spacer"/>
+                                        <div class="clearfix"></div>
+                                        <h2 class=" head-line section-heading"><strong>Guías de Laboratorio</strong></h2>
+                                        <p> Por medio de esta funcionalidad usted podra registrar una guía de laboratorio que no se encuentre registrada en el sistema para realizar alguna practica academica dentro de los laboratorios de la universidad. Recuerde que las guías de laboratorio son la base para una reserva de una sala de laboratorio, ya que esta guía fundamenta la solicitud del área a solicitar.</p>
+                                        <br></br>
+                                        <div class="row">    
+                                            <h:commandButton value="Adicionar" action="registrarguialaboratorio" actionListener="#{controllerRegistrarGuiaLaboratorio.recibirPaginaAnterior('iniciodocente')}" class="btn btn-block btn-default"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                        <br></br>
+                        <div class="content-section-a">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 hidden-xs hidden-sm"></div>
+                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+                                        <hr class="section-heading-spacer"/>
+                                        <div class="clearfix"></div>
+                                        <h2 class=" head-line section-heading">Reservas</h2>
+                                        <p>Por medio de esta funcionalidad usted podra realizar procesos de consulta de alguna reserva realizada, cancelación o solicitar una nueva área de trabajo para realizar alguna practica. Si tiene algunda duda acerca del proceso recuerde que en la parte superior de la pagina se encuentra un instructivo para realizar este proceso.</p>
+                                        <row>
+                                            <h:commandButton class="btn btn-info btn-block" value="Consultar Reservas Sala" action="consultarreservassala" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
+                                        </row>
+                                        <br></br>
+                                        <row>
+                                            <h:commandButton class="btn btn-success btn-block" value="Realizar Reserva Sala" action="reservasala1" />
+                                        </row>
+                                        <br></br>
+                                        <row>
+                                            <h:commandButton class="btn btn-danger btn-block" value="Consultar Reservas Modulo" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservasModulo.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
+                                        </row>
+                                        <br></br>
+                                        <row>
+                                            <h:commandButton class="btn btn-warning btn-block" value="Realizar Reserva Modulo" action="reservamodulo1" />
+                                        </row>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ABOUT SECTION END-->
                 </h:form>
             </ui:define>  
         </ui:composition>

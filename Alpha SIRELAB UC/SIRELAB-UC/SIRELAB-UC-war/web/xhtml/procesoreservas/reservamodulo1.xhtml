@@ -8,7 +8,6 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head> 
     </h:head>
@@ -17,10 +16,13 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
+                         <br></br>
+                        <br></br>
+                        <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li class="active">Reserva - Paso 1</li>
+                                <li class="active">Reserva Modulo- Paso 1</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -31,7 +33,7 @@ and open the template in the editor.
                                             <h3><legend style="color: darkblue"><strong>Información de la Reserva</strong></legend></h3>
                                             <br></br>
                                             <p>
-                                                A continuación usted podra solicitar una reserva de una sala de laboratorio. 
+                                                A continuación usted podra solicitar una reserva de una modulo de una sala de laboratorio. 
                                                 Para este proceso es necesario ingresar la información solicitada en el formulario y el sistema le indicara si se encuentra disponible la sala para una reserva en la fecha y hora solicitada.
                                                 Recuerde que las reservas de sala tiene un bloque de tiempo de 2 horas.
                                             </p>
@@ -41,15 +43,10 @@ and open the template in the editor.
                                                         <label for="date">
                                                             Día de la reserva
                                                         </label>
-                                                        <b:datepicker class="form-group" disabled="true" id="fecha" firstDay="1" showButtonPanel="true" changeMonth="true" changeYear="true" placeholder="dd/mm/yy" value="#{controllerPaso1Reserva.fecha}" >
-                                                            <f:ajax event="change" listener="#{controllerPaso1Reserva.activarHoraReserva()}" render="horaIngreso"/>
-                                                        </b:datepicker>
-                                                        <script id="date_js" type="text/javascript">
-                                                            $(function () {
-                                                                $('#fecha').datepicker({dateFormat: 'dd/mm/yyyy'});
-                                                                $('#fecha').datepicker("option", $.datepicker.regional["es"]);
-                                                            });
-                                                        </script>
+                                                        <h:inputText maxlength="11" value="#{controllerReservaModulo1.fecha}" required="true" class="form-control" id="fecha" requiredMessage="El campo Fecha es obligatorio.">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                            <f:ajax event="blur" listener="#{controllerReservaModulo1.activarHoraReserva()}" execute="@this" render="horaIngreso" />
+                                                        </h:inputText>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
@@ -57,11 +54,11 @@ and open the template in the editor.
                                                         <label for="horaIngreso">
                                                             Hora de Ingreso
                                                         </label>
-                                                        <h:selectOneMenu value="#{controllerPaso1Reserva.horaIngreso}"
-                                                                         class="form-control"  disabled="#{controllerPaso1Reserva.activarHora}"
+                                                        <h:selectOneMenu value="#{controllerReservaModulo1.horaIngreso}"
+                                                                         class="form-control"  disabled="#{controllerReservaModulo1.activarHora}"
                                                                          id="horaIngreso">
                                                             <f:selectItem itemLabel="Seleccione Hora" itemValue="null" />
-                                                            <f:selectItems value="#{controllerPaso1Reserva.listaHora}" var="hora"
+                                                            <f:selectItems value="#{controllerReservaModulo1.listaHora}" var="hora"
                                                                            itemLabel="#{hora}" itemValue="#{hora}"/>
                                                         </h:selectOneMenu>
                                                     </div>
@@ -73,14 +70,14 @@ and open the template in the editor.
                                                         <label for="parametroLaboratorio">
                                                             Laboratorio
                                                         </label>
-                                                        <h:selectOneMenu value="#{controllerPaso1Reserva.parametroLaboratorio}"
+                                                        <h:selectOneMenu value="#{controllerReservaModulo1.parametroLaboratorio}"
                                                                          class="form-control" 
                                                                          id="parametroLaboratorio">
                                                             <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
-                                                            <f:selectItems value="#{controllerPaso1Reserva.listaLaboratorios}" var="laboratorio"
+                                                            <f:selectItems value="#{controllerReservaModulo1.listaLaboratorios}" var="laboratorio"
                                                                            itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
                                                             <f:converter converterId="ConverterGenerico" />
-                                                            <f:ajax event="change" listener="#{controllerPaso1Reserva.actualizarLaboratorio()}" execute="@this" render="@this parametroSala"/>
+                                                            <f:ajax event="change" listener="#{controllerReservaModulo1.actualizarLaboratorio()}" execute="@this" render="@this parametroModulo"/>
                                                         </h:selectOneMenu>
                                                     </div>
                                                 </div>
@@ -89,27 +86,29 @@ and open the template in the editor.
                                                         <label for="parametroSala">
                                                             Sala de Laboratorio
                                                         </label>
-                                                        <h:selectOneMenu value="#{controllerPaso1Reserva.parametroSala}"
-                                                                         class="form-control" disabled="#{controllerPaso1Reserva.activarSala}"
+                                                        <h:selectOneMenu value="#{controllerReservaSala1.parametroSala}"
+                                                                         class="form-control" disabled="#{controllerReservaSala1.activarSala}"
                                                                          id="parametroSala">
                                                             <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
-                                                            <f:selectItems value="#{controllerPaso1Reserva.listaSalaLaboratorio}" var="sala"
+                                                            <f:selectItems value="#{controllerReservaSala1.listaSalaLaboratorio}" var="sala"
                                                                            itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
                                                             <f:converter converterId="ConverterGenerico" />
+                                                            <f:ajax event="change" listener="#{controllerReservaSala1.activarHoraReserva()}" render="horaIngreso"/>
                                                         </h:selectOneMenu>
                                                     </div>
                                                 </div>
+
                                             </div> 
                                         </fieldset>
                                         <br></br>
                                         <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                                             <div class="right pull-right">
-                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" action="#{controllerPaso1Reserva.consultarReservaARealizar()}" >
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" action="#{controllerReservaModulo1.consultarReservaARealizar()}" >
                                                     <f:ajax execute="@form" render="form" />
                                                 </h:commandButton>
                                                 <span></span>
                                                 <span></span>
-                                                <h:commandButton  value="Inicio" class="btn btn-primary right" action="iniciodocente" actionListener="#{controllerPaso1Reserva.cancelarProcesoReserva()}" immediate="true">
+                                                <h:commandButton  value="Inicio" class="btn btn-primary right" action="#{controllerReservaModulo1.cancelarProcesoReserva()}" immediate="true">
                                                     <f:ajax execute="@form" render="form" />
                                                 </h:commandButton>
                                             </div>
@@ -121,7 +120,7 @@ and open the template in the editor.
                                                     Resultados de la Reserva
                                                 </h5>
                                                 <strong>
-                                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerPaso1Reserva.mensajeFormulario}" style="color: #{controllerPaso1Reserva.colorMensaje}}"/>
+                                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerReservaModulo1.mensajeFormulario}" style="color: #{controllerReservaModulo1.colorMensaje}}"/>
                                                 </strong>
                                             </div>
                                             <br></br>
@@ -129,21 +128,6 @@ and open the template in the editor.
                                         <hr class="intro-divider"/>
                                     </div>
                                     <div class="col-md-12 col-lg-12 hidden-sm hidden-xs">
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
                                         <br></br>
                                         <br></br>
                                         <br></br>

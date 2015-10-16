@@ -33,6 +33,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
     public void crearConvenio(Convenio convenio) {
         try {
             em.persist(convenio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearConvenio ConvenioDAO : " + e.toString());
         }

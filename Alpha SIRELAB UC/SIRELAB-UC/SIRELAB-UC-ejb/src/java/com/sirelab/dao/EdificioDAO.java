@@ -29,6 +29,7 @@ public class EdificioDAO implements EdificioDAOInterface {
         try {
             em.clear();
             em.persist(edificio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEdificio EdificioDAO : " + e.toString());
         }

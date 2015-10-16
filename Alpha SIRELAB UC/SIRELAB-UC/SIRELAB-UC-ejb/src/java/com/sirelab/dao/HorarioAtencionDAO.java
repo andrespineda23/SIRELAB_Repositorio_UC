@@ -31,6 +31,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
     public void crearHorarioAtencion(HorarioAtencion horario) {
         try {
             em.persist(horario);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearHorarioAtencion HorarioAtencionDAO : " + e.toString());
         }

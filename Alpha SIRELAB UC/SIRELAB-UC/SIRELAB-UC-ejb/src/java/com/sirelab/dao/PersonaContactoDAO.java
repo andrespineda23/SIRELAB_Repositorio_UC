@@ -33,6 +33,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
     public void crearPersonaContacto(PersonaContacto personacontacto) {
         try {
             em.persist(personacontacto);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearPersonaContacto PersonaContactoDAO : " + e.toString());
         }

@@ -31,6 +31,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
     public void crearReservaEquipoElemento(ReservaEquipoElemento reserva) {
         try {
             em.persist(reserva);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString());
         }

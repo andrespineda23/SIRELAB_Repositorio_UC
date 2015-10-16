@@ -32,6 +32,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
     public void crearReservaSala(ReservaSala reserva) {
         try {
             em.persist(reserva);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearReservaSala ReservaSalaDAO : " + e.toString());
         }

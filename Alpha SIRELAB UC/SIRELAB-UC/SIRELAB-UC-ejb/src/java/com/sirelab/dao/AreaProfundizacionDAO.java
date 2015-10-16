@@ -33,6 +33,7 @@ public class AreaProfundizacionDAO implements AreaProfundizacionDAOInterface {
             BasicConfigurator.configure();
             em.persist(areaprofundizacion);
             logger.info("Mensaje Info");
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearAreaProfundizacion AreaProfundizacionDAO : " + e.toString());
         }

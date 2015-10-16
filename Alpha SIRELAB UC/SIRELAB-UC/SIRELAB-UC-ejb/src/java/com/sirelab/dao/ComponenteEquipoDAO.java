@@ -31,6 +31,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
     public void crearComponenteEquipo(ComponenteEquipo componenteEquipo) {
         try {
             em.persist(componenteEquipo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearComponenteEquipo ComponenteEquipoDAO : " + e.toString());
         }

@@ -34,6 +34,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
         try {
             em.clear();
             em.persist(asignatura);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString());
         }

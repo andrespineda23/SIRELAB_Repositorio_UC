@@ -12,7 +12,6 @@ import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -46,27 +45,24 @@ public class ControllerConsultarReservasSala implements Serializable {
 
     @PostConstruct
     public void init() {
-        tipoConsulta = 1;
     }
 
     public void obtenerInformacionReservasUsuario(String tipoUsuario, BigInteger registro) {
+        tipoConsulta = 1;
         tipoUsuarioEnLinea = tipoUsuario;
-        System.out.println("tipoUsuario : "+tipoUsuario);
-        System.out.println("registro : "+registro);
         personEnLinea = administrarReservasBO.obtenerPersonaConsultarReservas(tipoUsuario, registro);
         listaReservasSala = administrarReservasBO.consultarReservasSalaPorPersona(personEnLinea.getIdpersona());
         if (Utilidades.validarNulo(listaReservasSala)) {
             listaReservasSalaTemporal = listaReservasSala;
-            cargarDatosEnEspera();
-            inicializarDatosPaginacion();
+            cambiarTipoConsulta();
         } else {
+            cargarDatosTablaReservaSala();
             posicionReservaSalaTabla = 0;
             tamTotalReservaSala = 0;
             bloquearPagAntReservaSala = true;
             bloquearPagSigReservaSala = true;
             posicionReservaSalaTabla = 0;
             cantidadRegistros = String.valueOf("0");
-            cargarDatosTablaReservaSala();
         }
     }
 
@@ -92,12 +88,11 @@ public class ControllerConsultarReservasSala implements Serializable {
         bloquearPagAntReservaSala = true;
         bloquearPagSigReservaSala = true;
         cantidadRegistros = "N/A";
-        System.out.println("tipoUsuarioEnLinea : "+tipoUsuarioEnLinea);
         if ("DOCENTE".equalsIgnoreCase(tipoUsuarioEnLinea)) {
             return "iniciodocente";
         } else {
             if ("ESTUDIANTE".equalsIgnoreCase(tipoUsuarioEnLinea)) {
-                return "iniciodocente";
+                return "inicioestudiante";
             } else {
                 return "iniciodocente";
             }
@@ -166,6 +161,8 @@ public class ControllerConsultarReservasSala implements Serializable {
             cargarDatosHistoricos();
             inicializarDatosPaginacion();
         }
+        System.out.println("Cambio la consulta");
+        System.out.println("tipo : " + tipoConsulta);
     }
 
     private void cargarDatosHistoricos() {
@@ -188,6 +185,22 @@ public class ControllerConsultarReservasSala implements Serializable {
                 }
             }
         }
+    }
+
+    public String paginaDetallesPagina() {
+        tipoConsulta = 1;
+        personEnLinea = null;
+        listaReservasSala = null;
+        listaReservasSalaTabla = null;
+        listaReservasSalaTemporal = null;
+
+        posicionReservaSalaTabla = 0;
+        tamTotalReservaSala = 0;
+        bloquearPagAntReservaSala = true;
+        bloquearPagSigReservaSala = true;
+        cantidadRegistros = "N/A";
+        System.out.println("Pagina siguiente");
+        return "detallesreservasala";
     }
 
     //GET-SET

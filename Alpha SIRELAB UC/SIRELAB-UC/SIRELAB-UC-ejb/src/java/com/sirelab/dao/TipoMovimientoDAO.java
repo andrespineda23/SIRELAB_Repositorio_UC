@@ -31,6 +31,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
     public void crearTipoMovimiento(TipoMovimiento tipoMovimiento) {
         try {
             em.persist(tipoMovimiento);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoMovimiento TipoMovimientoDAO : " + e.toString());
         }

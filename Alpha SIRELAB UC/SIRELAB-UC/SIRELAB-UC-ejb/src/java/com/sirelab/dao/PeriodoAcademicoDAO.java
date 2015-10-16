@@ -32,6 +32,7 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
     public void crearPeriodoAcademico(PeriodoAcademico periodo) {
         try {
             em.persist(periodo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearPeriodoAcademico PeriodoAcademicoDAO : " + e.toString());
         }

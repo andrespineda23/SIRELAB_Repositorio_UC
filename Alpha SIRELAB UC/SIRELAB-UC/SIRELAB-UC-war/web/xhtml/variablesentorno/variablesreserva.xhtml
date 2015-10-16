@@ -16,6 +16,9 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="formularioGeneral">
                     <div class="container">
+                         <br></br>
+                        <br></br>
+                        <br></br>
                         <div class="row">
                             <div class="text-center">
                                 <h1>Variables del Proceso de Reserva</h1>
@@ -160,12 +163,6 @@ and open the template in the editor.
                                                     </f:facet>
                                                     <h:outputText value="#{itemTR.nombretiporeserva}"/>
                                                 </h:column>   
-                                                <h:column>
-                                                    <f:facet name="header">
-                                                        <h:outputText value="Detalles"/>
-                                                    </f:facet>
-                                                    <h:commandLink value="Ver" action="detallestiporeserva" actionListener="#{controllerDetallesTipoReserva.recibirIDDetalleTipoReserva(itemTR.idtiporeserva)}"/>
-                                                </h:column>
                                                 <f:facet name="footer">
                                                     <nav>
                                                         <ul class="pager">
@@ -185,10 +182,6 @@ and open the template in the editor.
                                             </h:dataTable>
                                         </div><!--/.row-->
                                     </fieldset>
-                                </div>
-                                <br></br>
-                                <div class="left pull-left">
-                                    <h:commandButton value="Nuevo Tipo Reserva" action="registrartiporeserva" class="btn btn-success"/>
                                 </div>
                             </div>
                         </div>

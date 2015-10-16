@@ -31,6 +31,7 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
     public void crearEstadoEquipo(EstadoEquipo estadoEquipo) {
         try {
             em.persist(estadoEquipo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEstadoEquipo EstadoEquipoDAO : " + e.toString());
         }

@@ -28,6 +28,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
     public void crearModuloLaboratorio(ModuloLaboratorio modulolaboratorio) {
         try {
             em.persist(modulolaboratorio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
         }

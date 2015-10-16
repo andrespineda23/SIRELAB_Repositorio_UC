@@ -16,149 +16,155 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="formularioGeneral">
                     <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
                         <div class="row">
-                            <div class="col-md-12"> 
-                                <div class="container">
-                                    <div class="row clearfix">
-                                        <fieldset style="border: black;border-radius: 10px">
-                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN ADMINISTRADOR</strong></legend></h3>
-                                            <div class="row col-md-12">
-                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
-                                                    <legend class="h5">I. Personal</legend>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
-                                                            <label for="parametroNombre">
-                                                                Nombre Administrador
-                                                            </label>
-                                                            <h:inputText maxlength="45" value="#{controllerAdministrarAdministradores.parametroNombre}" class="form-control" id="parametroNombre" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
-                                                            <label for="parametroApellido">
-                                                                Apellido Administrador
-                                                            </label>
-                                                            <h:inputText maxlength="45" value="#{controllerAdministrarAdministradores.parametroApellido}" class="form-control" id="parametroApellido" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
-                                                            <label for="parametroDocumento">
-                                                                Número Identificación
-                                                            </label>
-                                                            <h:inputText maxlength="20" value="#{controllerAdministrarAdministradores.parametroDocumento}" class="form-control" id="parametroDocumento" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="parametroCorreo">
-                                                            Correo Institucional
-                                                        </label>
-                                                        <div class="input-group">
-                                                            <h:inputText maxlength="29" value="#{controllerAdministrarAdministradores.parametroCorreo}" class="form-control" id="parametroCorreo" />
-                                                            <span class="input-group-addon">@ucentral.edu.co</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
-                                                            <label for="parametroEstado">
-                                                                Estado Administrador
-                                                            </label>
-                                                            <h:selectOneMenu value="#{controllerAdministrarAdministradores.parametroEstado}"
-                                                                             class="form-control"
-                                                                             id="parametroEstado">
-                                                                <f:selectItem itemLabel="ACTIVO" itemValue="1" />
-                                                                <f:selectItem itemLabel="INACTIVO" itemValue="2" />
-                                                                <f:selectItem itemLabel="TODOS" itemValue="3" />
-                                                            </h:selectOneMenu>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </div> 
-                                        </fieldset>
-                                        <br></br>
-                                        <div class="col-md-12">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Administrar Administradores Sistema</li>
+                            </ol>
+                        </div>
+
+                        <div class="row col-md-12">
+                            <div class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px">
+                                    <h3><legend style="color: darkblue"><strong>INFORMACIÓN ADMINISTRADOR</strong></legend></h3>
+                                    <div class="row col-md-12">
+                                        <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                            <legend class="h5">I. Personal</legend>
                                             <div class="col-md-2">
-                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarAdministradores.cantidadRegistros}"/>
+                                                <div class="form-group">
+                                                    <label for="parametroNombre">
+                                                        Nombre Administrador
+                                                    </label>
+                                                    <h:inputText maxlength="45" value="#{controllerAdministrarAdministradores.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                </div>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="parametroApellido">
+                                                        Apellido Administrador
+                                                    </label>
+                                                    <h:inputText maxlength="45" value="#{controllerAdministrarAdministradores.parametroApellido}" class="form-control" id="parametroApellido" />
+                                                </div>
                                             </div>
-                                            <div class="col-md-1">
-                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarAdministradores.buscarAdministradoresPorParametros()}">
-                                                    <f:ajax execute="@form" render="formularioGeneral" />
-                                                </h:commandButton>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="parametroDocumento">
+                                                        Número Identificación
+                                                    </label>
+                                                    <h:inputText maxlength="20" value="#{controllerAdministrarAdministradores.parametroDocumento}" class="form-control" id="parametroDocumento" />
+                                                </div>
                                             </div>
-                                            <div class="col-md-1">
-                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarAdministradores.limpiarProcesoBusqueda()}" class="btn btn-default right" >
-                                                    <f:ajax execute="@form" render="formularioGeneral" />
-                                                </h:commandButton>
+                                            <div class="col-md-4">
+                                                <label for="parametroCorreo">
+                                                    Correo Institucional
+                                                </label>
+                                                <div class="input-group">
+                                                    <h:inputText maxlength="29" value="#{controllerAdministrarAdministradores.parametroCorreo}" class="form-control" id="parametroCorreo" />
+                                                    <span class="input-group-addon">@ucentral.edu.co</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <br></br>
-                                    <div id="resultadosBusqueda" class="row clearfix">
-                                        <fieldset style="border: black;border-radius: 10px;">
-                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
-                                            <div class="row">
-                                                <h:dataTable id="dataTable" var="item" 
-                                                             styleClass="table table-striped table-hover table-responsive" 
-                                                             value="#{controllerAdministrarAdministradores.listaAdministradoresTabla}">
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Nombre"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.nombrespersona}"/>
-                                                    </h:column>  
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Apellido"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.apellidospersona}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="N. Documento"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.identificacionpersona}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Correo"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.emailpersona}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Estado"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.usuario.strEstado}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Detalles"/>
-                                                        </f:facet>
-                                                        <h:commandLink value="Ver" action="detallesadministrador" actionListener="#{controllerDetallesAdministrador.recibirIDAdministradoresDetalles(item.idpersona)}"/>
-                                                    </h:column>
-                                                    <f:facet name="footer">
-                                                        <nav>
-                                                            <ul class="pager">
-                                                                <li>
-                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarAdministradores.cargarPaginaAnteriorAdministrador()}" disabled="#{controllerAdministrarAdministradores.bloquearPagAntAdministrador}">
-                                                                        <f:ajax execute="@form" render="formularioGeneral" />
-                                                                    </h:commandLink>
-                                                                </li>
-                                                                <li>
-                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarAdministradores.cargarPaginaSiguienteAdministrador()}" disabled="#{controllerAdministrarAdministradores.bloquearPagSigAdministrador}">
-                                                                        <f:ajax execute="@form" render="formularioGeneral" />
-                                                                    </h:commandLink>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </f:facet>
-                                                </h:dataTable>
-                                            </div><!--/.row-->
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="parametroEstado">
+                                                        Estado Administrador
+                                                    </label>
+                                                    <h:selectOneMenu value="#{controllerAdministrarAdministradores.parametroEstado}"
+                                                                     class="form-control"
+                                                                     id="parametroEstado">
+                                                        <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                        <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                        <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
                                         </fieldset>
+                                    </div> 
+                                </fieldset>
+                                <br></br>
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <h:outputText value="Cantidad de registros: #{controllerAdministrarAdministradores.cantidadRegistros}"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarAdministradores.buscarAdministradoresPorParametros()}">
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarAdministradores.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                            <f:ajax execute="@form" render="formularioGeneral" />
+                                        </h:commandButton>
                                     </div>
                                 </div>
+                            </div>
+                            <br></br>
+                            <div id="resultadosBusqueda" class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px;">
+                                    <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                    <div class="row">
+                                        <h:dataTable id="dataTable" var="item" 
+                                                     styleClass="table table-striped table-hover table-responsive" 
+                                                     value="#{controllerAdministrarAdministradores.listaAdministradoresTabla}">
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Nombre"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.nombrespersona}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Apellido"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.apellidospersona}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="N. Documento"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.identificacionpersona}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Correo"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.emailpersona}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Estado"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.usuario.strEstado}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Detalles"/>
+                                                </f:facet>
+                                                <h:commandLink value="Ver" action="detallesadministrador" actionListener="#{controllerDetallesAdministrador.recibirIDAdministradoresDetalles(item.idpersona)}"/>
+                                            </h:column>
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerAdministrarAdministradores.cargarPaginaAnteriorAdministrador()}" disabled="#{controllerAdministrarAdministradores.bloquearPagAntAdministrador}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarAdministradores.cargarPaginaSiguienteAdministrador()}" disabled="#{controllerAdministrarAdministradores.bloquearPagSigAdministrador}">
+                                                                <f:ajax execute="@form" render="formularioGeneral" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
+                                        </h:dataTable>
+                                    </div><!--/.row-->
+                                </fieldset>
                             </div>
                         </div>
                         <br></br>

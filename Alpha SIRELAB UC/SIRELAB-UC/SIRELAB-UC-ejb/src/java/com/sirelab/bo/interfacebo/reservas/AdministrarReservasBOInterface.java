@@ -10,11 +10,13 @@ import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.EstadoReserva;
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.ReservaEquipoElemento;
+import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoReserva;
@@ -57,4 +59,25 @@ public interface AdministrarReservasBOInterface {
     public List<ReservaEquipoElemento> obtenerReservasEquipoPorIdReserva(BigInteger reserva);
 
     public void actualizarValorReserva(Reserva reserva);
+
+    public Boolean validarReservaModuloSalaDisposible(Date fecha, String horaInicio, BigInteger sala);
+
+    public List<ReservaModuloLaboratorio> obtenerCantidadReservasModuloPorParametros(Date fecha, String horaInicio, BigInteger sala);
+
+    public List<ModuloLaboratorio> obtenerModuloLaboratoriosPorSala(BigInteger sala);
+
+    public Reserva registrarNuevaReservaModulo(Reserva reserva, ReservaModuloLaboratorio reservaModuloLaboratorio);
+
+    public List<ReservaModuloLaboratorio> consultarReservasModuloPorPersona(BigInteger persona);
+
+    public ReservaSala obtenerReservaSalaPorId(BigInteger idReserva);
+
+    public Reserva obtenerReservaPorId(BigInteger idReserva);
+
+    public ReservaModuloLaboratorio obtenerReservaModuloLaboratorioPorId(BigInteger idRegistro);
+
+    public void actualizarGuiaLaboratorioReserva(ReservaSala reservaSala);
+
+    public TipoReserva obtenerTipoReservaPorId(BigInteger idRegistro);
+
 }

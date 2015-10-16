@@ -26,6 +26,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
     public void crearTipoUsuario(TipoUsuario tipoUsuario) {
         try {
             em.persist(tipoUsuario);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoUsuario TipoUsuarioDAO : " + e.toString());
         }

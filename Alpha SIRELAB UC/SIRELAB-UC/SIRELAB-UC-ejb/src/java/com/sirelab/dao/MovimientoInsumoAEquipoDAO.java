@@ -31,6 +31,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
     public void crearMovimientoInsumoAEquipo(MovimientoInsumoAEquipo movimiento) {
         try {
             em.persist(movimiento);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString());
         }

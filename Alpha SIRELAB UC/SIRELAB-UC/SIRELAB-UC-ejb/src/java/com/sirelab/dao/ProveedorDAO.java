@@ -28,6 +28,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
     public void crearProveedor(Proveedor proveedor) {
         try {
             em.persist(proveedor);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearProveedor ProveedorDAO : " + e.toString());
         }

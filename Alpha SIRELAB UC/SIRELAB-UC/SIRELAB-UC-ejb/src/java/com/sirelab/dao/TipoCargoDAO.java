@@ -31,6 +31,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
     public void crearTipoCargo(TipoCargo tipoCargo) {
         try {
             em.persist(tipoCargo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoCargo TipoCargoDAO : " + e.toString());
         }

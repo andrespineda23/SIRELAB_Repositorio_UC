@@ -28,6 +28,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
     public void crearPlanEstudios(PlanEstudios planestudios) {
         try {
             em.persist(planestudios);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearPlanEstudios PlanEstudiosDAO : " + e.toString());
         }

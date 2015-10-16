@@ -31,6 +31,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
     public void crearTipoReserva(TipoReserva tipoReserva) {
         try {
             em.persist(tipoReserva);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoReserva TipoReservaDAO : " + e.toString());
         }

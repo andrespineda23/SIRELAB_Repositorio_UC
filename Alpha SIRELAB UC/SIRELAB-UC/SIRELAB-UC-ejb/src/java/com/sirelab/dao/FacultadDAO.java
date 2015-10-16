@@ -28,6 +28,7 @@ public class FacultadDAO implements FacultadDAOInterface {
     public void crearFacultad(Facultad facultad) {
         try {
             em.persist(facultad);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearFacultad FacultadDAO : " + e.toString());
         }

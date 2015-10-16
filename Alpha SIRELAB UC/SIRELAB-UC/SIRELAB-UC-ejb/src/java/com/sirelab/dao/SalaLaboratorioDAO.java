@@ -28,6 +28,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
     public void crearSalaLaboratorio(SalaLaboratorio salalaboratorio) {
         try {
             em.persist(salalaboratorio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearSalaLaboratorio SalaLaboratorioDAO : " + e.toString());
         }

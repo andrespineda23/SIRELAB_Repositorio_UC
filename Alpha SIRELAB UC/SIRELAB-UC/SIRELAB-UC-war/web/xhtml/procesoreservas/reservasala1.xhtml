@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head> 
+        <link rel="icon" href="../../assets/img/favicon.ico" />
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+        <!-- BOOTSTRAP CORE CSS -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <!-- ION ICONS STYLES -->
+        <link href="../../assets/css/ionicons.css" rel="stylesheet" />
+        <!-- FONT AWESOME ICONS STYLES -->
+        <link href="../../assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM CSS -->
+        <link href="../../assets/css/style.css" rel="stylesheet" />
+
+        <!-- SCROLLING SCRIPTS PLUGIN  -->
+
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+        <link href="../../assets/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+
+        <!-- IE10 viewport hack  -->
+        <script src="../../assets/js/bootstrap.js"></script>
+
+        <script type="text/javascript">
+            function DisabledDomingo(date) {
+                var day = date.getDay();
+                // If day == 1 then it is MOnday
+                if (day == 0) {
+                    return [false];
+                } else {
+                    return [true];
+                }
+            }
+            $(function () {
+                $("#form\\:fecha").datepicker({
+                    dateFormat: "dd/mm/yy",
+                    beforeShowDay: DisabledDomingo
+                });
+            });
+            // Traducción al español
+            $(function ($) {
+                $.datepicker.regional['es'] = {
+                    closeText: 'Cerrar',
+                    prevText: 'Ant',
+                    nextText: 'Sig',
+                    currentText: 'Hoy',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                    weekHeader: 'Sm',
+                    dateFormat: 'dd/mm/yy',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: ''
+                };
+                $.datepicker.setDefaults($.datepicker.regional['es']);
+            });
+        </script>
+    </h:head>
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;">
+        <h:form id="form">
+            <div id="header">
+                <header>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 logo-wrapper">
+                                <img src="../../assets/img/logo-universidad-central.png" alt=""/>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <div class="container">
+                <br></br>
+                <br></br>
+                <br></br>
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li class="active">Reserva Sala- Paso 1</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12"> 
+                        <div class="container">
+                            <div class="row clearfix">
+                                <fieldset style="border: black;border-radius: 10px">
+                                    <h3><legend style="color: darkblue"><strong>Información de la Reserva</strong></legend></h3>
+                                    <br></br>
+                                    <p>
+                                        A continuación usted podra solicitar una reserva de una sala de laboratorio. 
+                                        Para este proceso es necesario ingresar la información solicitada en el formulario y el sistema le indicara si se encuentra disponible la sala para una reserva en la fecha y hora solicitada.
+                                        Recuerde que las reservas de sala tiene un bloque de tiempo de 2 horas.
+                                    </p>
+                                    <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="date">
+                                                    Día de la reserva
+                                                </label>
+                                                <h:inputText size="10" value="#{controllerReservaSala1.fecha}" class="form-control" id="fecha">
+                                                    <f:ajax event="blur" listener="#{controllerReservaSala1.activarHoraReserva()}" render="horaIngreso"/>
+                                                    <f:ajax event="change" listener="#{controllerReservaSala1.activarHoraReserva()}" render="horaIngreso"/>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="horaIngreso">
+                                                    Hora de Ingreso
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerReservaSala1.horaIngreso}"
+                                                                 class="form-control"  disabled="#{controllerReservaSala1.activarHora}"
+                                                                 id="horaIngreso">
+                                                    <f:selectItem itemLabel="Seleccione Hora" itemValue="null" />
+                                                    <f:selectItems value="#{controllerReservaSala1.listaHora}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="parametroLaboratorio">
+                                                    Laboratorio
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerReservaSala1.parametroLaboratorio}"
+                                                                 class="form-control" 
+                                                                 id="parametroLaboratorio">
+                                                    <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                                    <f:selectItems value="#{controllerReservaSala1.listaLaboratorios}" var="laboratorio"
+                                                                   itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerReservaSala1.actualizarLaboratorio()}" execute="@this" render="@this parametroSala"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="parametroSala">
+                                                    Sala de Laboratorio
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerReservaSala1.parametroSala}"
+                                                                 class="form-control" disabled="#{controllerReservaSala1.activarSala}"
+                                                                 id="parametroSala">
+                                                    <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
+                                                    <f:selectItems value="#{controllerReservaSala1.listaSalaLaboratorio}" var="sala"
+                                                                   itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerReservaSala1.activarHoraReserva()}" render="horaIngreso"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+
+                                    </div> 
+                                </fieldset>
+                                <br></br>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                    <div class="right pull-right">
+                                        <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" action="#{controllerReservaSala1.consultarReservaARealizar()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton  value="Inicio" class="btn btn-primary right" action="#{controllerReservaSala1.cancelarProcesoReserva()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                                <hr class="intro-divider"/>
+                                <div class="row col-md-12">
+                                    <div class="text-center">
+                                        <h5>
+                                            Resultados de la Reserva
+                                        </h5>
+                                        <strong>
+                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerReservaSala1.mensajeFormulario}" style="color: #{controllerReservaSala1.colorMensaje}}"/>
+                                        </strong>
+                                    </div>
+                                    <br></br>
+                                </div>
+                                <hr class="intro-divider"/>
+                            </div>
+                            <div class="col-md-12 col-lg-12 hidden-sm hidden-xs">
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <footer>
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                &#169; 2015 - SIRELAB | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Andrés Pineda </a> 
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </h:form>
+    </h:body>
+</html>

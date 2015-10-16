@@ -33,6 +33,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
     public void crearGuiaLaboratorio(GuiaLaboratorio guia) {
         try {
             em.persist(guia);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString());
         }

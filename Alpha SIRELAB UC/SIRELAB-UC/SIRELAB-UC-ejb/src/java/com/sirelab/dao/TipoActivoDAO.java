@@ -31,6 +31,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
     public void crearTipoActivo(TipoActivo tipoActivo) {
         try {
             em.persist(tipoActivo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoActivo TipoActivoDAO : " + e.toString());
         }

@@ -33,13 +33,12 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerPaso2Reserva implements Serializable {
+public class ControllerReservaSala2 implements Serializable {
 
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
     private AyudaReservaSala reservaSala;
-    private List<TipoReserva> listaTipoReserva;
     private TipoReserva parametroTipoReserva;
     private List<PlanEstudios> listaPlanEstudios;
     private PlanEstudios parametroPlanEstudios;
@@ -53,7 +52,7 @@ public class ControllerPaso2Reserva implements Serializable {
     private boolean validacionesTipo, validacionesGuia, validacionesAsignatura, validacionesPlan;
     private boolean adicionarElementos;
 
-    public ControllerPaso2Reserva() {
+    public ControllerReservaSala2() {
     }
 
     @PostConstruct
@@ -72,6 +71,14 @@ public class ControllerPaso2Reserva implements Serializable {
         validacionesGuia = false;
         validacionesAsignatura = false;
         validacionesPlan = false;
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("1"));
+        } else {
+            if ("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("3"));
+            }
+        }
     }
 
     public void actualizarPlanEstudios() {
@@ -157,15 +164,23 @@ public class ControllerPaso2Reserva implements Serializable {
             Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(reservaSala.getFechaReserva(), reservaSala.getHoraInicio(), reservaSala.getSalaLaboratorio().getIdsalalaboratorio());
             if (null != respuestaReserva) {
                 if (respuestaReserva == true) {
-                    //Proceso siguiente de la reservaRegistro
-                    registrarReservaEnSistema();
-                    if (adicionarElementos == false) {
-                        paginaSiguiente = "paso3Reserva";
-                    } else {
-                        paginaSiguiente = "paso3Reserva";
+                    Boolean respuesta2 = administrarReservasBO.validarReservaModuloSalaDisposible(reservaSala.getFechaReserva(), reservaSala.getHoraInicio(), reservaSala.getSalaLaboratorio().getIdsalalaboratorio());
+                    if (null != respuesta2) {
+                        if (respuesta2 == true) {
+                            //Proceso siguiente de la reservaRegistro
+                            registrarReservaEnSistema();
+                            if (adicionarElementos == false) {
+                                paginaSiguiente = "reservasala3";
+                            } else {
+                                paginaSiguiente = "reservasala3";
+                            }
+                        } else {
+                            mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
+                            colorMensaje = "red";
+                        }
                     }
                 } else {
-                    mensajeFormulario = "La reservaRegistro que ha solicitado ya ha sido asignada a otro usuario.";
+                    mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
                     colorMensaje = "red";
                 }
             }
@@ -203,7 +218,8 @@ public class ControllerPaso2Reserva implements Serializable {
             Reserva reservaPersona = administrarReservasBO.registrarNuevaReservaSala(reservaRegistro, reservaSalaRegistro);
             if (null != reservaPersona) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("reservaPersona", reservaPersona);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("asignaturaReserva", parametroAsignaturaPorPlanEstudio.getAsignatura().getNombreasignatura());
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("nombreAsignatura", parametroAsignaturaPorPlanEstudio.getAsignatura().getNombreasignatura());
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("rutaGuia", parametroGuiaLaboratorio.getUbicacionguia());
             }
             limpiarDatosParaPaso3();
         } catch (Exception e) {
@@ -228,10 +244,9 @@ public class ControllerPaso2Reserva implements Serializable {
         listaAsignaturaPorPlanEstudio = null;
         listaGuiaLaboratorio = null;
         listaPlanEstudios = null;
-        listaTipoReserva = null;
     }
 
-    public void cancelarReserva() {
+    private void limpiarInformacion() {
         adicionarElementos = false;
         parametroTipoReserva = null;
         parametroGuiaLaboratorio = null;
@@ -248,29 +263,32 @@ public class ControllerPaso2Reserva implements Serializable {
         listaAsignaturaPorPlanEstudio = null;
         listaGuiaLaboratorio = null;
         listaPlanEstudios = null;
-        listaTipoReserva = null;
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaSala");
     }
 
-    public void descargarGuiaLaboratorio(){}
-    
+    public String cancelarReserva() {
+        limpiarInformacion();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaSala");
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            return "iniciodocente";
+        } else {
+            if ("ESTUDIANTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                return "inicioestudiante";
+            } else {
+                return "iniciodocente";
+            }
+        }
+    }
+
+    public void descargarGuiaLaboratorio() {
+    }
+
     public AyudaReservaSala getReservaSala() {
         return reservaSala;
     }
 
     public void setReservaSala(AyudaReservaSala reservaSala) {
         this.reservaSala = reservaSala;
-    }
-
-    public List<TipoReserva> getListaTipoReserva() {
-        if (null == listaTipoReserva) {
-            listaTipoReserva = administrarReservasBO.consultarTiposReservas();
-        }
-        return listaTipoReserva;
-    }
-
-    public void setListaTipoReserva(List<TipoReserva> listaTipoReserva) {
-        this.listaTipoReserva = listaTipoReserva;
     }
 
     public TipoReserva getParametroTipoReserva() {
@@ -371,5 +389,4 @@ public class ControllerPaso2Reserva implements Serializable {
     public void setAdicionarElementos(boolean adicionarElementos) {
         this.adicionarElementos = adicionarElementos;
     }
-
 }

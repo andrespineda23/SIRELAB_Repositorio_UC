@@ -31,6 +31,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
     public void crearEstadoReserva(EstadoReserva estadoReserva) {
         try {
             em.persist(estadoReserva);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEstadoReserva EstadoReservaDAO : " + e.toString());
         }

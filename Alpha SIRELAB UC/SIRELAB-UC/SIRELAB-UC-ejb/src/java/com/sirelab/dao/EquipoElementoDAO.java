@@ -33,6 +33,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
     public void crearEquipoElemento(EquipoElemento equipoelemento) {
         try {
             em.persist(equipoelemento);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEquipoElemento EquipoElementoDAO : " + e.toString());
         }

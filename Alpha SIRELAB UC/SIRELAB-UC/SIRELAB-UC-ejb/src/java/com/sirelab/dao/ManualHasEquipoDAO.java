@@ -31,6 +31,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
     public void crearManualHasEquipo(ManualHasEquipo manual) {
         try {
             em.persist(manual);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearManualHasEquipo ManualHasEquipoDAO : " + e.toString());
         }

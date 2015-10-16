@@ -5,10 +5,13 @@
  */
 package com.sirelab.controller.reservas;
 
-import com.sirelab.ayuda.AyudaReservaSala;
+import com.sirelab.ayuda.AyudaReservaModulo;
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.ModuloLaboratorio;
+import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerPaso1Reserva implements Serializable {
+public class ControllerReservaModulo1 implements Serializable {
 
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
@@ -43,7 +46,7 @@ public class ControllerPaso1Reserva implements Serializable {
     private String mensajeFormulario, colorMensaje;
     private boolean activarHora;
 
-    public ControllerPaso1Reserva() {
+    public ControllerReservaModulo1() {
     }
 
     @PostConstruct
@@ -90,7 +93,6 @@ public class ControllerPaso1Reserva implements Serializable {
         if (!Utilidades.validarNulo(parametroSala)) {
             retorno = false;
         }
-        activarHoraReserva();
         return retorno;
     }
 
@@ -115,6 +117,7 @@ public class ControllerPaso1Reserva implements Serializable {
                         listaHora.add(i);
                     }
                 }
+                activarHora = false;
             }
         }
     }
@@ -142,13 +145,36 @@ public class ControllerPaso1Reserva implements Serializable {
             Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(fecha, String.valueOf(horaIngreso), parametroSala.getIdsalalaboratorio());
             if (null != respuestaReserva) {
                 if (respuestaReserva == true) {
-                    AyudaReservaSala reservaSala = new AyudaReservaSala();
-                    reservaSala.setFechaReserva(fecha);
-                    reservaSala.setSalaLaboratorio(parametroSala);
-                    reservaSala.setHoraInicio(String.valueOf(horaIngreso));
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("reservaSala", reservaSala);
-                    paso2 = "paso2reserva";
-                    System.out.println("Información guardada con exito en la sesión");
+                    List<ReservaModuloLaboratorio> reservaModuloLaboratorio = administrarReservasBO.obtenerCantidadReservasModuloPorParametros(fecha, String.valueOf(horaIngreso), parametroSala.getIdsalalaboratorio());
+                    List<ModuloLaboratorio> moduloLaboratorio = administrarReservasBO.obtenerModuloLaboratoriosPorSala(parametroSala.getIdsalalaboratorio());
+                    int cantidadReserva = 0;
+                    int cantidadModulo = 0;
+                    if (Utilidades.validarNulo(reservaModuloLaboratorio)) {
+                        cantidadReserva = reservaModuloLaboratorio.size();
+                    }
+                    if (Utilidades.validarNulo(moduloLaboratorio)) {
+                        cantidadModulo = moduloLaboratorio.size();
+                    }
+                    if (cantidadReserva < cantidadModulo) {
+                        for (int i = 0; i < cantidadModulo; i++) {
+                            for (int j = 0; j < cantidadReserva; j++) {
+                                if (moduloLaboratorio.get(i).getIdmodulolaboratorio().equals(reservaModuloLaboratorio.get(j).getModulolaboratorio().getIdmodulolaboratorio())) {
+                                    moduloLaboratorio.remove(i);
+                                }
+                            }
+                        }
+
+                        AyudaReservaModulo reservaModulo = new AyudaReservaModulo();
+                        reservaModulo.setFechaReserva(fecha);
+                        reservaModulo.setModuloLaboratorio(moduloLaboratorio.get(0));
+                        reservaModulo.setHoraInicio(String.valueOf(horaIngreso));
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("reservaModulo", reservaModulo);
+                        paso2 = "reservamodulo2";
+                        limpiarInformacion();
+                    } else {
+                        mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad.";
+                        colorMensaje = "red";
+                    }
                 } else {
                     mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
                     colorMensaje = "red";
@@ -173,7 +199,7 @@ public class ControllerPaso1Reserva implements Serializable {
         }
     }
 
-    public void cancelarProcesoReserva() {
+    private void limpiarInformacion() {
         activarSala = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
@@ -185,6 +211,20 @@ public class ControllerPaso1Reserva implements Serializable {
         parametroSala = null;
         horaIngreso = null;
         activarHora = true;
+    }
+
+    public String cancelarProcesoReserva() {
+        limpiarInformacion();
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            return "iniciodocente";
+        } else {
+            if ("ESTUDIANTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                return "inicioestudiante";
+            } else {
+                return "iniciodocente";
+            }
+        }
     }
 
     public Date getFecha() {

@@ -31,6 +31,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
     public void crearTipoComponente(TipoComponente tipoComponente) {
         try {
             em.persist(tipoComponente);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoComponente TipoComponenteDAO : " + e.toString());
         }

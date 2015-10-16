@@ -28,6 +28,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
     public void crearEncargadoLaboratorio(EncargadoLaboratorio encargadolaboratorio) {
         try {
             em.persist(encargadolaboratorio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString());
         }

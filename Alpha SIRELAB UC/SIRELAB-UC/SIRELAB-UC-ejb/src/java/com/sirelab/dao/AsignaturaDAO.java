@@ -29,6 +29,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
         try {
             em.clear();
             em.persist(asignatura);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearAsignatura AsignaturaDAO : " + e.toString());
         }

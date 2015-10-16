@@ -31,6 +31,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
     public void crearMovimientoInsumo(MovimientoInsumo movimientoInsumo) {
         try {
             em.persist(movimientoInsumo);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearMovimientoInsumo MovimientoInsumoDAO : " + e.toString());
         }

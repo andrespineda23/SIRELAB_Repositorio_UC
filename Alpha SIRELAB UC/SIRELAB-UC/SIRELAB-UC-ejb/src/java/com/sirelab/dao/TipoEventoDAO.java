@@ -31,6 +31,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
     public void crearTipoEvento(TipoEvento tipoEvento) {
         try {
             em.persist(tipoEvento);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoEvento TipoEventoDAO : " + e.toString());
         }

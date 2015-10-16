@@ -28,6 +28,7 @@ public class DocenteDAO implements DocenteDAOInterface {
     public void crearDocente(Docente docente) {
         try {
             em.persist(docente);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearDocente DocenteDAO : " + e.toString());
         }

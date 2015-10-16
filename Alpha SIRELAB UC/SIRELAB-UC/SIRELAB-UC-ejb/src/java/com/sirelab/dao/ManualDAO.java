@@ -33,6 +33,7 @@ public class ManualDAO implements ManualDAOInterface {
     public void crearManual(Manual manual) {
         try {
             em.persist(manual);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearManual ManualDAO : " + e.toString());
         }

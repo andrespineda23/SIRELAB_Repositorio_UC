@@ -28,6 +28,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
     public void crearLaboratorio(Laboratorio laboratorio) {
         try {
             em.persist(laboratorio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearLaboratorio LaboratorioDAO : " + e.toString());
         }

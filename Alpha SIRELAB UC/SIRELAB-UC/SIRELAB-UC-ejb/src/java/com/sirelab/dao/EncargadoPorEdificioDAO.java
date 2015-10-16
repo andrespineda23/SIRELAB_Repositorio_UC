@@ -34,6 +34,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
         try {
             em.clear();
             em.persist(encargado);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearEdificio EncargadoPorEdificioDAO : " + e.toString());
         }

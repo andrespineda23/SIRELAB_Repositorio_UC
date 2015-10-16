@@ -5,7 +5,7 @@
  */
 package com.sirelab.controller.reservas;
 
-import com.sirelab.ayuda.AyudaReservaSala;
+import com.sirelab.ayuda.AyudaReservaModulo;
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.ReservaEquipoElemento;
@@ -25,23 +25,21 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerPaso3Reserva implements Serializable {
+public class ControllerReservaModulo3 implements Serializable {
 
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
-    private AyudaReservaSala reservaSala;
+    private AyudaReservaModulo reservaModulo;
     private Reserva reservaPersona;
     private Integer valorReserva;
-    private String nombreAsignatura;
 
-    public ControllerPaso3Reserva() {
+    public ControllerReservaModulo3() {
     }
 
     @PostConstruct
     public void init() {
-        reservaSala = (AyudaReservaSala) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaSala");
-        nombreAsignatura = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("nombreAsignatura");
+        reservaModulo = (AyudaReservaModulo) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaModulo");
         reservaPersona = (Reserva) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaPersona");
         valorReserva = 0;
         obtenerCostoFinalReserva();
@@ -61,29 +59,37 @@ public class ControllerPaso3Reserva implements Serializable {
                 }
                 valorReserva = valorReserva + costo;
             }
-            valorReserva = valorReserva + Long.valueOf(reservaSala.getSalaLaboratorio().getCostoalquiler()).intValue();
+            valorReserva = valorReserva + reservaModulo.getModuloLaboratorio().getCostoalquiler().intValue();
             reservaPersona.setValorreserva(valorReserva);
             administrarReservasBO.actualizarValorReserva(reservaPersona);
         }
     }
 
-    public void cerrarDatosReserva() {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaSala");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("nombreAsignatura");
+    public String cerrarDatosReserva() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaModulo");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaPersona");
         valorReserva = 0;
         reservaPersona = null;
-        reservaSala = null;
-        nombreAsignatura = "";
+        reservaModulo = null;
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            return "iniciodocente";
+        } else {
+            if ("ESTUDIANTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                return "inicioestudiante";
+            } else {
+                return "iniciodocente";
+            }
+        }
 
     }
 
-    public AyudaReservaSala getReservaSala() {
-        return reservaSala;
+    public AyudaReservaModulo getReservaModulo() {
+        return reservaModulo;
     }
 
-    public void setReservaSala(AyudaReservaSala reservaSala) {
-        this.reservaSala = reservaSala;
+    public void setReservaModulo(AyudaReservaModulo reservaModulo) {
+        this.reservaModulo = reservaModulo;
     }
 
     public Reserva getReservaPersona() {
@@ -100,14 +106,6 @@ public class ControllerPaso3Reserva implements Serializable {
 
     public void setValorReserva(Integer valorReserva) {
         this.valorReserva = valorReserva;
-    }
-
-    public String getNombreAsignatura() {
-        return nombreAsignatura;
-    }
-
-    public void setNombreAsignatura(String nombreAsignatura) {
-        this.nombreAsignatura = nombreAsignatura;
     }
 
 }

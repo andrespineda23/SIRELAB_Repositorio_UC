@@ -32,6 +32,7 @@ public class ReservaDAO implements ReservaDAOInterface {
     public void crearReserva(Reserva reserva) {
         try {
             em.persist(reserva);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearReserva ReservaDAO : " + e.toString());
         }

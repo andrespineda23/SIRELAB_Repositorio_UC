@@ -31,6 +31,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
     public void crearTipoPerfil(TipoPerfil tipoPerfil) {
         try {
             em.persist(tipoPerfil);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearTipoPerfil TipoPerfilDAO : " + e.toString());
         }

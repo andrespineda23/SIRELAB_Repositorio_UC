@@ -16,10 +16,13 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
+                         <br></br>
+                        <br></br>
+                        <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li class="active">Reserva - Finalización</li>
+                                <li class="active">Reserva Modulo- Finalización</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -35,7 +38,7 @@ and open the template in the editor.
                                                         <label>
                                                             Número de Reserva
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control" value="#{controllerPaso3Reserva.reservaSala.fechaReserva}"/>
+                                                        <h:inputText readonly="true" class="form-control" value="#{controllerReservaModulo3.reservaPersona.numeroreserva}"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
@@ -43,7 +46,7 @@ and open the template in the editor.
                                                         <label>
                                                             Día de la Reserva
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control" value="#{controllerPaso3Reserva.reservaSala.fechaReserva}">
+                                                        <h:inputText readonly="true" class="form-control" value="#{controllerReservaModulo3.reservaModulo.fechaReserva}">
                                                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                                         </h:inputText>
                                                     </div>
@@ -53,7 +56,7 @@ and open the template in the editor.
                                                         <label>
                                                             Hora de Reserva 
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso3Reserva.reservaSala.horaInicio}:00"/>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo3.reservaModulo.horaInicio}:00"/>
                                                     </div>
                                                 </div>
                                             </div> 
@@ -63,7 +66,7 @@ and open the template in the editor.
                                                         <label>
                                                             Laboratorio
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso3Reserva.reservaSala.salaLaboratorio.laboratoriosporareas.laboratorio.nombrelaboratorio}"/>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo3.reservaModulo.moduloLaboratorio.salalaboratorio.laboratoriosporareas.laboratorio.nombrelaboratorio}"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
@@ -71,7 +74,7 @@ and open the template in the editor.
                                                         <label>
                                                             Sala de Laboratorio
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso3Reserva.reservaSala.salaLaboratorio.nombresala}"/>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo3.reservaModulo.moduloLaboratorio.salalaboratorio.nombresala}"/>
                                                     </div>
                                                 </div>
                                             </div> 
@@ -81,15 +84,7 @@ and open the template in the editor.
                                                         <label>
                                                             Tipo de Reserva
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso3Reserva.reservaPersona.tiporeserva.nombretiporeserva}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <label>
-                                                            Asignatura
-                                                        </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerPaso3Reserva.nombreAsignatura}"/>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo3.reservaPersona.tiporeserva.nombretiporeserva}"/>
                                                     </div>
                                                 </div>
                                             </div> 
@@ -97,12 +92,9 @@ and open the template in the editor.
                                                 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
                                                     <label>Costo de la Reserva</label>
                                                     <div class="input-group">
-                                                        <h:inputText value="#{controllerPaso3Reserva.reservaPersona.valorreserva}"/>
+                                                        <h:inputText  class="form-control" value="#{controllerReservaModulo3.reservaPersona.valorreserva}"/>
                                                         <span class="input-group-addon">$</span>
                                                     </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
-                                                    <h:commandButton value="Descargar Guía de Laboratorio" />
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -110,7 +102,7 @@ and open the template in the editor.
                                         <hr class="intro-divider"/>                                        
                                         <hr class="intro-divider"/>
                                         <div class="right pull-right">
-                                            <h:commandButton value="Finalizar" class="btn btn-danger" action="inicio" actionListener="#{controllerPaso3Reserva.cerrarDatosReserva()}" immediate="true">
+                                            <h:commandButton value="Finalizar" class="btn btn-danger" action="#{controllerReservaModulo3.cerrarDatosReserva()}" immediate="true">
                                                 <f:ajax execute="@form" render="form" />
                                             </h:commandButton>
                                         </div>

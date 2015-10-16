@@ -28,6 +28,7 @@ public class CarreraDAO implements CarreraDAOInterface {
     public void crearCarrera(Carrera carrera) {
         try {
             em.persist(carrera);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearCarrera CarreraDAO : " + e.toString());
         }

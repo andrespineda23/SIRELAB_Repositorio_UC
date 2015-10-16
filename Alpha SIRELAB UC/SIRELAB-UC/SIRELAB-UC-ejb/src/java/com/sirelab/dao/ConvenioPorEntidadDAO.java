@@ -31,6 +31,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
     public void crearConvenioPorEntidad(ConvenioPorEntidad convenio) {
         try {
             em.persist(convenio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error crearConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
         }
