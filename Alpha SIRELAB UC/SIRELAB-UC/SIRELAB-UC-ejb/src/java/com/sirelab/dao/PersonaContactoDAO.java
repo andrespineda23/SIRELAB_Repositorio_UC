@@ -90,9 +90,39 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
     public PersonaContacto buscarPersonaContactoPorUsuario(String usuario) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM PersonaContacto p WHERE p.nombreusuario=:usuario");
+            Query query = em.createQuery("SELECT p FROM PersonaContacto p WHERE p.persona.usuario.nombreusuario=:usuario");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("usuario", usuario);
+            PersonaContacto registro = (PersonaContacto) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarPersonaContactoPorUsuario PersonaContactoDAO : " + e.toString());
+            return null;
+        }
+    }
+    
+    @Override
+    public PersonaContacto buscarPersonaContactoPorIDPersona(BigInteger idPersona) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PersonaContacto p WHERE p.persona.idpersona=:idPersona");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idPersona", idPersona);
+            PersonaContacto registro = (PersonaContacto) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarPersonaContactoPorIDPersona PersonaContactoDAO : " + e.toString());
+            return null;
+        }
+    }
+    
+    @Override
+    public PersonaContacto buscarPersonaContactoPorCorreo(String correo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PersonaContacto p WHERE p.persona.emailpersona=:correo");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("correo", correo);
             PersonaContacto registro = (PersonaContacto) query.getSingleResult();
             return registro;
         } catch (Exception e) {
@@ -105,7 +135,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
     public List<PersonaContacto> consultarPersonasContactoPorConvenioEntidad(BigInteger convenioentidad) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM PersonaContacto p WHERE p.convenioporentidad.idconvenioporentidad=:convenioentidad ORDER BY p.nombre ASC");
+            Query query = em.createQuery("SELECT p FROM PersonaContacto p WHERE p.convenioporentidad.idconvenioporentidad=:convenioentidad ORDER BY p.persona.nombrespersona ASC");
             query.setParameter("convenioentidad", convenioentidad);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<PersonaContacto> lista = query.getResultList();
@@ -126,7 +156,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".identificacion ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.identificacionpersona ASC";
             System.out.println("consulta : " + consulta);
             TypedQuery<PersonaContacto> tq = em.createQuery(consulta, PersonaContacto.class);
             tq = asignarValores(tq, filters);
@@ -159,7 +189,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
                         camposFiltro++;
                     }
                     if ("parametroEstado".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "convenioporentidad.entidadexterna.persona.usuario.estado");
+                        wheres.append(alias).append("." + "persona.usuario.estado");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }

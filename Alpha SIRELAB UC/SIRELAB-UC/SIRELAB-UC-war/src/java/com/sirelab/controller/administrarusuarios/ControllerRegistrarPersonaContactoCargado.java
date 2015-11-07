@@ -7,6 +7,7 @@ package com.sirelab.controller.administrarusuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarPersonasContactoBOInterface;
 import com.sirelab.entidades.ConvenioPorEntidad;
+import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.EncriptarContrasenia;
@@ -36,11 +37,11 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
     //
 
     private ConvenioPorEntidad convenioPorEntidad;
-    private String inputNombre, inputApellido, inputID, inputEmail, inputTelefono1, inputTelefono2, inputUsuario;
+    private String inputNombre, inputApellido, inputID, inputEmail, inputEmailOpc, inputTelefono1, inputTelefono2, inputDireccion;
 
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
+    private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpc;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
-    private boolean validacionesUsuario;
+    private boolean validacionesDireccion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -64,19 +65,16 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         validacionesID = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
-        validacionesUsuario = false;
+        validacionesCorreoOpc = true;
+        validacionesDireccion = false;
         inputApellido = null;
-        inputUsuario = null;
+        inputDireccion = null;
         inputTelefono1 = null;
         inputTelefono2 = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
         BasicConfigurator.configure();
-    }
-
-    public void recibirConvenioPorEntidad(BigInteger idregistro) {
-        convenioPorEntidad = administrarPersonasContactoBO.buscarConvenioPorEntidadPorId(idregistro);
     }
 
     public void validarNombrePersonaContacto() {
@@ -126,7 +124,13 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
             if (tam >= 4) {
                 String correoPersonaContacto = inputEmail;
                 if (Utilidades.validarCorreoElectronico(correoPersonaContacto)) {
-                    validacionesCorreo = true;
+                    PersonaContacto registro = administrarPersonasContactoBO.obtenerPersonaContactoPorCorreo(inputEmail);
+                    if (registro == null) {
+                        validacionesCorreo = true;
+                    } else {
+                        validacionesCorreo = false;
+                        FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El correo ingresado se encuentra registrado."));
+                    }
                 } else {
                     validacionesCorreo = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
@@ -136,6 +140,25 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         } else {
             validacionesCorreo = false;
             FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El correo es obligatorio."));
+        }
+    }
+
+    public void validarCorreoOpcPersonaContacto() {
+        if (Utilidades.validarNulo(inputEmailOpc) && (!inputEmailOpc.isEmpty()) && (inputEmailOpc.trim().length() > 0)) {
+            int tam = inputEmailOpc.length();
+            if (tam >= 4) {
+                String correoPersonaContacto = inputEmailOpc;
+                if (Utilidades.validarCorreoElectronico(correoPersonaContacto)) {
+                    validacionesCorreoOpc = true;
+                } else {
+                    validacionesCorreoOpc = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                }
+            } else {
+            }
+        } else {
+            validacionesCorreoOpc = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El correo es obligatorio."));
         }
     }
 
@@ -193,29 +216,23 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         }
     }
 
-    public void validarUsuarioPersonaContacto() {
-        if ((Utilidades.validarNulo(inputUsuario)) && (!inputUsuario.isEmpty()) && (inputUsuario.trim().length() > 0)) {
-            int tam = inputUsuario.length();
+    public void validarDireccionPersonaContacto() {
+        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty()) && (inputDireccion.trim().length() > 0)) {
+            int tam = inputDireccion.length();
             if (tam >= 8) {
-                if (Utilidades.validarCaracteresAlfaNumericos(inputUsuario)) {
-                    PersonaContacto registro = administrarPersonasContactoBO.obtenerPersonaContactoPorUsuario(inputUsuario);
-                    if (null == registro) {
-                        validacionesUsuario = false;
-                    } else {
-                        FacesContext.getCurrentInstance().addMessage("form:inputUsuario", new FacesMessage("El usuario ya se encuentra registrado."));
-                        validacionesUsuario = false;
-                    }
+                if (Utilidades.validarCaracteresAlfaNumericos(inputDireccion)) {
+                    validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:inputUsuario", new FacesMessage("El usuario ingresado es incorrecto."));
-                    validacionesUsuario = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("La dirección es incorrecta."));
+                    validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:inputUsuario", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
-                validacionesUsuario = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                validacionesDireccion = false;
             }
         } else {
-            FacesContext.getCurrentInstance().addMessage("form:inputUsuario", new FacesMessage("El campo Usuario es incorrecto."));
-            validacionesUsuario = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("El campo Direccion es incorrecto."));
+            validacionesDireccion = false;
         }
     }
 
@@ -227,7 +244,7 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         if (validacionesCorreo == false) {
             retorno = false;
         }
-        if (validacionesUsuario == false) {
+        if (validacionesDireccion == false) {
             retorno = false;
         }
         if (validacionesID == false) {
@@ -239,16 +256,15 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         if (validacionesTel1 == false) {
             retorno = false;
         }
+        if (validacionesCorreoOpc == false) {
+            retorno = false;
+        }
         if (validacionesTel2 == false) {
             retorno = false;
         }
         return retorno;
     }
 
-    /**
-     * Metodo encargado de realizar el registro y validaciones de la información
-     * del nuevo docente
-     */
     public void registrarNuevoPersonaContacto() {
         if (validarResultadosValidacion() == true) {
             almacenarNuevoPersonaContactoEnSistema();
@@ -276,18 +292,21 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
+        validacionesCorreoOpc = true;
         validacionesID = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
-        validacionesUsuario = false;
+        validacionesDireccion = false;
         //
         inputApellido = null;
-        inputUsuario = null;
+        inputDireccion = null;
+        inputEmailOpc = null;
         inputEmail = null;
         inputTelefono1 = null;
         inputTelefono2 = null;
         inputID = null;
         inputNombre = null;
+        convenioPorEntidad = null;
     }
 
     public void limpiarFormulario() {
@@ -296,13 +315,15 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         validacionesCorreo = false;
         validacionesID = false;
         validacionesTel1 = true;
+        validacionesCorreoOpc = true;
         validacionesTel2 = true;
-        validacionesUsuario = false;
+        validacionesDireccion = false;
         //
         inputApellido = null;
-        inputUsuario = null;
+        inputDireccion = null;
         inputTelefono1 = null;
         inputTelefono2 = null;
+        inputEmailOpc = null;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
@@ -317,20 +338,22 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
             usuarioNuevo.setNumeroconexiones(0);
-            usuarioNuevo.setNombreusuario(inputUsuario);
+            usuarioNuevo.setNombreusuario(inputDireccion);
             EncriptarContrasenia obj = new EncriptarContrasenia();
             usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
-            PersonaContacto personaNueva = new PersonaContacto();
-            personaNueva.setApellido(inputApellido);
-            personaNueva.setNombreusuario(inputUsuario);
-            personaNueva.setCorreo(inputEmail);
-            personaNueva.setIdentificacion(inputID);
-            personaNueva.setNombre(inputNombre);
-            personaNueva.setConvenioporentidad(convenioPorEntidad);
-            personaNueva.setTelefonofijo(inputTelefono1);
-            personaNueva.setTelefonocelular(inputTelefono2);
-            administrarPersonasContactoBO.crearUsuario(usuarioNuevo);
-            administrarPersonasContactoBO.crearPersonaContado(personaNueva);
+            Persona personaNueva = new Persona();
+            personaNueva.setApellidospersona(inputApellido);
+            personaNueva.setDireccionpersona(inputDireccion);
+            personaNueva.setEmailpersona(inputEmail);
+            personaNueva.setIdentificacionpersona(inputID);
+            personaNueva.setNombrespersona(inputNombre);
+            personaNueva.setTelefono1persona(inputTelefono1);
+            personaNueva.setTelefono2persona(inputTelefono2);
+            personaNueva.setDireccionpersona(inputDireccion);
+            personaNueva.setEmailsecundario(inputEmailOpc);
+            PersonaContacto personaCNueva = new PersonaContacto();
+            personaCNueva.setConvenioporentidad(convenioPorEntidad);
+            administrarPersonasContactoBO.crearPersonaContado(usuarioNuevo, personaNueva, personaCNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema:  " + e.toString());
             System.out.println("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema : " + e.toString());
@@ -348,6 +371,22 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
     }
 
     //GET-SET
+    public String getInputEmailOpc() {
+        return inputEmailOpc;
+    }
+
+    public void setInputEmailOpc(String inputEmailOpc) {
+        this.inputEmailOpc = inputEmailOpc;
+    }
+
+    public String getInputDireccion() {
+        return inputDireccion;
+    }
+
+    public void setInputDireccion(String inputDireccion) {
+        this.inputDireccion = inputDireccion;
+    }
+
     public ConvenioPorEntidad getConvenioPorEntidad() {
         return convenioPorEntidad;
     }
@@ -402,14 +441,6 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
 
     public void setInputTelefono2(String inputTelefono2) {
         this.inputTelefono2 = inputTelefono2;
-    }
-
-    public String getInputUsuario() {
-        return inputUsuario;
-    }
-
-    public void setInputUsuario(String inputUsuario) {
-        this.inputUsuario = inputUsuario;
     }
 
     public String getMensajeFormulario() {

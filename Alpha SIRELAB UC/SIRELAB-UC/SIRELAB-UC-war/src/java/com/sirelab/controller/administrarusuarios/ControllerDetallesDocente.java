@@ -358,10 +358,10 @@ public class ControllerDetallesDocente implements Serializable {
         if (tipoTel == 1) {
             if (Utilidades.validarNulo(telefono1Docente) && (!telefono1Docente.isEmpty()) && (telefono1Docente.trim().length() > 0)) {
                 int tam = telefono1Docente.length();
-                if (tam == 7) {
+                if (tam == 4) {
                     if ((Utilidades.isNumber(telefono1Docente)) == false) {
                         validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono1Docente", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                        FacesContext.getCurrentInstance().addMessage("form:telefono1Docente", new FacesMessage("El numero de extensión se encuentra incorrecto."));
                     } else {
                         validacionesTel1 = true;
                     }

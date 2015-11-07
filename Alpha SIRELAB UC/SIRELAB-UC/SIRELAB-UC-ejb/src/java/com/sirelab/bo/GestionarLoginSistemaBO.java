@@ -8,6 +8,7 @@ import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
+import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
@@ -57,6 +58,8 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
     AdministradorEdificioDAOInterface administradorEdificioDAO;
+    @EJB
+    PersonaContactoDAOInterface personaContactoDAO;
 
     private final String NUMEROS = "0123456789";
     private final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -79,7 +82,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
                     } else {
                         if (tipoUsuario == 4) {
                             EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorID(secuencia);
-                            actualizarUsuario(registro.getPersona().getUsuario());
+                            //actualizarUsuario(registro.getPersona().getUsuario());
                         } else {
                             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(secuencia);
                             actualizarUsuario(registro.getPersona().getUsuario());
@@ -259,7 +262,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
                     } else {
                         secuencia = new BigInteger("5");
                         if (secuencia.equals(idTipoUsuario)) {
-                            registro = entidadExternaDAO.buscarEntidadExternaPorIDPersona(idPersona);
+                            registro = personaContactoDAO.buscarPersonaContactoPorIDPersona(idPersona);
                         } else {
                             registro = administradorEdificioDAO.buscarAdministradorEdificioPorIDPersona(idPersona);
                         }

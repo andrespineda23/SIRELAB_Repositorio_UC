@@ -39,11 +39,11 @@ public class ControllerDetallesPersonaContacto implements Serializable {
     //
     private PersonaContacto personaContactoEditar;
     private BigInteger idPersonaContacto;
-    private String inputNombre, inputApellido, inputID, inputEmail, inputTelefono1, inputTelefono2, inputUsuario;
+    private String inputNombre, inputApellido, inputID, inputEmail, inputEmailOpc, inputTelefono1, inputTelefono2, inputDireccion;
     private boolean inputEstado;
-    private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
+    private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpc;
     private boolean validacionesID, validacionesTel1, validacionesTel2;
-    private boolean validacionesUsuario, validacionesConvenioPorEntidad;
+    private boolean validacionesDireccion, validacionesConvenioPorEntidad;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
@@ -59,7 +59,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
     public void init() {
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
-        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionUsuario");
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionDireccion");
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             activarEstado = false;
         }
@@ -82,22 +82,24 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         validacionesNombre = true;
         validacionesApellido = true;
         validacionesCorreo = true;
+        validacionesCorreoOpc = true;
         validacionesID = true;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesConvenioPorEntidad = true;
-        validacionesUsuario = true;
+        validacionesDireccion = true;
         modificacionRegistro = false;
         colorMensaje = "black";
         mensajeFormulario = "N/A";
         inputConvenioPorEntidad = personaContactoEditar.getConvenioporentidad();
-        inputApellido = personaContactoEditar.getApellido();
-        inputEmail = personaContactoEditar.getCorreo();
-        inputEstado = personaContactoEditar.getConvenioporentidad().getEntidadexterna().getPersona().getUsuario().getEstado();
-        inputID = personaContactoEditar.getIdentificacion();
-        inputTelefono1 = personaContactoEditar.getTelefonofijo();
-        inputTelefono2 = personaContactoEditar.getTelefonocelular();
-        inputUsuario = personaContactoEditar.getNombreusuario();
+        inputApellido = personaContactoEditar.getPersona().getApellidospersona();
+        inputEmail = personaContactoEditar.getPersona().getEmailpersona();
+        inputEmailOpc = personaContactoEditar.getPersona().getEmailsecundario();
+        inputEstado = personaContactoEditar.getPersona().getUsuario().getEstado();
+        inputID = personaContactoEditar.getPersona().getIdentificacionpersona();
+        inputTelefono1 = personaContactoEditar.getPersona().getTelefono1persona();
+        inputTelefono2 = personaContactoEditar.getPersona().getTelefono1persona();
+        inputDireccion = personaContactoEditar.getPersona().getDireccionpersona();
         listaCoveniosPorEntidad = administrarPersonasContactoBO.obtenerConveniosPorEntidadRegistrados();
     }
 
@@ -166,16 +168,45 @@ public class ControllerDetallesPersonaContacto implements Serializable {
             if (tam >= 4) {
                 String correoPersonaContacto = inputEmail;
                 if (Utilidades.validarCorreoElectronico(correoPersonaContacto)) {
-                    validacionesCorreo = true;
+                    PersonaContacto registro = administrarPersonasContactoBO.obtenerPersonaContactoPorCorreo(inputEmail);
+                    if (null == registro) {
+                        validacionesCorreo = true;
+                    } else {
+                        if (personaContactoEditar.getIdpersonacontacto().equals(registro.getIdpersonacontacto())) {
+                            validacionesCorreo = false;
+                            FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El correo ingresado ya se encuentra registrado."));
+                        } else {
+                            validacionesCorreo = true;
+                        }
+                    }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El correo ingresado es incorreccto."));
                 }
             } else {
+                validacionesCorreo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
             }
         } else {
             validacionesCorreo = false;
             FacesContext.getCurrentInstance().addMessage("form:inputEmail", new FacesMessage("El correo es obligatorio."));
+        }
+        modificacionRegistro = true;
+    }
+
+    public void validarCorreoOpcPersonaContacto() {
+        if (Utilidades.validarNulo(inputEmailOpc) && (!inputEmailOpc.isEmpty()) && (inputEmailOpc.trim().length() > 0)) {
+            int tam = inputEmailOpc.length();
+            if (tam >= 4) {
+                String correoPersonaContacto = inputEmailOpc;
+                if (Utilidades.validarCorreoElectronico(correoPersonaContacto)) {
+                    validacionesCorreoOpc = true;
+                } else {
+                    validacionesCorreoOpc = false;
+                    FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                }
+            } else {
+            }
         }
         modificacionRegistro = true;
     }
@@ -199,6 +230,23 @@ public class ControllerDetallesPersonaContacto implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:inputID", new FacesMessage("El numero identificación es obligatorio."));
         }
         modificacionRegistro = true;
+    }
+
+    public void validarDireccionPersonaContacto() {
+        if ((Utilidades.validarNulo(inputDireccion)) && (!inputDireccion.isEmpty()) && (inputDireccion.trim().length() > 0)) {
+            int tam = inputDireccion.length();
+            if (tam >= 8) {
+                if (Utilidades.validarCaracteresAlfaNumericos(inputDireccion)) {
+                    validacionesDireccion = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("La dirección es incorrecta."));
+                    validacionesDireccion = false;
+                }
+            } else {
+                FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                validacionesDireccion = false;
+            }
+        }
     }
 
     public void validarDatosNumericosPersonaContacto(int tipoTel) {
@@ -254,10 +302,13 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         if (validacionesCorreo == false) {
             retorno = false;
         }
+        if (validacionesCorreoOpc == false) {
+            retorno = false;
+        }
         if (validacionesConvenioPorEntidad == false) {
             retorno = false;
         }
-        if (validacionesUsuario == false) {
+        if (validacionesDireccion == false) {
             retorno = false;
         }
         if (validacionesID == false) {
@@ -302,17 +353,17 @@ public class ControllerDetallesPersonaContacto implements Serializable {
      */
     private void almacenarModificacionPersonaContacto() {
         try {
-            personaContactoEditar.setApellido(inputApellido);
-            personaContactoEditar.setNombreusuario(inputUsuario);
-            personaContactoEditar.setCorreo(inputEmail);
-            personaContactoEditar.setIdentificacion(inputID);
-            personaContactoEditar.setNombre(inputNombre);
-            personaContactoEditar.setTelefonofijo(inputTelefono1);
-            personaContactoEditar.setTelefonocelular(inputTelefono2);
+
+            personaContactoEditar.getPersona().setApellidospersona(inputApellido);
+            personaContactoEditar.getPersona().setDireccionpersona(inputDireccion);
+            personaContactoEditar.getPersona().setEmailpersona(inputEmail);
+            personaContactoEditar.getPersona().setIdentificacionpersona(inputID);
+            personaContactoEditar.getPersona().setNombrespersona(inputNombre);
+            personaContactoEditar.getPersona().setTelefono1persona(inputTelefono1);
+            personaContactoEditar.getPersona().setTelefono2persona(inputTelefono2);
+            personaContactoEditar.getPersona().setDireccionpersona(inputDireccion);
+            personaContactoEditar.getPersona().setEmailsecundario(inputEmailOpc);
             personaContactoEditar.setConvenioporentidad(inputConvenioPorEntidad);
-            if (activarEstado == false) {
-                administrarPersonasContactoBO.editarUsuario(personaContactoEditar.getConvenioporentidad().getEntidadexterna().getPersona().getUsuario());
-            }
             administrarPersonasContactoBO.editarPersonaContado(personaContactoEditar);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto:  " + e.toString());
@@ -385,12 +436,12 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         this.inputTelefono2 = inputTelefono2;
     }
 
-    public String getInputUsuario() {
-        return inputUsuario;
+    public String getInputDireccion() {
+        return inputDireccion;
     }
 
-    public void setInputUsuario(String inputUsuario) {
-        this.inputUsuario = inputUsuario;
+    public void setInputDireccion(String inputDireccion) {
+        this.inputDireccion = inputDireccion;
     }
 
     public boolean isInputEstado() {
@@ -447,6 +498,14 @@ public class ControllerDetallesPersonaContacto implements Serializable {
 
     public void setInputConvenioPorEntidad(ConvenioPorEntidad inputConvenioPorEntidad) {
         this.inputConvenioPorEntidad = inputConvenioPorEntidad;
+    }
+
+    public String getInputEmailOpc() {
+        return inputEmailOpc;
+    }
+
+    public void setInputEmailOpc(String inputEmailOpc) {
+        this.inputEmailOpc = inputEmailOpc;
     }
 
 }

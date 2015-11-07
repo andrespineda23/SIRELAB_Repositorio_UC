@@ -93,9 +93,9 @@ and open the template in the editor.
                                                         <h:selectOneMenu value="#{controllerAdministrarPersonaContacto.parametroEntidad}"
                                                                          class="form-control"
                                                                          id="parametroEntidad">
-                                                            <f:selectItem itemLabel="Seleccione Convenio" itemValue="null" />
+                                                            <f:selectItem itemLabel="Seleccione Entidad Externa" itemValue="null" />
                                                             <f:selectItems value="#{controllerAdministrarPersonaContacto.listaEntidadesExternas}" var="entidad"
-                                                                           itemLabel="#{entidad.persona.nombrespersona}" itemValue="#{entidad}"/>
+                                                                           itemLabel="#{entidad.nombreentidad}" itemValue="#{entidad}"/>
                                                             <f:converter converterId="ConverterGenerico" />
                                                         </h:selectOneMenu>
                                                     </div>
@@ -103,7 +103,7 @@ and open the template in the editor.
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="parametroEstado">
-                                                            Estado PersonaContacto
+                                                            Estado Usuario
                                                         </label>
                                                         <h:selectOneMenu value="#{controllerAdministrarPersonaContacto.parametroEstado}"
                                                                          class="form-control"
@@ -147,31 +147,31 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Nombre"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.nombre}"/>
+                                                        <h:outputText value="#{item.persona.nombrespersona}"/>
                                                     </h:column>  
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Apellido"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.apellido}"/>
+                                                        <h:outputText value="#{item.persona.apellidospersona}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="N. Documento"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.identificacion}"/>
+                                                        <h:outputText value="#{item.persona.identificacionpersona}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Correo"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.correo}"/>
+                                                        <h:outputText value="#{item.persona.emailpersona}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Entidad Externa"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.convenioporentidad.entidadexterna.persona.nombrespersona}"/>
+                                                        <h:outputText value="#{item.convenioporentidad.entidadexterna.nombreentidad}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
@@ -183,13 +183,13 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Estado"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.convenioporentidad.entidadexterna.persona.usuario.strEstado}"/>
+                                                        <h:outputText value="#{item.persona.usuario.strEstado}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" action="#{controllerAdministrarPersonaContacto.verDetallesPersonaContacto()}" actionListener="#{controllerDetallesPersonaContacto.recibirIDPersonasContactoDetalles(item.idpersonacontacto)}"/>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarPersonaContacto.verDetallesPersonaContacto()}" actionListener="#{controllerDetallesPersonaContacto.recibirIDPersonaContactoDetalles(item.idpersonacontacto)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>

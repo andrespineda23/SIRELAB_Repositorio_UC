@@ -136,7 +136,7 @@ and open the template in the editor.
                                         <h6><h:message id="msnEdificio" for="inputEdificio" style="color: red"></h:message></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número de Atención en Edificio"/></strong>
+                                        <strong><h:outputText value="Número de Extensión"/></strong>
                                         <h:inputText maxlength="45"  value="#{controllerRegistrarAdministradorEdificio.inputNAtencion}" disabled="#{controllerRegistrarAdministradorEdificio.activarCasillas}" class="form-control" id="inputNAtencion" >
                                             <f:ajax event="blur" listener="#{controllerRegistrarAdministradorEdificio.actualizarNAtencion()}" execute="inputNAtencion" render="inputNAtencion msnNAtencion" />
                                         </h:inputText>

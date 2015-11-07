@@ -109,27 +109,21 @@ and open the template in the editor.
                                                              value="#{controllerAdministrarEntidadesExternas.listaEntidadesExternasTabla}">
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Nombre Inicial"/>
+                                                            <h:outputText value="Nombre"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.persona.nombrespersona}"/>
+                                                        <h:outputText value="#{item.nombreentidad}"/>
                                                     </h:column>  
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Nombre Secundario"/>
+                                                            <h:outputText value="Identificación"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.persona.apellidospersona}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="N. Documento"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.persona.identificacionpersona}"/>
+                                                        <h:outputText value="#{item.identificacion}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Correo"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.persona.emailpersona}"/>
+                                                        <h:outputText value="#{item.emailentidad}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">

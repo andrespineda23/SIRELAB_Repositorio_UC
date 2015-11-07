@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByDireccionpersona", query = "SELECT p FROM Persona p WHERE p.direccionpersona = :direccionpersona")})
 public class Persona implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    private Collection<PersonaContacto> personaContactoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private Collection<AdministradorEdificio> administradorEdificioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private Collection<Reserva> reservaCollection;
@@ -87,8 +89,6 @@ public class Persona implements Serializable {
     @Size(max = 45)
     @Column(name = "direccionpersona")
     private String direccionpersona;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Collection<EntidadExterna> entidadExternaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private Collection<Estudiante> estudianteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
@@ -199,15 +199,6 @@ public class Persona implements Serializable {
     }
 
     @XmlTransient
-    public Collection<EntidadExterna> getEntidadExternaCollection() {
-        return entidadExternaCollection;
-    }
-
-    public void setEntidadExternaCollection(Collection<EntidadExterna> entidadExternaCollection) {
-        this.entidadExternaCollection = entidadExternaCollection;
-    }
-
-    @XmlTransient
     public Collection<Estudiante> getEstudianteCollection() {
         return estudianteCollection;
     }
@@ -283,6 +274,15 @@ public class Persona implements Serializable {
 
     public void setAdministradorEdificioCollection(Collection<AdministradorEdificio> administradorEdificioCollection) {
         this.administradorEdificioCollection = administradorEdificioCollection;
+    }
+
+    @XmlTransient
+    public Collection<PersonaContacto> getPersonaContactoCollection() {
+        return personaContactoCollection;
+    }
+
+    public void setPersonaContactoCollection(Collection<PersonaContacto> personaContactoCollection) {
+        this.personaContactoCollection = personaContactoCollection;
     }
 
 }

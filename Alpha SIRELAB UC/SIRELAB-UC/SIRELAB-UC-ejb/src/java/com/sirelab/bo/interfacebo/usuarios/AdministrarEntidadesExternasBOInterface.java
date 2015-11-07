@@ -2,6 +2,7 @@ package com.sirelab.bo.interfacebo.usuarios;
 
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.SectorEntidad;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
@@ -21,15 +22,15 @@ public interface AdministrarEntidadesExternasBOInterface {
 
     public void actualizarInformacionEntidadExterna(EntidadExterna entidadExterna);
 
-    public void almacenarNuevaEntidadExternaEnSistema(Usuario usuarioNuevo, Persona personaNuevo, EntidadExterna entidadNueva);
+    public void almacenarNuevaEntidadExternaEnSistema(EntidadExterna entidadNueva);
 
     public void actualizarInformacionPersona(Persona persona);
+
+    public List<SectorEntidad> obtenerSectorEntidadRegistrado();
 
     public EntidadExterna obtenerEntidadExternaPorIdentificacion(String identificacion);
 
     public void actualizarInformacionUsuario(Usuario usuario);
-
-    public EntidadExterna obtenerEntidadExternaPorDocumento(String documento);
 
     public EntidadExterna obtenerEntidadExternaPorCorreo(String correo);
 

@@ -4,11 +4,13 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarEntidadesExternasBOInterfa
 import com.sirelab.dao.interfacedao.ConvenioPorEntidadDAOInterface;
 import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
+import com.sirelab.dao.interfacedao.SectorEntidadDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.ConvenioPorEntidad;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.SectorEntidad;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
@@ -34,6 +36,8 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
     EntidadExternaDAOInterface entidadExternaDAO;
     @EJB
     ConvenioPorEntidadDAOInterface convenioPorEntidadDAO;
+    @EJB
+    SectorEntidadDAOInterface sectorEntidadDAO;
 
     @Override
     public List<EntidadExterna> consultarEntidadesExternasPorParametro(Map<String, String> filtros) {
@@ -65,17 +69,6 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorCorreoNumDocumento : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public EntidadExterna obtenerEntidadExternaPorDocumento(String documento) {
-        try {
-            EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorDocumento(documento);
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorDocumento : " + e.toString());
             return null;
         }
     }
@@ -130,20 +123,8 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
     }
 
     @Override
-    public void almacenarNuevaEntidadExternaEnSistema(Usuario usuarioNuevo, Persona personaNuevo, EntidadExterna entidadNueva) {
+    public void almacenarNuevaEntidadExternaEnSistema(EntidadExterna entidadNueva) {
         try {
-            int sec = 1;
-            //usuarioNuevo.setIdusuario(idUsuario);
-            TipoUsuario tipoUsuario = tipoUsuarioDAO.buscarTipoUsuarioPorNombre("ENTIDADEXTERNA");
-            usuarioNuevo.setTipousuario(tipoUsuario);
-            usuarioDAO.crearUsuario(usuarioNuevo);
-            Usuario usuarioRegistrado = usuarioDAO.obtenerUltimoUsuarioRegistrado();
-            //personaNuevo.setIdpersona(idPersona);
-            personaNuevo.setUsuario(usuarioRegistrado);
-            personaDAO.crearPersona(personaNuevo);
-            Persona personaRegistrada = personaDAO.obtenerUltimaPersonaRegistrada();
-            //estudianteNuevo.setIdestudiante(idEstudiante);
-            entidadNueva.setPersona(personaRegistrada);
             entidadExternaDAO.crearEntidadExterna(entidadNueva);
         } catch (Exception e) {
             System.out.println("Error AdministrarEntidadesExternasBO almacenarNuevaEntidadExternaEnSistema : " + e.toString());
@@ -169,6 +150,17 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
                     return false;
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEntidadesExternasBO validarCambioEstadoEntidad : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<SectorEntidad> obtenerSectorEntidadRegistrado() {
+        try {
+            List<SectorEntidad> lista = sectorEntidadDAO.consultarSectoresEntidad();
+            return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarEntidadesExternasBO validarCambioEstadoEntidad : " + e.toString());
             return null;

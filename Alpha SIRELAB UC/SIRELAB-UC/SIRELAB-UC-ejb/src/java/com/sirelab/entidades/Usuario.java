@@ -160,7 +160,7 @@ public class Usuario implements Serializable {
     public String getStrEstado() {
         getEstado();
         if (null != estado) {
-            if (estado == null) {
+            if (estado == true) {
                 strEstado = "ACTIVO";
             } else {
                 strEstado = "INACTIVO";

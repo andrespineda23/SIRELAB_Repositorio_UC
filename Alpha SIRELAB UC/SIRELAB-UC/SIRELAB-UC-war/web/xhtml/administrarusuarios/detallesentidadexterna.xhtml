@@ -68,41 +68,21 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Estado Entidad Externa*"/></strong>
                                         <h:inputText readonly="true" value="#{controllerDetallesEntidadExterna.entidadExternaDetalles.strEstado}" class="form-control" id="estadoEntidad" />
-                                    </div>    
-                                    <fieldset>
-                                        <legend class="h5 text-info">Datos Opcionales</legend>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Correo Contacto*"/></strong>
-                                            <div class="input-group">
-                                                <h:inputText maxlength="60" value="#{controllerDetallesEntidadExterna.correoOpcEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="correoOpcEntidadExterna">
-                                                    <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarCorreoOpcEntidadExterna()}" execute="correoOpcEntidadExterna" render="correoOpcEntidadExterna msnEmailOpc" />
-                                                </h:inputText>
-                                                <span class="input-group-addon">@</span>
-                                            </div>
-                                            <h6><h:message id="msnEmailOpc" for="correoOpcEntidadExterna" style="color: red"></h:message></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Número Fijo"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono1EntidadExterna" >
-                                                <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(1)}" execute="telefono1EntidadExterna" render="telefono1EntidadExterna msnTelefono1" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnTelefono1" for="telefono1EntidadExterna" style="color: red"></h:message></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Número Celular"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono2EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono2EntidadExterna" >
-                                                <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(2)}" execute="telefono2EntidadExterna" render="telefono2EntidadExterna msnTelefono2" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnTelefono2" for="telefono2EntidadExterna" style="color: red"></h:message></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Dirección"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.direccionEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="direccionEntidadExterna" >
-                                                <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDireccionEntidadExterna()}" execute="direccionEntidadExterna" render="direccionEntidadExterna msnDireccion" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnDireccion" for="direccionEntidadExterna" style="color: red"></h:message></h6>
-                                        </div>
-                                    </fieldset>
+                                    </div>  
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Números Contacto*"/></strong>
+                                        <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono1EntidadExterna" >
+                                            <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(1)}" execute="telefono1EntidadExterna" render="telefono1EntidadExterna msnTelefono1" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnTelefono1" for="telefono1EntidadExterna" style="color: red"></h:message></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Dirección"/></strong>
+                                        <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.direccionEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="direccionEntidadExterna" >
+                                            <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDireccionEntidadExterna()}" execute="direccionEntidadExterna" render="direccionEntidadExterna msnDireccion" />
+                                        </h:inputText>
+                                        <h6><h:message id="msnDireccion" for="direccionEntidadExterna" style="color: red"></h:message></h6>
+                                    </div>
                                 </fieldset>
                                 <fieldset>
                                     <legend class="text-info">Información Entidad Externa</legend>

@@ -41,6 +41,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             return null;
         }
     }
+
     @Override
     public List<Convenio> consultarConveniosActivosRegistrados() {
         try {
@@ -62,6 +63,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             return null;
         }
     }
+
     @Override
     public List<EntidadExterna> consultarEntidadesExternasActivasRegistradas() {
         try {
@@ -142,6 +144,17 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorParametros: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<ConvenioPorEntidad> obtenerConvenioPorEntidadPorIdEntidad(BigInteger idEntidad) {
+        try {
+            List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidadPorEntidad(idEntidad);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorIdEntidad: " + e.toString());
             return null;
         }
     }

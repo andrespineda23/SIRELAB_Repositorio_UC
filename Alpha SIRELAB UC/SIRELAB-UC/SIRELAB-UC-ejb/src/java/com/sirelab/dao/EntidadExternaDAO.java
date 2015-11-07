@@ -65,6 +65,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             return null;
         }
     }
+
     @Override
     public List<EntidadExterna> consultarEntidadesExternasActivas() {
         try {
@@ -93,12 +94,12 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public EntidadExterna buscarEntidadExternaPorIdentificacionEntidad(String identificacion) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.persona.identificacionpersona=:identificacion");
+            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.identificacion=:identificacion");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("identificacion", identificacion);
             EntidadExterna registro = (EntidadExterna) query.getSingleResult();
@@ -110,25 +111,10 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
     }
 
     @Override
-    public EntidadExterna buscarEntidadExternaPorIDPersona(BigInteger idPersona) {
-        try {
-            em.clear();
-            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.persona.idpersona=:idPersona");
-            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("idPersona", idPersona);
-            EntidadExterna registro = (EntidadExterna) query.getSingleResult();
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error buscarEntidadExternaPorIDPersona EntidadExternaDAO : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
     public EntidadExterna buscarEntidadExternaPorCorreoNumDocumento(String correo, String documento) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.persona.emailpersona=:correo AND p.persona.identificacionpersona=:documento");
+            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.emailentidad=:correo AND p.identificacion=:documento");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("correo", correo);
             query.setParameter("documento", documento);
@@ -139,25 +125,12 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             return null;
         }
     }
-    @Override
-    public EntidadExterna buscarEntidadExternaPorDocumento(String documento) {
-        try {
-            em.clear();
-            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.persona.identificacionpersona=:documento");
-            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("documento", documento);
-            EntidadExterna registro = (EntidadExterna) query.getSingleResult();
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error buscarEntidadExternaPorDocumento EntidadExternaDAO : " + e.toString());
-            return null;
-        }
-    }
+
     @Override
     public EntidadExterna buscarEntidadExternaPorCorreo(String correo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.persona.emailpersona=:correo");
+            Query query = em.createQuery("SELECT p FROM EntidadExterna p WHERE p.emailentidad=:correo");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("correo", correo);
             EntidadExterna registro = (EntidadExterna) query.getSingleResult();
@@ -178,7 +151,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".identidadexterna ASC";
             System.out.println("consulta : " + consulta);
             TypedQuery<EntidadExterna> tq = em.createQuery(consulta, EntidadExterna.class);
             tq = asignarValores(tq, filters);
@@ -201,31 +174,31 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
                         wheres.append(" AND ");
                     }
                     if ("parametroEstado".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + ".estado");
+                        wheres.append(alias).append("." + "estado");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
                     if ("parametroNombre".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".persona.nombrespersona")
+                                .append(".nombreentidad")
                                 .append(") Like :parametroNombre");
                         camposFiltro++;
                     }
                     if ("parametroSector".equals(entry.getKey())) {
-                        wheres.append("UPPER(").append(alias)
-                                .append(".sector")
-                                .append(") Like :parametroSector");
+                        wheres.append(alias)
+                                .append(".sector.idsectorentidad")
+                                .append(" =:parametroSector");
                         camposFiltro++;
                     }
                     if ("parametroDocumento".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".persona.identificacionpersona")
+                                .append(".identidadexterna")
                                 .append(") Like :parametroDocumento");
                         camposFiltro++;
                     }
                     if ("parametroCorreo".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".persona.emailpersona")
+                                .append(".emailentidad")
                                 .append(") Like :parametroCorreo");
                         camposFiltro++;
                     }
@@ -248,7 +221,6 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             if (null != entry.getValue() && !entry.getValue().isEmpty()) {
                 if (("parametroCorreo".equals(entry.getKey()))
-                        || ("parametroSector".equals(entry.getKey()))
                         || ("parametroDocumento".equals(entry.getKey()))
                         || ("parametroNombre".equals(entry.getKey()))) {
                     //
@@ -256,6 +228,9 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
                 }
                 if (("parametroEstado".equals(entry.getKey()))) {
                     tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
+                }
+                if (("parametroSector".equals(entry.getKey()))) {
+                    tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
                 }
             }
         }

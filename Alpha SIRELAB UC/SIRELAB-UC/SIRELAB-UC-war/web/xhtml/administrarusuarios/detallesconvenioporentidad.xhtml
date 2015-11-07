@@ -51,7 +51,7 @@ and open the template in the editor.
                                                              id="inputEntidadExterna">
                                                 <f:selectItem itemLabel="Seleccione Entidad Externa" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesConvenioPorEntidad.listaEntidadesExternas}" var="entidad"
-                                                               itemLabel="#{entidad.persona.nombrespersona}" itemValue="#{entidad}"/>
+                                                               itemLabel="#{entidad.nombreentidad}" itemValue="#{entidad}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerDetallesConvenioPorEntidad.validarEntidadExterna()}" execute="inputEntidadExterna" />
                                             </h:selectOneMenu>

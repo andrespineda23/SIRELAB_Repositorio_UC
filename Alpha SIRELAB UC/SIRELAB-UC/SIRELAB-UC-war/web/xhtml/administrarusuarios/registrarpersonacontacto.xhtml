@@ -17,8 +17,8 @@ and open the template in the editor.
                 <h:form id="form">
                     <div class="container">
                         <br></br>
-                            <br></br>
-                            <br></br>
+                        <br></br>
+                        <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
@@ -70,16 +70,9 @@ and open the template in the editor.
                                                 <h:inputText maxlength="45" value="#{controllerRegistrarPersonaContacto.inputEmail}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
                                                     <f:ajax event="blur" listener="#{controllerRegistrarPersonaContacto.validarCorreoPersonaContacto()}" execute="inputEmail" render="inputEmail msnEmail" />
                                                 </h:inputText>
-                                                <span class="input-group-addon">@ucentral.edu.co</span>
+                                                <span class="input-group-addon"></span>
                                             </div>
                                             <h6><h:message id="msnEmail" for="inputEmail" style="color: red"/></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Nombre Usuario"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContacto.inputUsuario}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" class="form-control" required="true" id="inputUsuario" requiredMessage="El campo Usuario es obligatorio." >
-                                                <f:ajax event="blur" listener="#{controllerRegistrarPersonaContacto.validarUsuarioPersonaContacto()}" execute="inputUsuario" render="inputUsuario msnUsuario" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnUsuario" for="inputUsuario" style="color: red"/></h6>
                                         </div>
                                         <fieldset>
                                             <legend class="h5 text-info">Datos Opcionales</legend>
@@ -97,6 +90,23 @@ and open the template in the editor.
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"/></h6>
                                             </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Correo Secundario"/></strong>
+                                                <div class="input-group">
+                                                    <h:inputText maxlength="45" value="#{controllerRegistrarPersonaContacto.inputEmailOpc}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" class="form-control" id="inputEmailOpc" >
+                                                        <f:ajax event="blur" listener="#{controllerRegistrarPersonaContacto.validarCorreoPersonaContacto()}" execute="inputEmailOpc" render="inputEmailOpc msnEmailOpc" />
+                                                    </h:inputText>
+                                                    <span class="input-group-addon"></span>
+                                                </div>
+                                                <h6><h:message id="msnEmailOpc" for="inputEmailOpc" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Dirección"/></strong>
+                                                <h:inputText maxlength="45" value="#{controllerRegistrarPersonaContacto.inputDireccion}" disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" class="form-control" id="inputDireccion" >
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarPersonaContacto.validarDireccionPersonaContacto()}" execute="inputDireccion" render="inputDireccion msnDireccion" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnDireccion" for="inputDireccion" style="color: red"/></h6>
+                                            </div>
                                         </fieldset>
                                     </fieldset>
                                     <fieldset>
@@ -108,20 +118,20 @@ and open the template in the editor.
                                                              id="inputEntidadExterna">
                                                 <f:selectItem itemLabel="Seleccione Entidad" itemValue="null" />
                                                 <f:selectItems value="#{controllerRegistrarPersonaContacto.listaEntidadesExternas}" var="entidad"
-                                                               itemLabel="#{entidad.persona.nombrespersona}" itemValue="#{entidad}"/>
+                                                               itemLabel="#{entidad.nombreentidad}" itemValue="#{entidad}"/>
                                                 <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerRegistrarPersonaContacto.validarEntidadPersonaContacto()}" execute="inputEntidadExterna" render="msnEntidad"/>
+                                                <f:ajax event="change" listener="#{controllerRegistrarPersonaContacto.validarEntidadPersonaContacto()}" execute="inputEntidadExterna" render="msnEntidad inputConvenio"/>
                                             </h:selectOneMenu>
                                             <h6><h:message id="msnEntidad" for="inputEntidadExterna" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Convenio*"/></strong>
-                                            <h:selectOneMenu disabled="#{controllerRegistrarPersonaContacto.activarCasillas}" value="#{controllerRegistrarPersonaContacto.inputConvenio}"
-                                                             class="form-control"
+                                            <h:selectOneMenu disabled="#{controllerRegistrarPersonaContacto.activarConvenio}" value="#{controllerRegistrarPersonaContacto.inputConvenioPorEntidad}"
+                                                             class="form-control" 
                                                              id="inputConvenio">
                                                 <f:selectItem itemLabel="Seleccione Convenio" itemValue="null" />
-                                                <f:selectItems value="#{controllerRegistrarPersonaContacto.listaConvenios}" var="convenio"
-                                                               itemLabel="#{convenio.nombreconvenio}" itemValue="#{convenio}"/>
+                                                <f:selectItems value="#{controllerRegistrarPersonaContacto.listaConveniosPorEntidad}" var="convenio"
+                                                               itemLabel="#{convenio.convenio.nombreconvenio}" itemValue="#{convenio}"/>
                                                 <f:converter converterId="ConverterGenerico" />
                                                 <f:ajax event="change" listener="#{controllerRegistrarPersonaContacto.validarConvenioPersonaContacto()}" execute="inputConvenio" render="msnConvenio"/>
                                             </h:selectOneMenu>

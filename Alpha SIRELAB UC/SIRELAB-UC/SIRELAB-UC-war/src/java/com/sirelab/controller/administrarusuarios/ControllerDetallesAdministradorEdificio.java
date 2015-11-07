@@ -162,7 +162,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
 
     public void validarNAtencionAdministradorEdificio() {
         if (Utilidades.validarNulo(numAtencionAdministradorEdificio) && (!numAtencionAdministradorEdificio.isEmpty()) && (numAtencionAdministradorEdificio.trim().length() > 0)) {
-            if (!Utilidades.validarCaracterString(numAtencionAdministradorEdificio)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(numAtencionAdministradorEdificio)) {
                 validacionesNombre = false;
                 FacesContext.getCurrentInstance().addMessage("form:numAtencionAdministradorEdificio", new FacesMessage("El Número ingresado es incorrecto."));
             } else {

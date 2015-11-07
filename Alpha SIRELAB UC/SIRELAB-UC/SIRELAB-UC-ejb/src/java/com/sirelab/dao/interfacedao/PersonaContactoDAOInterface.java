@@ -16,6 +16,10 @@ import java.util.Map;
  */
 public interface PersonaContactoDAOInterface {
 
+    public PersonaContacto buscarPersonaContactoPorCorreo(String correo);
+
+    public PersonaContacto buscarPersonaContactoPorIDPersona(BigInteger idPersona);
+
     public void crearPersonaContacto(PersonaContacto personacontacto);
 
     public void editarPersonaContacto(PersonaContacto personacontacto);

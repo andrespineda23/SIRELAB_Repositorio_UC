@@ -8,6 +8,7 @@ package com.sirelab.bo.interfacebo.usuarios;
 import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.ConvenioPorEntidad;
 import com.sirelab.entidades.EntidadExterna;
+import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
@@ -26,7 +27,7 @@ public interface AdministrarPersonasContactoBOInterface {
 
     public List<PersonaContacto> buscarPersonasContactoPorConvenioEntidad(BigInteger convenioentidad);
 
-    public void crearPersonaContado(PersonaContacto personacontacto);
+    public void crearPersonaContado(Usuario usuario, Persona persona, PersonaContacto personacontacto);
 
     public void editarPersonaContado(PersonaContacto personacontacto);
 
@@ -48,5 +49,9 @@ public interface AdministrarPersonasContactoBOInterface {
 
     public List<EntidadExterna> obtenerEntidadesExternasActivosRegistradas();
 
+    public PersonaContacto obtenerPersonaContactoPorCorreo(String correo);
+
     public List<Convenio> obtenerConveniosActivosRegistradas();
+    
+    public List<ConvenioPorEntidad> obtenerConvenioPorEntidadPorIdEntidad(BigInteger idEntidad);
 }

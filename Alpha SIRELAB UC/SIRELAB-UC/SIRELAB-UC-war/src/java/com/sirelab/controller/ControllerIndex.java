@@ -8,6 +8,7 @@ import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
@@ -247,9 +248,9 @@ public class ControllerIndex implements Serializable {
                                 } else {
                                     secuenciaLogin = new BigInteger("5");
                                     if (secuenciaLogin.equals(idTipoUsuario)) {
-                                        EntidadExterna entidadExternaLogin = (EntidadExterna) usuarioFinal;
+                                        PersonaContacto entidadExternaLogin = (PersonaContacto) usuarioFinal;
                                         usuarioLoginSistema.setNombreTipoUsuario("ENTIDADEXTERNA");
-                                        usuarioLoginSistema.setIdUsuarioLogin(entidadExternaLogin.getIdentidadexterna());
+                                        usuarioLoginSistema.setIdUsuarioLogin(entidadExternaLogin.getIdpersonacontacto());
                                         usuarioLoginSistema.setUserUsuario(entidadExternaLogin.getPersona().getUsuario().getNombreusuario());
                                         paginaSiguiente = "inicioentidadexterna";
                                     } else {

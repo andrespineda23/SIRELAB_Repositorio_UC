@@ -5,12 +5,9 @@
  */
 package com.sirelab.entidades;
 
-import java.awt.AlphaComposite;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,17 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "entidadexterna")
@@ -38,8 +33,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "EntidadExterna.findAll", query = "SELECT e FROM EntidadExterna e"),
     @NamedQuery(name = "EntidadExterna.findByIdentidadexterna", query = "SELECT e FROM EntidadExterna e WHERE e.identidadexterna = :identidadexterna"),
-    @NamedQuery(name = "EntidadExterna.findBySector", query = "SELECT e FROM EntidadExterna e WHERE e.sector = :sector"),
-    @NamedQuery(name = "EntidadExterna.findByEstado", query = "SELECT e FROM EntidadExterna e WHERE e.estado = :estado")})
+    @NamedQuery(name = "EntidadExterna.findByEstado", query = "SELECT e FROM EntidadExterna e WHERE e.estado = :estado"),
+    @NamedQuery(name = "EntidadExterna.findByNombreentidad", query = "SELECT e FROM EntidadExterna e WHERE e.nombreentidad = :nombreentidad"),
+    @NamedQuery(name = "EntidadExterna.findByEmailentidad", query = "SELECT e FROM EntidadExterna e WHERE e.emailentidad = :emailentidad"),
+    @NamedQuery(name = "EntidadExterna.findByTelefonoentidad", query = "SELECT e FROM EntidadExterna e WHERE e.telefonoentidad = :telefonoentidad"),
+    @NamedQuery(name = "EntidadExterna.findByDireccionentidad", query = "SELECT e FROM EntidadExterna e WHERE e.direccionentidad = :direccionentidad"),
+    @NamedQuery(name = "EntidadExterna.findByIdentificacion", query = "SELECT e FROM EntidadExterna e WHERE e.identificacion = :identificacion")})
 public class EntidadExterna implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,56 +49,38 @@ public class EntidadExterna implements Serializable {
     private BigInteger identidadexterna;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "sector")
-    private String sector;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "estado")
     private boolean estado;
-    @JoinColumn(name = "persona", referencedColumnName = "idpersona")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nombreentidad")
+    private String nombreentidad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 60)
+    @Column(name = "emailentidad")
+    private String emailentidad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "telefonoentidad")
+    private String telefonoentidad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "direccionentidad")
+    private String direccionentidad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "identificacion")
+    private String identificacion;
+    @JoinColumn(name = "sector", referencedColumnName = "idsectorentidad")
     @ManyToOne(optional = false)
-    private Persona persona;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entidadexterna")
-    private Collection<ConvenioPorEntidad> convenioPorEntidadCollection;
+    private SectorEntidad sector;
     @Transient
     private String strEstado;
-
-    public EntidadExterna() {
-    }
-
-    public EntidadExterna(BigInteger identidadexterna) {
-        this.identidadexterna = identidadexterna;
-    }
-
-    public EntidadExterna(BigInteger identidadexterna, String sector, boolean estado) {
-        this.identidadexterna = identidadexterna;
-        this.sector = sector;
-        this.estado = estado;
-    }
-
-    public BigInteger getIdentidadexterna() {
-        return identidadexterna;
-    }
-
-    public void setIdentidadexterna(BigInteger identidadexterna) {
-        this.identidadexterna = identidadexterna;
-    }
-
-    public String getSector() {
-        if (null != sector) {
-            return sector.toUpperCase();
-        }
-        return sector;
-    }
-
-    public void setSector(String sector) {
-        this.sector = sector.toUpperCase();
-    }
-
-    public boolean getEstado() {
-        return estado;
-    }
 
     public String getStrEstado() {
         getEstado();
@@ -115,25 +96,85 @@ public class EntidadExterna implements Serializable {
         this.strEstado = strEstado;
     }
 
+    public EntidadExterna() {
+    }
+
+    public EntidadExterna(BigInteger identidadexterna) {
+        this.identidadexterna = identidadexterna;
+    }
+
+    public EntidadExterna(BigInteger identidadexterna, boolean estado, String nombreentidad, String emailentidad, String telefonoentidad, String direccionentidad, String identificacion) {
+        this.identidadexterna = identidadexterna;
+        this.estado = estado;
+        this.nombreentidad = nombreentidad;
+        this.emailentidad = emailentidad;
+        this.telefonoentidad = telefonoentidad;
+        this.direccionentidad = direccionentidad;
+        this.identificacion = identificacion;
+    }
+
+    public BigInteger getIdentidadexterna() {
+        return identidadexterna;
+    }
+
+    public void setIdentidadexterna(BigInteger identidadexterna) {
+        this.identidadexterna = identidadexterna;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public String getNombreentidad() {
+        return nombreentidad;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setNombreentidad(String nombreentidad) {
+        this.nombreentidad = nombreentidad;
     }
 
-    @XmlTransient
-    public Collection<ConvenioPorEntidad> getConvenioPorEntidadCollection() {
-        return convenioPorEntidadCollection;
+    public String getEmailentidad() {
+        return emailentidad;
     }
 
-    public void setConvenioPorEntidadCollection(Collection<ConvenioPorEntidad> convenioPorEntidadCollection) {
-        this.convenioPorEntidadCollection = convenioPorEntidadCollection;
+    public void setEmailentidad(String emailentidad) {
+        this.emailentidad = emailentidad;
+    }
+
+    public String getTelefonoentidad() {
+        return telefonoentidad;
+    }
+
+    public void setTelefonoentidad(String telefonoentidad) {
+        this.telefonoentidad = telefonoentidad;
+    }
+
+    public String getDireccionentidad() {
+        return direccionentidad;
+    }
+
+    public void setDireccionentidad(String direccionentidad) {
+        this.direccionentidad = direccionentidad;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public SectorEntidad getSector() {
+        return sector;
+    }
+
+    public void setSector(SectorEntidad sector) {
+        this.sector = sector;
     }
 
     @Override

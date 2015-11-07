@@ -138,7 +138,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
                     registro = docente.getPersona();
                 } else {
                     EntidadExterna entidad = entidadExternaDAO.buscarEntidadExternaPorID(idPersona);
-                    registro = entidad.getPersona();
+                    //registro = entidad.getPersona();
                 }
             }
             return registro;

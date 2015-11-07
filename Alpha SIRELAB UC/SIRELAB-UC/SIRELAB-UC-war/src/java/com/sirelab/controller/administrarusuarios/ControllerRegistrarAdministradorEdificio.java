@@ -140,7 +140,7 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
     public void actualizarNAtencion() {
         if (Utilidades.validarNulo(inputNAtencion)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(inputNAtencion)) {
-                validacionesNAtencion = true;
+                validacionesNAtencion = false;
                 FacesContext.getCurrentInstance().addMessage("form:inputNAtencion", new FacesMessage("El número ingresado ingresado es incorrecto."));
             } else {
                 validacionesNAtencion = true;

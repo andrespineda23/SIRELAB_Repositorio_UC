@@ -7,6 +7,7 @@ package com.sirelab.controller.administrarusuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEntidadesExternasBOInterface;
 import com.sirelab.entidades.EntidadExterna;
+import com.sirelab.entidades.SectorEntidad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,9 +36,11 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     @EJB
     AdministrarEntidadesExternasBOInterface administrarEntidadesExternasBO;
 
-    private String parametroNombre, parametroSector, parametroDocumento, parametroCorreo;
+    private String parametroNombre, parametroDocumento, parametroCorreo;
     private int parametroEstado;
     private Map<String, String> filtros;
+    private List<SectorEntidad> listaSectorEntidad;
+    private SectorEntidad parametroSector;
     //
     private boolean activarExport;
     //
@@ -97,8 +100,10 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre);
         }
-        if ((Utilidades.validarNulo(parametroSector) == true) && (!parametroSector.isEmpty()) && (parametroSector.trim().length() > 0)) {
-            filtros.put("parametroSector", parametroSector);
+        if (Utilidades.validarNulo(parametroSector) == true) {
+            if (null != parametroSector.getIdsectorentidad()) {
+                filtros.put("parametroSector", parametroSector.getIdsectorentidad().toString());
+            }
         }
         if ((Utilidades.validarNulo(parametroDocumento) == true) && (!parametroDocumento.isEmpty()) && (parametroDocumento.trim().length() > 0)) {
             filtros.put("parametroDocumento", parametroDocumento);
@@ -227,6 +232,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
         bloquearPagSigEntidadExterna = true;
         posicionEntidadExternaTabla = 0;
         tamTotalEntidadExterna = 0;
+        listaSectorEntidad = null;
         cantidadRegistros = "N/A";
         return paginaAnterior;
     }
@@ -281,14 +287,6 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
 
     public void setParametroNombre(String parametroNombre) {
         this.parametroNombre = parametroNombre;
-    }
-
-    public String getParametroSector() {
-        return parametroSector;
-    }
-
-    public void setParametroSector(String parametroSector) {
-        this.parametroSector = parametroSector;
     }
 
     public String getParametroDocumento() {
@@ -369,6 +367,25 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public List<SectorEntidad> getListaSectorEntidad() {
+        if (null == listaSectorEntidad) {
+            listaSectorEntidad = administrarEntidadesExternasBO.obtenerSectorEntidadRegistrado();
+        }
+        return listaSectorEntidad;
+    }
+
+    public void setListaSectorEntidad(List<SectorEntidad> listaSectorEntidad) {
+        this.listaSectorEntidad = listaSectorEntidad;
+    }
+
+    public SectorEntidad getParametroSector() {
+        return parametroSector;
+    }
+
+    public void setParametroSector(SectorEntidad parametroSector) {
+        this.parametroSector = parametroSector;
     }
 
 }

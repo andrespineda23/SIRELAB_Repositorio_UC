@@ -59,7 +59,7 @@ and open the template in the editor.
                                                                              id="parametroEntidadExterna">
                                                                 <f:selectItem itemLabel="Seleccione Entidad Externa" itemValue="null" />
                                                                 <f:selectItems value="#{controllerAdministrarConvenioPorEntidad.listaEntidadesExternas}" var="entidad"
-                                                                               itemLabel="#{entidad.persona.nombrespersona}" itemValue="#{entidad}"/>
+                                                                               itemLabel="#{entidad.nombreentidad}" itemValue="#{entidad}"/>
                                                                 <f:converter converterId="ConverterGenerico" />
                                                             </h:selectOneMenu>
                                                         </div>
@@ -119,7 +119,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Entidad Externa"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.entidadexterna.persona.nombrespersona}"/>
+                                                        <h:outputText value="#{item.entidadexterna.nombreentidad}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">

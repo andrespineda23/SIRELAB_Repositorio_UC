@@ -159,7 +159,7 @@ public class ConvenioPorEntidad implements Serializable {
     public String getStrEntidadConvenio() {
         getConvenio();
         getEntidadexterna();
-        strEntidadConvenio = entidadexterna.getPersona().getNombrespersona() + " - " + convenio.getNombreconvenio();
+        strEntidadConvenio = entidadexterna.getNombreentidad() + " - " + convenio.getNombreconvenio();
         return strEntidadConvenio.toUpperCase();
     }
 

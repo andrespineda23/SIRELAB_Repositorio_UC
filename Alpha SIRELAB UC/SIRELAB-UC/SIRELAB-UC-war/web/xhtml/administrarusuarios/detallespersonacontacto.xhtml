@@ -69,13 +69,9 @@ and open the template in the editor.
                                                 <h:inputText maxlength="45" value="#{controllerDetallesPersonaContacto.inputEmail}"  required="true" class="form-control" id="inputEmail" requiredMessage="El campo Correo es obligatorio.">
                                                     <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarCorreoPersonaContacto()}" execute="inputEmail" render="inputEmail msnEmail" />
                                                 </h:inputText>
-                                                <span class="input-group-addon">@ucentral.edu.co</span>
+                                                <span class="input-group-addon"></span>
                                             </div>
                                             <h6><h:message id="msnEmail" for="inputEmail" style="color: red"/></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Nombre Usuario"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerDetallesPersonaContacto.inputUsuario}" readonly="true" class="form-control" id="inputUsuario" />
                                         </div>
                                         <div class="form-group">
                                             <label for="inputEstado">
@@ -104,6 +100,23 @@ and open the template in the editor.
                                                     <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarDatosNumericosPersonaContacto(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Correo Secundario"/></strong>
+                                                <div class="input-group">
+                                                    <h:inputText maxlength="45" value="#{controllerDetallesPersonaContacto.inputEmailOpc}"  class="form-control" id="inputEmailOpc" >
+                                                        <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarCorreoPersonaContacto()}" execute="inputEmailOpc" render="inputEmailOpc msnEmailOpc" />
+                                                    </h:inputText>
+                                                    <span class="input-group-addon"></span>
+                                                </div>
+                                                <h6><h:message id="msnEmailOpc" for="inputEmailOpc" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Dirección"/></strong>
+                                                <h:inputText maxlength="45" value="#{controllerDetallesPersonaContacto.inputDireccion}"  class="form-control" id="inputDireccion" >
+                                                    <f:ajax event="blur" listener="#{controllerDetallesPersonaContacto.validarDireccionPersonaContacto()}" execute="inputDireccion" render="inputDireccion msnDireccion" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnDireccion" for="inputDireccion" style="color: red"/></h6>
                                             </div>
                                         </fieldset>
                                     </fieldset>

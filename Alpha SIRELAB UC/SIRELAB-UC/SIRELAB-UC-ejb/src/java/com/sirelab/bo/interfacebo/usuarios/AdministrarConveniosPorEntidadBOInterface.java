@@ -38,4 +38,6 @@ public interface AdministrarConveniosPorEntidadBOInterface {
     public List<ConvenioPorEntidad> buscarConveniosPorEntidad();
 
     public ConvenioPorEntidad obtenerConvenioPorEntidadPorParametros(BigInteger entidad, BigInteger convenio);
+
+    public List<ConvenioPorEntidad> obtenerConvenioPorEntidadPorIdEntidad(BigInteger idEntidad);
 }

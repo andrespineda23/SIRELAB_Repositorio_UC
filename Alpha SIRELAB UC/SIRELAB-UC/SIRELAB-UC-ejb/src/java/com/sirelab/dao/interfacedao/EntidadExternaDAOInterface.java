@@ -28,15 +28,11 @@ public interface EntidadExternaDAOInterface {
 
     public EntidadExterna buscarEntidadExternaPorID(BigInteger idRegistro);
 
-    public EntidadExterna buscarEntidadExternaPorIDPersona(BigInteger idPersona);
-
     public EntidadExterna buscarEntidadExternaPorCorreoNumDocumento(String correo, String documento);
 
     public List<EntidadExterna> buscarEntidadesExternasPorFiltrado(Map<String, String> filters);
 
     public EntidadExterna buscarEntidadExternaPorIdentificacionEntidad(String identificacion);
-
-    public EntidadExterna buscarEntidadExternaPorDocumento(String documento);
 
     public EntidadExterna buscarEntidadExternaPorCorreo(String correo);
 }
