@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
@@ -45,12 +46,14 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarTipoPerfil() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         activarAceptar = false;
         activarCasillasAdd = false;
         tipoPerfil = "DEPARTAMENTO";
@@ -116,7 +119,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
             }
         } else {
             validacionesCodigoRegistro = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
         }
     }
 

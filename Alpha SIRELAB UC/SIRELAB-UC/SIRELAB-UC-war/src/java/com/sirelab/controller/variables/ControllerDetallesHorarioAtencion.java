@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableHorariosAtencionBOInterface;
 import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.utilidades.Utilidades;
@@ -50,12 +51,14 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
     private List<Integer> listaHoraCierreSabado;
     private Integer horaCierreSabado;
     private boolean validacionesHoraCierreSabado;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesHorarioAtencion() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -148,15 +151,15 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
                     validacionesDescripcion = true;
                 } else {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.VARIABLE_DESCR));
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_DESCR));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.VARIABLE_DESCR));
         }
         modificacionesRegistro = true;
     }
@@ -169,15 +172,15 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
                     validacionesCodigo = true;
                 } else {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. "+constantes.VARIABLE_COD));
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.VARIABLE_COD));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. "+constantes.VARIABLE_COD));
         }
         modificacionesRegistro = true;
     }

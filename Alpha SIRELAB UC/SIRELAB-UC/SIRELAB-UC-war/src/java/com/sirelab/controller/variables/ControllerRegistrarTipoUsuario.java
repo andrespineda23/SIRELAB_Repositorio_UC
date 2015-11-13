@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposUsuarioBOInterface;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.utilidades.Utilidades;
@@ -37,6 +38,7 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarTipoUsuario() {
     }
@@ -50,20 +52,21 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
         activarCasillas = false;
         activarAceptar = false;
         mensajeFormulario = "N/A";
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
     public void validarNombre() {
-        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty())  && (inputNombre.trim().length() > 0)) {
+        if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty()) && (inputNombre.trim().length() > 0)) {
             if (Utilidades.validarCaracterString(inputNombre)) {
                 validacionesNombre = true;
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.VARIABLE_NOMBRE));
         }
     }
 
@@ -162,6 +165,14 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
 
     public void setActivarLimpiar(boolean activarLimpiar) {
         this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }

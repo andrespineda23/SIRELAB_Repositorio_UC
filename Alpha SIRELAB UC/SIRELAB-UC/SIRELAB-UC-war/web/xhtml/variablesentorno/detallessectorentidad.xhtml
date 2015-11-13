@@ -22,8 +22,8 @@ and open the template in the editor.
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li><a href="#">...</a></li>
-                                <li class="active">Registrar Area de Profundización</li>
+                                <li><a href="#">Variables Usuario</a></li>
+                                <li class="active">Registrar Sector Entidad</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -36,7 +36,7 @@ and open the template in the editor.
                                         Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
                                     </p>
                                     <p>
-                                        Este registro es unicamente para los laboratorios por areas registrados en la universidad.
+                                        Este registro es unicamente para el ingreso de un sector de una entidad externa.
                                     </p>
                                 </div>
 
@@ -44,27 +44,17 @@ and open the template in the editor.
                                     <fieldset>
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Departamento*"/></strong>
-                                            <h:inputText value="#{controllerRegistrarLaboratorioPorArea.nuevoLaboratorio.departamento.nombredepartamento}" class="form-control" readonly="true"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Laboratorio*"/></strong>
-                                            <h:inputText value="#{controllerRegistrarLaboratorioPorArea.nuevoLaboratorio.nombrelaboratorio}" class="form-control" readonly="true"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Area de Profundización*"/></strong>
-                                            <h:selectOneMenu value="#{controllerRegistrarLaboratorioPorArea.nuevoArea}"
-                                                             class="form-control" disabled="#{controllerRegistrarLaboratorioPorArea.activarCasillas}"
-                                                             id="nuevoArea">
-                                                <f:selectItem itemLabel="Seleccione Area Profundización" itemValue="null" />
-                                                <f:selectItems value="#{controllerRegistrarLaboratorioPorArea.listaAreasProfundizacion}" var="area"
-                                                               itemLabel="#{area.nombrearea}" itemValue="#{area}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerRegistrarLaboratorioPorArea.actualizarAreaProfundizacion()}" execute="nuevoArea" render="msnArea"/>
-                                            </h:selectOneMenu>
-                                            <h6><h:message id="msnArea" for="nuevoArea" style="color: red"/></h6>
+                                            <strong><h:outputText value="Nombre Sector Entidad*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerDetallesSectorEntidad.inputNombre}" required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesSectorEntidad.validarNombre()}" execute="inputNombre" render="inputNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
                                         </div>
                                     </fieldset>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
                                     <br></br>
                                     <br></br>
                                     <br></br>
@@ -79,24 +69,19 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarLaboratorioPorArea.mensajeFormulario}" style="color: #{controllerRegistrarLaboratorioPorArea.colorMensaje}}"/>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesSectorEntidad.mensajeFormulario}" style="color: #{controllerDetallesSectorEntidad.colorMensaje}}"/>
                                             </strong>
                                         </div>
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
                                     <div class="right pull-right">
-                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarLaboratorioPorArea.activarAceptar}" actionListener="#{controllerRegistrarLaboratorioPorArea.registrarNuevoLaboratorioPorArea()}" class="btn btn-success" >
+                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesSectorEntidad.registrarModificacionSectorEntidad()}" class="btn btn-success" >
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarLaboratorioPorArea.cancelarRegistroLaboratorioPorArea()}" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(controllerRegistrarLaboratorioPorArea.idLaboratorio)}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarLaboratorioPorArea.activarLimpiar}" actionListener="#{controllerRegistrarLaboratorioPorArea.cambiarActivarCasillas()}" >
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesSectorEntidad.cerrarPagina()}" actionListener="#{controllerVariablesInventario.iniciarInformacionTablas()}" immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                     </div>

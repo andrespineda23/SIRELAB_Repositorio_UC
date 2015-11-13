@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.administrarusuarios;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEntidadesExternasBOInterface;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.SectorEntidad;
@@ -53,12 +54,14 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesEntidadExterna() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         colorMensaje = "black";
         validacionesNombre = true;
         validacionesSector = true;
@@ -161,17 +164,17 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(nombreEntidadExterna)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.USUARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nombreEntidadExterna", new FacesMessage("El nombre es obligatorio. "+constantes.USUARIO_NOMBRE));
         }
         modificacionesRegistroEntidadExterna();
     }
@@ -204,15 +207,15 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                     }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo se encuentra incorrecto. "+constantes.ENTIDAD_CORREO));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El tamaño minimo permitido es 15 caracteres. "+constantes.ENTIDAD_CORREO));
             }
         } else {
             validacionesCorreo = false;
-            FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:correoEntidadExterna", new FacesMessage("El correo es obligatorio. "+constantes.ENTIDAD_CORREO));
         }
         modificacionesRegistroEntidadExterna();
     }
@@ -220,7 +223,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     public void validarIdentificacionEntidadExterna() {
         if (Utilidades.validarNulo(identificacionEntidadExterna) && (!identificacionEntidadExterna.isEmpty()) && (identificacionEntidadExterna.trim().length() > 0)) {
             int tam = identificacionEntidadExterna.length();
-            if (tam >= 8) {
+            if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(identificacionEntidadExterna)) {
                     EntidadExterna registro = administrarEntidadesExternasBO.obtenerEntidadExternaPorIdentificacion(identificacionEntidadExterna);
                     if (null == registro) {
@@ -235,15 +238,15 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                     }
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El numero identificación se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El numero identificación se encuentra incorrecto. "+constantes.USUARIO_ID));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.USUARIO_ID));
             }
         } else {
             validacionesID = false;
-            FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El numero identificación es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:identificacionEntidadExterna", new FacesMessage("El numero identificación es obligatorio. "+constantes.USUARIO_ID));
         }
         modificacionesRegistroEntidadExterna();
     }
@@ -255,13 +258,13 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 if (tam <= 45) {
                     if ((Utilidades.validarCaracteresAlfaNumericos(telefono1EntidadExterna)) == false) {
                         validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono1EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                        FacesContext.getCurrentInstance().addMessage("form:telefono1EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.ENTIDAD_TELEFONO));
                     } else {
                         validacionesTel1 = true;
                     }
                 } else {
                     validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono1EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:telefono1EntidadExterna", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.ENTIDAD_TELEFONO));
                 }
             }
         }
@@ -275,11 +278,11 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 if (Utilidades.validarDirecciones(direccionEntidadExterna)) {
                     validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("La dirección se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("La dirección se encuentra incorrecta. "+constantes.USUARIO_DIRECCION));
                     validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:direccionEntidadExterna", new FacesMessage("El tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
                 validacionesDireccion = false;
             }
         }

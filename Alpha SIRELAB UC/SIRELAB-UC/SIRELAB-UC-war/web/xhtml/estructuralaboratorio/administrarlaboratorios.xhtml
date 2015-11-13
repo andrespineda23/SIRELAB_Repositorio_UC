@@ -156,6 +156,12 @@ and open the template in the editor.
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
+                                                            <h:outputText value="Sala"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Adicionar" action="#{controllerRegistrarLaboratorio.nuevoRegistroSala()}" actionListener="#{controllerRegistrarSala.recibirIdLaboratorio(item.idlaboratorio)}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
                                                         <h:commandLink value="Ver" action="detalleslaboratorio" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(item.idlaboratorio)}" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}"/>
@@ -185,10 +191,7 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-1">
-                                <h:commandButton value="Nuevo Laboratorio" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}" class="btn btn-success" action="registrarlaboratorio" actionListener="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}"/>
-                            </div>
-                            <div class="col-md-10"></div>
+                            <div class="col-md-11"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atras" action="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                             </div>

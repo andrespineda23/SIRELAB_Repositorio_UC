@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposUsuarioBOInterface;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.utilidades.Utilidades;
@@ -38,12 +39,14 @@ public class ControllerDetallesTipoUsuario implements Serializable {
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesTipoUsuario() {
     }
 
     @PostConstruct
     public void init() {
+        constantes =  new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -69,11 +72,11 @@ public class ControllerDetallesTipoUsuario implements Serializable {
                 validacionesNombre = true;
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
         }
         modificacionesRegistro = true;
     }

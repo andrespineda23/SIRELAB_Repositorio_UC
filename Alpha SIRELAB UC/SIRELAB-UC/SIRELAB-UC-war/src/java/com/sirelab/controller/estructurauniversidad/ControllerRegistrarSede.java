@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructurauniversidad;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.universidad.GestionarSedeBOInterface;
 import com.sirelab.entidades.Sede;
 import com.sirelab.utilidades.Utilidades;
@@ -38,6 +39,7 @@ public class ControllerRegistrarSede implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarSede() {
     }
@@ -55,6 +57,7 @@ public class ControllerRegistrarSede implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -64,17 +67,17 @@ public class ControllerRegistrarSede implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.U_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.U_NOMBRE));
         }
 
     }
@@ -85,17 +88,17 @@ public class ControllerRegistrarSede implements Serializable {
             if (tam >= 8) {
                 if (!Utilidades.validarDirecciones(nuevoDireccion)) {
                     validacionesDireccion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección ingresada es incorrecta. "+constantes.USUARIO_DIRECCION));
                 } else {
                     validacionesDireccion = true;
                 }
             } else {
                 validacionesDireccion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
             }
         } else {
             validacionesDireccion = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección es obligatoria. "+constantes.USUARIO_DIRECCION));
         }
     }
 
@@ -103,13 +106,13 @@ public class ControllerRegistrarSede implements Serializable {
         if (Utilidades.validarNulo(nuevoTelefono) && (!nuevoTelefono.isEmpty()) && (nuevoTelefono.trim().length() > 0)) {
             if (!Utilidades.isNumber(nuevoTelefono)) {
                 validacionesTelefono = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono", new FacesMessage("El telefono ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono", new FacesMessage("El telefono ingresado es incorrecto. "+constantes.ENTIDAD_TELEFONO));
             } else {
                 validacionesTelefono = true;
             }
         } else {
             validacionesTelefono = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono", new FacesMessage("El telefono es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono", new FacesMessage("El telefono es obligatorio. "+constantes.ENTIDAD_TELEFONO));
         }
     }
 

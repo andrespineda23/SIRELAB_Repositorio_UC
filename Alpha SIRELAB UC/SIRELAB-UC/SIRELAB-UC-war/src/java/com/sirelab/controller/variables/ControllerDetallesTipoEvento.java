@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposEventosBOInterface;
 import com.sirelab.entidades.TipoEvento;
 import com.sirelab.utilidades.Utilidades;
@@ -38,12 +39,14 @@ public class ControllerDetallesTipoEvento implements Serializable {
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesTipoEvento() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -71,15 +74,15 @@ public class ControllerDetallesTipoEvento implements Serializable {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
         }
         modificacionesRegistro = true;
     }

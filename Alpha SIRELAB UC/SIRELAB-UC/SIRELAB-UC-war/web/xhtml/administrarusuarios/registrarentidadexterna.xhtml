@@ -49,7 +49,7 @@ and open the template in the editor.
                                         <h6><h:message id="msnNombre" for="inputNombre" style="color: red"></h:message></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Identificación*"/></strong>
+                                        <strong><h:outputText value="Identificación Entidad*"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerRegistrarEntidadExterna.inputID}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" required="true" class="form-control" id="inputID" requiredMessage="El campo Identificación es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarIdentificacionEntidadExterna()}" execute="inputID" render="inputID msnID" />
                                         </h:inputText>
@@ -84,9 +84,14 @@ and open the template in the editor.
                                     <legend class="text-info">Información Entidad Externa</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Sector Entidad Externa*"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerRegistrarEntidadExterna.inputSector}" disabled="#{controllerRegistrarEntidadExterna.activarCasillas}" required="true" class="form-control" id="inputSector" requiredMessage="El campo Sector es obligatorio.">
-                                            <f:ajax event="blur" listener="#{controllerRegistrarEntidadExterna.validarSectorEntidadExterna()}" execute="inputSector" render="inputSector msnSector" />
-                                        </h:inputText>
+                                        <h:selectOneMenu readonly="#{controllerRegistrarEntidadExterna.activarCasillas}" value="#{controllerRegistrarEntidadExterna.inputSector}"
+                                                         class="form-control"
+                                                         id="inputSector">
+                                            <f:selectItems value="#{controllerRegistrarEntidadExterna.listaSectorEntidad}" var="cargo"
+                                                           itemLabel="#{cargo.nombre}" itemValue="#{cargo}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarEntidadExterna.validarSectorEntidadExterna()}" execute="inputSector" render="msnSector"/>
+                                        </h:selectOneMenu>
                                         <h6><h:message id="msnSector" for="inputSector" style="color: red"></h:message></h6>
                                     </div>
                                 </fieldset>

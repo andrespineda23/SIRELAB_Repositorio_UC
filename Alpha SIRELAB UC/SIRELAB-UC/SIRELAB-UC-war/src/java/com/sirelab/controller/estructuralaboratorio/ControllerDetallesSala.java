@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaSalasBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
@@ -67,12 +68,14 @@ public class ControllerDetallesSala implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarTipo;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesSala() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         validacionesCosto = true;
         validacionesCapacidad = true;
         validacionesCodigo = true;
@@ -162,17 +165,17 @@ public class ControllerDetallesSala implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nombreSalaLaboratorio)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nombreSalaLaboratorio", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
         }
         modificacionesRegistroSala();
     }
@@ -183,17 +186,17 @@ public class ControllerDetallesSala implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(codigoSalaLaboratorio)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_CODIGO));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El codigo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:codigoSalaLaboratorio", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO));
         }
         modificacionesRegistroSala();
     }
@@ -206,15 +209,15 @@ public class ControllerDetallesSala implements Serializable {
                     validacionesUbicacion = true;
                 } else {
                     validacionesUbicacion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("La ubicación se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("La ubicación se encuentra incorrecta. "+constantes.INVENTARIO_UBICACION));
                 }
             } else {
                 validacionesUbicacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_UBICACION));
             }
         } else {
             validacionesUbicacion = false;
-            FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("La ubicación es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:ubicacionSalaLaboratorio", new FacesMessage("La ubicación es obligatoria. "+constantes.INVENTARIO_UBICACION));
         }
         modificacionesRegistroSala();
     }
@@ -225,11 +228,11 @@ public class ControllerDetallesSala implements Serializable {
                 validacionesCosto = true;
             } else {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:costoSalaLaboratorio", new FacesMessage("El costo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:costoSalaLaboratorio", new FacesMessage("El costo se encuentra incorrecto. "+constantes.INVENTARIO_COST_ALQ));
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:costoSalaLaboratorio", new FacesMessage("El costo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:costoSalaLaboratorio", new FacesMessage("El costo es obligatorio. "+constantes.INVENTARIO_COST_ALQ));
         }
         modificacionesRegistroSala();
     }
@@ -238,13 +241,13 @@ public class ControllerDetallesSala implements Serializable {
         if (Utilidades.validarNulo(capacidadSalaLaboratorio) && (!capacidadSalaLaboratorio.isEmpty()) && (capacidadSalaLaboratorio.trim().length() > 0)) {
             if ((Utilidades.isNumber(capacidadSalaLaboratorio)) == false) {
                 validacionesCapacidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:capacidadSalaLaboratorio", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:capacidadSalaLaboratorio", new FacesMessage("La capacidad ingresada se encuentra incorrecta. "+constantes.INVENTARIO_CAPACIDAD));
             } else {
                 validacionesCapacidad = true;
             }
         } else {
             validacionesCapacidad = false;
-            FacesContext.getCurrentInstance().addMessage("form:capacidadSalaLaboratorio", new FacesMessage("La capacidad es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:capacidadSalaLaboratorio", new FacesMessage("La capacidad es obligatoria. "+constantes.INVENTARIO_CAPACIDAD));
         }
         modificacionesRegistroSala();
     }
@@ -255,17 +258,17 @@ public class ControllerDetallesSala implements Serializable {
             if (tam >= 20) {
                 if ((Utilidades.validarCaracteresAlfaNumericos(descripcionSalaLaboratorio)) == false) {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("La descripción se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.INVENTARIO_DESCRIP));
                 } else {
                     validacionesDescripcion = true;
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("El tamaño minimo permitido es 20 caracteres. "+constantes.INVENTARIO_DESCRIP));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("La descripción es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:descripcionSalaLaboratorio", new FacesMessage("La descripción es obligatoria. "+constantes.INVENTARIO_DESCRIP));
         }
         modificacionesRegistroSala();
     }
@@ -274,7 +277,7 @@ public class ControllerDetallesSala implements Serializable {
         if (Utilidades.validarNulo(inversionSalaLaboratorio) && (!inversionSalaLaboratorio.isEmpty()) && (inversionSalaLaboratorio.trim().length() > 0)) {
             if ((Utilidades.isNumber(inversionSalaLaboratorio)) == false) {
                 validacionesInversion = false;
-                FacesContext.getCurrentInstance().addMessage("form:inversionSalaLaboratorio", new FacesMessage("El valor de inversión se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:inversionSalaLaboratorio", new FacesMessage("El valor de inversión se encuentra incorrecto. "+constantes.INVENTARIO_COST_INV));
             } else {
                 validacionesInversion = true;
             }

@@ -49,7 +49,7 @@ and open the template in the editor.
                                         <h6><h:message id="msnNombre" for="nombreEntidadExterna" style="color: red"></h:message></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Número Identificación*"/></strong>
+                                        <strong><h:outputText value="Identificación Entidad*"/></strong>
                                         <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.identificacionEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" required="true" class="form-control" id="identificacionEntidadExterna" requiredMessage="El campo Identificación es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarIdentificacionEntidadExterna()}" execute="identificacionEntidadExterna" render="identificacionEntidadExterna msnID" />
                                         </h:inputText>
@@ -71,7 +71,7 @@ and open the template in the editor.
                                     </div>  
                                     <div class="form-group">
                                         <strong><h:outputText value="Números Contacto*"/></strong>
-                                        <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono1EntidadExterna" >
+                                        <h:inputText maxlength="45" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" class="form-control" id="telefono1EntidadExterna" >
                                             <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarDatosNumericosEntidadExterna(1)}" execute="telefono1EntidadExterna" render="telefono1EntidadExterna msnTelefono1" />
                                         </h:inputText>
                                         <h6><h:message id="msnTelefono1" for="telefono1EntidadExterna" style="color: red"></h:message></h6>
@@ -88,9 +88,14 @@ and open the template in the editor.
                                     <legend class="text-info">Información Entidad Externa</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Sector Entidad Externa*"/></strong>
-                                        <h:inputText maxlength="20" value="#{controllerDetallesEntidadExterna.sectorEntidadExterna}" readonly="#{controllerDetallesEntidadExterna.activarEditar}" required="true" class="form-control" id="sectorEntidadExterna" requiredMessage="El campo Sector es obligatorio.">
-                                            <f:ajax event="blur" listener="#{controllerDetallesEntidadExterna.validarSectorEntidadExterna()}" execute="sectorEntidadExterna" render="sectorEntidadExterna msnSector" />
-                                        </h:inputText>
+                                        <h:selectOneMenu readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.sectorEntidadExterna}"
+                                                         class="form-control"
+                                                         id="sectorEntidadExterna">
+                                            <f:selectItems value="#{controllerDetallesEntidadExterna.listaSectorEntidad}" var="cargo"
+                                                           itemLabel="#{cargo.nombre}" itemValue="#{cargo}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerDetallesEntidadExterna.validarSectorEntidadExterna()}" execute="sectorEntidadExterna" render="msnSector"/>
+                                        </h:selectOneMenu>
                                         <h6><h:message id="msnSector" for="sectorEntidadExterna" style="color: red"></h:message></h6>
                                     </div>
                                 </fieldset>

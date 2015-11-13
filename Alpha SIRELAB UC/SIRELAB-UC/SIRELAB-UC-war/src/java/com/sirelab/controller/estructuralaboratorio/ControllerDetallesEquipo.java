@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
@@ -74,12 +75,14 @@ public class ControllerDetallesEquipo implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean fechaDiferida;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         colorMensaje = "black";
         validacionesCosto = true;
         validacionesEspecificacion = true;
@@ -273,17 +276,17 @@ public class ControllerDetallesEquipo implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(nombreEquipoElemento)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
         }
 
     }
@@ -294,17 +297,17 @@ public class ControllerDetallesEquipo implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(inventarioEquipoElemento)) {
                     validacionesInventario = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO));
                 } else {
                     validacionesInventario = true;
                 }
             } else {
                 validacionesInventario = false;
-                FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_CODIGO));
             }
         } else {
             validacionesInventario = false;
-            FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO));
         }
     }
 
@@ -314,17 +317,17 @@ public class ControllerDetallesEquipo implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(marcaEquipoElemento)) {
                     validacionesMarca = false;
-                    FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca ingresada es incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca ingresada es incorrecta. "+constantes.INVENTARIO_MARCA));
                 } else {
                     validacionesMarca = true;
                 }
             } else {
                 validacionesMarca = false;
-                FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_MARCA));
             }
         } else {
             validacionesMarca = false;
-            FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca es obligatoria. "+constantes.INVENTARIO_MARCA));
         }
     }
 
@@ -363,11 +366,11 @@ public class ControllerDetallesEquipo implements Serializable {
                     validacionesModelo = true;
                 } else {
                     validacionesModelo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:modeloEquipoElemento", new FacesMessage("El modelo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:modeloEquipoElemento", new FacesMessage("El modelo se encuentra incorrecto. "+constantes.INVENTARIO_MODELO));
                 }
             } else {
                 validacionesMarca = false;
-                FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_MODELO));
             }
         }
     }
@@ -380,11 +383,11 @@ public class ControllerDetallesEquipo implements Serializable {
                     validacionesSerie = true;
                 } else {
                     validacionesSerie = false;
-                    FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("La serie se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("La serie se encuentra incorrecta. "+constantes.INVENTARIO_SERIAL));
                 }
             } else {
                 validacionesSerie = false;
-                FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_SERIAL));
             }
         }
     }
@@ -395,7 +398,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 validacionesCosto = true;
             } else {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:alquilerEquipoElemento", new FacesMessage("El costo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:alquilerEquipoElemento", new FacesMessage("El costo se encuentra incorrecto. "+constantes.INVENTARIO_COST_ALQ));
             }
         }
     }
@@ -404,7 +407,7 @@ public class ControllerDetallesEquipo implements Serializable {
         if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty()) && (inversionEquipoElemento.trim().length() > 0)) {
             if ((Utilidades.isNumber(inversionEquipoElemento)) == false) {
                 validacionesInversion = false;
-                FacesContext.getCurrentInstance().addMessage("form:inversionEquipoElemento", new FacesMessage("El valor de inversión se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:inversionEquipoElemento", new FacesMessage("El valor de inversión se encuentra incorrecto. "+constantes.INVENTARIO_COST_INV));
             } else {
                 validacionesInversion = true;
             }
@@ -419,14 +422,14 @@ public class ControllerDetallesEquipo implements Serializable {
                     validacionesFecha = true;
                 } else {
                     validacionesFecha = true;
-                    FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 }
             } else {
                 if (Utilidades.fechaDiferidaIngresadaCorrecta(fechaEquipoElemento)) {
                     validacionesFecha = true;
                 } else {
                     validacionesFecha = true;
-                    FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 }
             }
         }
@@ -438,13 +441,13 @@ public class ControllerDetallesEquipo implements Serializable {
             if (tam >= 20) {
                 if ((Utilidades.validarCaracteresAlfaNumericos(especificacionEquipoElemento)) == false) {
                     validacionesEspecificacion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("La especificación ingresada se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("La especificación ingresada se encuentra incorrecta. "+constantes.INVENTARIO_DESCRIP));
                 } else {
                     validacionesEspecificacion = true;
                 }
             } else {
                 validacionesEspecificacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("El tamaño minimo permitido es 20 caracteres. "+constantes.INVENTARIO_DESCRIP));
             }
         }
     }

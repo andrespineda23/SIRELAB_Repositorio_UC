@@ -5,9 +5,12 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.bo.interfacebo.variables.GestionarVariableEstadosEquiposBOInterface;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableSectoresEntidadesBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposCargosBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposUsuarioBOInterface;
+import com.sirelab.entidades.SectorEntidad;
 import com.sirelab.entidades.TipoCargo;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.TipoUsuario;
@@ -33,6 +36,8 @@ public class ControllerVariablesUsuario implements Serializable {
     GestionarVariableTiposPerfilesBOInterface gestionarVariableTiposPerfilesBO;
     @EJB
     GestionarVariableTiposCargosBOInterface gestionarVariableTiposCargosBO;
+    @EJB
+    GestionarVariableSectoresEntidadesBOInterface gestionarVariableSectoresEntidadesBO;
 
     private List<TipoPerfil> listaTiposPerfiles;
     private List<TipoPerfil> listaTiposPerfilesTabla;
@@ -40,11 +45,14 @@ public class ControllerVariablesUsuario implements Serializable {
     private List<TipoUsuario> listaTiposUsuarioTabla;
     private List<TipoCargo> listaTiposCargos;
     private List<TipoCargo> listaTiposCargosTabla;
-    private int posicionTipoPerfilTabla, posicionTipoUsuarioTabla, posicionTipoCargoTabla;
-    private int tamTotalTipoPerfil, tamTotalTipoUsuario, tamTotalTipoCargo;
+    private List<SectorEntidad> listaSectorEntidad;
+    private List<SectorEntidad> listaSectorEntidadTabla;
+    private int posicionTipoPerfilTabla, posicionTipoUsuarioTabla, posicionTipoCargoTabla, posicionSectorEntidadTabla;
+    private int tamTotalTipoPerfil, tamTotalTipoUsuario, tamTotalTipoCargo, tamTotalSectorEntidad;
     private boolean bloquearPagSigTipoPerfil, bloquearPagAntTipoPerfil;
     private boolean bloquearPagSigTipoUsuario, bloquearPagAntTipoUsuario;
     private boolean bloquearPagSigTipoCargo, bloquearPagAntTipoCargo;
+    private boolean bloquearPagSigSectorEntidad, bloquearPagAntSectorEntidad;
 
     public ControllerVariablesUsuario() {
     }
@@ -75,6 +83,29 @@ public class ControllerVariablesUsuario implements Serializable {
         }
         posicionTipoCargoTabla = 0;
         cargarDatosTablaTipoCargo();
+        listaSectorEntidad = gestionarVariableSectoresEntidadesBO.consultarSectoresEntidadesRegistrados();
+        if (null != listaSectorEntidad) {
+            listaSectorEntidadTabla = new ArrayList<SectorEntidad>();
+            tamTotalSectorEntidad = listaSectorEntidad.size();
+        }
+        posicionSectorEntidadTabla = 0;
+        cargarDatosTablaSectorEntidad();
+    }
+
+    private void cargarDatosTablaSectorEntidad() {
+        if (tamTotalSectorEntidad < 10) {
+            for (int i = 0; i < tamTotalSectorEntidad; i++) {
+                listaSectorEntidadTabla.add(listaSectorEntidad.get(i));
+            }
+            bloquearPagSigSectorEntidad = true;
+            bloquearPagAntSectorEntidad = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaSectorEntidadTabla.add(listaSectorEntidad.get(i));
+            }
+            bloquearPagSigSectorEntidad = false;
+            bloquearPagAntSectorEntidad = true;
+        }
     }
 
     private void cargarDatosTablaTipoCargo() {
@@ -129,21 +160,27 @@ public class ControllerVariablesUsuario implements Serializable {
         listaTiposUsuario = null;
         listaTiposPerfiles = null;
         listaTiposCargos = null;
+        listaSectorEntidad = null;
         posicionTipoPerfilTabla = 0;
         posicionTipoUsuarioTabla = 0;
         posicionTipoCargoTabla = 0;
+        posicionSectorEntidadTabla = 0;
         tamTotalTipoPerfil = 0;
         tamTotalTipoCargo = 0;
         tamTotalTipoUsuario = 0;
+        tamTotalSectorEntidad = 0;
         listaTiposPerfilesTabla = null;
         listaTiposCargosTabla = null;
         listaTiposUsuarioTabla = null;
+        listaSectorEntidadTabla = null;
         bloquearPagSigTipoPerfil = true;
         bloquearPagSigTipoCargo = true;
         bloquearPagAntTipoPerfil = true;
+        bloquearPagAntSectorEntidad = true;
         bloquearPagSigTipoUsuario = true;
         bloquearPagAntTipoUsuario = true;
         bloquearPagAntTipoCargo = true;
+        bloquearPagSigSectorEntidad = true;
     }
 
     public void cargarPaginaSiguienteTipoCargo() {
@@ -181,6 +218,44 @@ public class ControllerVariablesUsuario implements Serializable {
             }
             bloquearPagSigTipoCargo = false;
             bloquearPagAntTipoCargo = false;
+        }
+    }
+
+    public void cargarPaginaSiguienteSectorEntidad() {
+        listaSectorEntidadTabla = new ArrayList<SectorEntidad>();
+        posicionSectorEntidadTabla = posicionSectorEntidadTabla + 10;
+        int diferencia = tamTotalSectorEntidad - posicionSectorEntidadTabla;
+        if (diferencia > 10) {
+            for (int i = posicionSectorEntidadTabla; i < (posicionSectorEntidadTabla + 10); i++) {
+                listaSectorEntidadTabla.add(listaSectorEntidad.get(i));
+            }
+            bloquearPagSigSectorEntidad = false;
+            bloquearPagAntSectorEntidad = false;
+        } else {
+            for (int i = posicionSectorEntidadTabla; i < (posicionSectorEntidadTabla + diferencia); i++) {
+                listaSectorEntidadTabla.add(listaSectorEntidad.get(i));
+            }
+            bloquearPagSigSectorEntidad = true;
+            bloquearPagAntSectorEntidad = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorSectorEntidad() {
+        listaSectorEntidadTabla = new ArrayList<SectorEntidad>();
+        posicionSectorEntidadTabla = posicionSectorEntidadTabla - 10;
+        int diferencia = tamTotalSectorEntidad - posicionSectorEntidadTabla;
+        if (diferencia == tamTotalSectorEntidad) {
+            for (int i = posicionSectorEntidadTabla; i < (posicionSectorEntidadTabla + 10); i++) {
+                listaSectorEntidadTabla.add(listaSectorEntidad.get(i));
+            }
+            bloquearPagSigSectorEntidad = false;
+            bloquearPagAntSectorEntidad = true;
+        } else {
+            for (int i = posicionSectorEntidadTabla; i < (posicionSectorEntidadTabla + 10); i++) {
+                listaSectorEntidadTabla.add(listaSectorEntidad.get(i));
+            }
+            bloquearPagSigSectorEntidad = false;
+            bloquearPagAntSectorEntidad = false;
         }
     }
 
@@ -355,6 +430,38 @@ public class ControllerVariablesUsuario implements Serializable {
 
     public void setBloquearPagAntTipoCargo(boolean bloquearPagAntTipoCargo) {
         this.bloquearPagAntTipoCargo = bloquearPagAntTipoCargo;
+    }
+
+    public List<SectorEntidad> getListaSectorEntidad() {
+        return listaSectorEntidad;
+    }
+
+    public void setListaSectorEntidad(List<SectorEntidad> listaSectorEntidad) {
+        this.listaSectorEntidad = listaSectorEntidad;
+    }
+
+    public List<SectorEntidad> getListaSectorEntidadTabla() {
+        return listaSectorEntidadTabla;
+    }
+
+    public void setListaSectorEntidadTabla(List<SectorEntidad> listaSectorEntidadTabla) {
+        this.listaSectorEntidadTabla = listaSectorEntidadTabla;
+    }
+
+    public boolean isBloquearPagSigSectorEntidad() {
+        return bloquearPagSigSectorEntidad;
+    }
+
+    public void setBloquearPagSigSectorEntidad(boolean bloquearPagSigSectorEntidad) {
+        this.bloquearPagSigSectorEntidad = bloquearPagSigSectorEntidad;
+    }
+
+    public boolean isBloquearPagAntSectorEntidad() {
+        return bloquearPagAntSectorEntidad;
+    }
+
+    public void setBloquearPagAntSectorEntidad(boolean bloquearPagAntSectorEntidad) {
+        this.bloquearPagAntSectorEntidad = bloquearPagAntSectorEntidad;
     }
 
 }

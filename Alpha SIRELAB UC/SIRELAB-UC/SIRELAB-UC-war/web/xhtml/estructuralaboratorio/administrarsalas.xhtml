@@ -243,7 +243,7 @@ and open the template in the editor.
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Edificio"/>
+                                                            <h:outputText value="Privada"/>
                                                         </f:facet>
                                                         <h:outputText value="#{item.strPrivada}"/>
                                                     </h:column>
@@ -251,7 +251,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Modulo"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Adicionar" action="#{controllerAdministrarSalas.cambiarPaginaDetalles()}" actionListener="#{controllerRegistrarModuloCargado.cargarInformacionSalaLaboratorio(item.idsalalaboratorio)}"/>
+                                                        <h:commandLink value="Adicionar" action="#{controllerAdministrarSalas.cambiarPaginaModuloCargado()}" actionListener="#{controllerRegistrarModuloCargado.cargarInformacionSalaLaboratorio(item.idsalalaboratorio)}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">

@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.recursoslaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoGuiasLaboratorioBOInterface;
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Carrera;
@@ -59,6 +60,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     private final String pathArchivo = "C:\\SIRELAB\\Guias Laboratorio\\";
     private String rutaArchivo;
     private String paginaAnterior;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarGuiaLaboratorio() {
     }
@@ -81,6 +83,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         validacionesCarrera = false;
         validacionesPlan = false;
         validacionesAsignatura = false;
+        constantes = new MensajesConstantes();
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -110,17 +113,17 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.RECURSO_GUIA_NOM));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_GUIA_NOM));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.RECURSO_GUIA_NOM));
         }
 
     }
@@ -132,11 +135,11 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
                 validacionesDescripcion = true;
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres. "+constantes.RECURSO_GUIA_DES));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción es obligatoria. "+constantes.RECURSO_GUIA_DES));
         }
     }
 

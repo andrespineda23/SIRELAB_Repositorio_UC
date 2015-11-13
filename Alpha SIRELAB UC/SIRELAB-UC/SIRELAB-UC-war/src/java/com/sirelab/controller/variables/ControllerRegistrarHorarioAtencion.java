@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableHorariosAtencionBOInterface;
 import com.sirelab.entidades.HorarioAtencion;
 import com.sirelab.utilidades.Utilidades;
@@ -49,6 +50,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     private List<Integer> listaHoraCierreSabado;
     private Integer horaCierreSabado;
     private boolean validacionesHoraCierreSabado;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarHorarioAtencion() {
     }
@@ -65,6 +67,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        constantes = new MensajesConstantes();
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
         cargarListasHoras();
@@ -135,15 +138,15 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
                     validacionesDescripcion = true;
                 } else {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.VARIABLE_DESCR));
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_DESCR));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.VARIABLE_DESCR));
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposComponentesBOInterface;
 import com.sirelab.entidades.TipoComponente;
 import com.sirelab.utilidades.Utilidades;
@@ -38,12 +39,14 @@ public class ControllerDetallesTipoComponente implements Serializable {
     private TipoComponente tipoComponenteDetalle;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesTipoComponente() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -71,15 +74,15 @@ public class ControllerDetallesTipoComponente implements Serializable {
                     validacionesNombre = true;
                 } else {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
         }
         modificacionesRegistro = true;
     }

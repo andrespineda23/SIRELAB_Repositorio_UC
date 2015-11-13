@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
@@ -50,12 +51,14 @@ public class ControllerDetallesLaboratorio implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesLaboratorio() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         activarModificacionDepartamento = true;
         validacionesCodigo = true;
         validacionesDepartamento = true;
@@ -64,6 +67,11 @@ public class ControllerDetallesLaboratorio implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         BasicConfigurator.configure();
+    }
+    
+    public String registrarAreaProfundizacion(){
+    restaurarInformacionLaboratorio();
+    return "registrarlaboratorioporarea";
     }
 
     public String restaurarInformacionLaboratorio() {
@@ -129,17 +137,17 @@ public class ControllerDetallesLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
         }
     }
 
@@ -149,17 +157,17 @@ public class ControllerDetallesLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO_LAB));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_CODIGO_LAB));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO_LAB));
         }
     }
 

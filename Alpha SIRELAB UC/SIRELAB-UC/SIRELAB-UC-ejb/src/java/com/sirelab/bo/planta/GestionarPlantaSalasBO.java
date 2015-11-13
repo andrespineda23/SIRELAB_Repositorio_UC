@@ -79,6 +79,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+
     @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorio(BigInteger laboratorio) {
         try {
@@ -100,6 +101,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+
     @Override
     public List<Departamento> consultarDepartamentosActivosRegistrados() {
         try {
@@ -121,6 +123,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+
     @Override
     public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento) {
         try {
@@ -142,6 +145,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+
     @Override
     public List<AreaProfundizacion> consultarAreasProfundizacionActivosRegistradas() {
         try {
@@ -163,6 +167,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+
     @Override
     public List<Sede> consultarSedesActivosRegistradas() {
         try {
@@ -184,6 +189,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return null;
         }
     }
+
     @Override
     public List<Edificio> consultarEdificiosActivosPorIDSede(BigInteger sede) {
         try {
@@ -242,6 +248,17 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaSalasBO obtenerSalaLaboratorioPorCodigoEdificioLabArea : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Laboratorio obtenerLaboratorioPorId(BigInteger idRegistro) {
+        try {
+            Laboratorio registro = laboratorioDAO.buscarLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaSalasBO obtenerLaboratorioPorId : " + e.toString());
             return null;
         }
     }

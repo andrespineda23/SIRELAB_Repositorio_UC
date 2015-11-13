@@ -194,4 +194,15 @@ public class GestionarPlantaLaboratoriosPorAreasBO implements GestionarPlantaLab
             return null;
         }
     }
+
+    @Override
+    public Laboratorio obtenerLaboratorioPorId(BigInteger idRegistro) {
+        try {
+            Laboratorio registro = laboratorioDAO.buscarLaboratorioPorID(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaLaboratoriosPorAreasBO obtenerLaboratorioPorId : " + e.toString());
+            return null;
+        }
+    }
 }

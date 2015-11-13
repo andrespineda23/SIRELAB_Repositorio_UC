@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaSalasBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
@@ -37,23 +38,19 @@ public class ControllerRegistrarSala implements Serializable {
     GestionarPlantaSalasBOInterface gestionarPlantaSalasBO;
 
     private String nuevoNombreSala, nuevoCodigoSala, nuevoDescripcionSala, nuevoUbicacionSala, nuevoCapacidadSala, nuevoCostoSala, nuevoInversionSala;
-    private Departamento nuevoDepartamentoSala;
     private Laboratorio nuevoLaboratorioSala;
-    private boolean activarNuevoLaboratorio;
     private LaboratoriosPorAreas nuevoLaboratorioPorArea;
     private boolean activarNuevoLabPorArea;
     private Sede nuevoSedeSala;
     private Edificio nuevoEdificioSala;
     private boolean activarNuevoEdificio;
-    private List<Departamento> listaDepartamentos;
-    private List<Laboratorio> listaLaboratorios;
     private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
     private List<Sede> listaSedes;
     private List<Edificio> listaEdificios;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesUbicacion;
-    private boolean validacionesCapacidad, validacionesCosto, validacionesInversion, validacionesDepartamento;
-    private boolean validacionesLaboratorioPorArea, validacionesSede, validacionesEdificio, validacionesLaboratorio;
+    private boolean validacionesCapacidad, validacionesCosto, validacionesInversion;
+    private boolean validacionesLaboratorioPorArea, validacionesSede, validacionesEdificio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -61,12 +58,15 @@ public class ControllerRegistrarSala implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private boolean nuevoTipo;
+    private BigInteger idLaboratorio;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarSala() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         nuevoTipo = false;
         activarAceptar = false;
         activarLimpiar = true;
@@ -79,15 +79,12 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesDescripcion = false;
         validacionesEdificio = false;
         validacionesInversion = true;
-        validacionesLaboratorio = false;
-        validacionesDepartamento = false;
         validacionesLaboratorioPorArea = false;
         validacionesNombre = false;
         validacionesSede = false;
         validacionesUbicacion = false;
         //
         activarNuevoEdificio = true;
-        activarNuevoLaboratorio = true;
         activarNuevoLabPorArea = true;
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
@@ -99,10 +96,17 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoSedeSala = null;
         nuevoLaboratorioPorArea = null;
         nuevoLaboratorioSala = null;
-        nuevoDepartamentoSala = null;
         nuevoEdificioSala = null;
         listaEdificios = null;
         BasicConfigurator.configure();
+    }
+
+    public void recibirIdLaboratorio(BigInteger laboratorio) {
+        idLaboratorio = laboratorio;
+        nuevoLaboratorioSala = gestionarPlantaSalasBO.obtenerLaboratorioPorId(idLaboratorio);
+        nuevoLaboratorioPorArea = null;
+        listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasActivosPorLaboratorio(nuevoLaboratorioSala.getIdlaboratorio());
+        activarNuevoLabPorArea = false;
     }
 
     public void validarNombreSala() {
@@ -111,17 +115,17 @@ public class ControllerRegistrarSala implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombreSala)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El tamaño minimo es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombreSala", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
         }
 
     }
@@ -132,17 +136,17 @@ public class ControllerRegistrarSala implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoSala)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El tamaño minimo es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_CODIGO));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El codigo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoSala", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO));
         }
     }
 
@@ -154,15 +158,15 @@ public class ControllerRegistrarSala implements Serializable {
                     validacionesUbicacion = true;
                 } else {
                     validacionesUbicacion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("La ubicación se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("La ubicación se encuentra incorrecta. "+constantes.INVENTARIO_UBICACION));
                 }
             } else {
                 validacionesUbicacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("El tamaño minimo es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("El tamaño minimo es 2 caracteres. "+constantes.INVENTARIO_UBICACION));
             }
         } else {
             validacionesUbicacion = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("La ubicación es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacionSala", new FacesMessage("La ubicación es obligatoria. "+constantes.INVENTARIO_UBICACION));
         }
     }
 
@@ -172,11 +176,11 @@ public class ControllerRegistrarSala implements Serializable {
                 validacionesCosto = true;
             } else {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoSala", new FacesMessage("El costo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoSala", new FacesMessage("El costo se encuentra incorrecto. "+constantes.INVENTARIO_COST_ALQ));
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCostoSala", new FacesMessage("El costo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCostoSala", new FacesMessage("El costo es obligatorio. "+constantes.INVENTARIO_COST_ALQ));
         }
     }
 
@@ -184,13 +188,13 @@ public class ControllerRegistrarSala implements Serializable {
         if (Utilidades.validarNulo(nuevoCapacidadSala) && (!nuevoCapacidadSala.isEmpty()) && (nuevoCapacidadSala.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCapacidadSala)) == false) {
                 validacionesCapacidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadSala", new FacesMessage("La capacidad ingresada se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadSala", new FacesMessage("La capacidad ingresada se encuentra incorrecta. "+constantes.INVENTARIO_CAPACIDAD));
             } else {
                 validacionesCapacidad = true;
             }
         } else {
             validacionesCapacidad = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadSala", new FacesMessage("La capacidad es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadSala", new FacesMessage("La capacidad es obligatoria. "+constantes.INVENTARIO_CAPACIDAD));
         }
     }
 
@@ -200,17 +204,17 @@ public class ControllerRegistrarSala implements Serializable {
             if (tam >= 20) {
                 if ((Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcionSala)) == false) {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("La descripción se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.INVENTARIO_DESCRIP));
                 } else {
                     validacionesDescripcion = true;
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("El tamaño minimo es 20 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("El tamaño minimo es 20 caracteres. "+constantes.INVENTARIO_DESCRIP));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("La descripción es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcionSala", new FacesMessage("La descripción es obligatoria. "+constantes.INVENTARIO_DESCRIP));
         }
     }
 
@@ -218,47 +222,10 @@ public class ControllerRegistrarSala implements Serializable {
         if (Utilidades.validarNulo(nuevoInversionSala) && (!nuevoInversionSala.isEmpty()) && (nuevoInversionSala.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoInversionSala)) == false) {
                 validacionesInversion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoInversionSala", new FacesMessage("El valor de inversión se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoInversionSala", new FacesMessage("El valor de inversión se encuentra incorrecto. "+constantes.INVENTARIO_COST_INV));
             } else {
                 validacionesInversion = true;
             }
-        }
-    }
-
-    public void actualizarDepartamentos() {
-        if (Utilidades.validarNulo(nuevoDepartamentoSala)) {
-            validacionesDepartamento = true;
-            listaLaboratorios = gestionarPlantaSalasBO.consultarLaboratoriosActivosPorIDDepartamento(nuevoDepartamentoSala.getIddepartamento());
-            nuevoLaboratorioSala = null;
-            activarNuevoLaboratorio = false;
-        } else {
-            listaLaboratorios = null;
-            nuevoLaboratorioSala = null;
-            activarNuevoLaboratorio = true;
-
-            activarNuevoLabPorArea = true;
-            nuevoLaboratorioPorArea = null;
-            listaLaboratoriosPorAreas = null;
-
-            validacionesDepartamento = false;
-            validacionesLaboratorio = false;
-            validacionesLaboratorioPorArea = false;
-        }
-    }
-
-    public void actualizarLaboratorios() {
-        if (Utilidades.validarNulo(nuevoLaboratorioSala)) {
-            validacionesLaboratorio = true;
-            nuevoLaboratorioPorArea = null;
-            listaLaboratoriosPorAreas = gestionarPlantaSalasBO.consultarLaboratoriosPorAreasActivosPorLaboratorio(nuevoLaboratorioSala.getIdlaboratorio());
-            activarNuevoLabPorArea = false;
-        } else {
-            activarNuevoLabPorArea = true;
-            nuevoLaboratorioPorArea = null;
-            listaLaboratoriosPorAreas = null;
-            validacionesLaboratorio = false;
-            validacionesLaboratorioPorArea = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoLaboratorioSala", new FacesMessage("El laboratorio obligatorio."));
         }
     }
 
@@ -296,11 +263,10 @@ public class ControllerRegistrarSala implements Serializable {
         }
     }
 
-    public void limpiarRegistroSalaLaboratorio() {
+    public String limpiarRegistroSalaLaboratorio() {
         activarNuevoEdificio = true;
         activarAceptar = false;
         activarNuevoLabPorArea = true;
-        activarNuevoLaboratorio = true;
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
@@ -310,13 +276,10 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoCapacidadSala = null;
         nuevoInversionSala = "0";
         nuevoSedeSala = null;
-        nuevoDepartamentoSala = null;
         nuevoLaboratorioSala = null;
         nuevoEdificioSala = null;
         listaEdificios = null;
-        listaLaboratorios = null;
         listaSedes = null;
-        listaDepartamentos = null;
         listaLaboratoriosPorAreas = null;
         //
         validacionesCosto = false;
@@ -325,8 +288,6 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesDescripcion = false;
         validacionesEdificio = false;
         validacionesInversion = true;
-        validacionesLaboratorio = false;
-        validacionesDepartamento = false;
         validacionesLaboratorioPorArea = false;
         validacionesNombre = false;
         validacionesSede = false;
@@ -335,6 +296,8 @@ public class ControllerRegistrarSala implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        idLaboratorio = null;
+        return "administrarlaboratorios";
     }
 
     private boolean validarResultadosValidacion() {
@@ -354,13 +317,7 @@ public class ControllerRegistrarSala implements Serializable {
         if (validacionesEdificio == false) {
             retorno = false;
         }
-        if (validacionesDepartamento == false) {
-            retorno = false;
-        }
         if (validacionesInversion == false) {
-            retorno = false;
-        }
-        if (validacionesLaboratorio == false) {
             retorno = false;
         }
         if (validacionesLaboratorioPorArea == false) {
@@ -414,14 +371,12 @@ public class ControllerRegistrarSala implements Serializable {
     private void limpiarFormulario() {
         activarNuevoEdificio = true;
         activarNuevoLabPorArea = true;
-        activarNuevoLaboratorio = true;
         nuevoNombreSala = null;
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
         nuevoTipo = false;
         nuevoDescripcionSala = null;
         nuevoLaboratorioSala = null;
-        nuevoDepartamentoSala = null;
         nuevoCostoSala = null;
         nuevoCapacidadSala = null;
         nuevoInversionSala = "0";
@@ -435,9 +390,7 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesDescripcion = false;
         validacionesEdificio = false;
         validacionesInversion = true;
-        validacionesLaboratorio = false;
         validacionesLaboratorioPorArea = false;
-        validacionesDepartamento = false;
         validacionesNombre = false;
         validacionesSede = false;
         validacionesUbicacion = false;
@@ -634,14 +587,6 @@ public class ControllerRegistrarSala implements Serializable {
         this.nuevoLaboratorioSala = nuevoLaboratorioSala;
     }
 
-    public List<Laboratorio> getListaLaboratorios() {
-        return listaLaboratorios;
-    }
-
-    public void setListaLaboratorios(List<Laboratorio> listaLaboratorios) {
-        this.listaLaboratorios = listaLaboratorios;
-    }
-
     public boolean isActivarNuevoLabPorArea() {
         return activarNuevoLabPorArea;
     }
@@ -656,33 +601,6 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
-    }
-
-    public Departamento getNuevoDepartamentoSala() {
-        return nuevoDepartamentoSala;
-    }
-
-    public void setNuevoDepartamentoSala(Departamento nuevoDepartamentoSala) {
-        this.nuevoDepartamentoSala = nuevoDepartamentoSala;
-    }
-
-    public boolean isActivarNuevoLaboratorio() {
-        return activarNuevoLaboratorio;
-    }
-
-    public void setActivarNuevoLaboratorio(boolean activarNuevoLaboratorio) {
-        this.activarNuevoLaboratorio = activarNuevoLaboratorio;
-    }
-
-    public List<Departamento> getListaDepartamentos() {
-        if (null == listaDepartamentos) {
-            listaDepartamentos = gestionarPlantaSalasBO.consultarDepartamentosActivosRegistrados();
-        }
-        return listaDepartamentos;
-    }
-
-    public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
-        this.listaDepartamentos = listaDepartamentos;
     }
 
     public boolean isNuevoTipo() {

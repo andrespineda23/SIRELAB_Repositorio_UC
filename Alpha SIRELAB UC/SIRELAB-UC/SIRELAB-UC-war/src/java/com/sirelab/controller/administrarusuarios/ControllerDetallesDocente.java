@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.administrarusuarios;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarDocentesBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
@@ -61,12 +62,14 @@ public class ControllerDetallesDocente implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesDocente() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         colorMensaje = "black";
         validacionesNombre = true;
         validacionesCorreoOpcional = true;
@@ -237,17 +240,17 @@ public class ControllerDetallesDocente implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(nombreDocente)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreDocente", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nombreDocente", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.USUARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreDocente", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nombreDocente", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nombreDocente", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nombreDocente", new FacesMessage("El nombre es obligatorio. "+constantes.USUARIO_NOMBRE));
         }
         modificacionesRegistroDocente();
     }
@@ -258,17 +261,17 @@ public class ControllerDetallesDocente implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(apellidoDocente)) {
                     validacionesApellido = false;
-                    FacesContext.getCurrentInstance().addMessage("form:apellidoDocente", new FacesMessage("El apellido ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:apellidoDocente", new FacesMessage("El apellido ingresado es incorrecto. "+constantes.USUARIO_APELLIDO));
                 } else {
                     validacionesApellido = true;
                 }
             } else {
                 validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:apellidoDocente", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:apellidoDocente", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_APELLIDO));
             }
         } else {
             validacionesApellido = false;
-            FacesContext.getCurrentInstance().addMessage("form:apellidoDocente", new FacesMessage("El apellido es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:apellidoDocente", new FacesMessage("El apellido es obligatorio. "+constantes.USUARIO_APELLIDO));
         }
         modificacionesRegistroDocente();
     }
@@ -292,15 +295,15 @@ public class ControllerDetallesDocente implements Serializable {
                     }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoDocente", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                    FacesContext.getCurrentInstance().addMessage("form:correoDocente", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.USUARIO_CORREO));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoDocente", new FacesMessage("El correo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:correoDocente", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO));
             }
         } else {
             validacionesCorreo = false;
-            FacesContext.getCurrentInstance().addMessage("form:correoDocente", new FacesMessage("El correo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:correoDocente", new FacesMessage("El correo es obligatorio. "+constantes.USUARIO_CORREO));
         }
         modificacionesRegistroDocente();
     }
@@ -313,11 +316,11 @@ public class ControllerDetallesDocente implements Serializable {
                     validacionesCorreoOpcional = true;
                 } else {
                     validacionesCorreoOpcional = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalDocente", new FacesMessage("El correo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalDocente", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO_OPC));
                 }
             } else {
                 validacionesCorreoOpcional = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalDocente", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalDocente", new FacesMessage("El tamaño minimo permitido es 15 caracteres. "+constantes.USUARIO_CORREO_OPC));
             }
         }
         modificacionesRegistroDocente();
@@ -326,7 +329,7 @@ public class ControllerDetallesDocente implements Serializable {
     public void validarIdentificacionDocente() {
         if (Utilidades.validarNulo(identificacionDocente) && (!identificacionDocente.isEmpty()) && (identificacionDocente.trim().length() > 0)) {
             int tam = identificacionDocente.length();
-            if (tam >= 8) {
+            if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(identificacionDocente)) {
                     Docente registro = administrarDocentesBO.obtenerDocentePorDocumento(identificacionDocente);
                     if (null == registro) {
@@ -341,15 +344,15 @@ public class ControllerDetallesDocente implements Serializable {
                     }
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:identificacionDocente", new FacesMessage("El numero identificación se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:identificacionDocente", new FacesMessage("El numero identificación se encuentra incorrecto. "+constantes.USUARIO_ID));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:identificacionDocente", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:identificacionDocente", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.USUARIO_ID));
             }
         } else {
             validacionesID = false;
-            FacesContext.getCurrentInstance().addMessage("form:identificacionDocente", new FacesMessage("El numero identificación es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:identificacionDocente", new FacesMessage("El numero identificación es obligatorio. "+constantes.USUARIO_ID));
         }
         modificacionesRegistroDocente();
     }
@@ -359,15 +362,15 @@ public class ControllerDetallesDocente implements Serializable {
             if (Utilidades.validarNulo(telefono1Docente) && (!telefono1Docente.isEmpty()) && (telefono1Docente.trim().length() > 0)) {
                 int tam = telefono1Docente.length();
                 if (tam == 4) {
-                    if ((Utilidades.isNumber(telefono1Docente)) == false) {
+                    if ((Utilidades.validarCaracteresAlfaNumericos(telefono1Docente)) == false) {
                         validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono1Docente", new FacesMessage("El numero de extensión se encuentra incorrecto."));
+                        FacesContext.getCurrentInstance().addMessage("form:telefono1Docente", new FacesMessage("El numero de extensión se encuentra incorrecto. "+constantes.USUARIO_TELEXT));
                     } else {
                         validacionesTel1 = true;
                     }
                 } else {
                     validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono1Docente", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:telefono1Docente", new FacesMessage("El numero de extensión se encuentra incorrecto. "+constantes.USUARIO_TELEXT));
                 }
             }
         } else {
@@ -376,13 +379,13 @@ public class ControllerDetallesDocente implements Serializable {
                 if (tam == 10) {
                     if ((Utilidades.isNumber(telefono2Docente)) == false) {
                         validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono2Docente", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                        FacesContext.getCurrentInstance().addMessage("form:telefono2Docente", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
                     } else {
                         validacionesTel2 = true;
                     }
                 } else {
                     validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono2Docente", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:telefono2Docente", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
                 }
             }
         }
@@ -396,11 +399,11 @@ public class ControllerDetallesDocente implements Serializable {
                 if (Utilidades.validarDirecciones(direccionDocente)) {
                     validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:direccionDocente", new FacesMessage("La dirección se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:direccionDocente", new FacesMessage("La dirección se encuentra incorrecta. "+constantes.USUARIO_DIRECCION));
                     validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:direccionDocente", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:direccionDocente", new FacesMessage("El tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
                 validacionesDireccion = false;
             }
         }

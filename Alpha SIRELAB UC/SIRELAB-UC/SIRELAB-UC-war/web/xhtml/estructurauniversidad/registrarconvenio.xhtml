@@ -73,7 +73,7 @@ and open the template in the editor.
                                             <h6><h:message id="msnFechaInicio" for="inputFechaInicio" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Fecha Finalización"/></strong>
+                                            <strong><h:outputText value="Fecha Finalización*"/></strong>
                                             <h:inputText maxlength="45" value="#{controllerRegistrarConvenio.inputFechaFin}" disabled="#{controllerRegistrarConvenio.activarCasillas}" class="form-control" id="inputFechaFin" >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarConvenio.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
                                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />

@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposEventosBOInterface;
 import com.sirelab.entidades.TipoEvento;
 import com.sirelab.utilidades.Utilidades;
@@ -37,6 +38,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarTipoEvento() {
     }
@@ -50,6 +52,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         activarAceptar = false;
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -61,15 +64,15 @@ public class ControllerRegistrarTipoEvento implements Serializable {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
         }
     }
 

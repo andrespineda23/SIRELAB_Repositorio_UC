@@ -45,7 +45,7 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Codigo Departamento*"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerDetallesDepartamento.editarCodigo}" required="true" class="form-control" id="editarCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                            <h:inputText maxlength="15" value="#{controllerDetallesDepartamento.editarCodigo}" required="true" class="form-control" id="editarCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesDepartamento.validarCodigoDepartamento()}" execute="editarCodigo" render="editarCodigo msnCodigo" />
                                             </h:inputText>
                                             <h6><h:message id="msnCodigo" for="editarCodigo" style="color: red"/></h6>

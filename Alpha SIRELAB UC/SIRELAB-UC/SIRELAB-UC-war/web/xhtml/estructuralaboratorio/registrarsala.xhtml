@@ -84,29 +84,11 @@ and open the template in the editor.
                                     <legend class="text-info">Información Universidad</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Departamento*"/></strong>
-                                        <h:selectOneMenu value="#{controllerRegistrarSala.nuevoDepartamentoSala}"
-                                                         class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}"
-                                                         id="nuevoDepartamentoSala">
-                                            <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                            <f:selectItems value="#{controllerRegistrarSala.listaDepartamentos}" var="departamento"
-                                                           itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
-                                            <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarDepartamentos()}" execute="nuevoDepartamentoSala" render="@this nuevoLaboratorioSala nuevoLaboratorioPorArea msnDepartamento"/>
-                                        </h:selectOneMenu>
-                                        <h6><h:message id="msnDepartamento" for="nuevoDepartamentoSala" style="color: red"/></h6>
+                                        <h:inputText value="#{controllerRegistrarSala.nuevoLaboratorioSala.departamento.nombredepartamento}" class="form-control" readonly="true"/>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Laboratorio*"/></strong>
-                                        <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioSala}"
-                                                         class="form-control" disabled="#{controllerRegistrarSala.activarNuevoLaboratorio}"
-                                                         id="nuevoLaboratorioSala">
-                                            <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                            <f:selectItems value="#{controllerRegistrarSala.listaLaboratorios}" var="laboratorio"
-                                                           itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
-                                            <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarLaboratorios()}" execute="nuevoLaboratorioSala" render="@this nuevoLaboratorioPorArea msnLaboratorio"/>
-                                        </h:selectOneMenu>
-                                        <h6><h:message id="msnLaboratorio" for="nuevoLaboratorioSala" style="color: red"/></h6>
+                                        <h:inputText value="#{controllerRegistrarSala.nuevoLaboratorioSala.nombrelaboratorio}" class="form-control" readonly="true"/>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Area de Profundización*"/></strong>
@@ -198,7 +180,7 @@ and open the template in the editor.
                                     </h:commandButton>
                                     <span></span>
                                     <span></span>
-                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarsalas" actionListener="#{controllerRegistrarSala.limpiarRegistroSalaLaboratorio()}" immediate="true">
+                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarSala.limpiarRegistroSalaLaboratorio()}" immediate="true">
                                         <f:ajax execute="@form" render="form" />
                                     </h:commandButton>
                                     <span></span>

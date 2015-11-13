@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.recursoslaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoIngresoInsumoBOInterface;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoInsumosBOInterface;
 import com.sirelab.entidades.IngresoInsumo;
@@ -64,12 +65,14 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     private boolean validacionesDescripcion;
     private boolean activarInsumo;
     private String paginaAnterior;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarIngresoInsumo() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         fechaDiferida = true;
         activarInsumo = false;
         activarLimpiar = true;
@@ -134,21 +137,21 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
                 nuevoFecha = new Date();
                 if (!Utilidades.fechaIngresadaCorrecta(nuevoFecha)) {
                     validacionesFecha = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
                 } else {
                     validacionesFecha = true;
                 }
             } else {
                 if (!Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFecha)) {
                     validacionesFecha = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
                 } else {
                     validacionesFecha = true;
                 }
             }
         } else {
             validacionesFecha = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha es obligatoria. Formato (dd/mm/yyyy)"));
         }
     }
 
@@ -177,16 +180,16 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
                 if (Utilidades.isNumber(nuevoCantidad) == true) {
                     validacionesCantidad = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad ingresada es incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad ingresada es incorrecta. "+constantes.RECURSO_CANT_E));
                     validacionesCantidad = false;
                 }
             } else {
                 validacionesCantidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria. "+constantes.RECURSO_CANT_E));
             }
         } else {
             validacionesCantidad = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria. "+constantes.RECURSO_CANT_E));
         }
     }
 
@@ -197,11 +200,11 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
                 if (Utilidades.isNumber(nuevoCosto) == true) {
                     validacionesCosto = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El costo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El costo ingresado es incorrecto. "+constantes.RECURSO_COSTO));
                     validacionesCosto = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_COSTO));
                 validacionesCosto = false;
             }
         }

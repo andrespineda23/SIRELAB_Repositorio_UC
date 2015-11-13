@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.administrarusuarios;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Departamento;
@@ -64,12 +65,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesEncargadoLaboratorio() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         colorMensaje = "black";
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
@@ -287,17 +290,17 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(nombreEncargadoLaboratorio)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.USUARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre es obligatorio. "+constantes.USUARIO_NOMBRE));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -308,17 +311,17 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(apellidoEncargadoLaboratorio)) {
                     validacionesApellido = false;
-                    FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido ingresado es incorrecto. "+constantes.USUARIO_APELLIDO));
                 } else {
                     validacionesApellido = true;
                 }
             } else {
                 validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_APELLIDO));
             }
         } else {
             validacionesApellido = false;
-            FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido es obligatorio. "+constantes.USUARIO_APELLIDO));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -342,15 +345,15 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                     }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.USUARIO_CORREO));
             }
         } else {
             validacionesCorreo = false;
-            FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo es obligatorio. "+constantes.USUARIO_CORREO));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -363,11 +366,11 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                     validacionesCorreoOpcional = true;
                 } else {
                     validacionesCorreoOpcional = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO_OPC));
                 }
             } else {
                 validacionesCorreoOpcional = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 15 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 15 caracteres. "+constantes.USUARIO_CORREO_OPC));
             }
         }
         modificacionesRegistroEncargadoLaboratorio();
@@ -376,7 +379,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     public void validarIdentificacionEncargadoLaboratorio() {
         if (Utilidades.validarNulo(identificacionEncargadoLaboratorio) && (!identificacionEncargadoLaboratorio.isEmpty()) && (identificacionEncargadoLaboratorio.trim().length() > 0)) {
             int tam = identificacionEncargadoLaboratorio.length();
-            if (tam >= 8) {
+            if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(identificacionEncargadoLaboratorio)) {
                     EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorDocumento(identificacionEncargadoLaboratorio);
                     if (null == registro) {
@@ -391,15 +394,15 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                     }
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación se encuentra incorrecto. "+constantes.USUARIO_ID));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.USUARIO_ID));
             }
         } else {
             validacionesID = false;
-            FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación es obligatorio. "+constantes.USUARIO_ID));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -408,16 +411,16 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         if (tipoTel == 1) {
             if (Utilidades.validarNulo(telefono1EncargadoLaboratorio) && (!telefono1EncargadoLaboratorio.isEmpty()) && (telefono1EncargadoLaboratorio.trim().length() > 0)) {
                 int tam = telefono1EncargadoLaboratorio.length();
-                if (tam == 7) {
+                if (tam == 4) {
                     if ((Utilidades.isNumber(telefono1EncargadoLaboratorio)) == false) {
                         validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono1EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                        FacesContext.getCurrentInstance().addMessage("form:telefono1EncargadoLaboratorio", new FacesMessage("El numero de extensión se encuentra incorrecto. "+constantes.USUARIO_TELEXT));
                     } else {
                         validacionesTel1 = true;
                     }
                 } else {
                     validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono1EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:telefono1EncargadoLaboratorio", new FacesMessage("El numero de extensión se encuentra incorrecto. "+constantes.USUARIO_TELEXT));
                 }
             }
         } else {
@@ -426,13 +429,13 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 if (tam == 10) {
                     if ((Utilidades.isNumber(telefono2EncargadoLaboratorio)) == false) {
                         validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono2EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                        FacesContext.getCurrentInstance().addMessage("form:telefono2EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
                     } else {
                         validacionesTel2 = true;
                     }
                 } else {
                     validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono2EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:telefono2EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
                 }
             }
         }
@@ -446,11 +449,11 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 if (Utilidades.validarDirecciones(direccionEncargadoLaboratorio)) {
                     validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("La dirección se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("La dirección se encuentra incorrecta. "+constantes.USUARIO_DIRECCION));
                     validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("LEl tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("LEl tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
                 validacionesDireccion = false;
             }
         }

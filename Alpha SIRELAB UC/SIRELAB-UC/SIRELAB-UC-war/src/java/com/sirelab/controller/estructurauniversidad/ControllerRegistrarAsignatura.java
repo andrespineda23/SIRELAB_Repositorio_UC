@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructurauniversidad;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.universidad.GestionarAsignaturasBOInterface;
 import com.sirelab.entidades.Asignatura;
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
@@ -44,12 +45,14 @@ public class ControllerRegistrarAsignatura implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarAsignatura() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         activarLimpiar = true;
         activarAceptar = false;
         colorMensaje = "black";
@@ -70,17 +73,17 @@ public class ControllerRegistrarAsignatura implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.U_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.U_NOMBRE));
         }
     }
 
@@ -90,17 +93,17 @@ public class ControllerRegistrarAsignatura implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.U_CODIGO));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.U_CODIGO));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.U_CODIGO));
         }
     }
 
@@ -109,12 +112,12 @@ public class ControllerRegistrarAsignatura implements Serializable {
             if (Utilidades.isNumber(nuevoCredito) == true) {
                 validacionesCredito = true;
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCredito", new FacesMessage("El credito ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCredito", new FacesMessage("El credito ingresado es incorrecto. "+constantes.U_CREDITO));
                 validacionesCredito = false;
             }
         } else {
             validacionesCredito = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCredito", new FacesMessage("El credito es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCredito", new FacesMessage("El credito es obligatorio. "+constantes.U_CREDITO));
         }
     }
 

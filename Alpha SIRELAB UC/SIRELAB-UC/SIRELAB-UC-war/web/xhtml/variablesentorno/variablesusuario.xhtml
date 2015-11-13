@@ -202,6 +202,57 @@ and open the template in the editor.
                             <br></br>
                             <br></br>
                         </div>
+                        <div class="row col-md-12">
+                            <div class="container">
+                                <div id="resultadosBusquedaTP" class="row clearfix">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>SECTOR ENTIDAD REGISTRADOS</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTableSECE" var="itemSECE" 
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerVariablesUsuario.listaSectorEntidadTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemSECE.nombre}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="detallessectorentidad" actionListener="#{controllerDetallesSectorEntidad.recibirIDDetalleSectorEntidad(itemSECE.idsectorentidad)}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerVariablesUsuario.cargarPaginaAnteriorSectorEntidad()}" disabled="#{controllerVariablesUsuario.bloquearPagAntSectorEntidad}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerVariablesUsuario.cargarPaginaSiguienteSectorEntidad()}" disabled="#{controllerVariablesUsuario.bloquearPagSigSectorEntidad}">
+                                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                                <br></br>
+                                <div class="left pull-left">
+                                    <h:commandButton value="Nuevo Sector Entidad" action="registrarsectorentidad" class="btn btn-success"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br></br>
+                            <br></br>
+                        </div>
                         <div class="row">
                             <div class="col-md-11"></div>
                             <div class="col-md-1">

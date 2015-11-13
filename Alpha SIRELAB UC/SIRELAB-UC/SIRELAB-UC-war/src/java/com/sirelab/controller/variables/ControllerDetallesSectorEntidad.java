@@ -6,8 +6,8 @@
 package com.sirelab.controller.variables;
 
 import com.sirelab.ayuda.MensajesConstantes;
-import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposCargosBOInterface;
-import com.sirelab.entidades.TipoCargo;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableSectoresEntidadesBOInterface;
+import com.sirelab.entidades.SectorEntidad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -22,26 +22,26 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @ManagedBean
 @SessionScoped
-public class ControllerDetallesTipoCargo implements Serializable {
+public class ControllerDetallesSectorEntidad implements Serializable {
 
     @EJB
-    GestionarVariableTiposCargosBOInterface gestionarVariableTiposCargoBO;
+    GestionarVariableSectoresEntidadesBOInterface gestionarVariableTiposCargoBO;
 
     private String inputNombre;
     private boolean validacionesNombre;
     private String mensajeFormulario;
-    private BigInteger idTipoCargo;
-    private TipoCargo tipoCargoDetalle;
+    private BigInteger idSectorEntidad;
+    private SectorEntidad tipoCargoDetalle;
     private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
-    
-    public ControllerDetallesTipoCargo() {
+
+    public ControllerDetallesSectorEntidad() {
     }
 
     @PostConstruct
@@ -50,17 +50,17 @@ public class ControllerDetallesTipoCargo implements Serializable {
         BasicConfigurator.configure();
     }
 
-    public void recibirIDDetalleTipoCargo(BigInteger idDetalle) {
-        this.idTipoCargo = idDetalle;
+    public void recibirIDDetalleSectorEntidad(BigInteger idDetalle) {
+        this.idSectorEntidad = idDetalle;
         cargarInformacionRegistro();
         mensajeFormulario = "N/A";
         colorMensaje = "black";
     }
 
     private void cargarInformacionRegistro() {
-        tipoCargoDetalle = gestionarVariableTiposCargoBO.consultarTipoCargoPorID(idTipoCargo);
+        tipoCargoDetalle = gestionarVariableTiposCargoBO.consultarSectorEntidadPorID(idSectorEntidad);
         if (null != tipoCargoDetalle) {
-            inputNombre = tipoCargoDetalle.getNombrecargo();
+            inputNombre = tipoCargoDetalle.getNombre();
             validacionesNombre = true;
             modificacionesRegistro = false;
         }
@@ -87,7 +87,7 @@ public class ControllerDetallesTipoCargo implements Serializable {
         modificacionesRegistro = true;
     }
 
-    public void registrarModificacionTipoCargo() {
+    public void registrarModificacionSectorEntidad() {
         if (modificacionesRegistro == true) {
             if (validacionesNombre == true) {
                 almacenarModificacionRegistro();
@@ -106,26 +106,26 @@ public class ControllerDetallesTipoCargo implements Serializable {
 
     private void almacenarModificacionRegistro() {
         try {
-            tipoCargoDetalle.setNombrecargo(inputNombre);
-            gestionarVariableTiposCargoBO.editarTipoCargo(tipoCargoDetalle);
+            tipoCargoDetalle.setNombre(inputNombre);
+            gestionarVariableTiposCargoBO.editarSectorEntidad(tipoCargoDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetalleTipoCargo almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetalleTipoCargo almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetalleSectorEntidad almacenarModificacionRegistro:  " + e.toString());
+            System.out.println("Error ControllerDetalleSectorEntidad almacenarModificacionRegistro: " + e.toString());
         }
     }
 
     public String cerrarPagina() {
-        cancelarTipoCargo();
+        cancelarSectorEntidad();
         return "variablesusuario";
     }
 
-    public void cancelarTipoCargo() {
+    public void cancelarSectorEntidad() {
         inputNombre = null;
         validacionesNombre = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         modificacionesRegistro = false;
-        idTipoCargo = null;
+        idSectorEntidad = null;
         tipoCargoDetalle = null;
     }
 
@@ -154,19 +154,19 @@ public class ControllerDetallesTipoCargo implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-    public BigInteger getIdTipoCargo() {
-        return idTipoCargo;
+    public BigInteger getIdSectorEntidad() {
+        return idSectorEntidad;
     }
 
-    public void setIdTipoCargo(BigInteger idTipoCargo) {
-        this.idTipoCargo = idTipoCargo;
+    public void setIdSectorEntidad(BigInteger idSectorEntidad) {
+        this.idSectorEntidad = idSectorEntidad;
     }
 
-    public TipoCargo getTipoCargoDetalle() {
+    public SectorEntidad getTipoCargoDetalle() {
         return tipoCargoDetalle;
     }
 
-    public void setTipoCargoDetalle(TipoCargo tipoCargoDetalle) {
+    public void setTipoCargoDetalle(SectorEntidad tipoCargoDetalle) {
         this.tipoCargoDetalle = tipoCargoDetalle;
     }
 
@@ -176,6 +176,14 @@ public class ControllerDetallesTipoCargo implements Serializable {
 
     public void setModificacionesRegistro(boolean modificacionesRegistro) {
         this.modificacionesRegistro = modificacionesRegistro;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 
     public String getColorMensaje() {

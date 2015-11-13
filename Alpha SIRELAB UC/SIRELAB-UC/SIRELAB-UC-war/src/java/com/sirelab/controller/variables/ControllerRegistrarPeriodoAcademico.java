@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariablePeriodosAcademicosBOInterface;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.utilidades.Utilidades;
@@ -39,6 +40,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarPeriodoAcademico() {
     }
@@ -52,6 +54,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
         activarLimpiar = true;
+        constantes =  new MensajesConstantes();
         colorMensaje = "black";
         activarAceptar = false;
         activarCasillas = false;
@@ -67,15 +70,15 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
         }
     }
 
@@ -85,11 +88,11 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                 validacionesFechaInicio = true;
             } else {
                 validacionesFechaInicio = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             }
         } else {
             validacionesFechaInicio = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
         }
     }
 
@@ -99,11 +102,11 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                 validacionesFechaFin = true;
             } else {
                 validacionesFechaFin = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             }
         } else {
             validacionesFechaFin = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
         }
     }
 

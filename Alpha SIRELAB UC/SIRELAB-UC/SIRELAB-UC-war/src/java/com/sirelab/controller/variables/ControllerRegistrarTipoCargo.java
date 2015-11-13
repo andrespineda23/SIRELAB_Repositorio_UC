@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposCargosBOInterface;
 import com.sirelab.entidades.TipoCargo;
 import com.sirelab.utilidades.Utilidades;
@@ -37,6 +38,7 @@ public class ControllerRegistrarTipoCargo implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarTipoCargo() {
     }
@@ -49,6 +51,7 @@ public class ControllerRegistrarTipoCargo implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         activarAceptar = false;
+        constantes = new MensajesConstantes();
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
@@ -61,15 +64,15 @@ public class ControllerRegistrarTipoCargo implements Serializable {
                     validacionesNombre = true;
                 } else {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El Nombre se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El Nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El Nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El Nombre es obligatorio. "+constantes.VARIABLE_NOMBRE));
         }
     }
 

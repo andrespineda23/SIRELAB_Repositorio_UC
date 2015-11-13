@@ -548,6 +548,24 @@
     </navigation-rule>
     
     
+        <navigation-rule>
+        <from-view-id>/xhtml/variablesentorno/registrarsectorentidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variablesusuario</from-outcome>
+            <to-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarsectorentidad</from-outcome>
+            <to-view-id>/xhtml/variablesentorno/registrarsectorentidad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
     <navigation-rule>
         <from-view-id>/xhtml/variablesentorno/detallestipoperfil.xhtml</from-view-id>
         <navigation-case>
@@ -579,6 +597,24 @@
         <navigation-case>
             <from-outcome>detallestipocargo</from-outcome>
             <to-view-id>/xhtml/variablesentorno/detallestipocargo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variablesentorno/detallessectorentidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>variablesusuario</from-outcome>
+            <to-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallessectorentidad</from-outcome>
+            <to-view-id>/xhtml/variablesentorno/detallessectorentidad.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -1731,7 +1767,7 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/detalleslaboratorio.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrarlaboratorioporarea</from-outcome>
             <to-view-id>/xhtml/estructuralaboratorio/registrarlaboratorioporarea.xhtml</to-view-id>
@@ -1741,8 +1777,8 @@
     <navigation-rule>
         <from-view-id>/xhtml/estructuralaboratorio/registrarlaboratorioporarea.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarlaboratoriosporareas</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</to-view-id>
+            <from-outcome>detalleslaboratorio</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/detalleslaboratorio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -2735,7 +2771,7 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/administrarsalas.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratorios.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrarsala</from-outcome>
             <to-view-id>/xhtml/estructuralaboratorio/registrarsala.xhtml</to-view-id>
@@ -2745,8 +2781,8 @@
     <navigation-rule>
         <from-view-id>/xhtml/estructuralaboratorio/registrarsala.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarsalas</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/administrarsalas.xhtml</to-view-id>
+            <from-outcome>administrarlaboratorios</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratorios.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

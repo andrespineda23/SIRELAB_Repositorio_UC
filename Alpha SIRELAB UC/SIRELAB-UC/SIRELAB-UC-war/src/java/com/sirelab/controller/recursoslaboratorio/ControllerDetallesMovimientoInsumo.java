@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.recursoslaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
 import com.sirelab.entidades.Insumo;
 import com.sirelab.entidades.MovimientoInsumo;
@@ -47,12 +48,14 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean fechaDiferida;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesMovimientoInsumo() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -110,13 +113,13 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         if (Utilidades.validarNulo(editarCostoMovimiento) && (!editarCostoMovimiento.isEmpty()) && (editarCostoMovimiento.trim().length() > 0)) {
             if ((Utilidades.isNumber(editarCostoMovimiento)) == false) {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto. "+constantes.RECURSO_COSTO));
             } else {
                 validacionesCosto = true;
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo es obligatorio. "+constantes.RECURSO_COSTO));
         }
         modificacionesRegistro = true;
     }
@@ -127,21 +130,21 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
                 editarFechaMovimiento = new Date();
                 if ((Utilidades.fechaIngresadaCorrecta(editarFechaMovimiento)) == false) {
                     validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 } else {
                     validacionesCosto = true;
                 }
             } else {
                 if ((Utilidades.fechaDiferidaIngresadaCorrecta(editarFechaMovimiento)) == false) {
                     validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 } else {
                     validacionesCosto = true;
                 }
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha es obligatoria. Formato (dd/mm/yyyy)"));
         }
         modificacionesRegistro = true;
     }

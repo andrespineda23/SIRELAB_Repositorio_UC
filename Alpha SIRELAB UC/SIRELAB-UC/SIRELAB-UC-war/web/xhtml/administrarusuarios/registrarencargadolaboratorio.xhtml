@@ -85,7 +85,7 @@ and open the template in the editor.
                                             <h6><h:message id="msnEmailOpcional" for="inputEmailOpcional" style="color: red"></h:message></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Número Fijo"/></strong>
+                                            <strong><h:outputText value="Número de Extension"/></strong>
                                             <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono1}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono1" >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDatosNumericosEncargadoLaboratorio(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                             </h:inputText>

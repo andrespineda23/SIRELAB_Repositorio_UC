@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructurauniversidad;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.universidad.GestionarConveniosBOInterface;
 import com.sirelab.entidades.Convenio;
 import com.sirelab.utilidades.Utilidades;
@@ -41,13 +42,14 @@ public class ControllerDetallesConvenio implements Serializable {
     private String colorMensaje;
     private boolean modificacionesRegistro;
     private boolean estadoConvenio;
-    private boolean fechaDiferida;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesConvenio() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -73,27 +75,26 @@ public class ControllerDetallesConvenio implements Serializable {
             validacionesFechaFin = true;
             validacionesFechaInicio = true;
             modificacionesRegistro = false;
-            fechaDiferida = true;
         }
     }
 
     public void validarNombre() {
         if (Utilidades.validarNulo(inputNombre) && (!inputNombre.isEmpty()) && (inputNombre.trim().length() > 0)) {
             int tam = inputNombre.length();
-            if (tam >= 3) {
+            if (tam >= 6) {
                 if (Utilidades.validarCaracterString(inputNombre)) {
                     validacionesNombre = true;
                 } else {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.U_NOMBRE));
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.U_NOMBRE));
         }
         modificacionesRegistro = true;
     }
@@ -101,20 +102,20 @@ public class ControllerDetallesConvenio implements Serializable {
     public void validarDescripcion() {
         if (Utilidades.validarNulo(inputDescripcion) && (!inputDescripcion.isEmpty()) && (inputDescripcion.trim().length() > 0)) {
             int tam = inputDescripcion.length();
-            if (tam >= 3) {
+            if (tam >= 20) {
                 if (Utilidades.validarCaracteresAlfaNumericos(inputDescripcion)) {
                     validacionesDescripcion = true;
                 } else {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. " + constantes.U_DESCRIP));
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 3 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres. " + constantes.U_DESCRIP));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción es obligatoria. " + constantes.U_DESCRIP));
         }
         modificacionesRegistro = true;
     }
@@ -125,36 +126,28 @@ public class ControllerDetallesConvenio implements Serializable {
                 validacionesValor = true;
             } else {
                 validacionesValor = true;
-                FacesContext.getCurrentInstance().addMessage("form:inputValor", new FacesMessage("El valor se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:inputValor", new FacesMessage("El valor se encuentra incorrecto. " + constantes.U_COSTO));
             }
         } else {
             validacionesValor = true;
-            FacesContext.getCurrentInstance().addMessage("form:inputValor", new FacesMessage("El valor es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:inputValor", new FacesMessage("El valor es obligatoria. " + constantes.U_COSTO));
         }
         modificacionesRegistro = true;
     }
 
     public void validarFechaInicio() {
         if (Utilidades.validarNulo(inputFechaInicio)) {
-            if (fechaDiferida == true) {
-                inputFechaInicio = new Date();
-                if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
-                    validacionesFechaInicio = true;
-                } else {
-                    validacionesFechaInicio = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
-                }
+
+            inputFechaInicio = new Date();
+            if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
+                validacionesFechaInicio = true;
             } else {
-                if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaInicio)) {
-                    validacionesFechaInicio = true;
-                } else {
-                    validacionesFechaInicio = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
-                }
+                validacionesFechaInicio = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             }
         } else {
             validacionesFechaInicio = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
         }
         modificacionesRegistro = true;
     }
@@ -164,9 +157,12 @@ public class ControllerDetallesConvenio implements Serializable {
             if (Utilidades.fechaIngresadaCorrecta(inputFechaFin)) {
                 validacionesFechaFin = true;
             } else {
-                validacionesFechaFin = true;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                validacionesFechaFin = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             }
+        } else {
+            validacionesFechaFin = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha es obligatoria. Formato (dd/mm/yyyy)"));
         }
         modificacionesRegistro = true;
     }
@@ -257,7 +253,6 @@ public class ControllerDetallesConvenio implements Serializable {
         validacionesFechaInicio = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
-        fechaDiferida = true;
     }
 
     public String cerrarPagina() {
@@ -344,14 +339,6 @@ public class ControllerDetallesConvenio implements Serializable {
 
     public void setEstadoConvenio(boolean estadoConvenio) {
         this.estadoConvenio = estadoConvenio;
-    }
-
-    public boolean isFechaDiferida() {
-        return fechaDiferida;
-    }
-
-    public void setFechaDiferida(boolean fechaDiferida) {
-        this.fechaDiferida = fechaDiferida;
     }
 
 }

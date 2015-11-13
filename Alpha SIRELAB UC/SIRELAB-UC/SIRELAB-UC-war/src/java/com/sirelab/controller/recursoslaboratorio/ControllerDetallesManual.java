@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.recursoslaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoManualesBOInterface;
 import com.sirelab.entidades.Manual;
 import com.sirelab.utilidades.Utilidades;
@@ -48,12 +49,14 @@ public class ControllerDetallesManual implements Serializable {
     private Part archivo;
     private boolean modificacionArchivo;
     private boolean activarUbicacion, activarArchivo;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesManual() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         modificacionArchivo = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
@@ -107,17 +110,17 @@ public class ControllerDetallesManual implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.RECURSO_NOM_MAN));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_NOM_MAN));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio "+constantes.RECURSO_NOM_MAN));
         }
     }
 
@@ -128,11 +131,11 @@ public class ControllerDetallesManual implements Serializable {
                 validacionesUbicacion = true;
             } else {
                 validacionesUbicacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El tamaño minimo permitido es 7 caracteres. "+constantes.RECURSO_INS_UBI));
             }
         } else {
             validacionesUbicacion = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El campo ubicación es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El campo ubicación es obligatorio. "+constantes.RECURSO_INS_UBI));
         }
     }
 

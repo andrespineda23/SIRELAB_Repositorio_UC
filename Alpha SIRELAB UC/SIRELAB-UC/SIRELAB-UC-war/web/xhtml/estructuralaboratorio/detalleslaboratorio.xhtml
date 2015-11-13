@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -97,7 +97,7 @@ and open the template in the editor.
                                     <br></br>
                                     <fieldset>
                                         <legend class="text-info">Áreas de Profundización Registradas (ACTIVAS)</legend>
-                                        <div class="row" >
+                                        <div class="row">
                                             <h:dataTable id="dataTable" var="item" 
                                                          styleClass="table table-condensed table-responsive"  
                                                          value="#{controllerDetallesLaboratorio.listaLaboratoriosPorAreas}">
@@ -114,6 +114,10 @@ and open the template in the editor.
                                                     <h:selectBooleanCheckbox value="#{item.estado}"/>
                                                 </h:column>
                                             </h:dataTable>
+                                            <br></br>
+                                            <div class="left pull-left">
+                                                <h:commandButton value="Registrar Área Profundización" actionListener="#{controllerRegistrarLaboratorioPorArea.recibirIdLaboratorio(controllerDetallesLaboratorio.idLaboratorio)}" action="#{controllerDetallesLaboratorio.registrarAreaProfundizacion()}"/>
+                                            </div>
                                         </div>
                                     </fieldset>
                                     <br></br>

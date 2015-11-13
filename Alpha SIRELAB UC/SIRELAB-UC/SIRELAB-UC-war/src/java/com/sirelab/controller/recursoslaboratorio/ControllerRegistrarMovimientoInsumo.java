@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.recursoslaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.MovimientoInsumo;
@@ -51,12 +52,14 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private List<EquipoElemento> listaEquiposElementos;
     private EquipoElemento equipoElemento;
     private boolean asociarEquipo;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarMovimientoInsumo() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         asociarEquipo = true;
         fechaDiferida = true;
         validacionesCantidad = false;
@@ -100,7 +103,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         if (Utilidades.validarNulo(nuevoCantidadMovimiento) && (!nuevoCantidadMovimiento.isEmpty()) && (nuevoCantidadMovimiento.trim().length() > 0)) {
             if (!Utilidades.isNumber(nuevoCantidadMovimiento)) {
                 validacionesCantidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad se encuentra incorrecta."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad se encuentra incorrecta. "+constantes.RECURSO_CANT_E));
             } else {
                 int cantidad = insumoRegistro.getCantidadexistencia() - Integer.valueOf(nuevoCantidadMovimiento);
                 if (cantidad < insumoRegistro.getCantidadminimia()) {
@@ -112,7 +115,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             }
         } else {
             validacionesCantidad = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad es obligatoria. "+constantes.RECURSO_CANT_E));
         }
     }
 
@@ -120,13 +123,13 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         if (Utilidades.validarNulo(nuevoCostoMovimiento) && (!nuevoCostoMovimiento.isEmpty()) && (nuevoCostoMovimiento.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCostoMovimiento)) == false) {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto. "+constantes.RECURSO_COSTO));
             } else {
                 validacionesCosto = true;
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo es obligatorio. "+constantes.RECURSO_COSTO));
         }
     }
 
@@ -136,21 +139,21 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
                 nuevoFechaMovimiento = new Date();
                 if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
                     validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 } else {
                     validacionesCosto = true;
                 }
             } else {
                 if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
                     validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 } else {
                     validacionesCosto = true;
                 }
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha es obligatoria. Formato (dd/mm/yyyy)"));
         }
     }
 

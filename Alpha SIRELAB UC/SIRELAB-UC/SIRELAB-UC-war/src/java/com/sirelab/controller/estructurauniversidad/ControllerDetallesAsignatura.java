@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructurauniversidad;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.universidad.GestionarAsignaturasBOInterface;
 import com.sirelab.entidades.Asignatura;
 import com.sirelab.utilidades.Utilidades;
@@ -40,12 +41,14 @@ public class ControllerDetallesAsignatura implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesAsignatura() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         BasicConfigurator.configure();
@@ -86,17 +89,17 @@ public class ControllerDetallesAsignatura implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.U_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. "+constantes.U_NOMBRE));
         }
     }
 
@@ -106,17 +109,17 @@ public class ControllerDetallesAsignatura implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.U_CODIGO));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.U_CODIGO));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. " + constantes.U_CODIGO));
         }
     }
 
@@ -124,13 +127,13 @@ public class ControllerDetallesAsignatura implements Serializable {
         if (Utilidades.validarNulo(editarCredito) && (!editarCredito.isEmpty()) && (editarCredito.trim().length() > 0)) {
             if (!Utilidades.isNumber(editarCredito)) {
                 validacionesCredito = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito ingresado es incorrecto."));
+                FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito ingresado es incorrecto. "+constantes.U_CREDITO));
             } else {
                 validacionesCredito = true;
             }
         } else {
             validacionesCredito = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito es obligatorio. "+constantes.U_CREDITO));
         }
     }
 

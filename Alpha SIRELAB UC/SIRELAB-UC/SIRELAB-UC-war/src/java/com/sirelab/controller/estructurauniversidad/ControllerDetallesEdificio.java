@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructurauniversidad;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.universidad.GestionarEdificiosBOInterface;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.HorarioAtencion;
@@ -46,12 +47,14 @@ public class ControllerDetallesEdificio implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesEdificio() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         validacionesDescripcion = true;
         validacionesDireccion = true;
         validacionesSede = true;
@@ -95,33 +98,33 @@ public class ControllerDetallesEdificio implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarDescripcion)) {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La descripción ingresada es incorrecta. " + constantes.U_NOMBRE));
                 } else {
                     validacionesDescripcion = true;
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_NOMBRE));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La descripción es obligatoria."));
+            FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La descripción es obligatoria. " + constantes.U_NOMBRE));
         }
     }
 
     public void validarDireccionEdificio() {
         if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty()) && (editarDireccion.trim().length() > 0)) {
             int tam = editarDireccion.length();
-            if (tam >= 7) {
+            if (tam >= 8) {
                 if (!Utilidades.validarCaracterString(editarDireccion)) {
                     validacionesDireccion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta. " + constantes.USUARIO_DIRECCION));
                 } else {
                     validacionesDireccion = true;
                 }
             } else {
                 validacionesDireccion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 7 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. " + constantes.USUARIO_DIRECCION));
             }
         }
     }

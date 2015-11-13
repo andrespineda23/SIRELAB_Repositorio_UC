@@ -45,4 +45,6 @@ public interface GestionarPlantaLaboratoriosPorAreasBOInterface {
     public List<Departamento> consultarDepartamentosActivosRegistrados();
 
     public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento);
+
+    public Laboratorio obtenerLaboratorioPorId(BigInteger idRegistro);
 }

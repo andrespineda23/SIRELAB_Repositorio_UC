@@ -91,7 +91,7 @@ and open the template in the editor.
                                             </div>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número de Extensión"/></strong>
-                                                <h:inputText maxlength="20" value="#{controllerDetallesDocente.telefono1Docente}" readonly="#{controllerDetallesDocente.activarEditar}" class="form-control" id="telefono1Docente" >
+                                                <h:inputText maxlength="4" value="#{controllerDetallesDocente.telefono1Docente}" readonly="#{controllerDetallesDocente.activarEditar}" class="form-control" id="telefono1Docente" >
                                                     <f:ajax event="blur" listener="#{controllerDetallesDocente.validarDatosNumericosDocente(1)}" execute="telefono1Docente" render="telefono1Docente msnTelefono1" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono1" for="telefono1Docente" style="color: red"/></h6>
@@ -119,7 +119,6 @@ and open the template in the editor.
                                             <h:selectOneMenu readonly="#{controllerDetallesDocente.activarEditar}" value="#{controllerDetallesDocente.cargoDocente}"
                                                              class="form-control"
                                                              id="cargoDocente">
-                                                <f:selectItem itemLabel="Seleccione Cargo" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesDocente.listaTipoCargo}" var="cargo"
                                                                itemLabel="#{cargo.nombrecargo}" itemValue="#{cargo}"/>
                                                 <f:converter converterId="ConverterGenerico" />

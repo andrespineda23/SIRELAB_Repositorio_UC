@@ -6,6 +6,7 @@
 package com.sirelab.controller.estructuralaboratorio;
 
 import com.sirelab.ayuda.AsociacionLaboratorioArea;
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
@@ -52,6 +53,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     private boolean activarAceptar;
     private List<AsociacionLaboratorioArea> listaAsociacionLaboratorioArea;
     private List<AreaProfundizacion> listaAreaProfundizacion;
+    private MensajesConstantes constantes;
 
     public ControllerRegistrarLaboratorio() {
     }
@@ -75,6 +77,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesNombre = false;
         BasicConfigurator.configure();
         cargarInformacionAsociacion();
+        constantes = new MensajesConstantes();
     }
 
     private void cargarInformacionAsociacion() {
@@ -121,17 +124,17 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
         }
     }
 
@@ -141,17 +144,17 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO_LAB));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_CODIGO_LAB));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO_LAB));
         }
     }
 
@@ -282,6 +285,11 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesNombre = false;
         listaAreaProfundizacion = null;
         listaAsociacionLaboratorioArea = null;
+    }
+
+    public String nuevoRegistroSala() {
+        cancelarRegistroLaboratorio();
+        return "registrarsala";
     }
 
     public void cambiarActivarCasillas() {

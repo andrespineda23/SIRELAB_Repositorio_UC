@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaHojasVidaEquiposBOInterface;
 import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.TipoEvento;
@@ -46,12 +47,14 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean fechaDiferidaEvento, fechaDiferidaRegistro;
+    private MensajesConstantes constantes;
 
     public ControllerDetallesHojaVidaEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
 
@@ -89,15 +92,15 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.INVENTARIO_NOMBRE));
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.INVENTARIO_NOMBRE));
         }
         modificacionesRegistro = true;
     }
@@ -110,19 +113,19 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
                     validacionesFechaEvento = true;
                 } else {
                     validacionesFechaEvento = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 }
             } else {
                 if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaEvento)) {
                     validacionesFechaEvento = true;
                 } else {
                     validacionesFechaEvento = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 }
             }
         } else {
             validacionesFechaEvento = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
         }
         modificacionesRegistro = true;
     }
@@ -135,19 +138,19 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
                     validacionesFechaRegistro = true;
                 } else {
                     validacionesFechaRegistro = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 }
             } else {
                 if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaRegistro)) {
                     validacionesFechaRegistro = true;
                 } else {
                     validacionesFechaRegistro = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
                 }
             }
         } else {
             validacionesFechaRegistro = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
         }
         modificacionesRegistro = true;
     }

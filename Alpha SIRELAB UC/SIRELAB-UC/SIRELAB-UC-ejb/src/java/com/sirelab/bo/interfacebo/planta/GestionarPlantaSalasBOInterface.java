@@ -60,4 +60,6 @@ public interface GestionarPlantaSalasBOInterface {
     public List<Sede> consultarSedesActivosRegistradas();
 
     public List<Edificio> consultarEdificiosActivosPorIDSede(BigInteger sede);
+
+    public Laboratorio obtenerLaboratorioPorId(BigInteger idRegistro);
 }

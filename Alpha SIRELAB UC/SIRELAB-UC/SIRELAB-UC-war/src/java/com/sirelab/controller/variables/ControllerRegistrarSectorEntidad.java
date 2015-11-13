@@ -6,11 +6,10 @@
 package com.sirelab.controller.variables;
 
 import com.sirelab.ayuda.MensajesConstantes;
-import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposCargosBOInterface;
-import com.sirelab.entidades.TipoCargo;
+import com.sirelab.bo.interfacebo.variables.GestionarVariableSectoresEntidadesBOInterface;
+import com.sirelab.entidades.SectorEntidad;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,48 +21,39 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @ManagedBean
 @SessionScoped
-public class ControllerDetallesTipoCargo implements Serializable {
+public class ControllerRegistrarSectorEntidad implements Serializable {
 
     @EJB
-    GestionarVariableTiposCargosBOInterface gestionarVariableTiposCargoBO;
+    GestionarVariableSectoresEntidadesBOInterface gestionarVariableTiposCargoBO;
 
     private String inputNombre;
     private boolean validacionesNombre;
     private String mensajeFormulario;
-    private BigInteger idTipoCargo;
-    private TipoCargo tipoCargoDetalle;
-    private boolean modificacionesRegistro;
     private Logger logger = Logger.getLogger(getClass().getName());
+    private boolean activarCasillas;
     private String colorMensaje;
+    private boolean activarLimpiar;
+    private boolean activarAceptar;
     private MensajesConstantes constantes;
-    
-    public ControllerDetallesTipoCargo() {
+
+    public ControllerRegistrarSectorEntidad() {
     }
 
     @PostConstruct
     public void init() {
+        inputNombre = null;
+        validacionesNombre = false;
+        activarLimpiar = true;
+        colorMensaje = "black";
+        activarCasillas = false;
+        activarAceptar = false;
+        mensajeFormulario = "N/A";
         constantes = new MensajesConstantes();
         BasicConfigurator.configure();
-    }
-
-    public void recibirIDDetalleTipoCargo(BigInteger idDetalle) {
-        this.idTipoCargo = idDetalle;
-        cargarInformacionRegistro();
-        mensajeFormulario = "N/A";
-        colorMensaje = "black";
-    }
-
-    private void cargarInformacionRegistro() {
-        tipoCargoDetalle = gestionarVariableTiposCargoBO.consultarTipoCargoPorID(idTipoCargo);
-        if (null != tipoCargoDetalle) {
-            inputNombre = tipoCargoDetalle.getNombrecargo();
-            validacionesNombre = true;
-            modificacionesRegistro = false;
-        }
     }
 
     public void validarNombre() {
@@ -84,49 +74,62 @@ public class ControllerDetallesTipoCargo implements Serializable {
             validacionesNombre = false;
             FacesContext.getCurrentInstance().addMessage("form:inputNombre", new FacesMessage("El Nombre es obligatorio. "+constantes.VARIABLE_NOMBRE));
         }
-        modificacionesRegistro = true;
     }
 
-    public void registrarModificacionTipoCargo() {
-        if (modificacionesRegistro == true) {
-            if (validacionesNombre == true) {
-                almacenarModificacionRegistro();
-                cargarInformacionRegistro();
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
-            } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
-            }
+    public void registrarSectorEntidad() {
+        if (validacionesNombre == true) {
+            almacenarRegistroNuevo();
+            restaurarFormulario();
+            activarLimpiar = false;
+            activarAceptar = true;
+            activarCasillas = true;
+            colorMensaje = "green";
+            mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "black";
-            mensajeFormulario = "No existen modificaciones para ser almacenadas.";
+            colorMensaje = "red";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }
 
-    private void almacenarModificacionRegistro() {
+    private void almacenarRegistroNuevo() {
         try {
-            tipoCargoDetalle.setNombrecargo(inputNombre);
-            gestionarVariableTiposCargoBO.editarTipoCargo(tipoCargoDetalle);
+            SectorEntidad tipoNuevo = new SectorEntidad();
+            tipoNuevo.setNombre(inputNombre);
+            gestionarVariableTiposCargoBO.crearSectorEntidad(tipoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerDetalleTipoCargo almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetalleTipoCargo almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerRegistrarSectorEntidad almacenarRegistroNuevo:  " + e.toString());
+            System.out.println("Error ControllerRegistrarSectorEntidad almacenarRegistroNuevo: " + e.toString());
         }
     }
 
     public String cerrarPagina() {
-        cancelarTipoCargo();
+        cancelarSectorEntidad();
         return "variablesusuario";
     }
 
-    public void cancelarTipoCargo() {
+    public void cancelarSectorEntidad() {
         inputNombre = null;
         validacionesNombre = false;
         mensajeFormulario = "N/A";
+        activarLimpiar = true;
+        activarAceptar = false;
         colorMensaje = "black";
-        modificacionesRegistro = false;
-        idTipoCargo = null;
-        tipoCargoDetalle = null;
+        activarCasillas = false;
+    }
+
+    private void restaurarFormulario() {
+        inputNombre = null;
+        validacionesNombre = false;
+    }
+
+    public void cambiarActivarCasillas() {
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        activarLimpiar = true;
+        activarAceptar = false;
+        if (activarCasillas == true) {
+            activarCasillas = false;
+        }
     }
 
     //GET-SET
@@ -154,28 +157,20 @@ public class ControllerDetallesTipoCargo implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-    public BigInteger getIdTipoCargo() {
-        return idTipoCargo;
+    public Logger getLogger() {
+        return logger;
     }
 
-    public void setIdTipoCargo(BigInteger idTipoCargo) {
-        this.idTipoCargo = idTipoCargo;
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 
-    public TipoCargo getTipoCargoDetalle() {
-        return tipoCargoDetalle;
+    public boolean isActivarCasillas() {
+        return activarCasillas;
     }
 
-    public void setTipoCargoDetalle(TipoCargo tipoCargoDetalle) {
-        this.tipoCargoDetalle = tipoCargoDetalle;
-    }
-
-    public boolean isModificacionesRegistro() {
-        return modificacionesRegistro;
-    }
-
-    public void setModificacionesRegistro(boolean modificacionesRegistro) {
-        this.modificacionesRegistro = modificacionesRegistro;
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
     public String getColorMensaje() {
@@ -184,6 +179,22 @@ public class ControllerDetallesTipoCargo implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isActivarLimpiar() {
+        return activarLimpiar;
+    }
+
+    public void setActivarLimpiar(boolean activarLimpiar) {
+        this.activarLimpiar = activarLimpiar;
+    }
+
+    public boolean isActivarAceptar() {
+        return activarAceptar;
+    }
+
+    public void setActivarAceptar(boolean activarAceptar) {
+        this.activarAceptar = activarAceptar;
     }
 
 }
