@@ -70,6 +70,7 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
             return null;
         }
     }
+
     @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivos() {
         try {
@@ -98,6 +99,21 @@ public class LaboratoriosPorAreasDAO implements LaboratoriosPorAreasDAOInterface
             return null;
         }
     }
+    @Override
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorDepartamento(BigInteger departamento) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM LaboratoriosPorAreas p WHERE p.laboratorio.departamento.iddepartamento=:");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("departamento", departamento);
+            List<LaboratoriosPorAreas> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarLaboratoriosPorAreasPorDepartamento LaboratoriosPorAreasDAO : " + e.toString());
+            return null;
+        }
+    }
+
     @Override
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorios(BigInteger laboratorio) {
         try {

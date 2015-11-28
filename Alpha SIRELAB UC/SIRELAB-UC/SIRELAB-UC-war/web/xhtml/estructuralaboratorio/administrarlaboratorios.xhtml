@@ -17,7 +17,7 @@ and open the template in the editor.
                 <h:form id="formularioGeneral">
 
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -154,17 +154,17 @@ and open the template in the editor.
                                                         </f:facet>
                                                         <h:outputText value="#{item.strEstado}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarLaboratorios.perfilConsulta}">
                                                         <f:facet name="header">
                                                             <h:outputText value="Sala"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Adicionar" action="#{controllerRegistrarLaboratorio.nuevoRegistroSala()}" actionListener="#{controllerRegistrarSala.recibirIdLaboratorio(item.idlaboratorio)}"/>
+                                                        <h:commandLink value="Adicionar" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}" action="#{controllerRegistrarLaboratorio.nuevoRegistroSala()}" actionListener="#{controllerRegistrarSala.recibirIdLaboratorio(item.idlaboratorio)}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarLaboratorios.perfilConsulta}">
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" action="detalleslaboratorio" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(item.idlaboratorio)}" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}"/>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarLaboratorios.paginaDetalles()}" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(item.idlaboratorio)}" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>
@@ -191,7 +191,10 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Nuevo Laboratorio" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}" class="btn btn-success" action="#{controllerAdministrarLaboratorios.paginaNueva()}" actionListener="#{controllerRegistrarLaboratorio.iniciarPagina()}"/>
+                            </div>
+                            <div class="col-md-10"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atras" action="#{controllerAdministrarLaboratorios.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                             </div>

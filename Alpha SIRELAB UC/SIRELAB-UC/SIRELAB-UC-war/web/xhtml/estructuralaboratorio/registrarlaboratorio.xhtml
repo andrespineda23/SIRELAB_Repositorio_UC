@@ -59,7 +59,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Facultad*"/></strong>
-                                            <h:selectOneMenu value="#{controllerRegistrarLaboratorio.nuevoFacultad}"
+                                            <h:selectOneMenu value="#{controllerRegistrarLaboratorio.nuevoFacultad}" readonly="#{controllerRegistrarLaboratorio.activarNuevoFacultad}"
                                                              class="form-control" disabled="#{controllerRegistrarLaboratorio.activarCasillas}"
                                                              id="nuevoFacultad">
                                                 <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />

@@ -14,6 +14,7 @@ import com.sirelab.entidades.TipoMovimiento;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -37,7 +38,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     GestionarRecursoMovimientosInsumoBOInterface gestionarRecursoMovimientosInsumoBO;
 
     private String nuevoCantidadMovimiento, nuevoCostoMovimiento;
-    private Date nuevoFechaMovimiento;
+    private String nuevoFechaMovimiento;
     private boolean validacionesTipo, validacionesCantidad, validacionesCosto, validacionesFecha;
     private String mensajeFormulario;
     private Insumo insumoRegistro;
@@ -75,7 +76,9 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         nuevoTipoMovimiento = null;
         nuevoCantidadMovimiento = null;
         nuevoCostoMovimiento = null;
-        nuevoFechaMovimiento = new Date();
+        Date fecha = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        nuevoFechaMovimiento = df.format(fecha);
         BasicConfigurator.configure();
     }
 
@@ -103,7 +106,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         if (Utilidades.validarNulo(nuevoCantidadMovimiento) && (!nuevoCantidadMovimiento.isEmpty()) && (nuevoCantidadMovimiento.trim().length() > 0)) {
             if (!Utilidades.isNumber(nuevoCantidadMovimiento)) {
                 validacionesCantidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad se encuentra incorrecta. "+constantes.RECURSO_CANT_E));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad se encuentra incorrecta. " + constantes.RECURSO_CANT_E));
             } else {
                 int cantidad = insumoRegistro.getCantidadexistencia() - Integer.valueOf(nuevoCantidadMovimiento);
                 if (cantidad < insumoRegistro.getCantidadminimia()) {
@@ -115,7 +118,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             }
         } else {
             validacionesCantidad = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad es obligatoria. "+constantes.RECURSO_CANT_E));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidadMovimiento", new FacesMessage("La cantidad es obligatoria. " + constantes.RECURSO_CANT_E));
         }
     }
 
@@ -123,33 +126,23 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         if (Utilidades.validarNulo(nuevoCostoMovimiento) && (!nuevoCostoMovimiento.isEmpty()) && (nuevoCostoMovimiento.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCostoMovimiento)) == false) {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto. "+constantes.RECURSO_COSTO));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto. " + constantes.RECURSO_COSTO));
             } else {
                 validacionesCosto = true;
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo es obligatorio. "+constantes.RECURSO_COSTO));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCostoMovimiento", new FacesMessage("El costo es obligatorio. " + constantes.RECURSO_COSTO));
         }
     }
 
     public void validarFechaMovimiento() {
         if (Utilidades.validarNulo(nuevoFechaMovimiento)) {
-            if (fechaDiferida == true) {
-                nuevoFechaMovimiento = new Date();
-                if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
-                    validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesCosto = true;
-                }
+            if ((Utilidades.fechaIngresadaCorrecta(new Date(nuevoFechaMovimiento))) == false) {
+                validacionesCosto = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             } else {
-                if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
-                    validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesCosto = true;
-                }
+                validacionesCosto = true;
             }
         } else {
             validacionesCosto = false;
@@ -161,7 +154,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         nuevoTipoMovimiento = null;
         nuevoCantidadMovimiento = null;
         nuevoCostoMovimiento = null;
-        nuevoFechaMovimiento = new Date();
+        nuevoFechaMovimiento = null;
         //
         validacionesCantidad = false;
         validacionesCosto = false;
@@ -227,7 +220,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             movimientoNuevo.setTipomovimiento(nuevoTipoMovimiento);
             movimientoNuevo.setCantidadmovimiento(Integer.parseInt(nuevoCantidadMovimiento));
             movimientoNuevo.setCostomovimiento(Long.parseLong(nuevoCostoMovimiento));
-            movimientoNuevo.setFechamovimiento(nuevoFechaMovimiento);
+            movimientoNuevo.setFechamovimiento(new Date(nuevoFechaMovimiento));
             movimientoNuevo.setInsumo(insumoRegistro);
             if (asociarEquipo == true) {
                 gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumo(movimientoNuevo);
@@ -243,7 +236,9 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private void limpiarFormulario() {
         nuevoTipoMovimiento = null;
         nuevoCantidadMovimiento = null;
-        nuevoFechaMovimiento = new Date();
+        Date fecha = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        nuevoFechaMovimiento = df.format(fecha);
         nuevoCostoMovimiento = null;
         asociarEquipo = true;
         equipoElemento = null;
@@ -301,11 +296,11 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         this.nuevoCostoMovimiento = nuevoCostoMovimiento;
     }
 
-    public Date getNuevoFechaMovimiento() {
+    public String getNuevoFechaMovimiento() {
         return nuevoFechaMovimiento;
     }
 
-    public void setNuevoFechaMovimiento(Date nuevoFechaMovimiento) {
+    public void setNuevoFechaMovimiento(String nuevoFechaMovimiento) {
         this.nuevoFechaMovimiento = nuevoFechaMovimiento;
     }
 

@@ -11,6 +11,7 @@ import com.sirelab.entidades.Convenio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -35,7 +36,7 @@ public class ControllerDetallesConvenio implements Serializable {
     private Convenio convenioEditar;
     private BigInteger idConvenio;
     private String inputNombre, inputDescripcion, inputValor;
-    private Date inputFechaInicio, inputFechaFin;
+    private String inputFechaInicio, inputFechaFin;
     private boolean validacionesNombre, validacionesDescripcion, validacionesValor, validacionesFechaInicio, validacionesFechaFin;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -66,8 +67,12 @@ public class ControllerDetallesConvenio implements Serializable {
             inputNombre = convenioEditar.getNombreconvenio();
             inputDescripcion = convenioEditar.getDescripcion();
             inputValor = String.valueOf(convenioEditar.getValor());
-            inputFechaInicio = convenioEditar.getFechainicial();
-            inputFechaFin = convenioEditar.getFechafinal();
+            Date fecha1 = convenioEditar.getFechainicial();
+            DateFormat df = DateFormat.getDateInstance();
+            inputFechaInicio = df.format(fecha1);
+            Date fecha2 = convenioEditar.getFechafinal();
+            DateFormat df2 = DateFormat.getDateInstance();
+            inputFechaFin = df2.format(fecha2);
             estadoConvenio = convenioEditar.getEstado();
             validacionesNombre = true;
             validacionesDescripcion = true;
@@ -137,9 +142,7 @@ public class ControllerDetallesConvenio implements Serializable {
 
     public void validarFechaInicio() {
         if (Utilidades.validarNulo(inputFechaInicio)) {
-
-            inputFechaInicio = new Date();
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
+            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaInicio))) {
                 validacionesFechaInicio = true;
             } else {
                 validacionesFechaInicio = false;
@@ -154,7 +157,7 @@ public class ControllerDetallesConvenio implements Serializable {
 
     public void validarFechaFin() {
         if (Utilidades.validarNulo(inputFechaFin)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaFin)) {
+            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaFin))) {
                 validacionesFechaFin = true;
             } else {
                 validacionesFechaFin = false;
@@ -194,7 +197,7 @@ public class ControllerDetallesConvenio implements Serializable {
     private boolean validarFechasRegistro() {
         boolean retorno = true;
         if (Utilidades.validarNulo(inputFechaFin)) {
-            if (inputFechaFin.after(inputFechaInicio)) {
+            if (new Date(inputFechaFin).after(new Date(inputFechaInicio))) {
                 retorno = true;
             } else {
                 retorno = false;
@@ -231,8 +234,8 @@ public class ControllerDetallesConvenio implements Serializable {
             convenioEditar.setValor(Integer.valueOf(inputValor));
             convenioEditar.setEstado(estadoConvenio);
             convenioEditar.setDescripcion(inputDescripcion);
-            convenioEditar.setFechafinal(inputFechaFin);
-            convenioEditar.setFechainicial(inputFechaInicio);
+            convenioEditar.setFechafinal(new Date(inputFechaFin));
+            convenioEditar.setFechainicial(new Date(inputFechaInicio));
             gestionarConvenioBO.editarConvenio(convenioEditar);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo:  " + e.toString());
@@ -244,7 +247,7 @@ public class ControllerDetallesConvenio implements Serializable {
         inputNombre = null;
         inputDescripcion = null;
         inputValor = "0";
-        inputFechaInicio = new Date();
+        inputFechaInicio = null;
         inputFechaFin = null;
         validacionesNombre = false;
         validacionesDescripcion = false;
@@ -301,19 +304,19 @@ public class ControllerDetallesConvenio implements Serializable {
         this.inputValor = inputValor;
     }
 
-    public Date getInputFechaInicio() {
+    public String getInputFechaInicio() {
         return inputFechaInicio;
     }
 
-    public void setInputFechaInicio(Date inputFechaInicio) {
+    public void setInputFechaInicio(String inputFechaInicio) {
         this.inputFechaInicio = inputFechaInicio;
     }
 
-    public Date getInputFechaFin() {
+    public String getInputFechaFin() {
         return inputFechaFin;
     }
 
-    public void setInputFechaFin(Date inputFechaFin) {
+    public void setInputFechaFin(String inputFechaFin) {
         this.inputFechaFin = inputFechaFin;
     }
 

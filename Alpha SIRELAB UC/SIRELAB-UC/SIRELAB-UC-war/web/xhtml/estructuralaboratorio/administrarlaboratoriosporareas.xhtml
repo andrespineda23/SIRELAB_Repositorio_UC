@@ -39,7 +39,7 @@ and open the template in the editor.
                                                             Departamento
                                                         </label>
                                                         <h:selectOneMenu value="#{controllerAdministrarLaboratoriosPorAreas.parametroDepartamento}"
-                                                                         class="form-control" 
+                                                                         class="form-control"  disabled="#{controllerAdministrarLaboratoriosPorAreas.activarDepartamento}"
                                                                          id="parametroDepartamento">
                                                             <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                                             <f:selectItems value="#{controllerAdministrarLaboratoriosPorAreas.listaDepartamentos}" var="departamento"
@@ -141,11 +141,11 @@ and open the template in the editor.
                                                         </f:facet>
                                                         <h:outputText value="#{item.areaprofundizacion.nombrearea}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarLaboratoriosPorAreas.perfilConsulta}">
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" action="detalleslaboratorioporarea" actionListener="#{controllerDetallesLaboratorioPorArea.recibirIDLaboratoriosPorAreasDetalles(item.idlaboratoriosporareas)}"/>
+                                                        <h:commandLink value="Ver" disabled="#{controllerAdministrarLaboratoriosPorAreas.perfilConsulta}" action="detalleslaboratorioporarea" actionListener="#{controllerDetallesLaboratorioPorArea.recibirIDLaboratoriosPorAreasDetalles(item.idlaboratoriosporareas)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>

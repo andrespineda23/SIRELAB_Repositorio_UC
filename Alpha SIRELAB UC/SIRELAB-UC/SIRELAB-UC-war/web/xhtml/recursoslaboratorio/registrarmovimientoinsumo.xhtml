@@ -6,153 +6,225 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!--[if IE]>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <![endif]-->
+        <!-- Favicon Icon -->
+        <link rel="icon" href="../../assets/img/favicon.ico" />
+        <title>Sistema de Información de Recursos de Laboratorios</title>
+        <!-- BOOTSTRAP CORE CSS -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <!-- ION ICONS STYLES -->
+        <link href="../../assets/css/ionicons.css" rel="stylesheet" />
+        <!-- FONT AWESOME ICONS STYLES -->
+        <link href="../../assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM CSS -->
+        <link href="../../assets/css/style.css" rel="stylesheet" />
+        <!-- IE10 viewport hack  -->
+        <script src="../../assets/js/ie-10-view-port.js"></script>
+
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+        <link href="../../assets/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+
+        <!-- IE10 viewport hack  -->
+        <script src="../../assets/js/bootstrap.js"></script>
+
+        <script type="text/javascript">
+            function DisabledDomingo(date) {
+                var day = date.getDay();
+                // If day == 1 then it is MOnday
+                if (day == 0) {
+                    return [false];
+                } else {
+                    return [true];
+                }
+            }
+            $(function () {
+                $("#form\\:nuevoFechaMovimiento").datepicker({
+                    dateFormat: "dd/mm/yy",
+                    beforeShowDay: DisabledDomingo
+                });
+            });
+            // Traducción al español
+            $(function ($) {
+                $.datepicker.regional['es'] = {
+                    closeText: 'Cerrar',
+                    prevText: 'Ant',
+                    nextText: 'Sig',
+                    currentText: 'Hoy',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                    weekHeader: 'Sm',
+                    dateFormat: 'dd/mm/yy',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: ''
+                };
+                $.datepicker.setDefaults($.datepicker.regional['es']);
+            });
+        </script>
     </h:head>
-    <h:body>
-        <ui:composition template="/xhtml/template/templatepaginas.xhtml">
-            <ui:define name="body">
-                <h:form id="form">
+    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;">
+        <h:form id="form">
+            <div id="header">
+                <header>
                     <div class="container">
-                         <br></br>
-                        <br></br>
-                        <br></br>
                         <div class="row">
-                            <ol class="breadcrumb">
-                                <li><a href="#">Inicio</a></li>
-                                <li><a href="#">Administrar Insumos</a></li>
-                                <li><a href="#">Detalles Insumo</a></li>
-                                <li><a href="#">Administrar Movimientos</a></li>
-                                <li class="active">Registrar Movimiento</li>
-                            </ol>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 row">
-                                <h2 class="info">
-                                    Información Registro
-                                </h2>
-                                <p>
-                                    Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
-                                </p>
-                                <p>
-                                    Este registro es unicamente para movimientos de los insumos de los laboratorios.
-                                </p>
-                            </div>
-                            <div class="col-md-12 row">
-                                <fieldset>
-                                    <legend class="text-info">Datos Basicos</legend>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Tipo Movimiento*"/></strong>
-                                        <h:selectOneMenu value="#{controllerRegistrarMovimientoInsumo.nuevoTipoMovimiento}"
-                                                         class="form-control"  disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}"
-                                                         id="nuevoTipoMovimiento">
-                                            <f:selectItem itemLabel="Seleccione Movimiento" itemValue="null" />
-                                            <f:selectItems value="#{controllerRegistrarMovimientoInsumo.listaTipoMovimiento}" var="movimiento"
-                                                           itemLabel="#{movimiento.nombretipo}" itemValue="#{movimiento}"/>
-                                            <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.validarTipoMovimiento()}" execute="nuevoTipoMovimiento" render="msnTipoMovimiento"/>
-                                        </h:selectOneMenu>
-                                        <h6><h:message id="msnTipoMovimiento" for="nuevoTipoMovimiento" style="color: red"/></h6>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Costo Movimiento*"/></strong>
-                                        <h:inputText maxlength="10"  value="#{controllerRegistrarMovimientoInsumo.nuevoCostoMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCostoMovimiento" requiredMessage="El campo Costo es obligatorio">
-                                            <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarCostoMovimiento()}" execute="nuevoCostoMovimiento" render="nuevoCostoMovimiento msnCostoMovimiento" />
-                                        </h:inputText>
-                                        <h6><h:message id="msnCostoMovimiento" for="nuevoCostoMovimiento" style="color: red"/></h6>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Cantidad*"/></strong>
-                                        <h:inputText maxlength="2"  value="#{controllerRegistrarMovimientoInsumo.nuevoCantidadMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCantidadMovimiento" requiredMessage="El campo Descripción es obligatorio.">
-                                            <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarCantidadMovimiento()}" execute="nuevoCantidadMovimiento" render="nuevoCantidadMovimiento msnCantidadMovimiento" />
-                                        </h:inputText>
-                                        <h6><h:message id="msnCantidadMovimiento" for="nuevoCantidadMovimiento" style="color: red"/></h6>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Fecha Movimiento*"/></strong>
-                                        <div class="input-group">
-                                            <h:inputText value="#{controllerRegistrarMovimientoInsumo.nuevoFechaMovimiento}" required="true" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" class="form-control" id="nuevoFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="nuevoFechaMovimiento" render="nuevoFechaMovimiento msnFechaMovimiento" />
-                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                            </h:inputText>
-                                            <span class="input-group-addon">
-                                                <h:outputText value="Fecha Actual"/>
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarMovimientoInsumo.fechaDiferida}">
-                                                    <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="fechaDiferida" render="@this nuevoFechaMovimiento msnFechaMovimiento" />
-                                                </h:selectBooleanCheckbox>
-                                            </span>
-                                        </div>
-                                        <h6><h:message id="msnFechaMovimiento" for="nuevoFechaMovimiento" style="color: red"/></h6>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Insumo Asociado*"/></strong>
-                                        <h:inputText readonly="true"  value="#{controllerRegistrarMovimientoInsumo.insumoRegistro.nombreinsumo}" class="form-control" id="nuevoInsumoMovimiento" />
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="¿El movimiento esta asociado a algun equipo?"/></strong>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <h:outputText value="¿Asociar Equipo?"/>
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectBooleanCheckbox id="asociarEquipo" value="#{controllerRegistrarMovimientoInsumo.asociarEquipo}">
-                                                    <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.actualizarAsocioEquipo()}" execute="asociarEquipo" render="@this equipoElemento" />
-                                                </h:selectBooleanCheckbox>
-                                            </span>
-                                            <h:selectOneMenu value="#{controllerRegistrarMovimientoInsumo.equipoElemento}"
-                                                             class="form-control" disabled="#{controllerRegistrarMovimientoInsumo.asociarEquipo}"
-                                                             id="equipoElemento">
-                                                <f:selectItem itemLabel="Seleccione Equipo" itemValue="null" />
-                                                <f:selectItems value="#{controllerRegistrarMovimientoInsumo.listaEquiposElementos}" var="equpo"
-                                                               itemLabel="#{equpo.nombreequipo}" itemValue="#{equpo}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" execute="nuevoTipoMovimiento" />
-                                            </h:selectOneMenu>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <hr class="intro-divider"/>
-                                <div class="row col-md-12">
-                                    <div class="text-center">
-                                        <h5>
-                                            Resultados del Formulario
-                                        </h5>
-                                        <strong>
-                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarMovimientoInsumo.mensajeFormulario}" style="color: #{controllerRegistrarMovimientoInsumo.colorMensaje}}"/>
-                                        </strong>
-                                    </div>
-                                    <br></br>
-                                </div>
-                                <hr class="intro-divider"/>
-                                <div class="right pull-right">
-                                    <h:commandButton class="btn btn-success" disabled="#{controllerRegistrarMovimientoInsumo.activarAceptar}" value="Registrar" actionListener="#{controllerRegistrarMovimientoInsumo.registrarNuevoMovimiento()}">
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
-                                    <span></span>
-                                    <span></span>
-                                    <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarMovimientoInsumo.limpiarRegistroMovimientoLaboratorio()}" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerRegistrarMovimientoInsumo.insumoRegistro.idinsumo)}" immediate="true">
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
-                                    <span></span>
-                                    <span></span>
-                                    <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarMovimientoInsumo.activarLimpiar}" actionListener="#{controllerRegistrarMovimientoInsumo.cambiarActivarCasillas()}" >
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
-                                </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 logo-wrapper">
+                                <img src="../../assets/img/logo-universidad-central.png" alt=""/>
                             </div>
                         </div>
                     </div>
-                </h:form>
-            </ui:define>  
-        </ui:composition>
+                </header>
+            </div>
+            <div class="container">
+                <br></br>
+                <br></br>
+                <br></br>
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">...</a></li>
+                        <li><a href="#">Administrar Movimientos</a></li>
+                        <li class="active">Registrar Movimiento</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <h2 class="info">
+                            Información Registro
+                        </h2>
+                        <p>
+                            Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                        </p>
+                        <p>
+                            Este registro es unicamente para movimientos de los insumos de los laboratorios.
+                        </p>
+                    </div>
+                    <div class="col-md-12 row">
+                        <fieldset>
+                            <legend class="text-info">Datos Basicos</legend>
+                            <div class="form-group">
+                                <strong><h:outputText value="Tipo Movimiento*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarMovimientoInsumo.nuevoTipoMovimiento}"
+                                                 class="form-control"  disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}"
+                                                 id="nuevoTipoMovimiento">
+                                    <f:selectItem itemLabel="Seleccione Movimiento" itemValue="null" />
+                                    <f:selectItems value="#{controllerRegistrarMovimientoInsumo.listaTipoMovimiento}" var="movimiento"
+                                                   itemLabel="#{movimiento.nombretipo}" itemValue="#{movimiento}"/>
+                                    <f:converter converterId="ConverterGenerico" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.validarTipoMovimiento()}" execute="nuevoTipoMovimiento" render="msnTipoMovimiento"/>
+                                </h:selectOneMenu>
+                                <h6><h:message id="msnTipoMovimiento" for="nuevoTipoMovimiento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Costo Movimiento*"/></strong>
+                                <h:inputText maxlength="10"  value="#{controllerRegistrarMovimientoInsumo.nuevoCostoMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCostoMovimiento" requiredMessage="El campo Costo es obligatorio">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarCostoMovimiento()}" execute="nuevoCostoMovimiento" render="nuevoCostoMovimiento msnCostoMovimiento" />
+                                </h:inputText>
+                                <h6><h:message id="msnCostoMovimiento" for="nuevoCostoMovimiento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Cantidad*"/></strong>
+                                <h:inputText maxlength="2"  value="#{controllerRegistrarMovimientoInsumo.nuevoCantidadMovimiento}" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCantidadMovimiento" requiredMessage="El campo Descripción es obligatorio.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarCantidadMovimiento()}" execute="nuevoCantidadMovimiento" render="nuevoCantidadMovimiento msnCantidadMovimiento" />
+                                </h:inputText>
+                                <h6><h:message id="msnCantidadMovimiento" for="nuevoCantidadMovimiento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Fecha Movimiento*"/></strong>
+                                <h:inputText maxlength="10" value="#{controllerRegistrarMovimientoInsumo.nuevoFechaMovimiento}" required="true" disabled="#{controllerRegistrarMovimientoInsumo.activarCasillas}" class="form-control" id="nuevoFechaMovimiento" requiredMessage="La Fecha es obligatoria.">
+                                    <f:ajax event="blur" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="nuevoFechaMovimiento" render="nuevoFechaMovimiento msnFechaMovimiento" />
+                                    <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.validarFechaMovimiento()}" execute="nuevoFechaMovimiento" render="nuevoFechaMovimiento msnFechaMovimiento" />
+                                </h:inputText>
+                                <h6><h:message id="msnFechaMovimiento" for="nuevoFechaMovimiento" style="color: red"/></h6>
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="Insumo Asociado*"/></strong>
+                                <h:inputText readonly="true"  value="#{controllerRegistrarMovimientoInsumo.insumoRegistro.nombreinsumo}" class="form-control" id="nuevoInsumoMovimiento" />
+                            </div>
+                            <div class="form-group">
+                                <strong><h:outputText value="¿El movimiento esta asociado a algun equipo?"/></strong>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <h:outputText value="¿Asociar Equipo?"/>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <h:selectBooleanCheckbox id="asociarEquipo" value="#{controllerRegistrarMovimientoInsumo.asociarEquipo}">
+                                            <f:ajax event="change" listener="#{controllerRegistrarMovimientoInsumo.actualizarAsocioEquipo()}" execute="asociarEquipo" render="@this equipoElemento" />
+                                        </h:selectBooleanCheckbox>
+                                    </span>
+                                    <h:selectOneMenu value="#{controllerRegistrarMovimientoInsumo.equipoElemento}"
+                                                     class="form-control" disabled="#{controllerRegistrarMovimientoInsumo.asociarEquipo}"
+                                                     id="equipoElemento">
+                                        <f:selectItem itemLabel="Seleccione Equipo" itemValue="null" />
+                                        <f:selectItems value="#{controllerRegistrarMovimientoInsumo.listaEquiposElementos}" var="equpo"
+                                                       itemLabel="#{equpo.nombreequipo}" itemValue="#{equpo}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" execute="nuevoTipoMovimiento" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <hr class="intro-divider"/>
+                        <div class="row col-md-12">
+                            <div class="text-center">
+                                <h5>
+                                    Resultados del Formulario
+                                </h5>
+                                <strong>
+                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarMovimientoInsumo.mensajeFormulario}" style="color: #{controllerRegistrarMovimientoInsumo.colorMensaje}}"/>
+                                </strong>
+                            </div>
+                            <br></br>
+                        </div>
+                        <hr class="intro-divider"/>
+                        <div class="right pull-right">
+                            <h:commandButton class="btn btn-success" disabled="#{controllerRegistrarMovimientoInsumo.activarAceptar}" value="Registrar" actionListener="#{controllerRegistrarMovimientoInsumo.registrarNuevoMovimiento()}">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarMovimientoInsumo.limpiarRegistroMovimientoLaboratorio()}" actionListener="#{controllerAdministrarMovimientoInsumo.recibirIDInsumo(controllerRegistrarMovimientoInsumo.insumoRegistro.idinsumo)}" immediate="true">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                            <span></span>
+                            <span></span>
+                            <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarMovimientoInsumo.activarLimpiar}" actionListener="#{controllerRegistrarMovimientoInsumo.cambiarActivarCasillas()}" >
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <footer>
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                &#169; 2015 - SIRELAB | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Andrés Pineda </a> 
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </h:form>
     </h:body>
 </html>

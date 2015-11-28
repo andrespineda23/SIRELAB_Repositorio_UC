@@ -37,4 +37,6 @@ public interface LaboratoriosPorAreasDAOInterface {
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorios(BigInteger laboratorio);
 
     public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivos();
+
+    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorDepartamento(BigInteger departamento);
 }

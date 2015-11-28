@@ -82,7 +82,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
             inputCodigo = "4";
             activarCasillasAdd = false;
         }
-        if ("AREA PROFUNDIZACIÓN".equalsIgnoreCase(tipoPerfil)) {
+        if ("ÁREA PROFUNDIZACIÓN".equalsIgnoreCase(tipoPerfil)) {
             inputCodigo = "5";
             activarCasillasAdd = false;
         }
@@ -148,7 +148,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
                 activarLimpiar = false;
                 activarAceptar = true;
                 activarCasillas = true;
-            colorMensaje = "green";
+                colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";

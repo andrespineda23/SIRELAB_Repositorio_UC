@@ -64,4 +64,10 @@ public interface GestionarPlantaEquiposElementosBOInterface {
     public List<SalaLaboratorio> consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion(BigInteger laboratorio);
 
     public List<ModuloLaboratorio> consultarModulosLaboratorioActivosPorIDSalaLaboratorio(BigInteger salaLaboratorio);
+
+    public List<LaboratoriosPorAreas> obtenerLaboratoriosPorAreasPorDepartamento(BigInteger departamento);
+
+    public List<LaboratoriosPorAreas> obtenerLaboratoriosPorAreasPorLaboratorio(BigInteger laboratorio);
+
+    public List<SalaLaboratorio> consultarSalasLaboratorioPorIDEdificio(BigInteger edificio);
 }

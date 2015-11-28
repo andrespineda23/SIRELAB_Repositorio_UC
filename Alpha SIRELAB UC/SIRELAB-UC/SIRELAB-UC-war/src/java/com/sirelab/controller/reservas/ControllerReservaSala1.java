@@ -99,8 +99,6 @@ public class ControllerReservaSala1 implements Serializable {
     }
 
     public void activarHoraReserva() {
-        System.out.println("parametroSala : " + parametroSala);
-        System.out.println("fecha : " + fecha);
         if ((Utilidades.validarNulo(parametroSala) == true) && (Utilidades.validarNulo(fecha))) {
             Date fecha2 = new Date(fecha);
             int diaSemana = fecha2.getDay();

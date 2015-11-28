@@ -5,11 +5,18 @@
  */
 package com.sirelab.controller.paginasiniciales;
 
+import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
+import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +39,7 @@ public class ControllerPaginasIniciales implements Serializable {
     GestionarLoginSistemaBOInterface gestionarLoginSistemaBO;
 
     private UsuarioLogin usuarioLoginSistema;
+    private TipoPerfil tipoPerfil;
 
     public ControllerPaginasIniciales() {
     }
@@ -64,6 +72,35 @@ public class ControllerPaginasIniciales implements Serializable {
             System.out.println("Error al cerrar la sesion del usuario : " + e.toString());
         }
         return "index";
+    }
+
+    public boolean inactivarOpcLaboratorio() {
+        boolean retorno = false;
+        usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            boolean perfilConsulta = validarSesionConsulta();
+            if (perfilConsulta == false) {
+                Map<String, Object> datosPerfil = AdministrarPerfil.getInstance().validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                if (null != datosPerfil) {
+                    if (datosPerfil.containsKey("LABORATORIO")) {
+                        Laboratorio parametro = (Laboratorio) datosPerfil.get("LABORATORIO");
+                        retorno = true;
+                    }
+                }
+            }
+        }
+        return retorno;
+    }
+
+    private boolean validarSesionConsulta() {
+        boolean retorno = false;
+        TipoPerfil tipoPerfil = AdministrarPerfil.getInstance().buscarTipoPerfilPorIDEncargado(usuarioLoginSistema.getIdUsuarioLogin());
+        if (null != tipoPerfil) {
+            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
+                retorno = true;
+            }
+        }
+        return retorno;
     }
 
     public UsuarioLogin getUsuarioLoginSistema() {

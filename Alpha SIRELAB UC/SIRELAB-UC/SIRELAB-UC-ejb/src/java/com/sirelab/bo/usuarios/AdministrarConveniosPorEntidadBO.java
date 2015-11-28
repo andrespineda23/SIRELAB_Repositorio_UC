@@ -9,9 +9,12 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarConveniosPorEntidadBOInter
 import com.sirelab.dao.interfacedao.ConvenioDAOInterface;
 import com.sirelab.dao.interfacedao.ConvenioPorEntidadDAOInterface;
 import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
+import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
+import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.ConvenioPorEntidad;
 import com.sirelab.entidades.EntidadExterna;
+import com.sirelab.entidades.PersonaContacto;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,6 +27,10 @@ import javax.ejb.Stateful;
 @Stateful
 public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPorEntidadBOInterface {
 
+    @EJB
+    PersonaContactoDAOInterface personaContactoDAO;
+    @EJB
+    UsuarioDAOInterface usuarioDAO;
     @EJB
     ConvenioPorEntidadDAOInterface convenioPorEntidadDAO;
     @EJB
@@ -120,9 +127,25 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
     @Override
     public void editarConvenioPorEntidad(ConvenioPorEntidad convenio) {
         try {
+            if (false == convenio.getEstado()) {
+                gestionarProcesosRelacionadosConvenioEntidad(convenio, false);
+            } else {
+                gestionarProcesosRelacionadosConvenioEntidad(convenio, true);
+            }
             convenioPorEntidadDAO.editarConvenioPorEntidad(convenio);
         } catch (Exception e) {
             System.out.println("Error AdministrarConveniosPorEntidadBO editarConvenioPorEntidad: " + e.toString());
+        }
+    }
+
+    private void gestionarProcesosRelacionadosConvenioEntidad(ConvenioPorEntidad convenio, boolean estado) {
+        List<PersonaContacto> listaPC = personaContactoDAO.consultarPersonasContactoPorConvenioEntidad(convenio.getIdconvenioporentidad());
+        if (null != listaPC) {
+            for (int j = 0; j < listaPC.size(); j++) {
+                PersonaContacto obj = listaPC.get(j);
+                obj.getPersona().getUsuario().setEstado(estado);
+                usuarioDAO.editarUsuario(obj.getPersona().getUsuario());
+            }
         }
     }
 

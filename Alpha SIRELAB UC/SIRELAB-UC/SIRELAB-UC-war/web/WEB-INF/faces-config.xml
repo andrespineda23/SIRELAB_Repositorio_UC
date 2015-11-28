@@ -2825,24 +2825,6 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/administrarmodulos.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>registrarmodulo</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/registrarmodulo.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/registrarmodulo.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>administrarmodulos</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/administrarmodulos.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    
-    
-    <navigation-rule>
         <from-view-id>/xhtml/estructuralaboratorio/administrarsalas.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrarmodulocargado</from-outcome>

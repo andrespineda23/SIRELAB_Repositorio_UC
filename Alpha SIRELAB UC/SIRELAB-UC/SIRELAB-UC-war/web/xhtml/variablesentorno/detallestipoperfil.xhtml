@@ -50,13 +50,9 @@ and open the template in the editor.
                                                              id="nombreTipoPerfil">
                                                 <f:selectItem itemLabel="DEPARTAMENTO" itemValue="DEPARTAMENTO" />
                                                 <f:selectItem itemLabel="LABORATORIO" itemValue="LABORATORIO" />
-                                                <f:selectItem itemLabel="AREA PROFUNDIZACIÓN" itemValue="AREA PROFUNDIZACIÓN" />
-                                                <f:ajax event="change" listener="#{controllerDetallesTipoPerfil.actualizarTipoPerfil()}" execute="nombreTipoPerfil" render="nombreTipoPerfil inputCodigo inputCodigoRegistro inputNombreRegistro" />
+                                                <f:selectItem itemLabel="ÁREA PROFUNDIZACIÓN" itemValue="AREAPROFUNDIZACION" />
+                                                <f:ajax event="change" listener="#{controllerDetallesTipoPerfil.actualizarTipoPerfil()}" execute="nombreTipoPerfil" render="nombreTipoPerfil inputCodigoRegistro inputNombreRegistro" />
                                             </h:selectOneMenu>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Codigo Tipo Perfil*"/></strong>
-                                            <h:inputText readonly="true" value="#{controllerDetallesTipoPerfil.inputCodigo}" class="form-control" id="inputCodigo" />
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Codigo del Registro*"/></strong>

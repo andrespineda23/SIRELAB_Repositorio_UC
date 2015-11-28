@@ -92,7 +92,7 @@ public class ControllerDetallesTipoPerfil implements Serializable {
             inputCodigo = "4";
             activarCasillasAdd = false;
         }
-        if ("AREA PROFUNDIZACIÓN".equalsIgnoreCase(tipoPerfil)) {
+        if ("ÁREA PROFUNDIZACIÓN".equalsIgnoreCase(tipoPerfil)) {
             inputCodigo = "5";
             activarCasillasAdd = false;
         }

@@ -13,6 +13,7 @@ import com.sirelab.entidades.Insumo;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -37,7 +38,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     @EJB
     GestionarRecursoInsumosBOInterface gestionarRecursoInsumoBO;
 
-    private Date nuevoFecha;
+    private String nuevoFecha;
     private String nuevoCantidad, nuevoCosto;
     private List<Insumo> listaInsumos;
     private Insumo nuevoInsumo;
@@ -80,7 +81,9 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
-        nuevoFecha = new Date();
+        Date fecha = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        nuevoFecha = df.format(fecha);
         nuevoCantidad = "1";
         nuevoCosto = "0";
         nuevoInsumo = null;
@@ -133,21 +136,11 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
 
     public void validarFechaIngresoInsumo() {
         if (Utilidades.validarNulo(nuevoFecha)) {
-            if (fechaDiferida == true) {
-                nuevoFecha = new Date();
-                if (!Utilidades.fechaIngresadaCorrecta(nuevoFecha)) {
-                    validacionesFecha = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesFecha = true;
-                }
+            if (!Utilidades.fechaIngresadaCorrecta(new Date(nuevoFecha))) {
+                validacionesFecha = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
             } else {
-                if (!Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFecha)) {
-                    validacionesFecha = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesFecha = true;
-                }
+                validacionesFecha = true;
             }
         } else {
             validacionesFecha = false;
@@ -180,16 +173,16 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
                 if (Utilidades.isNumber(nuevoCantidad) == true) {
                     validacionesCantidad = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad ingresada es incorrecta. "+constantes.RECURSO_CANT_E));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad ingresada es incorrecta. " + constantes.RECURSO_CANT_E));
                     validacionesCantidad = false;
                 }
             } else {
                 validacionesCantidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria. "+constantes.RECURSO_CANT_E));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria. " + constantes.RECURSO_CANT_E));
             }
         } else {
             validacionesCantidad = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria. "+constantes.RECURSO_CANT_E));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria. " + constantes.RECURSO_CANT_E));
         }
     }
 
@@ -200,11 +193,11 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
                 if (Utilidades.isNumber(nuevoCosto) == true) {
                     validacionesCosto = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El costo ingresado es incorrecto. "+constantes.RECURSO_COSTO));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El costo ingresado es incorrecto. " + constantes.RECURSO_COSTO));
                     validacionesCosto = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_COSTO));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.RECURSO_COSTO));
                 validacionesCosto = false;
             }
         }
@@ -248,7 +241,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     private void almacenarNuevoIngresoInsumoEnSistema() {
         try {
             IngresoInsumo ingresoNuevo = new IngresoInsumo();
-            ingresoNuevo.setFechaingreso(nuevoFecha);
+            ingresoNuevo.setFechaingreso(new Date(nuevoFecha));
             Integer cantidad = Integer.valueOf(nuevoCantidad);
             ingresoNuevo.setCantidadingreso(cantidad);
             if (Utilidades.validarNulo(nuevoCosto) && (!nuevoCosto.isEmpty()) && (nuevoCosto.trim().length() > 0)) {
@@ -270,7 +263,9 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
         nuevoCosto = "0";
         activarInsumo = false;
         nuevoCantidad = "1";
-        nuevoFecha = new Date();
+        Date fecha = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        nuevoFecha = df.format(fecha);
         fechaDiferida = true;
         nuevoInsumo = null;
         nuevoProveedor = null;
@@ -286,7 +281,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     public String cancelarRegistroIngresoInsumo() {
         nuevoCosto = "0";
         nuevoCantidad = "1";
-        nuevoFecha = new Date();
+        nuevoFecha = null;
         activarInsumo = false;
         validacionesFecha = true;
         fechaDiferida = true;
@@ -526,7 +521,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
 
     private void almacenarNuevoInsumoEIngresoEnSistema() {
         IngresoInsumo ingresoNuevo = new IngresoInsumo();
-        ingresoNuevo.setFechaingreso(nuevoFecha);
+        ingresoNuevo.setFechaingreso(new Date(nuevoFecha));
         Integer cantidad = Integer.valueOf(nuevoCantidad);
         ingresoNuevo.setCantidadingreso(cantidad);
         if (Utilidades.validarNulo(nuevoCosto) && (!nuevoCosto.isEmpty()) && (nuevoCosto.trim().length() > 0)) {
@@ -553,11 +548,11 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     }
 
     //GET-SET
-    public Date getNuevoFecha() {
+    public String getNuevoFecha() {
         return nuevoFecha;
     }
 
-    public void setNuevoFecha(Date nuevoFecha) {
+    public void setNuevoFecha(String nuevoFecha) {
         this.nuevoFecha = nuevoFecha;
     }
 

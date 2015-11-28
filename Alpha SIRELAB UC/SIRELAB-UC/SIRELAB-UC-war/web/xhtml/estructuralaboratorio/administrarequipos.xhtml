@@ -130,7 +130,7 @@ and open the template in the editor.
                                                         Laboratorios Por Area Profundización
                                                     </label>
                                                     <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroLaboratorioPorArea}"
-                                                                     class="form-control" 
+                                                                     class="form-control"  disabled="#{controllerAdministrarEquipos.activarLabArea}"
                                                                      id="parametroLaboratorioPorArea">
                                                         <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
                                                         <f:selectItems value="#{controllerAdministrarEquipos.listaLaboratoriosPorAreas}" var="area"
@@ -231,11 +231,11 @@ and open the template in the editor.
                                                         </f:facet>
                                                         <h:outputText value="#{item.modulolaboratorio.detallemodulo}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarEquipos.perfilConsulta}">
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" action="#{controllerAdministrarEquipos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesEquipo.recibirIDEquiposElementoDetalles(item.idequipoelemento)}"/>
+                                                        <h:commandLink value="Ver" disabled="#{controllerAdministrarEquipos.perfilConsulta}" action="#{controllerAdministrarEquipos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesEquipo.recibirIDEquiposElementoDetalles(item.idequipoelemento)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>
@@ -262,10 +262,7 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-1">
-                                <h:commandButton value="Nuevo Equipo" action="registrarequipo" disabled="#{controllerAdministrarEquipos.perfilConsulta}" actionListener="#{controllerAdministrarEquipos.limpiarProcesoBusqueda()}" class="btn btn-success"/>
-                            </div>
-                            <div class="col-md-10"></div>
+                            <div class="col-md-11"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atras" action="#{controllerAdministrarEquipos.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                             </div>

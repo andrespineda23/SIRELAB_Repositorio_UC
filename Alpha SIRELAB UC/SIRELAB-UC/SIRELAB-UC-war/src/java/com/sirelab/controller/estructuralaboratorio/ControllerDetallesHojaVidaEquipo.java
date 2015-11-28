@@ -12,6 +12,7 @@ import com.sirelab.entidades.TipoEvento;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -35,7 +36,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     GestionarPlantaHojasVidaEquiposBOInterface gestionarPlantaHojasVidaEquiposBO;
 
     private String inputDetalle;
-    private Date inputFechaEvento, inputFechaRegistro;
+    private String inputFechaEvento, inputFechaRegistro;
     private TipoEvento inputTipoEvento;
     private List<TipoEvento> listaTiposEventos;
     private boolean validacionesDetalle, validacionesFechaEvento, validacionesFechaRegistro, validacionesTipo;
@@ -69,8 +70,11 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
         hojaVidaEquipoDetalle = gestionarPlantaHojasVidaEquiposBO.consultarHojaVidaEquipoPorID(idHojaVidaEquipo);
         if (null != hojaVidaEquipoDetalle) {
             inputDetalle = hojaVidaEquipoDetalle.getDetalleevento();
-            inputFechaEvento = hojaVidaEquipoDetalle.getFechaevento();
-            inputFechaRegistro = hojaVidaEquipoDetalle.getFecharegistro();
+            Date fecha = hojaVidaEquipoDetalle.getFechaevento();
+            DateFormat df = DateFormat.getDateInstance();
+            Date fecha2 = hojaVidaEquipoDetalle.getFecharegistro();
+            inputFechaEvento = df.format(fecha);
+            inputFechaRegistro = df.format(fecha2);
             idEquipo = hojaVidaEquipoDetalle.getEquipoelemento().getIdequipoelemento();
             validacionesDetalle = true;
             validacionesFechaEvento = true;
@@ -92,36 +96,26 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.INVENTARIO_NOMBRE));
         }
         modificacionesRegistro = true;
     }
 
     public void validarFechaEvento() {
         if (Utilidades.validarNulo(inputFechaEvento)) {
-            if (fechaDiferidaEvento == true) {
-                inputFechaEvento = new Date();
-                if (Utilidades.fechaIngresadaCorrecta(inputFechaEvento)) {
-                    validacionesFechaEvento = true;
-                } else {
-                    validacionesFechaEvento = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                }
+            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaEvento))) {
+                validacionesFechaEvento = true;
             } else {
-                if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaEvento)) {
-                    validacionesFechaEvento = true;
-                } else {
-                    validacionesFechaEvento = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                }
+                validacionesFechaEvento = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             }
         } else {
             validacionesFechaEvento = false;
@@ -132,21 +126,11 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
 
     public void validarFechaRegistro() {
         if (Utilidades.validarNulo(inputFechaRegistro)) {
-            if (fechaDiferidaRegistro == true) {
-                inputFechaRegistro = new Date();
-                if (Utilidades.fechaIngresadaCorrecta(inputFechaRegistro)) {
-                    validacionesFechaRegistro = true;
-                } else {
-                    validacionesFechaRegistro = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                }
+            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaRegistro))) {
+                validacionesFechaRegistro = true;
             } else {
-                if (Utilidades.fechaDiferidaIngresadaCorrecta(inputFechaRegistro)) {
-                    validacionesFechaRegistro = true;
-                } else {
-                    validacionesFechaRegistro = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                }
+                validacionesFechaRegistro = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             }
         } else {
             validacionesFechaRegistro = false;
@@ -185,7 +169,7 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     public void registrarModificacionHojaVidaEquipo() {
         if (modificacionesRegistro == true) {
             if (validarValidacionesRegistro() == true) {
-                if ((inputFechaRegistro.after(inputFechaEvento)) || (inputFechaRegistro.equals(inputFechaEvento))) {
+                if ((new Date(inputFechaRegistro).after(new Date(inputFechaEvento))) || (new Date(inputFechaRegistro).equals(new Date(inputFechaEvento)))) {
                     almacenarModificacionRegistro();
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
@@ -207,9 +191,9 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     private void almacenarModificacionRegistro() {
         try {
             hojaVidaEquipoDetalle.setDetalleevento(inputDetalle);
-            hojaVidaEquipoDetalle.setFecharegistro(inputFechaRegistro);
+            hojaVidaEquipoDetalle.setFecharegistro(new Date(inputFechaRegistro));
             hojaVidaEquipoDetalle.setTipoevento(inputTipoEvento);
-            hojaVidaEquipoDetalle.setFechaevento(inputFechaEvento);
+            hojaVidaEquipoDetalle.setFechaevento(new Date(inputFechaEvento));
             gestionarPlantaHojasVidaEquiposBO.editarHojaVidaEquipo(hojaVidaEquipoDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro:  " + e.toString());
@@ -222,8 +206,8 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
         fechaDiferidaEvento = true;
         fechaDiferidaRegistro = true;
         inputTipoEvento = null;
-        inputFechaEvento = new Date();
-        inputFechaRegistro = new Date();
+        inputFechaEvento = null;
+        inputFechaRegistro = null;
         validacionesDetalle = false;
         validacionesTipo = false;
         validacionesFechaRegistro = false;
@@ -246,19 +230,19 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
         this.inputDetalle = inputDetalle;
     }
 
-    public Date getInputFechaEvento() {
+    public String getInputFechaEvento() {
         return inputFechaEvento;
     }
 
-    public void setInputFechaEvento(Date inputFechaEvento) {
+    public void setInputFechaEvento(String inputFechaEvento) {
         this.inputFechaEvento = inputFechaEvento;
     }
 
-    public Date getInputFechaRegistro() {
+    public String getInputFechaRegistro() {
         return inputFechaRegistro;
     }
 
-    public void setInputFechaRegistro(Date inputFechaRegistro) {
+    public void setInputFechaRegistro(String inputFechaRegistro) {
         this.inputFechaRegistro = inputFechaRegistro;
     }
 

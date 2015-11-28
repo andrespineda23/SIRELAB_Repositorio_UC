@@ -3,13 +3,16 @@ package com.sirelab.bo.usuarios;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEntidadesExternasBOInterface;
 import com.sirelab.dao.interfacedao.ConvenioPorEntidadDAOInterface;
 import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
+import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.SectorEntidadDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
+import com.sirelab.entidades.Convenio;
 import com.sirelab.entidades.ConvenioPorEntidad;
 import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.SectorEntidad;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.entidades.Usuario;
@@ -38,6 +41,8 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
     ConvenioPorEntidadDAOInterface convenioPorEntidadDAO;
     @EJB
     SectorEntidadDAOInterface sectorEntidadDAO;
+    @EJB
+    PersonaContactoDAOInterface personaContactoDAO;
 
     @Override
     public List<EntidadExterna> consultarEntidadesExternasPorParametro(Map<String, String> filtros) {
@@ -98,9 +103,33 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
     @Override
     public void actualizarInformacionEntidadExterna(EntidadExterna entidadExterna) {
         try {
+            if (false == entidadExterna.getEstado()) {
+                gestionarProcesosRelacionadosEntidadExterna(entidadExterna, false);
+            } else {
+                gestionarProcesosRelacionadosEntidadExterna(entidadExterna, true);
+            }
             entidadExternaDAO.editarEntidadExterna(entidadExterna);
         } catch (Exception e) {
             System.out.println("Error AdministrarEntidadesExternasBO actualizarInformacionEntidadExterna : " + e.toString());
+        }
+    }
+
+    private void gestionarProcesosRelacionadosEntidadExterna(EntidadExterna entidadExterna, boolean estado) {
+        List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidadPorEntidad(entidadExterna.getIdentidadexterna());
+        if (null != lista) {
+            for (int i = 0; i < lista.size(); i++) {
+                List<PersonaContacto> listaPC = personaContactoDAO.consultarPersonasContactoPorConvenioEntidad(lista.get(i).getIdconvenioporentidad());
+                if (null != listaPC) {
+                    for (int j = 0; j < listaPC.size(); j++) {
+                        PersonaContacto obj = listaPC.get(j);
+                        obj.getPersona().getUsuario().setEstado(estado);
+                        usuarioDAO.editarUsuario(obj.getPersona().getUsuario());
+                    }
+                }
+                ConvenioPorEntidad obj2 = lista.get(i);
+                obj2.setEstado(estado);
+                convenioPorEntidadDAO.editarConvenioPorEntidad(obj2);
+            }
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.ayuda.AsociacionLaboratorioArea;
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
@@ -12,10 +13,14 @@ import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.TipoPerfil;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -39,6 +44,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     private List<Facultad> listaFacultades;
     private List<Departamento> listaDepartamentos;
     private boolean activarNuevoDepartamento;
+    private boolean activarNuevoFacultad;
     //
     private String nuevoNombre, nuevoCodigo;
     private Facultad nuevoFacultad;
@@ -54,6 +60,8 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     private List<AsociacionLaboratorioArea> listaAsociacionLaboratorioArea;
     private List<AreaProfundizacion> listaAreaProfundizacion;
     private MensajesConstantes constantes;
+    private boolean perfilConsulta;
+    private TipoPerfil tipoPerfil;
 
     public ControllerRegistrarLaboratorio() {
     }
@@ -65,7 +73,6 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
-        activarNuevoDepartamento = true;
         nuevoCodigo = null;
         nuevoDepartamento = null;
         nuevoNombre = null;
@@ -78,6 +85,48 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         BasicConfigurator.configure();
         cargarInformacionAsociacion();
         constantes = new MensajesConstantes();
+    }
+
+    public void iniciarPagina() {
+        cargarInformacionPerfil();
+    }
+
+    private void cargarInformacionPerfil() {
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            perfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
+            if (perfilConsulta == false) {
+                Map<String, Object> datosPerfil = AdministrarPerfil.getInstance().validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                if (null != datosPerfil) {
+                    if (datosPerfil.containsKey("DEPARTAMENTO")) {
+                        activarNuevoFacultad = true;
+                        validacionesDepartamento = true;
+                        validacionesFacultad = true;
+                        activarNuevoDepartamento = true;
+                        nuevoDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
+                        nuevoFacultad = nuevoDepartamento.getFacultad();
+                        listaDepartamentos = new ArrayList<Departamento>();
+                        listaFacultades = new ArrayList<Facultad>();
+                        listaDepartamentos.add(nuevoDepartamento);
+                        listaFacultades.add(nuevoFacultad);
+                    }
+                } else {
+                    activarNuevoFacultad = false;
+                    activarNuevoDepartamento = true;
+                }
+            }
+        }
+    }
+
+    private boolean validarSesionConsulta(BigInteger usuario) {
+        boolean retorno = false;
+        tipoPerfil = AdministrarPerfil.getInstance().buscarTipoPerfilPorIDEncargado(usuario);
+        if (null != tipoPerfil) {
+            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
+                retorno = true;
+            }
+        }
+        return retorno;
     }
 
     private void cargarInformacionAsociacion() {
@@ -124,17 +173,17 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
     }
 
@@ -144,17 +193,17 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO_LAB));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.INVENTARIO_CODIGO_LAB));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_CODIGO_LAB));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo es 4 caracteres. " + constantes.INVENTARIO_CODIGO_LAB));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO_LAB));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. " + constantes.INVENTARIO_CODIGO_LAB));
         }
     }
 
@@ -263,6 +312,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesNombre = false;
         cargarInformacionAsociacion();
         mensajeFormulario = "";
+        cargarInformacionPerfil();
     }
 
     public void cancelarRegistroLaboratorio() {
@@ -285,6 +335,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesNombre = false;
         listaAreaProfundizacion = null;
         listaAsociacionLaboratorioArea = null;
+        activarNuevoFacultad = false;
     }
 
     public String nuevoRegistroSala() {
@@ -416,6 +467,14 @@ public class ControllerRegistrarLaboratorio implements Serializable {
 
     public void setListaAreaProfundizacion(List<AreaProfundizacion> listaAreaProfundizacion) {
         this.listaAreaProfundizacion = listaAreaProfundizacion;
+    }
+
+    public boolean isActivarNuevoFacultad() {
+        return activarNuevoFacultad;
+    }
+
+    public void setActivarNuevoFacultad(boolean activarNuevoFacultad) {
+        this.activarNuevoFacultad = activarNuevoFacultad;
     }
 
 }

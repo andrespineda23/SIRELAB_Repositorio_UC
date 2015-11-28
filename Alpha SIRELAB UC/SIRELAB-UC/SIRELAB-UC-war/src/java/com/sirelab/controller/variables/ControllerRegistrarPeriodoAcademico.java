@@ -10,6 +10,7 @@ import com.sirelab.bo.interfacebo.variables.GestionarVariablePeriodosAcademicosB
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -32,7 +33,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     GestionarVariablePeriodosAcademicosBOInterface gestionarVariablePeriodosAcademicosBO;
 
     private String inputDetalle;
-    private Date inputFechaInicio, inputFechaFin;
+    private String inputFechaInicio, inputFechaFin;
     private boolean validacionesDetalle, validacionesFechaInicio, validacionesFechaFin;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -48,13 +49,15 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     @PostConstruct
     public void init() {
         inputDetalle = null;
-        inputFechaInicio = new Date();
-        inputFechaFin = new Date();
+        Date fecha1 = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        inputFechaInicio = df.format(fecha1);
+        inputFechaFin = df.format(fecha1);
         validacionesDetalle = false;
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
         activarLimpiar = true;
-        constantes =  new MensajesConstantes();
+        constantes = new MensajesConstantes();
         colorMensaje = "black";
         activarAceptar = false;
         activarCasillas = false;
@@ -70,21 +73,21 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.VARIABLE_NOMBRE));
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. " + constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.VARIABLE_NOMBRE));
         }
     }
 
     public void validarFechaInicio() {
         if (Utilidades.validarNulo(inputFechaInicio)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
+            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaInicio))) {
                 validacionesFechaInicio = true;
             } else {
                 validacionesFechaInicio = false;
@@ -98,7 +101,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     public void validarFechaFin() {
         if (Utilidades.validarNulo(inputFechaFin)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaFin)) {
+            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaFin))) {
                 validacionesFechaFin = true;
             } else {
                 validacionesFechaFin = false;
@@ -126,7 +129,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     public void registrarPeriodoAcademico() {
         if (validarValidacionesRegistro() == true) {
-            if (inputFechaFin.after(inputFechaInicio)) {
+            if (new Date(inputFechaFin).after(new Date(inputFechaInicio))) {
                 almacenarRegistroNuevo();
                 restaurarFormulario();
                 activarLimpiar = false;
@@ -148,8 +151,8 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         try {
             PeriodoAcademico periodoNuevo = new PeriodoAcademico();
             periodoNuevo.setDetalleperiodo(inputDetalle);
-            periodoNuevo.setFechafinal(inputFechaFin);
-            periodoNuevo.setFechainicial(inputFechaInicio);
+            periodoNuevo.setFechafinal(new Date(inputFechaFin));
+            periodoNuevo.setFechainicial(new Date(inputFechaInicio));
             gestionarVariablePeriodosAcademicosBO.crearPeriodoAcademico(periodoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo:  " + e.toString());
@@ -159,8 +162,10 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     public void cancelarPeriodoAcademico() {
         inputDetalle = null;
-        inputFechaInicio = new Date();
-        inputFechaFin = new Date();
+        Date fecha1 = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        inputFechaInicio = df.format(fecha1);
+        inputFechaFin = df.format(fecha1);
         validacionesDetalle = false;
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
@@ -178,8 +183,10 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
 
     private void restaurarFormulario() {
         inputDetalle = null;
-        inputFechaInicio = new Date();
-        inputFechaFin = new Date();
+        Date fecha1 = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        inputFechaInicio = df.format(fecha1);
+        inputFechaFin = df.format(fecha1);
         validacionesDetalle = false;
         validacionesFechaFin = false;
         validacionesFechaInicio = false;
@@ -204,19 +211,19 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         this.inputDetalle = inputDetalle;
     }
 
-    public Date getInputFechaInicio() {
+    public String getInputFechaInicio() {
         return inputFechaInicio;
     }
 
-    public void setInputFechaInicio(Date inputFechaInicio) {
+    public void setInputFechaInicio(String inputFechaInicio) {
         this.inputFechaInicio = inputFechaInicio;
     }
 
-    public Date getInputFechaFin() {
+    public String getInputFechaFin() {
         return inputFechaFin;
     }
 
-    public void setInputFechaFin(Date inputFechaFin) {
+    public void setInputFechaFin(String inputFechaFin) {
         this.inputFechaFin = inputFechaFin;
     }
 

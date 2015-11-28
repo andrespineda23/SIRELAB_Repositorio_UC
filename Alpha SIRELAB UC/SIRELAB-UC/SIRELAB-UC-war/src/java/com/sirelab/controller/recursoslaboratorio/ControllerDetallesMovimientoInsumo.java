@@ -13,6 +13,7 @@ import com.sirelab.entidades.TipoMovimiento;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -38,7 +39,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
     private String editarCantidadMovimiento, editarCostoMovimiento;
     private List<TipoMovimiento> listaTipoMovimiento;
     private TipoMovimiento editarTipoMovimiento;
-    private Date editarFechaMovimiento;
+    private String editarFechaMovimiento;
     private Insumo editarInsumo;
     private boolean validacionesTipo, validacionesCantidad, validacionesCosto, validacionesFecha;
     private String mensajeFormulario;
@@ -71,7 +72,9 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         if (null != movimientoInsumoDetalle) {
             editarCantidadMovimiento = String.valueOf(movimientoInsumoDetalle.getCantidadmovimiento());
             editarCostoMovimiento = String.valueOf(movimientoInsumoDetalle.getCostomovimiento());
-            editarFechaMovimiento = movimientoInsumoDetalle.getFechamovimiento();
+            Date fecha = movimientoInsumoDetalle.getFechamovimiento();
+            DateFormat df = DateFormat.getDateInstance();
+            editarFechaMovimiento = df.format(fecha);
             editarInsumo = movimientoInsumoDetalle.getInsumo();
             editarTipoMovimiento = movimientoInsumoDetalle.getTipomovimiento();
             listaTipoMovimiento = gestionarRecursoMovimientosInsumoBO.obtenerTipoMovimientoRegistrado();
@@ -113,34 +116,24 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         if (Utilidades.validarNulo(editarCostoMovimiento) && (!editarCostoMovimiento.isEmpty()) && (editarCostoMovimiento.trim().length() > 0)) {
             if ((Utilidades.isNumber(editarCostoMovimiento)) == false) {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto. "+constantes.RECURSO_COSTO));
+                FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo se encuentra incorrecto. " + constantes.RECURSO_COSTO));
             } else {
                 validacionesCosto = true;
             }
         } else {
             validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo es obligatorio. "+constantes.RECURSO_COSTO));
+            FacesContext.getCurrentInstance().addMessage("form:editarCostoMovimiento", new FacesMessage("El costo es obligatorio. " + constantes.RECURSO_COSTO));
         }
         modificacionesRegistro = true;
     }
 
     public void validarFechaMovimiento() {
         if (Utilidades.validarNulo(editarFechaMovimiento)) {
-            if (fechaDiferida == true) {
-                editarFechaMovimiento = new Date();
-                if ((Utilidades.fechaIngresadaCorrecta(editarFechaMovimiento)) == false) {
-                    validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesCosto = true;
-                }
+            if ((Utilidades.fechaIngresadaCorrecta(new Date(editarFechaMovimiento))) == false) {
+                validacionesCosto = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             } else {
-                if ((Utilidades.fechaDiferidaIngresadaCorrecta(editarFechaMovimiento)) == false) {
-                    validacionesCosto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesCosto = true;
-                }
+                validacionesCosto = true;
             }
         } else {
             validacionesCosto = false;
@@ -153,7 +146,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         editarTipoMovimiento = null;
         editarCantidadMovimiento = null;
         editarCostoMovimiento = null;
-        editarFechaMovimiento = new Date();
+        editarFechaMovimiento = null;
         //
         validacionesCantidad = false;
         validacionesCosto = false;
@@ -211,7 +204,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
             movimientoInsumoDetalle.setTipomovimiento(editarTipoMovimiento);
             movimientoInsumoDetalle.setCantidadmovimiento(Integer.parseInt(editarCantidadMovimiento));
             movimientoInsumoDetalle.setCostomovimiento(Long.parseLong(editarCostoMovimiento));
-            movimientoInsumoDetalle.setFechamovimiento(editarFechaMovimiento);
+            movimientoInsumoDetalle.setFechamovimiento(new Date(editarFechaMovimiento));
             movimientoInsumoDetalle.setInsumo(editarInsumo);
             gestionarRecursoMovimientosInsumoBO.editarMovimientoInsumo(movimientoInsumoDetalle);
         } catch (Exception e) {
@@ -253,11 +246,11 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         this.editarCostoMovimiento = editarCostoMovimiento;
     }
 
-    public Date getEditarFechaMovimiento() {
+    public String getEditarFechaMovimiento() {
         return editarFechaMovimiento;
     }
 
-    public void setEditarFechaMovimiento(Date editarFechaMovimiento) {
+    public void setEditarFechaMovimiento(String editarFechaMovimiento) {
         this.editarFechaMovimiento = editarFechaMovimiento;
     }
 

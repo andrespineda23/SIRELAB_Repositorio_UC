@@ -16,6 +16,7 @@ import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoActivo;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -49,7 +50,7 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     private String nuevoNombreEquipo, nuevoInventarioEquipo, nuevoMarcaEquipo, nuevoModeloEquipo, nuevoSerieEquipo;
     private String nuevoCostoAlquilerEquipo, nuevoEspecificacionEquipo, nuevoCostoInversionEquipo;
-    private Date nuevoFechaAdquisicionEquipo;
+    private String nuevoFechaAdquisicionEquipo;
     private LaboratoriosPorAreas nuevoLaboratorioPorArea;
     private SalaLaboratorio nuevoSalaLaboratorioEquipo;
     private ModuloLaboratorio nuevoModuloLaboratorioEquipo;
@@ -83,7 +84,9 @@ public class ControllerRegistrarEquipo implements Serializable {
         mensajeFormulario = "N/A";
         nuevoCostoAlquilerEquipo = "0";
         nuevoCostoInversionEquipo = "0";
-        nuevoFechaAdquisicionEquipo = new Date();
+        Date now = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        nuevoFechaAdquisicionEquipo = df.format(now);
         validacionesCosto = true;
         validacionesEspecificacion = true;
         validacionesEstado = false;
@@ -104,6 +107,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         activarNuevoSalaLaboratorio = true;
         listaModulosLaboratorios = null;
         listaSalasLaboratorios = null;
+        fechaDiferida = false;
         BasicConfigurator.configure();
     }
 
@@ -113,17 +117,17 @@ public class ControllerRegistrarEquipo implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(nuevoNombreEquipo)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombreEquipo", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombreEquipo", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombreEquipo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombreEquipo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombreEquipo", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombreEquipo", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
 
     }
@@ -134,17 +138,17 @@ public class ControllerRegistrarEquipo implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoInventarioEquipo)) {
                     validacionesInventario = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoInventarioEquipo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoInventarioEquipo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.INVENTARIO_CODIGO));
                 } else {
                     validacionesInventario = true;
                 }
             } else {
                 validacionesInventario = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoInventarioEquipo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_CODIGO));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoInventarioEquipo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_CODIGO));
             }
         } else {
             validacionesInventario = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoInventarioEquipo", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoInventarioEquipo", new FacesMessage("El codigo es obligatorio. " + constantes.INVENTARIO_CODIGO));
         }
     }
 
@@ -154,17 +158,17 @@ public class ControllerRegistrarEquipo implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoMarcaEquipo)) {
                     validacionesMarca = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoMarcaEquipo", new FacesMessage("La marca ingresada es incorrecta. "+constantes.INVENTARIO_MARCA));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoMarcaEquipo", new FacesMessage("La marca ingresada es incorrecta. " + constantes.INVENTARIO_MARCA));
                 } else {
                     validacionesMarca = true;
                 }
             } else {
                 validacionesMarca = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoMarcaEquipo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_MARCA));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoMarcaEquipo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.INVENTARIO_MARCA));
             }
         } else {
             validacionesMarca = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoMarcaEquipo", new FacesMessage("La marca es obligatoria. "+constantes.INVENTARIO_MARCA));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoMarcaEquipo", new FacesMessage("La marca es obligatoria. " + constantes.INVENTARIO_MARCA));
         }
     }
 
@@ -203,11 +207,11 @@ public class ControllerRegistrarEquipo implements Serializable {
                     validacionesModelo = true;
                 } else {
                     validacionesModelo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoModeloEquipo", new FacesMessage("El modelo se encuentra incorrecto. "+constantes.INVENTARIO_MODELO));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoModeloEquipo", new FacesMessage("El modelo se encuentra incorrecto. " + constantes.INVENTARIO_MODELO));
                 }
             } else {
                 validacionesModelo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoModeloEquipo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_MODELO));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoModeloEquipo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.INVENTARIO_MODELO));
             }
         }
     }
@@ -220,11 +224,11 @@ public class ControllerRegistrarEquipo implements Serializable {
                     validacionesSerie = true;
                 } else {
                     validacionesSerie = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoSerieEquipo", new FacesMessage("La serie se encuentra incorrecta. "+constantes.INVENTARIO_SERIAL));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoSerieEquipo", new FacesMessage("La serie se encuentra incorrecta. " + constantes.INVENTARIO_SERIAL));
                 }
             } else {
                 validacionesSerie = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoSerieEquipo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_SERIAL));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoSerieEquipo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.INVENTARIO_SERIAL));
             }
         }
     }
@@ -235,7 +239,7 @@ public class ControllerRegistrarEquipo implements Serializable {
                 validacionesCosto = true;
             } else {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoAlquilerEquipo", new FacesMessage("El costo se encuentra incorrecto. "+constantes.INVENTARIO_COST_ALQ));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoAlquilerEquipo", new FacesMessage("El costo se encuentra incorrecto. " + constantes.INVENTARIO_COST_ALQ));
             }
         }
     }
@@ -244,7 +248,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty()) && (nuevoCostoInversionEquipo.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCostoInversionEquipo)) == false) {
                 validacionesInversion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoInversionEquipo", new FacesMessage("El valor de inversión se encuentra incorrecto. "+constantes.INVENTARIO_COST_INV));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoInversionEquipo", new FacesMessage("El valor de inversión se encuentra incorrecto. " + constantes.INVENTARIO_COST_INV));
             } else {
                 validacionesInversion = true;
             }
@@ -253,23 +257,12 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void validarFechaEquipo() {
         if (Utilidades.validarNulo(nuevoFechaAdquisicionEquipo)) {
-            if (fechaDiferida == true) {
-                nuevoFechaAdquisicionEquipo = new Date();
-                if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
-                    validacionesFecha = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesFecha = true;
-                }
+            if ((Utilidades.fechaIngresadaCorrecta(new Date(nuevoFechaAdquisicionEquipo))) == false) {
+                validacionesFecha = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             } else {
-                if ((Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
-                    validacionesFecha = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-                } else {
-                    validacionesFecha = true;
-                }
+                validacionesFecha = true;
             }
-
         }
     }
 
@@ -279,13 +272,13 @@ public class ControllerRegistrarEquipo implements Serializable {
             if (tam >= 20) {
                 if ((Utilidades.validarCaracteresAlfaNumericos(nuevoEspecificacionEquipo)) == false) {
                     validacionesEspecificacion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoEspecificacionEquipo", new FacesMessage("La especificación ingresada se encuentra incorrecta. "+constantes.INVENTARIO_DESCRIP));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoEspecificacionEquipo", new FacesMessage("La especificación ingresada se encuentra incorrecta. " + constantes.INVENTARIO_DESCRIP));
                 } else {
                     validacionesEspecificacion = true;
                 }
             } else {
                 validacionesEspecificacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoEspecificacionEquipo", new FacesMessage("El tamaño minimo permitido es 20 caracteres "+constantes.INVENTARIO_DESCRIP));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoEspecificacionEquipo", new FacesMessage("El tamaño minimo permitido es 20 caracteres " + constantes.INVENTARIO_DESCRIP));
             }
         }
     }
@@ -444,7 +437,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             } else {
                 equipoNuevo.setCostoalquiler(Integer.valueOf("0"));
             }
-            equipoNuevo.setFechaadquisicion(nuevoFechaAdquisicionEquipo);
+            equipoNuevo.setFechaadquisicion(new Date(nuevoFechaAdquisicionEquipo));
             equipoNuevo.setEspecificacionestecnicas(nuevoEspecificacionEquipo);
             equipoNuevo.setModulolaboratorio(nuevoModuloLaboratorioEquipo);
             equipoNuevo.setTipoactivo(nuevoTipoActivoEquipo);
@@ -469,7 +462,9 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoCostoAlquilerEquipo = null;
         nuevoEspecificacionEquipo = null;
         nuevoCostoInversionEquipo = null;
-        nuevoFechaAdquisicionEquipo = new Date();
+        Date now = new Date();
+        DateFormat df = DateFormat.getDateInstance();
+        nuevoFechaAdquisicionEquipo = df.format(now);
         nuevoLaboratorioPorArea = null;
         nuevoSalaLaboratorioEquipo = null;
         nuevoModuloLaboratorioEquipo = null;
@@ -511,7 +506,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoEspecificacionEquipo = null;
         nuevoCostoAlquilerEquipo = "0";
         nuevoCostoInversionEquipo = "0";
-        nuevoFechaAdquisicionEquipo = new Date();
+        nuevoFechaAdquisicionEquipo = null;
         nuevoLaboratorioPorArea = null;
         nuevoSalaLaboratorioEquipo = null;
         nuevoModuloLaboratorioEquipo = null;
@@ -690,11 +685,11 @@ public class ControllerRegistrarEquipo implements Serializable {
         this.nuevoCostoInversionEquipo = nuevoCostoInversionEquipo;
     }
 
-    public Date getNuevoFechaAdquisicionEquipo() {
+    public String getNuevoFechaAdquisicionEquipo() {
         return nuevoFechaAdquisicionEquipo;
     }
 
-    public void setNuevoFechaAdquisicionEquipo(Date nuevoFechaAdquisicionEquipo) {
+    public void setNuevoFechaAdquisicionEquipo(String nuevoFechaAdquisicionEquipo) {
         this.nuevoFechaAdquisicionEquipo = nuevoFechaAdquisicionEquipo;
     }
 

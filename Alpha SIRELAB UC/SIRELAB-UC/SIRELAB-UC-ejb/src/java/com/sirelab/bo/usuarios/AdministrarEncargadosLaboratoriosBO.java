@@ -228,13 +228,10 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     @Override
     public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro) {
         try {
-            System.out.println("Ingreso al metodo");
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
             if (null != registro) {
-                System.out.println("Ok");
                 return registro.getTipoperfil();
             } else {
-                System.out.println("Null");
                 return null;
             }
         } catch (Exception e) {

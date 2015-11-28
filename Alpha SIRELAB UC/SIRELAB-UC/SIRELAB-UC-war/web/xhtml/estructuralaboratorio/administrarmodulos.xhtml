@@ -149,23 +149,23 @@ and open the template in the editor.
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Area Profundización"/>
+                                                            <h:outputText value="Área Prof."/>
                                                         </f:facet>
                                                         <h:outputText value="#{item.salalaboratorio.laboratoriosporareas.areaprofundizacion.nombrearea}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Sala de Laboratorio"/>
+                                                            <h:outputText value="Sala"/>
                                                         </f:facet>
                                                         <h:outputText value="#{item.salalaboratorio.nombresala}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarModulos.perfilConsulta}">
                                                         <f:facet name="header">
-                                                            <h:outputText value="Modulo"/>
+                                                            <h:outputText value="Equipo"/>
                                                         </f:facet>
                                                         <h:commandLink value="Adicionar" action="#{controllerAdministrarModulos.cambiarPaginaEquipoCargado()}" actionListener="#{controllerRegistrarEquipoCargado.cargarInformacionModuloLaboratorio(item.idmodulolaboratorio)}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarModulos.perfilConsulta}">
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
@@ -196,10 +196,7 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-1">
-                                <h:commandButton value="Nuevo Modulo" disabled="#{controllerAdministrarModulos.perfilConsulta}" action="registrarmodulo" actionListener="#{controllerAdministrarModulos.limpiarProcesoBusqueda()}" class="btn btn-success"/>
-                            </div>
-                            <div class="col-md-10"></div>
+                            <div class="col-md-11"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atras" action="#{controllerAdministrarModulos.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                             </div>
