@@ -58,7 +58,6 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
         activarCasillasAdd = false;
         tipoPerfil = "DEPARTAMENTO";
         inputCodigo = "3";
-        inputCodigo = null;
         inputNombreRegistro = null;
         inputCodigoRegistro = null;
         validacionesCodigoRegistro = false;
@@ -94,6 +93,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
                 Departamento registro = gestionarVariableTiposPerfilesBO.consultarDepartamentoPorCodigo(inputCodigoRegistro);
                 if (null != registro) {
                     inputNombreRegistro = registro.getNombredepartamento();
+                    validacionesCodigoRegistro = true;
                 } else {
                     validacionesCodigoRegistro = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo no se encuentre registrado."));
@@ -102,6 +102,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
             if (inputCodigo.equalsIgnoreCase("4")) {
                 Laboratorio registro = gestionarVariableTiposPerfilesBO.consultaLaboratorioPorCodigo(inputCodigoRegistro);
                 if (null != registro) {
+                    validacionesCodigoRegistro = true;
                     inputNombreRegistro = registro.getNombrelaboratorio();
                 } else {
                     validacionesCodigoRegistro = false;
@@ -111,6 +112,7 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
             if (inputCodigo.equalsIgnoreCase("5")) {
                 AreaProfundizacion registro = gestionarVariableTiposPerfilesBO.consultarAreaProfundizacionPorCodigo(inputCodigoRegistro);
                 if (null != registro) {
+                    validacionesCodigoRegistro = true;
                     inputNombreRegistro = registro.getNombrearea();
                 } else {
                     validacionesCodigoRegistro = false;

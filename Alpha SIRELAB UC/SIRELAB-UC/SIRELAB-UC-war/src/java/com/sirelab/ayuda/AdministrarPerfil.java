@@ -7,7 +7,6 @@ package com.sirelab.ayuda;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresEdificioBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.entidades.AdministradorEdificio;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
@@ -67,7 +66,9 @@ public class AdministrarPerfil implements Serializable {
     }
 
     public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro) {
+        System.out.println("idRegistro: "+idRegistro);
         TipoPerfil perfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(idRegistro);
+        System.out.println("perfil: "+perfil);
         return perfil;
     }
 

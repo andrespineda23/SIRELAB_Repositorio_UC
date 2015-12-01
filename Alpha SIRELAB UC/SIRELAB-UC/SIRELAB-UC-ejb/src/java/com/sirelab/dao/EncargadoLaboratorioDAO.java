@@ -69,11 +69,13 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
     @Override
     public EncargadoLaboratorio buscarEncargadoLaboratorioPorID(BigInteger idRegistro) {
         try {
+            System.out.println("buscarEncargadoLaboratorioPorID: "+idRegistro);
             em.clear();
             Query query = em.createQuery("SELECT p FROM EncargadoLaboratorio p WHERE p.idencargadolaboratorio=:idRegistro");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idRegistro", idRegistro);
             EncargadoLaboratorio registro = (EncargadoLaboratorio) query.getSingleResult();
+            System.out.println("registro: "+registro);
             return registro;
         } catch (Exception e) {
             System.out.println("Error buscarEncargadoLaboratorioPorID EncargadoLaboratorioDAO : " + e.toString());

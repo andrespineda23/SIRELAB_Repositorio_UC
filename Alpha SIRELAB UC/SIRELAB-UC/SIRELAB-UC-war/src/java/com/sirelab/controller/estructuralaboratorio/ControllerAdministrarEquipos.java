@@ -7,6 +7,8 @@ package com.sirelab.controller.estructuralaboratorio;
 
 import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoLaboratorio;
@@ -45,6 +47,8 @@ public class ControllerAdministrarEquipos implements Serializable {
 
     @EJB
     GestionarPlantaEquiposElementosBOInterface gestionarPlantaEquiposElementosBO;
+    @EJB
+    AdministrarEncargadosLaboratoriosBOInterface administrarValidadorTipoUsuario;
 
     private String parametroNombre, parametroInventario, parametroMarca, parametroModelo, parametroSerie;
     private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
@@ -121,12 +125,35 @@ public class ControllerAdministrarEquipos implements Serializable {
         BasicConfigurator.configure();
     }
 
+    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
+        Map<String, Object> lista = new HashMap<String, Object>();
+        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
+            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("DEPARTAMENTO", registro);
+            }
+        }
+        if ("AREAPROFUNDIZACION".equalsIgnoreCase(nombre)) {
+            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("AREAPROFUNDIZACION", registro);
+            }
+        }
+        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
+            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("LABORATORIO", registro);
+            }
+        }
+        return lista;
+    }
+
     private void cargarInformacionPerfil() {
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             perfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
             if (perfilConsulta == false) {
-                Map<String, Object> datosPerfil = AdministrarPerfil.getInstance().validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
                 if (null != datosPerfil) {
                     if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
                         if (datosPerfil.containsKey("DEPARTAMENTO")) {
@@ -153,13 +180,13 @@ public class ControllerAdministrarEquipos implements Serializable {
     }
 
     private Edificio obtenerEdificio(BigInteger usuario) {
-        Edificio edificio = AdministrarPerfil.getInstance().buscarEdificioPorIdEncargadoEdificio(usuario);
+        Edificio edificio = administrarValidadorTipoUsuario.buscarEdificioPorIdEncargadoEdificio(usuario);
         return edificio;
     }
 
     private boolean validarSesionConsulta(BigInteger usuario) {
         boolean retorno = false;
-        tipoPerfil = AdministrarPerfil.getInstance().buscarTipoPerfilPorIDEncargado(usuario);
+        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuario);
         if (null != tipoPerfil) {
             if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
                 retorno = true;

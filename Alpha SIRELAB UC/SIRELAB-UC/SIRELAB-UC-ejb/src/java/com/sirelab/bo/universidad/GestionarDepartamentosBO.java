@@ -11,13 +11,13 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 
 /**
  *
  * @author ANDRES PINEDA
  */
-@Stateless
+@Stateful
 public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterface {
 
     @EJB

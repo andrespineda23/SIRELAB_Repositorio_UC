@@ -64,7 +64,10 @@ public class ControllerReservaSala1 implements Serializable {
     private boolean validarFecha() {
         boolean retorno = true;
         if (Utilidades.validarNulo(fecha)) {
-            if (!Utilidades.fechaIngresadaCorrecta(new Date(fecha))) {
+            System.out.println("11");
+            Date fechaDia = new Date();
+            Date fechaValidar = new Date(fecha);
+            if (fechaValidar.after(fechaDia)) {
                 retorno = false;
             }
         } else {
@@ -128,15 +131,19 @@ public class ControllerReservaSala1 implements Serializable {
     private boolean validarCamposReserva() {
         boolean retorno = true;
         if (validarSala() == false) {
+            System.out.println("1");
             retorno = false;
         }
         if (validarFecha() == false) {
+            System.out.println("2");
             retorno = false;
         }
         if (validarLaboratorio() == false) {
+            System.out.println("3");
             retorno = false;
         }
         if (validarHora() == false) {
+            System.out.println("4");
             retorno = false;
         }
         return retorno;

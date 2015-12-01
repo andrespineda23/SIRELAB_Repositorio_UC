@@ -67,7 +67,7 @@ public class ControllerReservaSala2 implements Serializable {
         activarGuia = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
-        validacionesTipo = false;
+        validacionesTipo = true;
         validacionesGuia = false;
         validacionesAsignatura = false;
         validacionesPlan = false;

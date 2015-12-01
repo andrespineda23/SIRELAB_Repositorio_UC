@@ -98,7 +98,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public Departamento buscarDepartamentoPorCodigo(String codigo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p WHERE UPPER(p.codigodepartamento)=:codigo");
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE UPPER(p.codigodepartamento)=UPPER(:codigo)");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("codigo", codigo.toUpperCase());
             Departamento registro = (Departamento) query.getSingleResult();

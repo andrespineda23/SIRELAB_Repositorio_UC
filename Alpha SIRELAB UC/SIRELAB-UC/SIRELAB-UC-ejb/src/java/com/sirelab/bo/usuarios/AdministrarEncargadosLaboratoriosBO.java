@@ -4,6 +4,7 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOIn
 import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
+import com.sirelab.dao.interfacedao.EncargadoPorEdificioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
@@ -12,7 +13,9 @@ import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoLaboratorio;
+import com.sirelab.entidades.EncargadoPorEdificio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Persona;
@@ -23,15 +26,18 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
+import javax.ejb.Stateful;
 
 /**
  *
  * @author ANDRES PINEDA
  */
-@Stateless
+@Stateful
 public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargadosLaboratoriosBOInterface {
 
+    @EJB
+    EncargadoPorEdificioDAOInterface encargadoPorEdificioDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
@@ -94,7 +100,9 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             return null;
         }
     }
+
     //@Override
+
     public List<Facultad> obtenerListaFacultadesActivos() {
         try {
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
@@ -115,6 +123,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             return null;
         }
     }
+
     @Override
     public List<Departamento> obtenerDepartamentosActivosPorIDFacultad(BigInteger idFacultad) {
         try {
@@ -136,6 +145,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             return null;
         }
     }
+
     @Override
     public List<Laboratorio> obtenerLaboratoriosActivosPorIDDepartamento(BigInteger idDepartamento) {
         try {
@@ -228,7 +238,9 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     @Override
     public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro) {
         try {
+            System.out.println("buscarTipoPerfilPorIDEncargado: " + idRegistro);
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
+            System.out.println("registro: " + registro);
             if (null != registro) {
                 return registro.getTipoperfil();
             } else {
@@ -269,6 +281,16 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarValidadorTipoUsuario obtenerLaboratorioPorCodigo: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public Edificio buscarEdificioPorIdEncargadoEdificio(BigInteger idRegistro) {
+        EncargadoPorEdificio obj = encargadoPorEdificioDAO.buscarEncargadoPorEdificioPorID(idRegistro);
+        if (null != obj) {
+            return obj.getEdificio();
+        } else {
             return null;
         }
     }

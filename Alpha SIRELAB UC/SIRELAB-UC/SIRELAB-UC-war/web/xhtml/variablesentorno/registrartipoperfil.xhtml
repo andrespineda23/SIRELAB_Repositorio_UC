@@ -57,7 +57,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Codigo del Registro*"/></strong>
                                             <h:inputText maxlength="45" value="#{controllerRegistrarTipoPerfil.inputCodigoRegistro}" disabled="#{controllerRegistrarTipoPerfil.activarCasillas}" readonly="#{controllerRegistrarTipoPerfil.activarCasillasAdd}" required="true" class="form-control" id="inputCodigoRegistro" requiredMessage="El campo Codigo es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarTipoPerfil.validarCodigoRegistro()}" execute="inputCodigoRegistro" render="inputCodigoRegistro msnCodigoRegistro inputNombreRegistro" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarTipoPerfil.validarCodigoRegistro()}" execute="@this" render="inputCodigoRegistro msnCodigoRegistro inputNombreRegistro" />
                                             </h:inputText>
                                             <h6><h:message id="msnCodigoRegistro" for="inputCodigoRegistro" style="color: red"/></h6>
                                         </div>

@@ -7,6 +7,8 @@ package com.sirelab.controller.paginasiniciales;
 
 import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -37,6 +40,8 @@ public class ControllerPaginasIniciales implements Serializable {
     //
     @EJB
     GestionarLoginSistemaBOInterface gestionarLoginSistemaBO;
+    @EJB
+    AdministrarEncargadosLaboratoriosBOInterface administrarValidadorTipoUsuario;
 
     private UsuarioLogin usuarioLoginSistema;
     private TipoPerfil tipoPerfil;
@@ -80,7 +85,7 @@ public class ControllerPaginasIniciales implements Serializable {
         if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             boolean perfilConsulta = validarSesionConsulta();
             if (perfilConsulta == false) {
-                Map<String, Object> datosPerfil = AdministrarPerfil.getInstance().validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
                 if (null != datosPerfil) {
                     if (datosPerfil.containsKey("LABORATORIO")) {
                         Laboratorio parametro = (Laboratorio) datosPerfil.get("LABORATORIO");
@@ -92,9 +97,32 @@ public class ControllerPaginasIniciales implements Serializable {
         return retorno;
     }
 
+    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
+        Map<String, Object> lista = new HashMap<String, Object>();
+        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
+            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("DEPARTAMENTO", registro);
+            }
+        }
+        if ("AREAPROFUNDIZACION".equalsIgnoreCase(nombre)) {
+            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("AREAPROFUNDIZACION", registro);
+            }
+        }
+        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
+            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("LABORATORIO", registro);
+            }
+        }
+        return lista;
+    }
+
     private boolean validarSesionConsulta() {
         boolean retorno = false;
-        TipoPerfil tipoPerfil = AdministrarPerfil.getInstance().buscarTipoPerfilPorIDEncargado(usuarioLoginSistema.getIdUsuarioLogin());
+        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuarioLoginSistema.getIdUsuarioLogin());
         if (null != tipoPerfil) {
             if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
                 retorno = true;
