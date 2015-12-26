@@ -9,13 +9,11 @@ import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaModulosBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -39,7 +37,6 @@ public class ControllerRegistrarModuloCargado implements Serializable {
     private String nuevoCodigoModulo, nuevoDetalleModulo, nuevoCapacidadModulo, nuevoCostoModulo, nuevoInversionModulo;
     private Departamento nuevoDepartamentoModulo;
     private Laboratorio nuevoLaboratorioModulo;
-    private LaboratoriosPorAreas nuevoLaboratorioPorAreaModulo;
     private SalaLaboratorio nuevoSalaLaboratorioModulo;
     //
     private boolean validacionesCodigo, validacionesDetalle, validacionesCapacidad, validacionesCosto, validacionesInversion;
@@ -78,9 +75,8 @@ public class ControllerRegistrarModuloCargado implements Serializable {
     public void cargarInformacionSalaLaboratorio(BigInteger sala) {
         nuevoSalaLaboratorioModulo = gestionarPlantaModulosBO.obtenerSalaLaboratorioPorID(sala);
         if (null != nuevoSalaLaboratorioModulo) {
-            nuevoDepartamentoModulo = nuevoSalaLaboratorioModulo.getLaboratoriosporareas().getLaboratorio().getDepartamento();
-            nuevoLaboratorioModulo = nuevoSalaLaboratorioModulo.getLaboratoriosporareas().getLaboratorio();
-            nuevoLaboratorioPorAreaModulo = nuevoSalaLaboratorioModulo.getLaboratoriosporareas();
+            nuevoDepartamentoModulo = nuevoSalaLaboratorioModulo.getLaboratorio().getDepartamento();
+            nuevoLaboratorioModulo = nuevoSalaLaboratorioModulo.getLaboratorio();
         }
     }
 
@@ -108,17 +104,17 @@ public class ControllerRegistrarModuloCargado implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDetalleModulo)) {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesDetalle = true;
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El tamaño minimo es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle es obligatorio. "+constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
 
     }
@@ -129,17 +125,17 @@ public class ControllerRegistrarModuloCargado implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigoModulo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.INVENTARIO_CODIGO));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El tamaño minimo es 4 caracteres. "+constantes.INVENTARIO_CODIGO));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El tamaño minimo es 4 caracteres. " + constantes.INVENTARIO_CODIGO));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigoModulo", new FacesMessage("El codigo es obligatorio. " + constantes.INVENTARIO_CODIGO));
         }
     }
 
@@ -149,7 +145,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
                 validacionesCosto = true;
             } else {
                 validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoModulo", new FacesMessage("El costo se encuentra incorrecto. "+constantes.INVENTARIO_COST_ALQ));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCostoModulo", new FacesMessage("El costo se encuentra incorrecto. " + constantes.INVENTARIO_COST_ALQ));
             }
         }
     }
@@ -158,7 +154,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         if (Utilidades.validarNulo(nuevoCapacidadModulo) && (!nuevoCapacidadModulo.isEmpty()) && (nuevoCapacidadModulo.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoCapacidadModulo)) == false) {
                 validacionesCapacidad = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadModulo", new FacesMessage("La capacidad ingresada se encuentra incorrecta. "+constantes.INVENTARIO_CAPACIDAD));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCapacidadModulo", new FacesMessage("La capacidad ingresada se encuentra incorrecta. " + constantes.INVENTARIO_CAPACIDAD));
             } else {
                 validacionesCapacidad = true;
             }
@@ -169,7 +165,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         if (Utilidades.validarNulo(nuevoInversionModulo) && (!nuevoInversionModulo.isEmpty()) && (nuevoInversionModulo.trim().length() > 0)) {
             if ((Utilidades.isNumber(nuevoInversionModulo)) == false) {
                 validacionesInversion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoInversionModulo", new FacesMessage("El valor de inversión se encuentra incorrecto. "+constantes.INVENTARIO_COST_INV));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoInversionModulo", new FacesMessage("El valor de inversión se encuentra incorrecto. " + constantes.INVENTARIO_COST_INV));
             } else {
                 validacionesInversion = true;
             }
@@ -325,14 +321,6 @@ public class ControllerRegistrarModuloCargado implements Serializable {
 
     public void setNuevoLaboratorioModulo(Laboratorio nuevoLaboratorioModulo) {
         this.nuevoLaboratorioModulo = nuevoLaboratorioModulo;
-    }
-
-    public LaboratoriosPorAreas getNuevoLaboratorioPorAreaModulo() {
-        return nuevoLaboratorioPorAreaModulo;
-    }
-
-    public void setNuevoLaboratorioPorAreaModulo(LaboratoriosPorAreas nuevoLaboratorioPorAreaModulo) {
-        this.nuevoLaboratorioPorAreaModulo = nuevoLaboratorioPorAreaModulo;
     }
 
     public SalaLaboratorio getNuevoSalaLaboratorioModulo() {

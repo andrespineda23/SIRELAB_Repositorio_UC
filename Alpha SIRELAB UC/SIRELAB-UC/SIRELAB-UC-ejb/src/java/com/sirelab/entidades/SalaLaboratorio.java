@@ -44,15 +44,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SalaLaboratorio.findByCostoalquiler", query = "SELECT s FROM SalaLaboratorio s WHERE s.costoalquiler = :costoalquiler"),
     @NamedQuery(name = "SalaLaboratorio.findByEstadosala", query = "SELECT s FROM SalaLaboratorio s WHERE s.estadosala = :estadosala"),
     @NamedQuery(name = "SalaLaboratorio.findByCapacidadsala", query = "SELECT s FROM SalaLaboratorio s WHERE s.capacidadsala = :capacidadsala"),
-    @NamedQuery(name = "SalaLaboratorio.findByValorinversion", query = "SELECT s FROM SalaLaboratorio s WHERE s.valorinversion = :valorinversion")})
+    @NamedQuery(name = "SalaLaboratorio.findByValorinversion", query = "SELECT s FROM SalaLaboratorio s WHERE s.valorinversion = :valorinversion"),
+    @NamedQuery(name = "SalaLaboratorio.findBySalaprivada", query = "SELECT s FROM SalaLaboratorio s WHERE s.salaprivada = :salaprivada")})
 public class SalaLaboratorio implements Serializable {
-
-    @Column(name = "salaprivada")
-    private Boolean salaprivada;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
-    private Collection<ReservaSala> reservaSalaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
     private Collection<ModuloLaboratorio> moduloLaboratorioCollection;
+    @Column(name = "costosaladigitado")
+    private Boolean costosaladigitado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -94,12 +92,16 @@ public class SalaLaboratorio implements Serializable {
     private int capacidadsala;
     @Column(name = "valorinversion")
     private BigInteger valorinversion;
-    @JoinColumn(name = "laboratoriosporareas", referencedColumnName = "idlaboratoriosporareas")
+    @Column(name = "salaprivada")
+    private Boolean salaprivada;
+    @JoinColumn(name = "laboratorio", referencedColumnName = "idlaboratorio")
     @ManyToOne(optional = false)
-    private LaboratoriosPorAreas laboratoriosporareas;
+    private Laboratorio laboratorio;
     @JoinColumn(name = "edificio", referencedColumnName = "idedificio")
     @ManyToOne(optional = false)
     private Edificio edificio;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
+    private Collection<SalaLaboratorioxServicios> salaLaboratorioxServiciosCollection;
     @Transient
     private String strEstado;
     @Transient
@@ -142,27 +144,27 @@ public class SalaLaboratorio implements Serializable {
     }
 
     public String getNombresala() {
-        return nombresala.toUpperCase();
+        return nombresala;
     }
 
     public void setNombresala(String nombresala) {
-        this.nombresala = nombresala.toUpperCase();
+        this.nombresala = nombresala;
     }
 
     public String getPisoubicacion() {
-        return pisoubicacion.toUpperCase();
+        return pisoubicacion;
     }
 
     public void setPisoubicacion(String pisoubicacion) {
-        this.pisoubicacion = pisoubicacion.toUpperCase();
+        this.pisoubicacion = pisoubicacion;
     }
 
     public String getDescripcionsala() {
-        return descripcionsala.toUpperCase();
+        return descripcionsala;
     }
 
     public void setDescripcionsala(String descripcionsala) {
-        this.descripcionsala = descripcionsala.toUpperCase();
+        this.descripcionsala = descripcionsala;
     }
 
     public long getCostoalquiler() {
@@ -211,12 +213,20 @@ public class SalaLaboratorio implements Serializable {
         this.valorinversion = valorinversion;
     }
 
-    public LaboratoriosPorAreas getLaboratoriosporareas() {
-        return laboratoriosporareas;
+    public Boolean getSalaprivada() {
+        return salaprivada;
     }
 
-    public void setLaboratoriosporareas(LaboratoriosPorAreas laboratoriosporareas) {
-        this.laboratoriosporareas = laboratoriosporareas;
+    public void setSalaprivada(Boolean salaprivada) {
+        this.salaprivada = salaprivada;
+    }
+
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
     }
 
     public Edificio getEdificio() {
@@ -225,6 +235,15 @@ public class SalaLaboratorio implements Serializable {
 
     public void setEdificio(Edificio edificio) {
         this.edificio = edificio;
+    }
+
+    @XmlTransient
+    public Collection<SalaLaboratorioxServicios> getSalaLaboratorioxServiciosCollection() {
+        return salaLaboratorioxServiciosCollection;
+    }
+
+    public void setSalaLaboratorioxServiciosCollection(Collection<SalaLaboratorioxServicios> salaLaboratorioxServiciosCollection) {
+        this.salaLaboratorioxServiciosCollection = salaLaboratorioxServiciosCollection;
     }
 
     @Override
@@ -252,32 +271,6 @@ public class SalaLaboratorio implements Serializable {
         return "com.sirelab.entidades.SalaLaboratorio[ idsalalaboratorio=" + idsalalaboratorio + " ]";
     }
 
-    @XmlTransient
-    public Collection<ModuloLaboratorio> getModuloLaboratorioCollection() {
-        return moduloLaboratorioCollection;
-    }
-
-    public void setModuloLaboratorioCollection(Collection<ModuloLaboratorio> moduloLaboratorioCollection) {
-        this.moduloLaboratorioCollection = moduloLaboratorioCollection;
-    }
-
-    @XmlTransient
-    public Collection<ReservaSala> getReservaSalaCollection() {
-        return reservaSalaCollection;
-    }
-
-    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
-        this.reservaSalaCollection = reservaSalaCollection;
-    }
-
-    public Boolean getSalaprivada() {
-        return salaprivada;
-    }
-
-    public void setSalaprivada(Boolean salaprivada) {
-        this.salaprivada = salaprivada;
-    }
-
     public String getStrPrivada() {
         getSalaprivada();
         if (null != salaprivada) {
@@ -303,6 +296,23 @@ public class SalaLaboratorio implements Serializable {
 
     public void setStrNombreEstado(String strNombreEstado) {
         this.strNombreEstado = strNombreEstado;
+    }
+
+    public Boolean getCostosaladigitado() {
+        return costosaladigitado;
+    }
+
+    public void setCostosaladigitado(Boolean costosaladigitado) {
+        this.costosaladigitado = costosaladigitado;
+    }
+
+    @XmlTransient
+    public Collection<ModuloLaboratorio> getModuloLaboratorioCollection() {
+        return moduloLaboratorioCollection;
+    }
+
+    public void setModuloLaboratorioCollection(Collection<ModuloLaboratorio> moduloLaboratorioCollection) {
+        this.moduloLaboratorioCollection = moduloLaboratorioCollection;
     }
 
 }

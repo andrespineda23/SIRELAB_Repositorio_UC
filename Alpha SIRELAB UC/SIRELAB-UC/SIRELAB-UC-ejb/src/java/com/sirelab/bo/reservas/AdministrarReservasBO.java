@@ -162,7 +162,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
     @Override
     public List<SalaLaboratorio> consultarSalaLaboratorioPorIdLaboratorio(BigInteger laboratorio) {
         try {
-            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosActivosPorLaboratorio(laboratorio);
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivos(laboratorio);
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarReservasBO consultarSalaLaboratorioPorIdLaboratorio: " + e.toString());

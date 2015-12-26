@@ -16,14 +16,14 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li><a href="#">Administrar Areas de Profundización</a></li>
-                                <li class="active">Registrar Area Profundización</li>
+                                <li><a href="#">Administrar Servicios Sala</a></li>
+                                <li class="active">Registrar Servicio Sala</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -36,7 +36,7 @@ and open the template in the editor.
                                         Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
                                     </p>
                                     <p>
-                                        Este registro es unicamente para las sedes que pertenencen a la universidad.
+                                        Este registro es unicamente para los servicios que se prestan en las diferentes salas de laboratorio.
                                     </p>
                                 </div>
 
@@ -44,22 +44,27 @@ and open the template in the editor.
                                     <fieldset>
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Codigo Area Profundización*"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerRegistrarAreaProfundizacion.nuevoCodigo}" disabled="#{controllerRegistrarAreaProfundizacion.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarAreaProfundizacion.validarCodigoAreaProfundizacion()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
+                                            <strong><h:outputText value="Codigo Servicio*"/></strong>
+                                            <h:inputText maxlength="20" value="#{controllerRegistrarServiciosSala.nuevoCodigo}" disabled="#{controllerRegistrarServiciosSala.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarServiciosSala.validarCodigoServiciosSala()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
                                             </h:inputText>
                                             <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Nombre Area Profundización*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerRegistrarAreaProfundizacion.nuevoNombre}" disabled="#{controllerRegistrarAreaProfundizacion.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarAreaProfundizacion.validarNombreAreaProfundizacion()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                            <strong><h:outputText value="Nombre Servicio*"/></strong>
+                                            <h:inputText maxlength="100" value="#{controllerRegistrarServiciosSala.nuevoNombre}" disabled="#{controllerRegistrarServiciosSala.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarServiciosSala.validarNombreServiciosSala()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
                                         </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Costo Servicio*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarServiciosSala.nuevoCosto}" disabled="#{controllerRegistrarServiciosSala.activarCasillas}" required="true" class="form-control" id="nuevoCosto" requiredMessage="El campo Costo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarServiciosSala.validarCostoServiciosSala()}" execute="nuevoCosto" render="nuevoCosto msnCosto" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCosto" for="nuevoCosto" style="color: red"/></h6>
+                                        </div>
                                     </fieldset>
-                                    <br></br>
-                                    <br></br>
                                     <br></br>
                                     <br></br>
                                     <br></br>
@@ -74,24 +79,24 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarAreaProfundizacion.mensajeFormulario}" style="color: #{controllerRegistrarAreaProfundizacion.colorMensaje}}"/>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarServiciosSala.mensajeFormulario}" style="color: #{controllerRegistrarServiciosSala.colorMensaje}}"/>
                                             </strong>
                                         </div>
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
                                     <div class="right pull-right">
-                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarAreaProfundizacion.activarAceptar}" actionListener="#{controllerRegistrarAreaProfundizacion.registrarNuevoAreaProfundizacion()}" class="btn btn-success" >
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarServiciosSala.activarAceptar}" actionListener="#{controllerRegistrarServiciosSala.registrarNuevoServiciosSala()}" class="btn btn-success" >
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarareasprofundizacion" actionListener="#{controllerRegistrarAreaProfundizacion.cancelarRegistroAreaProfundizacion()}" immediate="true">
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarserviciossala" actionListener="#{controllerRegistrarServiciosSala.cancelarRegistroServiciosSala()}" immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarAreaProfundizacion.activarLimpiar}" actionListener="#{controllerRegistrarAreaProfundizacion.cambiarActivarCasillas()}" >
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarServiciosSala.activarLimpiar}" actionListener="#{controllerRegistrarServiciosSala.cambiarActivarCasillas()}" >
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                     </div>

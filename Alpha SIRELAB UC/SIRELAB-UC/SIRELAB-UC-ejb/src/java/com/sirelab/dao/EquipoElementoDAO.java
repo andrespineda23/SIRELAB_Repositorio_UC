@@ -43,6 +43,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
     public void editarEquipoElemento(EquipoElemento equipoelemento) {
         try {
             em.merge(equipoelemento);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error editarEquipoElemento EquipoElementoDAO : " + e.toString());
         }
@@ -52,6 +53,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
     public void eliminarEquipoElemento(EquipoElemento equipoelemento) {
         try {
             em.remove(em.merge(equipoelemento));
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error eliminarEquipoElemento EquipoElementoDAO : " + e.toString());
         }
@@ -179,8 +181,8 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-                    if ("parametroLaboratorioPorArea".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "modulolaboratorio.salalaboratorio.laboratoriosporareas.idlaboratoriosporareas");
+                    if ("parametroLaboratorio".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "modulolaboratorio.salalaboratorio.laboratorio.idlaboratorio");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }

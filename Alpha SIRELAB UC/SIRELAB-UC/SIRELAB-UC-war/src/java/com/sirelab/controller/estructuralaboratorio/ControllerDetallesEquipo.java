@@ -7,20 +7,27 @@ package com.sirelab.controller.estructuralaboratorio;
 
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
-import com.sirelab.entidades.LaboratoriosPorAreas;
+import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoActivo;
+import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -41,14 +48,16 @@ public class ControllerDetallesEquipo implements Serializable {
 
     @EJB
     GestionarPlantaEquiposElementosBOInterface gestionarPlantaEquiposElementosBO;
+    @EJB
+    AdministrarEncargadosLaboratoriosBOInterface administrarValidadorTipoUsuario;
 
     private EquipoElemento equipoElementoDetalles;
     private BigInteger idEquipoElemento;
     private boolean activarEditar, disabledEditar;
     private boolean modificacionRegistro;
     private boolean visibleGuardar;
-    private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
-    private LaboratoriosPorAreas laboratorioPorAreaEquipoElemento;
+    private List<Laboratorio> listaLaboratorio;
+    private Laboratorio laboratorioEquipoElemento;
     private List<SalaLaboratorio> listaSalasLaboratorio;
     private SalaLaboratorio salaEquipoElemento;
     private boolean activarSalaLaboratorio;
@@ -77,6 +86,8 @@ public class ControllerDetallesEquipo implements Serializable {
     private String colorMensaje;
     private boolean fechaDiferida;
     private MensajesConstantes constantes;
+    private boolean perfilConsulta, activarLaboratorio;
+    private TipoPerfil tipoPerfil;
 
     public ControllerDetallesEquipo() {
     }
@@ -122,6 +133,7 @@ public class ControllerDetallesEquipo implements Serializable {
         this.idEquipoElemento = idEquipoElemento;
         equipoElementoDetalles = gestionarPlantaEquiposElementosBO.obtenerEquipoElementoPorIDEquipoElemento(idEquipoElemento);
         asignarValoresVariablesEquipoElemento();
+        cargarInformacionPerfil();
     }
 
     public void asignarValoresVariablesEquipoElemento() {
@@ -140,12 +152,12 @@ public class ControllerDetallesEquipo implements Serializable {
         DateFormat df = DateFormat.getDateInstance();
         fechaEquipoElemento = df.format(fecha);
 
-        laboratorioPorAreaEquipoElemento = equipoElementoDetalles.getModulolaboratorio().getSalalaboratorio().getLaboratoriosporareas();
+        laboratorioEquipoElemento = equipoElementoDetalles.getModulolaboratorio().getSalalaboratorio().getLaboratorio();
         salaEquipoElemento = equipoElementoDetalles.getModulolaboratorio().getSalalaboratorio();
         moduloEquipoElemento = equipoElementoDetalles.getModulolaboratorio();
 
-        listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
-        listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion(laboratorioPorAreaEquipoElemento.getIdlaboratoriosporareas());
+        listaLaboratorio = gestionarPlantaEquiposElementosBO.consultarLaboratoriosRegistrados();
+        listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorio(laboratorioEquipoElemento.getIdlaboratorio());
         listaModulosLaboratorio = gestionarPlantaEquiposElementosBO.consultarModulosLaboratorioPorIDSalaLaboratorio(salaEquipoElemento.getIdsalalaboratorio());
 
         tipoActivoEquipoElemento = equipoElementoDetalles.getTipoactivo();
@@ -169,6 +181,83 @@ public class ControllerDetallesEquipo implements Serializable {
         activarSalaLaboratorio = false;
         colorMensaje = "black";
         mensajeFormulario = "N/A";
+    }
+
+    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
+        Map<String, Object> lista = new HashMap<String, Object>();
+        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
+            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("DEPARTAMENTO", registro);
+            }
+        }
+        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
+            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("LABORATORIO", registro);
+            }
+        }
+        return lista;
+    }
+
+    private void cargarInformacionPerfil() {
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            perfilConsulta = true;
+        } else {
+            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                boolean validarPerfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
+                if (validarPerfilConsulta == false) {
+                    perfilConsulta = true;
+                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                    if (null != datosPerfil) {
+                        if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
+                            if (datosPerfil.containsKey("DEPARTAMENTO")) {
+                                Departamento parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
+                                listaLaboratorio = administrarValidadorTipoUsuario.obtenerLaboratoriosActivosPorIDDepartamento(parametroDepartamento.getIddepartamento());
+                                activarLaboratorio = false;
+                            }
+                            if (datosPerfil.containsKey("LABORATORIO")) {
+                                activarLaboratorio = true;
+                                laboratorioEquipoElemento = (Laboratorio) datosPerfil.get("LABORATORIO");
+                                listaLaboratorio = new ArrayList<Laboratorio>();
+                                listaLaboratorio.add(laboratorioEquipoElemento);
+                            }
+                        } else {
+                            activarLaboratorio = false;
+                        }
+                    } else {
+                        activarLaboratorio = false;
+                    }
+                } else {
+                    perfilConsulta = false;
+                }
+            } else {
+                if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                    Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
+                    activarLaboratorio = true;
+                    listaSalasLaboratorio = administrarValidadorTipoUsuario.obtenerSalaLaboratorioPorEdificio(edificio.getIdedificio());
+                    listaLaboratorio = new ArrayList<Laboratorio>();
+                    laboratorioEquipoElemento = new Laboratorio();
+                }
+            }
+        }
+    }
+
+    private Edificio obtenerEdificio(BigInteger usuario) {
+        Edificio edificio = administrarValidadorTipoUsuario.buscarEdificioPorIdEncargadoEdificio(usuario);
+        return edificio;
+    }
+
+    private boolean validarSesionConsulta(BigInteger usuario) {
+        boolean retorno = false;
+        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuario);
+        if (null != tipoPerfil) {
+            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
+                retorno = true;
+            }
+        }
+        return retorno;
     }
 
     public String restaurarInformacionEquipoElemento() {
@@ -203,12 +292,12 @@ public class ControllerDetallesEquipo implements Serializable {
         return "administrarequipos";
     }
 
-    public void actualizarLaboratoriosAreasProfundizacion() {
+    public void actualizarLaboratorios() {
         try {
-            if (Utilidades.validarNulo(laboratorioPorAreaEquipoElemento)) {
+            if (Utilidades.validarNulo(laboratorioEquipoElemento)) {
                 activarSalaLaboratorio = false;
                 salaEquipoElemento = null;
-                listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion(laboratorioPorAreaEquipoElemento.getIdlaboratoriosporareas());
+                listaSalasLaboratorio = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorio(laboratorioEquipoElemento.getIdlaboratorio());
 
                 activarModuloLaboratorio = true;
                 listaModulosLaboratorio = null;
@@ -227,7 +316,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 listaModulosLaboratorio = null;
                 moduloEquipoElemento = null;
 
-                FacesContext.getCurrentInstance().addMessage("form:laboratorioPorAreaEquipoElemento", new FacesMessage("El campo Laboratorio por Area es obligatorio."));
+                FacesContext.getCurrentInstance().addMessage("form:laboratorioEquipoElemento", new FacesMessage("El campo Laboratorio por Area es obligatorio."));
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
@@ -291,7 +380,7 @@ public class ControllerDetallesEquipo implements Serializable {
             validacionesNombre = false;
             FacesContext.getCurrentInstance().addMessage("form:nombreEquipoElemento", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
-
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarInventarioEquipo() {
@@ -312,6 +401,7 @@ public class ControllerDetallesEquipo implements Serializable {
             validacionesInventario = false;
             FacesContext.getCurrentInstance().addMessage("form:inventarioEquipoElemento", new FacesMessage("El codigo es obligatorio. " + constantes.INVENTARIO_CODIGO));
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarMarcaEquipo() {
@@ -332,6 +422,7 @@ public class ControllerDetallesEquipo implements Serializable {
             validacionesMarca = false;
             FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("La marca es obligatoria. " + constantes.INVENTARIO_MARCA));
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void actualizarEstadoEquipo() {
@@ -341,6 +432,7 @@ public class ControllerDetallesEquipo implements Serializable {
             validacionesEstado = false;
             FacesContext.getCurrentInstance().addMessage("form:estadoEquipoElemento", new FacesMessage("El estado del equipo es obligatorio."));
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void actualizarTipoActivo() {
@@ -350,6 +442,7 @@ public class ControllerDetallesEquipo implements Serializable {
             validacionesTipo = false;
             FacesContext.getCurrentInstance().addMessage("form:tipoActivoEquipoElemento", new FacesMessage("El tipo activo es obligatorio."));
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void actualizarProveedor() {
@@ -359,6 +452,7 @@ public class ControllerDetallesEquipo implements Serializable {
             validacionesProveedor = false;
             FacesContext.getCurrentInstance().addMessage("form:proveedorEquipoElemento", new FacesMessage("El proveedor es obligatorio."));
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarModeloEquipo() {
@@ -376,6 +470,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:marcaEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.INVENTARIO_MODELO));
             }
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarSerieEquipo() {
@@ -393,6 +488,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:serieEquipoElemento", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.INVENTARIO_SERIAL));
             }
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarCostoAlquilerEquipo() {
@@ -404,6 +500,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:alquilerEquipoElemento", new FacesMessage("El costo se encuentra incorrecto. " + constantes.INVENTARIO_COST_ALQ));
             }
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarInversionEquipo() {
@@ -415,6 +512,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 validacionesInversion = true;
             }
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarFechaEquipo() {
@@ -426,6 +524,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:fechaEquipoElemento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             }
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     public void validarEspecificacionEquipo() {
@@ -443,6 +542,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:especificacionEquipoElemento", new FacesMessage("El tamaño minimo permitido es 20 caracteres. " + constantes.INVENTARIO_DESCRIP));
             }
         }
+        modificacionesRegistroEquipoElemento();
     }
 
     private boolean validarResultadosValidacion() {
@@ -534,8 +634,17 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void modificarInformacionEquipoElemento() {
         try {
-            equipoElementoDetalles.setNombreequipo(inventarioEquipoElemento);
-            equipoElementoDetalles.setInventarioequipo(nombreEquipoElemento);
+            EquipoElemento equipoCambio = null;
+            boolean cambioModulo;
+            if (equipoElementoDetalles.getModulolaboratorio().getIdmodulolaboratorio().equals(moduloEquipoElemento.getIdmodulolaboratorio())) {
+                cambioModulo = false;
+            } else {
+                cambioModulo = true;
+                equipoCambio = equipoElementoDetalles;
+            }
+            System.out.println("nombreEquipoElemento: "+nombreEquipoElemento);
+            equipoElementoDetalles.setNombreequipo(nombreEquipoElemento);
+            equipoElementoDetalles.setInventarioequipo(inventarioEquipoElemento);
             equipoElementoDetalles.setMarcaequipo(nombreEquipoElemento);
             equipoElementoDetalles.setModeloequipo(nombreEquipoElemento);
             equipoElementoDetalles.setSeriequipo(nombreEquipoElemento);
@@ -560,7 +669,7 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setTipoactivo(tipoActivoEquipoElemento);
             equipoElementoDetalles.setProveedor(proveedorEquipoElemento);
 
-            gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles);
+            gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles, cambioModulo, equipoCambio);
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString());
@@ -569,9 +678,7 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public void modificacionesRegistroEquipoElemento() {
-        if (modificacionRegistro == false) {
-            modificacionRegistro = true;
-        }
+        modificacionRegistro = true;
     }
 
     //GET - SET
@@ -623,20 +730,20 @@ public class ControllerDetallesEquipo implements Serializable {
         this.visibleGuardar = visibleGuardar;
     }
 
-    public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
-        return listaLaboratoriosPorAreas;
+    public List<Laboratorio> getListaLaboratorio() {
+        return listaLaboratorio;
     }
 
-    public void setListaLaboratoriosPorAreas(List<LaboratoriosPorAreas> listaLaboratoriosPorAreas) {
-        this.listaLaboratoriosPorAreas = listaLaboratoriosPorAreas;
+    public void setListaLaboratorio(List<Laboratorio> listaLaboratorio) {
+        this.listaLaboratorio = listaLaboratorio;
     }
 
-    public LaboratoriosPorAreas getLaboratorioPorAreaEquipoElemento() {
-        return laboratorioPorAreaEquipoElemento;
+    public Laboratorio getLaboratorioEquipoElemento() {
+        return laboratorioEquipoElemento;
     }
 
-    public void setLaboratorioPorAreaEquipoElemento(LaboratoriosPorAreas laboratorioPorAreaEquipoElemento) {
-        this.laboratorioPorAreaEquipoElemento = laboratorioPorAreaEquipoElemento;
+    public void setLaboratorioEquipoElemento(Laboratorio laboratorioEquipoElemento) {
+        this.laboratorioEquipoElemento = laboratorioEquipoElemento;
     }
 
     public List<SalaLaboratorio> getListaSalasLaboratorio() {

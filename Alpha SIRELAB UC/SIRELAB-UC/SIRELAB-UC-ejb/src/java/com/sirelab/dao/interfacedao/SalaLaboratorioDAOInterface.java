@@ -16,11 +16,15 @@ import java.util.Map;
  */
 public interface SalaLaboratorioDAOInterface {
 
-    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioArea(BigInteger laboratorioArea);
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorDepartamento(BigInteger departamento);
 
-    public SalaLaboratorio buscarSalaLaboratorioPorCodigoEdificioLaboratorioArea(String codigo, BigInteger edificio, BigInteger laboratorioArea);
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioActivos(BigInteger laboratorio);
+
+    public SalaLaboratorio buscarSalaLaboratorioPorCodigoyEdificioyLaboratorio(String codigo, BigInteger edificio, BigInteger laboratorio);
 
     public void crearSalaLaboratorio(SalaLaboratorio salalaboratorio);
+
+    public SalaLaboratorio obtenerUltimoSalaLaboratorioRegistrado();
 
     public void editarSalaLaboratorio(SalaLaboratorio salalaboratorio);
 
@@ -32,13 +36,7 @@ public interface SalaLaboratorioDAOInterface {
 
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorFiltrado(Map<String, String> filters);
 
-    public List<SalaLaboratorio> buscarSalasLaboratoriosPorAreaProfundizacion(BigInteger areaProfundizacion);
-
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorEdificio(BigInteger edificio);
 
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorio(BigInteger laboratorio);
-
-    public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorioArea(BigInteger laboratorioArea);
-
-    public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorio(BigInteger laboratorio);
 }

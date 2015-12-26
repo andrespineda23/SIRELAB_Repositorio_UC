@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -54,6 +54,17 @@ and open the template in the editor.
                                             <f:ajax event="blur" listener="#{controllerDetallesSala.validarNombreSala()}" execute="nombreSalaLaboratorio" render="nombreSalaLaboratorio msnNombreSala" />
                                         </h:inputText>
                                         <h6><h:message id="msnNombreSala" for="nombreSalaLaboratorio" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Tipo de Costo*"/></strong>
+                                        <h:selectOneMenu value="#{controllerDetallesSala.costoAlquilerDigitado}"
+                                                         class="form-control"
+                                                         id="costoAlquilerDigitado">
+                                            <f:selectItem itemLabel="DIGITADO MANUALMENTE" itemValue="false" />
+                                            <f:selectItem itemLabel="CALCULADO POR VALORES MODULOS" itemValue="true" />
+                                            <f:ajax event="change" listener="#{controllerDetallesSala.cambiarCostoAlquilerDigitado()}" execute="@this" render="costoSalaLaboratorio msnCostoAlquilerDigitado"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnCostoAlquilerDigitado" for="costoAlquilerDigitado" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Costo Alquiler*"/></strong>
@@ -100,13 +111,13 @@ and open the template in the editor.
                                     <legend class="text-info">Información Universidad</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Departamento*"/></strong>
-                                        <h:selectOneMenu value="#{controllerDetallesSala.departamentoSalaLaboratorio}"
+                                        <h:selectOneMenu value="#{controllerDetallesSala.departamentoSalaLaboratorio}" disabled="#{controllerDetallesSala.activarDepartamento}"
                                                          class="form-control" readonly="#{controllerDetallesSala.activarEditar}"
                                                          id="departamentoSalaLaboratorio">
                                             <f:selectItems value="#{controllerDetallesSala.listaDepartamentos}" var="departamento"
                                                            itemLabel="#{departamento.strNombreEstado}" itemValue="#{departamento}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerDetallesSala.actualizarDepartamentos()}" execute="departamentoSalaLaboratorio" render="@this laboratorioSalaLaboratorio laboratorioPorAreaSalaLaboratorio msnDepartamento"/>
+                                            <f:ajax event="change" listener="#{controllerDetallesSala.actualizarDepartamentos()}" execute="departamentoSalaLaboratorio" render="@this laboratorioSalaLaboratorio laboratorioSalaLaboratorio msnDepartamento"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnDepartamento" for="departamentoSalaLaboratorio" style="color: red"/></h6>
                                     </div>
@@ -115,28 +126,16 @@ and open the template in the editor.
                                         <h:selectOneMenu value="#{controllerDetallesSala.laboratorioSalaLaboratorio}"
                                                          class="form-control" disabled="#{controllerDetallesSala.activarLaboratorio}"
                                                          id="laboratorioSalaLaboratorio">
-                                            <f:selectItems value="#{controllerDetallesSala.listaLaboratoriosPorAreas}" var="laboratorio"
-                                                           itemLabel="#{laboratorio.strNombreEstado}" itemValue="#{laboratorio}"/>
+                                            <f:selectItems value="#{controllerDetallesSala.listaLaboratorios}" var="laboratorio"
+                                                           itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerDetallesSala.actualizarLaboratorios()}" execute="laboratorioSalaLaboratorio" render="@this laboratorioPorAreaSalaLaboratorio msnLaboratorio"/>
+                                            <f:ajax event="change" listener="#{controllerDetallesSala.actualizarLaboratorios()}" execute="laboratorioSalaLaboratorio" render="@this msnLaboratorio"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnLaboratorio" for="laboratorioSalaLaboratorio" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Area de Profundización*"/></strong>
-                                        <h:selectOneMenu value="#{controllerDetallesSala.laboratorioPorAreaSalaLaboratorio}"
-                                                         class="form-control" disabled="#{controllerDetallesSala.activarLabPorArea}"
-                                                         id="laboratorioPorAreaSalaLaboratorio">
-                                            <f:selectItems value="#{controllerDetallesSala.listaLaboratoriosPorAreas}" var="laboratorio"
-                                                           itemLabel="#{laboratorio.areaprofundizacion.strNombreEstado}" itemValue="#{laboratorio}"/>
-                                            <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerDetallesSala.actualizarLaboratoriosPorArea()}" execute="laboratorioPorAreaSalaLaboratorio" render="@this msnLaboratorioPorArea"/>
-                                        </h:selectOneMenu>
-                                        <h6><h:message id="msnLaboratorioPorArea" for="laboratorioPorAreaSalaLaboratorio" style="color: red"/></h6>
-                                    </div>
-                                    <div class="form-group">
                                         <strong><h:outputText value="Sede*"/></strong>
-                                        <h:selectOneMenu value="#{controllerDetallesSala.sedeSalaLaboratorio}"
+                                        <h:selectOneMenu value="#{controllerDetallesSala.sedeSalaLaboratorio}" disabled="#{controllerDetallesSala.activarSede}"
                                                          class="form-control" readonly="#{controllerDetallesSala.activarEditar}"
                                                          id="sedeSalaLaboratorio">
                                             <f:selectItems value="#{controllerDetallesSala.listaSedes}" var="sede"
@@ -181,6 +180,33 @@ and open the template in the editor.
                                         <h6><h:message id="msnInversionSala" for="inversionSalaLaboratorio" style="color: red"/></h6>
                                     </div>
                                 </fieldset>
+                                <br></br>
+                                <fieldset>
+                                    <legend class="text-info">Servicios Asociados</legend>
+                                    <div class="row" >
+                                        <h:dataTable id="dataTable" var="item" 
+                                                     styleClass="table table-condensed table-responsive"  
+                                                     value="#{controllerDetallesSala.listaServiciosAsociados}">
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Servicio"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.serviciosala.nombreservicio}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Estado"/>
+                                                </f:facet>
+                                                <h:selectBooleanCheckbox value="#{item.estado}"/>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div>
+                                    <br></br>
+                                    <div class="right pull-right">
+                                        <h:commandButton class="btn btn-block btn-success" value="Registrar Asociacion" actionListener="#{controllerDetallesSalaLaboratorioXServicio.recibirIdSalaLaboratorio(controllerDetallesSala.idSalaLaboratorio)}" action="registrarsalalaboratorioxservicio"/>
+                                    </div>
+                                </fieldset>
+                                <br></br>
                             </div>
                             <hr class="intro-divider"/>
                             <div class="row col-md-12">

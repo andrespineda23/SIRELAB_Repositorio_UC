@@ -16,14 +16,14 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li><a href="#">...</a></li>
-                                <li class="active">Registrar Area de Profundización</li>
+                                <li><a href="#">Administrar Servicios Sala</a></li>
+                                <li class="active">Detalles Servicio Sala</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -36,7 +36,7 @@ and open the template in the editor.
                                         Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
                                     </p>
                                     <p>
-                                        Este registro es unicamente para los laboratorios por areas registrados en la universidad.
+                                        Este registro es unicamente para los servicios que se prestan en las diferentes salas de laboratorio.
                                     </p>
                                 </div>
 
@@ -44,27 +44,39 @@ and open the template in the editor.
                                     <fieldset>
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Departamento*"/></strong>
-                                            <h:inputText value="#{controllerRegistrarLaboratorioPorArea.nuevoLaboratorio.departamento.nombredepartamento}" class="form-control" readonly="true"/>
+                                            <strong><h:outputText value="Codigo Servicio*"/></strong>
+                                            <h:inputText maxlength="20" value="#{controllerDetallesServiciosSala.editarCodigo}" required="true" class="form-control" id="editarCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesServiciosSala.validarCodigoServiciosSala()}" execute="editarCodigo" render="editarCodigo msnCodigo" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCodigo" for="editarCodigo" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Laboratorio*"/></strong>
-                                            <h:inputText value="#{controllerRegistrarLaboratorioPorArea.nuevoLaboratorio.nombrelaboratorio}" class="form-control" readonly="true"/>
+                                            <strong><h:outputText value="Nombre Servicio*"/></strong>
+                                            <h:inputText maxlength="100" value="#{controllerDetallesServiciosSala.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesServiciosSala.validarNombreServiciosSala()}" execute="editarNombre" render="editarNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Area de Profundización*"/></strong>
-                                            <h:selectOneMenu value="#{controllerRegistrarLaboratorioPorArea.nuevoArea}"
-                                                             class="form-control" disabled="#{controllerRegistrarLaboratorioPorArea.activarCasillas}"
-                                                             id="nuevoArea">
-                                                <f:selectItem itemLabel="Seleccione Area Profundización" itemValue="null" />
-                                                <f:selectItems value="#{controllerRegistrarLaboratorioPorArea.listaAreasProfundizacion}" var="area"
-                                                               itemLabel="#{area.nombrearea}" itemValue="#{area}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerRegistrarLaboratorioPorArea.actualizarAreaProfundizacion()}" execute="nuevoArea" render="msnArea"/>
+                                            <strong><h:outputText value="Costo Servicio*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerDetallesServiciosSala.editarCosto}"  required="true" class="form-control" id="editarCosto" requiredMessage="El campo Costo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesServiciosSala.validarCostoServiciosSala()}" execute="editarCosto" render="editarCosto msnCosto" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCosto" for="editarCosto" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="parametroEstado">
+                                                Estado Servicio*
+                                            </label>
+                                            <h:selectOneMenu value="#{controllerDetallesServiciosSala.editarEstado}"
+                                                             class="form-control"
+                                                             id="editarEstado">
+                                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
                                             </h:selectOneMenu>
-                                            <h6><h:message id="msnArea" for="nuevoArea" style="color: red"/></h6>
                                         </div>
                                     </fieldset>
+                                    <br></br>
                                     <br></br>
                                     <br></br>
                                     <br></br>
@@ -79,24 +91,19 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarLaboratorioPorArea.mensajeFormulario}" style="color: #{controllerRegistrarLaboratorioPorArea.colorMensaje}}"/>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesServiciosSala.mensajeFormulario}" style="color: #{controllerDetallesServiciosSala.colorMensaje}}"/>
                                             </strong>
                                         </div>
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
                                     <div class="right pull-right">
-                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarLaboratorioPorArea.activarAceptar}" actionListener="#{controllerRegistrarLaboratorioPorArea.registrarNuevoLaboratorioPorArea()}" class="btn btn-success" >
+                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesServiciosSala.modificarInformacionServiciosSala()}" class="btn btn-success" >
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarLaboratorioPorArea.cancelarRegistroLaboratorioPorArea()}" actionListener="#{controllerDetallesLaboratorio.recibirIDLaboratoriosDetalles(controllerRegistrarLaboratorioPorArea.idLaboratorio)}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarLaboratorioPorArea.activarLimpiar}" actionListener="#{controllerRegistrarLaboratorioPorArea.cambiarActivarCasillas()}" >
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesServiciosSala.restaurarInformacionServiciosSala()}" actionListener="#{controllerAdministrarServiciosSala.limpiarProcesoBusqueda()}" immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                     </div>

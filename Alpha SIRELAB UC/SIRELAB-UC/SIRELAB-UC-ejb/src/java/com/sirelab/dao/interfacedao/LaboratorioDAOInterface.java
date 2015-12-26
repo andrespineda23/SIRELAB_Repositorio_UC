@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public interface LaboratorioDAOInterface {
 
+    public List<Laboratorio> consultarLaboratoriosActivos();
+
     public void crearLaboratorio(Laboratorio laboratorio);
 
     public void editarLaboratorio(Laboratorio laboratorio);

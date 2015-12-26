@@ -56,6 +56,17 @@ and open the template in the editor.
                                         <h6><h:message id="msnNombreSala" for="nuevoNombreSala" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
+                                        <strong><h:outputText value="Tipo de Costo*"/></strong>
+                                        <h:selectOneMenu disabled="#{controllerRegistrarSala.activarNuevoEdificio}" value="#{controllerRegistrarSala.costoAlquilerDigitado}"
+                                                         class="form-control"
+                                                         id="costoAlquilerDigitado">
+                                            <f:selectItem itemLabel="DIGITADO MANUALMENTE" itemValue="false" />
+                                            <f:selectItem itemLabel="CALCULADO POR VALORES MODULOS" itemValue="true" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarSala.cambiarCostoAlquilerDigitado()}" execute="@this" render="nuevoCostoSala msnCostoAlquilerDigitado"/>
+                                        </h:selectOneMenu>
+                                        <h6><h:message id="msnCostoAlquilerDigitado" for="costoAlquilerDigitado" style="color: red"/></h6>
+                                    </div>
+                                    <div class="form-group">
                                         <strong><h:outputText value="Costo Alquiler*"/></strong>
                                         <div class="input-group">
                                             <h:inputText maxlength="10"  value="#{controllerRegistrarSala.nuevoCostoSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoCostoSala" requiredMessage="El campo Costo es obligatorio.">
@@ -89,19 +100,6 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Laboratorio*"/></strong>
                                         <h:inputText value="#{controllerRegistrarSala.nuevoLaboratorioSala.nombrelaboratorio}" class="form-control" readonly="true"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Area de Profundización*"/></strong>
-                                        <h:selectOneMenu value="#{controllerRegistrarSala.nuevoLaboratorioPorArea}"
-                                                         class="form-control" disabled="#{controllerRegistrarSala.activarNuevoLabPorArea}"
-                                                         id="nuevoLaboratorioPorArea">
-                                            <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                            <f:selectItems value="#{controllerRegistrarSala.listaLaboratoriosPorAreas}" var="laboratorioArea"
-                                                           itemLabel="#{laboratorioArea.areaprofundizacion.nombrearea}" itemValue="#{laboratorioArea}"/>
-                                            <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarLaboratoriosPorArea()}" execute="nuevoLaboratorioPorArea" render="@this msnLaboratorioPorArea"/>
-                                        </h:selectOneMenu>
-                                        <h6><h:message id="msnLaboratorioPorArea" for="nuevoLaboratorioPorArea" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Sede*"/></strong>
@@ -161,6 +159,29 @@ and open the template in the editor.
                                         <h6><h:message id="msnInversionSala" for="nuevoInversionSala" style="color: red"/></h6>
                                     </div>
                                 </fieldset>
+                                <br></br>
+                                <fieldset>
+                                    <legend class="text-info">Tipos de servicios que prestará la Sala</legend>
+                                    <div class="row" >
+                                        <h:dataTable id="dataTable" var="item" 
+                                                     styleClass="table table-condensed table-responsive"  
+                                                     value="#{controllerRegistrarSala.listaAsociacionServicios}">
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Servicio"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.servicio.nombreservicio}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Adicionar"/>
+                                                </f:facet>
+                                                <h:selectBooleanCheckbox disabled="#{controllerRegistrarSala.activarCasillas}" value="#{item.activo}"/>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div>
+                                </fieldset>
+                                <br></br>
                                 <hr class="intro-divider"/>
                                 <div class="row col-md-12">
                                     <div class="text-center">

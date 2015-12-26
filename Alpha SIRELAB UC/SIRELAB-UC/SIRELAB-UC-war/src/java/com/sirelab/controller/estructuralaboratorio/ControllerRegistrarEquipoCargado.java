@@ -9,7 +9,7 @@ import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
-import com.sirelab.entidades.LaboratoriosPorAreas;
+import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.SalaLaboratorio;
@@ -47,7 +47,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     private String nuevoNombreEquipo, nuevoInventarioEquipo, nuevoMarcaEquipo, nuevoModeloEquipo, nuevoSerieEquipo;
     private String nuevoCostoAlquilerEquipo, nuevoEspecificacionEquipo, nuevoCostoInversionEquipo;
     private String nuevoFechaAdquisicionEquipo;
-    private LaboratoriosPorAreas nuevoLaboratorioPorArea;
+    private Laboratorio nuevoLaboratorio;
     private SalaLaboratorio nuevoSalaLaboratorioEquipo;
     private ModuloLaboratorio nuevoModuloLaboratorioEquipo;
     private TipoActivo nuevoTipoActivoEquipo;
@@ -105,7 +105,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         nuevoModuloLaboratorioEquipo = gestionarPlantaEquiposElementosBO.obtenerModuloLaboratorioPorID(modulo);
         if (null != nuevoModuloLaboratorioEquipo) {
             nuevoSalaLaboratorioEquipo = nuevoModuloLaboratorioEquipo.getSalalaboratorio();
-            nuevoLaboratorioPorArea = nuevoModuloLaboratorioEquipo.getSalalaboratorio().getLaboratoriosporareas();
+            nuevoLaboratorio = nuevoModuloLaboratorioEquipo.getSalalaboratorio().getLaboratorio();
         }
     }
 
@@ -569,12 +569,12 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         this.nuevoFechaAdquisicionEquipo = nuevoFechaAdquisicionEquipo;
     }
 
-    public LaboratoriosPorAreas getNuevoLaboratorioPorArea() {
-        return nuevoLaboratorioPorArea;
+    public Laboratorio getNuevoLaboratorio() {
+        return nuevoLaboratorio;
     }
 
-    public void setNuevoLaboratorioPorArea(LaboratoriosPorAreas nuevoLaboratorioPorArea) {
-        this.nuevoLaboratorioPorArea = nuevoLaboratorioPorArea;
+    public void setNuevoLaboratorio(Laboratorio nuevoLaboratorio) {
+        this.nuevoLaboratorio = nuevoLaboratorio;
     }
 
     public SalaLaboratorio getNuevoSalaLaboratorioEquipo() {

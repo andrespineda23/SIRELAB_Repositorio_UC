@@ -82,50 +82,6 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
     }
 
     @Override
-    public List<SalaLaboratorio> buscarSalasLaboratoriosPorAreaProfundizacion(BigInteger areaProfundizacion) {
-        try {
-            em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratoriosporareas.areaprofundizacion.idareaprofundizacion=:areaProfundizacion");
-            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("areaProfundizacion", areaProfundizacion);
-            List<SalaLaboratorio> registro = query.getResultList();
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error buscarSalasLaboratoriosPorAreaProfundizacion SalaLaboratorioDAO : " + e.toString());
-            return null;
-        }
-    }
-    
-    @Override
-    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorio(BigInteger laboratorio) {
-        try {
-            em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratoriosporareas.laboratorio.idlaboratorio=:laboratorio");
-            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("laboratorio", laboratorio);
-            List<SalaLaboratorio> registro = query.getResultList();
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error buscarSalasLaboratoriosPorAreaProfundizacion SalaLaboratorioDAO : " + e.toString());
-            return null;
-        }
-    }
-    @Override
-    public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorio(BigInteger laboratorio) {
-        try {
-            em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratoriosporareas.laboratorio.idlaboratorio=:laboratorio AND p.estadosala=true");
-            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("laboratorio", laboratorio);
-            List<SalaLaboratorio> registro = query.getResultList();
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error buscarSalasLaboratoriosPorAreaProfundizacion SalaLaboratorioDAO : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorEdificio(BigInteger edificio) {
         try {
             em.clear();
@@ -139,53 +95,68 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             return null;
         }
     }
-    
     @Override
-     public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioArea(BigInteger laboratorioArea) {
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorDepartamento(BigInteger departamento) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratoriosporareas.idlaboratoriosporareas=:laboratorioArea");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratorio.departamento.iddepartamento=:departamento");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("laboratorioArea", laboratorioArea);
+            query.setParameter("departamento", departamento);
             List<SalaLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarSalasLaboratoriosPorLaboratorioArea SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error buscarSalasLaboratoriosPorDepartamento SalaLaboratorioDAO : " + e.toString());
             return null;
         }
     }
+
     @Override
-     public List<SalaLaboratorio> buscarSalasLaboratoriosActivosPorLaboratorioArea(BigInteger laboratorioArea) {
+    public SalaLaboratorio buscarSalaLaboratorioPorCodigoyEdificioyLaboratorio(String codigo, BigInteger edificio, BigInteger laboratorio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratoriosporareas.idlaboratoriosporareas=:laboratorioArea AND p.estadosala=true");
-            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("laboratorioArea", laboratorioArea);
-            List<SalaLaboratorio> registro = query.getResultList();
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error buscarSalasLaboratoriosActivosPorLaboratorioArea SalaLaboratorioDAO : " + e.toString());
-            return null;
-        }
-    }
-     
-    @Override
-     public SalaLaboratorio buscarSalaLaboratorioPorCodigoEdificioLaboratorioArea(String codigo, BigInteger edificio, BigInteger laboratorioArea) {
-        try {
-            em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.codigosala=:codigo AND p.edificio.idedificio=:edificio AND p.laboratoriosporareas.idlaboratoriosporareas=:laboratorioArea");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.codigosala=:codigo AND p.edificio.idedificio=:edificio AND p.laboratorio=:laboratorio");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("codigo", codigo);
             query.setParameter("edificio", edificio);
-            query.setParameter("laboratorioArea", laboratorioArea);
+            query.setParameter("laboratorio", laboratorio);
             SalaLaboratorio registro = (SalaLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarSalaLaboratorioPorCodigoEdificioLaboratorioArea SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error buscarSalaLaboratorioPorEdificioyLaboratorio SalaLaboratorioDAO : " + e.toString());
             return null;
         }
     }
-    
+
+    @Override
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorio(BigInteger laboratorio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratorio.idlaboratorio=:laboratorio");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioActivos(BigInteger laboratorio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratorio.idlaboratorio=:laboratorio AND p.estadosala=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+
     @Override
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorFiltrado(Map<String, String> filters) {
         try {
@@ -244,18 +215,13 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-                    if ("parametroAreaProfundizacion".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "laboratoriosporareas.areaprofundizacion.idareaprofundizacion");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
                     if ("parametroLaboratorio".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "laboratoriosporareas.laboratorio.idlaboratorio");
+                        wheres.append(alias).append("." + "laboratorio.idlaboratorio");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
                     if ("parametroDepartamento".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "laboratoriosporareas.laboratorio.departamento.iddepartamento");
+                        wheres.append(alias).append("." + "laboratorio.departamento.iddepartamento");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
@@ -300,7 +266,6 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
                 if (("parametroEdificio".equals(entry.getKey()))
                         || ("parametroSede".equals(entry.getKey()))
                         || ("parametroLaboratorio".equals(entry.getKey()))
-                        || ("parametroAreaProfundizacion".equals(entry.getKey()))
                         || ("parametroDepartamento".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
@@ -309,4 +274,25 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
         }
         return tq;
     }
+
+    @Override
+    public SalaLaboratorio obtenerUltimoSalaLaboratorioRegistrado() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<SalaLaboratorio> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                SalaLaboratorio ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error obtenerUltimaSalaLaboratorioRegistrada SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+
 }

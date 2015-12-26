@@ -40,6 +40,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Laboratorio.findByNombrelaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.nombrelaboratorio = :nombrelaboratorio"),
     @NamedQuery(name = "Laboratorio.findByCodigolaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.codigolaboratorio = :codigolaboratorio")})
 public class Laboratorio implements Serializable {
+    @Size(max = 1)
+    @Column(name = "bloquehorareserva")
+    private String bloquehorareserva;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorio")
+    private Collection<SalaLaboratorio> salaLaboratorioCollection;
 
     @Column(name = "estado")
     private Boolean estado;
@@ -65,8 +70,6 @@ public class Laboratorio implements Serializable {
     @JoinColumn(name = "departamento", referencedColumnName = "iddepartamento")
     @ManyToOne(optional = false)
     private Departamento departamento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorio")
-    private Collection<LaboratoriosPorAreas> laboratoriosPorAreasCollection;
     @Transient
     private String strEstado;
     @Transient
@@ -115,15 +118,6 @@ public class Laboratorio implements Serializable {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
-    }
-
-    @XmlTransient
-    public Collection<LaboratoriosPorAreas> getLaboratoriosPorAreasCollection() {
-        return laboratoriosPorAreasCollection;
-    }
-
-    public void setLaboratoriosPorAreasCollection(Collection<LaboratoriosPorAreas> laboratoriosPorAreasCollection) {
-        this.laboratoriosPorAreasCollection = laboratoriosPorAreasCollection;
     }
 
     @Override
@@ -193,6 +187,23 @@ public class Laboratorio implements Serializable {
 
     public void setStrNombreEstado(String strNombreEstado) {
         this.strNombreEstado = strNombreEstado;
+    }
+
+    @XmlTransient
+    public Collection<SalaLaboratorio> getSalaLaboratorioCollection() {
+        return salaLaboratorioCollection;
+    }
+
+    public void setSalaLaboratorioCollection(Collection<SalaLaboratorio> salaLaboratorioCollection) {
+        this.salaLaboratorioCollection = salaLaboratorioCollection;
+    }
+
+    public String getBloquehorareserva() {
+        return bloquehorareserva;
+    }
+
+    public void setBloquehorareserva(String bloquehorareserva) {
+        this.bloquehorareserva = bloquehorareserva;
     }
 
 }

@@ -7,7 +7,6 @@ package com.sirelab.controller.variables;
 
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
@@ -104,16 +103,6 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
                 if (null != registro) {
                     validacionesCodigoRegistro = true;
                     inputNombreRegistro = registro.getNombrelaboratorio();
-                } else {
-                    validacionesCodigoRegistro = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo no se encuentre registrado."));
-                }
-            }
-            if (inputCodigo.equalsIgnoreCase("5")) {
-                AreaProfundizacion registro = gestionarVariableTiposPerfilesBO.consultarAreaProfundizacionPorCodigo(inputCodigoRegistro);
-                if (null != registro) {
-                    validacionesCodigoRegistro = true;
-                    inputNombreRegistro = registro.getNombrearea();
                 } else {
                     validacionesCodigoRegistro = false;
                     FacesContext.getCurrentInstance().addMessage("form:inputCodigoRegistro", new FacesMessage("El codigo no se encuentre registrado."));

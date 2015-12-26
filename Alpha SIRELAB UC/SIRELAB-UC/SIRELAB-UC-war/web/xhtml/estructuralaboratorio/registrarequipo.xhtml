@@ -237,17 +237,17 @@ and open the template in the editor.
                         <fieldset>
                             <legend class="text-info">Información Laboratorio</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Laboratorio / Area de Profundización*"/></strong>
-                                <h:selectOneMenu value="#{controllerRegistrarEquipo.nuevoLaboratorioPorArea}"
+                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <h:selectOneMenu value="#{controllerRegistrarEquipo.nuevoLaboratorio}"
                                                  class="form-control" disabled="#{controllerRegistrarEquipo.activarCasillas}"
-                                                 id="nuevoLaboratorioPorAreaEquipo">
+                                                 id="nuevoLaboratorioEquipo">
                                     <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                    <f:selectItems value="#{controllerRegistrarEquipo.listaLaboratoriosPorAreas}" var="area"
-                                                   itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
+                                    <f:selectItems value="#{controllerRegistrarEquipo.listaLaboratorio}" var="area"
+                                                   itemLabel="#{area.nombrelaboratorio}" itemValue="#{area}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarNuevoLaboratorioPorArea()}" execute="nuevoLaboratorioPorAreaEquipo" render="@this nuevoSalaLaboratorioEquipo nuevoModuloLaboratorioEquipo msnLaboratorioPorAreaEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerRegistrarEquipo.actualizarNuevoLaboratorio()}" execute="nuevoLaboratorioEquipo" render="@this nuevoSalaLaboratorioEquipo nuevoModuloLaboratorioEquipo msnLaboratorioEquipo"/>
                                 </h:selectOneMenu>
-                                <h6><h:message id="msnLaboratorioPorAreaEquipo" for="nuevoLaboratorioPorAreaEquipo" style="color: red"/></h6>
+                                <h6><h:message id="msnLaboratorioEquipo" for="nuevoLaboratorioEquipo" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Sala de Laboratorio*"/></strong>

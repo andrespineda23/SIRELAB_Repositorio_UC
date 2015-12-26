@@ -1,17 +1,16 @@
 package com.sirelab.bo.usuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoPorEdificioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
+import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.TipoPerfilDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoLaboratorio;
@@ -19,6 +18,7 @@ import com.sirelab.entidades.EncargadoPorEdificio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.entidades.Usuario;
@@ -55,7 +55,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     @EJB
     TipoPerfilDAOInterface TipoPerfilDAO;
     @EJB
-    AreaProfundizacionDAOInterface areaProfundizacionDAO;
+    SalaLaboratorioDAOInterface salaLaboratorioDAO;
 
     @Override
     public List<TipoPerfil> consultarPerfilesPorEncargadoRegistrados() {
@@ -102,7 +102,6 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     }
 
     //@Override
-
     public List<Facultad> obtenerListaFacultadesActivos() {
         try {
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
@@ -264,17 +263,6 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
     }
 
     @Override
-    public AreaProfundizacion obtenerAreaProfundizacionPorCodigo(String codigo) {
-        try {
-            AreaProfundizacion registro = areaProfundizacionDAO.buscarAreaProfundizacionPorCodigo(codigo);
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error AdministrarValidadorTipoUsuario obtenerAreaProfundizacionPorCodigo: " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
     public Laboratorio obtenerLaboratorioPorCodigo(String codigo) {
         try {
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
@@ -291,6 +279,16 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
         if (null != obj) {
             return obj.getEdificio();
         } else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<SalaLaboratorio> obtenerSalaLaboratorioPorEdificio(BigInteger edificio) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorEdificio(edificio);
+            return lista;
+        } catch (Exception e) {
             return null;
         }
     }

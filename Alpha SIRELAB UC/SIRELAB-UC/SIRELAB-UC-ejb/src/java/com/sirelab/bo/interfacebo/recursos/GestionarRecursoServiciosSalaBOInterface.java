@@ -5,19 +5,19 @@
  */
 package com.sirelab.bo.interfacebo.recursos;
 
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.ServiciosSala;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author AndresPineda
  */
-public interface GestionarRecursoAreasProfundizacionBOInterface {
+public interface GestionarRecursoServiciosSalaBOInterface {
 
     public List<Facultad> consultarFacultadesRegistradas();
 
@@ -25,16 +25,15 @@ public interface GestionarRecursoAreasProfundizacionBOInterface {
 
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento);
 
-    public List<AreaProfundizacion> consultarAreasProfundizacionPorParametro(Map<String, String> filtros);
+    public List<ServiciosSala> consultarServiciosSalaPorParametro(Map<String, String> filtros);
 
-    public void crearNuevaAreaProfundizacion(AreaProfundizacion areaProfundizacion);
+    public void crearNuevoServiciosSala(ServiciosSala servicio);
 
-    public void modificarInformacionAreaProfundizacion(AreaProfundizacion areaProfundizacion);
+    public void modificarInformacionServiciosSala(ServiciosSala servicio);
 
-    public AreaProfundizacion obtenerAreaProfundizacionPorIDAreaProfundizacion(BigInteger idAreaProfundizacion);
+    public ServiciosSala obtenerServiciosSalaPorIDServiciosSala(BigInteger idServiciosSala);
 
-    public AreaProfundizacion obtenerAreaProfundizacionPorCodigo(String codigo);
+    public ServiciosSala obtenerServiciosSalaPorCodigo(String codigo);
 
-    public Boolean validarCambioEstadoArea(BigInteger area);
-
+    public Boolean validarCambioEstadoServicio(BigInteger servicio);
 }

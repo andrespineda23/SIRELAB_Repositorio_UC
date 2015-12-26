@@ -5,10 +5,8 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
-import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
@@ -101,12 +99,6 @@ public class ControllerAdministrarLaboratorios implements Serializable {
                 lista.put("DEPARTAMENTO", registro);
             }
         }
-        if ("AREAPROFUNDIZACION".equalsIgnoreCase(nombre)) {
-            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("AREAPROFUNDIZACION", registro);
-            }
-        }
         if ("LABORATORIO".equalsIgnoreCase(nombre)) {
             Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
             if (null != registro) {
@@ -118,30 +110,37 @@ public class ControllerAdministrarLaboratorios implements Serializable {
 
     private void cargarInformacionPerfil() {
         usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
-        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-            perfilConsulta = validarSesionConsulta();
-            if (perfilConsulta == false) {
-                Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
-                if (null != datosPerfil) {
-                    if (datosPerfil.containsKey("DEPARTAMENTO")) {
-                        activarFacultad = true;
+        if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            perfilConsulta = true;
+        } else {
+            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                boolean validarPerfilConsulta = validarSesionConsulta();
+                if (validarPerfilConsulta == false) {
+                    perfilConsulta = true;
+                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                    if (null != datosPerfil) {
+                        if (datosPerfil.containsKey("DEPARTAMENTO")) {
+                            activarFacultad = true;
+                            activarDepartamento = true;
+                            parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
+                            parametroFacultad = parametroDepartamento.getFacultad();
+                            listaDepartamentos = new ArrayList<Departamento>();
+                            listaFacultades = new ArrayList<Facultad>();
+                            listaDepartamentos.add(parametroDepartamento);
+                            listaFacultades.add(parametroFacultad);
+                        }
+                    } else {
+                        activarFacultad = false;
                         activarDepartamento = true;
-                        parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
-                        parametroFacultad = parametroDepartamento.getFacultad();
-                        listaDepartamentos = new ArrayList<Departamento>();
-                        listaFacultades = new ArrayList<Facultad>();
-                        listaDepartamentos.add(parametroDepartamento);
-                        listaFacultades.add(parametroFacultad);
                     }
                 } else {
-                    activarFacultad = false;
-                    activarDepartamento = true;
+                    perfilConsulta = false;
                 }
             }
         }
     }
 
-     private boolean validarSesionConsulta() {
+    private boolean validarSesionConsulta() {
         boolean retorno = false;
         tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuarioLoginSistema.getIdUsuarioLogin());
         if (null != tipoPerfil) {

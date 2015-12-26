@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "hojavidaequipo")
@@ -39,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HojaVidaEquipo.findByFechaevento", query = "SELECT h FROM HojaVidaEquipo h WHERE h.fechaevento = :fechaevento"),
     @NamedQuery(name = "HojaVidaEquipo.findByDetalleevento", query = "SELECT h FROM HojaVidaEquipo h WHERE h.detalleevento = :detalleevento")})
 public class HojaVidaEquipo implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +57,7 @@ public class HojaVidaEquipo implements Serializable {
     private Date fechaevento;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 200)
+    @Size(min = 1, max = 800)
     @Column(name = "detalleevento")
     private String detalleevento;
     @JoinColumn(name = "tipoevento", referencedColumnName = "idtipoevento")
@@ -107,11 +106,11 @@ public class HojaVidaEquipo implements Serializable {
     }
 
     public String getDetalleevento() {
-        return detalleevento.toUpperCase();
+        return detalleevento;
     }
 
     public void setDetalleevento(String detalleevento) {
-        this.detalleevento = detalleevento.toUpperCase();
+        this.detalleevento = detalleevento;
     }
 
     public TipoEvento getTipoevento() {
@@ -154,5 +153,5 @@ public class HojaVidaEquipo implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.HojaVidaEquipo[ idhojavidaequipo=" + idhojavidaequipo + " ]";
     }
-
+    
 }

@@ -5,7 +5,6 @@
  */
 package com.sirelab.bo.interfacebo.variables;
 
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
@@ -33,6 +32,4 @@ public interface GestionarVariableTiposPerfilesBOInterface {
     public Departamento consultarDepartamentoPorCodigo(String codigo);
 
     public Laboratorio consultaLaboratorioPorCodigo(String codigo);
-
-    public AreaProfundizacion consultarAreaProfundizacionPorCodigo(String codigo);
 }

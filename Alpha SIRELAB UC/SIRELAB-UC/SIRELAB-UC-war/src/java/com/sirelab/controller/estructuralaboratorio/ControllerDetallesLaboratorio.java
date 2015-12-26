@@ -7,14 +7,19 @@ package com.sirelab.controller.estructuralaboratorio;
 
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosBOInterface;
+import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.LaboratoriosPorAreas;
+import com.sirelab.entidades.TipoPerfil;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -34,6 +39,8 @@ public class ControllerDetallesLaboratorio implements Serializable {
 
     @EJB
     GestionarPlantaLaboratoriosBOInterface gestionarPlantaLaboratoriosBO;
+    @EJB
+    AdministrarEncargadosLaboratoriosBOInterface administrarValidadorTipoUsuario;
 
     private Laboratorio laboratorioDetalles;
     private BigInteger idLaboratorio;
@@ -50,8 +57,11 @@ public class ControllerDetallesLaboratorio implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
-    private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
     private MensajesConstantes constantes;
+    private boolean activarModificaconFacultad;
+    private boolean perfilConsulta;
+    private TipoPerfil tipoPerfil;
+    private UsuarioLogin usuarioLoginSistema;
 
     public ControllerDetallesLaboratorio() {
     }
@@ -68,10 +78,10 @@ public class ControllerDetallesLaboratorio implements Serializable {
         colorMensaje = "black";
         BasicConfigurator.configure();
     }
-    
-    public String registrarAreaProfundizacion(){
-    restaurarInformacionLaboratorio();
-    return "registrarlaboratorioporarea";
+
+    public String registrarAreaProfundizacion() {
+        restaurarInformacionLaboratorio();
+        return "registrarlaboratorioporarea";
     }
 
     public String restaurarInformacionLaboratorio() {
@@ -86,6 +96,66 @@ public class ControllerDetallesLaboratorio implements Serializable {
         return "administrarlaboratorios";
     }
 
+    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
+        Map<String, Object> lista = new HashMap<String, Object>();
+        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
+            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("DEPARTAMENTO", registro);
+            }
+        }
+        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
+            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
+            if (null != registro) {
+                lista.put("LABORATORIO", registro);
+            }
+        }
+        return lista;
+    }
+
+    private void cargarInformacionPerfil() {
+        usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+        if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            perfilConsulta = true;
+        } else {
+            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                boolean validarPerfilConsulta = validarSesionConsulta();
+                if (validarPerfilConsulta == false) {
+                    perfilConsulta = true;
+                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                    if (null != datosPerfil) {
+                        if (datosPerfil.containsKey("DEPARTAMENTO")) {
+                            activarModificacionDepartamento = true;
+                            activarModificaconFacultad = true;
+                            editarDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
+                            editarFacultad = editarDepartamento.getFacultad();
+                            listaDepartamentos = new ArrayList<Departamento>();
+                            listaFacultades = new ArrayList<Facultad>();
+                            listaDepartamentos.add(editarDepartamento);
+                            listaFacultades.add(editarFacultad);
+                        }
+                    } else {
+                        activarModificacionDepartamento = false;
+                        activarModificaconFacultad = false;
+                    }
+                } else {
+                    perfilConsulta = false;
+                }
+            }
+        }
+    }
+
+    private boolean validarSesionConsulta() {
+        boolean retorno = false;
+        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuarioLoginSistema.getIdUsuarioLogin());
+        if (null != tipoPerfil) {
+            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
+                retorno = true;
+            }
+        }
+        return retorno;
+    }
+
     public void asignarValoresVariablesLaboratorio() {
         editarCodigo = laboratorioDetalles.getCodigolaboratorio();
         editarDepartamento = laboratorioDetalles.getDepartamento();
@@ -97,13 +167,13 @@ public class ControllerDetallesLaboratorio implements Serializable {
         if (Utilidades.validarNulo(editarFacultad)) {
             listaDepartamentos = gestionarPlantaLaboratoriosBO.consultarDepartamentosPorIDFacultad(editarFacultad.getIdfacultad());
         }
-        listaLaboratoriosPorAreas = gestionarPlantaLaboratoriosBO.obtenerLaboratoriosPorAreasPorIdLaboratorio(idLaboratorio);
     }
 
     public void recibirIDLaboratoriosDetalles(BigInteger idRegistro) {
         this.idLaboratorio = idRegistro;
         laboratorioDetalles = gestionarPlantaLaboratoriosBO.obtenerLaboratorioPorIDLaboratorio(idLaboratorio);
         asignarValoresVariablesLaboratorio();
+        cargarInformacionPerfil();
     }
 
     public void actualizarFacultades() {
@@ -137,17 +207,17 @@ public class ControllerDetallesLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
     }
 
@@ -157,33 +227,18 @@ public class ControllerDetallesLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO_LAB));
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.INVENTARIO_CODIGO_LAB));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_CODIGO_LAB));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_CODIGO_LAB));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO_LAB));
+            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. " + constantes.INVENTARIO_CODIGO_LAB));
         }
-    }
-
-    private boolean validarCambioEstado() {
-        boolean retorno = true;
-        if (editarEstado == false) {
-            Boolean validacion = gestionarPlantaLaboratoriosBO.validarCambioEstadoLaboratorio(laboratorioDetalles.getIdlaboratorio());
-            if (null != validacion) {
-                if (validacion == true) {
-                    retorno = true;
-                } else {
-                    retorno = false;
-                }
-            }
-        }
-        return retorno;
     }
 
     private boolean validarResultadosValidacion() {
@@ -214,43 +269,12 @@ public class ControllerDetallesLaboratorio implements Serializable {
         return retorno;
     }
 
-    private boolean validarAsociacionLaboratorioArea() {
-        boolean retorno = true;
-        int antiguos = validarRegistroAntiguosAsociacion();
-        if (antiguos == 0) {
-            retorno = false;
-        }
-        return retorno;
-    }
-
-    private int validarRegistroAntiguosAsociacion() {
-        int cantidad = 0;
-        if (Utilidades.validarNulo(listaLaboratoriosPorAreas)) {
-            for (int i = 0; i < listaLaboratoriosPorAreas.size(); i++) {
-                if (listaLaboratoriosPorAreas.get(i).getEstado() == true) {
-                    cantidad++;
-                }
-            }
-        }
-        return cantidad;
-    }
-
     public void registrarModificacionLaboratorio() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                if (validarAsociacionLaboratorioArea() == true) {
-                    if (validarCambioEstado() == true) {
-                        almacenarModificacionLaboratorioEnSistema();
-                        colorMensaje = "green";
-                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
-                    } else {
-                        colorMensaje = "red";
-                        mensajeFormulario = "Existen areas asociadas. Imposible cambiar el estado del laboratorio.";
-                    }
-                } else {
-                    colorMensaje = "red";
-                    mensajeFormulario = "Es necesario que exista al menos una área de profundización asociado.";
-                }
+                almacenarModificacionLaboratorioEnSistema();
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "El codigo ya esta registrado con el departamento seleccionado.";
@@ -268,7 +292,6 @@ public class ControllerDetallesLaboratorio implements Serializable {
             laboratorioDetalles.setDepartamento(editarDepartamento);
             laboratorioDetalles.setEstado(editarEstado);
             gestionarPlantaLaboratoriosBO.modificarInformacionLaboratorio(laboratorioDetalles);
-            gestionarPlantaLaboratoriosBO.modificarLaboratorioPorArea(listaLaboratoriosPorAreas);
             restaurarInformacionLaboratorio();
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema:  " + e.toString());
@@ -374,12 +397,12 @@ public class ControllerDetallesLaboratorio implements Serializable {
         this.editarEstado = editarEstado;
     }
 
-    public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
-        return listaLaboratoriosPorAreas;
+    public boolean isActivarModificaconFacultad() {
+        return activarModificaconFacultad;
     }
 
-    public void setListaLaboratoriosPorAreas(List<LaboratoriosPorAreas> listaLaboratoriosPorAreas) {
-        this.listaLaboratoriosPorAreas = listaLaboratoriosPorAreas;
+    public void setActivarModificaconFacultad(boolean activarModificaconFacultad) {
+        this.activarModificaconFacultad = activarModificaconFacultad;
     }
 
 }

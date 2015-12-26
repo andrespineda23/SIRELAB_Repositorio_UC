@@ -7,7 +7,6 @@ package com.sirelab.ayuda;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresEdificioBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoPorEdificio;
@@ -50,12 +49,6 @@ public class AdministrarPerfil implements Serializable {
                 lista.put("DEPARTAMENTO", registro);
             }
         }
-        if ("AREAPROFUNDIZACION".equalsIgnoreCase(nombre)) {
-            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("AREAPROFUNDIZACION", registro);
-            }
-        }
         if ("LABORATORIO".equalsIgnoreCase(nombre)) {
             Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
             if (null != registro) {
@@ -66,9 +59,7 @@ public class AdministrarPerfil implements Serializable {
     }
 
     public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro) {
-        System.out.println("idRegistro: "+idRegistro);
         TipoPerfil perfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(idRegistro);
-        System.out.println("perfil: "+perfil);
         return perfil;
     }
 

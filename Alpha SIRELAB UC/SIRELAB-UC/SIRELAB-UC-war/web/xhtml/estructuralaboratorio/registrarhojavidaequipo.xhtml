@@ -128,7 +128,7 @@ and open the template in the editor.
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
                                     <strong><h:outputText value="Detalle Registro*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarHojaVidaEquipo.inputDetalle}" disabled="#{controllerRegistrarHojaVidaEquipo.activarCasillas}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
+                                    <h:inputText maxlength="800" value="#{controllerRegistrarHojaVidaEquipo.inputDetalle}" disabled="#{controllerRegistrarHojaVidaEquipo.activarCasillas}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarHojaVidaEquipo.validarDetalle()}" execute="inputDetalle" render="inputDetalle msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>

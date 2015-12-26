@@ -9,7 +9,7 @@ import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
-import com.sirelab.entidades.LaboratoriosPorAreas;
+import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.SalaLaboratorio;
@@ -39,7 +39,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     @EJB
     GestionarPlantaEquiposElementosBOInterface gestionarPlantaEquiposElementosBO;
 
-    private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
+    private List<Laboratorio> listaLaboratorio;
     private List<SalaLaboratorio> listaSalasLaboratorios;
     private List<ModuloLaboratorio> listaModulosLaboratorios;
     private List<TipoActivo> listaTiposActivos;
@@ -51,7 +51,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     private String nuevoNombreEquipo, nuevoInventarioEquipo, nuevoMarcaEquipo, nuevoModeloEquipo, nuevoSerieEquipo;
     private String nuevoCostoAlquilerEquipo, nuevoEspecificacionEquipo, nuevoCostoInversionEquipo;
     private String nuevoFechaAdquisicionEquipo;
-    private LaboratoriosPorAreas nuevoLaboratorioPorArea;
+    private Laboratorio nuevoLaboratorio;
     private SalaLaboratorio nuevoSalaLaboratorioEquipo;
     private ModuloLaboratorio nuevoModuloLaboratorioEquipo;
     private TipoActivo nuevoTipoActivoEquipo;
@@ -283,10 +283,10 @@ public class ControllerRegistrarEquipo implements Serializable {
         }
     }
 
-    public void actualizarNuevoLaboratorioPorArea() {
-        if (Utilidades.validarNulo(nuevoLaboratorioPorArea)) {
+    public void actualizarNuevoLaboratorio() {
+        if (Utilidades.validarNulo(nuevoLaboratorio)) {
             nuevoSalaLaboratorioEquipo = null;
-            listaSalasLaboratorios = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion(nuevoLaboratorioPorArea.getIdlaboratoriosporareas());
+            listaSalasLaboratorios = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioActivosIDLaboratorio(nuevoLaboratorio.getIdlaboratorio());
             activarNuevoSalaLaboratorio = false;
 
             nuevoModuloLaboratorioEquipo = null;
@@ -306,7 +306,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             nuevoModuloLaboratorioEquipo = null;
             activarNuevoModuloLaboratorio = true;
             listaModulosLaboratorios = null;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoLaboratorioPorArea", new FacesMessage("El laboratorio por area es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoLaboratorio", new FacesMessage("El laboratorio es obligatorio."));
         }
     }
 
@@ -465,7 +465,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         Date now = new Date();
         DateFormat df = DateFormat.getDateInstance();
         nuevoFechaAdquisicionEquipo = df.format(now);
-        nuevoLaboratorioPorArea = null;
+        nuevoLaboratorio = null;
         nuevoSalaLaboratorioEquipo = null;
         nuevoModuloLaboratorioEquipo = null;
         nuevoTipoActivoEquipo = null;
@@ -507,7 +507,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoCostoAlquilerEquipo = "0";
         nuevoCostoInversionEquipo = "0";
         nuevoFechaAdquisicionEquipo = null;
-        nuevoLaboratorioPorArea = null;
+        nuevoLaboratorio = null;
         nuevoSalaLaboratorioEquipo = null;
         nuevoModuloLaboratorioEquipo = null;
         nuevoTipoActivoEquipo = null;
@@ -545,15 +545,15 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     //GET - SET
-    public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
-        if (null == listaLaboratoriosPorAreas) {
-            listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasActivosRegistradas();
+    public List<Laboratorio> getListaLaboratorio() {
+        if (null == listaLaboratorio) {
+            listaLaboratorio = gestionarPlantaEquiposElementosBO.consultarLaboratoriosActivosRegistrados();
         }
-        return listaLaboratoriosPorAreas;
+        return listaLaboratorio;
     }
 
-    public void setListaLaboratoriosPorAreas(List<LaboratoriosPorAreas> listaLaboratoriosPorAreas) {
-        this.listaLaboratoriosPorAreas = listaLaboratoriosPorAreas;
+    public void setListaLaboratorio(List<Laboratorio> listaLaboratorio) {
+        this.listaLaboratorio = listaLaboratorio;
     }
 
     public List<SalaLaboratorio> getListaSalasLaboratorios() {
@@ -693,12 +693,12 @@ public class ControllerRegistrarEquipo implements Serializable {
         this.nuevoFechaAdquisicionEquipo = nuevoFechaAdquisicionEquipo;
     }
 
-    public LaboratoriosPorAreas getNuevoLaboratorioPorArea() {
-        return nuevoLaboratorioPorArea;
+    public Laboratorio getNuevoLaboratorio() {
+        return nuevoLaboratorio;
     }
 
-    public void setNuevoLaboratorioPorArea(LaboratoriosPorAreas nuevoLaboratorioPorArea) {
-        this.nuevoLaboratorioPorArea = nuevoLaboratorioPorArea;
+    public void setNuevoLaboratorio(Laboratorio nuevoLaboratorio) {
+        this.nuevoLaboratorio = nuevoLaboratorio;
     }
 
     public SalaLaboratorio getNuevoSalaLaboratorioEquipo() {

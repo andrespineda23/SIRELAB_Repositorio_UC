@@ -68,17 +68,17 @@ and open the template in the editor.
                                             </div> 
                                             <div class="row col-md-12">
                                                 <div class="col-md-6">
-                                                    <label for="parametroLaboratorioPorArea">
+                                                    <label for="parametroLaboratorio">
                                                         Laboratorios Por Area Profundización
                                                     </label>
-                                                    <h:selectOneMenu value="#{controllerAdministrarModulos.parametroLaboratorioPorArea}"
+                                                    <h:selectOneMenu value="#{controllerAdministrarModulos.parametroLaboratorio}"
                                                                      class="form-control" 
-                                                                     id="parametroLaboratorioPorArea">
+                                                                     id="parametroLaboratorio">
                                                         <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                                        <f:selectItems value="#{controllerAdministrarModulos.listaLaboratoriosPorAreas}" var="area"
-                                                                       itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
+                                                        <f:selectItems value="#{controllerAdministrarModulos.listaLaboratorio}" var="area"
+                                                                       itemLabel="#{area.nombrelaboratorio}" itemValue="#{area}"/>
                                                         <f:converter converterId="ConverterGenerico" />
-                                                        <f:ajax event="change" listener="#{controllerAdministrarModulos.actualizarLaboratoriosAreasProfundizacion()}" execute="parametroLaboratorioPorArea" render="@this parametroSalaLaboratorio"/>
+                                                        <f:ajax event="change" listener="#{controllerAdministrarModulos.activarLaboratorio()}" execute="parametroLaboratorio" render="@this parametroSalaLaboratorio"/>
                                                     </h:selectOneMenu>
                                                 </div>
                                                 <div class="col-md-6">
@@ -145,13 +145,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Laboratorio"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.salalaboratorio.laboratoriosporareas.laboratorio.departamento.nombredepartamento}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Área Prof."/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.salalaboratorio.laboratoriosporareas.areaprofundizacion.nombrearea}"/>
+                                                        <h:outputText value="#{item.salalaboratorio.laboratorio.departamento.nombredepartamento}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">

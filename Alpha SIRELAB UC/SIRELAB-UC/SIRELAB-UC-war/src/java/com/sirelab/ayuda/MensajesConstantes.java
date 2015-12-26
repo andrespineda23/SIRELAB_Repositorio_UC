@@ -47,6 +47,7 @@ public class MensajesConstantes {
     public final String RECURSO_CANT_E = "Formato (12) / Tam (Max 3 caract.)";
     public final String RECURSO_CANT_M = "Formato (12) / Tam (Max  caract.)";
     public final String RECURSO_NOM = "Formato (ejemplo) / Tam (Min 4 - Max 45)";
+    public final String SERVICIO_NOM = "Formato (ejemplo) / Tam (Min 4 - Max 100)";
     public final String RECURSO_NIT = "Formato (ejemplo) / Tam (Min 8 - Max 45)";
     public final String RECURSO_NOM_MAN = "Formato (ejemplo) / Tam (Min 4 - Max 100)";
     public final String RECURSO_GUIA_NOM = "Formato (ejemplo) / Tam (Min 4 - Max 100)";

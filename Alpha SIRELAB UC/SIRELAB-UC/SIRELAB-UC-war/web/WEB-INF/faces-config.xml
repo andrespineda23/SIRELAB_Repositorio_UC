@@ -548,7 +548,7 @@
     </navigation-rule>
     
     
-        <navigation-rule>
+    <navigation-rule>
         <from-view-id>/xhtml/variablesentorno/registrarsectorentidad.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>variablesusuario</from-outcome>
@@ -1031,13 +1031,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarlaboratoriosporareas</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</to-view-id>
+            <from-outcome>administrarsalalaboratorioxservicio</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarsalalaboratorioxservicio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarsalalaboratorioxservicio.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicioadministrador</from-outcome>
             <to-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</to-view-id>
@@ -1049,13 +1049,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarlaboratoriosporareas</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</to-view-id>
+            <from-outcome>administrarsalalaboratorioxservicio</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarsalalaboratorioxservicio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarsalalaboratorioxservicio.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
@@ -1065,13 +1065,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarlaboratoriosporareas</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</to-view-id>
+            <from-outcome>administrarsalalaboratorioxservicio</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/administrarsalalaboratorioxservicio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/administrarsalalaboratorioxservicio.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicioadministradoredificio</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
@@ -1609,13 +1609,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarareasprofundizacion</from-outcome>
-            <to-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</to-view-id>
+            <from-outcome>administrarserviciossala</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</from-view-id>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicioadministrador</from-outcome>
             <to-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</to-view-id>
@@ -1627,13 +1627,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarareasprofundizacion</from-outcome>
-            <to-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</to-view-id>
+            <from-outcome>administrarserviciossala</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</from-view-id>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
@@ -1643,13 +1643,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarareasprofundizacion</from-outcome>
-            <to-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</to-view-id>
+            <from-outcome>administrarserviciossala</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</from-view-id>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicioadministradoredificio</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
@@ -1767,36 +1767,36 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/detalleslaboratorio.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/detallessala.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>registrarlaboratorioporarea</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/registrarlaboratorioporarea.xhtml</to-view-id>
+            <from-outcome>registrarsalalaboratorioxservicio</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/registrarsalalaboratorioxservicio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/registrarlaboratorioporarea.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/registrarsalalaboratorioxservicio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>detalleslaboratorio</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/detalleslaboratorio.xhtml</to-view-id>
+            <from-outcome>detallessala</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/detallessala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/detallessala.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>detalleslaboratorioporarea</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/detalleslaboratorioporarea.xhtml</to-view-id>
+            <from-outcome>detallessalalaboratorioxservicio</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/detallessalalaboratorioxservicio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/estructuralaboratorio/detalleslaboratorioporarea.xhtml</from-view-id>
+        <from-view-id>/xhtml/estructuralaboratorio/detallessalalaboratorioxservicio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarlaboratoriosporareas</from-outcome>
-            <to-view-id>/xhtml/estructuralaboratorio/administrarlaboratoriosporareas.xhtml</to-view-id>
+            <from-outcome>detallessala</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/detallessala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -1838,7 +1838,7 @@
     </navigation-rule>
     
     
-     <navigation-rule>
+    <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrarguialaboratorio</from-outcome>
@@ -1911,36 +1911,36 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</from-view-id>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>registrarareaprofundizacion</from-outcome>
-            <to-view-id>/xhtml/recursoslaboratorio/registrarareaprofundizacion.xhtml</to-view-id>
+            <from-outcome>registrarserviciossala</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/registrarserviciossala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/recursoslaboratorio/registrarareaprofundizacion.xhtml</from-view-id>
+        <from-view-id>/xhtml/recursoslaboratorio/registrarserviciossala.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarareasprofundizacion</from-outcome>
-            <to-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</to-view-id>
+            <from-outcome>administrarserviciossala</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</from-view-id>
+        <from-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>detallesareaprofundizacion</from-outcome>
-            <to-view-id>/xhtml/recursoslaboratorio/detallesareaprofundizacion.xhtml</to-view-id>
+            <from-outcome>detallesserviciossala</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/detallesserviciossala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/recursoslaboratorio/detallesareaprofundizacion.xhtml</from-view-id>
+        <from-view-id>/xhtml/recursoslaboratorio/detallesserviciossala.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarareasprofundizacion</from-outcome>
-            <to-view-id>/xhtml/recursoslaboratorio/administrarareasprofundizacion.xhtml</to-view-id>
+            <from-outcome>administrarserviciossala</from-outcome>
+            <to-view-id>/xhtml/recursoslaboratorio/administrarserviciossala.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

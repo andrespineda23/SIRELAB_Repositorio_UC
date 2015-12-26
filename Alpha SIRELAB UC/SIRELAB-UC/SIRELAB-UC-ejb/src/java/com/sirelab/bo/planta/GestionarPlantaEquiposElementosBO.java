@@ -6,27 +6,28 @@
 package com.sirelab.bo.planta;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
-import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstadoEquipoDAOInterface;
+import com.sirelab.dao.interfacedao.HojaVidaEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
-import com.sirelab.dao.interfacedao.LaboratoriosPorAreasDAOInterface;
 import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.TipoActivoDAOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.dao.interfacedao.TipoEventoDAOInterface;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
+import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoActivo;
+import com.sirelab.entidades.TipoEvento;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -44,8 +45,6 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     @EJB
     LaboratorioDAOInterface laboratorioDAO;
     @EJB
-    AreaProfundizacionDAOInterface areaProfundizacionDAO;
-    @EJB
     SalaLaboratorioDAOInterface salaLaboratorioDAO;
     @EJB
     TipoActivoDAOInterface tipoActivoDAO;
@@ -56,9 +55,11 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     @EJB
     ProveedorDAOInterface proveedorDAO;
     @EJB
-    LaboratoriosPorAreasDAOInterface laboratoriosPorAreasDAO;
-    @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+    @EJB
+    HojaVidaEquipoDAOInterface hojaVidaEquipoDAO;
+    @EJB
+    TipoEventoDAOInterface tipoEventoDAO;
 
     @Override
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
@@ -72,34 +73,23 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     }
 
     @Override
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasRegistradas() {
-        try {
-            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreas();
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO consultarLaboratoriosPorAreasRegistradas : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosRegistradas() {
-        try {
-            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasActivos();
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO consultarLaboratoriosPorAreasRegistradas : " + e.toString());
-            return null;
-        }
-    }
-
-    //@Override
     public List<Laboratorio> consultarLaboratoriosRegistrados() {
         try {
             List<Laboratorio> lista = laboratorioDAO.consultarLaboratorios();
             return lista;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaElementosEquiposBO consultarLaboratoriosRegistrados : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Laboratorio> consultarLaboratoriosActivosRegistrados() {
+        try {
+            List<Laboratorio> lista = laboratorioDAO.consultarLaboratoriosActivos();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaElementosEquiposBO consultarLaboratoriosActivosRegistrados : " + e.toString());
             return null;
         }
     }
@@ -138,45 +128,23 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     }
 
     @Override
-    public List<AreaProfundizacion> consultarAreasProfundizacionPorIDLaboratorio(BigInteger laboratorio) {
+    public List<SalaLaboratorio> consultarSalasLaboratorioPorLaboratorio(BigInteger laboratorio) {
         try {
-            List<AreaProfundizacion> lista = areaProfundizacionDAO.buscarAreaProfundizacionPorIDLaboratorio(laboratorio);
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorio(laboratorio);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO consultarProveedoresRegistrados : " + e.toString());
+            System.out.println("Error GestionarPlantaElementosEquiposBO consultarSalasLaboratorioPorLaboratorio : " + e.toString());
             return null;
         }
     }
 
     @Override
-    public List<SalaLaboratorio> consultarSalasLaboratorioPorIDAreaProfundizacion(BigInteger areaProfundizacion) {
+    public List<SalaLaboratorio> consultarSalasLaboratorioActivosIDLaboratorio(BigInteger laboratorio) {
         try {
-            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorAreaProfundizacion(areaProfundizacion);
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivos(laboratorio);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO consultarSalasLaboratorioPorIDAreaProfundizacion : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public List<SalaLaboratorio> consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion(BigInteger laboratorio) {
-        try {
-            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioArea(laboratorio);
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public List<SalaLaboratorio> consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion(BigInteger laboratorio) {
-        try {
-            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosActivosPorLaboratorioArea(laboratorio);
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO consultarSalasLaboratorioActivosPorIDLaboratorioAreaProfundizacion : " + e.toString());
+            System.out.println("Error GestionarPlantaElementosEquiposBO consultarSalasLaboratorioActivosIDLaboratorio : " + e.toString());
             return null;
         }
     }
@@ -229,15 +197,67 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     public void crearNuevoEquipoElemento(EquipoElemento equipoElemento) {
         try {
             equipoElementoDAO.crearEquipoElemento(equipoElemento);
+            EquipoElemento nuevo = equipoElementoDAO.obtenerUltimaEquipoElementoRegistrada();
+            HojaVidaEquipo hojaVida = new HojaVidaEquipo();
+            hojaVida.setFechaevento(new Date());
+            hojaVida.setEquipoelemento(nuevo);
+            hojaVida.setFecharegistro(new Date());
+            hojaVida.setTipoevento(obtenerTipoEventoPorId(new BigInteger("1")));
+            hojaVida.setDetalleevento("CREACIÓN DEL EQUIPO TECNOLOGICO ("
+                    + nuevo.getInventarioequipo() + " - "
+                    + nuevo.getMarcaequipo() + " - "
+                    + nuevo.getModulolaboratorio().getSalalaboratorio().getDescripcionsala()
+                    + " - " + nuevo.getEstadoequipo().getNombreestadoequipo() + ") PARA EL MODULO " + equipoElemento.getModulolaboratorio().getStrNombreEstado() + " Y SALA " + equipoElemento.getModulolaboratorio().getSalalaboratorio().getStrNombreEstado());
+            hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaElementosEquiposBO crearNuevoEquipoElemento : " + e.toString());
         }
     }
 
+    private TipoEvento obtenerTipoEventoPorId(BigInteger secuencia) {
+        return tipoEventoDAO.buscarTipoEventoPorID(secuencia);
+    }
+
     @Override
-    public void modificarInformacionEquipoElemento(EquipoElemento equipoElemento) {
+    public void modificarInformacionEquipoElemento(EquipoElemento equipoElemento, boolean cambio, EquipoElemento equipoCambio) {
         try {
             equipoElementoDAO.editarEquipoElemento(equipoElemento);
+            if (cambio == false) {
+                HojaVidaEquipo hojaVida = new HojaVidaEquipo();
+                hojaVida.setFechaevento(new Date());
+                hojaVida.setEquipoelemento(equipoElemento);
+                hojaVida.setFecharegistro(new Date());
+                hojaVida.setTipoevento(obtenerTipoEventoPorId(new BigInteger("2")));
+                hojaVida.setDetalleevento("MODIFICACION DEL EQUIPO TECNOLOGICO ("
+                        + equipoElemento.getInventarioequipo() + " - "
+                        + equipoElemento.getMarcaequipo() + " - "
+                        + equipoElemento.getModulolaboratorio().getSalalaboratorio().getDescripcionsala()
+                        + " - " + equipoElemento.getEstadoequipo().getNombreestadoequipo() + ") PARA EL MODULO " + equipoElemento.getModulolaboratorio().getStrNombreEstado() + " Y SALA " + equipoElemento.getModulolaboratorio().getSalalaboratorio().getStrNombreEstado());
+                hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
+            } else {
+                HojaVidaEquipo hojaVida = new HojaVidaEquipo();
+                hojaVida.setFechaevento(new Date());
+                hojaVida.setEquipoelemento(equipoElemento);
+                hojaVida.setFecharegistro(new Date());
+                hojaVida.setTipoevento(obtenerTipoEventoPorId(new BigInteger("1")));
+                hojaVida.setDetalleevento("CREACIÓN DEL EQUIPO TECNOLOGICO ("
+                        + equipoElemento.getInventarioequipo() + " - "
+                        + equipoElemento.getMarcaequipo() + " - "
+                        + equipoElemento.getModulolaboratorio().getSalalaboratorio().getDescripcionsala()
+                        + " - " + equipoElemento.getEstadoequipo().getNombreestadoequipo() + ") PARA EL MODULO " + equipoElemento.getModulolaboratorio().getStrNombreEstado() + " Y SALA " + equipoElemento.getModulolaboratorio().getSalalaboratorio().getStrNombreEstado());
+                HojaVidaEquipo hojaVidaCambio = new HojaVidaEquipo();
+                hojaVidaCambio.setFechaevento(new Date());
+                hojaVidaCambio.setEquipoelemento(equipoCambio);
+                hojaVidaCambio.setFecharegistro(new Date());
+                hojaVidaCambio.setTipoevento(obtenerTipoEventoPorId(new BigInteger("6")));
+                hojaVida.setDetalleevento("ELIMINACION DEL EQUIPO TECNOLOGICO ("
+                        + equipoCambio.getInventarioequipo() + " - "
+                        + equipoCambio.getMarcaequipo() + " - "
+                        + equipoCambio.getModulolaboratorio().getSalalaboratorio().getDescripcionsala()
+                        + " - " + equipoCambio.getEstadoequipo().getNombreestadoequipo() + ") PARA EL MODULO " + equipoCambio.getModulolaboratorio().getStrNombreEstado() + " Y SALA " + equipoCambio.getModulolaboratorio().getSalalaboratorio().getStrNombreEstado());
+                hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
+                hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVidaCambio);
+            }
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaElementosEquiposBO modificarInformacionEquipoElemento : " + e.toString());
         }
@@ -272,28 +292,6 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaElementosEquiposBO obtenerModuloLaboratorioPorID : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public List<LaboratoriosPorAreas> obtenerLaboratoriosPorAreasPorDepartamento(BigInteger departamento) {
-        try {
-            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasPorDepartamento(departamento);
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO obtenerLaboratoriosPorAreasPorDepartamento : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public List<LaboratoriosPorAreas> obtenerLaboratoriosPorAreasPorLaboratorio(BigInteger laboratorio) {
-        try {
-            List<LaboratoriosPorAreas> lista = laboratoriosPorAreasDAO.consultarLaboratoriosPorAreasPorLaboratorios(laboratorio);
-            return lista;
-        } catch (Exception e) {
-            System.out.println("Error GestionarPlantaElementosEquiposBO obtenerLaboratoriosPorAreasPorLaboratorio : " + e.toString());
             return null;
         }
     }

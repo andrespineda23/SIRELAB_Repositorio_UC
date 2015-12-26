@@ -179,8 +179,8 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-                    if ("parametroLaboratorioPorArea".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "salalaboratorio.laboratoriosporareas.idlaboratoriosporareas");
+                    if ("parametroLaboratorio".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "salalaboratorio.laboratorio.idlaboratorio");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
@@ -206,7 +206,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
                 if ("parametroEstado".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
-                if (("parametroLaboratorioPorArea".equals(entry.getKey()))
+                if (("parametroLaboratorio".equals(entry.getKey()))
                         || ("parametroSalaLaboratorio".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));

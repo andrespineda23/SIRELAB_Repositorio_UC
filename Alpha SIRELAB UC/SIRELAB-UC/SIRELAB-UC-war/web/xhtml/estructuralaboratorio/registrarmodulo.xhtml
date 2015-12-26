@@ -97,7 +97,7 @@ and open the template in the editor.
                                             <f:selectItems value="#{controllerRegistrarModulo.listaDepartamentos}" var="departamento"
                                                            itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarDepartamentos()}" execute="nuevoDepartamentoModulo" render="nuevoLaboratorioModulo nuevoSalaDepartamentoModulo nuevoLaboratorioPorAreaModulo msnDepartamentoModulo"/>
+                                            <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarDepartamentos()}" execute="nuevoDepartamentoModulo" render="nuevoLaboratorioModulo nuevoSalaDepartamentoModulo nuevoLaboratorioModulo msnDepartamentoModulo"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnDepartamentoModulo" for="nuevoDepartamentoModulo" style="color: red"/></h6>
                                     </div>
@@ -110,22 +110,9 @@ and open the template in the editor.
                                             <f:selectItems value="#{controllerRegistrarModulo.listaLaboratorios}" var="laboratorio"
                                                            itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarLaboratorios()}" execute="nuevoLaboratorioModulo" render="nuevoLaboratorioPorAreaModulo nuevoSalaLaboratorioModulo msnLaboratorioModulo"/>
+                                            <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarLaboratorios()}" execute="nuevoLaboratorioModulo" render="nuevoSalaLaboratorioModulo msnLaboratorioModulo"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnLaboratorioModulo" for="nuevoLaboratorioModulo" style="color: red"/></h6>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Area de Profundización*"/></strong>
-                                        <h:selectOneMenu value="#{controllerRegistrarModulo.nuevoLaboratorioPorAreaModulo}"
-                                                         class="form-control" disabled="#{controllerRegistrarModulo.activarNuevoLabPorArea}"
-                                                         id="nuevoLaboratorioPorAreaModulo">
-                                            <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                            <f:selectItems value="#{controllerRegistrarModulo.listaLaboratoriosPorAreas}" var="area"
-                                                           itemLabel="#{area.areaprofundizacion.nombrearea}" itemValue="#{area}"/>
-                                            <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarModulo.actualizarLaboratoriosPorAreas()}" execute="nuevoLaboratorioPorAreaModulo" render=" nuevoSalaLaboratorioModulo msnLaboratorioPorAreaModulo"/>
-                                        </h:selectOneMenu>
-                                        <h6><h:message id="msnLaboratorioPorAreaModulo" for="nuevoLaboratorioPorAreaModulo" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Sala de Laboratorio*"/></strong>

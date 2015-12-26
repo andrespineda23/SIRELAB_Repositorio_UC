@@ -5,19 +5,14 @@
  */
 package com.sirelab.controller.paginasiniciales;
 
-import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
-import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -103,12 +98,6 @@ public class ControllerPaginasIniciales implements Serializable {
             Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
             if (null != registro) {
                 lista.put("DEPARTAMENTO", registro);
-            }
-        }
-        if ("AREAPROFUNDIZACION".equalsIgnoreCase(nombre)) {
-            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("AREAPROFUNDIZACION", registro);
             }
         }
         if ("LABORATORIO".equalsIgnoreCase(nombre)) {

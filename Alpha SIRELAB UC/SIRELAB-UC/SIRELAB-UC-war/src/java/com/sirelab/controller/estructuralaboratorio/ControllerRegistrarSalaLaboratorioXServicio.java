@@ -5,10 +5,11 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
-import com.sirelab.bo.interfacebo.planta.GestionarPlantaLaboratoriosPorAreasBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.bo.interfacebo.planta.GestionarPlantaSalaLaboratorioxServiciosBOInterface;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.LaboratoriosPorAreas;
+import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.entidades.SalaLaboratorioxServicios;
+import com.sirelab.entidades.ServiciosSala;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -28,58 +29,57 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerRegistrarLaboratorioPorArea implements Serializable {
+public class ControllerRegistrarSalaLaboratorioXServicio implements Serializable {
 
     @EJB
-    GestionarPlantaLaboratoriosPorAreasBOInterface gestionarPlantaLaboratoriosPorAreasBO;
+    GestionarPlantaSalaLaboratorioxServiciosBOInterface gestionarPlantaSalaLaboratorioxServiciosBO;
 
-    private Laboratorio nuevoLaboratorio;
-    private List<AreaProfundizacion> listaAreasProfundizacion;
-    private AreaProfundizacion nuevoArea;
+    private SalaLaboratorio nuevoSalaLaboratorio;
+    private List<ServiciosSala> listaServiciosSala;
+    private ServiciosSala nuevoServicio;
     //
-    private boolean validacionesArea;
+    private boolean validacionesServicio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
-    private BigInteger idLaboratorio;
+    private BigInteger idSalaLaboratorio;
 
-    public ControllerRegistrarLaboratorioPorArea() {
+    public ControllerRegistrarSalaLaboratorioXServicio() {
     }
 
     @PostConstruct
     public void init() {
-
         BasicConfigurator.configure();
     }
 
-    public void recibirIdLaboratorio(BigInteger idLaboratorio) {
-        this.idLaboratorio = idLaboratorio;
-        nuevoLaboratorio = gestionarPlantaLaboratoriosPorAreasBO.obtenerLaboratorioPorId(idLaboratorio);
+    public void recibirIdSalaLaboratorio(BigInteger idSalaLaboratorio) {
+        this.idSalaLaboratorio = idSalaLaboratorio;
+        nuevoSalaLaboratorio = gestionarPlantaSalaLaboratorioxServiciosBO.obtenerSalaLaboratorioPorId(idSalaLaboratorio);
         activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
-        nuevoArea = null;
+        nuevoServicio = null;
         //
-        validacionesArea = false;
+        validacionesServicio = false;
     }
 
-    public void actualizarAreaProfundizacion() {
-        if (Utilidades.validarNulo(nuevoArea)) {
-            validacionesArea = true;
+    public void actualizarServiciosSala() {
+        if (Utilidades.validarNulo(nuevoServicio)) {
+            validacionesServicio = true;
         } else {
-            validacionesArea = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoArea", new FacesMessage("El campo Area Profundización es obligatorio."));
+            validacionesServicio = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoServicio", new FacesMessage("El campo Servicio es obligatorio."));
         }
     }
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
-        if (validacionesArea == false) {
+        if (validacionesServicio == false) {
             retorno = false;
         }
         return retorno;
@@ -87,17 +87,17 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
 
     private boolean validarRegistroRepetido() {
         boolean retorno = true;
-        LaboratoriosPorAreas registro = gestionarPlantaLaboratoriosPorAreasBO.consultarLaboratorioPorAreaPorLabYArea(nuevoLaboratorio.getIdlaboratorio(), nuevoArea.getIdareaprofundizacion());
+        SalaLaboratorioxServicios registro = gestionarPlantaSalaLaboratorioxServiciosBO.consultarSalaLaboratorioXServicioPorSalayServicio(nuevoSalaLaboratorio.getIdsalalaboratorio(), nuevoServicio.getIdserviciossala());
         if (null != registro) {
             retorno = false;
         }
         return retorno;
     }
 
-    public void registrarNuevoLaboratorioPorArea() {
+    public void registrarNuevoSalaLaboratorioXServicio() {
         if (validarResultadosValidacion() == true) {
             if (validarRegistroRepetido() == true) {
-                almacenarNuevoLaboratorioPorAreaEnSistema();
+                almacenarNuevoSalaLaboratorioXServicioEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
                 activarAceptar = true;
@@ -114,38 +114,38 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         }
     }
 
-    public void almacenarNuevoLaboratorioPorAreaEnSistema() {
+    public void almacenarNuevoSalaLaboratorioXServicioEnSistema() {
         try {
-            LaboratoriosPorAreas laboratorioNuevo = new LaboratoriosPorAreas();
-            laboratorioNuevo.setAreaprofundizacion(nuevoArea);
+            SalaLaboratorioxServicios laboratorioNuevo = new SalaLaboratorioxServicios();
+            laboratorioNuevo.setServiciosala(nuevoServicio);
             laboratorioNuevo.setEstado(true);
-            laboratorioNuevo.setLaboratorio(nuevoLaboratorio);
-            gestionarPlantaLaboratoriosPorAreasBO.crearLaboratoriosPorAreas(laboratorioNuevo);
+            laboratorioNuevo.setSalalaboratorio(nuevoSalaLaboratorio);
+            gestionarPlantaSalaLaboratorioxServiciosBO.crearSalaLaboratorioxServicios(laboratorioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioPorAreaEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarSalaLaboratorioXServicio almacenarNuevoSalaLaboratorioXServicioEnSistema:  " + e.toString());
+            System.out.println("Error ControllerRegistrarSalaLaboratorioXServicio almacenarNuevoSalaLaboratorioXServicioEnSistema : " + e.toString());
 
         }
     }
 
     public void limpiarFormulario() {
-        nuevoArea = null;
-        nuevoLaboratorio = null;
-        validacionesArea = false;
+        nuevoServicio = null;
+        nuevoSalaLaboratorio = null;
+        validacionesServicio = false;
         mensajeFormulario = "";
     }
 
-    public String cancelarRegistroLaboratorioPorArea() {
-        listaAreasProfundizacion = null;
-        nuevoArea = null;
+    public String cancelarRegistroSalaLaboratorioXServicio() {
+        listaServiciosSala = null;
+        nuevoServicio = null;
         activarAceptar = false;
-        nuevoLaboratorio = null;
-        validacionesArea = false;
+        nuevoSalaLaboratorio = null;
+        validacionesServicio = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
-        return "detalleslaboratorio";
+        return "detallessala";
     }
 
     public void cambiarActivarCasillas() {
@@ -159,31 +159,31 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
     }
 
     //GET-SET
-    public Laboratorio getNuevoLaboratorio() {
-        return nuevoLaboratorio;
+    public SalaLaboratorio getNuevoSalaLaboratorio() {
+        return nuevoSalaLaboratorio;
     }
 
-    public void setNuevoLaboratorio(Laboratorio nuevoLaboratorio) {
-        this.nuevoLaboratorio = nuevoLaboratorio;
+    public void setNuevoSalaLaboratorio(SalaLaboratorio nuevoSalaLaboratorio) {
+        this.nuevoSalaLaboratorio = nuevoSalaLaboratorio;
     }
 
-    public List<AreaProfundizacion> getListaAreasProfundizacion() {
-        if (listaAreasProfundizacion == null) {
-            listaAreasProfundizacion = gestionarPlantaLaboratoriosPorAreasBO.consultarAreasProfundizacionRegistradas();
+    public List<ServiciosSala> getListaServiciosSala() {
+        if (null == listaServiciosSala) {
+            listaServiciosSala = gestionarPlantaSalaLaboratorioxServiciosBO.consultarServiciosSalaRegistradas();
         }
-        return listaAreasProfundizacion;
+        return listaServiciosSala;
     }
 
-    public void setListaAreasProfundizacion(List<AreaProfundizacion> listaAreasProfundizacion) {
-        this.listaAreasProfundizacion = listaAreasProfundizacion;
+    public void setListaServiciosSala(List<ServiciosSala> listaServiciosSala) {
+        this.listaServiciosSala = listaServiciosSala;
     }
 
-    public AreaProfundizacion getNuevoArea() {
-        return nuevoArea;
+    public ServiciosSala getNuevoServicio() {
+        return nuevoServicio;
     }
 
-    public void setNuevoArea(AreaProfundizacion nuevoArea) {
-        this.nuevoArea = nuevoArea;
+    public void setNuevoServicio(ServiciosSala nuevoServicio) {
+        this.nuevoServicio = nuevoServicio;
     }
 
     public String getMensajeFormulario() {
@@ -226,12 +226,12 @@ public class ControllerRegistrarLaboratorioPorArea implements Serializable {
         this.activarAceptar = activarAceptar;
     }
 
-    public BigInteger getIdLaboratorio() {
-        return idLaboratorio;
+    public BigInteger getIdSalaLaboratorio() {
+        return idSalaLaboratorio;
     }
 
-    public void setIdLaboratorio(BigInteger idLaboratorio) {
-        this.idLaboratorio = idLaboratorio;
+    public void setIdSalaLaboratorio(BigInteger idSalaLaboratorio) {
+        this.idSalaLaboratorio = idSalaLaboratorio;
     }
 
 }

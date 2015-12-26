@@ -17,13 +17,13 @@ and open the template in the editor.
                 <h:form id="formularioGeneral">
 
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li class="active">Administrar Areas de Profundización</li>
+                                <li class="active">Administrar Servicios Sala</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -31,32 +31,32 @@ and open the template in the editor.
                                 <div class="container">
                                     <div class="row clearfix">
                                         <fieldset style="border: black;border-radius: 10px">
-                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN AREAS PROFUNDIZACIÓN</strong></legend></h3>
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN SERVICIOS SALA</strong></legend></h3>
                                             <div class="row col-md-12">
                                                 <fieldset style="border: black;border-radius: 10px; color: black"> 
                                                     <legend class="h5">I. Basica</legend>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="parametroNombre">
-                                                                Nombre Area Profundización
+                                                                Nombre Servicio
                                                             </label>
-                                                            <h:inputText maxlength="45" value="#{controllerAdministrarAreasProfundizacion.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                            <h:inputText maxlength="100" value="#{controllerAdministrarServiciosSala.parametroNombre}" class="form-control" id="parametroNombre" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="parametroCodigo">
-                                                                Codigo Area Profundización
+                                                                Codigo Servicio
                                                             </label>
-                                                            <h:inputText maxlength="20" value="#{controllerAdministrarAreasProfundizacion.parametroCodigo}" class="form-control" id="parametroCodigo" />
+                                                            <h:inputText maxlength="20" value="#{controllerAdministrarServiciosSala.parametroCodigo}" class="form-control" id="parametroCodigo" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="parametroEstado">
-                                                                Estado Area Profundización
+                                                                Estado Servicio
                                                             </label>
-                                                            <h:selectOneMenu value="#{controllerAdministrarAreasProfundizacion.parametroEstado}"
+                                                            <h:selectOneMenu value="#{controllerAdministrarServiciosSala.parametroEstado}"
                                                                              class="form-control"
                                                                              id="parametroEstado">
                                                                 <f:selectItem itemLabel="ACTIVO" itemValue="1" />
@@ -71,17 +71,17 @@ and open the template in the editor.
                                         <br></br>
                                         <div class="col-md-12">
                                             <div class="col-md-2">
-                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarAreasProfundizacion.cantidadRegistros}"/>
+                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarServiciosSala.cantidadRegistros}"/>
                                             </div>
                                             <div class="col-md-8">
                                             </div>
                                             <div class="col-md-1">
-                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarAreasProfundizacion.buscarAreasProfundizacionPorParametros()}">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarServiciosSala.buscarServiciosSalaPorParametros()}">
                                                     <f:ajax execute="@form" render="formularioGeneral" />
                                                 </h:commandButton>
                                             </div>
                                             <div class="col-md-1">
-                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarAreasProfundizacion.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarServiciosSala.limpiarProcesoBusqueda()}" class="btn btn-default right" >
                                                     <f:ajax execute="@form" render="formularioGeneral" />
                                                 </h:commandButton>
                                             </div>
@@ -94,35 +94,35 @@ and open the template in the editor.
                                             <div class="row">
                                                 <h:dataTable id="dataTable" var="item" 
                                                              styleClass="table table-striped table-hover table-responsive" 
-                                                             value="#{controllerAdministrarAreasProfundizacion.listaAreasProfundizacionTabla}">
+                                                             value="#{controllerAdministrarServiciosSala.listaServiciosSalaTabla}">
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Nombre"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.nombrearea}"/>
+                                                        <h:outputText value="#{item.nombreservicio}"/>
                                                     </h:column>  
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Codigo"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.codigoarea}"/>
+                                                        <h:outputText value="#{item.codigoservicio}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" action="detallesareaprofundizacion" actionListener="#{controllerDetallesAreaProfundizacion.recibirIDAreasProfundizacionDetalles(item.idareaprofundizacion)}"/>
+                                                        <h:commandLink value="Ver" action="detallesserviciossala" actionListener="#{controllerDetallesServiciosSala.recibirIDServiciosSalaDetalles(item.idserviciossala)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>
                                                             <ul class="pager">
                                                                 <li>
-                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarAreasProfundizacion.cargarPaginaAnteriorAreaProfundizacion()}" disabled="#{controllerAdministrarAreasProfundizacion.bloquearPagAntAreaProfundizacion}">
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarServiciosSala.cargarPaginaAnteriorServiciosSala()}" disabled="#{controllerAdministrarServiciosSala.bloquearPagAntServiciosSala}">
                                                                         <f:ajax execute="@form" render="formularioGeneral" />
                                                                     </h:commandLink>
                                                                 </li>
                                                                 <li>
-                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarAreasProfundizacion.cargarPaginaSiguienteAreaProfundizacion()}" disabled="#{controllerAdministrarAreasProfundizacion.bloquearPagSigAreaProfundizacion}">
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarServiciosSala.cargarPaginaSiguienteServiciosSala()}" disabled="#{controllerAdministrarServiciosSala.bloquearPagSigServiciosSala}">
                                                                         <f:ajax execute="@form" render="formularioGeneral" />
                                                                     </h:commandLink>
                                                                 </li>
@@ -139,11 +139,11 @@ and open the template in the editor.
                         <br></br>
                         <div class="row">
                             <div class="col-md-1">
-                                <h:commandButton value="Nueva Area P." class="btn btn-success" action="registrarareaprofundizacion" actionListener="#{controllerAdministrarAreasProfundizacion.limpiarProcesoBusqueda()}"/>
+                                <h:commandButton value="Nuevo Servicio" class="btn btn-success" action="registrarserviciossala" actionListener="#{controllerAdministrarServiciosSala.limpiarProcesoBusqueda()}"/>
                             </div>
                             <div class="col-md-10"></div>
                             <div class="col-md-1">
-                                <h:commandButton value="Atras" action="#{controllerAdministrarAreasProfundizacion.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
+                                <h:commandButton value="Atras" action="#{controllerAdministrarServiciosSala.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                             </div>
                         </div>
                     </div>

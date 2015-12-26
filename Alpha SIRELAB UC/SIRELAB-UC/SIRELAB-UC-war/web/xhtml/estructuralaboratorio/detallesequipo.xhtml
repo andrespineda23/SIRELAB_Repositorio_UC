@@ -233,16 +233,16 @@ and open the template in the editor.
                         <fieldset>
                             <legend class="text-info">Información Laboratorio</legend>
                             <div class="form-group">
-                                <strong><h:outputText value="Laboratorio / Area de Profundización*"/></strong>
-                                <h:selectOneMenu value="#{controllerDetallesEquipo.laboratorioPorAreaEquipoElemento}"
+                                <strong><h:outputText value="Laboratorio*"/></strong>
+                                <h:selectOneMenu value="#{controllerDetallesEquipo.laboratorioEquipoElemento}"
                                                  class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
-                                                 id="laboratorioPorAreaEquipoElemento">
-                                    <f:selectItems value="#{controllerDetallesEquipo.listaLaboratoriosPorAreas}" var="area"
+                                                 id="laboratorioEquipoElemento">
+                                    <f:selectItems value="#{controllerDetallesEquipo.listaLaboratorio}" var="area"
                                                    itemLabel="#{area.strNombreEstado}" itemValue="#{area}"/>
                                     <f:converter converterId="ConverterGenerico" />
-                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarLaboratoriosAreasProfundizacion()}" execute="laboratorioPorAreaEquipoElemento" render="@this salaEquipoElemento moduloEquipoElemento msnLaboratorioPorAreaEquipo"/>
+                                    <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarLaboratorios()}" execute="laboratorioEquipoElemento" render="@this salaEquipoElemento moduloEquipoElemento msnLaboratorioEquipo"/>
                                 </h:selectOneMenu>
-                                <h6><h:message id="msnLaboratorioPorAreaEquipo" for="laboratorioPorAreaEquipoElemento" style="color: red"/></h6>
+                                <h6><h:message id="msnLaboratorioEquipo" for="laboratorioEquipoElemento" style="color: red"/></h6>
                             </div>
                             <div class="form-group">
                                 <strong><h:outputText value="Sala de Laboratorio*"/></strong>
@@ -251,7 +251,7 @@ and open the template in the editor.
                                                  id="salaEquipoElemento">
                                     <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
                                     <f:selectItems value="#{controllerDetallesEquipo.listaSalasLaboratorio}" var="sala"
-                                                   itemLabel="#{sala.strNombreEstado}" itemValue="#{sala}"/>
+                                                   itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
                                     <f:converter converterId="ConverterGenerico" />
                                     <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarSalasLaboratorio()}" execute="salaEquipoElemento" render="@this moduloEquipoElemento msnSalaLaboratorioEquipo"/>
                                 </h:selectOneMenu>

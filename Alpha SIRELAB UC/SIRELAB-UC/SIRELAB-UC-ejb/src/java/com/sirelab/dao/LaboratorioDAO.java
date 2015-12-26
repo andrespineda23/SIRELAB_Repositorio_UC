@@ -56,6 +56,19 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
     public List<Laboratorio> consultarLaboratorios() {
         try {
             em.clear();
+            Query query = em.createQuery("SELECT p FROM Laboratorio p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Laboratorio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+    @Override
+    public List<Laboratorio> consultarLaboratoriosActivos() {
+        try {
+            em.clear();
             Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.estado=TRUE");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Laboratorio> lista = query.getResultList();

@@ -6,11 +6,9 @@
 package com.sirelab.bo.variables;
 
 import com.sirelab.bo.interfacebo.variables.GestionarVariableTiposPerfilesBOInterface;
-import com.sirelab.dao.interfacedao.AreaProfundizacionDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.TipoPerfilDAOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
@@ -32,8 +30,6 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
     DepartamentoDAOInterface departamentoDAO;
     @EJB
     LaboratorioDAOInterface laboratorioDAO;
-    @EJB
-    AreaProfundizacionDAOInterface areaProfundizacionDAO;
 
     @Override
     public Departamento consultarDepartamentoPorCodigo(String codigo) {
@@ -53,17 +49,6 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             return registro;
         } catch (Exception e) {
             System.out.println("Error GestionarVariableTiposPerfilesBO consultaLaboratorioPorCodigo : " + e.toString());
-            return null;
-        }
-    }
-
-    @Override
-    public AreaProfundizacion consultarAreaProfundizacionPorCodigo(String codigo) {
-        try {
-            AreaProfundizacion registro = areaProfundizacionDAO.buscarAreaProfundizacionPorCodigo(codigo);
-            return registro;
-        } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO consultarAreaProfundizacionPorCodigo : " + e.toString());
             return null;
         }
     }

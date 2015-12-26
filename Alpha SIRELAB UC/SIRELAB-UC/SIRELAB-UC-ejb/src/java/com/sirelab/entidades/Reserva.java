@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reserva.findByNumeroreserva", query = "SELECT r FROM Reserva r WHERE r.numeroreserva = :numeroreserva"),
     @NamedQuery(name = "Reserva.findByValorreserva", query = "SELECT r FROM Reserva r WHERE r.valorreserva = :valorreserva")})
 public class Reserva implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,8 +78,6 @@ public class Reserva implements Serializable {
     private Collection<ReservaModuloLaboratorio> reservaModuloLaboratorioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reserva")
     private Collection<ReservaSala> reservaSalaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reserva")
-    private Collection<HistoriaUsoReserva> historiaUsoReservaCollection;
     @JoinColumn(name = "tiporeserva", referencedColumnName = "idtiporeserva")
     @ManyToOne(optional = false)
     private TipoReserva tiporeserva;
@@ -93,6 +92,17 @@ public class Reserva implements Serializable {
     private EstadoReserva estadoreserva;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reserva")
     private Collection<ReservaEquipoElemento> reservaEquipoElementoCollection;
+    @Size(max = 5)
+    @Column(name = "horainicioefectiva")
+    private String horainicioefectiva;
+    @Size(max = 5)
+    @Column(name = "horafinefectiva")
+    private String horafinefectiva;
+    @Size(max = 256)
+    @Column(name = "observaciones")
+    private String observaciones;
+    @Column(name = "cobroefectivo")
+    private Boolean cobroefectivo;
 
     public Reserva() {
     }
@@ -175,15 +185,6 @@ public class Reserva implements Serializable {
         this.reservaSalaCollection = reservaSalaCollection;
     }
 
-    @XmlTransient
-    public Collection<HistoriaUsoReserva> getHistoriaUsoReservaCollection() {
-        return historiaUsoReservaCollection;
-    }
-
-    public void setHistoriaUsoReservaCollection(Collection<HistoriaUsoReserva> historiaUsoReservaCollection) {
-        this.historiaUsoReservaCollection = historiaUsoReservaCollection;
-    }
-
     public TipoReserva getTiporeserva() {
         return tiporeserva;
     }
@@ -249,5 +250,37 @@ public class Reserva implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.Reserva[ idreserva=" + idreserva + " ]";
     }
-    
+
+    public String getHorainicioefectiva() {
+        return horainicioefectiva;
+    }
+
+    public void setHorainicioefectiva(String horainicioefectiva) {
+        this.horainicioefectiva = horainicioefectiva;
+    }
+
+    public String getHorafinefectiva() {
+        return horafinefectiva;
+    }
+
+    public void setHorafinefectiva(String horafinefectiva) {
+        this.horafinefectiva = horafinefectiva;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Boolean getCobroefectivo() {
+        return cobroefectivo;
+    }
+
+    public void setCobroefectivo(Boolean cobroefectivo) {
+        this.cobroefectivo = cobroefectivo;
+    }
+
 }

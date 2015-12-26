@@ -8,11 +8,16 @@ package com.sirelab.bo.planta;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
+import com.sirelab.dao.interfacedao.HojaVidaEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.TipoComponenteDAOInterface;
+import com.sirelab.dao.interfacedao.TipoEventoDAOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.TipoComponente;
+import com.sirelab.entidades.TipoEvento;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -30,6 +35,10 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
     ComponenteEquipoDAOInterface componenteEquipoDAO;
     @EJB
     TipoComponenteDAOInterface tipoComponenteDAO;
+    @EJB
+    HojaVidaEquipoDAOInterface hojaVidaEquipoDAO;
+    @EJB
+    TipoEventoDAOInterface tipoEventoDAO;
 
     @Override
     public List<TipoComponente> consultarTiposComponentesRegistrados() {
@@ -90,15 +99,62 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
     public void crearComponenteEquipo(ComponenteEquipo componenteEquipo) {
         try {
             componenteEquipoDAO.crearComponenteEquipo(componenteEquipo);
+            HojaVidaEquipo hojaVida = new HojaVidaEquipo();
+            hojaVida.setFechaevento(new Date());
+            hojaVida.setEquipoelemento(componenteEquipo.getEquipoelemento());
+            hojaVida.setFecharegistro(new Date());
+            hojaVida.setTipoevento(obtenerTipoEventoPorId(new BigInteger("7")));
+            hojaVida.setDetalleevento("CREACIÓN DE UN NUEVO COMPONENTE ("
+                    + componenteEquipo.getCodigocomponete() + " - "
+                    + componenteEquipo.getDescripcioncomponente() + " - "
+                    + componenteEquipo.getTipocomponente() + ") PARA EL EQUIPO " + componenteEquipo.getEquipoelemento().getInventarioequipo());
+            hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaComponentesEquiposBO crearComponenteEquipo : " + e.toString());
         }
     }
 
+    private TipoEvento obtenerTipoEventoPorId(BigInteger secuencia) {
+        return tipoEventoDAO.buscarTipoEventoPorID(secuencia);
+    }
+
     @Override
-    public void editarComponenteEquipo(ComponenteEquipo componenteEquipo) {
+    public void editarComponenteEquipo(ComponenteEquipo componenteEquipo, boolean cambioEquipo, EquipoElemento equipoCambio) {
         try {
             componenteEquipoDAO.editarComponenteEquipo(componenteEquipo);
+            if (cambioEquipo == false) {
+                HojaVidaEquipo hojaVida = new HojaVidaEquipo();
+                hojaVida.setFechaevento(new Date());
+                hojaVida.setEquipoelemento(componenteEquipo.getEquipoelemento());
+                hojaVida.setFecharegistro(new Date());
+                hojaVida.setTipoevento(obtenerTipoEventoPorId(new BigInteger("8")));
+                hojaVida.setDetalleevento("MODIFICACIÓN INFORMACIÓN COMPONENTE ("
+                        + componenteEquipo.getCodigocomponete() + " - "
+                        + componenteEquipo.getDescripcioncomponente() + " - "
+                        + componenteEquipo.getTipocomponente() + " - " + componenteEquipo.getStrEstado() + ") PARA EL EQUIPO " + componenteEquipo.getEquipoelemento().getInventarioequipo());
+                hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
+            } else {
+                HojaVidaEquipo hojaVida = new HojaVidaEquipo();
+                hojaVida.setFechaevento(new Date());
+                hojaVida.setEquipoelemento(componenteEquipo.getEquipoelemento());
+                hojaVida.setFecharegistro(new Date());
+                hojaVida.setTipoevento(obtenerTipoEventoPorId(new BigInteger("7")));
+                hojaVida.setDetalleevento("CREACIÓN DE UN NUEVO COMPONENTE ("
+                        + componenteEquipo.getCodigocomponete() + " - "
+                        + componenteEquipo.getDescripcioncomponente() + " - "
+                        + componenteEquipo.getTipocomponente() + " - " + componenteEquipo.getStrEstado() + ") PARA EL EQUIPO " + componenteEquipo.getEquipoelemento().getInventarioequipo());
+                hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
+                HojaVidaEquipo hojaVidaCambio = new HojaVidaEquipo();
+                hojaVidaCambio.setFechaevento(new Date());
+                hojaVidaCambio.setEquipoelemento(componenteEquipo.getEquipoelemento());
+                hojaVidaCambio.setFecharegistro(new Date());
+                hojaVidaCambio.setTipoevento(obtenerTipoEventoPorId(new BigInteger("5")));
+                hojaVidaCambio.setDetalleevento("ELIMINACIÓN DE UN COMPONENTE ("
+                        + componenteEquipo.getCodigocomponete() + " - "
+                        + componenteEquipo.getDescripcioncomponente() + " - "
+                        + componenteEquipo.getTipocomponente() + " - " + componenteEquipo.getStrEstado() + ") PARA EL EQUIPO " + componenteEquipo.getEquipoelemento().getInventarioequipo());
+                hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVidaCambio);
+            }
         } catch (Exception e) {
             System.out.println("Error GestionarPlantaComponentesEquiposBO editarComponenteEquipo : " + e.toString());
         }

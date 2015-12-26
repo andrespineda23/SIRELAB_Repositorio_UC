@@ -5,14 +5,14 @@
  */
 package com.sirelab.bo.interfacebo.planta;
 
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.entidades.SalaLaboratorioxServicios;
 import com.sirelab.entidades.Sede;
+import com.sirelab.entidades.ServiciosSala;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +25,9 @@ public interface GestionarPlantaSalasBOInterface {
 
     public List<Laboratorio> consultarLaboratoriosRegistrados();
 
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasPorLaboratorio(BigInteger laboratorio);
-
     public List<Departamento> consultarDepartamentosRegistrados();
 
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento);
-
-    public List<AreaProfundizacion> consultarAreasProfundizacionRegistradas();
 
     public List<Sede> consultarSedesRegistradas();
 
@@ -39,27 +35,33 @@ public interface GestionarPlantaSalasBOInterface {
 
     public List<SalaLaboratorio> consultarSalasLaboratoriosPorParametro(Map<String, String> filtros);
 
-    public void crearNuevaSalaLaboratorio(SalaLaboratorio salaLaboratorio);
+    public void crearNuevaSalaLaboratorio(SalaLaboratorio salaLaboratorio, List<ServiciosSala> listaServicios);
 
     public void modificarInformacionSalaLaboratorio(SalaLaboratorio salaLaboratorio);
 
     public SalaLaboratorio obtenerSalaLaboratorioPorIDSalaLaboratorio(BigInteger idSalaLaboratorio);
 
-    public SalaLaboratorio obtenerSalaLaboratorioPorCodigoEdificioLabArea(String codigo, BigInteger edificio, BigInteger laboratorioArea);
-
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro);
-
-    public List<LaboratoriosPorAreas> consultarLaboratoriosPorAreasActivosPorLaboratorio(BigInteger laboratorio);
 
     public List<Departamento> consultarDepartamentosActivosRegistrados();
 
     public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento);
-
-    public List<AreaProfundizacion> consultarAreasProfundizacionActivosRegistradas();
 
     public List<Sede> consultarSedesActivosRegistradas();
 
     public List<Edificio> consultarEdificiosActivosPorIDSede(BigInteger sede);
 
     public Laboratorio obtenerLaboratorioPorId(BigInteger idRegistro);
+
+    public List<ServiciosSala> consultarServiciosSalaRegistradas();
+
+    public List<ServiciosSala> consultarServiciosSalaActivosRegistradas();
+
+    public SalaLaboratorio obtenerSalaLaboratorioPorCodigoEdificioyLaboratorio(String codigo, BigInteger edificio, BigInteger laboratorio);
+
+    public List<SalaLaboratorioxServicios> obtenerSalaLaboratorioxServiciosPorIdSala(BigInteger sala);
+
+    public void almacenarModificacionesSalaServicio(List<SalaLaboratorioxServicios> lista);
+
+    public String obtenerCostoCalculadoSalaLaboratorio(BigInteger idSala);
 }

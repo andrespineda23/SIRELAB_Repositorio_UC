@@ -22,8 +22,7 @@ and open the template in the editor.
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li><a href="#">Administrar Equipos</a></li>
-                                <li><a href="#">Detalle Equipo</a></li>
+                                <li><a href="#">...</a></li>
                                 <li class="active">Administrar Hoja Vida</li>
                             </ol>
                         </div>
@@ -39,7 +38,7 @@ and open the template in the editor.
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="parametroNombre">
-                                                                Nombre Componente
+                                                                Nombre Equipo
                                                             </label>
                                                             <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.nombreequipo}" class="form-control" id="parametroNombre" />
                                                         </div>
@@ -47,7 +46,7 @@ and open the template in the editor.
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="parametroCodigo">
-                                                                Codigo Inventario Componente
+                                                                Codigo Equipo
                                                             </label>
                                                             <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.inventarioequipo}" class="form-control" id="parametroCodigo" />
                                                         </div>
@@ -58,7 +57,7 @@ and open the template in the editor.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="parametroModulo">
-                                                            Modelo Componente
+                                                            Modelo Equipo
                                                         </label>
                                                         <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.modulolaboratorio.detallemodulo}" class="form-control" id="parametroModulo" />
                                                     </div>
@@ -66,7 +65,7 @@ and open the template in the editor.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="parametroSala">
-                                                            Serie Componente
+                                                            Serie Equipo
                                                         </label>
                                                         <h:inputText readonly="true" value="#{controllerHojaVidaEquipo.equipoElementoDetalle.modulolaboratorio.salalaboratorio.nombresala}" class="form-control" id="parametroSala" />
                                                     </div>
@@ -106,12 +105,6 @@ and open the template in the editor.
                                                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                                         </h:outputText>
                                                     </h:column>  
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Detalle del Evento"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.detalleevento}"/>
-                                                    </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Tipo de Evento"/>

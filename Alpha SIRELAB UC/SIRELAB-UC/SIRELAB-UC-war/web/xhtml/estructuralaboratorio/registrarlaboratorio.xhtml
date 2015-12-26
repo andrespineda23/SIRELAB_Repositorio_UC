@@ -83,29 +83,20 @@ and open the template in the editor.
                                             </h:selectOneMenu>
                                             <h6><h:message id="msnDepartamento" for="nuevoDepartamento" style="color: red"/></h6>
                                         </div>
-                                    </fieldset>
-                                    <br></br>
-                                    <fieldset>
-                                        <legend class="text-info">Áreas de Profundización Registradas (ACTIVAS)</legend>
-                                        <div class="row" >
-                                            <h:dataTable id="dataTable" var="item" 
-                                                         styleClass="table table-condensed table-responsive"  
-                                                         value="#{controllerRegistrarLaboratorio.listaAsociacionLaboratorioArea}">
-                                                <h:column>
-                                                    <f:facet name="header">
-                                                        <h:outputText value="Nombre Área"/>
-                                                    </f:facet>
-                                                    <h:outputText value="#{item.areaProfundizacion.nombrearea}"/>
-                                                </h:column>  
-                                                <h:column>
-                                                    <f:facet name="header">
-                                                        <h:outputText value="Estado de asociación"/>
-                                                    </f:facet>
-                                                    <h:selectBooleanCheckbox disabled="#{controllerRegistrarLaboratorio.activarCasillas}" value="#{item.activo}"/>
-                                                </h:column>
-                                            </h:dataTable>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Cantidad de horas para una reserva*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarLaboratorio.nuevoBloque}"
+                                                             class="form-control" disabled="#{controllerRegistrarLaboratorio.activarCasillas}"
+                                                             id="nuevoBloque">
+                                                <f:selectItem itemLabel="1 hora" itemValue="1" />
+                                                <f:selectItem itemLabel="2 horas" itemValue="2" />
+                                                <f:selectItem itemLabel="3 horas" itemValue="3" />
+                                                <f:selectItem itemLabel="4 horas" itemValue="4" />
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnBloque" for="nuevoBloque" style="color: red"/></h6>
                                         </div>
                                     </fieldset>
+                                    <br></br>
                                     <br></br>
                                     <br></br>
                                     <br></br>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/template/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="formularioGeneral">
+                    <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Administrar Servicios prestamos por Sala de Laboratorio</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN BASICA</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <fieldset style="border: black;border-radius: 10px; color: black"> 
+                                                    <legend class="h5">I. Basica</legend>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="parametroDepartamento">
+                                                                Departamento
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarSalaLaboratorioXServicio.parametroDepartamento}"
+                                                                             class="form-control"  disabled="#{controllerAdministrarSalaLaboratorioXServicio.activarDepartamento}"
+                                                                             id="parametroDepartamento">
+                                                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                                                <f:selectItems value="#{controllerAdministrarSalaLaboratorioXServicio.listaDepartamentos}" var="departamento"
+                                                                               itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                                                <f:ajax event="change" listener="#{controllerAdministrarSalaLaboratorioXServicio.actualizarDepartamentos()}" execute="parametroDepartamento" render="@this parametroSala parametroLaboratorio"/>
+                                                                <f:converter converterId="ConverterGenerico" />
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="parametroLaboratorio">
+                                                                Laboratorio
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarSalaLaboratorioXServicio.parametroLaboratorio}"
+                                                                             class="form-control" disabled="#{controllerAdministrarSalaLaboratorioXServicio.activarLaboratorio}"
+                                                                             id="parametroLaboratorio">
+                                                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                                                <f:selectItems value="#{controllerAdministrarSalaLaboratorioXServicio.listaLaboratorios}" var="laboratorio"
+                                                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                                                <f:converter converterId="ConverterGenerico" />
+                                                                <f:ajax event="change" listener="#{controllerAdministrarSalaLaboratorioXServicio.actualizarLaboratorio()}" execute="parametroLaboratorio" render="@this parametroSala"/>
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="parametroSala">
+                                                                Sala de Laboratorio
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarSalaLaboratorioXServicio.parametroSala}"
+                                                                             class="form-control" 
+                                                                             id="parametroSala">
+                                                                <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
+                                                                <f:selectItems value="#{controllerAdministrarSalaLaboratorioXServicio.listaSalaLaboratorio}" var="sala"
+                                                                               itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                                                <f:converter converterId="ConverterGenerico" />
+                                                            </h:selectOneMenu>
+                                                        </div>    
+                                                        <div class="col-md-6">
+                                                            <label for="parametroServicio">
+                                                                Servicio
+                                                            </label>
+                                                            <h:selectOneMenu value="#{controllerAdministrarSalaLaboratorioXServicio.parametroServicio}"
+                                                                             class="form-control" 
+                                                                             id="parametroServicio">
+                                                                <f:selectItem itemLabel="Seleccione Servicio" itemValue="null" />
+                                                                <f:selectItems value="#{controllerAdministrarSalaLaboratorioXServicio.listaServiciosSala}" var="area"
+                                                                               itemLabel="#{area.nombreservicio}" itemValue="#{area}"/>
+                                                                <f:converter converterId="ConverterGenerico" />
+                                                            </h:selectOneMenu>
+                                                        </div>    
+                                                    </div>
+                                                </fieldset>
+                                            </div> 
+                                            <div class="row col-md-12">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="parametroEstado">
+                                                            Estado Registro
+                                                        </label>
+                                                        <h:selectOneMenu value="#{controllerAdministrarSalaLaboratorioXServicio.parametroEstado}"
+                                                                         class="form-control"
+                                                                         id="parametroEstado">
+                                                            <f:selectItem itemLabel="ACTIVO" itemValue="1" />
+                                                            <f:selectItem itemLabel="INACTIVO" itemValue="2" />
+                                                            <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarSalaLaboratorioXServicio.cantidadRegistros}"/>
+                                            </div>
+                                            <div class="col-md-8">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarSalaLaboratorioXServicio.buscarLaboratoriosPorParametros()}">
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarSalaLaboratorioXServicio.limpiarDatos()}" class="btn btn-default right" >
+                                                    <f:ajax execute="@form" render="formularioGeneral" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div id="resultadosBusqueda" class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px;">
+                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                            <div class="row">
+                                                <h:dataTable id="dataTable" var="item"  
+                                                             styleClass="table table-striped table-hover table-responsive" 
+                                                             value="#{controllerAdministrarSalaLaboratorioXServicio.listaSalaLaboratorioxServiciosTabla}">
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Departamento"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.salalaboratorio.laboratorio.departamento.nombredepartamento}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Laboratorio"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.salalaboratorio.laboratorio.nombrelaboratorio}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Sala Laboratorio"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.salalaboratorio.nombresala}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Servicio"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.serviciosala.nombreservicio}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Estado"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.strEstado}"/>
+                                                    </h:column>
+                                                    <f:facet name="footer">
+                                                        <nav>
+                                                            <ul class="pager">
+                                                                <li>
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarSalaLaboratorioXServicio.cargarPaginaAnteriorSalaLaboratorioxServicio()}" disabled="#{controllerAdministrarSalaLaboratorioXServicio.bloquearPagAntSalaLaboratorioxServicio}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarSalaLaboratorioXServicio.cargarPaginaSiguienteSalaLaboratorioxServicio()}" disabled="#{controllerAdministrarSalaLaboratorioXServicio.bloquearPagSigSalaLaboratorioxServicio}">
+                                                                        <f:ajax execute="@form" render="formularioGeneral" />
+                                                                    </h:commandLink>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </f:facet>
+                                                </h:dataTable>
+                                            </div><!--/.row-->
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Atras" action="#{controllerAdministrarSalaLaboratorioXServicio.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

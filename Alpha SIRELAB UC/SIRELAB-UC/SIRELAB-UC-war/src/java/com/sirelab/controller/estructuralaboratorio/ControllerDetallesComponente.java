@@ -94,17 +94,17 @@ public class ControllerDetallesComponente implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarNombreComponente)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El nombre es obligatorio. "+constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombreComponente", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
         modificacionesRegistro = true;
     }
@@ -115,17 +115,17 @@ public class ControllerDetallesComponente implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigoComponente)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.INVENTARIO_CODIGO));
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.INVENTARIO_CODIGO));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.INVENTARIO_CODIGO));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_CODIGO));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El codigo es obligatorio. "+constantes.INVENTARIO_CODIGO));
+            FacesContext.getCurrentInstance().addMessage("form:editarCodigoComponente", new FacesMessage("El codigo es obligatorio. " + constantes.INVENTARIO_CODIGO));
         }
         modificacionesRegistro = true;
     }
@@ -138,15 +138,15 @@ public class ControllerDetallesComponente implements Serializable {
                     validacionesMarca = true;
                 } else {
                     validacionesMarca = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("La marca se encuentra incorrecta. "+constantes.INVENTARIO_MARCA));
+                    FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("La marca se encuentra incorrecta. " + constantes.INVENTARIO_MARCA));
                 }
             } else {
                 validacionesMarca = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_MARCA));
+                FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.INVENTARIO_MARCA));
             }
         } else {
             validacionesMarca = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("La marca es obligatoria. "+constantes.INVENTARIO_MARCA));
+            FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("La marca es obligatoria. " + constantes.INVENTARIO_MARCA));
         }
         modificacionesRegistro = true;
     }
@@ -159,15 +159,15 @@ public class ControllerDetallesComponente implements Serializable {
                     validacionesSerial = true;
                 } else {
                     validacionesSerial = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El serial se encuentra incorrecto. "+constantes.INVENTARIO_SERIAL));
+                    FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El serial se encuentra incorrecto. " + constantes.INVENTARIO_SERIAL));
                 }
             } else {
                 validacionesSerial = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres.  "+constantes.INVENTARIO_SERIAL));
+                FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres.  " + constantes.INVENTARIO_SERIAL));
             }
         } else {
             validacionesSerial = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El serial es obligatorio. "+constantes.INVENTARIO_SERIAL));
+            FacesContext.getCurrentInstance().addMessage("form:editarSerialComponente", new FacesMessage("El serial es obligatorio. " + constantes.INVENTARIO_SERIAL));
         }
         modificacionesRegistro = true;
     }
@@ -178,17 +178,17 @@ public class ControllerDetallesComponente implements Serializable {
             if (tam >= 2) {
                 if ((Utilidades.validarCaracteresAlfaNumericos(editarModeloComponente)) == false) {
                     validacionesModelo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("El modelo ingresado se encuentra incorrecto. "+constantes.INVENTARIO_MODELO));
+                    FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("El modelo ingresado se encuentra incorrecto. " + constantes.INVENTARIO_MODELO));
                 } else {
                     validacionesModelo = true;
                 }
             } else {
                 validacionesModelo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.INVENTARIO_MODELO));
+                FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.INVENTARIO_MODELO));
             }
         } else {
             validacionesModelo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("El modelo es obligatorio. "+constantes.INVENTARIO_MODELO));
+            FacesContext.getCurrentInstance().addMessage("form:editarModeloComponente", new FacesMessage("El modelo es obligatorio. " + constantes.INVENTARIO_MODELO));
         }
         modificacionesRegistro = true;
     }
@@ -199,17 +199,17 @@ public class ControllerDetallesComponente implements Serializable {
             if (tam >= 20) {
                 if ((Utilidades.validarCaracteresAlfaNumericos(editarDescripcionComponente)) == false) {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.INVENTARIO_DESCRIP));
+                    FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("La descripción se encuentra incorrecta. " + constantes.INVENTARIO_DESCRIP));
                 } else {
                     validacionesDescripcion = true;
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("El tamaño minimo permitido es 20 caracteres. "+constantes.INVENTARIO_DESCRIP));
+                FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("El tamaño minimo permitido es 20 caracteres. " + constantes.INVENTARIO_DESCRIP));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("La descripción es obligatoria. "+constantes.INVENTARIO_DESCRIP));
+            FacesContext.getCurrentInstance().addMessage("form:editarDescripcionComponente", new FacesMessage("La descripción es obligatoria. " + constantes.INVENTARIO_DESCRIP));
         }
         modificacionesRegistro = true;
     }
@@ -317,6 +317,14 @@ public class ControllerDetallesComponente implements Serializable {
 
     public void almacenaModificacionComponente() {
         try {
+            EquipoElemento equipoCambio = null;
+            boolean cambioEquipo;
+            if (componenteEquipoDetalle.getEquipoelemento().getIdequipoelemento().equals(editarEquipoElemento.getIdequipoelemento())) {
+                cambioEquipo = false;
+            } else {
+                cambioEquipo = true;
+                equipoCambio = componenteEquipoDetalle.getEquipoelemento();
+            }
             componenteEquipoDetalle.setNombrecomponente(editarNombreComponente);
             componenteEquipoDetalle.setCodigocomponete(editarCodigoComponente);
             componenteEquipoDetalle.setMarcacomponente(editarMarcaComponente);
@@ -324,7 +332,7 @@ public class ControllerDetallesComponente implements Serializable {
             componenteEquipoDetalle.setSerialcomponente(editarSerialComponente);
             componenteEquipoDetalle.setModelocomponente(editarModeloComponente);
             componenteEquipoDetalle.setTipocomponente(editarTipoComponente);
-            gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle);
+            gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle, cambioEquipo,equipoCambio);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesComponente almacenaModificacionComponente:  " + e.toString());
             System.out.println("Error ControllerDetallesComponente almacenaModificacionComponente : " + e.toString());

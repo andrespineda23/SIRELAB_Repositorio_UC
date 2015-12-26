@@ -126,17 +126,17 @@ and open the template in the editor.
                                             </div>
                                             <div class="row col-md-12">
                                                 <div class="col-md-4">
-                                                    <label for="parametroLaboratorioPorArea">
-                                                        Laboratorios Por Area Profundización
+                                                    <label for="parametroLaboratorio">
+                                                        Laboratorio
                                                     </label>
-                                                    <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroLaboratorioPorArea}"
+                                                    <h:selectOneMenu value="#{controllerAdministrarEquipos.parametroLaboratorio}"
                                                                      class="form-control"  disabled="#{controllerAdministrarEquipos.activarLabArea}"
-                                                                     id="parametroLaboratorioPorArea">
+                                                                     id="parametroLaboratorio">
                                                         <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                                        <f:selectItems value="#{controllerAdministrarEquipos.listaLaboratoriosPorAreas}" var="area"
-                                                                       itemLabel="#{area.informacionRegistro}" itemValue="#{area}"/>
+                                                        <f:selectItems value="#{controllerAdministrarEquipos.listaLaboratorio}" var="area"
+                                                                       itemLabel="#{area.nombrelaboratorio}" itemValue="#{area}"/>
                                                         <f:converter converterId="ConverterGenerico" />
-                                                        <f:ajax event="change" listener="#{controllerAdministrarEquipos.actualizarLaboratoriosAreasProfundizacion()}" execute="parametroLaboratorioPorArea" render="@this parametroSalaLaboratorio parametroModuloLaboratorio"/>
+                                                        <f:ajax event="change" listener="#{controllerAdministrarEquipos.actualizarLaboratorios()}" execute="parametroLaboratorio" render="@this parametroSalaLaboratorio parametroModuloLaboratorio"/>
                                                     </h:selectOneMenu>
                                                 </div>
                                                 <div class="col-md-4">
@@ -217,7 +217,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Laboratorio Por Area"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.modulolaboratorio.salalaboratorio.laboratoriosporareas.informacionRegistro}"/>
+                                                        <h:outputText value="#{item.modulolaboratorio.salalaboratorio.laboratorio.nombrelaboratorio}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
@@ -235,7 +235,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" disabled="#{controllerAdministrarEquipos.perfilConsulta}" action="#{controllerAdministrarEquipos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesEquipo.recibirIDEquiposElementoDetalles(item.idequipoelemento)}"/>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarEquipos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesEquipo.recibirIDEquiposElementoDetalles(item.idequipoelemento)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>

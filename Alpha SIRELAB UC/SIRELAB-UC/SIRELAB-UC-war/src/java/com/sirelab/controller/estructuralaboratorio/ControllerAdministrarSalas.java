@@ -5,10 +5,8 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
-import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaSalasBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.Laboratorio;
@@ -50,8 +48,6 @@ public class ControllerAdministrarSalas implements Serializable {
     private Departamento parametroDepartamento;
     private List<Laboratorio> listaLaboratorios;
     private Laboratorio parametroLaboratorio;
-    private List<AreaProfundizacion> listaAreasProfundizacion;
-    private AreaProfundizacion parametroAreaProfundizacion;
     private List<Sede> listaSedes;
     private Sede parametroSede;
     private boolean activarSede;
@@ -92,14 +88,12 @@ public class ControllerAdministrarSalas implements Serializable {
         parametroNombre = null;
         parametroCodigo = null;
         parametroCapacidad = null;
-        parametroAreaProfundizacion = new AreaProfundizacion();
         parametroDepartamento = new Departamento();
         parametroLaboratorio = new Laboratorio();
         parametroEdificio = new Edificio();
         parametroSede = new Sede();
         listaSedes = null;
         listaDepartamentos = null;
-        listaAreasProfundizacion = null;
         altoTabla = "150";
         inicializarFiltros();
         listaLaboratorios = null;
@@ -115,18 +109,12 @@ public class ControllerAdministrarSalas implements Serializable {
         BasicConfigurator.configure();
     }
 
-       private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
+    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
         Map<String, Object> lista = new HashMap<String, Object>();
         if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
             Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
             if (null != registro) {
                 lista.put("DEPARTAMENTO", registro);
-            }
-        }
-        if ("AREAPROFUNDIZACION".equalsIgnoreCase(nombre)) {
-            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("AREAPROFUNDIZACION", registro);
             }
         }
         if ("LABORATORIO".equalsIgnoreCase(nombre)) {
@@ -138,30 +126,38 @@ public class ControllerAdministrarSalas implements Serializable {
         return lista;
     }
 
-       
     private void cargarInformacionPerfil() {
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
-        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-            perfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
-            if (perfilConsulta == false) {
-                Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
-                if (null != datosPerfil) {
-                    if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
-                        if (datosPerfil.containsKey("DEPARTAMENTO")) {
-                            activarDepartamento = true;
-                            parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
-                            listaDepartamentos = new ArrayList<Departamento>();
-                            listaDepartamentos.add(parametroDepartamento);
-                        }
-                        if (datosPerfil.containsKey("LABORATORIO")) {
+        if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            perfilConsulta = true;
+        } else {
+            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                boolean validarPerfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
+                if (validarPerfilConsulta == false) {
+                    perfilConsulta = true;
+                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                    if (null != datosPerfil) {
+                        if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
+                            if (datosPerfil.containsKey("DEPARTAMENTO")) {
+                                activarDepartamento = true;
+                                parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
+                                listaDepartamentos = new ArrayList<Departamento>();
+                                listaDepartamentos.add(parametroDepartamento);
+                            }
+                            if (datosPerfil.containsKey("LABORATORIO")) {
+                                activarLaboratorio = true;
+                                activarDepartamento = true;
+                                parametroLaboratorio = (Laboratorio) datosPerfil.get("LABORATORIO");
+                                parametroDepartamento = parametroLaboratorio.getDepartamento();
+                                listaDepartamentos = new ArrayList<Departamento>();
+                                listaDepartamentos.add(parametroDepartamento);
+                                listaLaboratorios = new ArrayList<Laboratorio>();
+                                listaLaboratorios.add(parametroLaboratorio);
+                            }
+                        } else {
+                            activarDepartamento = false;
                             activarLaboratorio = true;
-                            activarDepartamento = true;
-                            parametroLaboratorio = (Laboratorio) datosPerfil.get("LABORATORIO");
-                            parametroDepartamento = parametroLaboratorio.getDepartamento();
-                            listaDepartamentos = new ArrayList<Departamento>();
-                            listaDepartamentos.add(parametroDepartamento);
-                            listaLaboratorios = new ArrayList<Laboratorio>();
-                            listaLaboratorios.add(parametroLaboratorio);
+                            activarSede = false;
                         }
                     } else {
                         activarDepartamento = false;
@@ -169,22 +165,20 @@ public class ControllerAdministrarSalas implements Serializable {
                         activarSede = false;
                     }
                 } else {
-                    activarDepartamento = false;
-                    activarLaboratorio = true;
-                    activarSede = false;
+                    perfilConsulta = false;
                 }
-            }
-        } else {
-            if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
-                parametroEdificio = edificio;
-                parametroSede = edificio.getSede();
-                activarSede = true;
-                activarEdificio = true;
-                listaSedes = new ArrayList<Sede>();
-                listaEdificios = new ArrayList<Edificio>();
-                listaSedes.add(parametroSede);
-                listaEdificios.add(parametroEdificio);
+            } else {
+                if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                    Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
+                    parametroEdificio = edificio;
+                    parametroSede = edificio.getSede();
+                    activarSede = true;
+                    activarEdificio = true;
+                    listaSedes = new ArrayList<Sede>();
+                    listaEdificios = new ArrayList<Edificio>();
+                    listaSedes.add(parametroSede);
+                    listaEdificios.add(parametroEdificio);
+                }
             }
         }
     }
@@ -267,11 +261,6 @@ public class ControllerAdministrarSalas implements Serializable {
         if (Utilidades.validarNulo(parametroSede)) {
             if (parametroSede.getIdsede() != null) {
                 filtros.put("parametroSede", parametroSede.getIdsede().toString());
-            }
-        }
-        if (Utilidades.validarNulo(parametroAreaProfundizacion)) {
-            if (parametroAreaProfundizacion.getIdareaprofundizacion() != null) {
-                filtros.put("parametroAreaProfundizacion", parametroAreaProfundizacion.getIdareaprofundizacion().toString());
             }
         }
     }
@@ -375,7 +364,6 @@ public class ControllerAdministrarSalas implements Serializable {
         parametroNombre = null;
         parametroCodigo = null;
         parametroCapacidad = null;
-        parametroAreaProfundizacion = new AreaProfundizacion();
         parametroDepartamento = new Departamento();
         parametroLaboratorio = new Laboratorio();
         parametroEdificio = new Edificio();
@@ -383,7 +371,6 @@ public class ControllerAdministrarSalas implements Serializable {
 
         listaEdificios = null;
         listaLaboratorios = null;
-        listaAreasProfundizacion = null;
         listaDepartamentos = null;
         listaSedes = null;
         cantidadRegistros = "N/A";
@@ -407,7 +394,6 @@ public class ControllerAdministrarSalas implements Serializable {
         parametroNombre = null;
         parametroCodigo = null;
         parametroCapacidad = null;
-        parametroAreaProfundizacion = new AreaProfundizacion();
         parametroDepartamento = new Departamento();
         parametroLaboratorio = new Laboratorio();
         parametroEdificio = new Edificio();
@@ -548,25 +534,6 @@ public class ControllerAdministrarSalas implements Serializable {
 
     public void setParametroLaboratorio(Laboratorio parametroLaboratorio) {
         this.parametroLaboratorio = parametroLaboratorio;
-    }
-
-    public List<AreaProfundizacion> getListaAreasProfundizacion() {
-        if (listaAreasProfundizacion == null) {
-            listaAreasProfundizacion = gestionarPlantaSalasBO.consultarAreasProfundizacionRegistradas();
-        }
-        return listaAreasProfundizacion;
-    }
-
-    public void setListaAreasProfundizacion(List<AreaProfundizacion> listaAreasProfundizacion) {
-        this.listaAreasProfundizacion = listaAreasProfundizacion;
-    }
-
-    public AreaProfundizacion getParametroAreaProfundizacion() {
-        return parametroAreaProfundizacion;
-    }
-
-    public void setParametroAreaProfundizacion(AreaProfundizacion parametroAreaProfundizacion) {
-        this.parametroAreaProfundizacion = parametroAreaProfundizacion;
     }
 
     public List<Sede> getListaSedes() {

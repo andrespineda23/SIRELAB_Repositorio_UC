@@ -1,12 +1,12 @@
 package com.sirelab.bo.interfacebo.usuarios;
 
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
@@ -57,8 +57,8 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
 
     public Departamento obtenerDepartamentoPorCodigo(String codigo);
 
-    public AreaProfundizacion obtenerAreaProfundizacionPorCodigo(String codigo);
-
     public Laboratorio obtenerLaboratorioPorCodigo(String codigo);
+
+    public List<SalaLaboratorio> obtenerSalaLaboratorioPorEdificio(BigInteger edificio);
 
 }

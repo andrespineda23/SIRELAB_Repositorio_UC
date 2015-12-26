@@ -102,19 +102,6 @@ and open the template in the editor.
                                                         <f:converter converterId="ConverterGenerico" />
                                                     </h:selectOneMenu>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <label for="parametroAreaProfundizacion">
-                                                        Area Profundización
-                                                    </label>
-                                                    <h:selectOneMenu value="#{controllerAdministrarSalas.parametroAreaProfundizacion}"
-                                                                     class="form-control" 
-                                                                     id="parametroAreaProfundizacion">
-                                                        <f:selectItem itemLabel="Seleccione Area" itemValue="null" />
-                                                        <f:selectItems value="#{controllerAdministrarSalas.listaAreasProfundizacion}" var="area"
-                                                                       itemLabel="#{area.nombrearea}" itemValue="#{area}"/>
-                                                        <f:converter converterId="ConverterGenerico" />
-                                                    </h:selectOneMenu>
-                                                </div>
                                             </div>
                                             <div class="row col-md-12">
                                                 <div class="col-md-4">
@@ -215,20 +202,15 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Departamento"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.laboratoriosporareas.laboratorio.departamento.nombredepartamento}"/>
+                                                        <h:outputText value="#{item.laboratorio.departamento.nombredepartamento}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Laboratorio"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.laboratoriosporareas.laboratorio.nombrelaboratorio}"/>
+                                                        <h:outputText value="#{item.laboratorio.nombrelaboratorio}"/>
                                                     </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Area Profundización"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.laboratoriosporareas.areaprofundizacion.nombrearea}"/>
-                                                    </h:column>
+
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Sede"/>
@@ -247,17 +229,17 @@ and open the template in the editor.
                                                         </f:facet>
                                                         <h:outputText value="#{item.strPrivada}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarSalas.perfilConsulta}">
                                                         <f:facet name="header">
                                                             <h:outputText value="Modulo"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Adicionar" disabled="#{controllerAdministrarSalas.perfilConsulta}" action="#{controllerAdministrarSalas.cambiarPaginaModuloCargado()}" actionListener="#{controllerRegistrarModuloCargado.cargarInformacionSalaLaboratorio(item.idsalalaboratorio)}"/>
+                                                        <h:commandLink value="Adicionar"  action="#{controllerAdministrarSalas.cambiarPaginaModuloCargado()}" actionListener="#{controllerRegistrarModuloCargado.cargarInformacionSalaLaboratorio(item.idsalalaboratorio)}"/>
                                                     </h:column>
-                                                    <h:column>
+                                                    <h:column rendered="#{controllerAdministrarSalas.perfilConsulta}">
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" disabled="#{controllerAdministrarSalas.perfilConsulta}" action="#{controllerAdministrarSalas.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesSala.recibirIDSalasLaboratorioDetalles(item.idsalalaboratorio)}"/>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarSalas.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesSala.recibirIDSalasLaboratorioDetalles(item.idsalalaboratorio)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>

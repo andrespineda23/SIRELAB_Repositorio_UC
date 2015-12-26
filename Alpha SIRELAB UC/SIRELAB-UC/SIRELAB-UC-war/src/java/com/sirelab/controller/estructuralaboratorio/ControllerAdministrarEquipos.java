@@ -5,20 +5,17 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
-import com.sirelab.ayuda.AdministrarPerfil;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Edificio;
-import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.LaboratoriosPorAreas;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.entidades.Sede;
 import com.sirelab.entidades.TipoActivo;
 import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
@@ -51,8 +48,9 @@ public class ControllerAdministrarEquipos implements Serializable {
     AdministrarEncargadosLaboratoriosBOInterface administrarValidadorTipoUsuario;
 
     private String parametroNombre, parametroInventario, parametroMarca, parametroModelo, parametroSerie;
-    private List<LaboratoriosPorAreas> listaLaboratoriosPorAreas;
-    private LaboratoriosPorAreas parametroLaboratorioPorArea;
+    private List<Laboratorio> listaLaboratorio;
+    private Laboratorio parametroLaboratorio;
+    private boolean activarLaboratorio;
     private List<SalaLaboratorio> listaSalasLaboratorios;
     private SalaLaboratorio parametroSalaLaboratorio;
     private List<ModuloLaboratorio> listaModulosLaboratorios;
@@ -107,11 +105,11 @@ public class ControllerAdministrarEquipos implements Serializable {
         parametroEstadoEquipo = new EstadoEquipo();
         parametroTipoActivo = new TipoActivo();
         parametroProveedor = new Proveedor();
-        parametroLaboratorioPorArea = new LaboratoriosPorAreas();
+        parametroLaboratorio = new Laboratorio();
         listaTiposActivos = null;
         listaEstadosEquipos = null;
         listaProveedores = null;
-        listaLaboratoriosPorAreas = null;
+        listaLaboratorio = null;
         altoTabla = "150";
         inicializarFiltros();
         listaModulosLaboratorios = null;
@@ -133,12 +131,6 @@ public class ControllerAdministrarEquipos implements Serializable {
                 lista.put("DEPARTAMENTO", registro);
             }
         }
-        if ("AREAPROFUNDIZACION".equalsIgnoreCase(nombre)) {
-            AreaProfundizacion registro = administrarValidadorTipoUsuario.obtenerAreaProfundizacionPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("AREAPROFUNDIZACION", registro);
-            }
-        }
         if ("LABORATORIO".equalsIgnoreCase(nombre)) {
             Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
             if (null != registro) {
@@ -150,31 +142,45 @@ public class ControllerAdministrarEquipos implements Serializable {
 
     private void cargarInformacionPerfil() {
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
-        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-            perfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
-            if (perfilConsulta == false) {
-                Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
-                if (null != datosPerfil) {
-                    if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
-                        if (datosPerfil.containsKey("DEPARTAMENTO")) {
-                            Departamento parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
-                            listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.obtenerLaboratoriosPorAreasPorDepartamento(parametroDepartamento.getIddepartamento());
-                        }
-                        if (datosPerfil.containsKey("LABORATORIO")) {
-                            Laboratorio parametroLaboratorio = (Laboratorio) datosPerfil.get("LABORATORIO");
-                            listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.obtenerLaboratoriosPorAreasPorLaboratorio(parametroLaboratorio.getIdlaboratorio());
-                        }
-                    }
-                }
-            }
+        if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            perfilConsulta = true;
         } else {
-            if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
-                listaSalasLaboratorios = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDEdificio(edificio.getIdedificio());
-                activarLabArea = true;
-                parametroLaboratorioPorArea = listaSalasLaboratorios.get(0).getLaboratoriosporareas();
-                listaLaboratoriosPorAreas = new ArrayList<LaboratoriosPorAreas>();
-                listaLaboratoriosPorAreas.add(parametroLaboratorioPorArea);
+            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                boolean validarPerfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
+                if (validarPerfilConsulta == false) {
+                    perfilConsulta = true;
+                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
+                    if (null != datosPerfil) {
+                        if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
+                            if (datosPerfil.containsKey("DEPARTAMENTO")) {
+                                Departamento parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
+                                listaLaboratorio = administrarValidadorTipoUsuario.obtenerLaboratoriosActivosPorIDDepartamento(parametroDepartamento.getIddepartamento());
+                                activarLaboratorio = false;
+                            }
+                            if (datosPerfil.containsKey("LABORATORIO")) {
+                                activarLaboratorio = true;
+                                parametroLaboratorio = (Laboratorio) datosPerfil.get("LABORATORIO");
+                                listaLaboratorio = new ArrayList<Laboratorio>();
+                                listaLaboratorio.add(parametroLaboratorio);
+                            }
+                        } else {
+                            activarLaboratorio = false;
+                        }
+                    } else {
+                        activarLaboratorio = false;
+                    }
+                } else {
+                    perfilConsulta = false;
+                }
+            } else {
+                if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                    Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
+                    activarLaboratorio = true;
+                    listaSalasLaboratorios = administrarValidadorTipoUsuario.obtenerSalaLaboratorioPorEdificio(edificio.getIdedificio());
+                    listaLaboratorio = new ArrayList<Laboratorio>();
+                    parametroLaboratorio = new Laboratorio();
+
+                }
             }
         }
     }
@@ -212,7 +218,7 @@ public class ControllerAdministrarEquipos implements Serializable {
         filtros.put("parametroTipoActivo", null);
         filtros.put("parametroModuloLaboratorio", null);
         filtros.put("parametroSalaLaboratorio", null);
-        filtros.put("parametroLaboratorioPorArea", null);
+        filtros.put("parametroLaboratorio", null);
         agregarFiltrosAdicionales();
     }
 
@@ -232,9 +238,9 @@ public class ControllerAdministrarEquipos implements Serializable {
         if ((Utilidades.validarNulo(parametroSerie) == true) && (!parametroSerie.isEmpty()) && (parametroSerie.trim().length() > 0)) {
             filtros.put("parametroSerie", parametroSerie.toString());
         }
-        if (Utilidades.validarNulo(parametroLaboratorioPorArea)) {
-            if (parametroLaboratorioPorArea.getIdlaboratoriosporareas() != null) {
-                filtros.put("parametroLaboratorioPorArea", parametroLaboratorioPorArea.getIdlaboratoriosporareas().toString());
+        if (Utilidades.validarNulo(parametroLaboratorio)) {
+            if (parametroLaboratorio.getIdlaboratorio() != null) {
+                filtros.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
             }
         }
         if (Utilidades.validarNulo(parametroEstadoEquipo)) {
@@ -365,13 +371,13 @@ public class ControllerAdministrarEquipos implements Serializable {
         parametroModelo = null;
         parametroSerie = null;
         parametroSalaLaboratorio = new SalaLaboratorio();
-        parametroLaboratorioPorArea = new LaboratoriosPorAreas();
+        parametroLaboratorio = new Laboratorio();
         parametroModuloLaboratorio = new ModuloLaboratorio();
         parametroTipoActivo = new TipoActivo();
         parametroEstadoEquipo = new EstadoEquipo();
         parametroProveedor = new Proveedor();
 
-        listaLaboratoriosPorAreas = null;
+        listaLaboratorio = null;
         listaSalasLaboratorios = null;
         listaModulosLaboratorios = null;
         listaEstadosEquipos = null;
@@ -401,7 +407,7 @@ public class ControllerAdministrarEquipos implements Serializable {
         parametroModelo = null;
         parametroSerie = null;
         parametroSalaLaboratorio = new SalaLaboratorio();
-        parametroLaboratorioPorArea = new LaboratoriosPorAreas();
+        parametroLaboratorio = new Laboratorio();
         parametroModuloLaboratorio = new ModuloLaboratorio();
         parametroTipoActivo = new TipoActivo();
         parametroEstadoEquipo = new EstadoEquipo();
@@ -418,10 +424,10 @@ public class ControllerAdministrarEquipos implements Serializable {
         cargarInformacionPerfil();
     }
 
-    public void actualizarLaboratoriosAreasProfundizacion() {
-        if (Utilidades.validarNulo(parametroLaboratorioPorArea)) {
+    public void actualizarLaboratorios() {
+        if (Utilidades.validarNulo(parametroLaboratorio)) {
             parametroSalaLaboratorio = new SalaLaboratorio();
-            listaSalasLaboratorios = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorioAreaProfundizacion(parametroLaboratorioPorArea.getIdlaboratoriosporareas());;
+            listaSalasLaboratorios = gestionarPlantaEquiposElementosBO.consultarSalasLaboratorioPorIDLaboratorio(parametroLaboratorio.getIdlaboratorio());;
             activarSalaLaboratorio = false;
             activarModuloLaboratorio = true;
             listaModulosLaboratorios = null;
@@ -512,23 +518,23 @@ public class ControllerAdministrarEquipos implements Serializable {
         this.parametroSerie = parametroSerie;
     }
 
-    public List<LaboratoriosPorAreas> getListaLaboratoriosPorAreas() {
-        if (listaLaboratoriosPorAreas == null) {
-            listaLaboratoriosPorAreas = gestionarPlantaEquiposElementosBO.consultarLaboratoriosPorAreasRegistradas();
+    public List<Laboratorio> getListaLaboratorio() {
+        if (listaLaboratorio == null) {
+            listaLaboratorio = gestionarPlantaEquiposElementosBO.consultarLaboratoriosRegistrados();
         }
-        return listaLaboratoriosPorAreas;
+        return listaLaboratorio;
     }
 
-    public void setListaLaboratoriosPorAreas(List<LaboratoriosPorAreas> listaLaboratoriosPorAreas) {
-        this.listaLaboratoriosPorAreas = listaLaboratoriosPorAreas;
+    public void setListaLaboratorio(List<Laboratorio> listaLaboratorio) {
+        this.listaLaboratorio = listaLaboratorio;
     }
 
-    public LaboratoriosPorAreas getParametroLaboratorioPorArea() {
-        return parametroLaboratorioPorArea;
+    public Laboratorio getParametroLaboratorio() {
+        return parametroLaboratorio;
     }
 
-    public void setParametroLaboratorioPorArea(LaboratoriosPorAreas parametroLaboratorioPorArea) {
-        this.parametroLaboratorioPorArea = parametroLaboratorioPorArea;
+    public void setParametroLaboratorio(Laboratorio parametroLaboratorio) {
+        this.parametroLaboratorio = parametroLaboratorio;
     }
 
     public List<SalaLaboratorio> getListaSalasLaboratorios() {
@@ -722,6 +728,14 @@ public class ControllerAdministrarEquipos implements Serializable {
 
     public void setActivarLabArea(boolean activarLabArea) {
         this.activarLabArea = activarLabArea;
+    }
+
+    public boolean isActivarLaboratorio() {
+        return activarLaboratorio;
+    }
+
+    public void setActivarLaboratorio(boolean activarLaboratorio) {
+        this.activarLaboratorio = activarLaboratorio;
     }
 
 }

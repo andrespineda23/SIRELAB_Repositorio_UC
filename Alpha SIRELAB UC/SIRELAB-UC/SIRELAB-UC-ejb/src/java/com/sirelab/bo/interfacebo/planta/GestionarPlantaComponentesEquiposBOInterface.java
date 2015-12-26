@@ -27,7 +27,7 @@ public interface GestionarPlantaComponentesEquiposBOInterface {
 
     public void crearComponenteEquipo(ComponenteEquipo componenteEquipo);
 
-    public void editarComponenteEquipo(ComponenteEquipo componenteEquipo);
+    public void editarComponenteEquipo(ComponenteEquipo componenteEquipo, boolean cambioEquipo,  EquipoElemento equipoCambio);
 
     public void eliminarComponenteEquipo(ComponenteEquipo componenteEquipo);
 

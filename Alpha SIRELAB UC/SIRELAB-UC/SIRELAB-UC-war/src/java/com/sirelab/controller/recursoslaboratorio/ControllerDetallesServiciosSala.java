@@ -6,8 +6,8 @@
 package com.sirelab.controller.recursoslaboratorio;
 
 import com.sirelab.ayuda.MensajesConstantes;
-import com.sirelab.bo.interfacebo.recursos.GestionarRecursoAreasProfundizacionBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoServiciosSalaBOInterface;
+import com.sirelab.entidades.ServiciosSala;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -26,22 +26,22 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerDetallesAreaProfundizacion implements Serializable {
+public class ControllerDetallesServiciosSala implements Serializable {
 
     @EJB
-    GestionarRecursoAreasProfundizacionBOInterface gestionarRecursoAreaProfundizacionBO;
+    GestionarRecursoServiciosSalaBOInterface gestionarRecursoServiciosSalaBO;
 
-    private AreaProfundizacion areaProfundizacionDetalle;
-    private BigInteger idAreaProfundizacion;
-    private String editarNombre, editarCodigo;
-    private boolean validacionesNombre, validacionesCodigo;
+    private ServiciosSala serviciosSalaDetalle;
+    private BigInteger idServiciosSala;
+    private String editarNombre, editarCodigo, editarCosto;
+    private boolean validacionesNombre, validacionesCodigo, validacionesCosto;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
 
-    public ControllerDetallesAreaProfundizacion() {
+    public ControllerDetallesServiciosSala() {
     }
 
     @PostConstruct
@@ -49,55 +49,58 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
         constantes = new MensajesConstantes();
         validacionesCodigo = true;
         validacionesNombre = true;
+        validacionesCosto = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         BasicConfigurator.configure();
     }
 
-    public String restaurarInformacionAreaProfundizacion() {
+    public String restaurarInformacionServiciosSala() {
         validacionesCodigo = true;
         validacionesNombre = true;
+        validacionesCosto = true;
         mensajeFormulario = "N/A";
-        colorMensaje = "black";
-        areaProfundizacionDetalle = new AreaProfundizacion();
-        recibirIDAreasProfundizacionDetalles(idAreaProfundizacion);
-        return "administrarareasprofundizacion";
+        colorMensaje = "black"; 
+        serviciosSalaDetalle = new ServiciosSala();
+        recibirIDServiciosSalaDetalles(idServiciosSala);
+        return "administrarserviciossala";
     }
 
-    public void asignarValoresVariablesAreaProfundizacion() {
-        editarCodigo = areaProfundizacionDetalle.getCodigoarea();
-        editarNombre = areaProfundizacionDetalle.getNombrearea();
-        editarEstado = areaProfundizacionDetalle.getEstado();
+    public void asignarValoresVariablesServiciosSala() {
+        editarCodigo = serviciosSalaDetalle.getCodigoservicio();
+        editarNombre = serviciosSalaDetalle.getNombreservicio();
+        editarCosto = String.valueOf(serviciosSalaDetalle.getCostoservicio());
+        editarEstado = serviciosSalaDetalle.getEstado();
     }
 
-    public void recibirIDAreasProfundizacionDetalles(BigInteger idArea) {
-        this.idAreaProfundizacion = idArea;
-        areaProfundizacionDetalle = gestionarRecursoAreaProfundizacionBO.obtenerAreaProfundizacionPorIDAreaProfundizacion(idAreaProfundizacion);
-        asignarValoresVariablesAreaProfundizacion();
+    public void recibirIDServiciosSalaDetalles(BigInteger idArea) {
+        this.idServiciosSala = idArea;
+        serviciosSalaDetalle = gestionarRecursoServiciosSalaBO.obtenerServiciosSalaPorIDServiciosSala(idServiciosSala);
+        asignarValoresVariablesServiciosSala();
     }
 
-    public void validarNombreAreaProfundizacion() {
+    public void validarNombreServiciosSala() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             int tam = editarNombre.length();
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.RECURSO_NOM));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.SERVICIO_NOM));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.RECURSO_NOM));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.SERVICIO_NOM));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.RECURSO_NOM));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.SERVICIO_NOM));
         }
 
     }
 
-    public void validarCodigoAreaProfundizacion() {
+    public void validarCodigoServiciosSala() {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
             int tam = editarCodigo.length();
             if (tam >= 4) {
@@ -117,9 +120,26 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
         }
     }
 
+    public void validarCostoServiciosSala() {
+        if (Utilidades.validarNulo(editarCosto) && (!editarCosto.isEmpty()) && (editarCosto.trim().length() > 0)) {
+            if (!Utilidades.isNumber(editarCosto)) {
+                validacionesCosto = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarCosto", new FacesMessage("El costo ingresado es incorrecto. " + constantes.RECURSO_COSTO));
+            } else {
+                validacionesCosto = true;
+            }
+        } else {
+            validacionesCosto = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarCosto", new FacesMessage("El costo es obligatorio. " + constantes.RECURSO_COSTO));
+        }
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         if (validacionesCodigo == false) {
+            retorno = false;
+        }
+        if (validacionesCosto == false) {
             retorno = false;
         }
         if (validacionesNombre == false) {
@@ -130,9 +150,9 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
 
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
-        AreaProfundizacion registro = gestionarRecursoAreaProfundizacionBO.obtenerAreaProfundizacionPorCodigo(editarCodigo);
+        ServiciosSala registro = gestionarRecursoServiciosSalaBO.obtenerServiciosSalaPorCodigo(editarCodigo);
         if (null != registro) {
-            if (!areaProfundizacionDetalle.getIdareaprofundizacion().equals(registro.getIdareaprofundizacion())) {
+            if (!serviciosSalaDetalle.getIdserviciossala().equals(registro.getIdserviciossala())) {
                 retorno = false;
             }
         }
@@ -142,7 +162,7 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
     private boolean validarCambioEstado() {
         boolean retorno = true;
         if (editarEstado == false) {
-            Boolean validacion = gestionarRecursoAreaProfundizacionBO.validarCambioEstadoArea(areaProfundizacionDetalle.getIdareaprofundizacion());
+            Boolean validacion = gestionarRecursoServiciosSalaBO.validarCambioEstadoServicio(serviciosSalaDetalle.getIdserviciossala());
             if (null != validacion) {
                 if (validacion == true) {
                     retorno = true;
@@ -154,17 +174,17 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
         return retorno;
     }
 
-    public void modificarInformacionAreaProfundizacion() {
+    public void modificarInformacionServiciosSala() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
                 if (validarCambioEstado() == true) {
-                    almacenarModificacionAreaProfundizacion();
-                    recibirIDAreasProfundizacionDetalles(this.idAreaProfundizacion);
+                    almacenarModificacionServiciosSala();
+                    recibirIDServiciosSalaDetalles(this.idServiciosSala);
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
                     colorMensaje = "red";
-                    mensajeFormulario = "Existen asociaciones con laboratorios. Imposible cambiar el estado.";
+                    mensajeFormulario = "Existen asociaciones con salas de laboratorios. Imposible cambiar el estado.";
                 }
             } else {
                 colorMensaje = "red";
@@ -176,24 +196,34 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
         }
     }
 
-    private void almacenarModificacionAreaProfundizacion() {
+    private void almacenarModificacionServiciosSala() {
         try {
-            areaProfundizacionDetalle.setNombrearea(editarNombre);
-            areaProfundizacionDetalle.setCodigoarea(editarCodigo);
-            gestionarRecursoAreaProfundizacionBO.modificarInformacionAreaProfundizacion(areaProfundizacionDetalle);
+            serviciosSalaDetalle.setNombreservicio(editarNombre);
+            serviciosSalaDetalle.setCodigoservicio(editarCodigo);
+            serviciosSalaDetalle.setEstado(editarEstado);
+            serviciosSalaDetalle.setCostoservicio(Integer.parseInt(editarCosto));
+            gestionarRecursoServiciosSalaBO.modificarInformacionServiciosSala(serviciosSalaDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAreaProfundizacion almacenarModificacionAreaProfundizacion:  " + e.toString());
-            System.out.println("Error ControllerDetallesAreaProfundizacion almacenarModificacionAreaProfundizacion : " + e.toString());
+            logger.error("Error ControllerDetallesServiciosSala almacenarModificacionServiciosSala:  " + e.toString());
+            System.out.println("Error ControllerDetallesServiciosSala almacenarModificacionServiciosSala : " + e.toString());
         }
     }
 
     //GET-SET
-    public AreaProfundizacion getAreaProfundizacionDetalle() {
-        return areaProfundizacionDetalle;
+    public ServiciosSala getServiciosSalaDetalle() {
+        return serviciosSalaDetalle;
     }
 
-    public void setAreaProfundizacionDetalle(AreaProfundizacion areaProfundizacionDetalle) {
-        this.areaProfundizacionDetalle = areaProfundizacionDetalle;
+    public void setServiciosSalaDetalle(ServiciosSala serviciosSalaDetalle) {
+        this.serviciosSalaDetalle = serviciosSalaDetalle;
+    }
+
+    public BigInteger getIdServiciosSala() {
+        return idServiciosSala;
+    }
+
+    public void setIdServiciosSala(BigInteger idServiciosSala) {
+        this.idServiciosSala = idServiciosSala;
     }
 
     public String getEditarNombre() {
@@ -210,6 +240,14 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
 
     public void setEditarCodigo(String editarCodigo) {
         this.editarCodigo = editarCodigo;
+    }
+
+    public String getEditarCosto() {
+        return editarCosto;
+    }
+
+    public void setEditarCosto(String editarCosto) {
+        this.editarCosto = editarCosto;
     }
 
     public String getMensajeFormulario() {
@@ -234,6 +272,14 @@ public class ControllerDetallesAreaProfundizacion implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public MensajesConstantes getConstantes() {
+        return constantes;
+    }
+
+    public void setConstantes(MensajesConstantes constantes) {
+        this.constantes = constantes;
     }
 
 }

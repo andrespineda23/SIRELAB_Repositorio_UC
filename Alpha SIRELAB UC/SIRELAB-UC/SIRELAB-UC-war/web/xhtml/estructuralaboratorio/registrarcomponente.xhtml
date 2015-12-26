@@ -70,13 +70,13 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Tipo Componente*"/></strong>
                                         <h:selectOneMenu value="#{controllerRegistrarComponente.nuevoTipoComponente}"
-                                                         class="form-control"
+                                                         class="form-control" disabled="#{controllerRegistrarComponente.activarCasillas}"
                                                          id="nuevoTipoComponente">
                                             <f:selectItem itemLabel="Seleccione Tipo Componente" itemValue="null" />
                                             <f:selectItems value="#{controllerRegistrarComponente.listaTiposComponentes}" var="tipo"
                                                            itemLabel="#{tipo.nombretipo}" itemValue="#{tipo}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarComponente.validarTipoComponente()}" disabled="#{controllerRegistrarComponente.activarCasillas}" disabled="#{controllerRegistrarComponente.activarCasillas}" execute="nuevoTipoComponente" render="msnTipo nuevoTipoComponente"/>
+                                            <f:ajax event="change" listener="#{controllerRegistrarComponente.validarTipoComponente()}" execute="nuevoTipoComponente" render="msnTipo nuevoTipoComponente"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnTipo" for="nuevoTipoComponente" style="color: red"/></h6>
                                     </div>

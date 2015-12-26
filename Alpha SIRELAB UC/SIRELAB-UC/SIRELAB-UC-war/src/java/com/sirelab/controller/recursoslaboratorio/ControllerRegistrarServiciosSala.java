@@ -6,8 +6,8 @@
 package com.sirelab.controller.recursoslaboratorio;
 
 import com.sirelab.ayuda.MensajesConstantes;
-import com.sirelab.bo.interfacebo.recursos.GestionarRecursoAreasProfundizacionBOInterface;
-import com.sirelab.entidades.AreaProfundizacion;
+import com.sirelab.bo.interfacebo.recursos.GestionarRecursoServiciosSalaBOInterface;
+import com.sirelab.entidades.ServiciosSala;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -25,13 +25,13 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerRegistrarAreaProfundizacion implements Serializable {
+public class ControllerRegistrarServiciosSala implements Serializable {
 
     @EJB
-    GestionarRecursoAreasProfundizacionBOInterface gestionarRecursoAreaProfundizacionBO;
+    GestionarRecursoServiciosSalaBOInterface gestionarRecursoServiciosSalaBO;
 
-    private String nuevoNombre, nuevoCodigo;
-    private boolean validacionesNombre, validacionesCodigo;
+    private String nuevoNombre, nuevoCodigo, nuevoCosto;
+    private boolean validacionesNombre, validacionesCodigo, validacionesCosto;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -40,7 +40,7 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
     private boolean activarAceptar;
     private MensajesConstantes constantes;
 
-    public ControllerRegistrarAreaProfundizacion() {
+    public ControllerRegistrarServiciosSala() {
     }
 
     @PostConstruct
@@ -49,7 +49,9 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
         activarAceptar = false;
         nuevoCodigo = null;
         nuevoNombre = null;
+        nuevoCosto = null;
         validacionesCodigo = false;
+        validacionesCosto = false;
         validacionesNombre = false;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -58,44 +60,58 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
         BasicConfigurator.configure();
     }
 
-    public void validarNombreAreaProfundizacion() {
+    public void validarNombreServiciosSala() {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
             int tam = nuevoNombre.length();
             if (tam >= 4) {
                 if (!Utilidades.validarCaracterString(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.RECURSO_NOM));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.SERVICIO_NOM));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_NOM));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.SERVICIO_NOM));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.RECURSO_NOM));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.SERVICIO_NOM));
         }
 
     }
 
-    public void validarCodigoAreaProfundizacion() {
+    public void validarCodigoServiciosSala() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty()) && (nuevoCodigo.trim().length() > 0)) {
             int tam = nuevoCodigo.length();
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.RECURSO_COD));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.RECURSO_COD));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_COD));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.RECURSO_COD));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.RECURSO_COD));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. " + constantes.RECURSO_COD));
+        }
+    }
+
+    public void validarCostoServiciosSala() {
+        if (Utilidades.validarNulo(nuevoCosto) && (!nuevoCosto.isEmpty()) && (nuevoCosto.trim().length() > 0)) {
+            if (!Utilidades.isNumber(nuevoCosto)) {
+                validacionesCosto = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El costo ingresado es incorrecto. " + constantes.RECURSO_COSTO));
+            } else {
+                validacionesCosto = true;
+            }
+        } else {
+            validacionesCosto = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCosto", new FacesMessage("El costo es obligatorio. " + constantes.RECURSO_COD));
         }
     }
 
@@ -104,7 +120,9 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
         if (validacionesCodigo == false) {
             retorno = false;
         }
-
+        if (validacionesCosto == false) {
+            retorno = false;
+        }
         if (validacionesNombre == false) {
             retorno = false;
         }
@@ -113,17 +131,17 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
 
     private boolean validarCodigoRepetido() {
         boolean retorno = true;
-        AreaProfundizacion registro = gestionarRecursoAreaProfundizacionBO.obtenerAreaProfundizacionPorCodigo(nuevoCodigo);
+        ServiciosSala registro = gestionarRecursoServiciosSalaBO.obtenerServiciosSalaPorCodigo(nuevoCodigo);
         if (null != registro) {
             retorno = false;
         }
         return retorno;
     }
 
-    public void registrarNuevoAreaProfundizacion() {
+    public void registrarNuevoServiciosSala() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenarNuevoAreaProfundizacionEnSistema();
+                almacenarNuevoServiciosSalaEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
                 activarAceptar = true;
@@ -140,31 +158,36 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
         }
     }
 
-    private void almacenarNuevoAreaProfundizacionEnSistema() {
+    private void almacenarNuevoServiciosSalaEnSistema() {
         try {
-            AreaProfundizacion areaNuevo = new AreaProfundizacion();
-            areaNuevo.setNombrearea(nuevoNombre);
-            areaNuevo.setCodigoarea(nuevoCodigo);
-            areaNuevo.setEstado(true);
-            gestionarRecursoAreaProfundizacionBO.crearNuevaAreaProfundizacion(areaNuevo);
+            ServiciosSala servicioNuevo = new ServiciosSala();
+            servicioNuevo.setNombreservicio(nuevoNombre);
+            servicioNuevo.setCodigoservicio(nuevoCodigo);
+            servicioNuevo.setCostoservicio(Integer.valueOf(nuevoCosto).intValue());
+            servicioNuevo.setEstado(true);
+            gestionarRecursoServiciosSalaBO.crearNuevoServiciosSala(servicioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAreaProfundizacion almacenarNuevoAreaProfundizacionEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarAreaProfundizacion almacenarNuevoAreaProfundizacionEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema:  " + e.toString());
+            System.out.println("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema : " + e.toString());
         }
     }
 
     public void limpiarFormulario() {
         nuevoCodigo = null;
+        nuevoCosto = null;
         nuevoNombre = null;
         validacionesCodigo = false;
         validacionesNombre = false;
+        validacionesCosto = false;
         mensajeFormulario = "";
     }
 
-    public void cancelarRegistroAreaProfundizacion() {
+    public void cancelarRegistroServiciosSala() {
         nuevoCodigo = null;
         nuevoNombre = null;
+        nuevoCosto = null;
         validacionesCodigo = false;
+        validacionesCosto = false;
         validacionesNombre = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
@@ -198,6 +221,14 @@ public class ControllerRegistrarAreaProfundizacion implements Serializable {
 
     public void setNuevoCodigo(String nuevoCodigo) {
         this.nuevoCodigo = nuevoCodigo;
+    }
+
+    public String getNuevoCosto() {
+        return nuevoCosto;
+    }
+
+    public void setNuevoCosto(String nuevoCosto) {
+        this.nuevoCosto = nuevoCosto;
     }
 
     public String getMensajeFormulario() {
