@@ -59,8 +59,8 @@ public class ControllerRegistrarConvenio implements Serializable {
         validacionesNombre = false;
         validacionesDescripcion = false;
         validacionesValor = true;
-        validacionesFechaFin = false;
-        validacionesFechaInicio = false;
+        validacionesFechaFin = true;
+        validacionesFechaInicio = true;
         activarLimpiar = true;
         colorMensaje = "black";
         activarAceptar = false;
@@ -174,7 +174,7 @@ public class ControllerRegistrarConvenio implements Serializable {
     private boolean validarFechasRegistro() {
         boolean retorno = true;
         if (Utilidades.validarNulo(inputFechaFin)) {
-            if (new Date(inputFechaFin).after(new Date(inputFechaInicio))) {
+            if (new Date(inputFechaInicio).before(new Date(inputFechaFin))) {
                 retorno = true;
             } else {
                 retorno = false;

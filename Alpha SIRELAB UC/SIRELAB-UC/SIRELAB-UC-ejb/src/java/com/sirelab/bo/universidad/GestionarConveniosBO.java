@@ -60,9 +60,8 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
         try {
             if (false == convenio.getEstado()) {
                 gestionarProcesosRelacionadosConvenio(convenio, false);
-            } else {
-                gestionarProcesosRelacionadosConvenio(convenio, true);
-            }
+            } 
+            System.out.println("EJB");
             convenioDAO.editarConvenio(convenio);
         } catch (Exception e) {
             System.out.println("Error GestionarConveniosBO editarConvenio : " + e.toString());

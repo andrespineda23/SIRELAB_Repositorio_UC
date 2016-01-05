@@ -130,11 +130,14 @@ public class EntidadExterna implements Serializable {
     }
 
     public String getNombreentidad() {
+        if(null != nombreentidad){
+            return nombreentidad.toUpperCase();
+        }
         return nombreentidad;
     }
 
     public void setNombreentidad(String nombreentidad) {
-        this.nombreentidad = nombreentidad;
+        this.nombreentidad = nombreentidad.toUpperCase();
     }
 
     public String getEmailentidad() {

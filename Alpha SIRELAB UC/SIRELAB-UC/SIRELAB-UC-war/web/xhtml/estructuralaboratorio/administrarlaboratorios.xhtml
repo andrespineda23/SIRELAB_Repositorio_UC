@@ -192,7 +192,7 @@ and open the template in the editor.
                         <br></br>
                         <div class="row">
                             <div class="col-md-1">
-                                <h:commandButton value="Nuevo Laboratorio" disabled="#{controllerAdministrarLaboratorios.perfilConsulta}" class="btn btn-success" action="#{controllerAdministrarLaboratorios.paginaNueva()}" actionListener="#{controllerRegistrarLaboratorio.iniciarPagina()}"/>
+                                <h:commandButton value="Nuevo Laboratorio" rendered="#{controllerAdministrarLaboratorios.perfilConsulta}" class="btn btn-success" action="#{controllerAdministrarLaboratorios.paginaNueva()}" actionListener="#{controllerRegistrarLaboratorio.iniciarPagina()}"/>
                             </div>
                             <div class="col-md-10"></div>
                             <div class="col-md-1">

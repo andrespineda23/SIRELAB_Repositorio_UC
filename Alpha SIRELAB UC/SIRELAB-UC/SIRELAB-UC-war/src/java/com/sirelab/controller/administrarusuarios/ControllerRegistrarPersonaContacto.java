@@ -392,7 +392,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
             usuarioNuevo.setNumeroconexiones(0);
-            usuarioNuevo.setNombreusuario(inputDireccion);
+            usuarioNuevo.setNombreusuario(inputID);
             EncriptarContrasenia obj = new EncriptarContrasenia();
             usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
             Persona personaNueva = new Persona();

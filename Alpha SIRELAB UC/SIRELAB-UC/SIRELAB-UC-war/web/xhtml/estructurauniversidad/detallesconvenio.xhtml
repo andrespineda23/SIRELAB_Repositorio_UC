@@ -122,58 +122,60 @@ and open the template in the editor.
                                 Este registro es unicamente para el ingreso de convenios.
                             </p>
                         </div>
-                        <fieldset>
-                            <legend class="text-info">Datos Basicos</legend>
-                            <div class="form-group">
-                                <strong><h:outputText value="Nombre Convenio*"/></strong>
-                                <h:inputText maxlength="45" value="#{controllerDetallesConvenio.inputNombre}"  required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarNombre()}" execute="inputNombre" render="inputNombre msnNombre" />
-                                </h:inputText>
-                                <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Descripción Convenio*"/></strong>
-                                <h:inputText maxlength="200" value="#{controllerDetallesConvenio.inputDescripcion}"  required="true" class="form-control" id="inputDescripcion" requiredMessage="El campo Descripción es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarDescripcion()}" execute="inputDescripcion" render="inputDescripcion msnDescripcion" />
-                                </h:inputText>
-                                <h6><h:message id="msnDescripcion" for="inputDescripcion" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Costo/Valor Convenio*"/></strong>
-                                <h:inputText maxlength="12" value="#{controllerDetallesConvenio.inputValor}"  required="true" class="form-control" id="inputValor" requiredMessage="El campo Valor es obligatorio.">
-                                    <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarValor()}" execute="inputValor" render="inputValor msnValor" />
-                                </h:inputText>
-                                <h6><h:message id="msnValor" for="inputValor" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
-                                <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                <h:inputText maxlength="10" value="#{controllerDetallesConvenio.inputFechaInicio}"  required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
-                                    <f:ajax event="change" listener="#{controllerDetallesConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
-                                    <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
-                                </h:inputText>
-                            </div>
-                            <h6><h:message id="msnFechaInicio" for="inputFechaInicio" style="color: red"/></h6>
-                            <div class="form-group">
-                                <strong><h:outputText value="Fecha Finalización*"/></strong>
-                                <h:inputText maxlength="10" value="#{controllerDetallesConvenio.inputFechaFin}"  class="form-control" id="inputFechaFin" >
-                                    <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
-                                    <f:ajax event="change" listener="#{controllerDetallesConvenio.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
-                                </h:inputText>
-                                <h6><h:message id="msnFechaFin" for="inputFechaFin" style="color: red"/></h6>
-                            </div>
-                            <div class="form-group">
-                                <label for="parametroEstado">
-                                    Estado Convenio
-                                </label>
-                                <h:selectOneMenu value="#{controllerDetallesConvenio.estadoConvenio}"
-                                                 class="form-control"
-                                                 id="estadoConvenio">
-                                    <f:selectItem itemLabel="ACTIVO" itemValue="true" />
-                                    <f:selectItem itemLabel="INACTIVO" itemValue="false" />
-                                    <f:ajax event="change" listener="#{controllerDetallesConvenio.actualizarEstado()}" execute="estadoConvenio" />
-                                </h:selectOneMenu>
-                            </div>
-                        </fieldset>
+                        <div class="row col-md-12">
+                            <fieldset>
+                                <legend class="text-info">Datos Basicos</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Nombre Convenio*"/></strong>
+                                    <h:inputText maxlength="45" value="#{controllerDetallesConvenio.inputNombre}"  required="true" class="form-control" id="inputNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarNombre()}" execute="inputNombre" render="inputNombre msnNombre" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnNombre" for="inputNombre" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Descripción Convenio*"/></strong>
+                                    <h:inputText maxlength="200" value="#{controllerDetallesConvenio.inputDescripcion}"  required="true" class="form-control" id="inputDescripcion" requiredMessage="El campo Descripción es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarDescripcion()}" execute="inputDescripcion" render="inputDescripcion msnDescripcion" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnDescripcion" for="inputDescripcion" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Costo/Valor Convenio*"/></strong>
+                                    <h:inputText maxlength="12" value="#{controllerDetallesConvenio.inputValor}"  required="true" class="form-control" id="inputValor" requiredMessage="El campo Valor es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarValor()}" execute="inputValor" render="inputValor msnValor" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnValor" for="inputValor" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Fecha Inicio*"/></strong>
+                                    <h:inputText maxlength="10" value="#{controllerDetallesConvenio.inputFechaInicio}"  required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
+                                        <f:ajax event="change" listener="#{controllerDetallesConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
+                                        <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
+                                    </h:inputText>
+                                </div>
+                                <h6><h:message id="msnFechaInicio" for="inputFechaInicio" style="color: red"/></h6>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Fecha Finalización*"/></strong>
+                                    <h:inputText maxlength="10" value="#{controllerDetallesConvenio.inputFechaFin}"  class="form-control" id="inputFechaFin" >
+                                        <f:ajax event="blur" listener="#{controllerDetallesConvenio.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
+                                        <f:ajax event="change" listener="#{controllerDetallesConvenio.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnFechaFin" for="inputFechaFin" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <label for="parametroEstado">
+                                        Estado Convenio
+                                    </label>
+                                    <h:selectOneMenu value="#{controllerDetallesConvenio.estadoConvenio}"
+                                                     class="form-control"
+                                                     id="estadoConvenio">
+                                        <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                        <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                        <f:ajax event="change" listener="#{controllerDetallesConvenio.actualizarEstado()}" execute="estadoConvenio" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </fieldset>
+                        </div>
                         <br></br>
                         <br></br>
                         <hr class="intro-divider"/>
@@ -202,6 +204,7 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+            <br></br>
             <div id="footer">
                 <footer>
                     <div class="container">

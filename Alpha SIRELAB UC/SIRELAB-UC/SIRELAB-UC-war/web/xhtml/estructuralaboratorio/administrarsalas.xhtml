@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="formularioGeneral">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -102,6 +102,20 @@ and open the template in the editor.
                                                         <f:converter converterId="ConverterGenerico" />
                                                     </h:selectOneMenu>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="parametroEstado">
+                                                            Tipo de Sala
+                                                        </label>
+                                                        <h:selectOneMenu value="#{controllerAdministrarSalas.parametroPrivada}"
+                                                                         class="form-control"
+                                                                         id="parametroPrivada">
+                                                            <f:selectItem itemLabel="PUBLICA" itemValue="1" />
+                                                            <f:selectItem itemLabel="PRIVADA" itemValue="2" />
+                                                            <f:selectItem itemLabel="TODOS" itemValue="3" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row col-md-12">
                                                 <div class="col-md-4">
@@ -130,20 +144,6 @@ and open the template in the editor.
                                                                        itemLabel="#{edificio.descripcionedificio}" itemValue="#{edificio}"/>
                                                         <f:converter converterId="ConverterGenerico" />
                                                     </h:selectOneMenu>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="parametroEstado">
-                                                            Tipo de Sala
-                                                        </label>
-                                                        <h:selectOneMenu value="#{controllerAdministrarSalas.parametroPrivada}"
-                                                                         class="form-control"
-                                                                         id="parametroPrivada">
-                                                            <f:selectItem itemLabel="PUBLICA" itemValue="1" />
-                                                            <f:selectItem itemLabel="PRIVADA" itemValue="2" />
-                                                            <f:selectItem itemLabel="TODOS" itemValue="3" />
-                                                        </h:selectOneMenu>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -176,21 +176,9 @@ and open the template in the editor.
                                                              value="#{controllerAdministrarSalas.listaSalasLaboratoriosTabla}">
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Nombre"/>
+                                                            <h:outputText value="Nombre - Codigo"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.nombresala}"/>
-                                                    </h:column>  
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Codigo"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.codigosala}"/>
-                                                    </h:column>  
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="Capacidad"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.capacidadsala}"/>
+                                                        <h:outputText value="#{item.nombresala} - #{item.codigosala}"/>
                                                     </h:column>  
                                                     <h:column>
                                                         <f:facet name="header">

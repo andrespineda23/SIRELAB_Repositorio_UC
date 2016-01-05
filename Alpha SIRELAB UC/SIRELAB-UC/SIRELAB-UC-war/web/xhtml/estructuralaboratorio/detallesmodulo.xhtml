@@ -123,7 +123,7 @@ and open the template in the editor.
                                                          id="salaModuloLaboratorio">
                                             <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
                                             <f:selectItems value="#{controllerDetallesModulo.listaSalasLaboratorio}" var="sala"
-                                                           itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                                           itemLabel="#{sala.strNombreEstado}" itemValue="#{sala}"/>
                                             <f:converter converterId="ConverterGenerico" />
                                             <f:ajax event="change" listener="#{controllerDetallesModulo.actualizarSalasLaboratorio()}" execute="salaModuloLaboratorio" render="msnSalaLaboratorioModulo"/>
                                         </h:selectOneMenu>

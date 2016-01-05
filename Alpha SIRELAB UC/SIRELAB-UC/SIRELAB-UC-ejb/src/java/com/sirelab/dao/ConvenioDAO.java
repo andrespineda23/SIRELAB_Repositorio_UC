@@ -43,6 +43,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
     public void editarConvenio(Convenio convenio) {
         try {
             em.merge(convenio);
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error editarConvenio ConvenioDAO : " + e.toString());
         }
@@ -52,6 +53,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
     public void eliminarConvenio(Convenio convenio) {
         try {
             em.remove(em.merge(convenio));
+            em.flush();
         } catch (Exception e) {
             System.out.println("Error eliminarConvenio ConvenioDAO : " + e.toString());
         }

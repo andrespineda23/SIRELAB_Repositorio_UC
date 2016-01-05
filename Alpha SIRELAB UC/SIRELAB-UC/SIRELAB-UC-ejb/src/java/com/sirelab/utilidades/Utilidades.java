@@ -26,7 +26,7 @@ public final class Utilidades {
      * @return true-Diferente de nulo / false-Es nulo
      */
     public static Boolean validarNulo(Object obj) {
-        if (null != obj) {
+        if (null != obj && !obj.toString().isEmpty()) {
             return true;
         }
         return false;

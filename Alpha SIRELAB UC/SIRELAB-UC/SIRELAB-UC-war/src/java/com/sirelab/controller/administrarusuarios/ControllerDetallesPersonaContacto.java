@@ -62,7 +62,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         constantes = new MensajesConstantes();
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
-        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionDireccion");
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionUsuario");
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             activarEstado = false;
         }
@@ -95,6 +95,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         colorMensaje = "black";
         mensajeFormulario = "N/A";
         inputConvenioPorEntidad = personaContactoEditar.getConvenioporentidad();
+        inputNombre = personaContactoEditar.getPersona().getNombrespersona();
         inputApellido = personaContactoEditar.getPersona().getApellidospersona();
         inputEmail = personaContactoEditar.getPersona().getEmailpersona();
         inputEmailOpc = personaContactoEditar.getPersona().getEmailsecundario();
@@ -368,6 +369,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
             personaContactoEditar.getPersona().setTelefono2persona(inputTelefono2);
             personaContactoEditar.getPersona().setDireccionpersona(inputDireccion);
             personaContactoEditar.getPersona().setEmailsecundario(inputEmailOpc);
+            personaContactoEditar.getPersona().getUsuario().setEstado(inputEstado);
             personaContactoEditar.setConvenioporentidad(inputConvenioPorEntidad);
             administrarPersonasContactoBO.editarPersonaContado(personaContactoEditar);
         } catch (Exception e) {

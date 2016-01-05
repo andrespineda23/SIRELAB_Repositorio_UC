@@ -12,7 +12,10 @@ import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -71,8 +74,11 @@ public class ControllerDetallesConvenio implements Serializable {
             DateFormat df = DateFormat.getDateInstance();
             inputFechaInicio = df.format(fecha1);
             Date fecha2 = convenioEditar.getFechafinal();
-            DateFormat df2 = DateFormat.getDateInstance();
-            inputFechaFin = df2.format(fecha2);
+            if (null != fecha2) {
+                inputFechaFin = df.format(fecha2);
+            } else {
+                inputFechaFin = null;
+            }
             estadoConvenio = convenioEditar.getEstado();
             validacionesNombre = true;
             validacionesDescripcion = true;
@@ -196,12 +202,29 @@ public class ControllerDetallesConvenio implements Serializable {
 
     private boolean validarFechasRegistro() {
         boolean retorno = true;
-        if (Utilidades.validarNulo(inputFechaFin)) {
-            if (new Date(inputFechaFin).after(new Date(inputFechaInicio))) {
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaDate1 = null;
+        try {
+            fechaDate1 = formateador.parse(inputFechaInicio);
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(ControllerDetallesConvenio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Date fechaDate2 = null;
+        try {
+            if (null != inputFechaFin && !inputFechaFin.isEmpty()) {
+                fechaDate2 = formateador.parse(inputFechaFin);
+            }
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(ControllerDetallesConvenio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (null != fechaDate2) {
+            if (fechaDate1.before(fechaDate2)) {
                 retorno = true;
             } else {
                 retorno = false;
             }
+        } else {
+            retorno = true;
         }
         return retorno;
     }
@@ -234,8 +257,12 @@ public class ControllerDetallesConvenio implements Serializable {
             convenioEditar.setValor(Integer.valueOf(inputValor));
             convenioEditar.setEstado(estadoConvenio);
             convenioEditar.setDescripcion(inputDescripcion);
-            convenioEditar.setFechafinal(new Date(inputFechaFin));
             convenioEditar.setFechainicial(new Date(inputFechaInicio));
+            if (null != inputFechaFin && !inputFechaFin.isEmpty()) {
+                convenioEditar.setFechafinal(new Date(inputFechaFin));
+            } else {
+                convenioEditar.setFechafinal(null);
+            }
             gestionarConvenioBO.editarConvenio(convenioEditar);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo:  " + e.toString());

@@ -88,19 +88,25 @@ public class ServiciosSala implements Serializable {
     }
 
     public String getNombreservicio() {
+        if (null != nombreservicio) {
+            return nombreservicio.toUpperCase();
+        }
         return nombreservicio;
     }
 
     public void setNombreservicio(String nombreservicio) {
-        this.nombreservicio = nombreservicio;
+        this.nombreservicio = nombreservicio.toUpperCase();
     }
 
     public String getCodigoservicio() {
+        if (null != codigoservicio) {
+            return codigoservicio.toUpperCase();
+        }
         return codigoservicio;
     }
 
     public void setCodigoservicio(String codigoservicio) {
-        this.codigoservicio = codigoservicio;
+        this.codigoservicio = codigoservicio.toUpperCase();
     }
 
     public int getCostoservicio() {

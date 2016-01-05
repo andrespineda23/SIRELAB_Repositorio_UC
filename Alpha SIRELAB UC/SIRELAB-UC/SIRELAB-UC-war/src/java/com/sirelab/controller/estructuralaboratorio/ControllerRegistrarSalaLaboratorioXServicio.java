@@ -130,7 +130,6 @@ public class ControllerRegistrarSalaLaboratorioXServicio implements Serializable
 
     public void limpiarFormulario() {
         nuevoServicio = null;
-        nuevoSalaLaboratorio = null;
         validacionesServicio = false;
         mensajeFormulario = "";
     }
