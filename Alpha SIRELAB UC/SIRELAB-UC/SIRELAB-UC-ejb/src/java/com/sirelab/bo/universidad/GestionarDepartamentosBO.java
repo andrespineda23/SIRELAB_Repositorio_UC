@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarDepartamentosBO.class);
+    
     @EJB
     DepartamentoDAOInterface departamentoDAO;
     @EJB
@@ -33,7 +36,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString());
             return null;
         }
     }
@@ -45,7 +48,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString());
             return null;
         }
     }
@@ -56,7 +59,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO consultarDepartamentosPorParametro : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO consultarDepartamentosPorParametro : " + e.toString());
             return null;
         }
     }
@@ -66,7 +69,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
         try {
             departamentoDAO.crearDepartamento(departamento);
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString());
         }
     }
 
@@ -75,7 +78,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
         try {
             departamentoDAO.editarDepartamento(departamento);
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString());
         }
     }
 
@@ -85,7 +88,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             Departamento registro = departamentoDAO.buscarDepartamentoPorID(idDepartamento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO obtenerDepartamentoPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorIDDepartamento : " + e.toString());
             return null;
         }
     }
@@ -96,7 +99,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString());
             return null;
         }
     }
@@ -121,7 +124,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString());
             return null;
         }
     }

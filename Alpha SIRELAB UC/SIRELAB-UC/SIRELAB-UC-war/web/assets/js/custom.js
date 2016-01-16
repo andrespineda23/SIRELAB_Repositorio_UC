@@ -1,34 +1,34 @@
 ﻿/*=============================================================
-    Authour URL: www.designbootstrap.com
-    
-    http://www.designbootstrap.com/
-
-    License: MIT
-
-    http://opensource.org/licenses/MIT
-
-    100% Free To use For Personal And Commercial Use.
-
-    IN EXCHANGE JUST TELL PEOPLE ABOUT THIS WEBSITE
-   
-========================================================  */
-$(document).ready(function () {
+ Authour URL: www.designbootstrap.com
+ 
+ http://www.designbootstrap.com/
+ 
+ License: MIT
+ 
+ http://opensource.org/licenses/MIT
+ 
+ 100% Free To use For Personal And Commercial Use.
+ 
+ IN EXCHANGE JUST TELL PEOPLE ABOUT THIS WEBSITE
+ 
+ ========================================================  */
+        $(document).ready(function () {
 
     /*====================================
-          SUBSCRIPTION   SCRIPTS 
-    ======================================*/
+     SUBSCRIPTION   SCRIPTS 
+     ======================================*/
 
 
-   $("#postcontent").submit(function (e) {
+    $("#postcontent").submit(function (e) {
         e.preventDefault();
         $.ajax({
             type: "POST",
             url: "subscribe.php",
             data: $("#postcontent").serialize(),
-             success: function (response) {
-			  $('[name="email"]').val('');
-               // alert(response); // FOR ACTUAL RESPONSE
-			   alert('Thanks for  subscribing Us');
+            success: function (response) {
+                $('[name="email"]').val('');
+                // alert(response); // FOR ACTUAL RESPONSE
+                alert('Thanks for  subscribing Us');
             }
         });
         e.preventDefault();
@@ -43,4 +43,14 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
-   });
+});
+
+
+function nobackbutton() {
+    window.location.hash = "no-back-button";
+    window.location.hash = "Again-No-back-button"; //chrome
+    window.onhashchange = function () {
+        window.location.hash = "no-back-button";
+    };
+}
+

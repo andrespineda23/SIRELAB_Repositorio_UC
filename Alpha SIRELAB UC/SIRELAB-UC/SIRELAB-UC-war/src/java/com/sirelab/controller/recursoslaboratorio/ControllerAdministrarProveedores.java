@@ -131,7 +131,7 @@ public class ControllerAdministrarProveedores implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString());
         }
     }
 

@@ -186,7 +186,7 @@ public class ControllerDetallesEdificio implements Serializable {
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema:  " + e.toString());
-            System.out.println("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString());
         }
     }
 

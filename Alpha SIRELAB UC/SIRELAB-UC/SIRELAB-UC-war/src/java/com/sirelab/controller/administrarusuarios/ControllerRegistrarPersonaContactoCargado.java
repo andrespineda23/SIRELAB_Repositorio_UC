@@ -356,7 +356,7 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
             administrarPersonasContactoBO.crearPersonaContado(usuarioNuevo, personaNueva, personaCNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema : " + e.toString());
         }
     }
 

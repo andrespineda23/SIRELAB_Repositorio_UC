@@ -169,7 +169,7 @@ public class ControllerHistorialEdificios implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerHistorialEdificios actualizarSedes:  " + e.toString());
-            System.out.println("Error ControllerHistorialEdificios actualizarSedes : " + e.toString());
+            logger.error("Error ControllerHistorialEdificios actualizarSedes : " + e.toString());
         }
     }
 
@@ -201,7 +201,7 @@ public class ControllerHistorialEdificios implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerHistorialEdificios actualizarEdificios:  " + e.toString());
-            System.out.println("Error ControllerHistorialEdificios actualizarEdificios : " + e.toString());
+            logger.error("Error ControllerHistorialEdificios actualizarEdificios : " + e.toString());
         }
     }
 

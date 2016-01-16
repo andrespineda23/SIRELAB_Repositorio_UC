@@ -117,7 +117,7 @@ public class ControllerRegistrarDocente implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarDocente actualizarFacultades:  " + e.toString());
-            System.out.println("Error ControllerRegistrarDocente actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente actualizarFacultades : " + e.toString());
         }
     }
 
@@ -131,7 +131,7 @@ public class ControllerRegistrarDocente implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarDocente actualizarDepartamentos:  " + e.toString());
-            System.out.println("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString());
         }
     }
 
@@ -145,7 +145,7 @@ public class ControllerRegistrarDocente implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarDocente actualizarCargos:  " + e.toString());
-            System.out.println("Error ControllerRegistrarDocente actualizarCargos : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente actualizarCargos : " + e.toString());
         }
     }
 
@@ -361,7 +361,7 @@ public class ControllerRegistrarDocente implements Serializable {
             activarAceptar = true;
             activarCasillas = true;
             colorMensaje = "green";
-            System.out.println("Funciona sin problema");
+            logger.error("Funciona sin problema");
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "red";
@@ -460,7 +460,7 @@ public class ControllerRegistrarDocente implements Serializable {
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString());
         }
     }
 

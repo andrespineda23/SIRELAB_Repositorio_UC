@@ -110,7 +110,7 @@ public class ControllerDetallesEstadoEquipo implements Serializable {
             gestionarVariableEstadosEquiposBO.editarEstadoEquipo(estadoEquipoDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEstadoEquipo almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetallesEstadoEquipo almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallesEstadoEquipo almacenarModificacionRegistro: " + e.toString());
         }
     }
 

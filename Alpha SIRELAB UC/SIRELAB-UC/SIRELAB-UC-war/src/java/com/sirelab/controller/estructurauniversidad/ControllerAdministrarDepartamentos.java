@@ -134,7 +134,7 @@ public class ControllerAdministrarDepartamentos implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros : " + e.toString());
         }
     }
 

@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstadosEquiposBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableEstadosEquiposBO.class);
+    
     @EJB
     EstadoEquipoDAOInterface estadoEquipoDAO;
 
@@ -28,7 +31,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
         try {
             estadoEquipoDAO.crearEstadoEquipo(estadoEquipo);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosEquiposBO crearEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO crearEstadoEquipo : " + e.toString());
         }
     }
 
@@ -37,7 +40,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
         try {
             estadoEquipoDAO.editarEstadoEquipo(estadoEquipo);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosEquiposBO editarEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO editarEstadoEquipo : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
         try {
             estadoEquipoDAO.eliminarEstadoEquipo(estadoEquipo);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString());
         }
     }
 
@@ -56,7 +59,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
             EstadoEquipo registro = estadoEquipoDAO.buscarEstadoEquipoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString());
             return null;
         }
     }
@@ -67,7 +70,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
             List<EstadoEquipo> lista = estadoEquipoDAO.consultarEstadosEquipos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosEquiposBO consultarEstadosEquiposRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO consultarEstadosEquiposRegistrados : " + e.toString());
             return null;
         }
     }

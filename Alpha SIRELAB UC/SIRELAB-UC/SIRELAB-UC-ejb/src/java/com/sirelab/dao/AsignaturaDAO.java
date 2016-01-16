@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,9 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class AsignaturaDAO implements AsignaturaDAOInterface {
 
+    
+    static Logger logger = Logger.getLogger(AsignaturaDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -31,7 +35,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             em.persist(asignatura);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearAsignatura AsignaturaDAO : " + e.toString());
+            logger.error("Error crearAsignatura AsignaturaDAO : " + e.toString());
         }
     }
 
@@ -41,7 +45,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             em.clear();
             em.merge(asignatura);
         } catch (Exception e) {
-            System.out.println("Error editarAsignatura AsignaturaDAO : " + e.toString());
+            logger.error("Error editarAsignatura AsignaturaDAO : " + e.toString());
         }
     }
 
@@ -51,7 +55,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             em.clear();
             em.remove(em.merge(asignatura));
         } catch (Exception e) {
-            System.out.println("Error eliminarAsignatura AsignaturaDAO : " + e.toString());
+            logger.error("Error eliminarAsignatura AsignaturaDAO : " + e.toString());
         }
     }
 
@@ -64,7 +68,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             List<Asignatura> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarAsignaturas AsignaturaDAO : " + e.toString());
+            logger.error("Error consultarAsignaturas AsignaturaDAO : " + e.toString());
             return null;
         }
     }
@@ -77,7 +81,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             List<Asignatura> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarAsignaturas AsignaturaDAO : " + e.toString());
+            logger.error("Error consultarAsignaturas AsignaturaDAO : " + e.toString());
             return null;
         }
     }
@@ -92,7 +96,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             Asignatura registro = (Asignatura) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAsignaturaPorID AsignaturaDAO : " + e.toString());
+            logger.error("Error buscarAsignaturaPorID AsignaturaDAO : " + e.toString());
             return null;
         }
     }
@@ -107,7 +111,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             Asignatura registro = (Asignatura) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAsignaturaPorCodigo AsignaturaDAO : " + e.toString());
+            logger.error("Error buscarAsignaturaPorCodigo AsignaturaDAO : " + e.toString());
             return null;
         }
     }
@@ -123,12 +127,12 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombreasignatura ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Asignatura> tq = em.createQuery(consulta, Asignatura.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarAsignaturasPorFiltrado AsignaturaDAO : " + e.toString());
+            logger.error("Error buscarAsignaturasPorFiltrado AsignaturaDAO : " + e.toString());
             return null;
         }
     }
@@ -169,7 +173,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
             }
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
-        System.out.println(jpql);
+        logger.error(jpql);
         if (jpql.trim()
                 .endsWith("WHERE")) {
             jpql = jpql.replace("WHERE", "");
@@ -213,7 +217,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimaAsignaturaRegistrada AsignaturaDAO : " + e.toString());
+            logger.error("Error obtenerUltimaAsignaturaRegistrada AsignaturaDAO : " + e.toString());
             return null;
         }
     }

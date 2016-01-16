@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
 
+    static Logger logger = Logger.getLogger(ManualHasEquipoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
             em.persist(manual);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearManualHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error crearManualHasEquipo ManualHasEquipoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
         try {
             em.merge(manual);
         } catch (Exception e) {
-            System.out.println("Error editarManualHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error editarManualHasEquipo ManualHasEquipoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
         try {
             em.remove(em.merge(manual));
         } catch (Exception e) {
-            System.out.println("Error eliminarManualHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error eliminarManualHasEquipo ManualHasEquipoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
             List<ManualHasEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarManualHasEquipoesHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error consultarManualHasEquipoesHasEquipo ManualHasEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
             ManualHasEquipo registro = (ManualHasEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarManualHasEquipoPorID ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error buscarManualHasEquipoPorID ManualHasEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
             List<ManualHasEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarManualHasEquipoPorEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error buscarManualHasEquipoPorEquipo ManualHasEquipoDAO : " + e.toString());
             return null;
         }
     }

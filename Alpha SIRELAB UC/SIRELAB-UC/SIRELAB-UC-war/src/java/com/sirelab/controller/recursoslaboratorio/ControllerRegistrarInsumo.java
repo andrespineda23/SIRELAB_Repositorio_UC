@@ -270,7 +270,7 @@ public class ControllerRegistrarInsumo implements Serializable {
             gestionarRecursoInsumosBO.crearNuevoInsumo(nuevaInsumo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema : " + e.toString());
         }
     }
 

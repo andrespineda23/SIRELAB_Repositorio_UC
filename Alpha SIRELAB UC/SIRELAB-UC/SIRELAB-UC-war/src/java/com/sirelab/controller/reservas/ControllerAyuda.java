@@ -5,12 +5,14 @@
  */
 package com.sirelab.controller.reservas;
 
+import com.sirelab.controller.paginasiniciales.ControllerPaginasIniciales;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +23,8 @@ import javax.faces.bean.SessionScoped;
 public class ControllerAyuda implements Serializable {
 
     private String dateAsString;
+    
+    static Logger logger = Logger.getLogger(ControllerAyuda.class);
 
     public ControllerAyuda() {
     }
@@ -33,7 +37,7 @@ public class ControllerAyuda implements Serializable {
     }
 
     public void impirmir() {
-        System.out.println("date : " + dateAsString);
+        logger.error("date : " + dateAsString);
     }
 
     public String getDateAsString() {

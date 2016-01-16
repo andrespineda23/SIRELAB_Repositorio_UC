@@ -63,7 +63,7 @@ public class ControllerReservaModulo1 implements Serializable {
     private boolean validarFecha() {
         boolean retorno = true;
         if (Utilidades.validarNulo(fecha)) {
-            if (!Utilidades.fechaIngresadaCorrecta(fecha)) {
+            if (!Utilidades.fechaIngresadaCorrecta(fecha.toString())) {
                 retorno = false;
             }
         } else {

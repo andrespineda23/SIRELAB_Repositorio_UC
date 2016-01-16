@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterface {
 
+    static Logger logger = Logger.getLogger(ReservaEquipoElementoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
             em.persist(reserva);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString());
+            logger.error("Error crearReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
         try {
             em.merge(reserva);
         } catch (Exception e) {
-            System.out.println("Error editarReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString());
+            logger.error("Error editarReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
         try {
             em.remove(em.merge(reserva));
         } catch (Exception e) {
-            System.out.println("Error eliminarReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString());
+            logger.error("Error eliminarReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
             List<ReservaEquipoElemento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarReservaEquipoElementos ReservaEquipoElementoDAO : " + e.toString());
+            logger.error("Error consultarReservaEquipoElementos ReservaEquipoElementoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
             ReservaEquipoElemento registro = (ReservaEquipoElemento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaEquipoElementoPorID ReservaEquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarReservaEquipoElementoPorID ReservaEquipoElementoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
             List<ReservaEquipoElemento> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaEquipoElementosPorPersona ReservaEquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarReservaEquipoElementosPorPersona ReservaEquipoElementoDAO : " + e.toString());
             return null;
         }
     }
@@ -109,7 +112,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
             List<ReservaEquipoElemento> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaEquipoElementosPorReserva ReservaEquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarReservaEquipoElementosPorReserva ReservaEquipoElementoDAO : " + e.toString());
             return null;
         }
     }

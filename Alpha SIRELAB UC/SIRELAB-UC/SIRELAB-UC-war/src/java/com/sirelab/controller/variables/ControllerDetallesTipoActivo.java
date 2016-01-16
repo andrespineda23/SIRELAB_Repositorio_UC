@@ -110,7 +110,7 @@ public class ControllerDetallesTipoActivo implements Serializable {
             gestionarVariableTiposActivoBO.editarTipoActivo(tipoActivoDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerDetalleTipoActivo almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetalleTipoActivo almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetalleTipoActivo almacenarModificacionRegistro: " + e.toString());
         }
     }
 

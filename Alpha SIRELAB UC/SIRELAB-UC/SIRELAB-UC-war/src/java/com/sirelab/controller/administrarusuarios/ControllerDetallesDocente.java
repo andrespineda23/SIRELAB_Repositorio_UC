@@ -210,7 +210,7 @@ public class ControllerDetallesDocente implements Serializable {
             modificacionesRegistroDocente();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesDocente actualizarFacultades:  " + e.toString());
-            System.out.println("Error ControllerDetallesDocente actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerDetallesDocente actualizarFacultades : " + e.toString());
         }
     }
 
@@ -486,7 +486,7 @@ public class ControllerDetallesDocente implements Serializable {
             restaurarInformacionDocente();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesDocente almacenarNuevoDocenteEnSistema:  " + e.toString());
-            System.out.println("Error modificarInformacionDocente almacenarNuevoDocenteEnSistema : " + e.toString());
+            logger.error("Error modificarInformacionDocente almacenarNuevoDocenteEnSistema : " + e.toString());
         }
     }
 
@@ -517,7 +517,7 @@ public class ControllerDetallesDocente implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesDocente activarDocente:  " + e.toString());
-            System.out.println("Error ControllerDetallesDocentes activarDocente : " + e.toString());
+            logger.error("Error ControllerDetallesDocentes activarDocente : " + e.toString());
         }
     }
 
@@ -540,7 +540,7 @@ public class ControllerDetallesDocente implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesDocente inactivarDocente:  " + e.toString());
-            System.out.println("Error ControllerDetallesDocentes inactivarDocente : " + e.toString());
+            logger.error("Error ControllerDetallesDocentes inactivarDocente : " + e.toString());
         }
     }
 

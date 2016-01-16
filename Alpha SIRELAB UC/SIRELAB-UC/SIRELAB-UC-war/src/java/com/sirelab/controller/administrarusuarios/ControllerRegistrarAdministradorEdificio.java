@@ -118,7 +118,7 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios:  " + e.toString());
-            System.out.println("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString());
+            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString());
         }
     }
 
@@ -136,7 +136,7 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios:  " + e.toString());
-            System.out.println("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString());
+            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString());
         }
     }
 
@@ -481,7 +481,7 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
             administrarAdministradoresEdificioBO.almacenarNuevoAdministradorEdificioEnSistema(usuarioNuevo, personaNueva, nuevoRegistro, inputEdificio);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAdministradorEdificio almacenarNuevoAdministradorEdificioEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarAdministradorEdificio almacenarNuevoAdministradorEdificioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarAdministradorEdificio almacenarNuevoAdministradorEdificioEnSistema : " + e.toString());
         }
     }
 

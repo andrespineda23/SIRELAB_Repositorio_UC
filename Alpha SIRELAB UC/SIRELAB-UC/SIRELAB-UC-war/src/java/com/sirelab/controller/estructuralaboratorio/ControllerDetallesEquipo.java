@@ -321,7 +321,7 @@ public class ControllerDetallesEquipo implements Serializable {
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  " + e.toString());
-            System.out.println("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString());
         }
     }
 
@@ -343,7 +343,7 @@ public class ControllerDetallesEquipo implements Serializable {
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString());
-            System.out.println("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
         }
     }
 
@@ -358,7 +358,7 @@ public class ControllerDetallesEquipo implements Serializable {
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString());
-            System.out.println("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
         }
     }
 
@@ -517,7 +517,7 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void validarFechaEquipo() {
         if (Utilidades.validarNulo(fechaEquipoElemento)) {
-            if (Utilidades.fechaIngresadaCorrecta(new Date(fechaEquipoElemento))) {
+            if (Utilidades.fechaIngresadaCorrecta(fechaEquipoElemento)) {
                 validacionesFecha = true;
             } else {
                 validacionesFecha = true;
@@ -642,7 +642,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 cambioModulo = true;
                 equipoCambio = equipoElementoDetalles;
             }
-            System.out.println("nombreEquipoElemento: "+nombreEquipoElemento);
+            logger.error("nombreEquipoElemento: "+nombreEquipoElemento);
             equipoElementoDetalles.setNombreequipo(nombreEquipoElemento);
             equipoElementoDetalles.setInventarioequipo(inventarioEquipoElemento);
             equipoElementoDetalles.setMarcaequipo(nombreEquipoElemento);
@@ -673,7 +673,7 @@ public class ControllerDetallesEquipo implements Serializable {
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString());
-            System.out.println("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString());
         }
     }
 

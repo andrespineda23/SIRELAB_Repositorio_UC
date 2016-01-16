@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,8 @@ import javax.persistence.Query;
 @Stateless
 public class ReservaDAO implements ReservaDAOInterface {
 
+    static Logger logger = Logger.getLogger(ReservaDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -34,7 +37,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             em.persist(reserva);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearReserva ReservaDAO : " + e.toString());
+            logger.error("Error crearReserva ReservaDAO : " + e.toString());
         }
     }
 
@@ -43,7 +46,7 @@ public class ReservaDAO implements ReservaDAOInterface {
         try {
             em.merge(reserva);
         } catch (Exception e) {
-            System.out.println("Error editarReserva ReservaDAO : " + e.toString());
+            logger.error("Error editarReserva ReservaDAO : " + e.toString());
         }
     }
 
@@ -52,7 +55,7 @@ public class ReservaDAO implements ReservaDAOInterface {
         try {
             em.remove(em.merge(reserva));
         } catch (Exception e) {
-            System.out.println("Error eliminarReserva ReservaDAO : " + e.toString());
+            logger.error("Error eliminarReserva ReservaDAO : " + e.toString());
         }
     }
 
@@ -65,7 +68,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarReservas ReservaDAO : " + e.toString());
+            logger.error("Error consultarReservas ReservaDAO : " + e.toString());
             return null;
         }
     }
@@ -80,7 +83,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             Reserva registro = (Reserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaPorID ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservaPorID ReservaDAO : " + e.toString());
             return null;
         }
     }
@@ -97,7 +100,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservasPorPersona ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservasPorPersona ReservaDAO : " + e.toString());
             return null;
         }
     }
@@ -113,7 +116,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             Reserva registro = (Reserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarUltimaReservaPersona ReservaDAO : " + e.toString());
+            logger.error("Error buscarUltimaReservaPersona ReservaDAO : " + e.toString());
             return null;
         }
     }
@@ -128,7 +131,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservasPorFecha ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservasPorFecha ReservaDAO : " + e.toString());
             return null;
         }
     }
@@ -143,7 +146,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservasPorEstadoReserva ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservasPorEstadoReserva ReservaDAO : " + e.toString());
             return null;
         }
     }

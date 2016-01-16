@@ -240,7 +240,7 @@ public class ControllerDetallesCarrera implements Serializable {
             gestionarCarrerasBO.modificarInformacionCarrera(carreraDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema : " + e.toString());
         }
     }
 

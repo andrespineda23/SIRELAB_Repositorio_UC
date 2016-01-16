@@ -5,8 +5,10 @@
  */
 package com.sirelab.utilidades;
 
+import com.sirelab.dao.UsuarioDAO;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -14,6 +16,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class EncriptarContrasenia {
 
+    static Logger logger = Logger.getLogger(EncriptarContrasenia.class);
+    
     private static String SHA1 = "SHA-1";
 
     /**
@@ -52,7 +56,7 @@ public class EncriptarContrasenia {
             messageDigest.update(buffer);
             digest = messageDigest.digest();
         } catch (NoSuchAlgorithmException ex) {
-            System.out.println("Error creando Digest : " + ex.toString());
+            logger.error("Error creando Digest : " + ex.toString());
         }
         return toHexadecimal(digest);
     }

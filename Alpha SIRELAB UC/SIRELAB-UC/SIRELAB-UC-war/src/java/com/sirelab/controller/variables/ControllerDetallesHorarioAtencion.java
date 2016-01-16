@@ -246,7 +246,7 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
             gestionarVariableHorariosAtencionBO.editarHorarioAtencion(horarioAtencionDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro: " + e.toString());
         }
     }
 

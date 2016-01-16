@@ -133,7 +133,7 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarGuiasLaboratorio buscarLaboratoriosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarGuiasLaboratorio buscarLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarGuiasLaboratorio buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
 

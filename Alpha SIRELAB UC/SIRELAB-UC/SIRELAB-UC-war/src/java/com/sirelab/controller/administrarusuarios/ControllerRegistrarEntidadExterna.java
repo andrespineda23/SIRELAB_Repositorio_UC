@@ -300,7 +300,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(entidadexternaNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
         }
     }
 

@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariablePeriodosAcademicosBO implements GestionarVariablePeriodosAcademicosBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariablePeriodosAcademicosBO.class);
+    
     @EJB
     PeriodoAcademicoDAOInterface periodoAcademicoInterface;
 
@@ -29,7 +32,7 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
             List<PeriodoAcademico> lista = periodoAcademicoInterface.consultarPeriodosAcademicos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariablePeriodosAcademicosBO consultarPeriodosAcademicos: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO consultarPeriodosAcademicos: " + e.toString());
             return null;
         }
     }
@@ -39,7 +42,7 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
         try {
             periodoAcademicoInterface.crearPeriodoAcademico(periodo);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariablePeriodosAcademicosBO crearPeriodoAcademico: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO crearPeriodoAcademico: " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
         try {
             periodoAcademicoInterface.editarPeriodoAcademico(periodo);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariablePeriodosAcademicosBO editarPeriodoAcademico: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO editarPeriodoAcademico: " + e.toString());
         }
     }
 
@@ -58,7 +61,7 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
             PeriodoAcademico registro = periodoAcademicoInterface.buscarPeriodoAcademicoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariablePeriodosAcademicosBO consultarPeriodoAcademicoPorID: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO consultarPeriodoAcademicoPorID: " + e.toString());
             return null;
         }
     }

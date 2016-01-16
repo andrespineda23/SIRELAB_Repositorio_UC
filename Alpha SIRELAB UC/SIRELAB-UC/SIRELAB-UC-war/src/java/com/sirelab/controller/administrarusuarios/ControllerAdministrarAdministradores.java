@@ -145,7 +145,7 @@ public class ControllerAdministrarAdministradores implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros : " + e.toString());
         }
     }
 

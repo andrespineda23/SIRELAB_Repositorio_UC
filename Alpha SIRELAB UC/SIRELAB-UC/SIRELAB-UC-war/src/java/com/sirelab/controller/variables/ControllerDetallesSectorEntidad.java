@@ -110,7 +110,7 @@ public class ControllerDetallesSectorEntidad implements Serializable {
             gestionarVariableTiposCargoBO.editarSectorEntidad(tipoCargoDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerDetalleSectorEntidad almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetalleSectorEntidad almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetalleSectorEntidad almacenarModificacionRegistro: " + e.toString());
         }
     }
 

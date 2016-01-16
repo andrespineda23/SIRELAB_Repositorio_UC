@@ -70,7 +70,7 @@ and open the template in the editor.
             });
         </script>
     </h:head>
-    <h:body style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;">
+    <h:body  onload="nobackbutton();" style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;">
         <h:form id="form">
             <div id="header">
                 <header>
@@ -121,21 +121,6 @@ and open the template in the editor.
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
                                             <div class="form-group">
-                                                <label for="horaIngreso">
-                                                    Hora de Ingreso
-                                                </label>
-                                                <h:selectOneMenu value="#{controllerReservaSala1.horaIngreso}"
-                                                                 class="form-control"  disabled="#{controllerReservaSala1.activarHora}"
-                                                                 id="horaIngreso">
-                                                    <f:selectItem itemLabel="Seleccione Hora" itemValue="null" />
-                                                    <f:selectItems value="#{controllerReservaSala1.listaHora}" />
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
-                                            <div class="form-group">
                                                 <label for="parametroLaboratorio">
                                                     Laboratorio
                                                 </label>
@@ -150,6 +135,8 @@ and open the template in the editor.
                                                 </h:selectOneMenu>
                                             </div>
                                         </div>
+                                    </div> 
+                                    <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
                                         <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="parametroSala">
@@ -166,7 +153,19 @@ and open the template in the editor.
                                                 </h:selectOneMenu>
                                             </div>
                                         </div>
-
+                                        <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="horaIngreso">
+                                                    Hora de Ingreso
+                                                </label>
+                                                <h:selectOneMenu value="#{controllerReservaSala1.horaIngreso}"
+                                                                 class="form-control"  disabled="#{controllerReservaSala1.activarHora}"
+                                                                 id="horaIngreso">
+                                                    <f:selectItem itemLabel="Seleccione Hora" itemValue="null" />
+                                                    <f:selectItems value="#{controllerReservaSala1.listaHora}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
                                     </div> 
                                 </fieldset>
                                 <br></br>

@@ -21,6 +21,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -30,6 +31,9 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class ControllerReservaSala1 implements Serializable {
 
+    static Logger logger = Logger.getLogger(ControllerReservaSala1.class);
+    
+    
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
@@ -64,7 +68,6 @@ public class ControllerReservaSala1 implements Serializable {
     private boolean validarFecha() {
         boolean retorno = true;
         if (Utilidades.validarNulo(fecha)) {
-            System.out.println("11");
             Date fechaDia = new Date();
             Date fechaValidar = new Date(fecha);
             if (fechaValidar.after(fechaDia)) {
@@ -97,7 +100,7 @@ public class ControllerReservaSala1 implements Serializable {
         if (!Utilidades.validarNulo(parametroSala)) {
             retorno = false;
         }
-        //activarHoraReserva();
+        activarHoraReserva();
         return retorno;
     }
 
@@ -111,7 +114,8 @@ public class ControllerReservaSala1 implements Serializable {
                     Integer horaFin = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoracierresabado());
                     horaIngreso = null;
                     listaHora = new ArrayList<Integer>();
-                    for (int i = horaInicio; i < horaFin - 2; i++) {
+                    int horaBloque = Integer.valueOf(parametroSala.getLaboratorio().getBloquehorareserva());
+                    for (int i = horaInicio; i < horaFin - horaBloque; i++) {
                         listaHora.add(i);
                     }
                 } else {
@@ -119,7 +123,8 @@ public class ControllerReservaSala1 implements Serializable {
                     Integer horaFin = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoracierre());
                     horaIngreso = null;
                     listaHora = new ArrayList<Integer>();
-                    for (int i = horaInicio; i < horaFin - 2; i++) {
+                    int horaBloque = Integer.valueOf(parametroSala.getLaboratorio().getBloquehorareserva());
+                    for (int i = horaInicio; i < horaFin - horaBloque; i++) {
                         listaHora.add(i);
                     }
                 }
@@ -131,19 +136,19 @@ public class ControllerReservaSala1 implements Serializable {
     private boolean validarCamposReserva() {
         boolean retorno = true;
         if (validarSala() == false) {
-            System.out.println("1");
+            logger.error("1");
             retorno = false;
         }
         if (validarFecha() == false) {
-            System.out.println("2");
+            logger.error("2");
             retorno = false;
         }
         if (validarLaboratorio() == false) {
-            System.out.println("3");
+            logger.error("3");
             retorno = false;
         }
         if (validarHora() == false) {
-            System.out.println("4");
+            logger.error("4");
             retorno = false;
         }
         return retorno;

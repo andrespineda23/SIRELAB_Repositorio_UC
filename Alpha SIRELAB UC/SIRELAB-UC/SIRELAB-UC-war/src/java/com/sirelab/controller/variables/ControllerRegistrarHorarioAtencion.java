@@ -228,7 +228,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
             gestionarVariableHorariosAtencionBO.crearHorarioAtencion(nuevoHorario);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro:  " + e.toString());
-            System.out.println("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString());
+            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString());
         }
     }
 

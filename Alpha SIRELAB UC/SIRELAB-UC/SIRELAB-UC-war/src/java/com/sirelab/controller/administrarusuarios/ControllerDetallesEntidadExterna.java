@@ -348,7 +348,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             restaurarInformacionEntidadExterna();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna:  " + e.toString());
-            System.out.println("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna : " + e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna : " + e.toString());
         }
     }
 
@@ -391,7 +391,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEntidadExterna activarEntidadExterna:  " + e.toString());
-            System.out.println("Error ControllerDetallesEntidadesExternas activarEntidadExterna : " + e.toString());
+            logger.error("Error ControllerDetallesEntidadesExternas activarEntidadExterna : " + e.toString());
         }
     }
 
@@ -418,7 +418,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEntidadExterna inactivarEntidadExterna:  " + e.toString());
-            System.out.println("Error ControllerDetallesEntidadesExternas inactivarEntidadExterna : " + e.toString());
+            logger.error("Error ControllerDetallesEntidadesExternas inactivarEntidadExterna : " + e.toString());
         }
     }
 

@@ -148,7 +148,7 @@ public class ControllerDetallesConvenio implements Serializable {
 
     public void validarFechaInicio() {
         if (Utilidades.validarNulo(inputFechaInicio)) {
-            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaInicio))) {
+            if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
                 validacionesFechaInicio = true;
             } else {
                 validacionesFechaInicio = false;
@@ -163,7 +163,7 @@ public class ControllerDetallesConvenio implements Serializable {
 
     public void validarFechaFin() {
         if (Utilidades.validarNulo(inputFechaFin)) {
-            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaFin))) {
+            if (Utilidades.fechaIngresadaCorrecta(inputFechaFin)) {
                 validacionesFechaFin = true;
             } else {
                 validacionesFechaFin = false;
@@ -266,7 +266,7 @@ public class ControllerDetallesConvenio implements Serializable {
             gestionarConvenioBO.editarConvenio(convenioEditar);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo:  " + e.toString());
-            System.out.println("Error ControllerRegistrarConvenio almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo: " + e.toString());
         }
     }
 

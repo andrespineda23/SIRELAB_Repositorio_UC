@@ -98,7 +98,7 @@ public class ControllerRegistrarTipoReserva implements Serializable {
             gestionarVariableTiposReservaBO.crearTipoReserva(tipoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoReserva almacenarRegistroNuevo:  " + e.toString());
-            System.out.println("Error ControllerRegistrarTipoReserva almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoReserva almacenarRegistroNuevo: " + e.toString());
         }
     }
 

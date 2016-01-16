@@ -288,7 +288,7 @@ public class ControllerDetallesInsumo implements Serializable {
             gestionarRecursoInsumosBO.modificarInformacionInsumo(insumoDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema:  " + e.toString());
-            System.out.println("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema : " + e.toString());
         }
     }
 

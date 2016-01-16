@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -36,6 +37,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargadosLaboratoriosBOInterface {
 
+    static Logger logger = Logger.getLogger(AdministrarEncargadosLaboratoriosBO.class);
+    
     @EJB
     EncargadoPorEdificioDAOInterface encargadoPorEdificioDAO;
     @EJB
@@ -63,7 +66,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<TipoPerfil> lista = TipoPerfilDAO.consultarTiposPerfiles();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO consultarPerfilesPorEncargadoRegistrados : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO consultarPerfilesPorEncargadoRegistrados : " + e.toString());
             return null;
         }
     }
@@ -74,7 +77,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<EncargadoLaboratorio> lista = encargadoLaboratorioDAO.buscarEncargadosLaboratoriosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO consultarEncargadoLaboratoriosPorParametro : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO consultarEncargadoLaboratoriosPorParametro : " + e.toString());
             return null;
         }
     }
@@ -85,7 +88,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idEncargadoLaboratorio);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio : " + e.toString());
             return null;
         }
     }
@@ -96,7 +99,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerListaFacultades : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerListaFacultades : " + e.toString());
             return null;
         }
     }
@@ -107,7 +110,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerListaFacultadesActivos : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerListaFacultadesActivos : " + e.toString());
             return null;
         }
     }
@@ -118,7 +121,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(idFacultad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerDepartamentosPorIDFacultad : " + e.toString());
             return null;
         }
     }
@@ -129,7 +132,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(idFacultad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerDepartamentosPorIDFacultad : " + e.toString());
             return null;
         }
     }
@@ -140,7 +143,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(idDepartamento);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerLaboratoriosPorIDDepartamento : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerLaboratoriosPorIDDepartamento : " + e.toString());
             return null;
         }
     }
@@ -151,7 +154,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(idDepartamento);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerLaboratoriosActivosPorIDDepartamento : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerLaboratoriosActivosPorIDDepartamento : " + e.toString());
             return null;
         }
     }
@@ -162,7 +165,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorPorCorreoNumDocumento(correo, documento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorCorreoNumDocumento : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorCorreoNumDocumento : " + e.toString());
             return null;
         }
     }
@@ -173,7 +176,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorPorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorCorreo : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorCorreo : " + e.toString());
             return null;
         }
     }
@@ -184,7 +187,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorPorDocumento(documento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorDocumento : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoLaboratorioPorDocumento : " + e.toString());
             return null;
         }
     }
@@ -194,7 +197,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
         try {
             encargadoLaboratorioDAO.editarEncargadoLaboratorio(personalLab);
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionEncargadoLaboratorio : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionEncargadoLaboratorio : " + e.toString());
         }
     }
 
@@ -203,7 +206,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
         try {
             personaDAO.editarPersona(persona);
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionPersona : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionPersona : " + e.toString());
         }
     }
 
@@ -212,7 +215,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionUsuario : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionUsuario : " + e.toString());
 
         }
     }
@@ -230,23 +233,23 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             personalNuevo.setPersona(personaRegistrada);
             encargadoLaboratorioDAO.crearEncargadoLaboratorio(personalNuevo);
         } catch (Exception e) {
-            System.out.println("Error AdministrarEncargadosLaboratoriosBO almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
         }
     }
 
     @Override
     public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro) {
         try {
-            System.out.println("buscarTipoPerfilPorIDEncargado: " + idRegistro);
+            logger.error("buscarTipoPerfilPorIDEncargado: " + idRegistro);
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
-            System.out.println("registro: " + registro);
+            logger.error("registro: " + registro);
             if (null != registro) {
                 return registro.getTipoperfil();
             } else {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error AdministrarValidadorTipoUsuario buscarTipoPerfilPorIDEncargado: " + e.toString());
+            logger.error("Error AdministrarValidadorTipoUsuario buscarTipoPerfilPorIDEncargado: " + e.toString());
             return null;
         }
     }
@@ -257,7 +260,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarValidadorTipoUsuario obtenerDepartamentoPorCodigo: " + e.toString());
+            logger.error("Error AdministrarValidadorTipoUsuario obtenerDepartamentoPorCodigo: " + e.toString());
             return null;
         }
     }
@@ -268,7 +271,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarValidadorTipoUsuario obtenerLaboratorioPorCodigo: " + e.toString());
+            logger.error("Error AdministrarValidadorTipoUsuario obtenerLaboratorioPorCodigo: " + e.toString());
             return null;
         }
     }

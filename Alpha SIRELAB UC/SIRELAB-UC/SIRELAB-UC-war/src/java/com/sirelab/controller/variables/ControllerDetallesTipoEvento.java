@@ -110,7 +110,7 @@ public class ControllerDetallesTipoEvento implements Serializable {
             gestionarVariableTiposEventoBO.editarTipoEvento(tipoEventoDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerDetalleTipoEvento almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetalleTipoEvento almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetalleTipoEvento almacenarModificacionRegistro: " + e.toString());
         }
     }
 

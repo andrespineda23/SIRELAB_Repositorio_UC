@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,8 @@ import javax.persistence.Query;
 @Stateless
 public class ReservaSalaDAO implements ReservaSalaDAOInterface {
 
+    static Logger logger = Logger.getLogger(ReservaSalaDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -34,7 +37,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             em.persist(reserva);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearReservaSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error crearReservaSala ReservaSalaDAO : " + e.toString());
         }
     }
 
@@ -43,7 +46,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
         try {
             em.merge(reserva);
         } catch (Exception e) {
-            System.out.println("Error editarReservaSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error editarReservaSala ReservaSalaDAO : " + e.toString());
         }
     }
 
@@ -52,7 +55,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
         try {
             em.remove(em.merge(reserva));
         } catch (Exception e) {
-            System.out.println("Error eliminarReservaSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error eliminarReservaSala ReservaSalaDAO : " + e.toString());
         }
     }
 
@@ -65,7 +68,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             List<ReservaSala> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarReservaSalasSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error consultarReservaSalasSala ReservaSalaDAO : " + e.toString());
             return null;
         }
     }
@@ -80,7 +83,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             ReservaSala registro = (ReservaSala) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaSalaPorID ReservaSalaDAO : " + e.toString());
+            logger.error("Error buscarReservaSalaPorID ReservaSalaDAO : " + e.toString());
             return null;
         }
     }
@@ -97,7 +100,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             ReservaSala registro = (ReservaSala) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaSalaPorFechaHoraSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error buscarReservaSalaPorFechaHoraSala ReservaSalaDAO : " + e.toString());
             return null;
         }
     }
@@ -112,7 +115,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             List<ReservaSala> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaSalasSalaPorPersona ReservaSalaDAO : " + e.toString());
+            logger.error("Error buscarReservaSalasSalaPorPersona ReservaSalaDAO : " + e.toString());
             return null;
         }
     }

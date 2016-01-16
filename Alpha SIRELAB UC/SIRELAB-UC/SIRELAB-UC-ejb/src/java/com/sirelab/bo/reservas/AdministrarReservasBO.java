@@ -6,6 +6,7 @@
 package com.sirelab.bo.reservas;
 
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
+import com.sirelab.bo.recursoslab.GestionarRecursoServiciosSalaBO;
 import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
@@ -46,6 +47,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -54,6 +56,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class AdministrarReservasBO implements AdministrarReservasBOInterface {
 
+    static Logger logger = Logger.getLogger(AdministrarReservasBO.class);
+    
     @EJB
     ReservaDAOInterface reservaDAO;
     @EJB
@@ -97,7 +101,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<ReservaSala> lista = reservaSalaDAO.buscarReservaSalasSalaPorPersona(persona);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarReservasSalaPorPersona: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarReservasSalaPorPersona: " + e.toString());
             return null;
         }
     }
@@ -108,7 +112,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<ReservaModuloLaboratorio> lista = reservaModuloLaboratorioDAO.buscarReservaModuloPorPersona(persona);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarReservasModuloPorPersona: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarReservasModuloPorPersona: " + e.toString());
             return null;
         }
     }
@@ -119,7 +123,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             Docente registro = docenteDAO.buscarDocentePorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarDocentePorID: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarDocentePorID: " + e.toString());
             return null;
         }
     }
@@ -143,7 +147,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             }
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerPersonaConsultarReservas : " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerPersonaConsultarReservas : " + e.toString());
             return null;
         }
     }
@@ -154,7 +158,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<Laboratorio> lista = laboratorioDAO.consultarLaboratorios();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarLaboratoriosRegistradosActivos: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarLaboratoriosRegistradosActivos: " + e.toString());
             return null;
         }
     }
@@ -165,7 +169,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivos(laboratorio);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarSalaLaboratorioPorIdLaboratorio: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarSalaLaboratorioPorIdLaboratorio: " + e.toString());
             return null;
         }
     }
@@ -180,7 +184,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO validarReservaSalaDisposible: " + e.toString());
+            logger.error("Error AdministrarReservasBO validarReservaSalaDisposible: " + e.toString());
             return null;
         }
     }
@@ -195,7 +199,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO validarReservaModuloSalaDisposible: " + e.toString());
+            logger.error("Error AdministrarReservasBO validarReservaModuloSalaDisposible: " + e.toString());
             return null;
         }
     }
@@ -206,7 +210,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<ReservaModuloLaboratorio> registro = reservaModuloLaboratorioDAO.buscarCantidadReservaModuloLaboratorioPorParametros(fecha, horaInicio, sala);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerCantidadReservasModuloPorParametros: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerCantidadReservasModuloPorParametros: " + e.toString());
             return null;
         }
     }
@@ -217,7 +221,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<TipoReserva> lista = tipoReservaDAO.consultarTiposReservas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarTiposReservas: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarTiposReservas: " + e.toString());
             return null;
         }
     }
@@ -228,7 +232,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<GuiaLaboratorio> lista = guiaLaboratorioDAO.consultarGuiasLaboratorioPorIdAreaPlan(areaPlan);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarGuiasLaboratorio: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarGuiasLaboratorio: " + e.toString());
             return null;
         }
     }
@@ -239,7 +243,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.consultarAsignaturaPorPlanEstudiosActivoIdPlanEstudio(plan);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarAsignaturasPorPlanEstudioPorIdPlan: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarAsignaturasPorPlanEstudioPorIdPlan: " + e.toString());
             return null;
         }
     }
@@ -250,7 +254,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudios();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO consultarPlanEstudiosActivos: " + e.toString());
+            logger.error("Error AdministrarReservasBO consultarPlanEstudiosActivos: " + e.toString());
             return null;
         }
     }
@@ -261,7 +265,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             EstadoReserva registro = estadoReservaDAO.buscarEstadoReservaPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerEstadoReservaPorId: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerEstadoReservaPorId: " + e.toString());
             return null;
         }
     }
@@ -272,7 +276,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             PeriodoAcademico registro = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerUltimoPeriodoAcademico: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerUltimoPeriodoAcademico: " + e.toString());
             return null;
         }
     }
@@ -286,7 +290,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             reservaSalaDAO.crearReservaSala(reservaSala);
             return nuevaReserva;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO registrarNuevaReservaSala: " + e.toString());
+            logger.error("Error AdministrarReservasBO registrarNuevaReservaSala: " + e.toString());
             return null;
         }
     }
@@ -300,7 +304,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             reservaModuloLaboratorioDAO.crearReservaModuloLaboratorio(reservaModuloLaboratorio);
             return nuevaReserva;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO registrarNuevaReservaModulo: " + e.toString());
+            logger.error("Error AdministrarReservasBO registrarNuevaReservaModulo: " + e.toString());
             return null;
         }
     }
@@ -311,7 +315,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<ReservaEquipoElemento> lista = reservaEquipoElementoDAO.buscarReservaEquipoElementosPorReserva(reserva);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerReservasEquipoPorIdReserva: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerReservasEquipoPorIdReserva: " + e.toString());
             return null;
         }
     }
@@ -321,7 +325,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
         try {
             reservaDAO.editarReserva(reserva);;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO actualizarValorReserva: " + e.toString());
+            logger.error("Error AdministrarReservasBO actualizarValorReserva: " + e.toString());
         }
     }
 
@@ -331,7 +335,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             List<ModuloLaboratorio> lista = moduloLaboratorioDAO.buscarModuloLaboratorioActivosPorIDSalaLaboratorio(sala);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerModuloLaboratoriosPorSala: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerModuloLaboratoriosPorSala: " + e.toString());
             return null;
         }
     }
@@ -342,7 +346,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             ReservaSala registro = reservaSalaDAO.buscarReservaSalaPorID(idReserva);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerReservaSalaPorId: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerReservaSalaPorId: " + e.toString());
             return null;
         }
     }
@@ -353,7 +357,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             Reserva registro = reservaDAO.buscarReservaPorID(idReserva);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerReservaPorId: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerReservaPorId: " + e.toString());
             return null;
         }
     }
@@ -364,7 +368,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             ReservaModuloLaboratorio registro = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO obtenerReservaModuloLaboratorioPorId: " + e.toString());
+            logger.error("Error AdministrarReservasBO obtenerReservaModuloLaboratorioPorId: " + e.toString());
             return null;
         }
     }
@@ -374,7 +378,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
         try {
             reservaSalaDAO.editarReservaSala(reservaSala);
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO actualizarGuiaLaboratorioReserva: " + e.toString());
+            logger.error("Error AdministrarReservasBO actualizarGuiaLaboratorioReserva: " + e.toString());
         }
     }
 
@@ -384,7 +388,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             TipoReserva registro = tipoReservaDAO.buscarTipoReservaPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarReservasBO actualizarGuiaLaboratorioReserva: " + e.toString());
+            logger.error("Error AdministrarReservasBO actualizarGuiaLaboratorioReserva: " + e.toString());
             return null;
         }
     }

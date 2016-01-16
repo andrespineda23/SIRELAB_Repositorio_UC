@@ -7,6 +7,7 @@ package com.sirelab.controller.paginasiniciales;
 
 import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
+import com.sirelab.controller.ServletCargueArchivo;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.TipoPerfil;
@@ -23,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -40,6 +42,8 @@ public class ControllerPaginasIniciales implements Serializable {
 
     private UsuarioLogin usuarioLoginSistema;
     private TipoPerfil tipoPerfil;
+    
+    static Logger logger = Logger.getLogger(ControllerPaginasIniciales.class);
 
     public ControllerPaginasIniciales() {
     }
@@ -69,7 +73,7 @@ public class ControllerPaginasIniciales implements Serializable {
                 //session.invalidate();
             }
         } catch (Exception e) {
-            System.out.println("Error al cerrar la sesion del usuario : " + e.toString());
+            logger.error("Error al cerrar la sesion del usuario : " + e.toString());
         }
         return "index";
     }

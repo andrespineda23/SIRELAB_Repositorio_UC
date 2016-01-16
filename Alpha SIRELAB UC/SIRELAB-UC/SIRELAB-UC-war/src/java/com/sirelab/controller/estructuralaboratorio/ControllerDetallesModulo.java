@@ -474,7 +474,7 @@ public class ControllerDetallesModulo implements Serializable {
             restaurarInformacionModuloLaboratorio();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  " + e.toString());
-            System.out.println("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema : " + e.toString());
 
         }
     }
@@ -500,7 +500,7 @@ public class ControllerDetallesModulo implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  " + e.toString());
-            System.out.println("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString());
         }
     }
 
@@ -520,7 +520,7 @@ public class ControllerDetallesModulo implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  " + e.toString());
-            System.out.println("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString());
         }
     }
 

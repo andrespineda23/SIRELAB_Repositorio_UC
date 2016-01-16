@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
 
+    static Logger logger = Logger.getLogger(ModuloLaboratorioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             em.persist(modulolaboratorio);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error crearModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
         try {
             em.merge(modulolaboratorio);
         } catch (Exception e) {
-            System.out.println("Error editarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error editarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
         try {
             em.remove(em.merge(modulolaboratorio));
         } catch (Exception e) {
-            System.out.println("Error eliminarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
         }
     }
 
@@ -61,7 +64,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             List<ModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarModulosLaboratorios ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error consultarModulosLaboratorios ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -76,7 +79,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             ModuloLaboratorio registro = (ModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarModuloLaboratorioPorID ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioPorID ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -92,7 +95,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             ModuloLaboratorio registro = (ModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarModuloLaboratorioPorCodigoYSala ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioPorCodigoYSala ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -107,7 +110,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             List<ModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarModuloLaboratorioPorIDDepartamento ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioPorIDDepartamento ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -121,7 +124,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             List<ModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarModuloLaboratorioActivosPorIDSalaLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioActivosPorIDSalaLaboratorio ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -137,12 +140,12 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigomodulo ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<ModuloLaboratorio> tq = em.createQuery(consulta, ModuloLaboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarModulosLaboratoriosPorFiltrado ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModulosLaboratoriosPorFiltrado ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -188,7 +191,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             }
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
-        System.out.println(jpql);
+        logger.error(jpql);
         if (jpql.trim()
                 .endsWith("WHERE")) {
             jpql = jpql.replace("WHERE", "");

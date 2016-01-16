@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,6 +24,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class EquipoElementoDAO implements EquipoElementoDAOInterface {
 
+    static Logger logger = Logger.getLogger(EquipoElementoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -35,7 +38,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             em.persist(equipoelemento);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearEquipoElemento EquipoElementoDAO : " + e.toString());
+            logger.error("Error crearEquipoElemento EquipoElementoDAO : " + e.toString());
         }
     }
 
@@ -45,7 +48,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             em.merge(equipoelemento);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error editarEquipoElemento EquipoElementoDAO : " + e.toString());
+            logger.error("Error editarEquipoElemento EquipoElementoDAO : " + e.toString());
         }
     }
 
@@ -55,7 +58,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             em.remove(em.merge(equipoelemento));
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error eliminarEquipoElemento EquipoElementoDAO : " + e.toString());
+            logger.error("Error eliminarEquipoElemento EquipoElementoDAO : " + e.toString());
         }
     }
 
@@ -68,7 +71,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             List<EquipoElemento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEquiposElementos EquipoElementoDAO : " + e.toString());
+            logger.error("Error consultarEquiposElementos EquipoElementoDAO : " + e.toString());
             return null;
         }
     }
@@ -83,7 +86,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             EquipoElemento registro = (EquipoElemento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEquipoElementoPorID EquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarEquipoElementoPorID EquipoElementoDAO : " + e.toString());
             return null;
         }
     }
@@ -99,7 +102,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             EquipoElemento registro = (EquipoElemento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEquipoElementoPorCodigoYModulo EquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarEquipoElementoPorCodigoYModulo EquipoElementoDAO : " + e.toString());
             return null;
         }
     }
@@ -115,12 +118,12 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombreequipo ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<EquipoElemento> tq = em.createQuery(consulta, EquipoElemento.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarEquiposElementosPorFiltrado EquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarEquiposElementosPorFiltrado EquipoElementoDAO : " + e.toString());
             return null;
         }
     }
@@ -128,7 +131,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
     private String adicionarFiltros(String jpql, Map<String, String> filters, String alias) {
         final StringBuilder wheres = new StringBuilder();
         int camposFiltro = 0;
-        System.out.println("filters : "+filters);
+        logger.error("filters : "+filters);
         if (null != filters && !filters.isEmpty()) {
             wheres.append(" WHERE ");
             for (Map.Entry<String, String> entry : filters.entrySet()) {
@@ -196,7 +199,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             }
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
-        System.out.println(jpql);
+        logger.error(jpql);
         if (jpql.trim()
                 .endsWith("WHERE")) {
             jpql = jpql.replace("WHERE", "");
@@ -242,7 +245,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimaEquipoElementoRegistrada EquipoElementoDAO : " + e.toString());
+            logger.error("Error obtenerUltimaEquipoElementoRegistrada EquipoElementoDAO : " + e.toString());
             return null;
         }
     }

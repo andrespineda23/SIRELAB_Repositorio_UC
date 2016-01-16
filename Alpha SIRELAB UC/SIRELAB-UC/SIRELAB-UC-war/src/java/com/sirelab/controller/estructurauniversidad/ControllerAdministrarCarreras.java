@@ -147,7 +147,7 @@ public class ControllerAdministrarCarreras implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString());
         }
     }
 

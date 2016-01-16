@@ -156,7 +156,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros : " + e.toString());
         }
     }
 

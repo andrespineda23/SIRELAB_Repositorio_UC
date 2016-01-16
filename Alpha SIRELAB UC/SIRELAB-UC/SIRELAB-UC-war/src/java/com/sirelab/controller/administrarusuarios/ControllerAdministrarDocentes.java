@@ -178,7 +178,7 @@ public class ControllerAdministrarDocentes implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
         }
     }
 
@@ -302,7 +302,7 @@ public class ControllerAdministrarDocentes implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarDocentes actualizarFacultades:  " + e.toString());
-            System.out.println("Error ControllerAdministrarDocentes actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerAdministrarDocentes actualizarFacultades : " + e.toString());
         }
     }
 

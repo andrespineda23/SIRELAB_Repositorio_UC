@@ -92,7 +92,7 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
             gestionarVariableTiposUsuarioBO.crearTipoUsuario(tipoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo:  " + e.toString());
-            System.out.println("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo: " + e.toString());
         }
     }
 

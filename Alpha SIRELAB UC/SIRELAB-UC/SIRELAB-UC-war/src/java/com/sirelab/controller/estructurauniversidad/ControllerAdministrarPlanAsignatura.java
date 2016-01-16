@@ -148,7 +148,7 @@ public class ControllerAdministrarPlanAsignatura implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarPlanAsignatura buscarAsignaturaPorPlanEstudioPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarPlanAsignatura buscarAsignaturaPorPlanEstudioPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarPlanAsignatura buscarAsignaturaPorPlanEstudioPorParametros : " + e.toString());
         }
     }
 

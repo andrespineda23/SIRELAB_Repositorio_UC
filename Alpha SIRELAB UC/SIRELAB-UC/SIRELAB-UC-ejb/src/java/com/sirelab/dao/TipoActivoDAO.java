@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoActivoDAO implements TipoActivoDAOInterface {
 
+    static Logger logger = Logger.getLogger(TipoActivoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
             em.persist(tipoActivo);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoActivo TipoActivoDAO : " + e.toString());
+            logger.error("Error crearTipoActivo TipoActivoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
         try {
             em.merge(tipoActivo);
         } catch (Exception e) {
-            System.out.println("Error editarTipoActivo TipoActivoDAO : " + e.toString());
+            logger.error("Error editarTipoActivo TipoActivoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
         try {
             em.remove(em.merge(tipoActivo));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoActivo TipoActivoDAO : " + e.toString());
+            logger.error("Error eliminarTipoActivo TipoActivoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
             List<TipoActivo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposActivos TipoActivoDAO : " + e.toString());
+            logger.error("Error consultarTiposActivos TipoActivoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
             TipoActivo registro = (TipoActivo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoActivoPorID TipoActivoDAO : " + e.toString());
+            logger.error("Error buscarTipoActivoPorID TipoActivoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
             TipoActivo registro = (TipoActivo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoActivoPorNombre TipoActivoDAO : " + e.toString());
+            logger.error("Error buscarTipoActivoPorNombre TipoActivoDAO : " + e.toString());
             return null;
         }
     }

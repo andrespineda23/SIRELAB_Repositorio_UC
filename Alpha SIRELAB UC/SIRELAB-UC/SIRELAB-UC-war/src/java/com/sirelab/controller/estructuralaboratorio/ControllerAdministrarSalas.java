@@ -297,7 +297,7 @@ public class ControllerAdministrarSalas implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros : " + e.toString());
         }
     }
 

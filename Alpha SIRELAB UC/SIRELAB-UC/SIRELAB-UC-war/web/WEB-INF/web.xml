@@ -45,7 +45,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterAdministrarUsuarios</filter-name>
-        <url-pattern>/faces/xhtml/administrar_usuarios/*</url-pattern>
+        <url-pattern>/faces/xhtml/administrarusuarios/*</url-pattern>
     </filter-mapping>
     
     <filter>
@@ -54,7 +54,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterCargueArchivos</filter-name>
-        <url-pattern>/faces/xhtml/cargue_archivos/*</url-pattern>
+        <url-pattern>/faces/xhtml/carguearchivos/*</url-pattern>
     </filter-mapping>
     
     <filter>
@@ -63,7 +63,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterEstructuraLaboratorio</filter-name>
-        <url-pattern>/faces/xhtml/estructura_laboratorio/*</url-pattern>
+        <url-pattern>/faces/xhtml/estructuralaboratorio/*</url-pattern>
     </filter-mapping>
     
     <filter>
@@ -72,7 +72,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterEstructuraUniversidad</filter-name>
-        <url-pattern>/faces/xhtml/estructura_universidad/*</url-pattern>
+        <url-pattern>/faces/xhtml/estructurauniversidad/*</url-pattern>
     </filter-mapping>
     
     <filter>
@@ -81,7 +81,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterPaginasAdministrador</filter-name>
-        <url-pattern>/faces/xhtml/paginas_administrador/*</url-pattern>
+        <url-pattern>/faces/xhtml/paginasadministrador/*</url-pattern>
     </filter-mapping>
     
     <filter>
@@ -90,6 +90,6 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterRecursosLaboratorio</filter-name>
-        <url-pattern>/faces/xhtml/recursos_laboratorio/*</url-pattern>
+        <url-pattern>/faces/xhtml/recursoslaboratorio/*</url-pattern>
     </filter-mapping>
 </web-app>

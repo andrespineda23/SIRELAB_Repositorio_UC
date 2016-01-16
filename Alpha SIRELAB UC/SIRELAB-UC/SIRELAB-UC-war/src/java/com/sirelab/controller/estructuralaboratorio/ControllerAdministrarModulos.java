@@ -251,7 +251,7 @@ public class ControllerAdministrarModulos implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
         }
     }
 

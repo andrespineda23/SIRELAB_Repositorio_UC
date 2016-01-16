@@ -133,7 +133,7 @@ public class ControllerAdministrarInsumos implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString());
         }
     }
 

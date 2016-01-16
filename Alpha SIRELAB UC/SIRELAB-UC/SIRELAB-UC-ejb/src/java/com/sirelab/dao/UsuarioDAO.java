@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,6 +17,8 @@ import javax.persistence.Query;
 @Stateless
 public class UsuarioDAO implements UsuarioDAOInterface {
 
+    static Logger logger = Logger.getLogger(UsuarioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -25,12 +28,12 @@ public class UsuarioDAO implements UsuarioDAOInterface {
     @Override
     public void crearUsuario(Usuario usuario) {
         try {
-            System.out.println("Creo usuario");
+            logger.error("Creo usuario");
             em.persist(usuario);
             em.flush();
-            System.out.println("Fin crear usuario");
+            logger.error("Fin crear usuario");
         } catch (Exception e) {
-            System.out.println("Error crearUsuario UsuarioDAO : " + e.toString());
+            logger.error("Error crearUsuario UsuarioDAO : " + e.toString());
         }
     }
 
@@ -40,7 +43,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             em.merge(usuario);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error editarUsuario UsuarioDAO : " + e.toString());
+            logger.error("Error editarUsuario UsuarioDAO : " + e.toString());
         }
     }
 
@@ -50,7 +53,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             em.remove(em.merge(usuario));
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error eliminarUsuario UsuarioDAO : " + e.toString());
+            logger.error("Error eliminarUsuario UsuarioDAO : " + e.toString());
         }
     }
 
@@ -63,7 +66,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             List<Usuario> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarUsuarios UsuarioDAO : " + e.toString());
+            logger.error("Error consultarUsuarios UsuarioDAO : " + e.toString());
             return null;
         }
     }
@@ -78,7 +81,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             Usuario registro = (Usuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarUsuarioPorID UsuarioDAO : " + e.toString());
+            logger.error("Error buscarUsuarioPorID UsuarioDAO : " + e.toString());
             return null;
         }
     }
@@ -92,13 +95,13 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             List<Usuario> registros = query.getResultList();
             if (registros != null) {
                 Usuario ultimoRegistro = registros.get(0);
-                System.out.println("ultimoRegistro : " + ultimoRegistro.getIdusuario());
+                logger.error("ultimoRegistro : " + ultimoRegistro.getIdusuario());
                 return ultimoRegistro;
             } else {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimoUsuarioRegistrado UsuarioDAO : " + e.toString());
+            logger.error("Error obtenerUltimoUsuarioRegistrado UsuarioDAO : " + e.toString());
             return null;
         }
     }

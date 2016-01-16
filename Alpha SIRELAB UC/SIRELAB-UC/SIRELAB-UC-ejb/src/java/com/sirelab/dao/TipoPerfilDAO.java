@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoPerfilDAO implements TipoPerfilDAOInterface {
 
+    static Logger logger = Logger.getLogger(TipoPerfilDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
             em.persist(tipoPerfil);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoPerfil TipoPerfilDAO : " + e.toString());
+            logger.error("Error crearTipoPerfil TipoPerfilDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
         try {
             em.merge(tipoPerfil);
         } catch (Exception e) {
-            System.out.println("Error editarTipoPerfil TipoPerfilDAO : " + e.toString());
+            logger.error("Error editarTipoPerfil TipoPerfilDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
         try {
             em.remove(em.merge(tipoPerfil));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoPerfil TipoPerfilDAO : " + e.toString());
+            logger.error("Error eliminarTipoPerfil TipoPerfilDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
             List<TipoPerfil> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposPerfiles TipoPerfilDAO : " + e.toString());
+            logger.error("Error consultarTiposPerfiles TipoPerfilDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
             TipoPerfil registro = (TipoPerfil) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoPerfilPorID TipoPerfilDAO : " + e.toString());
+            logger.error("Error buscarTipoPerfilPorID TipoPerfilDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
             TipoPerfil registro = (TipoPerfil) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoPerfilPorCodigo TipoPerfilDAO : " + e.toString());
+            logger.error("Error buscarTipoPerfilPorCodigo TipoPerfilDAO : " + e.toString());
             return null;
         }
     }

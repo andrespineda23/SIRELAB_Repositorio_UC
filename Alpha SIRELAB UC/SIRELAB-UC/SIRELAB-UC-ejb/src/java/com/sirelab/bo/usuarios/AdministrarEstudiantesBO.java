@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -28,6 +29,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterface {
 
+    static Logger logger = Logger.getLogger(AdministrarEstudiantesBO.class);
+    
     @EJB
     UsuarioDAOInterface usuarioDAO;
     @EJB
@@ -49,7 +52,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerListasDepartamentos : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerListasDepartamentos : " + e.toString());
             return null;
         }
     }
@@ -60,7 +63,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerListaFacultades : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerListaFacultades : " + e.toString());
             return null;
         }
     }
@@ -71,7 +74,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Carrera> lista = carreraDAO.consultarCarreras();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerListaCarreras : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerListaCarreras : " + e.toString());
             return null;
         }
     }
@@ -82,7 +85,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(idFacultad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerListasCarrerasPorDepartamento : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerListasCarrerasPorDepartamento : " + e.toString());
             return null;
         }
     }
@@ -93,7 +96,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Carrera> lista = carreraDAO.consultarCarrerasPorDepartamento(idDepartamento);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerListasCarrerasPorDepartamento : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerListasCarrerasPorDepartamento : " + e.toString());
             return null;
         }
     }
@@ -104,7 +107,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(idCarrera);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerListasPlanesEstudioPorCarrera : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerListasPlanesEstudioPorCarrera : " + e.toString());
             return null;
         }
     }
@@ -115,7 +118,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Estudiante> lista = estudianteDAO.buscarEstudiantesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO consultarEstudiantesPorParametro : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO consultarEstudiantesPorParametro : " + e.toString());
             return null;
         }
     }
@@ -126,7 +129,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             Estudiante registro = estudianteDAO.buscarEstudiantePorID(idEstudiante);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerEstudiantePorIDEstudiante : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerEstudiantePorIDEstudiante : " + e.toString());
             return null;
         }
     }
@@ -137,7 +140,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             Estudiante registro = estudianteDAO.buscarEstudiantePorDocumentoYCorreo(correo, documento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerEstudiantePorCorreoNumDocumento : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerEstudiantePorCorreoNumDocumento : " + e.toString());
             return null;
         }
     }
@@ -148,7 +151,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             Estudiante registro = estudianteDAO.buscarEstudiantePorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerEstudiantePorCorreo : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerEstudiantePorCorreo : " + e.toString());
             return null;
         }
     }
@@ -159,7 +162,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             Estudiante registro = estudianteDAO.buscarEstudiantePorDocumento(documento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO obtenerEstudianteDocumento : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO obtenerEstudianteDocumento : " + e.toString());
             return null;
         }
     }
@@ -169,7 +172,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
         try {
             estudianteDAO.editarEstudiante(estudiante);
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO actualizarInformacionEstudiante : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO actualizarInformacionEstudiante : " + e.toString());
         }
     }
 
@@ -178,7 +181,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
         try {
             personaDAO.editarPersona(persona);
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO actualizarInformacionPersona : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO actualizarInformacionPersona : " + e.toString());
         }
     }
 
@@ -187,7 +190,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            System.out.println("Error AdministrarEstudiantesBO actualizarInformacionUsuario : " + e.toString());
+            logger.error("Error AdministrarEstudiantesBO actualizarInformacionUsuario : " + e.toString());
         }
     }
 }

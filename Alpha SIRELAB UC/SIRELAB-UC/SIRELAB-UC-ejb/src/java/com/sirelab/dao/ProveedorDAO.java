@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ProveedorDAO implements ProveedorDAOInterface {
 
+    static Logger logger = Logger.getLogger(ProveedorDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             em.persist(proveedor);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearProveedor ProveedorDAO : " + e.toString());
+            logger.error("Error crearProveedor ProveedorDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
         try {
             em.merge(proveedor);
         } catch (Exception e) {
-            System.out.println("Error editarProveedor ProveedorDAO : " + e.toString());
+            logger.error("Error editarProveedor ProveedorDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
         try {
             em.remove(em.merge(proveedor));
         } catch (Exception e) {
-            System.out.println("Error eliminarProveedor ProveedorDAO : " + e.toString());
+            logger.error("Error eliminarProveedor ProveedorDAO : " + e.toString());
         }
     }
 
@@ -61,7 +64,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             List<Proveedor> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarProveedores ProveedorDAO : " + e.toString());
+            logger.error("Error consultarProveedores ProveedorDAO : " + e.toString());
             return null;
         }
     }
@@ -76,7 +79,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             Proveedor registro = (Proveedor) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarProveedorPorID ProveedorDAO : " + e.toString());
+            logger.error("Error buscarProveedorPorID ProveedorDAO : " + e.toString());
             return null;
         }
     }
@@ -91,7 +94,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             Proveedor registro = (Proveedor) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarProveedorPorNIT ProveedorDAO : " + e.toString());
+            logger.error("Error buscarProveedorPorNIT ProveedorDAO : " + e.toString());
             return null;
         }
     }
@@ -107,12 +110,12 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".nitproveedor ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Proveedor> tq = em.createQuery(consulta, Proveedor.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarProveedoresPorFiltrado ProveedorDAO : " + e.toString());
+            logger.error("Error buscarProveedoresPorFiltrado ProveedorDAO : " + e.toString());
             return null;
         }
     }
@@ -155,7 +158,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             }
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
-        System.out.println(jpql);
+        logger.error(jpql);
         if (jpql.trim()
                 .endsWith("WHERE")) {
             jpql = jpql.replace("WHERE", "");

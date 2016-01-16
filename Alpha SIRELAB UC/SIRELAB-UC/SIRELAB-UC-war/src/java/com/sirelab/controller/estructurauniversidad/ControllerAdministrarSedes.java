@@ -132,7 +132,7 @@ public class ControllerAdministrarSedes implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarSedes buscarSedesPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString());
         }
     }
 
@@ -225,7 +225,7 @@ public class ControllerAdministrarSedes implements Serializable {
                 editarNombre = sedeEditar.getNombresede();
             }
         } catch (Exception e) {
-            System.out.println("Error ControllerGestionarSedes cargarInformacionUsuarioEditar : " + e.toString());
+            logger.error("Error ControllerGestionarSedes cargarInformacionUsuarioEditar : " + e.toString());
         }
     }
 
@@ -267,7 +267,7 @@ public class ControllerAdministrarSedes implements Serializable {
             limpiarEditarSede();
 //            context.execute("registroExitosoSede.show()");
         } catch (Exception e) {
-            System.out.println("Error ControllerGestionarSedes almacenarModificacion : " + e.toString());
+            logger.error("Error ControllerGestionarSedes almacenarModificacion : " + e.toString());
             //context.execute("registroFallidoSede.show()");
         }
     }

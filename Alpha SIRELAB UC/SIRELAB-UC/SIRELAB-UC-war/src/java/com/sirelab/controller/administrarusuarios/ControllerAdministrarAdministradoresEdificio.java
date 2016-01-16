@@ -168,7 +168,7 @@ public class ControllerAdministrarAdministradoresEdificio implements Serializabl
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarAdministradoresEdificio buscarAdministradoresEdificioPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarAdministradoresEdificio buscarAdministradoresEdificioPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarAdministradoresEdificio buscarAdministradoresEdificioPorParametros : " + e.toString());
         }
     }
 
@@ -294,7 +294,7 @@ public class ControllerAdministrarAdministradoresEdificio implements Serializabl
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarAdministradoresEdificio actualizarSedes:  " + e.toString());
-            System.out.println("Error ControllerAdministrarAdministradoresEdificio actualizarSedes : " + e.toString());
+            logger.error("Error ControllerAdministrarAdministradoresEdificio actualizarSedes : " + e.toString());
         }
     }
 

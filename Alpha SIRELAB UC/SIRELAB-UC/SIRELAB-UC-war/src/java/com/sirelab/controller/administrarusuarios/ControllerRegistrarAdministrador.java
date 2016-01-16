@@ -349,7 +349,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
             cancelarRegistroAdministrador();
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString());
         }
     }
 

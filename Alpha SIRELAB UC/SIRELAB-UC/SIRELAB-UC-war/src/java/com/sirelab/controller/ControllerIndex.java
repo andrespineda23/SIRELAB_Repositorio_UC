@@ -129,7 +129,7 @@ public class ControllerIndex implements Serializable {
                 paginaRecuperacion = "";
             }
         } catch (Exception e) {
-            System.out.println("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString());
+            logger.error("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString());
             paginaRecuperacion = "";
         }
     }
@@ -273,9 +273,9 @@ public class ControllerIndex implements Serializable {
                 }
             }
         } catch (NoResultException nre) {
-            System.out.println("NoResultException loginUsuario ControllerIndex : " + nre.toString());
+            logger.error("NoResultException loginUsuario ControllerIndex : " + nre.toString());
         } catch (Exception e) {
-            System.out.println("Error ControllerIndex loginUsuario: " + e.toString());
+            logger.error("Error ControllerIndex loginUsuario: " + e.toString());
         }
     }
 
@@ -297,7 +297,7 @@ public class ControllerIndex implements Serializable {
         }
         if (numeroConexiones == 1) {
             //paginaSiguiente = "cambiarcontrasenia";
-            System.out.println("cambiarcontrasenia");
+            logger.error("cambiarcontrasenia");
             //return paginaSiguiente;
         }
         return paginaSiguiente;

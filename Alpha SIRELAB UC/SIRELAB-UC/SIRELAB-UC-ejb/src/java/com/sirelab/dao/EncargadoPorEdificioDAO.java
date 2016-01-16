@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,6 +24,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface {
 
+    static Logger logger = Logger.getLogger(EncargadoPorEdificioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -36,7 +39,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             em.persist(encargado);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error crearEdificio EncargadoPorEdificioDAO : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             em.clear();
             em.merge(encargado);
         } catch (Exception e) {
-            System.out.println("Error editarEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error editarEdificio EncargadoPorEdificioDAO : " + e.toString());
         }
     }
 
@@ -56,7 +59,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             em.clear();
             em.remove(em.merge(encargado));
         } catch (Exception e) {
-            System.out.println("Error eliminarEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error eliminarEdificio EncargadoPorEdificioDAO : " + e.toString());
         }
     }
 
@@ -69,7 +72,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEncargadosPorEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error consultarEncargadosPorEdificio EncargadoPorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -84,7 +87,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             EncargadoPorEdificio registro = (EncargadoPorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEdificioPorID EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificioPorID EncargadoPorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -99,7 +102,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -113,7 +116,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarEncargadosPorEdificioPorIDAdministrador EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEncargadosPorEdificioPorIDAdministrador EncargadoPorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -128,7 +131,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -144,12 +147,12 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + "administradoredificio.persona.nombrespersona ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<EncargadoPorEdificio> tq = em.createQuery(consulta, EncargadoPorEdificio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarAdministradoresEdificioPorFiltrado EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradoresEdificioPorFiltrado EncargadoPorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -209,7 +212,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

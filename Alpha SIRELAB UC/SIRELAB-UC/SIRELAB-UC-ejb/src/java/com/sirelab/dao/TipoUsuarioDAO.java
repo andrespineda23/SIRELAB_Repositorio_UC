@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,6 +17,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
 
+    static Logger logger = Logger.getLogger(TipoUsuarioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -28,7 +31,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             em.persist(tipoUsuario);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoUsuario TipoUsuarioDAO : " + e.toString());
+            logger.error("Error crearTipoUsuario TipoUsuarioDAO : " + e.toString());
         }
     }
 
@@ -37,7 +40,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
         try {
             em.merge(tipoUsuario);
         } catch (Exception e) {
-            System.out.println("Error editarTipoUsuario TipoUsuarioDAO : " + e.toString());
+            logger.error("Error editarTipoUsuario TipoUsuarioDAO : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
         try {
             em.remove(em.merge(tipoUsuario));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoUsuario TipoUsuarioDAO : " + e.toString());
+            logger.error("Error eliminarTipoUsuario TipoUsuarioDAO : " + e.toString());
         }
     }
 
@@ -59,7 +62,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             List<TipoUsuario> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposUsuarios TipoUsuarioDAO : " + e.toString());
+            logger.error("Error consultarTiposUsuarios TipoUsuarioDAO : " + e.toString());
             return null;
         }
     }
@@ -74,7 +77,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             TipoUsuario registro = (TipoUsuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoUsuarioPorID TipoUsuarioDAO : " + e.toString());
+            logger.error("Error buscarTipoUsuarioPorID TipoUsuarioDAO : " + e.toString());
             return null;
         }
     }
@@ -89,7 +92,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             TipoUsuario registro = (TipoUsuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoUsuarioPorNombre TipoUsuarioDAO : " + e.toString());
+            logger.error("Error buscarTipoUsuarioPorNombre TipoUsuarioDAO : " + e.toString());
             return null;
         }
     }

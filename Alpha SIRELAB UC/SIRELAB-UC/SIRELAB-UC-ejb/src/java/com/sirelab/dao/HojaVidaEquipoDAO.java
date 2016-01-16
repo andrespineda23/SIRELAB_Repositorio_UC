@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
 
+    static Logger logger = Logger.getLogger(HojaVidaEquipoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
             em.persist(hojavidaequipo);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error crearHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
         try {
             em.merge(hojavidaequipo);
         } catch (Exception e) {
-            System.out.println("Error editarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error editarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
         try {
             em.remove(em.merge(hojavidaequipo));
         } catch (Exception e) {
-            System.out.println("Error eliminarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error eliminarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
             List<HojaVidaEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarHojasVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error consultarHojasVidaEquipo HojaVidaEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
             List<HojaVidaEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarHojaVidaPorIDEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error consultarHojaVidaPorIDEquipo HojaVidaEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
             HojaVidaEquipo registro = (HojaVidaEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarHojaVidaEquipoPorID HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error buscarHojaVidaEquipoPorID HojaVidaEquipoDAO : " + e.toString());
             return null;
         }
     }

@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,6 +24,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class PersonaContactoDAO implements PersonaContactoDAOInterface {
 
+    static Logger logger = Logger.getLogger(PersonaContactoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -35,7 +38,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             em.persist(personacontacto);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearPersonaContacto PersonaContactoDAO : " + e.toString());
+            logger.error("Error crearPersonaContacto PersonaContactoDAO : " + e.toString());
         }
     }
 
@@ -44,7 +47,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
         try {
             em.merge(personacontacto);
         } catch (Exception e) {
-            System.out.println("Error editarPersonaContacto PersonaContactoDAO : " + e.toString());
+            logger.error("Error editarPersonaContacto PersonaContactoDAO : " + e.toString());
         }
     }
 
@@ -53,7 +56,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
         try {
             em.remove(em.merge(personacontacto));
         } catch (Exception e) {
-            System.out.println("Error eliminarPersonaContacto PersonaContactoDAO : " + e.toString());
+            logger.error("Error eliminarPersonaContacto PersonaContactoDAO : " + e.toString());
         }
     }
 
@@ -66,7 +69,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             List<PersonaContacto> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarPersonasContacto PersonaContactoDAO : " + e.toString());
+            logger.error("Error consultarPersonasContacto PersonaContactoDAO : " + e.toString());
             return null;
         }
     }
@@ -81,7 +84,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             PersonaContacto registro = (PersonaContacto) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaContactoPorID PersonaContactoDAO : " + e.toString());
+            logger.error("Error buscarPersonaContactoPorID PersonaContactoDAO : " + e.toString());
             return null;
         }
     }
@@ -96,7 +99,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             PersonaContacto registro = (PersonaContacto) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaContactoPorUsuario PersonaContactoDAO : " + e.toString());
+            logger.error("Error buscarPersonaContactoPorUsuario PersonaContactoDAO : " + e.toString());
             return null;
         }
     }
@@ -111,7 +114,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             PersonaContacto registro = (PersonaContacto) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaContactoPorIDPersona PersonaContactoDAO : " + e.toString());
+            logger.error("Error buscarPersonaContactoPorIDPersona PersonaContactoDAO : " + e.toString());
             return null;
         }
     }
@@ -126,7 +129,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             PersonaContacto registro = (PersonaContacto) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaContactoPorUsuario PersonaContactoDAO : " + e.toString());
+            logger.error("Error buscarPersonaContactoPorUsuario PersonaContactoDAO : " + e.toString());
             return null;
         }
     }
@@ -141,7 +144,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             List<PersonaContacto> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarPersonasContactoPorConvenioEntidad PersonaContactoDAO : " + e.toString());
+            logger.error("Error consultarPersonasContactoPorConvenioEntidad PersonaContactoDAO : " + e.toString());
             return null;
         }
     }
@@ -157,12 +160,12 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.identificacionpersona ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<PersonaContacto> tq = em.createQuery(consulta, PersonaContacto.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarPersonasContactoPorFiltrado PersonaContactoDAO : " + e.toString());
+            logger.error("Error buscarPersonasContactoPorFiltrado PersonaContactoDAO : " + e.toString());
             return null;
         }
     }
@@ -222,7 +225,7 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

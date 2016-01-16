@@ -190,7 +190,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString());
         }
     }
 
@@ -326,7 +326,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEstudiantes actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos : " + e.toString());
         }
     }
 
@@ -346,7 +346,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEstudiantes actualizarCarreras : " + e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras : " + e.toString());
         }
     }
 

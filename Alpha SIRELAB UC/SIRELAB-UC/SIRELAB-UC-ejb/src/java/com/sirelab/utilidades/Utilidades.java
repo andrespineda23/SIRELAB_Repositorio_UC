@@ -6,15 +6,19 @@
 package com.sirelab.utilidades;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author ANDRES PINEDA
  */
 public final class Utilidades {
+
+    static Logger logger = Logger.getLogger(Utilidades.class);
 
     private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -52,7 +56,7 @@ public final class Utilidades {
      * @return true-Palabra correcta / false-Palabra incorrecta
      */
     public static boolean validarCaracterString(String str) {
-        System.out.println("validarCaracterString data : " + str);
+        logger.error("validarCaracterString data : " + str);
         boolean respuesta = false;
         Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[ÁÉÍÓÚ]|[áéíóú]|[ñÑ]|\\s)+");
         Matcher matcher = pattern.matcher(str);
@@ -92,7 +96,7 @@ public final class Utilidades {
      */
     public static boolean isNumber(String numero) {
         try {
-            System.out.println("numero : " + numero);
+            logger.error("numero : " + numero);
             boolean respuesta = false;
             Pattern pattern = Pattern.compile("([0-9])+");
             Matcher matcher = pattern.matcher(numero);
@@ -142,26 +146,25 @@ public final class Utilidades {
      * @param fechaValidar Fecha a validar
      * @return true - fecha correcta / false - fecha incorrecta (fecha mayor)
      */
-    public static boolean fechaIngresadaCorrecta(Date fechaValidar) {
+    public static boolean fechaIngresadaCorrecta(String fechaValidar) {
         try {
             boolean retorno = true;
-            Date fechaDia = new Date();
-            if (fechaValidar.after(fechaDia) || fechaValidar.equals(fechaDia)) {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaHoy = new Date();
+            Date fechaAValidar = sdf.parse(fechaValidar);
+
+            sdf.format(fechaHoy);
+            sdf.format(fechaAValidar);
+
+            if (fechaHoy.compareTo(fechaAValidar) > 0) {
                 retorno = true;
-            } else {
+            } else if (fechaHoy.compareTo(fechaAValidar) < 0) {
+                retorno = true;
+            } else if (fechaHoy.compareTo(fechaAValidar) == 0) {
                 retorno = false;
             }
-            /*
-             if (fechaValidar.getDay() < fechaDia.getDay()) {
-             retorno = false;
-             }
-             if (fechaValidar.getMonth() < fechaDia.getMonth()) {
-             retorno = false;
-             }
-             if (fechaValidar.getYear() < fechaDia.getYear()) {
-             retorno = false;
-             }
-            */
+          
             return retorno;
         } catch (Exception e) {
             return false;
@@ -175,13 +178,24 @@ public final class Utilidades {
      * @param fechaValidar Fecha a validar
      * @return true - fecha correcta / false - fecha incorrecta (fecha mayor)
      */
-    public static boolean fechaDiferidaIngresadaCorrecta(Date fechaValidar) {
+    public static boolean fechaDiferidaIngresadaCorrecta(String fechaValidar) {
         try {
             boolean retorno = false;
-            Date fechaDia = new Date();
-            if (fechaDia.after(fechaValidar)) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaHoy = new Date();
+            Date fechaAValidar = sdf.parse(fechaValidar);
+
+            sdf.format(fechaHoy);
+            sdf.format(fechaAValidar);
+
+            if (fechaHoy.compareTo(fechaAValidar) > 0) {
+                retorno = false;
+            } else if (fechaHoy.compareTo(fechaAValidar) < 0) {
+                retorno = false;
+            } else if (fechaHoy.compareTo(fechaAValidar) == 0) {
                 retorno = true;
             }
+          
             return retorno;
         } catch (Exception e) {
             return false;

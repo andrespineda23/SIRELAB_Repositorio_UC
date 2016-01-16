@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,6 +24,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ConvenioDAO implements ConvenioDAOInterface {
 
+    static Logger logger = Logger.getLogger(ConvenioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -35,7 +38,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             em.persist(convenio);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearConvenio ConvenioDAO : " + e.toString());
+            logger.error("Error crearConvenio ConvenioDAO : " + e.toString());
         }
     }
 
@@ -45,7 +48,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             em.merge(convenio);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error editarConvenio ConvenioDAO : " + e.toString());
+            logger.error("Error editarConvenio ConvenioDAO : " + e.toString());
         }
     }
 
@@ -55,7 +58,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             em.remove(em.merge(convenio));
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error eliminarConvenio ConvenioDAO : " + e.toString());
+            logger.error("Error eliminarConvenio ConvenioDAO : " + e.toString());
         }
     }
 
@@ -68,7 +71,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             List<Convenio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarConvenios ConvenioDAO : " + e.toString());
+            logger.error("Error consultarConvenios ConvenioDAO : " + e.toString());
             return null;
         }
     }
@@ -81,7 +84,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             List<Convenio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarConveniosActivos ConvenioDAO : " + e.toString());
+            logger.error("Error consultarConveniosActivos ConvenioDAO : " + e.toString());
             return null;
         }
     }
@@ -96,7 +99,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             Convenio registro = (Convenio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarConvenioPorID ConvenioDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorID ConvenioDAO : " + e.toString());
             return null;
         }
     }
@@ -112,12 +115,12 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombreconvenio ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Convenio> tq = em.createQuery(consulta, Convenio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarConvenioPorFiltrado ConvenioDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorFiltrado ConvenioDAO : " + e.toString());
             return null;
         }
     }
@@ -149,7 +152,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

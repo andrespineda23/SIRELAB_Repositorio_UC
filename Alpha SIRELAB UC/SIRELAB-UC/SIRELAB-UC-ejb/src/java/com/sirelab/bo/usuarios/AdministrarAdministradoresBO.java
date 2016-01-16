@@ -1,6 +1,7 @@
 package com.sirelab.bo.usuarios;
 
 import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresBOInterface;
+import com.sirelab.bo.universidad.GestionarSedeBO;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +22,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class AdministrarAdministradoresBO implements AdministrarAdministradoresBOInterface {
 
+    static Logger logger = Logger.getLogger(AdministrarAdministradoresBO.class);
+    
     @EJB
     TipoUsuarioDAOInterface tipoUsuarioDAO;
     @EJB
@@ -33,7 +37,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             List<Persona> lista = personaDAO.buscarAdministradoresPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO consultarAdministradoresPorParametro : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO consultarAdministradoresPorParametro : " + e.toString());
             return null;
         }
     }
@@ -44,7 +48,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorID(idPersona);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO obtenerAdministradorPorIDPersona : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorIDPersona : " + e.toString());
             return null;
         }
     }
@@ -55,7 +59,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorCorreoYNumeroIdentificacion(correo, documento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreoNumDocumento : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreoNumDocumento : " + e.toString());
             return null;
         }
     }
@@ -66,7 +70,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorDocumento(documento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO obtenerAdministradorPorDocumento : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorDocumento : " + e.toString());
             return null;
         }
     }
@@ -77,7 +81,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreo : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreo : " + e.toString());
             return null;
         }
     }
@@ -88,7 +92,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorUsuario(usuario);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO obtenerAdministradorPorUsuario : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorUsuario : " + e.toString());
             return null;
         }
     }
@@ -98,7 +102,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
         try {
             personaDAO.editarPersona(administrador);
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
         }
     }
 
@@ -107,7 +111,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
         }
     }
 
@@ -123,7 +127,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             personaNuevo.setUsuario(usuarioRegistrado);
             personaDAO.crearPersona(personaNuevo);
         } catch (Exception e) {
-            System.out.println("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
         }
     }
 }

@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoComponenteDAO implements TipoComponenteDAOInterface {
 
+    static Logger logger = Logger.getLogger(TipoComponenteDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
             em.persist(tipoComponente);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoComponente TipoComponenteDAO : " + e.toString());
+            logger.error("Error crearTipoComponente TipoComponenteDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
         try {
             em.merge(tipoComponente);
         } catch (Exception e) {
-            System.out.println("Error editarTipoComponente TipoComponenteDAO : " + e.toString());
+            logger.error("Error editarTipoComponente TipoComponenteDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
         try {
             em.remove(em.merge(tipoComponente));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoComponente TipoComponenteDAO : " + e.toString());
+            logger.error("Error eliminarTipoComponente TipoComponenteDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
             List<TipoComponente> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposComponentes TipoComponenteDAO : " + e.toString());
+            logger.error("Error consultarTiposComponentes TipoComponenteDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
             TipoComponente registro = (TipoComponente) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoComponentePorID TipoComponenteDAO : " + e.toString());
+            logger.error("Error buscarTipoComponentePorID TipoComponenteDAO : " + e.toString());
             return null;
         }
     }

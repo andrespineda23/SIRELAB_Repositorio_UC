@@ -120,7 +120,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  " + e.toString());
-            System.out.println("Error ControllerRegistrarEstudiante actualizarCarreras : " + e.toString());
+            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras : " + e.toString());
         }
     }
 
@@ -421,7 +421,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
             gestionarLoginSistemaBO.almacenarNuevoEstudianteEnSistema(usuarioNuevo, personaNueva, estudianteNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  " + e.toString());
-            System.out.println("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
     }
 

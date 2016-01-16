@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarSedeBO implements GestionarSedeBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarSedeBO.class);
+    
     @EJB
     SedeDAOInterface sedeDAO;
     @EJB
@@ -29,7 +32,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
             List<Sede> lista = sedeDAO.buscarSedesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarSedeBO consultarSedesPorParametro : " + e.toString());
+            logger.error("Error GestionarSedeBO consultarSedesPorParametro : " + e.toString());
             return null;
         }
     }
@@ -39,7 +42,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
         try {
             sedeDAO.crearSede(sede);
         } catch (Exception e) {
-            System.out.println("Error GestionarSedeBO crearNuevaSede : " + e.toString());
+            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
         try {
             sedeDAO.editarSede(sede);
         } catch (Exception e) {
-            System.out.println("Error GestionarSedeBO crearNuevaSede : " + e.toString());
+            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString());
         }
     }
 
@@ -58,7 +61,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
             Sede registro = sedeDAO.buscarSedePorID(idSede);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarSedeBO obtenerSedePorIDSede : " + e.toString());
+            logger.error("Error GestionarSedeBO obtenerSedePorIDSede : " + e.toString());
             return null;
         }
     }
@@ -83,7 +86,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error GestionarSedeBO validarcambioEstadoSede : " + e.toString());
+            logger.error("Error GestionarSedeBO validarcambioEstadoSede : " + e.toString());
             return null;
         }
     }

@@ -238,7 +238,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
             gestionarPlantaModulosBO.crearNuevoModuloLaboratorio(salaNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString());
         }
     }
 

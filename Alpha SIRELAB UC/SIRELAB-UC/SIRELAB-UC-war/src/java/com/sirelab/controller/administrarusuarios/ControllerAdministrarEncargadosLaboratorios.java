@@ -188,7 +188,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros : " + e.toString());
         }
     }
 
@@ -324,7 +324,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades : " + e.toString());
         }
     }
 
@@ -344,7 +344,7 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos : " + e.toString());
         }
     }
 

@@ -111,7 +111,7 @@ public class ControllerDetallesEstadoReserva implements Serializable {
             gestionarVariableEstadosReservaBO.editarEstadoReserva(estadoReservaDetalles);
         } catch (Exception e) {
             logger.error("Error ControlleDetallesEstadoReserva almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControlleDetallesEstadoReserva almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControlleDetallesEstadoReserva almacenarModificacionRegistro: " + e.toString());
         }
     }
 

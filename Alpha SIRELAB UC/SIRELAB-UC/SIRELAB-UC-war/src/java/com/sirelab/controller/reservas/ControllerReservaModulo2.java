@@ -24,6 +24,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -33,6 +34,8 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class ControllerReservaModulo2 implements Serializable {
 
+    static Logger logger = Logger.getLogger(ControllerReservaModulo2.class);
+    
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
@@ -144,7 +147,7 @@ public class ControllerReservaModulo2 implements Serializable {
             }
             limpiarDatosParaPaso3();
         } catch (Exception e) {
-            System.out.println("Error ControllerPaso2Reserva registrarReservaEnSistema: " + e.toString());
+            logger.error("Error ControllerPaso2Reserva registrarReservaEnSistema: " + e.toString());
         }
     }
 

@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class PersonaDAO implements PersonaDAOInterface {
 
+    static Logger logger = Logger.getLogger(PersonaDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             em.persist(persona);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearPersona PersonaDAO : " + e.toString());
+            logger.error("Error crearPersona PersonaDAO : " + e.toString());
         }
     }
 
@@ -40,7 +43,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             em.merge(persona);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error editarPersona PersonaDAO : " + e.toString());
+            logger.error("Error editarPersona PersonaDAO : " + e.toString());
         }
     }
 
@@ -50,7 +53,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             em.remove(em.merge(persona));
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error eliminarPersona PersonaDAO : " + e.toString());
+            logger.error("Error eliminarPersona PersonaDAO : " + e.toString());
         }
     }
 
@@ -63,7 +66,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             List<Persona> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarPersonas PersonaDAO : " + e.toString());
+            logger.error("Error consultarPersonas PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -78,7 +81,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaPorID PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorID PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -98,7 +101,7 @@ public class PersonaDAO implements PersonaDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimaPersonaRegistrada PersonaDAO : " + e.toString());
+            logger.error("Error obtenerUltimaPersonaRegistrada PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -114,7 +117,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaPorCorreoYNumeroIdentificacion PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorCorreoYNumeroIdentificacion PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -129,7 +132,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaPorDocumento PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorDocumento PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -144,7 +147,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaPorCorreo PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorCorreo PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -159,7 +162,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPersonaPorUsuario PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorUsuario PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -175,7 +178,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error obtenerPersonaLoginUserPassword PersonaDAO : " + e.toString());
+            logger.error("Error obtenerPersonaLoginUserPassword PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -190,12 +193,12 @@ public class PersonaDAO implements PersonaDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            System.out.println("jpql2.toString() : " + jpql2.toString());
+            logger.error("jpql2.toString() : " + jpql2.toString());
             TypedQuery<Persona> tq = em.createQuery(jpql2.toString(), Persona.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarPersonasPorFiltrado PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonasPorFiltrado PersonaDAO : " + e.toString());
             return null;
         }
     }
@@ -244,7 +247,7 @@ public class PersonaDAO implements PersonaDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

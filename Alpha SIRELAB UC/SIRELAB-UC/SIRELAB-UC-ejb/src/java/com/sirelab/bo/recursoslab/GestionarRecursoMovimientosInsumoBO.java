@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -28,6 +29,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovimientosInsumoBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarRecursoMovimientosInsumoBO.class);
+    
     @EJB
     MovimientoInsumoDAOInterface movimientoInsumoDAO;
     @EJB
@@ -45,7 +48,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             List<MovimientoInsumo> lista = movimientoInsumoDAO.consultarMovimientosInsumoPorInsumo(insumo);
             return lista;
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO consultarMovimientosInsumoPorIDInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO consultarMovimientosInsumoPorIDInsumo: " + e.toString());
             return null;
         }
     }
@@ -56,7 +59,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             Insumo registro = insumoDAO.buscarInsumoPorID(insumo);
             return registro;
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO obtenerInsumoPorID: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerInsumoPorID: " + e.toString());
             return null;
         }
     }
@@ -67,7 +70,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             MovimientoInsumo registro = movimientoInsumoDAO.buscarMovimientoInsumoPorID(movimientoInsumo);
             return registro;
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO obtenerMovimientoInsumoPorID: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerMovimientoInsumoPorID: " + e.toString());
             return null;
         }
     }
@@ -81,7 +84,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             registro.setCantidadexistencia(cantidad);
             insumoDAO.editarInsumo(registro);
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
         }
     }
     @Override
@@ -98,7 +101,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             movimientoInsumoAEquipo.setMovimientoinsumo(movimiento);
             movimientoInsumoAEquipoDAO.crearMovimientoInsumoAEquipo(movimientoInsumoAEquipo);
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
         }
     }
 
@@ -107,7 +110,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
         try {
             movimientoInsumoDAO.editarMovimientoInsumo(movimientoInsumo);
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO editarMovimientoInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO editarMovimientoInsumo: " + e.toString());
         }
     }
 
@@ -117,7 +120,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             List<TipoMovimiento> lista = tipoMovimientoDAO.consultarTiposMovimientos();
             return lista;
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO obtenerTipoMovimientoRegistrado: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerTipoMovimientoRegistrado: " + e.toString());
             return null;
         }
     }
@@ -128,7 +131,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             List<EquipoElemento> lista = equipoElementoDAO.consultarEquiposElementos();
             return lista;
         } catch (Exception e) {
-            System.out.println("GestionarRecursoMovimientosInsumoBO obtenerEquipoElementoRegistrado: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerEquipoElementoRegistrado: " + e.toString());
             return null;
         }
     }

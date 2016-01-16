@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller;
 
+import com.sirelab.ayuda.EnvioCorreo;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ServletCargueArchivo", urlPatterns = {"/ServletCargueArchivo"})
 public class ServletCargueArchivo extends HttpServlet {
 
+    static Logger logger = Logger.getLogger(ServletCargueArchivo.class);
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -59,12 +63,12 @@ public class ServletCargueArchivo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Entro al get");
+        logger.error("Entro al get");
         String archivo = (String) request.getAttribute("archivo");
         if (null != archivo) {
-            System.out.println("Hay");
+            logger.error("Hay");
         } else {
-            System.out.println("Ni cojones");
+            logger.error("Ni cojones");
         }
         processRequest(request, response);
     }

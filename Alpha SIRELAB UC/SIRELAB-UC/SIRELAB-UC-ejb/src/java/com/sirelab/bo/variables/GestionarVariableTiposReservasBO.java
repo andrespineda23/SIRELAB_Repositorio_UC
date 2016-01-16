@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableTiposReservasBO implements GestionarVariableTiposReservasBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableTiposReservasBO.class);
+    
     @EJB
     TipoReservaDAOInterface tipoReservaDAO;
 
@@ -28,7 +31,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
         try {
             tipoReservaDAO.crearTipoReserva(tipoReserva);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposReservasBO crearTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO crearTipoReserva : " + e.toString());
         }
     }
 
@@ -37,7 +40,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
         try {
             tipoReservaDAO.editarTipoReserva(tipoReserva);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposReservasBO editarTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO editarTipoReserva : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
         try {
             tipoReservaDAO.eliminarTipoReserva(tipoReserva);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString());
         }
     }
 
@@ -56,7 +59,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
             TipoReserva registro = tipoReservaDAO.buscarTipoReservaPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString());
             return null;
         }
     }
@@ -67,7 +70,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
             List<TipoReserva> lista = tipoReservaDAO.consultarTiposReservas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposReservasBO consultarTiposReservasRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO consultarTiposReservasRegistrados : " + e.toString());
             return null;
         }
     }

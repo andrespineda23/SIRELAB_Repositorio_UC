@@ -128,7 +128,7 @@ public class ControllerAdministrarAsignaturas implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarAsignaturas buscarAsignaturasPorParametros : " + e.toString());
         }
     }
 

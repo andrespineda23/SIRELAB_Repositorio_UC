@@ -162,7 +162,7 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
 

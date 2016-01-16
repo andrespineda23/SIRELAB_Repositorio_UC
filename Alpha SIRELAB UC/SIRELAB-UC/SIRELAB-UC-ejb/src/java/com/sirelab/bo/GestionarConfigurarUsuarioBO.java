@@ -19,6 +19,7 @@ import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,6 +27,8 @@ import javax.ejb.Stateful;
  */
 @Stateful
 public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioBOInterface {
+    
+    static Logger logger = Logger.getLogger(GestionarConfigurarUsuarioBO.class);
 
     @EJB
     PersonaDAOInterface personaDAO;
@@ -37,6 +40,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
     DocenteDAOInterface docenteDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
+    
 
     //@Override
     public Persona obtenerPersonaPorUsuarioModificar(BigInteger idUsuario, String tipoUsuario) {
@@ -68,7 +72,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
             Persona persona = personaDAO.buscarPersonaPorID(secuenciaPersona);
             return persona;
         } catch (Exception e) {
-            System.out.println("Error GestionarConfigurarUsuarioBO obtenerPersonaPorUsuarioModificar: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorUsuarioModificar: " + e.toString());
             return null;
         }
     }
@@ -78,7 +82,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
         try {
             personaDAO.editarPersona(persona);
         } catch (Exception e) {
-            System.out.println("Error GestionarConfigurarUsuarioBO actualizarInformacionPersona: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO actualizarInformacionPersona: " + e.toString());
         }
     }
 
@@ -87,7 +91,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            System.out.println("Error GestionarConfigurarUsuarioBO actualizarContraseniaPersona: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO actualizarContraseniaPersona: " + e.toString());
         }
     }
 
@@ -97,7 +101,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
             Persona persona = personaDAO.buscarPersonaPorCorreo(correo);
             return persona;
         } catch (Exception e) {
-            System.out.println("Error GestionarConfigurarUsuarioBO obtenerPersonaPorEmail: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorEmail: " + e.toString());
             return null;
         }
     }
@@ -108,7 +112,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
             Persona persona = personaDAO.buscarPersonaPorDocumento(documento);
             return persona;
         } catch (Exception e) {
-            System.out.println("Error GestionarConfigurarUsuarioBO obtenerPersonaPorDocumento: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorDocumento: " + e.toString());
             return null;
         }
     }

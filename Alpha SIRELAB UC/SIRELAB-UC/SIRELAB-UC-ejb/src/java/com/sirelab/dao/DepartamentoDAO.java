@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class DepartamentoDAO implements DepartamentoDAOInterface {
 
+    static Logger logger = Logger.getLogger(DepartamentoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             em.persist(departamento);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearDepartamento DepartamentoDAO : " + e.toString());
+            logger.error("Error crearDepartamento DepartamentoDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
         try {
             em.merge(departamento);
         } catch (Exception e) {
-            System.out.println("Error editarDepartamento DepartamentoDAO : " + e.toString());
+            logger.error("Error editarDepartamento DepartamentoDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
         try {
             em.remove(em.merge(departamento));
         } catch (Exception e) {
-            System.out.println("Error eliminarDepartamento DepartamentoDAO : " + e.toString());
+            logger.error("Error eliminarDepartamento DepartamentoDAO : " + e.toString());
         }
     }
 
@@ -164,12 +167,12 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombredepartamento ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Departamento> tq = em.createQuery(consulta, Departamento.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarDepartamentosPorFiltrado DepartamentoDAO : " + e.toString());
+            logger.error("Error buscarDepartamentosPorFiltrado DepartamentoDAO : " + e.toString());
             return null;
         }
     }
@@ -211,7 +214,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

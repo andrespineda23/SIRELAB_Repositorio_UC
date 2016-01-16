@@ -110,7 +110,7 @@ public class ControllerDetallesTipoReserva implements Serializable {
             gestionarVariableTiposReservaBO.editarTipoReserva(tipoReservaDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesTipoReserva almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetallesTipoReserva almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallesTipoReserva almacenarModificacionRegistro: " + e.toString());
         }
     }
 

@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class FacultadDAO implements FacultadDAOInterface {
 
+    static Logger logger = Logger.getLogger(FacultadDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             em.persist(facultad);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearFacultad FacultadDAO : " + e.toString());
+            logger.error("Error crearFacultad FacultadDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class FacultadDAO implements FacultadDAOInterface {
         try {
             em.merge(facultad);
         } catch (Exception e) {
-            System.out.println("Error editarFacultad FacultadDAO : " + e.toString());
+            logger.error("Error editarFacultad FacultadDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class FacultadDAO implements FacultadDAOInterface {
         try {
             em.remove(em.merge(facultad));
         } catch (Exception e) {
-            System.out.println("Error eliminarFacultad FacultadDAO : " + e.toString());
+            logger.error("Error eliminarFacultad FacultadDAO : " + e.toString());
         }
     }
 
@@ -61,7 +64,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             List<Facultad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarFacultades FacultadDAO : " + e.toString());
+            logger.error("Error consultarFacultades FacultadDAO : " + e.toString());
             return null;
         }
     }
@@ -74,7 +77,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             List<Facultad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarFacultades FacultadDAO : " + e.toString());
+            logger.error("Error consultarFacultades FacultadDAO : " + e.toString());
             return null;
         }
     }
@@ -89,7 +92,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             Facultad registro = (Facultad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarFacultadPorID FacultadDAO : " + e.toString());
+            logger.error("Error buscarFacultadPorID FacultadDAO : " + e.toString());
             return null;
         }
     }
@@ -104,7 +107,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             Facultad registro = (Facultad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarFacultadPorCodigo FacultadDAO : " + e.toString());
+            logger.error("Error buscarFacultadPorCodigo FacultadDAO : " + e.toString());
             return null;
         }
     }
@@ -120,12 +123,12 @@ public class FacultadDAO implements FacultadDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigofacultad ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Facultad> tq = em.createQuery(consulta, Facultad.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarFacultadesPorFiltrado FacultadDAO : " + e.toString());
+            logger.error("Error buscarFacultadesPorFiltrado FacultadDAO : " + e.toString());
             return null;
         }
     }
@@ -162,7 +165,7 @@ public class FacultadDAO implements FacultadDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableEstadosReservasBO implements GestionarVariableEstadosReservasBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableEstadosReservasBO.class);
+    
     @EJB
     EstadoReservaDAOInterface estadoReservaDAO;
 
@@ -28,7 +31,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
         try {
             estadoReservaDAO.crearEstadoReserva(estadoReserva);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosReservasBO crearEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO crearEstadoReserva : " + e.toString());
         }
     }
 
@@ -37,7 +40,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
         try {
             estadoReservaDAO.editarEstadoReserva(estadoReserva);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosReservasBO editarEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO editarEstadoReserva : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
         try {
             estadoReservaDAO.eliminarEstadoReserva(estadoReserva);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString());
         }
     }
 
@@ -56,7 +59,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
             EstadoReserva registro = estadoReservaDAO.buscarEstadoReservaPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString());
             return null;
         }
     }
@@ -67,7 +70,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
             List<EstadoReserva> lista = estadoReservaDAO.consultarEstadosReservas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableEstadosReservasBO consultarEstadosReservasRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO consultarEstadosReservasRegistrados : " + e.toString());
             return null;
         }
     }

@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
 
+    static Logger logger = Logger.getLogger(ConvenioPorEntidadDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             em.persist(convenio);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error crearConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
         try {
             em.merge(convenio);
         } catch (Exception e) {
-            System.out.println("Error editarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error editarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
         try {
             em.remove(em.merge(convenio));
         } catch (Exception e) {
-            System.out.println("Error eliminarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error eliminarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             List<ConvenioPorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarConveniosPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error consultarConveniosPorEntidad ConvenioPorEntidadDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             ConvenioPorEntidad registro = (ConvenioPorEntidad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarConvenioPorEntidadPorID ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorEntidadPorID ConvenioPorEntidadDAO : " + e.toString());
             return null;
         }
     }
@@ -95,7 +98,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             ConvenioPorEntidad registro = (ConvenioPorEntidad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarConvenioPorEntidadPorParametros ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorEntidadPorParametros ConvenioPorEntidadDAO : " + e.toString());
             return null;
         }
     }
@@ -110,7 +113,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             List<ConvenioPorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarConveniosPorEntidadPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error consultarConveniosPorEntidadPorEntidad ConvenioPorEntidadDAO : " + e.toString());
             return null;
         }
     }
@@ -125,7 +128,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             List<ConvenioPorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarConveniosPorEntidadPorConvenio ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error consultarConveniosPorEntidadPorConvenio ConvenioPorEntidadDAO : " + e.toString());
             return null;
         }
     }

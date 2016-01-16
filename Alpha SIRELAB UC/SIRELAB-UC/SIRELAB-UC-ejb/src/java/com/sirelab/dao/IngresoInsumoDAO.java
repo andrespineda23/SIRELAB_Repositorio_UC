@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
 
+    static Logger logger = Logger.getLogger(IngresoInsumoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
             em.persist(insumo);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearIngresoInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error crearIngresoInsumo IngresoInsumoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
         try {
             em.merge(insumo);
         } catch (Exception e) {
-            System.out.println("Error editarIngresoInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error editarIngresoInsumo IngresoInsumoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
         try {
             em.remove(em.merge(insumo));
         } catch (Exception e) {
-            System.out.println("Error eliminarIngresoInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error eliminarIngresoInsumo IngresoInsumoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
             List<IngresoInsumo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarIngresoInsumos IngresoInsumoDAO : " + e.toString());
+            logger.error("Error consultarIngresoInsumos IngresoInsumoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
             IngresoInsumo registro = (IngresoInsumo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarIngresoInsumoPorID IngresoInsumoDAO : " + e.toString());
+            logger.error("Error buscarIngresoInsumoPorID IngresoInsumoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
             List<IngresoInsumo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarIngresoInsumoPorIdInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error buscarIngresoInsumoPorIdInsumo IngresoInsumoDAO : " + e.toString());
             return null;
         }
     }

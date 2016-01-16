@@ -262,7 +262,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo, lista);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString());
         }
     }
 

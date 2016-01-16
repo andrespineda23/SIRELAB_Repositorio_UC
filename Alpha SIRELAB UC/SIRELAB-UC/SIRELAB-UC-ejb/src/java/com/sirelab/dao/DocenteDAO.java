@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class DocenteDAO implements DocenteDAOInterface {
 
+    static Logger logger = Logger.getLogger(DocenteDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class DocenteDAO implements DocenteDAOInterface {
             em.persist(docente);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearDocente DocenteDAO : " + e.toString());
+            logger.error("Error crearDocente DocenteDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class DocenteDAO implements DocenteDAOInterface {
         try {
             em.merge(docente);
         } catch (Exception e) {
-            System.out.println("Error editarDocente DocenteDAO : " + e.toString());
+            logger.error("Error editarDocente DocenteDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class DocenteDAO implements DocenteDAOInterface {
         try {
             em.remove(em.merge(docente));
         } catch (Exception e) {
-            System.out.println("Error eliminarDocente DocenteDAO : " + e.toString());
+            logger.error("Error eliminarDocente DocenteDAO : " + e.toString());
         }
     }
 
@@ -61,7 +64,7 @@ public class DocenteDAO implements DocenteDAOInterface {
             List<Docente> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarDocentes DocenteDAO : " + e.toString());
+            logger.error("Error consultarDocentes DocenteDAO : " + e.toString());
             return null;
         }
     }
@@ -76,7 +79,7 @@ public class DocenteDAO implements DocenteDAOInterface {
             Docente registro = (Docente) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarDocentePorID DocenteDAO : " + e.toString());
+            logger.error("Error buscarDocentePorID DocenteDAO : " + e.toString());
             return null;
         }
     }
@@ -91,7 +94,7 @@ public class DocenteDAO implements DocenteDAOInterface {
             Docente registro = (Docente) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarDocentePorIDPersona DocenteDAO : " + e.toString());
+            logger.error("Error buscarDocentePorIDPersona DocenteDAO : " + e.toString());
             return null;
         }
     }
@@ -107,7 +110,7 @@ public class DocenteDAO implements DocenteDAOInterface {
             Docente registro = (Docente) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error obtenerDocentePorCorreoDocumento DocenteDAO : " + e.toString());
+            logger.error("Error obtenerDocentePorCorreoDocumento DocenteDAO : " + e.toString());
             return null;
         }
     }
@@ -122,7 +125,7 @@ public class DocenteDAO implements DocenteDAOInterface {
             Docente registro = (Docente) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error obtenerDocentePorCorreo DocenteDAO : " + e.toString());
+            logger.error("Error obtenerDocentePorCorreo DocenteDAO : " + e.toString());
             return null;
         }
     }
@@ -137,7 +140,7 @@ public class DocenteDAO implements DocenteDAOInterface {
             Docente registro = (Docente) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error obtenerDocentePorDocumento DocenteDAO : " + e.toString());
+            logger.error("Error obtenerDocentePorDocumento DocenteDAO : " + e.toString());
             return null;
         }
     }
@@ -153,12 +156,12 @@ public class DocenteDAO implements DocenteDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Docente> tq = em.createQuery(consulta, Docente.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarDocentesPorFiltrado DocenteDAO : " + e.toString());
+            logger.error("Error buscarDocentesPorFiltrado DocenteDAO : " + e.toString());
             return null;
         }
     }
@@ -223,7 +226,7 @@ public class DocenteDAO implements DocenteDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.LocalBean;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.ejb.LocalBean;
 @Stateful
 public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEventosBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableTiposEventosBO.class);
+    
     @EJB
     TipoEventoDAOInterface tipoEventoDAO;
 
@@ -29,7 +32,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
         try {
             tipoEventoDAO.crearTipoEvento(tipoEvento);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposEventosBO crearTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO crearTipoEvento : " + e.toString());
         }
     }
 
@@ -38,7 +41,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
         try {
             tipoEventoDAO.editarTipoEvento(tipoEvento);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposEventosBO editarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO editarTipoEvento : " + e.toString());
         }
     }
 
@@ -47,7 +50,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
         try {
             tipoEventoDAO.eliminarTipoEvento(tipoEvento);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
         }
     }
 
@@ -57,7 +60,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
             TipoEvento registro = tipoEventoDAO.buscarTipoEventoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
             return null;
         }
     }
@@ -68,7 +71,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
             List<TipoEvento> lista = tipoEventoDAO.consultarTiposEventos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
             return null;
         }
     }

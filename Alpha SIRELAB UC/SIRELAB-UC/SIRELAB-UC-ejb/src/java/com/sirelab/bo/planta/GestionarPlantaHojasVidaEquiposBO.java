@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -24,6 +25,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVidaEquiposBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarPlantaHojasVidaEquiposBO.class);
+    
     @EJB
     EquipoElementoDAOInterface equipoElementoDAO;
     @EJB
@@ -37,7 +40,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             List<TipoEvento> lista = tipoEventoDAO.consultarTiposEventos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaHojasVidaEquiposBO consultarTiposEventosRegistrados: " + e.toString());
+            logger.error("Error GestionarPlantaHojasVidaEquiposBO consultarTiposEventosRegistrados: " + e.toString());
             return null;
         }
     }
@@ -48,7 +51,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             HojaVidaEquipo registro = hojaVidaEquipoDAO.buscarHojaVidaEquipoPorID(hojavida);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaHojasVidaEquiposBO consultarHojaVidaEquipoPorID: " + e.toString());
+            logger.error("Error GestionarPlantaHojasVidaEquiposBO consultarHojaVidaEquipoPorID: " + e.toString());
             return null;
         }
     }
@@ -59,7 +62,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             EquipoElemento registro = equipoElementoDAO.buscarEquipoElementoPorID(equipo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaHojasVidaEquiposBO consultarEquipoElementoPorID: " + e.toString());
+            logger.error("Error GestionarPlantaHojasVidaEquiposBO consultarEquipoElementoPorID: " + e.toString());
             return null;
         }
     }
@@ -70,7 +73,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
             List<HojaVidaEquipo> lista = hojaVidaEquipoDAO.consultarHojaVidaPorIDEquipo(equipo);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaHojasVidaEquiposBO consultarHojaVidaPorIDEquipo: " + e.toString());
+            logger.error("Error GestionarPlantaHojasVidaEquiposBO consultarHojaVidaPorIDEquipo: " + e.toString());
             return null;
         }
     }
@@ -80,7 +83,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
         try {
             hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVidaEquipo);
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaHojasVidaEquiposBO crearHojaVidaEquipo: " + e.toString());
+            logger.error("Error GestionarPlantaHojasVidaEquiposBO crearHojaVidaEquipo: " + e.toString());
         }
     }
 
@@ -89,7 +92,7 @@ public class GestionarPlantaHojasVidaEquiposBO implements GestionarPlantaHojasVi
         try {
             hojaVidaEquipoDAO.editarHojaVidaEquipo(hojaVidaEquipo);
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaHojasVidaEquiposBO editarHojaVidaEquipo: " + e.toString());
+            logger.error("Error GestionarPlantaHojasVidaEquiposBO editarHojaVidaEquipo: " + e.toString());
         }
     }
 

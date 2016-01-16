@@ -98,7 +98,7 @@ public class ControllerRegistrarTipoCargo implements Serializable {
             gestionarVariableTiposCargoBO.crearTipoCargo(tipoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoCargo almacenarRegistroNuevo:  " + e.toString());
-            System.out.println("Error ControllerRegistrarTipoCargo almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoCargo almacenarRegistroNuevo: " + e.toString());
         }
     }
 

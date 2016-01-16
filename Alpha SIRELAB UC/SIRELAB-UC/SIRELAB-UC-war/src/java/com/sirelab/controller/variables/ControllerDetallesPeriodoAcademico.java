@@ -99,7 +99,7 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
 
     public void validarFechaInicio() {
         if (Utilidades.validarNulo(inputFechaInicio)) {
-            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaInicio))) {
+            if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
                 validacionesFechaInicio = true;
             } else {
                 validacionesFechaInicio = false;
@@ -114,7 +114,7 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
 
     public void validarFechaFin() {
         if (Utilidades.validarNulo(inputFechaFin)) {
-            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaFin))) {
+            if (Utilidades.fechaIngresadaCorrecta(inputFechaFin)) {
                 validacionesFechaFin = true;
             } else {
                 validacionesFechaFin = false;
@@ -171,7 +171,7 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
             gestionarVariablePeriodosAcademicosBO.editarPeriodoAcademico(periodoAcademicoEditar);
         } catch (Exception e) {
             logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro:  " + e.toString());
-            System.out.println("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro: " + e.toString());
         }
     }
 

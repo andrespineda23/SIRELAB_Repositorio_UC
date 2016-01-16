@@ -374,7 +374,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
             administrarPersonasContactoBO.editarPersonaContado(personaContactoEditar);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto:  " + e.toString());
-            System.out.println("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto : " + e.toString());
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto : " + e.toString());
         }
     }
 

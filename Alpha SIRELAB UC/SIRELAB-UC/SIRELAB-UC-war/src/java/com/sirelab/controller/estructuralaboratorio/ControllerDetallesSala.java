@@ -450,7 +450,7 @@ public class ControllerDetallesSala implements Serializable {
             modificacionesRegistroSala();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaSala actualizarSedes:  " + e.toString());
-            System.out.println("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString());
         }
     }
 
@@ -568,7 +568,7 @@ public class ControllerDetallesSala implements Serializable {
             gestionarPlantaSalasBO.almacenarModificacionesSalaServicio(listaServiciosAsociados);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema : " + e.toString());
         }
     }
 
@@ -593,7 +593,7 @@ public class ControllerDetallesSala implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  " + e.toString());
-            System.out.println("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString());
         }
     }
 
@@ -613,7 +613,7 @@ public class ControllerDetallesSala implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  " + e.toString());
-            System.out.println("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString());
         }
     }
 

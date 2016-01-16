@@ -21,6 +21,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -29,7 +30,9 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @SessionScoped
 public class ControllerDetallesReservaSala implements Serializable {
-
+    
+    static Logger logger = Logger.getLogger(ControllerDetallesReservaSala.class);
+    
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
@@ -69,7 +72,7 @@ public class ControllerDetallesReservaSala implements Serializable {
             listaGuiaLaboratorios = null;
             reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
         } catch (Exception e) {
-            System.out.println("Error ControllerDetallesReservaSala guardarNuevaGuiaLaboratorio: " + e.toString());
+            logger.error("Error ControllerDetallesReservaSala guardarNuevaGuiaLaboratorio: " + e.toString());
         }
     }
 

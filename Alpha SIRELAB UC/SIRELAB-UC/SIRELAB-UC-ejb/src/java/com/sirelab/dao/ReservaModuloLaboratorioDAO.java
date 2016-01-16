@@ -14,6 +14,7 @@ import javax.ejb.Stateless;;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,8 @@ import javax.persistence.Query;
 @Stateless
 public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOInterface {
 
+    static Logger logger = Logger.getLogger(ReservaModuloLaboratorioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -34,7 +37,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             em.persist(reserva);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error crearReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
         }
     }
 
@@ -43,7 +46,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
         try {
             em.merge(reserva);
         } catch (Exception e) {
-            System.out.println("Error editarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error editarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
         }
     }
 
@@ -52,7 +55,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
         try {
             em.remove(em.merge(reserva));
         } catch (Exception e) {
-            System.out.println("Error eliminarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
         }
     }
 
@@ -65,7 +68,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             List<ReservaModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarReservaModuloLaboratoriosModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error consultarReservaModuloLaboratoriosModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -80,7 +83,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             ReservaModuloLaboratorio registro = (ReservaModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaModuloLaboratorioPorID ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratorioPorID ReservaModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -97,7 +100,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             ReservaModuloLaboratorio registro = (ReservaModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -114,7 +117,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             List<ReservaModuloLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -129,7 +132,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             List<ReservaModuloLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaModuloLaboratoriosModuloLaboratorioPorPersona ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratoriosModuloLaboratorioPorPersona ReservaModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -144,7 +147,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             List<ReservaModuloLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarReservaModulosModuloPorPersona ReservaModuloDAO : " + e.toString());
+            logger.error("Error buscarReservaModulosModuloPorPersona ReservaModuloDAO : " + e.toString());
             return null;
         }
     }

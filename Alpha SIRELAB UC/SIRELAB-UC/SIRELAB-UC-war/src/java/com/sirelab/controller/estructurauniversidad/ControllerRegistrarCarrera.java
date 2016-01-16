@@ -211,7 +211,7 @@ public class ControllerRegistrarCarrera implements Serializable {
             gestionarCarrerasBO.crearNuevaCarrera(carreraNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarCarrera almacenarNuevoCarreraEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarCarrera almacenarNuevoCarreraEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarCarrera almacenarNuevoCarreraEnSistema : " + e.toString());
         }
     }
 

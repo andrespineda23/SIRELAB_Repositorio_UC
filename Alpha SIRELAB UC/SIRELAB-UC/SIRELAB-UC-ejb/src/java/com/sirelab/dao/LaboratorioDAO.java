@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class LaboratorioDAO implements LaboratorioDAOInterface {
 
+    static Logger logger = Logger.getLogger(LaboratorioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             em.persist(laboratorio);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearLaboratorio LaboratorioDAO : " + e.toString());
+            logger.error("Error crearLaboratorio LaboratorioDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
         try {
             em.merge(laboratorio);
         } catch (Exception e) {
-            System.out.println("Error editarLaboratorio LaboratorioDAO : " + e.toString());
+            logger.error("Error editarLaboratorio LaboratorioDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
         try {
             em.remove(em.merge(laboratorio));
         } catch (Exception e) {
-            System.out.println("Error eliminarLaboratorio LaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarLaboratorio LaboratorioDAO : " + e.toString());
         }
     }
 
@@ -61,7 +64,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
+            logger.error("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -74,7 +77,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
+            logger.error("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -89,7 +92,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             Laboratorio registro = (Laboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarLaboratorioPorID LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorID LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -105,7 +108,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             Laboratorio registro = (Laboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarLaboratorioPorCodigoYDepartamento LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorCodigoYDepartamento LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -120,7 +123,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             Laboratorio registro = (Laboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarLaboratorioPorCodigo LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorCodigo LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -135,7 +138,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarLaboratorioPorIDDepartamento LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorIDDepartamento LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -150,7 +153,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarLaboratorioActivosPorIDDepartamento LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioActivosPorIDDepartamento LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -166,12 +169,12 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigolaboratorio ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Laboratorio> tq = em.createQuery(consulta, Laboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarLaboratoriosPorFiltrado LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratoriosPorFiltrado LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -217,7 +220,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             }
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
-        System.out.println(jpql);
+        logger.error(jpql);
         if (jpql.trim()
                 .endsWith("WHERE")) {
             jpql = jpql.replace("WHERE", "");
@@ -264,7 +267,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimaLaboratorioRegistrada LaboratorioDAO : " + e.toString());
+            logger.error("Error obtenerUltimaLaboratorioRegistrada LaboratorioDAO : " + e.toString());
             return null;
         }
     }

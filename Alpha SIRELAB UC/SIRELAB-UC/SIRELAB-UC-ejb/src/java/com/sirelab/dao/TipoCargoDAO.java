@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoCargoDAO implements TipoCargoDAOInterface {
 
+    static Logger logger = Logger.getLogger(TipoCargoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
             em.persist(tipoCargo);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoCargo TipoCargoDAO : " + e.toString());
+            logger.error("Error crearTipoCargo TipoCargoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
         try {
             em.merge(tipoCargo);
         } catch (Exception e) {
-            System.out.println("Error editarTipoCargo TipoCargoDAO : " + e.toString());
+            logger.error("Error editarTipoCargo TipoCargoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
         try {
             em.remove(em.merge(tipoCargo));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoCargo TipoCargoDAO : " + e.toString());
+            logger.error("Error eliminarTipoCargo TipoCargoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
             List<TipoCargo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposCargos TipoCargoDAO : " + e.toString());
+            logger.error("Error consultarTiposCargos TipoCargoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
             TipoCargo registro = (TipoCargo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoCargoPorID TipoCargoDAO : " + e.toString());
+            logger.error("Error buscarTipoCargoPorID TipoCargoDAO : " + e.toString());
             return null;
         }
     }

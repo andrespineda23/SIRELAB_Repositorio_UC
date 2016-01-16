@@ -121,7 +121,7 @@ public class ControllerAdministrarManuales implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarManuales buscarLaboratoriosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarManuales buscarLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarManuales buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
 

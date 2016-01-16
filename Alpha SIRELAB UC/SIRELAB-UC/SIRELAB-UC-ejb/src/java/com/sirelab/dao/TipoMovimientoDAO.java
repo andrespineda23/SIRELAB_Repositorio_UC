@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
 
+    static Logger logger = Logger.getLogger(TipoMovimientoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
             em.persist(tipoMovimiento);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoMovimiento TipoMovimientoDAO : " + e.toString());
+            logger.error("Error crearTipoMovimiento TipoMovimientoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
         try {
             em.merge(tipoMovimiento);
         } catch (Exception e) {
-            System.out.println("Error editarTipoMovimiento TipoMovimientoDAO : " + e.toString());
+            logger.error("Error editarTipoMovimiento TipoMovimientoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
         try {
             em.remove(em.merge(tipoMovimiento));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoMovimiento TipoMovimientoDAO : " + e.toString());
+            logger.error("Error eliminarTipoMovimiento TipoMovimientoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
             List<TipoMovimiento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposMovimientos TipoMovimientoDAO : " + e.toString());
+            logger.error("Error consultarTiposMovimientos TipoMovimientoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
             TipoMovimiento registro = (TipoMovimiento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoMovimientoPorID TipoMovimientoDAO : " + e.toString());
+            logger.error("Error buscarTipoMovimientoPorID TipoMovimientoDAO : " + e.toString());
             return null;
         }
     }

@@ -136,7 +136,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
 
     public void validarFechaIngresoInsumo() {
         if (Utilidades.validarNulo(nuevoFecha)) {
-            if (!Utilidades.fechaIngresadaCorrecta(new Date(nuevoFecha))) {
+            if (!Utilidades.fechaIngresadaCorrecta(nuevoFecha)) {
                 validacionesFecha = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
             } else {
@@ -255,7 +255,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
             gestionarRecursoIngresoInsumoBO.crearIngresoInsumo(ingresoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarIngresoInsumo almacenarNuevoIngresoInsumoEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarIngresoInsumo almacenarNuevoIngresoInsumoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarIngresoInsumo almacenarNuevoIngresoInsumoEnSistema : " + e.toString());
         }
     }
 

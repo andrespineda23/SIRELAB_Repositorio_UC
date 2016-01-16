@@ -224,7 +224,7 @@ public class ControllerAdministrarLaboratorios implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString());
         }
     }
 

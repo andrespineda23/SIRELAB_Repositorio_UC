@@ -205,7 +205,7 @@ public class ControllerDetallesServiciosSala implements Serializable {
             gestionarRecursoServiciosSalaBO.modificarInformacionServiciosSala(serviciosSalaDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesServiciosSala almacenarModificacionServiciosSala:  " + e.toString());
-            System.out.println("Error ControllerDetallesServiciosSala almacenarModificacionServiciosSala : " + e.toString());
+            logger.error("Error ControllerDetallesServiciosSala almacenarModificacionServiciosSala : " + e.toString());
         }
     }
 

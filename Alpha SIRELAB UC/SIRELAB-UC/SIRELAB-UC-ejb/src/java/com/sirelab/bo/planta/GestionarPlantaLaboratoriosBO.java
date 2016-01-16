@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratoriosBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarPlantaLaboratoriosBO.class);
+    
     @EJB
     FacultadDAOInterface facultadDAO;
     @EJB
@@ -37,7 +40,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString());
             return null;
         }
     }
@@ -48,7 +51,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             Departamento registro = departamentoDAO.buscarDepartamentoPorNombre(nombre);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarDepartamentoPorNombre : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentoPorNombre : " + e.toString());
             return null;
         }
     }
@@ -59,7 +62,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString());
             return null;
         }
     }
@@ -70,7 +73,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarFacultadesActivosRegistradas : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesActivosRegistradas : " + e.toString());
             return null;
         }
     }
@@ -81,7 +84,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString());
             return null;
         }
     }
@@ -92,7 +95,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarDepartamentosActivosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosActivosPorIDFacultad : " + e.toString());
             return null;
         }
     }
@@ -103,7 +106,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratoriosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarLaboratoriosPorParametro : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarLaboratoriosPorParametro : " + e.toString());
             return null;
         }
     }
@@ -113,7 +116,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
         try {
             laboratorioDAO.crearLaboratorio(laboratorio);
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO crearNuevaLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO crearNuevaLaboratorio : " + e.toString());
         }
     }
 
@@ -122,7 +125,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
         try {
             laboratorioDAO.editarLaboratorio(laboratorio);
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO modificarInformacionLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO modificarInformacionLaboratorio : " + e.toString());
         }
     }
 
@@ -132,7 +135,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorID(idLaboratorio);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString());
             return null;
         }
     }
@@ -143,7 +146,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaLaboratorioBO obtenerLaboratorioPorCodigo : " + e.toString());
+            logger.error("Error GestionarPlantaLaboratorioBO obtenerLaboratorioPorCodigo : " + e.toString());
             return null;
         }
     }

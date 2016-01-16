@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,7 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarRecursoInsumosBO.class);
     
     @EJB
     InsumoDAOInterface insumoDAO;
@@ -31,7 +33,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
             List<Insumo> lista = insumoDAO.buscarInsumosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoInsumosBO consultarInsumosPorParametro : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO consultarInsumosPorParametro : " + e.toString());
             return null;
         }
     }
@@ -41,7 +43,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
         try {
             insumoDAO.crearInsumo(insumo);
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoInsumosBO crearNuevoInsumo : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO crearNuevoInsumo : " + e.toString());
         }
     }
 
@@ -50,7 +52,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
         try {
             insumoDAO.editarInsumo(insumo);
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoInsumosBO modificarInformacionInsumo : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO modificarInformacionInsumo : " + e.toString());
         }
     }
 
@@ -60,7 +62,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
             Insumo registro = insumoDAO.buscarInsumoPorID(idInsumo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoInsumosBO obtenerInsumoPorIDProveedor : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO obtenerInsumoPorIDProveedor : " + e.toString());
             return null;
         }
     }
@@ -71,7 +73,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
             Insumo registro = insumoDAO.buscarInsumoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoInsumosBO obtenerInsumoPorCodigo : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO obtenerInsumoPorCodigo : " + e.toString());
             return null;
         }
     }

@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoEventoDAO implements TipoEventoDAOInterface{
 
+    static Logger logger = Logger.getLogger(TipoEventoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
             em.persist(tipoEvento);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoEvento TipoEventoDAO : " + e.toString());
+            logger.error("Error crearTipoEvento TipoEventoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
         try {
             em.merge(tipoEvento);
         } catch (Exception e) {
-            System.out.println("Error editarTipoEvento TipoEventoDAO : " + e.toString());
+            logger.error("Error editarTipoEvento TipoEventoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
         try {
             em.remove(em.merge(tipoEvento));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoEvento TipoEventoDAO : " + e.toString());
+            logger.error("Error eliminarTipoEvento TipoEventoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
             List<TipoEvento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposEventos TipoEventoDAO : " + e.toString());
+            logger.error("Error consultarTiposEventos TipoEventoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
             TipoEvento registro = (TipoEvento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoEventoPorID TipoEventoDAO : " + e.toString());
+            logger.error("Error buscarTipoEventoPorID TipoEventoDAO : " + e.toString());
             return null;
         }
     }

@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class EdificioDAO implements EdificioDAOInterface {
 
+    static Logger logger = Logger.getLogger(EdificioDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -31,7 +34,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             em.persist(edificio);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearEdificio EdificioDAO : " + e.toString());
+            logger.error("Error crearEdificio EdificioDAO : " + e.toString());
         }
     }
 
@@ -41,7 +44,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             em.clear();
             em.merge(edificio);
         } catch (Exception e) {
-            System.out.println("Error editarEdificio EdificioDAO : " + e.toString());
+            logger.error("Error editarEdificio EdificioDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             em.clear();
             em.remove(em.merge(edificio));
         } catch (Exception e) {
-            System.out.println("Error eliminarEdificio EdificioDAO : " + e.toString());
+            logger.error("Error eliminarEdificio EdificioDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             List<Edificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEdificios EdificioDAO : " + e.toString());
+            logger.error("Error consultarEdificios EdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             Edificio registro = (Edificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEdificioPorID EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificioPorID EdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             List<Edificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -109,7 +112,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             List<Edificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -125,12 +128,12 @@ public class EdificioDAO implements EdificioDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".descripcionedificio ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<Edificio> tq = em.createQuery(consulta, Edificio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarEdificiosPorFiltrado EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificiosPorFiltrado EdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -172,7 +175,7 @@ public class EdificioDAO implements EdificioDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

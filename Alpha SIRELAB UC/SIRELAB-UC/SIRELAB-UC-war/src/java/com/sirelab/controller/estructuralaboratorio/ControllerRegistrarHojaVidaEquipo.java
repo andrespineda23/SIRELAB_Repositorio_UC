@@ -108,7 +108,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         if (Utilidades.validarNulo(inputFechaEvento)) {
 
             inputFechaEvento = new String();
-            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaEvento))) {
+            if (Utilidades.fechaIngresadaCorrecta(inputFechaEvento)) {
                 validacionesFechaEvento = true;
             } else {
                 validacionesFechaEvento = false;
@@ -124,7 +124,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         if (Utilidades.validarNulo(inputFechaRegistro)) {
 
             inputFechaRegistro = new String();
-            if (Utilidades.fechaIngresadaCorrecta(new Date(inputFechaRegistro))) {
+            if (Utilidades.fechaIngresadaCorrecta(inputFechaRegistro)) {
                 validacionesFechaRegistro = true;
             } else {
                 validacionesFechaRegistro = false;
@@ -193,7 +193,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
             gestionarPlantaHojasVidaEquiposBO.crearHojaVidaEquipo(reggNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo:  " + e.toString());
-            System.out.println("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString());
         }
     }
 

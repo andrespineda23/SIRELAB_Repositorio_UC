@@ -166,7 +166,7 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
             administrarConveniosPorEntidadBO.crearConvenioPorEntidad(nuevoRegistro);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarConvenioPorEntidad almacenarNuevoConvenioPorEntidadEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarConvenioPorEntidad almacenarNuevoConvenioPorEntidadEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarConvenioPorEntidad almacenarNuevoConvenioPorEntidadEnSistema : " + e.toString());
         }
     }
 

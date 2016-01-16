@@ -20,6 +20,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -28,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebFilter(filterName = "FilterCargueArchivos", urlPatterns = {"/faces/xhtml/carguearchivos/*"})
 public class FilterCargueArchivos implements Filter {
 
+    static Logger logger = Logger.getLogger(FilterCargueArchivos.class);
+    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -110,7 +113,7 @@ public class FilterCargueArchivos implements Filter {
         String contextPath = req.getContextPath();
         if (null != usuarioLoginSistema) {
             if (("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) || ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario()))) {
-                System.out.println("El usuario es CORRECTO");
+                logger.error("El usuario es CORRECTO");
             } else {
                 ControllerPaginasIniciales obj = new ControllerPaginasIniciales();
                 obj.cerrarSession();

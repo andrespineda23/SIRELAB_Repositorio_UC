@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -33,6 +34,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class AdministrarPersonasContactoBO implements AdministrarPersonasContactoBOInterface {
 
+    static Logger logger = Logger.getLogger(AdministrarPersonasContactoBO.class);
+    
     @EJB
     PersonaDAOInterface personaDAO;
     @EJB
@@ -54,7 +57,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             ConvenioPorEntidad registro = convenioPorEntidadDAO.buscarConvenioPorEntidadPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO buscarConvenioPorEntidadPorId: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO buscarConvenioPorEntidadPorId: " + e.toString());
             return null;
         }
     }
@@ -65,7 +68,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<PersonaContacto> lista = personaContactoDAO.buscarPersonasContactoPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO consultarPersonasContactoPorParametro : " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO consultarPersonasContactoPorParametro : " + e.toString());
             return null;
         }
     }
@@ -76,7 +79,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<PersonaContacto> lista = personaContactoDAO.consultarPersonasContactoPorConvenioEntidad(convenioentidad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO buscarPersonasContactoPorConvenioEntidad: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO buscarPersonasContactoPorConvenioEntidad: " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             personacontacto.setPersona(personaN);
             personaContactoDAO.crearPersonaContacto(personacontacto);
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO crearPersonaContado: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO crearPersonaContado: " + e.toString());
         }
     }
 
@@ -105,7 +108,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             personaDAO.editarPersona(personacontacto.getPersona());
             personaContactoDAO.editarPersonaContacto(personacontacto);
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO editarPersonaContado: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO editarPersonaContado: " + e.toString());
         }
     }
 
@@ -115,7 +118,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             PersonaContacto registro = personaContactoDAO.buscarPersonaContactoPorUsuario(usuario);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerPersonaContactoPorUsuario: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerPersonaContactoPorUsuario: " + e.toString());
             return null;
         }
     }
@@ -125,7 +128,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
         try {
             usuarioDAO.crearUsuario(usuario);
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO crearUsuario: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO crearUsuario: " + e.toString());
         }
     }
 
@@ -135,7 +138,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             PersonaContacto registro = personaContactoDAO.buscarPersonaContactoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerPersonaContactoPorId: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerPersonaContactoPorId: " + e.toString());
             return null;
         }
     }
@@ -145,7 +148,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO editarUsuario: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO editarUsuario: " + e.toString());
         }
     }
 
@@ -155,7 +158,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<EntidadExterna> lista = entidadExternaDAO.consultarEntidadesExternas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerEntidadesExternasRegistradas: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerEntidadesExternasRegistradas: " + e.toString());
             return null;
         }
     }
@@ -166,7 +169,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<EntidadExterna> lista = entidadExternaDAO.consultarEntidadesExternasActivas();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerEntidadesExternasActivosRegistradas: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerEntidadesExternasActivosRegistradas: " + e.toString());
             return null;
         }
     }
@@ -177,7 +180,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<Convenio> lista = convenioDAO.consultarConvenios();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosRegistradas: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerConveniosRegistradas: " + e.toString());
             return null;
         }
     }
@@ -188,7 +191,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<Convenio> lista = convenioDAO.consultarConveniosActivos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosActivosRegistradas: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerConveniosActivosRegistradas: " + e.toString());
             return null;
         }
     }
@@ -199,7 +202,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             ConvenioPorEntidad registro = convenioPorEntidadDAO.buscarConvenioPorEntidadPorParametros(entidad, convenio);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO buscarConvenioPorEntidadPorEntidadYConvenio: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO buscarConvenioPorEntidadPorEntidadYConvenio: " + e.toString());
             return null;
         }
     }
@@ -210,7 +213,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidad();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosPorEntidadRegistrados: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerConveniosPorEntidadRegistrados: " + e.toString());
             return null;
         }
     }
@@ -221,7 +224,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             PersonaContacto registro = personaContactoDAO.buscarPersonaContactoPorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerConveniosPorEntidadRegistrados: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerConveniosPorEntidadRegistrados: " + e.toString());
             return null;
         }
     }
@@ -232,7 +235,7 @@ public class AdministrarPersonasContactoBO implements AdministrarPersonasContact
             List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidadPorEntidad(idEntidad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error AdministrarPersonasContactoBO obtenerConvenioPorEntidadPorIdEntidad: " + e.toString());
+            logger.error("Error AdministrarPersonasContactoBO obtenerConvenioPorEntidadPorIdEntidad: " + e.toString());
             return null;
         }
     }

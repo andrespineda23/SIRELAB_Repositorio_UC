@@ -257,7 +257,7 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void validarFechaEquipo() {
         if (Utilidades.validarNulo(nuevoFechaAdquisicionEquipo)) {
-            if ((Utilidades.fechaIngresadaCorrecta(new Date(nuevoFechaAdquisicionEquipo))) == false) {
+            if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaAdquisicionEquipo)) == false) {
                 validacionesFecha = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoFechaAdquisicionEquipo", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             } else {
@@ -446,7 +446,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString());
         }
     }
 

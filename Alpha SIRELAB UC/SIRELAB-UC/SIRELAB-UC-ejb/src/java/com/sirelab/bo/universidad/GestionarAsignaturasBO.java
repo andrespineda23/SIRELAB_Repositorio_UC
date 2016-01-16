@@ -1,6 +1,7 @@
 package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarAsignaturasBOInterface;
+import com.sirelab.bo.reservas.AdministrarReservasBO;
 import com.sirelab.dao.interfacedao.AsignaturaDAOInterface;
 import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,6 +28,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarAsignaturasBO.class);
+    
     @EJB
     AsignaturaDAOInterface asignaturaDAO;
     @EJB
@@ -45,7 +49,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO consultarDepartamentosPorIDFacultad : " + e.toString());
             return null;
         }
     }
@@ -56,7 +60,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
             List<Carrera> lista = carreraDAO.consultarCarrerasPorDepartamento(departamentos);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO consultarCarrerasPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO consultarCarrerasPorIDDepartamento : " + e.toString());
             return null;
         }
     }
@@ -67,7 +71,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(carrera);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO consultarPlanesEstudiosPorIDCarrera : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO consultarPlanesEstudiosPorIDCarrera : " + e.toString());
             return null;
         }
     }
@@ -78,7 +82,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
             List<Asignatura> lista = asignaturaDAO.buscarAsignaturasPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO consultarAsignaturasPorParametro : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO consultarAsignaturasPorParametro : " + e.toString());
             return null;
         }
     }
@@ -88,7 +92,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
         try {
             asignaturaDAO.editarAsignatura(asignatura);
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO modificarInformacionAsignatura : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO modificarInformacionAsignatura : " + e.toString());
         }
     }
 
@@ -98,7 +102,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
             Asignatura registro = asignaturaDAO.buscarAsignaturaPorID(idAsignatura);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO obtenerAsignaturaPorIDAsignatura : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO obtenerAsignaturaPorIDAsignatura : " + e.toString());
             return null;
         }
     }
@@ -109,7 +113,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
             Asignatura registro = asignaturaDAO.buscarAsignaturaPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO obtenerAsignaturaPorCodigoYPlanEstudio : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO obtenerAsignaturaPorCodigoYPlanEstudio : " + e.toString());
             return null;
         }
     }
@@ -119,7 +123,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
         try {
             asignaturaDAO.crearAsignatura(asignatura);
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO crearAsignatura : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO crearAsignatura : " + e.toString());
         }
     }
 
@@ -144,7 +148,7 @@ public class GestionarAsignaturasBO implements GestionarAsignaturasBOInterface {
 
             }
         } catch (Exception e) {
-            System.out.println("Error GestionarAsignaturasBO validarCambioEstadoAsignatura : " + e.toString());
+            logger.error("Error GestionarAsignaturasBO validarCambioEstadoAsignatura : " + e.toString());
             return null;
         }
     }

@@ -421,7 +421,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             restaurarInformacionAdministradorEdificio();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio : " + e.toString());
 
         }
     }
@@ -453,7 +453,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministradorEdificio activarAdministradorEdificio:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministradoresEdificio activarAdministradorEdificio : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradoresEdificio activarAdministradorEdificio : " + e.toString());
         }
     }
 
@@ -476,7 +476,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministradorEdificio inactivarAdministradorEdificio:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministradoresEdificio inactivarAdministradorEdificio : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradoresEdificio inactivarAdministradorEdificio : " + e.toString());
         }
     }
 

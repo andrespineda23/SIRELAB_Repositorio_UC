@@ -149,7 +149,7 @@ public class ControllerCargueArchivos implements Serializable {
             salArch.close();
         } catch (IOException ex) {
             logger.error("Error en creación archivo txt de errores ControllerCargueArchivos:  " + ex.toString());
-            System.out.println("Error en creación archivo txt de errores ControllerCargueArchivos: " + ex.toString());
+            logger.error("Error en creación archivo txt de errores ControllerCargueArchivos: " + ex.toString());
         }
         descargarArchivoErrores(nombreArchivo);
     }
@@ -184,7 +184,7 @@ public class ControllerCargueArchivos implements Serializable {
             disableAcciones = true;
         } catch (Exception e) {
             logger.error("Error ControllerCargueArchivos imprimirArchivo: " + e.toString());
-            System.out.println("Error ControllerCargueArchivos imprimirArchivo: " + e.toString());
+            logger.error("Error ControllerCargueArchivos imprimirArchivo: " + e.toString());
         }
     }
 

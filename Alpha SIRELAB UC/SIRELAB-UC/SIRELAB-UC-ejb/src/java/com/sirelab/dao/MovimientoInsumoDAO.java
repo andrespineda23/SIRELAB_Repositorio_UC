@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
 
+    static Logger logger = Logger.getLogger(MovimientoInsumoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
             em.persist(movimientoInsumo);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearMovimientoInsumo MovimientoInsumoDAO : " + e.toString());
+            logger.error("Error crearMovimientoInsumo MovimientoInsumoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
         try {
             em.merge(movimientoInsumo);
         } catch (Exception e) {
-            System.out.println("Error editarMovimientoInsumo MovimientoInsumoDAO : " + e.toString());
+            logger.error("Error editarMovimientoInsumo MovimientoInsumoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
         try {
             em.remove(em.merge(movimientoInsumo));
         } catch (Exception e) {
-            System.out.println("Error eliminarMovimientoInsumo MovimientoInsumoDAO : " + e.toString());
+            logger.error("Error eliminarMovimientoInsumo MovimientoInsumoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
             List<MovimientoInsumo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarMovimientosInsumo MovimientoInsumoDAO : " + e.toString());
+            logger.error("Error consultarMovimientosInsumo MovimientoInsumoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
             List<MovimientoInsumo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarMovimientosInsumoPorInsumo MovimientoInsumoDAO : " + e.toString());
+            logger.error("Error consultarMovimientosInsumoPorInsumo MovimientoInsumoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
             MovimientoInsumo registro = (MovimientoInsumo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarMovimientoInsumoPorID MovimientoInsumoDAO : " + e.toString());
+            logger.error("Error buscarMovimientoInsumoPorID MovimientoInsumoDAO : " + e.toString());
             return null;
         }
     }
@@ -115,7 +118,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimaMovimientoInsumoRegistrada MovimientoInsumoDAO : " + e.toString());
+            logger.error("Error obtenerUltimaMovimientoInsumoRegistrada MovimientoInsumoDAO : " + e.toString());
             return null;
         }
     }

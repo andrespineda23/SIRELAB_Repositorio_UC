@@ -173,7 +173,7 @@ public class ControllerAdministrarPersonaContacto implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarPersonasContacto buscarPersonasContactoPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarPersonasContacto buscarPersonasContactoPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarPersonasContacto buscarPersonasContactoPorParametros : " + e.toString());
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarRecursoManualesBO implements GestionarRecursoManualesBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarRecursoManualesBO.class);
+    
     @EJB
     ManualDAOInterface manualDAO;
 
@@ -30,7 +33,7 @@ public class GestionarRecursoManualesBO implements GestionarRecursoManualesBOInt
             List<Manual> lista = manualDAO.buscarManualesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoManualesBO consultarManualesPorParametro : " + e.toString());
+            logger.error("Error GestionarRecursoManualesBO consultarManualesPorParametro : " + e.toString());
             return null;
         }
     }
@@ -41,7 +44,7 @@ public class GestionarRecursoManualesBO implements GestionarRecursoManualesBOInt
             Manual registro = manualDAO.buscarManualPorID(manual);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoManualesBO obtenerManualPorID : " + e.toString());
+            logger.error("Error GestionarRecursoManualesBO obtenerManualPorID : " + e.toString());
             return null;
         }
     }
@@ -52,7 +55,7 @@ public class GestionarRecursoManualesBO implements GestionarRecursoManualesBOInt
             Manual registro = manualDAO.buscarManualPorUbicacion(ubicacion);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoManualesBO consultarManualPorUbicacion : " + e.toString());
+            logger.error("Error GestionarRecursoManualesBO consultarManualPorUbicacion : " + e.toString());
             return null;
         }
     }
@@ -62,7 +65,7 @@ public class GestionarRecursoManualesBO implements GestionarRecursoManualesBOInt
         try {
             manualDAO.crearManual(manual);
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoManualesBO crearManual : " + e.toString());
+            logger.error("Error GestionarRecursoManualesBO crearManual : " + e.toString());
         }
     }
 
@@ -71,7 +74,7 @@ public class GestionarRecursoManualesBO implements GestionarRecursoManualesBOInt
         try {
             manualDAO.editarManual(manual);
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoManualesBO editarManual : " + e.toString());
+            logger.error("Error GestionarRecursoManualesBO editarManual : " + e.toString());
         }
     }
 

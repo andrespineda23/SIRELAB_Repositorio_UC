@@ -335,7 +335,7 @@ public class ControllerDetallesComponente implements Serializable {
             gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle, cambioEquipo,equipoCambio);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesComponente almacenaModificacionComponente:  " + e.toString());
-            System.out.println("Error ControllerDetallesComponente almacenaModificacionComponente : " + e.toString());
+            logger.error("Error ControllerDetallesComponente almacenaModificacionComponente : " + e.toString());
         }
     }
 

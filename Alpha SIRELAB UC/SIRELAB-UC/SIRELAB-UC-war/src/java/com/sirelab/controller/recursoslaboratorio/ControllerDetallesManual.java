@@ -231,7 +231,7 @@ public class ControllerDetallesManual implements Serializable {
             gestionarRecursoManualesBO.editarManual(manualDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarManuales almacenarModificacionManualEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarManuales almacenarModificacionManualEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarManuales almacenarModificacionManualEnSistema : " + e.toString());
         }
     }
 

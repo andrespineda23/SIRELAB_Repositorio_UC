@@ -131,7 +131,7 @@ public class ControllerAdministrarServiciosSala implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarServiciosSala buscarServiciosSalaPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarServiciosSala buscarServiciosSalaPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarServiciosSala buscarServiciosSalaPorParametros : " + e.toString());
         }
     }
 

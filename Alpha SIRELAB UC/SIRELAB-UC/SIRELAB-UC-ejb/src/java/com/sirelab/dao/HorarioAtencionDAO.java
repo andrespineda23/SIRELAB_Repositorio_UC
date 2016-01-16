@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
 
+    static Logger logger = Logger.getLogger(HorarioAtencionDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             em.persist(horario);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearHorarioAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error crearHorarioAtencion HorarioAtencionDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
         try {
             em.merge(horario);
         } catch (Exception e) {
-            System.out.println("Error editarHorarioAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error editarHorarioAtencion HorarioAtencionDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
         try {
             em.remove(em.merge(horario));
         } catch (Exception e) {
-            System.out.println("Error eliminarHorarioAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error eliminarHorarioAtencion HorarioAtencionDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             List<HorarioAtencion> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarHorariosAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error consultarHorariosAtencion HorarioAtencionDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             HorarioAtencion registro = (HorarioAtencion) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarHorarioAtencionPorID HorarioAtencionDAO : " + e.toString());
+            logger.error("Error buscarHorarioAtencionPorID HorarioAtencionDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             HorarioAtencion registro = (HorarioAtencion) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarHorarioAtencionPorCodigo HorarioAtencionDAO : " + e.toString());
+            logger.error("Error buscarHorarioAtencionPorCodigo HorarioAtencionDAO : " + e.toString());
             return null;
         }
     }

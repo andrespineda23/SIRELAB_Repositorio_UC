@@ -11,7 +11,7 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head> 
     </h:head>
-    <h:body >
+    <h:body  onload="nobackbutton();" >
         <ui:composition template="/xhtml/template/templateresponsive.xhtml">
             <ui:define name="body">
                 <h:form id="form">
@@ -86,14 +86,14 @@ and open the template in the editor.
                                                         <label for="parametroSala">
                                                             Sala de Laboratorio
                                                         </label>
-                                                        <h:selectOneMenu value="#{controllerReservaSala1.parametroSala}"
-                                                                         class="form-control" disabled="#{controllerReservaSala1.activarSala}"
+                                                        <h:selectOneMenu value="#{controllerReservaModulo1.parametroSala}"
+                                                                         class="form-control" disabled="#{controllerReservaModulo1.activarSala}"
                                                                          id="parametroSala">
                                                             <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
-                                                            <f:selectItems value="#{controllerReservaSala1.listaSalaLaboratorio}" var="sala"
+                                                            <f:selectItems value="#{controllerReservaModulo1.listaSalaLaboratorio}" var="sala"
                                                                            itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
                                                             <f:converter converterId="ConverterGenerico" />
-                                                            <f:ajax event="change" listener="#{controllerReservaSala1.activarHoraReserva()}" render="horaIngreso"/>
+                                                            <f:ajax event="change" listener="#{controllerReservaModulo1.activarHoraReserva()}" render="horaIngreso"/>
                                                         </h:selectOneMenu>
                                                     </div>
                                                 </div>

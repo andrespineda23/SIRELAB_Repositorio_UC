@@ -176,7 +176,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
             gestionarAsignaturasBO.crearAsignatura(asignaturaNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema : " + e.toString());
         }
     }
 

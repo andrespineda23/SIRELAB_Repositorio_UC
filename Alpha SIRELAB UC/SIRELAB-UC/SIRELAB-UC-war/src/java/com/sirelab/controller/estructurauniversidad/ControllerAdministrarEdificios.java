@@ -135,7 +135,7 @@ public class ControllerAdministrarEdificios implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerAdministrarEdificios buscarEdificiosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros : " + e.toString());
         }
     }
 

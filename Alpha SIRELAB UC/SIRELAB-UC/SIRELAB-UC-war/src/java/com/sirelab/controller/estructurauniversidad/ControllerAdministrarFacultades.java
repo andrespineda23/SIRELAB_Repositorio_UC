@@ -118,7 +118,7 @@ public class ControllerAdministrarFacultades implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString());
         }
     }
 

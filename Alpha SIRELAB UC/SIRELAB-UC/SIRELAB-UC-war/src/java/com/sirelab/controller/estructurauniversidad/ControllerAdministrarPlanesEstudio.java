@@ -164,7 +164,7 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString());
         }
     }
 

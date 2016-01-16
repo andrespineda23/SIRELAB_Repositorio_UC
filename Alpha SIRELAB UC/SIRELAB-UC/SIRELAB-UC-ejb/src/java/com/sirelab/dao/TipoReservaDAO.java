@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class TipoReservaDAO implements TipoReservaDAOInterface{
 
+    static Logger logger = Logger.getLogger(TipoReservaDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
             em.persist(tipoReserva);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearTipoReserva TipoReservaDAO : " + e.toString());
+            logger.error("Error crearTipoReserva TipoReservaDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
         try {
             em.merge(tipoReserva);
         } catch (Exception e) {
-            System.out.println("Error editarTipoReserva TipoReservaDAO : " + e.toString());
+            logger.error("Error editarTipoReserva TipoReservaDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
         try {
             em.remove(em.merge(tipoReserva));
         } catch (Exception e) {
-            System.out.println("Error eliminarTipoReserva TipoReservaDAO : " + e.toString());
+            logger.error("Error eliminarTipoReserva TipoReservaDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
             List<TipoReserva> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposReservas TipoReservaDAO : " + e.toString());
+            logger.error("Error consultarTiposReservas TipoReservaDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
             TipoReserva registro = (TipoReserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarTipoReservaPorID TipoReservaDAO : " + e.toString());
+            logger.error("Error buscarTipoReservaPorID TipoReservaDAO : " + e.toString());
             return null;
         }
     }

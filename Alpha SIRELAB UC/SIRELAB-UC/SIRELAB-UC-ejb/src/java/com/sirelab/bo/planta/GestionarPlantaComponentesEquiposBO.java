@@ -5,6 +5,7 @@
  */
 package com.sirelab.bo.planta;
 
+import com.sirelab.bo.cargue.AdministrarCargueArchivoEstudianteBO;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -28,6 +30,8 @@ import javax.ejb.Stateful;
  */
 @Stateful
 public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaComponentesEquiposBOInterface {
+    
+    static Logger logger = Logger.getLogger(GestionarPlantaComponentesEquiposBO.class);
 
     @EJB
     EquipoElementoDAOInterface equipoElementoDAO;
@@ -46,7 +50,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             List<TipoComponente> lista = tipoComponenteDAO.consultarTiposComponentes();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO consultarTiposComponentesRegistrados : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarTiposComponentesRegistrados : " + e.toString());
             return null;
         }
     }
@@ -57,7 +61,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             EquipoElemento registro = equipoElementoDAO.buscarEquipoElementoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO consultarEquipoElementoPorID : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarEquipoElementoPorID : " + e.toString());
             return null;
         }
     }
@@ -68,7 +72,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             ComponenteEquipo registro = componenteEquipoDAO.buscarComponenteEquipoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO consultarComponenteEquipoPorID : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponenteEquipoPorID : " + e.toString());
             return null;
         }
     }
@@ -79,7 +83,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             List<ComponenteEquipo> lista = componenteEquipoDAO.consultarComponentesEquiposPorEquipo(idRegistro);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO consultarComponentesEquipoPorIDEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponentesEquipoPorIDEquipo : " + e.toString());
             return null;
         }
     }
@@ -90,7 +94,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             ComponenteEquipo registro = componenteEquipoDAO.buscarComponenteEquipoPorCodigoYEquipo(codigo, equipo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO consultarComponentePorCodigoYEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponentePorCodigoYEquipo : " + e.toString());
             return null;
         }
     }
@@ -110,7 +114,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
                     + componenteEquipo.getTipocomponente() + ") PARA EL EQUIPO " + componenteEquipo.getEquipoelemento().getInventarioequipo());
             hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO crearComponenteEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO crearComponenteEquipo : " + e.toString());
         }
     }
 
@@ -156,7 +160,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
                 hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVidaCambio);
             }
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO editarComponenteEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO editarComponenteEquipo : " + e.toString());
         }
     }
 
@@ -165,7 +169,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
         try {
             componenteEquipoDAO.eliminarComponenteEquipo(componenteEquipo);
         } catch (Exception e) {
-            System.out.println("Error GestionarPlantaComponentesEquiposBO eliminarComponenteEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO eliminarComponenteEquipo : " + e.toString());
         }
     }
 }

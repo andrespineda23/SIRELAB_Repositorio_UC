@@ -20,6 +20,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -27,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebFilter(filterName = "FilterEstructuraUniversidad", urlPatterns = {"/faces/xhtml/estructurauniversidad/*"})
 public class FilterEstructuraUniversidad implements Filter {
+    
+    static Logger logger = Logger.getLogger(FilterEstructuraUniversidad.class);
     
     private static final boolean debug = true;
 
@@ -110,7 +113,7 @@ public class FilterEstructuraUniversidad implements Filter {
         String contextPath = req.getContextPath();
         if (null != usuarioLoginSistema) {
             if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                System.out.println("El usuario es CORRECTO");
+                logger.error("El usuario es CORRECTO");
             } else {
                 ControllerPaginasIniciales obj = new ControllerPaginasIniciales();
                 obj.cerrarSession();

@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
 
+    static Logger logger = Logger.getLogger(ComponenteEquipoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
             em.persist(componenteEquipo);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearComponenteEquipo ComponenteEquipoDAO : " + e.toString());
+            logger.error("Error crearComponenteEquipo ComponenteEquipoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
         try {
             em.merge(componenteEquipo);
         } catch (Exception e) {
-            System.out.println("Error editarComponenteEquipo ComponenteEquipoDAO : " + e.toString());
+            logger.error("Error editarComponenteEquipo ComponenteEquipoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
         try {
             em.remove(em.merge(componenteEquipo));
         } catch (Exception e) {
-            System.out.println("Error eliminarComponenteEquipo ComponenteEquipoDAO : " + e.toString());
+            logger.error("Error eliminarComponenteEquipo ComponenteEquipoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
             List<ComponenteEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEquiposElementos ComponenteEquipoDAO : " + e.toString());
+            logger.error("Error consultarEquiposElementos ComponenteEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
             List<ComponenteEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarComponentesEquiposPorEquipo ComponenteEquipoDAO : " + e.toString());
+            logger.error("Error consultarComponentesEquiposPorEquipo ComponenteEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
             ComponenteEquipo registro = (ComponenteEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarComponenteEquipoPorID ComponenteEquipoDAO : " + e.toString());
+            logger.error("Error buscarComponenteEquipoPorID ComponenteEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -110,7 +113,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
             ComponenteEquipo registro = (ComponenteEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarComponenteEquipoPorCodigoYEquipo ComponenteEquipoDAO : " + e.toString());
+            logger.error("Error buscarComponenteEquipoPorCodigoYEquipo ComponenteEquipoDAO : " + e.toString());
             return null;
         }
     }

@@ -223,7 +223,7 @@ public class ControllerRegistrarManual implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString());
         }
     }
 

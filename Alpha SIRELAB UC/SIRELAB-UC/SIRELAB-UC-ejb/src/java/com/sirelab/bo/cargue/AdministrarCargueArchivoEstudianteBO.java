@@ -5,6 +5,7 @@
  */
 package com.sirelab.bo.cargue;
 
+import com.sirelab.bo.GestionarLoginSistemaBO;
 import com.sirelab.bo.interfacebo.cargue.AdministrarCargueArchivoEstudianteBOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
@@ -29,6 +30,7 @@ import javax.ejb.Stateful;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -36,6 +38,8 @@ import jxl.read.biff.BiffException;
  */
 @Stateful
 public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueArchivoEstudianteBOInterface {
+    
+    static Logger logger = Logger.getLogger(AdministrarCargueArchivoEstudianteBO.class);
 
     @EJB
     TipoUsuarioDAOInterface tipoUsuarioDAO;
@@ -63,8 +67,8 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
             Sheet hoja = archivoExcel.getSheet(0);
             int numColumnas = hoja.getColumns();
             int numFilas = hoja.getRows();
-            System.out.println("numFilas : " + (numFilas - 1));
-            System.out.println("getColumns : " + numColumnas);
+            logger.error("numFilas : " + (numFilas - 1));
+            logger.error("getColumns : " + numColumnas);
             if (numColumnas > 0 && numFilas > 1) {
                 String data;
                 listaEstudiantes = new ArrayList<Estudiante>();
@@ -76,7 +80,7 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
                     Persona nuevaPersona = new Persona();
                     Usuario nuevoUsuario = new Usuario();
                     String mensajeError = "";
-                    System.out.println("registro numero : " + fila);
+                    logger.error("registro numero : " + fila);
                     for (int columna = 0; columna < numColumnas; columna++) { // Recorre cada columna de la fila 
                         data = hoja.getCell(columna, fila).getContents();
                         switch (columna) {//0-NUMERO_ID_PERSONA
@@ -233,7 +237,7 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
                     nuevoUsuario.setEstado(true);
                     nuevoUsuario.setNumeroconexiones(0);
                     nuevoUsuario.setTipousuario(tipoUsuario);
-                    System.out.println("mensajeError : " + mensajeError);
+                    logger.error("mensajeError : " + mensajeError);
                     if (null != mensajeError && (!mensajeError.isEmpty())) {
                         nuevoUsuario.setNombreusuario("error");
                         nuevoUsuario.setPasswordusuario("error");
@@ -262,7 +266,7 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
                 reporteRegistos.setCantidadRegistros(0);
             }
         } catch (IOException | BiffException | IndexOutOfBoundsException ioe) {
-            System.out.println("Error AdministrarCargueArchivoEstudianteBO cargarDatosArchivoEstudiante: " + ioe.toString());
+            logger.error("Error AdministrarCargueArchivoEstudianteBO cargarDatosArchivoEstudiante: " + ioe.toString());
         }
         return reporteRegistos;
     }
@@ -280,7 +284,7 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
                 estudianteDAO.crearEstudiante(reporte.getListaEstudiantes().get(i));
             }
         } catch (Exception e) {
-            System.out.println("Error AdministrarCargueArchivosBO almacenarNuevoEstudianteEnSistema : " + e.toString());
+            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
     }
 }

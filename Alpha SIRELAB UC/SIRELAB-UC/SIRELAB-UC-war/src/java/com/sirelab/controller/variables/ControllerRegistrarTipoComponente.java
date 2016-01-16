@@ -98,7 +98,7 @@ public class ControllerRegistrarTipoComponente implements Serializable {
             gestionarVariableTiposComponenteBO.crearTipoComponente(tipoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarTipoComponente almacenarRegistroNuevo:  " + e.toString());
-            System.out.println("Error ControllerRegistrarTipoComponente almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoComponente almacenarRegistroNuevo: " + e.toString());
         }
     }
 

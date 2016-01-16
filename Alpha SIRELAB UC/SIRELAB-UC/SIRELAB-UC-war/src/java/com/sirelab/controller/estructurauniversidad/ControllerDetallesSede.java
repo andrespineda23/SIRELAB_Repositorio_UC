@@ -191,7 +191,7 @@ public class ControllerDetallesSede implements Serializable {
             gestionarSedeBO.modificarInformacionSede(sedeDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesSede almacenarModificacionSedeEnSistema:  " + e.toString());
-            System.out.println("Error ControllerDetallesSede almacenarModificacionSedeEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesSede almacenarModificacionSedeEnSistema : " + e.toString());
         }
     }
 

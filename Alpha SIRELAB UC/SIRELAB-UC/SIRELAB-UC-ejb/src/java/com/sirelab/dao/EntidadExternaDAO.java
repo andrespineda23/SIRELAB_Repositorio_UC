@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class EntidadExternaDAO implements EntidadExternaDAOInterface {
 
+    static Logger logger = Logger.getLogger(EntidadExternaDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             em.persist(entidadexterna);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearEntidadExterna EntidadExternaDAO : " + e.toString());
+            logger.error("Error crearEntidadExterna EntidadExternaDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
         try {
             em.merge(entidadexterna);
         } catch (Exception e) {
-            System.out.println("Error editarEntidadExterna EntidadExternaDAO : " + e.toString());
+            logger.error("Error editarEntidadExterna EntidadExternaDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
         try {
             em.remove(em.merge(entidadexterna));
         } catch (Exception e) {
-            System.out.println("Error eliminarEntidadExterna EntidadExternaDAO : " + e.toString());
+            logger.error("Error eliminarEntidadExterna EntidadExternaDAO : " + e.toString());
         }
     }
 
@@ -61,7 +64,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             List<EntidadExterna> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEntidadExternas EntidadExternaDAO : " + e.toString());
+            logger.error("Error consultarEntidadExternas EntidadExternaDAO : " + e.toString());
             return null;
         }
     }
@@ -75,7 +78,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             List<EntidadExterna> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEntidadExternas EntidadExternaDAO : " + e.toString());
+            logger.error("Error consultarEntidadExternas EntidadExternaDAO : " + e.toString());
             return null;
         }
     }
@@ -90,7 +93,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             EntidadExterna registro = (EntidadExterna) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEntidadExternaPorID EntidadExternaDAO : " + e.toString());
+            logger.error("Error buscarEntidadExternaPorID EntidadExternaDAO : " + e.toString());
             return null;
         }
     }
@@ -105,7 +108,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             EntidadExterna registro = (EntidadExterna) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEntidadExternaPorIdentificacionEntidad EntidadExternaDAO : " + e.toString());
+            logger.error("Error buscarEntidadExternaPorIdentificacionEntidad EntidadExternaDAO : " + e.toString());
             return null;
         }
     }
@@ -121,7 +124,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             EntidadExterna registro = (EntidadExterna) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEntidadExternaPorCorreoNumDocumento EntidadExternaDAO : " + e.toString());
+            logger.error("Error buscarEntidadExternaPorCorreoNumDocumento EntidadExternaDAO : " + e.toString());
             return null;
         }
     }
@@ -136,7 +139,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             EntidadExterna registro = (EntidadExterna) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEntidadExternaPorCorreo EntidadExternaDAO : " + e.toString());
+            logger.error("Error buscarEntidadExternaPorCorreo EntidadExternaDAO : " + e.toString());
             return null;
         }
     }
@@ -152,12 +155,12 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".identidadexterna ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<EntidadExterna> tq = em.createQuery(consulta, EntidadExterna.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarEntidadesExternasPorFiltrado EntidadExternaDAO : " + e.toString());
+            logger.error("Error buscarEntidadesExternasPorFiltrado EntidadExternaDAO : " + e.toString());
             return null;
         }
     }
@@ -207,7 +210,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
 
-        System.out.println(jpql);
+        logger.error(jpql);
 
         if (jpql.trim()
                 .endsWith("WHERE")) {

@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCargosBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableTiposCargosBO.class);
+    
     @EJB
     TipoCargoDAOInterface tipoCargoDAO;
 
@@ -28,7 +31,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
         try {
             tipoCargoDAO.crearTipoCargo(tipoCargo);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposCargosBO crearTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO crearTipoCargo : " + e.toString());
         }
     }
 
@@ -37,7 +40,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
         try {
             tipoCargoDAO.editarTipoCargo(tipoCargo);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposCargosBO editarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO editarTipoCargo : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
         try {
             tipoCargoDAO.eliminarTipoCargo(tipoCargo);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
         }
     }
 
@@ -56,7 +59,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
             TipoCargo registro = tipoCargoDAO.buscarTipoCargoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
             return null;
         }
     }
@@ -67,7 +70,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
             List<TipoCargo> lista = tipoCargoDAO.consultarTiposCargos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
             return null;
         }
     }

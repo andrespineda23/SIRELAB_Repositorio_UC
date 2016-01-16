@@ -302,7 +302,7 @@ public class ControllerAdministrarEquipos implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros : " + e.toString());
         }
     }
 

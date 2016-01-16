@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -24,6 +25,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposPerfilesBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableTiposPerfilesBO.class);
+    
     @EJB
     TipoPerfilDAOInterface tipoPerfilDAO;
     @EJB
@@ -37,7 +40,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO consultarDepartamentoPorCodigo : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultarDepartamentoPorCodigo : " + e.toString());
             return null;
         }
     }
@@ -48,7 +51,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO consultaLaboratorioPorCodigo : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultaLaboratorioPorCodigo : " + e.toString());
             return null;
         }
     }
@@ -58,7 +61,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
         try {
             tipoPerfilDAO.crearTipoPerfil(tipoPerfil);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO crearTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO crearTipoPerfil : " + e.toString());
         }
     }
 
@@ -67,7 +70,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
         try {
             tipoPerfilDAO.editarTipoPerfil(tipoPerfil);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO editarTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO editarTipoPerfil : " + e.toString());
         }
     }
 
@@ -76,7 +79,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
         try {
             tipoPerfilDAO.eliminarTipoPerfil(tipoPerfil);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString());
         }
     }
 
@@ -86,7 +89,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             TipoPerfil registro = tipoPerfilDAO.buscarTipoPerfilPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorID : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorID : " + e.toString());
             return null;
         }
     }
@@ -97,7 +100,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             TipoPerfil registro = tipoPerfilDAO.buscarTipoPerfilPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorCodigo : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorCodigo : " + e.toString());
             return null;
         }
     }
@@ -108,7 +111,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             List<TipoPerfil> lista = tipoPerfilDAO.consultarTiposPerfiles();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString());
             return null;
         }
     }

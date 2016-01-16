@@ -168,7 +168,7 @@ public class ControllerConsultarReservasModulo implements Serializable {
         if (Utilidades.validarNulo(listaReservasModuloLaboratorio)) {
             listaReservasModuloLaboratorioTemporal = new ArrayList<ReservaModuloLaboratorio>();
             for (int i = 0; i < listaReservasModuloLaboratorio.size(); i++) {
-                if (Utilidades.fechaIngresadaCorrecta(listaReservasModuloLaboratorio.get(i).getReserva().getFechareserva()) == false) {
+                if (Utilidades.fechaIngresadaCorrecta(listaReservasModuloLaboratorio.get(i).getReserva().getFechareserva().toString()) == false) {
                     listaReservasModuloLaboratorioTemporal.add(listaReservasModuloLaboratorio.get(i));
                 }
             }
@@ -179,7 +179,7 @@ public class ControllerConsultarReservasModulo implements Serializable {
         if (Utilidades.validarNulo(listaReservasModuloLaboratorio)) {
             listaReservasModuloLaboratorioTemporal = new ArrayList<ReservaModuloLaboratorio>();
             for (int i = 0; i < listaReservasModuloLaboratorio.size(); i++) {
-                if (Utilidades.fechaIngresadaCorrecta(listaReservasModuloLaboratorio.get(i).getReserva().getFechareserva()) == true) {
+                if (Utilidades.fechaIngresadaCorrecta(listaReservasModuloLaboratorio.get(i).getReserva().getFechareserva().toString()) == true) {
                     listaReservasModuloLaboratorioTemporal.add(listaReservasModuloLaboratorio.get(i));
                 }
             }

@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class EstadoReservaDAO implements EstadoReservaDAOInterface {
 
+    static Logger logger = Logger.getLogger(EstadoReservaDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
             em.persist(estadoReserva);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearEstadoReserva EstadoReservaDAO : " + e.toString());
+            logger.error("Error crearEstadoReserva EstadoReservaDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
         try {
             em.merge(estadoReserva);
         } catch (Exception e) {
-            System.out.println("Error editarEstadoReserva EstadoReservaDAO : " + e.toString());
+            logger.error("Error editarEstadoReserva EstadoReservaDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
         try {
             em.remove(em.merge(estadoReserva));
         } catch (Exception e) {
-            System.out.println("Error eliminarEstadoReserva EstadoReservaDAO : " + e.toString());
+            logger.error("Error eliminarEstadoReserva EstadoReservaDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
             List<EstadoReserva> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarEstadosReservas EstadoReservaDAO : " + e.toString());
+            logger.error("Error consultarEstadosReservas EstadoReservaDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
             EstadoReserva registro = (EstadoReserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarEstadoReservaPorID EstadoReservaDAO : " + e.toString());
+            logger.error("Error buscarEstadoReservaPorID EstadoReservaDAO : " + e.toString());
             return null;
         }
     }

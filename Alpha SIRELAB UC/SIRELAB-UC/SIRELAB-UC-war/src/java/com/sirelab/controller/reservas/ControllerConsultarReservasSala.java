@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,6 +27,8 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ControllerConsultarReservasSala implements Serializable {
 
+    static Logger logger = Logger.getLogger(ControllerConsultarReservasSala.class);
+    
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
@@ -161,15 +164,15 @@ public class ControllerConsultarReservasSala implements Serializable {
             cargarDatosHistoricos();
             inicializarDatosPaginacion();
         }
-        System.out.println("Cambio la consulta");
-        System.out.println("tipo : " + tipoConsulta);
+        logger.error("Cambio la consulta");
+        logger.error("tipo : " + tipoConsulta);
     }
 
     private void cargarDatosHistoricos() {
         if (Utilidades.validarNulo(listaReservasSala)) {
             listaReservasSalaTemporal = new ArrayList<ReservaSala>();
             for (int i = 0; i < listaReservasSala.size(); i++) {
-                if (Utilidades.fechaIngresadaCorrecta(listaReservasSala.get(i).getReserva().getFechareserva()) == false) {
+                if (Utilidades.fechaIngresadaCorrecta(listaReservasSala.get(i).getReserva().getFechareserva().toString()) == false) {
                     listaReservasSalaTemporal.add(listaReservasSala.get(i));
                 }
             }
@@ -180,7 +183,7 @@ public class ControllerConsultarReservasSala implements Serializable {
         if (Utilidades.validarNulo(listaReservasSala)) {
             listaReservasSalaTemporal = new ArrayList<ReservaSala>();
             for (int i = 0; i < listaReservasSala.size(); i++) {
-                if (Utilidades.fechaIngresadaCorrecta(listaReservasSala.get(i).getReserva().getFechareserva()) == true) {
+                if (Utilidades.fechaIngresadaCorrecta(listaReservasSala.get(i).getReserva().getFechareserva().toString()) == true) {
                     listaReservasSalaTemporal.add(listaReservasSala.get(i));
                 }
             }
@@ -199,7 +202,7 @@ public class ControllerConsultarReservasSala implements Serializable {
         bloquearPagAntReservaSala = true;
         bloquearPagSigReservaSala = true;
         cantidadRegistros = "N/A";
-        System.out.println("Pagina siguiente");
+        logger.error("Pagina siguiente");
         return "detallesreservasala";
     }
 

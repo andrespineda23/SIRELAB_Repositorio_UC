@@ -138,7 +138,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
 
     public void validarFechaMovimiento() {
         if (Utilidades.validarNulo(nuevoFechaMovimiento)) {
-            if ((Utilidades.fechaIngresadaCorrecta(new Date(nuevoFechaMovimiento))) == false) {
+            if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
                 validacionesCosto = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
             } else {
@@ -229,7 +229,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString());
         }
     }
 

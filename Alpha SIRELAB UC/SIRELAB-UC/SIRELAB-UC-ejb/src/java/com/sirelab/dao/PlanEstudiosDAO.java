@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
 
+    static Logger logger = Logger.getLogger(PlanEstudiosDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -30,7 +33,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             em.persist(planestudios);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearPlanEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error crearPlanEstudios PlanEstudiosDAO : " + e.toString());
         }
     }
 
@@ -39,7 +42,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
         try {
             em.merge(planestudios);
         } catch (Exception e) {
-            System.out.println("Error editarPlanEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error editarPlanEstudios PlanEstudiosDAO : " + e.toString());
         }
     }
 
@@ -48,7 +51,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
         try {
             em.remove(em.merge(planestudios));
         } catch (Exception e) {
-            System.out.println("Error eliminarPlanEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error eliminarPlanEstudios PlanEstudiosDAO : " + e.toString());
         }
     }
 
@@ -61,7 +64,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             List<PlanEstudios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarPlanesEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error consultarPlanesEstudios PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }
@@ -76,7 +79,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             PlanEstudios registro = (PlanEstudios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPlanEstudiosPorID PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanEstudiosPorID PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }
@@ -92,7 +95,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             PlanEstudios registro = (PlanEstudios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPlanEstudiosPorCodigoYCarrera PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanEstudiosPorCodigoYCarrera PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }
@@ -107,7 +110,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             PlanEstudios registro = (PlanEstudios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarPlanEstudiosPorCodigo PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanEstudiosPorCodigo PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }
@@ -122,7 +125,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             List<PlanEstudios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarPlanesEstudiosPorCarrera PlanEstudiosDAO : " + e.toString());
+            logger.error("Error consultarPlanesEstudiosPorCarrera PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }
@@ -137,7 +140,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             List<PlanEstudios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarPlanesEstudiosActivosPorCarrera PlanEstudiosDAO : " + e.toString());
+            logger.error("Error consultarPlanesEstudiosActivosPorCarrera PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }
@@ -153,12 +156,12 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigoplanestudio ASC";
-            System.out.println("consulta : " + consulta);
+            logger.error("consulta : " + consulta);
             TypedQuery<PlanEstudios> tq = em.createQuery(consulta, PlanEstudios.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarPlanesEstudiosPorFiltrado PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanesEstudiosPorFiltrado PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }
@@ -209,7 +212,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             }
         }
         jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
-        System.out.println(jpql);
+        logger.error(jpql);
         if (jpql.trim()
                 .endsWith("WHERE")) {
             jpql = jpql.replace("WHERE", "");
@@ -255,7 +258,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimaPlanEstudiosRegistrada PlanEstudiosDAO : " + e.toString());
+            logger.error("Error obtenerUltimaPlanEstudiosRegistrada PlanEstudiosDAO : " + e.toString());
             return null;
         }
     }

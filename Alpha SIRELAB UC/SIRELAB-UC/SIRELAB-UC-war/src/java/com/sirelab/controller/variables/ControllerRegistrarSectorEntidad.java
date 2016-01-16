@@ -98,7 +98,7 @@ public class ControllerRegistrarSectorEntidad implements Serializable {
             gestionarVariableTiposCargoBO.crearSectorEntidad(tipoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarSectorEntidad almacenarRegistroNuevo:  " + e.toString());
-            System.out.println("Error ControllerRegistrarSectorEntidad almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarSectorEntidad almacenarRegistroNuevo: " + e.toString());
         }
     }
 

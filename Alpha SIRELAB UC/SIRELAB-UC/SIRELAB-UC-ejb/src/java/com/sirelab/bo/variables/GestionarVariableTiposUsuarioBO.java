@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUsuarioBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableTiposUsuarioBO.class);
+    
     @EJB
     TipoUsuarioDAOInterface tipoUsuarioDAO;
 
@@ -28,7 +31,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
         try {
             tipoUsuarioDAO.crearTipoUsuario(tipoUsuario);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposUsuariosBO crearTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO crearTipoUsuario : " + e.toString());
         }
     }
 
@@ -37,7 +40,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
         try {
             tipoUsuarioDAO.editarTipoUsuario(tipoUsuario);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposUsuariosBO editarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO editarTipoUsuario : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
         try {
             tipoUsuarioDAO.eliminarTipoUsuario(tipoUsuario);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
         }
     }
 
@@ -56,7 +59,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
             TipoUsuario registro = tipoUsuarioDAO.buscarTipoUsuarioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
             return null;
         }
     }
@@ -67,7 +70,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
             List<TipoUsuario> lista = tipoUsuarioDAO.consultarTiposUsuarios();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
             return null;
         }
     }

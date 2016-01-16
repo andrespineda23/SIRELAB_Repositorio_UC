@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSectoresEntidadesBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarVariableSectoresEntidadesBO.class);
+    
     @EJB
     SectorEntidadDAOInterface sectorEntidadDAO;
 
@@ -28,7 +31,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
         try {
             sectorEntidadDAO.crearSectorEntidad(sectorEntidad);;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableSectoresEntidadesBO crearSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO crearSectorEntidad : " + e.toString());
         }
     }
 
@@ -37,7 +40,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
         try {
             sectorEntidadDAO.editarSectorEntidad(sectorEntidad);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableSectoresEntidadesBO editarSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO editarSectorEntidad : " + e.toString());
         }
     }
 
@@ -46,7 +49,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
         try {
             sectorEntidadDAO.eliminarSectorEntidad(sectorEntidad);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString());
         }
     }
 
@@ -56,7 +59,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
             SectorEntidad registro = sectorEntidadDAO.buscarSectorEntidadPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString());
             return null;
         }
     }
@@ -67,7 +70,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
             List<SectorEntidad> lista = sectorEntidadDAO.consultarSectoresEntidad();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableSectoresEntidadesBO consultarSectoresEntidadesRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO consultarSectoresEntidadesRegistrados : " + e.toString());
             return null;
         }
     }

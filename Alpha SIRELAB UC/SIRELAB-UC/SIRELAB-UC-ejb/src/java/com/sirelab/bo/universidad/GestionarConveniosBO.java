@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,6 +26,8 @@ import javax.ejb.Stateful;
  */
 @Stateful
 public class GestionarConveniosBO implements GestionarConveniosBOInterface {
+    
+    static Logger logger = Logger.getLogger(GestionarConveniosBO.class);
 
     @EJB
     UsuarioDAOInterface usuarioDAO;
@@ -41,7 +44,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             List<Convenio> lista = convenioDAO.buscarConvenioPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarConveniosBO consultarConveniosPorParametro : " + e.toString());
+            logger.error("Error GestionarConveniosBO consultarConveniosPorParametro : " + e.toString());
             return null;
         }
     }
@@ -51,7 +54,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
         try {
             convenioDAO.crearConvenio(convenio);
         } catch (Exception e) {
-            System.out.println("Error GestionarConveniosBO crearConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO crearConvenio : " + e.toString());
         }
     }
 
@@ -61,10 +64,10 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             if (false == convenio.getEstado()) {
                 gestionarProcesosRelacionadosConvenio(convenio, false);
             } 
-            System.out.println("EJB");
+            logger.error("EJB");
             convenioDAO.editarConvenio(convenio);
         } catch (Exception e) {
-            System.out.println("Error GestionarConveniosBO editarConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO editarConvenio : " + e.toString());
         }
     }
 
@@ -92,7 +95,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
         try {
             convenioDAO.eliminarConvenio(convenio);
         } catch (Exception e) {
-            System.out.println("Error GestionarConveniosBO borrarConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO borrarConvenio : " + e.toString());
         }
     }
 
@@ -102,7 +105,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             Convenio registro = convenioDAO.buscarConvenioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarConveniosBO consultarConvenioPorID : " + e.toString());
+            logger.error("Error GestionarConveniosBO consultarConvenioPorID : " + e.toString());
             return null;
         }
     }
@@ -113,7 +116,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             List<Convenio> lista = convenioDAO.consultarConvenios();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarConveniosBO consultarConveniosRegistrados : " + e.toString());
+            logger.error("Error GestionarConveniosBO consultarConveniosRegistrados : " + e.toString());
             return null;
         }
     }
@@ -128,7 +131,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error GestionarConveniosBO validarCambioEstadoConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO validarCambioEstadoConvenio : " + e.toString());
             return null;
         }
     }

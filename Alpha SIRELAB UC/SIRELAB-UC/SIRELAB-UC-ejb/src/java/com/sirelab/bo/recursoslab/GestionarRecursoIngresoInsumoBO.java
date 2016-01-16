@@ -15,6 +15,7 @@ import com.sirelab.entidades.Proveedor;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,6 +24,8 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoInsumoBOInterface {
 
+    static Logger logger = Logger.getLogger(GestionarRecursoIngresoInsumoBO.class);
+    
     @EJB
     InsumoDAOInterface insumoDAO;
     @EJB
@@ -36,7 +39,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             List<Insumo> lista = insumoDAO.consultarInsumos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoIngresoInsumoBO consultarInsumosRegistrados: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO consultarInsumosRegistrados: " + e.toString());
             return null;
         }
     }
@@ -50,7 +53,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             modificar.setCantidadexistencia(cantidad);
             insumoDAO.editarInsumo(modificar);
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoIngresoInsumoBO crearIngresoInsumo: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO crearIngresoInsumo: " + e.toString());
         }
     }
 
@@ -62,7 +65,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             ingresoInsumo.setInsumo(nuevo);
             ingresoInsumoDAO.crearIngresoInsumo(ingresoInsumo);
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString());
         }
     }
 
@@ -72,7 +75,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             List<Proveedor> lista = proveedorDAOInterface.consultarProveedores();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString());
             return null;
         }
     }

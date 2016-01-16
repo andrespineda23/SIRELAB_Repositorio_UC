@@ -135,7 +135,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString());
-            System.out.println("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
         }
     }
 
@@ -160,7 +160,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString());
-            System.out.println("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
         }
     }
 
@@ -518,7 +518,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  " + e.toString());
-            System.out.println("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
         }
     }
 

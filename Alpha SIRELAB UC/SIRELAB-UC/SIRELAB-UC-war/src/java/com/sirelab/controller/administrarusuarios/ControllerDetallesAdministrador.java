@@ -370,7 +370,7 @@ public class ControllerDetallesAdministrador implements Serializable {
             restaurarInformacionAdministrador();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministrador modificarInformacionAdministrador : " + e.toString());
+            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador : " + e.toString());
         }
     }
 
@@ -401,7 +401,7 @@ public class ControllerDetallesAdministrador implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministrador activarAdministrador:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministradores activarAdministrador : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradores activarAdministrador : " + e.toString());
         }
     }
 
@@ -424,7 +424,7 @@ public class ControllerDetallesAdministrador implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministrador inactivarAdministrador:  " + e.toString());
-            System.out.println("Error ControllerDetallesAdministradores inactivarAdministrador : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradores inactivarAdministrador : " + e.toString());
         }
     }
 

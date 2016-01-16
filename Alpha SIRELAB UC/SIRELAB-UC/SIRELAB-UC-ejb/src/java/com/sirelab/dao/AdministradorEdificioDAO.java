@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,8 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterface {
+    
+    static Logger logger = Logger.getLogger(AdministradorEdificioDAO.class);
 
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
@@ -33,10 +36,10 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
     public void crearAdministradorEdificio(AdministradorEdificio administradoredificio) {
         try {
             em.persist(administradoredificio);
-            System.out.println("Creo el administradoedificio");
+            logger.error("Creo el administradoedificio");
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error crearAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
         }
     }
 
@@ -45,7 +48,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
         try {
             em.merge(administradoredificio);
         } catch (Exception e) {
-            System.out.println("Error editarAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error editarAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
         }
     }
 
@@ -54,7 +57,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
         try {
             em.remove(em.merge(administradoredificio));
         } catch (Exception e) {
-            System.out.println("Error eliminarAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error eliminarAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
         }
     }
 
@@ -67,7 +70,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             List<AdministradorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarAdministradorEdificios AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error consultarAdministradorEdificios AdministradorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -82,7 +85,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAdministradorEdificioPorID AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorID AdministradorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -97,7 +100,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAdministradorEdificioPorIDPersona AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorIDPersona AdministradorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -113,7 +116,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAdministradorEdificioPorPorCorreoNumDocumento AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorPorCorreoNumDocumento AdministradorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -128,7 +131,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAdministradorEdificioPorPorCorreo AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorPorCorreo AdministradorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -143,7 +146,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarAdministradorEdificioPorPorDocumento AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorPorDocumento AdministradorEdificioDAO : " + e.toString());
             return null;
         }
     }
@@ -156,18 +159,18 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<AdministradorEdificio> registros = query.getResultList();
             if (registros != null) {
-                System.out.println("Hay datos : "+registros.size());
+                logger.error("Hay datos : "+registros.size());
                 for (int i = 0; i < registros.size(); i++) {
-                    System.out.println("registros: i: " + registros.get(i));
+                    logger.error("registros: i: " + registros.get(i));
                 }
                 AdministradorEdificio ultimoRegistro = registros.get(0);
                 return ultimoRegistro;
             } else {
-                System.out.println("No Hay datos");
+                logger.error("No Hay datos");
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error obtenerUltimaAdministradorEdificioRegistrada AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error obtenerUltimaAdministradorEdificioRegistrada AdministradorEdificioDAO : " + e.toString());
             return null;
         }
     }

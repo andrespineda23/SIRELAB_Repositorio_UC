@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +21,9 @@ import javax.ejb.Stateful;
 @Stateful
 public class GestionarVariableHorariosAtencionBO implements GestionarVariableHorariosAtencionBOInterface {
 
+    
+    static Logger logger = Logger.getLogger(GestionarVariableHorariosAtencionBO.class);
+    
     @EJB
     HorarioAtencionDAOInterface horarioAtencionInterface;
 
@@ -29,7 +33,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
             List<HorarioAtencion> lista = horarioAtencionInterface.consultarHorariosAtencion();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableHorariosAtencionBO consultarPeriodosAcademicos: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO consultarPeriodosAcademicos: " + e.toString());
             return null;
         }
     }
@@ -40,7 +44,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
             HorarioAtencion registro = horarioAtencionInterface.buscarHorarioAtencionPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorID: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorID: " + e.toString());
             return null;
         }
     }
@@ -51,7 +55,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
             HorarioAtencion registro = horarioAtencionInterface.buscarHorarioAtencionPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorCodigo: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorCodigo: " + e.toString());
             return null;
         }
     }
@@ -61,7 +65,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
         try {
             horarioAtencionInterface.crearHorarioAtencion(horario);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableHorariosAtencionBO crearHorarioAtencion: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO crearHorarioAtencion: " + e.toString());
         }
     }
 
@@ -70,7 +74,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
         try {
             horarioAtencionInterface.editarHorarioAtencion(horario);
         } catch (Exception e) {
-            System.out.println("Error GestionarVariableHorariosAtencionBO editarHorarioAtencion: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO editarHorarioAtencion: " + e.toString());
         }
     }
 }

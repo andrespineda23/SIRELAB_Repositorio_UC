@@ -295,7 +295,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
             restaurarInformacionLaboratorio();
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema : " + e.toString());
 
         }
     }

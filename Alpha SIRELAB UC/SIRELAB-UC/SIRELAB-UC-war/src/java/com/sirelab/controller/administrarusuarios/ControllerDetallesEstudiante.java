@@ -226,7 +226,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             modificacionesRegistroEstudiante();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEstudiante actualizarCarreras:  " + e.toString());
-            System.out.println("Error ControllerDetallesEstudiante actualizarCarreras : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiante actualizarCarreras : " + e.toString());
         }
     }
 
@@ -497,7 +497,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             restaurarInformacionEstudiante();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema:  " + e.toString());
-            System.out.println("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema : " + e.toString());
         }
     }
 
@@ -528,7 +528,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEstudiante activarEstudiante:  " + e.toString());
-            System.out.println("Error ControllerDetallesEstudiantes activarEstudiante : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiantes activarEstudiante : " + e.toString());
         }
     }
 
@@ -551,7 +551,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesEstudiante inactivarEstudiante:  " + e.toString());
-            System.out.println("Error ControllerDetallesEstudiantes inactivarEstudiante : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiantes inactivarEstudiante : " + e.toString());
         }
     }
 

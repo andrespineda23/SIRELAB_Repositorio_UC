@@ -14,6 +14,7 @@ import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,8 @@ import javax.persistence.Query;
 @Stateless
 public class SectorEntidadDAO implements SectorEntidadDAOInterface {
 
+    static Logger logger = Logger.getLogger(SectorEntidadDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -34,7 +37,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
             em.persist(sectorEntidad);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearSectorEntidad SectorEntidadDAO : " + e.toString());
+            logger.error("Error crearSectorEntidad SectorEntidadDAO : " + e.toString());
         }
     }
 
@@ -43,7 +46,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
         try {
             em.merge(sectorEntidad);
         } catch (Exception e) {
-            System.out.println("Error editarSectorEntidad SectorEntidadDAO : " + e.toString());
+            logger.error("Error editarSectorEntidad SectorEntidadDAO : " + e.toString());
         }
     }
 
@@ -52,7 +55,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
         try {
             em.remove(em.merge(sectorEntidad));
         } catch (Exception e) {
-            System.out.println("Error eliminarSectorEntidad SectorEntidadDAO : " + e.toString());
+            logger.error("Error eliminarSectorEntidad SectorEntidadDAO : " + e.toString());
         }
     }
 
@@ -65,7 +68,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
             List<SectorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarTiposMovimientos SectorEntidadDAO : " + e.toString());
+            logger.error("Error consultarTiposMovimientos SectorEntidadDAO : " + e.toString());
             return null;
         }
     }
@@ -80,7 +83,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
             SectorEntidad registro = (SectorEntidad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarSectorEntidadPorID SectorEntidadDAO : " + e.toString());
+            logger.error("Error buscarSectorEntidadPorID SectorEntidadDAO : " + e.toString());
             return null;
         }
     }

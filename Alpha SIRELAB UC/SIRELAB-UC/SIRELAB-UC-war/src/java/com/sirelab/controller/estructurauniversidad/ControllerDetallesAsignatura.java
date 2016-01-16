@@ -209,7 +209,7 @@ public class ControllerDetallesAsignatura implements Serializable {
             gestionarAsignaturasBO.modificarInformacionAsignatura(asignaturaDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  " + e.toString());
-            System.out.println("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema : " + e.toString());
         }
     }
 

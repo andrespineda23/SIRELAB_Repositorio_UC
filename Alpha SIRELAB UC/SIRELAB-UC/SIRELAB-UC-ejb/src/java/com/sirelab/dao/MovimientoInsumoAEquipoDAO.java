@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,8 @@ import javax.persistence.Query;
 @Stateless
 public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInterface {
 
+    static Logger logger = Logger.getLogger(MovimientoInsumoAEquipoDAO.class);
+    
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +36,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
             em.persist(movimiento);
             em.flush();
         } catch (Exception e) {
-            System.out.println("Error crearMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString());
+            logger.error("Error crearMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString());
         }
     }
 
@@ -42,7 +45,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
         try {
             em.merge(movimiento);
         } catch (Exception e) {
-            System.out.println("Error editarMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString());
+            logger.error("Error editarMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString());
         }
     }
 
@@ -51,7 +54,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
         try {
             em.remove(em.merge(movimiento));
         } catch (Exception e) {
-            System.out.println("Error eliminarMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString());
+            logger.error("Error eliminarMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString());
         }
     }
 
@@ -64,7 +67,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
             List<MovimientoInsumoAEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarMovimientoInsumoAEquipos MovimientoInsumoAEquipoDAO : " + e.toString());
+            logger.error("Error consultarMovimientoInsumoAEquipos MovimientoInsumoAEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -79,7 +82,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
             MovimientoInsumoAEquipo registro = (MovimientoInsumoAEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarMovimientoInsumoAEquipoPorID MovimientoInsumoAEquipoDAO : " + e.toString());
+            logger.error("Error buscarMovimientoInsumoAEquipoPorID MovimientoInsumoAEquipoDAO : " + e.toString());
             return null;
         }
     }
@@ -94,7 +97,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
             List<MovimientoInsumoAEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error buscarMovimientoInsumoAEquipoPorIdMovimiento MovimientoInsumoAEquipoDAO : " + e.toString());
+            logger.error("Error buscarMovimientoInsumoAEquipoPorIdMovimiento MovimientoInsumoAEquipoDAO : " + e.toString());
             return null;
         }
     }
