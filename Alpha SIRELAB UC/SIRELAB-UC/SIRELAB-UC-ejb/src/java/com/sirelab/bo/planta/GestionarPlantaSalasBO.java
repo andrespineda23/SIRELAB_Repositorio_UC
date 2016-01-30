@@ -285,7 +285,7 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             List<ModuloLaboratorio> lista = moduloLaboratorioDAO.buscarModuloLaboratorioPorIDSalaLaboratorio(idSala);
             if (null != lista) {
                 for (int i = 0; i < lista.size(); i++) {
-                    valor = valor + lista.get(i).getCostomodulo().intValue();
+                    valor = valor + lista.get(i).getCostoalquiler().intValue();
                 }
             }
             return valor.toString();

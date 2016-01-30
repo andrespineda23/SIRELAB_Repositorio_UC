@@ -12,6 +12,8 @@ import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -144,7 +146,19 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     public void registrarModificacionPeriodoAcademico() {
         if (modificacionesRegistro == true) {
             if (validarValidacionesRegistro() == true) {
-                if (new Date(inputFechaFin).after(new Date(inputFechaInicio))) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        	Date date1 = null;
+                Date date2 = null;
+                int comparacion = 1;
+                try {
+                    date1 = sdf.parse(inputFechaInicio);
+                    date2 = sdf.parse(inputFechaFin);
+                } catch (ParseException ex) {  
+                    comparacion = 1;
+                }
+                comparacion = date1.compareTo(date2);
+                
+                if (comparacion<0) {
                     almacenarModificacionRegistro();
                     cargarInformacionRegistro();
                     colorMensaje = "green";
@@ -166,8 +180,20 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     private void almacenarModificacionRegistro() {
         try {
             periodoAcademicoEditar.setDetalleperiodo(inputDetalle);
-            periodoAcademicoEditar.setFechafinal(new Date(inputFechaFin));
-            periodoAcademicoEditar.setFechainicial(new Date(inputFechaInicio));
+            
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fecha1 = null;
+            Date fecha2 = null;
+
+            try {
+                fecha1 = format.parse(inputFechaFin);
+                fecha2 = format.parse(inputFechaInicio);
+                periodoAcademicoEditar.setFechafinal(fecha1);
+            periodoAcademicoEditar.setFechainicial(fecha2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             gestionarVariablePeriodosAcademicosBO.editarPeriodoAcademico(periodoAcademicoEditar);
         } catch (Exception e) {
             logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro:  " + e.toString());

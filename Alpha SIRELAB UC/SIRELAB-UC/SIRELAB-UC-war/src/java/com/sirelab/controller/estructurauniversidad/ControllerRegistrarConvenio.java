@@ -11,6 +11,8 @@ import com.sirelab.entidades.Convenio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -210,8 +212,22 @@ public class ControllerRegistrarConvenio implements Serializable {
             convenioNuevo.setValor(Integer.valueOf(inputValor));
             convenioNuevo.setEstado(true);
             convenioNuevo.setDescripcion(inputDescripcion);
-            convenioNuevo.setFechafinal(new Date(inputFechaFin));
-            convenioNuevo.setFechainicial(new Date(inputFechaInicio));
+            
+            
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fecha1 = null;
+            Date fecha2 = null;
+
+            try {
+                fecha1 = format.parse(inputFechaFin);
+                fecha2 = format.parse(inputFechaInicio);
+                convenioNuevo.setFechafinal(fecha1);
+            convenioNuevo.setFechainicial(fecha2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
             gestionarConvenioBO.crearConvenio(convenioNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo:  " + e.toString());

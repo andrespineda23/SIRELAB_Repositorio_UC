@@ -14,6 +14,8 @@ import com.sirelab.entidades.Proveedor;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -521,7 +523,19 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
 
     private void almacenarNuevoInsumoEIngresoEnSistema() {
         IngresoInsumo ingresoNuevo = new IngresoInsumo();
-        ingresoNuevo.setFechaingreso(new Date(nuevoFecha));
+        String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fecha1 = null;
+            Date fecha2 = null;
+
+            try {
+                fecha1 = format.parse(nuevoFecha);
+                ingresoNuevo.setFechaingreso(fecha1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
+        
         Integer cantidad = Integer.valueOf(nuevoCantidad);
         ingresoNuevo.setCantidadingreso(cantidad);
         if (Utilidades.validarNulo(nuevoCosto) && (!nuevoCosto.isEmpty()) && (nuevoCosto.trim().length() > 0)) {

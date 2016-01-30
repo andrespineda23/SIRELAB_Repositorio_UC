@@ -29,8 +29,6 @@ import org.apache.log4j.Logger;
 @WebFilter(filterName = "FilterPaginasAdministrador", urlPatterns = {"/faces/xhtml/paginasadministrador/*"})
 public class FilterPaginasAdministrador implements Filter {
     
-    static Logger logger = Logger.getLogger(FilterPaginasAdministrador.class);
-    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -113,7 +111,6 @@ public class FilterPaginasAdministrador implements Filter {
         String contextPath = req.getContextPath();
         if (null != usuarioLoginSistema) {
             if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                logger.error("El usuario es CORRECTO");
             } else {
                 ControllerPaginasIniciales obj = new ControllerPaginasIniciales();
                 obj.cerrarSession();

@@ -23,6 +23,8 @@ import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -642,7 +644,6 @@ public class ControllerDetallesEquipo implements Serializable {
                 cambioModulo = true;
                 equipoCambio = equipoElementoDetalles;
             }
-            logger.error("nombreEquipoElemento: "+nombreEquipoElemento);
             equipoElementoDetalles.setNombreequipo(nombreEquipoElemento);
             equipoElementoDetalles.setInventarioequipo(inventarioEquipoElemento);
             equipoElementoDetalles.setMarcaequipo(nombreEquipoElemento);
@@ -650,7 +651,20 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setSeriequipo(nombreEquipoElemento);
 
             equipoElementoDetalles.setEspecificacionestecnicas(especificacionEquipoElemento);
-            equipoElementoDetalles.setFechaadquisicion(new Date(fechaEquipoElemento));
+
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fechaAdq = null;
+            if (null != fechaEquipoElemento && !fechaEquipoElemento.isEmpty()) {
+                try {
+                    fechaAdq = format.parse(fechaEquipoElemento);
+                    equipoElementoDetalles.setFechaadquisicion(fechaAdq);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                equipoElementoDetalles.setFechaadquisicion(null);
+            }
 
             equipoElementoDetalles.setCantidadequipo(Integer.valueOf(cantidadEquipoElemento).intValue());
             if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty()) && (inversionEquipoElemento.trim().length() > 0)) {

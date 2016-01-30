@@ -14,6 +14,8 @@ import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -164,7 +166,18 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     public void registrarHojaVidaEquipo() {
         if (validarValidacionesRegistro() == true) {
-            if ((new Date(inputFechaRegistro).after(new Date(inputFechaEvento))) || (new Date(inputFechaRegistro).equals(new Date(inputFechaEvento)))) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        	Date date1 = null;
+                Date date2 = null;
+                int comparacion = 1;
+                try {
+                    date1 = sdf.parse(inputFechaRegistro);
+                    date2 = sdf.parse(inputFechaEvento);
+                } catch (ParseException ex) {  
+                    comparacion = 1;
+                }
+                comparacion = date1.compareTo(date2);
+                if (comparacion != 1) {
                 almacenarRegistroNuevo();
                 restaurarFormulario();
                 activarLimpiar = false;
@@ -186,8 +199,21 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         try {
             HojaVidaEquipo reggNuevo = new HojaVidaEquipo();
             reggNuevo.setDetalleevento(inputDetalle);
-            reggNuevo.setFecharegistro(new Date(inputFechaRegistro));
-            reggNuevo.setFechaevento(new Date(inputFechaEvento));
+
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fecha1 = null;
+            Date fecha2 = null;
+
+            try {
+                fecha1 = format.parse(inputFechaRegistro);
+                fecha2 = format.parse(inputFechaEvento);
+                reggNuevo.setFecharegistro(fecha1);
+                reggNuevo.setFechaevento(fecha2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             reggNuevo.setTipoevento(inputTipoEvento);
             reggNuevo.setEquipoelemento(equipoElemento);
             gestionarPlantaHojasVidaEquiposBO.crearHojaVidaEquipo(reggNuevo);

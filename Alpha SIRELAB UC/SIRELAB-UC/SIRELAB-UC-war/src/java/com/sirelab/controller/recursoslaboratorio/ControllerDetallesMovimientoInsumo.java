@@ -14,6 +14,8 @@ import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -204,7 +206,20 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
             movimientoInsumoDetalle.setTipomovimiento(editarTipoMovimiento);
             movimientoInsumoDetalle.setCantidadmovimiento(Integer.parseInt(editarCantidadMovimiento));
             movimientoInsumoDetalle.setCostomovimiento(Long.parseLong(editarCostoMovimiento));
-            movimientoInsumoDetalle.setFechamovimiento(new Date(editarFechaMovimiento));
+            
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fecha1 = null;
+            Date fecha2 = null;
+
+            try {
+                fecha1 = format.parse(editarFechaMovimiento);
+                movimientoInsumoDetalle.setFechamovimiento(fecha1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
+            
             movimientoInsumoDetalle.setInsumo(editarInsumo);
             gestionarRecursoMovimientosInsumoBO.editarMovimientoInsumo(movimientoInsumoDetalle);
         } catch (Exception e) {

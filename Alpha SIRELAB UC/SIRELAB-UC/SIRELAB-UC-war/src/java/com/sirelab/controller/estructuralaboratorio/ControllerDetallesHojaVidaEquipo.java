@@ -13,8 +13,11 @@ import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -169,7 +172,18 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
     public void registrarModificacionHojaVidaEquipo() {
         if (modificacionesRegistro == true) {
             if (validarValidacionesRegistro() == true) {
-                if ((new Date(inputFechaRegistro).after(new Date(inputFechaEvento))) || (new Date(inputFechaRegistro).equals(new Date(inputFechaEvento)))) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        	Date date1 = null;
+                Date date2 = null;
+                int comparacion = 1;
+                try {
+                    date1 = sdf.parse(inputFechaRegistro);
+                    date2 = sdf.parse(inputFechaEvento);
+                } catch (ParseException ex) {  
+                    comparacion = 1;
+                }
+                comparacion = date1.compareTo(date2);
+                if (comparacion != 1) {
                     almacenarModificacionRegistro();
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
@@ -194,6 +208,19 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             hojaVidaEquipoDetalle.setFecharegistro(new Date(inputFechaRegistro));
             hojaVidaEquipoDetalle.setTipoevento(inputTipoEvento);
             hojaVidaEquipoDetalle.setFechaevento(new Date(inputFechaEvento));
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fecha1 = null;
+            Date fecha2 = null;
+                try {
+                    fecha1 = format.parse(inputFechaRegistro);
+                    fecha2 = format.parse(inputFechaEvento);
+                    hojaVidaEquipoDetalle.setFecharegistro(fecha1);
+                    hojaVidaEquipoDetalle.setFechaevento(fecha2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            
             gestionarPlantaHojasVidaEquiposBO.editarHojaVidaEquipo(hojaVidaEquipoDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro:  " + e.toString());

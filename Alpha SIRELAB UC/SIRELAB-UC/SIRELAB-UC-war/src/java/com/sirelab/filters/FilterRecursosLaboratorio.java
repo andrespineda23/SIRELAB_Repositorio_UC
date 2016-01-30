@@ -29,9 +29,6 @@ import org.apache.log4j.Logger;
 @WebFilter(filterName = "FilterRecursosLaboratorio", urlPatterns = {"/faces/xhtml/recursoslaboratorio/*"})
 public class FilterRecursosLaboratorio implements Filter {
 
-    
-    static Logger logger = Logger.getLogger(FilterRecursosLaboratorio.class);
-    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -48,7 +45,7 @@ public class FilterRecursosLaboratorio implements Filter {
             log("FilterRecursosLaboratorio:DoBeforeProcessing");
         }
 
-	// Write code here to process the request and/or response before
+        // Write code here to process the request and/or response before
         // the rest of the filter chain is invoked.
         // For example, a logging filter might log items on the request object,
         // such as the parameters.
@@ -114,7 +111,6 @@ public class FilterRecursosLaboratorio implements Filter {
         String contextPath = req.getContextPath();
         if (null != usuarioLoginSistema) {
             if (("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) || ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario()))) {
-                logger.error("El usuario es CORRECTO");
             } else {
                 ControllerPaginasIniciales obj = new ControllerPaginasIniciales();
                 obj.cerrarSession();

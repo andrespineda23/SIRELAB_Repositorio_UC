@@ -17,6 +17,8 @@ import com.sirelab.entidades.TipoActivo;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -437,7 +439,19 @@ public class ControllerRegistrarEquipo implements Serializable {
             } else {
                 equipoNuevo.setCostoalquiler(Integer.valueOf("0"));
             }
-            equipoNuevo.setFechaadquisicion(new Date(nuevoFechaAdquisicionEquipo));
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fecha1 = null;
+            if(nuevoFechaAdquisicionEquipo != null && !nuevoFechaAdquisicionEquipo.isEmpty()){
+                try {
+                    fecha1 = format.parse(nuevoFechaAdquisicionEquipo);
+                    equipoNuevo.setFechaadquisicion(fecha1);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                equipoNuevo.setFechaadquisicion(fecha1);
+            }
             equipoNuevo.setEspecificacionestecnicas(nuevoEspecificacionEquipo);
             equipoNuevo.setModulolaboratorio(nuevoModuloLaboratorioEquipo);
             equipoNuevo.setTipoactivo(nuevoTipoActivoEquipo);

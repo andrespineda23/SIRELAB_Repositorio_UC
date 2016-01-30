@@ -28,8 +28,6 @@ import org.apache.log4j.Logger;
  */
 @WebFilter(filterName = "FilterPaginaInicialLaboratorista", urlPatterns = {"/faces/xhtml/paginasiniciales/iniciolaboratorista.xhtml"})
 public class FilterPaginaInicialLaboratorista implements Filter {
-
-    static Logger logger = Logger.getLogger(FilterPaginaInicialLaboratorista.class);
     
     
     private static final boolean debug = true;
@@ -114,7 +112,7 @@ public class FilterPaginaInicialLaboratorista implements Filter {
         String contextPath = req.getContextPath();
         if (null != usuarioLoginSistema) {
             if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                logger.error("El usuario es CORRECTO");
+                
             } else {
                 ControllerPaginasIniciales obj = new ControllerPaginasIniciales();
                 obj.cerrarSession();

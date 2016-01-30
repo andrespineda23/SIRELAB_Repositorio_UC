@@ -257,12 +257,18 @@ public class ControllerDetallesConvenio implements Serializable {
             convenioEditar.setValor(Integer.valueOf(inputValor));
             convenioEditar.setEstado(estadoConvenio);
             convenioEditar.setDescripcion(inputDescripcion);
-            convenioEditar.setFechainicial(new Date(inputFechaInicio));
-            if (null != inputFechaFin && !inputFechaFin.isEmpty()) {
-                convenioEditar.setFechafinal(new Date(inputFechaFin));
-            } else {
-                convenioEditar.setFechafinal(null);
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date fechaInicio = null;
+            Date fechaFin = null;
+            try {
+                fechaInicio = format.parse(inputFechaInicio);
+                fechaFin = format.parse(inputFechaFin);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            convenioEditar.setFechainicial(fechaInicio);
+            convenioEditar.setFechafinal(fechaFin);
             gestionarConvenioBO.editarConvenio(convenioEditar);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo:  " + e.toString());
