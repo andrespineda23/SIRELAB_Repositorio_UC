@@ -45,14 +45,17 @@ public class ControllerReservaSala3 implements Serializable {
     public ControllerReservaSala3() {
     }
 
-    @PostConstruct
-    public void init() {
-        reservaSala = (AyudaReservaSala) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaSala");
-        nombreAsignatura = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("nombreAsignatura");
-        rutaGuia = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("rutaGuia");
-        reservaPersona = (Reserva) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaPersona");
+    public void cargarInformacionReserva(AyudaReservaSala ayudaReserva) {
+        reservaSala = ayudaReserva;
+        nombreAsignatura = ayudaReserva.getNombreAsignatura();
+        rutaGuia = ayudaReserva.getRutaGuia();
+        reservaPersona = ayudaReserva.getReserva();
         valorReserva = 0;
         obtenerCostoFinalReserva();
+    }
+
+    @PostConstruct
+    public void init() {
     }
 
     private void obtenerCostoFinalReserva() {
@@ -76,9 +79,6 @@ public class ControllerReservaSala3 implements Serializable {
     }
 
     public String cerrarDatosReserva() {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaSala");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("nombreAsignatura");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaPersona");
         valorReserva = 0;
         reservaPersona = null;
         reservaSala = null;
@@ -94,7 +94,7 @@ public class ControllerReservaSala3 implements Serializable {
             }
         }
     }
-    
+
     public void descargarGuiaLaboratorio() throws FileNotFoundException, IOException {
         File ficheroPDF = new File(rutaGuia);
         FacesContext ctx = FacesContext.getCurrentInstance();
@@ -116,7 +116,6 @@ public class ControllerReservaSala3 implements Serializable {
             ctx.responseComplete();
         }
     }
-
 
     public AyudaReservaSala getReservaSala() {
         return reservaSala;

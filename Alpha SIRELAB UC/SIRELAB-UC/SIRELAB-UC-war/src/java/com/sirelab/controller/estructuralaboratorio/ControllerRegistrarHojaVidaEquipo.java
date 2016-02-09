@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.estructuralaboratorio;
 
+import com.sirelab.ayuda.AyudaFechaReserva;
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaHojasVidaEquiposBOInterface;
 import com.sirelab.entidades.EquipoElemento;
@@ -16,6 +17,8 @@ import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -53,6 +56,15 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     private boolean activarAceptar;
     private boolean fechaDiferidaEvento, fechaDiferidaRegistro;
     private MensajesConstantes constantes;
+    private Integer fechaAnio;
+    private AyudaFechaReserva fechaEventoMes;
+    private AyudaFechaReserva fechaEventoDia;
+    private List<AyudaFechaReserva> listaMesesEvento;
+    private List<AyudaFechaReserva> listaDiasEvento;
+    private AyudaFechaReserva fechaRegistroMes;
+    private AyudaFechaReserva fechaRegistroDia;
+    private List<AyudaFechaReserva> listaMesesRegistro;
+    private List<AyudaFechaReserva> listaDiasRegistro;
 
     public ControllerRegistrarHojaVidaEquipo() {
     }
@@ -66,10 +78,6 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         inputDetalle = null;
-        Date fecha = new Date();
-        DateFormat df = DateFormat.getDateInstance();
-        inputFechaRegistro = df.format(fecha);
-        inputFechaEvento = df.format(fecha);
         inputTipoEvento = null;
         validacionesDetalle = false;
         listaTiposEventos = null;
@@ -84,6 +92,96 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     public void recibirIDEquipo(BigInteger idRegistro) {
         this.idEquipo = idRegistro;
         equipoElemento = gestionarPlantaHojasVidaEquiposBO.consultarEquipoElementoPorID(idEquipo);
+        cargarFechaReserva();
+    }
+
+    private void cargarFechaReserva() {
+        Date fechaHoy = new Date();
+        fechaAnio = fechaHoy.getYear() + 1900;
+        listaMesesEvento = new ArrayList<AyudaFechaReserva>();
+        listaMesesRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesRegistro.add(ayuda);
+            listaMesesEvento.add(ayuda);
+        }
+        fechaEventoMes = obtenerMesExacto(fechaHoy.getMonth(), 1);
+        fechaRegistroMes = obtenerMesExacto(fechaHoy.getMonth(), 2);
+        actualizarInformacionEventoDia();
+        actualizarInformacionRegistroDia();
+        fechaEventoDia = obtenerDiaExacto(fechaHoy.getDate(),1);
+        fechaRegistroDia = obtenerDiaExacto(fechaHoy.getDate(),2);
+    }
+
+    private AyudaFechaReserva obtenerMesExacto(int mes, int op) {
+        AyudaFechaReserva ayuda = null;
+        if (op == 1) {
+            for (int i = 0; i < listaMesesEvento.size(); i++) {
+                if (mes == listaMesesEvento.get(i).getParametro()) {
+                    ayuda = listaMesesEvento.get(i);
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < listaMesesRegistro.size(); i++) {
+                if (mes == listaMesesRegistro.get(i).getParametro()) {
+                    ayuda = listaMesesRegistro.get(i);
+                    break;
+                }
+            }
+        }
+        return ayuda;
+    }
+
+    private AyudaFechaReserva obtenerDiaExacto(int dia, int op) {
+        AyudaFechaReserva ayuda = null;
+        if (op == 1) {
+            for (int i = 0; i < listaDiasEvento.size(); i++) {
+                if (dia == listaDiasEvento.get(i).getParametro()) {
+                    ayuda = listaDiasEvento.get(i);
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < listaDiasRegistro.size(); i++) {
+                if (dia == listaDiasRegistro.get(i).getParametro()) {
+                    ayuda = listaDiasRegistro.get(i);
+                    break;
+                }
+            }
+        }
+        return ayuda;
+    }
+
+    public void actualizarInformacionEventoDia() {
+        Calendar ahoraCal = Calendar.getInstance();
+        ahoraCal.set(Integer.valueOf(fechaAnio), fechaEventoMes.getParametro(), 1);
+        int diaFin = ahoraCal.getActualMaximum(Calendar.DATE);
+        int diaInicio = 1;
+        listaDiasEvento = new ArrayList<AyudaFechaReserva>();
+        for (int i = diaInicio; i < diaFin + 1; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaDiasEvento.add(ayuda);
+        }
+    }
+
+    public void actualizarInformacionRegistroDia() {
+        Calendar ahoraCal = Calendar.getInstance();
+        ahoraCal.set(Integer.valueOf(fechaAnio), fechaRegistroMes.getParametro(), 1);
+        int diaFin = ahoraCal.getActualMaximum(Calendar.DATE);
+        int diaInicio = 1;
+        listaDiasRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = diaInicio; i < diaFin + 1; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaDiasRegistro.add(ayuda);
+        }
     }
 
     public void validarDetalle() {
@@ -107,34 +205,29 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     }
 
     public void validarFechaEvento() {
-        if (Utilidades.validarNulo(inputFechaEvento)) {
-
-            inputFechaEvento = new String();
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaEvento)) {
-                validacionesFechaEvento = true;
-            } else {
-                validacionesFechaEvento = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
-            }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaAnio);
+        cal.set(Calendar.MONTH, fechaEventoMes.getParametro());
+        cal.set(Calendar.DATE, fechaEventoDia.getParametro());
+        if (Utilidades.fechaIngresadaCorrecta(cal.getTime().toString())) {
+            validacionesFechaEvento = true;
         } else {
             validacionesFechaEvento = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaEvento", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
         }
+
     }
 
     public void validarFechaRegistro() {
-        if (Utilidades.validarNulo(inputFechaRegistro)) {
-
-            inputFechaRegistro = new String();
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaRegistro)) {
-                validacionesFechaRegistro = true;
-            } else {
-                validacionesFechaRegistro = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-            }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaAnio);
+        cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
+        cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
+        if (Utilidades.fechaIngresadaCorrecta(cal.getTime().toString())) {
+            validacionesFechaRegistro = true;
         } else {
             validacionesFechaRegistro = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta."));
+            FacesContext.getCurrentInstance().addMessage("form:inputFechaRegistro", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
         }
     }
 
@@ -167,17 +260,27 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
     public void registrarHojaVidaEquipo() {
         if (validarValidacionesRegistro() == true) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        	Date date1 = null;
-                Date date2 = null;
-                int comparacion = 1;
-                try {
-                    date1 = sdf.parse(inputFechaRegistro);
-                    date2 = sdf.parse(inputFechaEvento);
-                } catch (ParseException ex) {  
-                    comparacion = 1;
-                }
-                comparacion = date1.compareTo(date2);
-                if (comparacion != 1) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, fechaAnio);
+            cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
+            cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
+
+            Calendar cal2 = Calendar.getInstance();
+            cal2.set(Calendar.YEAR, fechaAnio);
+            cal2.set(Calendar.MONTH, fechaEventoMes.getParametro());
+            cal2.set(Calendar.DATE, fechaEventoDia.getParametro());
+
+            Date date1 = cal.getTime();
+            Date date2 = cal2.getTime();
+            int comparacion = 1;
+            try {
+                date1 = sdf.parse(cal.getTime().toString());
+                date2 = sdf.parse(cal2.getTime().toString());
+            } catch (ParseException ex) {
+                comparacion = 1;
+            }
+            comparacion = date1.compareTo(date2);
+            if (comparacion != 1) {
                 almacenarRegistroNuevo();
                 restaurarFormulario();
                 activarLimpiar = false;
@@ -202,12 +305,22 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
-            Date fecha1 = null;
-            Date fecha2 = null;
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, fechaAnio);
+            cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
+            cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
+
+            Calendar cal2 = Calendar.getInstance();
+            cal2.set(Calendar.YEAR, fechaAnio);
+            cal2.set(Calendar.MONTH, fechaEventoMes.getParametro());
+            cal2.set(Calendar.DATE, fechaEventoDia.getParametro());
+
+            Date fecha1 = cal.getTime();
+            Date fecha2 = cal2.getTime();
 
             try {
-                fecha1 = format.parse(inputFechaRegistro);
-                fecha2 = format.parse(inputFechaEvento);
+                fecha1 = format.parse(cal.getTime().toString());
+                fecha2 = format.parse(cal2.getTime().toString());
                 reggNuevo.setFecharegistro(fecha1);
                 reggNuevo.setFechaevento(fecha2);
             } catch (ParseException e) {
@@ -257,6 +370,7 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         validacionesFechaEvento = false;
         fechaDiferidaEvento = true;
         fechaDiferidaRegistro = true;
+        cargarFechaReserva();
     }
 
     public void cambiarActivarCasillas() {
@@ -383,6 +497,78 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
 
     public void setFechaDiferidaRegistro(boolean fechaDiferidaRegistro) {
         this.fechaDiferidaRegistro = fechaDiferidaRegistro;
+    }
+
+    public Integer getFechaAnio() {
+        return fechaAnio;
+    }
+
+    public void setFechaAnio(Integer fechaAnio) {
+        this.fechaAnio = fechaAnio;
+    }
+
+    public AyudaFechaReserva getFechaEventoMes() {
+        return fechaEventoMes;
+    }
+
+    public void setFechaEventoMes(AyudaFechaReserva fechaEventoMes) {
+        this.fechaEventoMes = fechaEventoMes;
+    }
+
+    public AyudaFechaReserva getFechaEventoDia() {
+        return fechaEventoDia;
+    }
+
+    public void setFechaEventoDia(AyudaFechaReserva fechaEventoDia) {
+        this.fechaEventoDia = fechaEventoDia;
+    }
+
+    public List<AyudaFechaReserva> getListaMesesEvento() {
+        return listaMesesEvento;
+    }
+
+    public void setListaMesesEvento(List<AyudaFechaReserva> listaMesesEvento) {
+        this.listaMesesEvento = listaMesesEvento;
+    }
+
+    public List<AyudaFechaReserva> getListaDiasEvento() {
+        return listaDiasEvento;
+    }
+
+    public void setListaDiasEvento(List<AyudaFechaReserva> listaDiasEvento) {
+        this.listaDiasEvento = listaDiasEvento;
+    }
+
+    public AyudaFechaReserva getFechaRegistroMes() {
+        return fechaRegistroMes;
+    }
+
+    public void setFechaRegistroMes(AyudaFechaReserva fechaRegistroMes) {
+        this.fechaRegistroMes = fechaRegistroMes;
+    }
+
+    public AyudaFechaReserva getFechaRegistroDia() {
+        return fechaRegistroDia;
+    }
+
+    public void setFechaRegistroDia(AyudaFechaReserva fechaRegistroDia) {
+        this.fechaRegistroDia = fechaRegistroDia;
+    }
+
+    public List<AyudaFechaReserva> getListaMesesRegistro() {
+        return listaMesesRegistro;
+    }
+
+    public void setListaMesesRegistro(List<AyudaFechaReserva> listaMesesRegistro) {
+        this.listaMesesRegistro = listaMesesRegistro;
+    }
+
+    public List<AyudaFechaReserva> getListaDiasRegistro() {
+        return listaDiasRegistro;
+    }
+
+    public void setListaDiasRegistro(List<AyudaFechaReserva> listaDiasRegistro) {
+        this.listaDiasRegistro = listaDiasRegistro;
     }
 
 }

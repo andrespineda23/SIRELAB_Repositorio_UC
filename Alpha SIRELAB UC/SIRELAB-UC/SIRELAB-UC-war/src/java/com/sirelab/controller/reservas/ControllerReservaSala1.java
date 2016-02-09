@@ -5,15 +5,20 @@
  */
 package com.sirelab.controller.reservas;
 
+import com.sirelab.ayuda.AyudaFechaReserva;
 import com.sirelab.ayuda.AyudaReservaSala;
+import com.sirelab.ayuda.HoraReserva;
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -32,14 +37,19 @@ import org.apache.log4j.Logger;
 public class ControllerReservaSala1 implements Serializable {
 
     static Logger logger = Logger.getLogger(ControllerReservaSala1.class);
-    
-    
+
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
     private String fecha;
+    private Integer fechaAnio;
+    private AyudaFechaReserva fechaMes;
+    private AyudaFechaReserva fechaDia;
+    private List<AyudaFechaReserva> listaMeses;
+    private List<AyudaFechaReserva> listaDias;
     private List<Integer> listaHora;
     private Integer horaIngreso;
+    private AyudaReservaSala reservaSala;
     //
     private List<Laboratorio> listaLaboratorios;
     private Laboratorio parametroLaboratorio;
@@ -48,12 +58,18 @@ public class ControllerReservaSala1 implements Serializable {
     private boolean activarSala;
     private String mensajeFormulario, colorMensaje;
     private boolean activarHora;
+    private List<HoraReserva> listaHoraReserva;
+    private HoraReserva horaReserva;
 
     public ControllerReservaSala1() {
     }
 
     @PostConstruct
     public void init() {
+
+    }
+
+    public void cargarInformacionReserva() {
         activarHora = true;
         activarSala = true;
         mensajeFormulario = "N/A";
@@ -63,25 +79,86 @@ public class ControllerReservaSala1 implements Serializable {
         fecha = df.format(now);
         parametroLaboratorio = null;
         parametroSala = null;
+        cargarFechaReserva();
     }
 
-    private boolean validarFecha() {
-        boolean retorno = true;
-        if (Utilidades.validarNulo(fecha)) {
-            Date fechaDia = new Date();
-            Date fechaValidar = new Date(fecha);
-            if (fechaValidar.after(fechaDia)) {
-                retorno = false;
+    private void cargarFechaReserva() {
+        PeriodoAcademico ultimoPeriodoAcademico = administrarReservasBO.obtenerUltimoPeriodoAcademico();
+        if (null != ultimoPeriodoAcademico) {
+            Date fechaInicio = ultimoPeriodoAcademico.getFechainicial();
+            Date fechaFin = ultimoPeriodoAcademico.getFechafinal();
+            Date fechaHoy = new Date();
+            if (fechaHoy.after(fechaInicio) && fechaHoy.before(fechaFin)) {
+                fechaAnio = fechaInicio.getYear() + 1900;
+                listaMeses = new ArrayList<AyudaFechaReserva>();
+                for (int i = fechaInicio.getMonth(); i < fechaFin.getMonth() + 1; i++) {
+                    AyudaFechaReserva ayuda = new AyudaFechaReserva();
+                    ayuda.setParametro(i);
+                    int mes = i + 1;
+                    ayuda.setMensajeMostrar(String.valueOf(mes));
+                    listaMeses.add(ayuda);
+                }
+                if (!listaMeses.isEmpty()) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(fechaInicio);
+                    int day = cal.get(Calendar.DATE);
+                    listaMeses.get(0).setDiaInicio(day);
+                    cal.setTime(fechaFin);
+                    day = cal.get(Calendar.DATE);
+                    int tam = listaMeses.size() - 1;
+                    listaMeses.get(tam).setDiaFin(day);
+                }
+                fechaMes = obtenerMesExacto(fechaHoy.getMonth());
+                actualizarInformacionDia();
+                fechaDia = obtenerDiaExacto(fechaHoy.getDate());
             }
-        } else {
-            retorno = false;
         }
-        return retorno;
+    }
+
+    private AyudaFechaReserva obtenerMesExacto(int mes){
+        AyudaFechaReserva ayuda = null;
+        for(int i = 0;i<listaMeses.size();i++){
+            if(mes == listaMeses.get(i).getParametro()){
+                ayuda = listaMeses.get(i);
+                break;
+            }
+        }
+        return ayuda;
+    }
+    private AyudaFechaReserva obtenerDiaExacto(int dia){
+        AyudaFechaReserva ayuda = null;
+        for(int i = 0;i<listaDias.size();i++){
+            if(dia == listaDias.get(i).getParametro()){
+                ayuda = listaDias.get(i);
+                break;
+            }
+        }
+        return ayuda;
+    }
+    
+    public void actualizarInformacionDia() {
+        Calendar ahoraCal = Calendar.getInstance();
+        ahoraCal.set(Integer.valueOf(fechaAnio), fechaMes.getParametro(), 1);
+        int diaFin = ahoraCal.getActualMaximum(Calendar.DATE);
+        int diaInicio = 1;
+        if (null != fechaMes.getDiaInicio()) {
+            diaInicio = fechaMes.getDiaInicio();
+        }
+        if (null != fechaMes.getDiaFin()) {
+            diaFin = fechaMes.getDiaFin();
+        }
+        listaDias = new ArrayList<AyudaFechaReserva>();
+        for (int i = diaInicio; i < diaFin + 1; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaDias.add(ayuda);
+        }
     }
 
     private boolean validarHora() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(horaIngreso)) {
+        if (!Utilidades.validarNulo(horaReserva)) {
             retorno = false;
         }
         return retorno;
@@ -105,27 +182,46 @@ public class ControllerReservaSala1 implements Serializable {
     }
 
     public void activarHoraReserva() {
-        if ((Utilidades.validarNulo(parametroSala) == true) && (Utilidades.validarNulo(fecha))) {
-            Date fecha2 = new Date(fecha);
-            int diaSemana = fecha2.getDay();
-            if (diaSemana != 0) {
-                if (diaSemana == 6) {
+        boolean validarSala = false;
+        if (parametroSala == null) {
+            validarSala = false;
+            activarHora = true;
+        } else {
+            validarSala = true;
+            activarHora = false;
+        }
+        if (validarSala) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, fechaAnio);
+            cal.set(Calendar.MONTH, fechaMes.getParametro());
+            cal.set(Calendar.DATE, fechaDia.getParametro());
+            int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
+            listaHoraReserva = new ArrayList<HoraReserva>();
+            horaIngreso = null;
+            System.out.println("diaSemana: " + diaSemana);
+            if (diaSemana != 1) {
+                if (diaSemana == 7) {
                     Integer horaInicio = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoraaperturasabado());
                     Integer horaFin = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoracierresabado());
-                    horaIngreso = null;
-                    listaHora = new ArrayList<Integer>();
+
                     int horaBloque = Integer.valueOf(parametroSala.getLaboratorio().getBloquehorareserva());
                     for (int i = horaInicio; i < horaFin - horaBloque; i++) {
-                        listaHora.add(i);
+                        HoraReserva hora = new HoraReserva();
+                        hora.setHora(i);
+                        hora.setHoraMostrar(i + ":00");
+                        listaHoraReserva.add(hora);
                     }
                 } else {
                     Integer horaInicio = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoraapertura());
                     Integer horaFin = Integer.valueOf(parametroSala.getEdificio().getHorarioatencion().getHoracierre());
                     horaIngreso = null;
-                    listaHora = new ArrayList<Integer>();
+                    listaHoraReserva = new ArrayList<HoraReserva>();
                     int horaBloque = Integer.valueOf(parametroSala.getLaboratorio().getBloquehorareserva());
                     for (int i = horaInicio; i < horaFin - horaBloque; i++) {
-                        listaHora.add(i);
+                        HoraReserva hora = new HoraReserva();
+                        hora.setHora(i);
+                        hora.setHoraMostrar(i + ":00");
+                        listaHoraReserva.add(hora);
                     }
                 }
                 activarHora = false;
@@ -137,10 +233,6 @@ public class ControllerReservaSala1 implements Serializable {
         boolean retorno = true;
         if (validarSala() == false) {
             logger.error("1");
-            retorno = false;
-        }
-        if (validarFecha() == false) {
-            logger.error("2");
             retorno = false;
         }
         if (validarLaboratorio() == false) {
@@ -157,17 +249,24 @@ public class ControllerReservaSala1 implements Serializable {
     public String consultarReservaARealizar() {
         String paso2 = "";
         if (validarCamposReserva() == true) {
-            Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(new Date(fecha), String.valueOf(horaIngreso), parametroSala.getIdsalalaboratorio());
+            Date fechaReserva = null;
+            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, fechaAnio);
+            cal.set(Calendar.MONTH, fechaMes.getParametro());
+            cal.set(Calendar.DATE, fechaDia.getParametro());
+            fechaReserva = cal.getTime();
+            formateador.format(fechaReserva);
+            Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(fechaReserva, String.valueOf(horaReserva.getHora()), parametroSala.getIdsalalaboratorio());
             if (null != respuestaReserva) {
                 if (respuestaReserva == true) {
-                    Boolean respuesta2 = administrarReservasBO.validarReservaModuloSalaDisposible(new Date(fecha), String.valueOf(horaIngreso), parametroSala.getIdsalalaboratorio());
+                    Boolean respuesta2 = administrarReservasBO.validarReservaModuloSalaDisposible(fechaReserva, String.valueOf(horaReserva.getHora()), parametroSala.getIdsalalaboratorio());
                     if (null != respuesta2) {
                         if (respuesta2 == true) {
-                            AyudaReservaSala reservaSala = new AyudaReservaSala();
-                            reservaSala.setFechaReserva(new Date(fecha));
+                            reservaSala = new AyudaReservaSala();
+                            reservaSala.setFechaReserva(fechaReserva);
                             reservaSala.setSalaLaboratorio(parametroSala);
-                            reservaSala.setHoraInicio(String.valueOf(horaIngreso));
-                            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("reservaSala", reservaSala);
+                            reservaSala.setHoraInicio(String.valueOf(horaReserva.getHora()));
                             paso2 = "reservasala2";
                             limpiarInformacion();
                         } else {
@@ -184,6 +283,7 @@ public class ControllerReservaSala1 implements Serializable {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar";
             colorMensaje = "red";
         }
+        System.out.println("hizo el proceso de la reserva sin problema");
         return paso2;
     }
 
@@ -197,6 +297,11 @@ public class ControllerReservaSala1 implements Serializable {
             activarSala = true;
             listaSalaLaboratorio = null;
         }
+        activarHora = true;
+    }
+
+    public AyudaReservaSala enviarAyudaReservaSalaPasoSiguiente() {
+        return reservaSala;
     }
 
     private void limpiarInformacion() {
@@ -217,6 +322,7 @@ public class ControllerReservaSala1 implements Serializable {
 
     public String cancelarProcesoReserva() {
         limpiarInformacion();
+        reservaSala = null;
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             return "iniciodocente";
@@ -318,6 +424,62 @@ public class ControllerReservaSala1 implements Serializable {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public List<HoraReserva> getListaHoraReserva() {
+        return listaHoraReserva;
+    }
+
+    public void setListaHoraReserva(List<HoraReserva> listaHoraReserva) {
+        this.listaHoraReserva = listaHoraReserva;
+    }
+
+    public HoraReserva getHoraReserva() {
+        return horaReserva;
+    }
+
+    public void setHoraReserva(HoraReserva horaReserva) {
+        this.horaReserva = horaReserva;
+    }
+
+    public Integer getFechaAnio() {
+        return fechaAnio;
+    }
+
+    public void setFechaAnio(Integer fechaAnio) {
+        this.fechaAnio = fechaAnio;
+    }
+
+    public AyudaFechaReserva getFechaMes() {
+        return fechaMes;
+    }
+
+    public void setFechaMes(AyudaFechaReserva fechaMes) {
+        this.fechaMes = fechaMes;
+    }
+
+    public AyudaFechaReserva getFechaDia() {
+        return fechaDia;
+    }
+
+    public void setFechaDia(AyudaFechaReserva fechaDia) {
+        this.fechaDia = fechaDia;
+    }
+
+    public List<AyudaFechaReserva> getListaMeses() {
+        return listaMeses;
+    }
+
+    public void setListaMeses(List<AyudaFechaReserva> listaMeses) {
+        this.listaMeses = listaMeses;
+    }
+
+    public List<AyudaFechaReserva> getListaDias() {
+        return listaDias;
+    }
+
+    public void setListaDias(List<AyudaFechaReserva> listaDias) {
+        this.listaDias = listaDias;
     }
 
 }

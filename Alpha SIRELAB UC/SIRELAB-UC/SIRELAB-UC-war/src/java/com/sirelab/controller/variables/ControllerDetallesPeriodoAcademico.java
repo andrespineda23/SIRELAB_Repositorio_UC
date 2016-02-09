@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.variables;
 
+import com.sirelab.ayuda.AyudaFechaReserva;
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.variables.GestionarVariablePeriodosAcademicosBOInterface;
 import com.sirelab.entidades.PeriodoAcademico;
@@ -14,7 +15,10 @@ import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -45,6 +49,18 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
+    private AyudaFechaReserva fechaInicioAnio;
+    private AyudaFechaReserva fechaInicioMes;
+    private AyudaFechaReserva fechaInicioDia;
+    private List<AyudaFechaReserva> listaAniosInicio;
+    private List<AyudaFechaReserva> listaMesesInicio;
+    private List<AyudaFechaReserva> listaDiasInicio;
+    private AyudaFechaReserva fechaFinAnio;
+    private AyudaFechaReserva fechaFinMes;
+    private AyudaFechaReserva fechaFinDia;
+    private List<AyudaFechaReserva> listaAniosFin;
+    private List<AyudaFechaReserva> listaMesesFin;
+    private List<AyudaFechaReserva> listaDiasFin;
 
     public ControllerDetallesPeriodoAcademico() {
     }
@@ -62,6 +78,134 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
         colorMensaje = "black";
     }
 
+    private void cargarFechasConvenio() {
+        int anioRegistro1 = periodoAcademicoEditar.getFechainicial().getYear() + 1900;
+        int anioRegistro2 = periodoAcademicoEditar.getFechafinal().getYear() + 1900;
+        int anioActual = new Date().getYear() + 1900;
+        listaAniosInicio = new ArrayList<AyudaFechaReserva>();
+        listaAniosFin = new ArrayList<AyudaFechaReserva>();
+        for (int i = anioRegistro1; i <= anioActual; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaAniosInicio.add(ayuda);
+        }
+        for (int i = anioRegistro2; i <= anioActual; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaAniosFin.add(ayuda);
+        }
+        fechaInicioAnio = obtenerAnioActual(anioRegistro1, 1);
+        fechaFinAnio = obtenerAnioActual(anioRegistro1, 2);
+        listaMesesInicio = new ArrayList<AyudaFechaReserva>();
+        listaMesesFin = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesFin.add(ayuda);
+            listaMesesInicio.add(ayuda);
+        }
+        fechaInicioMes = obtenerMesExacto(periodoAcademicoEditar.getFechainicial().getMonth(), 1);
+        fechaFinMes = obtenerMesExacto(periodoAcademicoEditar.getFechafinal().getMonth(), 2);
+        actualizarInformacionInicioDia();
+        actualizarInformacionFinDia();
+        fechaInicioDia = obtenerDiaExacto(periodoAcademicoEditar.getFechainicial().getDate(), 1);
+        fechaFinDia = obtenerDiaExacto(periodoAcademicoEditar.getFechafinal().getDate(), 2);
+    }
+
+    private AyudaFechaReserva obtenerAnioActual(int anio, int op) {
+        AyudaFechaReserva ayuda = null;
+        if (op == 1) {
+            for (int i = 0; i < listaAniosInicio.size(); i++) {
+                if (anio == listaAniosInicio.get(i).getParametro()) {
+                    ayuda = listaAniosInicio.get(i);
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < listaAniosFin.size(); i++) {
+                if (anio == listaAniosFin.get(i).getParametro()) {
+                    ayuda = listaAniosFin.get(i);
+                    break;
+                }
+            }
+        }
+        return ayuda;
+    }
+
+    private AyudaFechaReserva obtenerMesExacto(int mes, int op) {
+        AyudaFechaReserva ayuda = null;
+        if (op == 1) {
+            for (int i = 0; i < listaMesesInicio.size(); i++) {
+                if (mes == listaMesesInicio.get(i).getParametro()) {
+                    ayuda = listaMesesInicio.get(i);
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < listaMesesFin.size(); i++) {
+                if (mes == listaMesesFin.get(i).getParametro()) {
+                    ayuda = listaMesesFin.get(i);
+                    break;
+                }
+            }
+        }
+        return ayuda;
+    }
+
+    private AyudaFechaReserva obtenerDiaExacto(int dia, int op) {
+        AyudaFechaReserva ayuda = null;
+        if (op == 1) {
+            for (int i = 0; i < listaDiasInicio.size(); i++) {
+                if (dia == listaDiasInicio.get(i).getParametro()) {
+                    ayuda = listaDiasInicio.get(i);
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < listaDiasFin.size(); i++) {
+                if (dia == listaDiasFin.get(i).getParametro()) {
+                    ayuda = listaDiasFin.get(i);
+                    break;
+                }
+            }
+        }
+        return ayuda;
+    }
+
+    public void actualizarInformacionInicioDia() {
+        Calendar ahoraCal = Calendar.getInstance();
+        ahoraCal.set(fechaInicioAnio.getParametro(), fechaInicioMes.getParametro(), 1);
+        int diaFin = ahoraCal.getActualMaximum(Calendar.DATE);
+        int diaInicio = 1;
+        listaDiasInicio = new ArrayList<AyudaFechaReserva>();
+        for (int i = diaInicio; i < diaFin + 1; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaDiasInicio.add(ayuda);
+        }
+        modificacionesRegistro = true;
+    }
+
+    public void actualizarInformacionFinDia() {
+        Calendar ahoraCal = Calendar.getInstance();
+        ahoraCal.set(fechaFinAnio.getParametro(), fechaFinMes.getParametro(), 1);
+        int diaFin = ahoraCal.getActualMaximum(Calendar.DATE);
+        int diaInicio = 1;
+        listaDiasFin = new ArrayList<AyudaFechaReserva>();
+        for (int i = diaInicio; i < diaFin + 1; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaDiasFin.add(ayuda);
+        }
+        modificacionesRegistro = true;
+    }
+
     private void cargarInformacionRegistro() {
         periodoAcademicoEditar = gestionarVariablePeriodosAcademicosBO.consultarPeriodoAcademicoPorID(idPeriodoAcademico);
         if (null != periodoAcademicoEditar) {
@@ -76,6 +220,7 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
             validacionesFechaInicio = true;
             modificacionesRegistro = false;
         }
+        cargarFechasConvenio();
     }
 
     public void validarDetalle() {
@@ -100,13 +245,13 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     }
 
     public void validarFechaInicio() {
-        if (Utilidades.validarNulo(inputFechaInicio)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaInicio)) {
-                validacionesFechaInicio = true;
-            } else {
-                validacionesFechaInicio = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-            }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaInicioAnio.getParametro());
+        cal.set(Calendar.MONTH, fechaInicioMes.getParametro());
+        cal.set(Calendar.DATE, fechaInicioDia.getParametro());
+
+        if (Utilidades.fechaIngresadaCorrecta(cal.getTime().toString())) {
+            validacionesFechaInicio = true;
         } else {
             validacionesFechaInicio = false;
             FacesContext.getCurrentInstance().addMessage("form:inputFechaInicio", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
@@ -115,13 +260,12 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     }
 
     public void validarFechaFin() {
-        if (Utilidades.validarNulo(inputFechaFin)) {
-            if (Utilidades.fechaIngresadaCorrecta(inputFechaFin)) {
-                validacionesFechaFin = true;
-            } else {
-                validacionesFechaFin = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-            }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaFinAnio.getParametro());
+        cal.set(Calendar.MONTH, fechaFinMes.getParametro());
+        cal.set(Calendar.DATE, fechaFinDia.getParametro());
+        if (Utilidades.fechaIngresadaCorrecta(cal.getTime().toString())) {
+            validacionesFechaFin = true;
         } else {
             validacionesFechaFin = false;
             FacesContext.getCurrentInstance().addMessage("form:inputFechaFin", new FacesMessage("La fecha ingresada se encuentra incorrecta. Formato (dd/mm/yyyy)"));
@@ -147,18 +291,26 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
         if (modificacionesRegistro == true) {
             if (validarValidacionesRegistro() == true) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        	Date date1 = null;
+                Date date1 = null;
                 Date date2 = null;
                 int comparacion = 1;
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, fechaInicioAnio.getParametro());
+                cal.set(Calendar.MONTH, fechaInicioMes.getParametro());
+                cal.set(Calendar.DATE, fechaInicioDia.getParametro());
+                Calendar cal2 = Calendar.getInstance();
+                cal2.set(Calendar.YEAR, fechaFinAnio.getParametro());
+                cal2.set(Calendar.MONTH, fechaFinMes.getParametro());
+                cal2.set(Calendar.DATE, fechaFinDia.getParametro());
                 try {
-                    date1 = sdf.parse(inputFechaInicio);
-                    date2 = sdf.parse(inputFechaFin);
-                } catch (ParseException ex) {  
+                    date1 = sdf.parse(cal.getTime().toString());
+                    date2 = sdf.parse(cal2.getTime().toString());
+                } catch (ParseException ex) {
                     comparacion = 1;
                 }
                 comparacion = date1.compareTo(date2);
-                
-                if (comparacion<0) {
+
+                if (comparacion < 0) {
                     almacenarModificacionRegistro();
                     cargarInformacionRegistro();
                     colorMensaje = "green";
@@ -180,17 +332,24 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
     private void almacenarModificacionRegistro() {
         try {
             periodoAcademicoEditar.setDetalleperiodo(inputDetalle);
-            
+
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
             Date fecha1 = null;
             Date fecha2 = null;
-
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, fechaInicioAnio.getParametro());
+            cal.set(Calendar.MONTH, fechaInicioMes.getParametro());
+            cal.set(Calendar.DATE, fechaInicioDia.getParametro());
+            Calendar cal2 = Calendar.getInstance();
+            cal2.set(Calendar.YEAR, fechaFinAnio.getParametro());
+            cal2.set(Calendar.MONTH, fechaFinMes.getParametro());
+            cal2.set(Calendar.DATE, fechaFinDia.getParametro());
             try {
-                fecha1 = format.parse(inputFechaFin);
-                fecha2 = format.parse(inputFechaInicio);
-                periodoAcademicoEditar.setFechafinal(fecha1);
-            periodoAcademicoEditar.setFechainicial(fecha2);
+                fecha1 = format.parse(cal.getTime().toString());
+                fecha2 = format.parse(cal2.getTime().toString());
+                periodoAcademicoEditar.setFechainicial(fecha1);
+                periodoAcademicoEditar.setFechafinal(fecha2);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -259,6 +418,102 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public AyudaFechaReserva getFechaInicioMes() {
+        return fechaInicioMes;
+    }
+
+    public AyudaFechaReserva getFechaInicioAnio() {
+        return fechaInicioAnio;
+    }
+
+    public void setFechaInicioAnio(AyudaFechaReserva fechaInicioAnio) {
+        this.fechaInicioAnio = fechaInicioAnio;
+    }
+
+    public List<AyudaFechaReserva> getListaAniosInicio() {
+        return listaAniosInicio;
+    }
+
+    public void setListaAniosInicio(List<AyudaFechaReserva> listaAniosInicio) {
+        this.listaAniosInicio = listaAniosInicio;
+    }
+
+    public AyudaFechaReserva getFechaFinAnio() {
+        return fechaFinAnio;
+    }
+
+    public void setFechaFinAnio(AyudaFechaReserva fechaFinAnio) {
+        this.fechaFinAnio = fechaFinAnio;
+    }
+
+    public List<AyudaFechaReserva> getListaAniosFin() {
+        return listaAniosFin;
+    }
+
+    public void setListaAniosFin(List<AyudaFechaReserva> listaAniosFin) {
+        this.listaAniosFin = listaAniosFin;
+    }
+
+    public void setFechaInicioMes(AyudaFechaReserva fechaInicioMes) {
+        this.fechaInicioMes = fechaInicioMes;
+    }
+
+    public AyudaFechaReserva getFechaInicioDia() {
+        return fechaInicioDia;
+    }
+
+    public void setFechaInicioDia(AyudaFechaReserva fechaInicioDia) {
+        this.fechaInicioDia = fechaInicioDia;
+    }
+
+    public List<AyudaFechaReserva> getListaMesesInicio() {
+        return listaMesesInicio;
+    }
+
+    public void setListaMesesInicio(List<AyudaFechaReserva> listaMesesInicio) {
+        this.listaMesesInicio = listaMesesInicio;
+    }
+
+    public List<AyudaFechaReserva> getListaDiasInicio() {
+        return listaDiasInicio;
+    }
+
+    public void setListaDiasInicio(List<AyudaFechaReserva> listaDiasInicio) {
+        this.listaDiasInicio = listaDiasInicio;
+    }
+
+    public AyudaFechaReserva getFechaFinMes() {
+        return fechaFinMes;
+    }
+
+    public void setFechaFinMes(AyudaFechaReserva fechaFinMes) {
+        this.fechaFinMes = fechaFinMes;
+    }
+
+    public AyudaFechaReserva getFechaFinDia() {
+        return fechaFinDia;
+    }
+
+    public void setFechaFinDia(AyudaFechaReserva fechaFinDia) {
+        this.fechaFinDia = fechaFinDia;
+    }
+
+    public List<AyudaFechaReserva> getListaMesesFin() {
+        return listaMesesFin;
+    }
+
+    public void setListaMesesFin(List<AyudaFechaReserva> listaMesesFin) {
+        this.listaMesesFin = listaMesesFin;
+    }
+
+    public List<AyudaFechaReserva> getListaDiasFin() {
+        return listaDiasFin;
+    }
+
+    public void setListaDiasFin(List<AyudaFechaReserva> listaDiasFin) {
+        this.listaDiasFin = listaDiasFin;
     }
 
 }

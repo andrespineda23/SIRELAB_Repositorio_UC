@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.recursoslaboratorio;
 
+import com.sirelab.ayuda.AyudaFechaReserva;
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoMovimientosInsumoBOInterface;
 import com.sirelab.entidades.EquipoElemento;
@@ -17,6 +18,8 @@ import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -56,6 +59,11 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private EquipoElemento equipoElemento;
     private boolean asociarEquipo;
     private MensajesConstantes constantes;
+    private Integer fechaAnio;
+    private AyudaFechaReserva fechaRegistroMes;
+    private AyudaFechaReserva fechaRegistroDia;
+    private List<AyudaFechaReserva> listaMesesRegistro;
+    private List<AyudaFechaReserva> listaDiasRegistro;
 
     public ControllerRegistrarMovimientoInsumo() {
     }
@@ -86,6 +94,60 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
 
     public void recibirIDInsumo(BigInteger idRegistro) {
         insumoRegistro = gestionarRecursoMovimientosInsumoBO.obtenerInsumoPorID(idRegistro);
+        cargarFechaRegistro();
+    }
+
+    private void cargarFechaRegistro() {
+        Date fechaHoy = new Date();
+        fechaAnio = fechaHoy.getYear() + 1900;
+        listaMesesRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesRegistro.add(ayuda);
+        }
+        fechaRegistroMes = obtenerMesExacto(fechaHoy.getMonth());
+        actualizarInformacionRegistroDia();
+        fechaRegistroDia = obtenerDiaExacto(fechaHoy.getDate());
+    }
+
+    private AyudaFechaReserva obtenerMesExacto(int mes) {
+        AyudaFechaReserva ayuda = null;
+        for (int i = 0; i < listaMesesRegistro.size(); i++) {
+            if (mes == listaMesesRegistro.get(i).getParametro()) {
+                ayuda = listaMesesRegistro.get(i);
+                break;
+            }
+        }
+        return ayuda;
+    }
+
+    private AyudaFechaReserva obtenerDiaExacto(int dia) {
+        AyudaFechaReserva ayuda = null;
+
+        for (int i = 0; i < listaDiasRegistro.size(); i++) {
+            if (dia == listaDiasRegistro.get(i).getParametro()) {
+                ayuda = listaDiasRegistro.get(i);
+                break;
+            }
+        }
+        return ayuda;
+    }
+
+    public void actualizarInformacionRegistroDia() {
+        Calendar ahoraCal = Calendar.getInstance();
+        ahoraCal.set(Integer.valueOf(fechaAnio), fechaRegistroMes.getParametro(), 1);
+        int diaFin = ahoraCal.getActualMaximum(Calendar.DATE);
+        int diaInicio = 1;
+        listaDiasRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = diaInicio; i < diaFin + 1; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaDiasRegistro.add(ayuda);
+        }
     }
 
     public void actualizarAsocioEquipo() {
@@ -139,16 +201,15 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     }
 
     public void validarFechaMovimiento() {
-        if (Utilidades.validarNulo(nuevoFechaMovimiento)) {
-            if ((Utilidades.fechaIngresadaCorrecta(nuevoFechaMovimiento)) == false) {
-                validacionesCosto = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
-            } else {
-                validacionesCosto = true;
-            }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaAnio);
+        cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
+        cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
+        if ((Utilidades.fechaIngresadaCorrecta(cal.getTime().toString())) == false) {
+            validacionesFecha = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha se encuentra incorrecta. Formato (dd/mm/yyyy)"));
         } else {
-            validacionesCosto = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoFechaMovimiento", new FacesMessage("La fecha es obligatoria. Formato (dd/mm/yyyy)"));
+            validacionesFecha = true;
         }
     }
 
@@ -222,20 +283,21 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             movimientoNuevo.setTipomovimiento(nuevoTipoMovimiento);
             movimientoNuevo.setCantidadmovimiento(Integer.parseInt(nuevoCantidadMovimiento));
             movimientoNuevo.setCostomovimiento(Long.parseLong(nuevoCostoMovimiento));
-            
+
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, fechaAnio);
+            cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
+            cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
             Date fecha1 = null;
-            Date fecha2 = null;
-
             try {
-                fecha1 = format.parse(nuevoFechaMovimiento);
+                fecha1 = format.parse(cal.getTime().toString());
                 movimientoNuevo.setFechamovimiento(fecha1);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            
-            
+
             movimientoNuevo.setInsumo(insumoRegistro);
             if (asociarEquipo == true) {
                 gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumo(movimientoNuevo);
@@ -263,6 +325,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         fechaDiferida = true;
         validacionesTipo = false;
         validacionesFecha = false;
+        cargarFechaRegistro();
     }
 
     public void cambiarActivarCasillas() {
@@ -400,6 +463,46 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
 
     public void setAsociarEquipo(boolean asociarEquipo) {
         this.asociarEquipo = asociarEquipo;
+    }
+
+    public Integer getFechaAnio() {
+        return fechaAnio;
+    }
+
+    public void setFechaAnio(Integer fechaAnio) {
+        this.fechaAnio = fechaAnio;
+    }
+
+    public AyudaFechaReserva getFechaRegistroMes() {
+        return fechaRegistroMes;
+    }
+
+    public void setFechaRegistroMes(AyudaFechaReserva fechaRegistroMes) {
+        this.fechaRegistroMes = fechaRegistroMes;
+    }
+
+    public AyudaFechaReserva getFechaRegistroDia() {
+        return fechaRegistroDia;
+    }
+
+    public void setFechaRegistroDia(AyudaFechaReserva fechaRegistroDia) {
+        this.fechaRegistroDia = fechaRegistroDia;
+    }
+
+    public List<AyudaFechaReserva> getListaMesesRegistro() {
+        return listaMesesRegistro;
+    }
+
+    public void setListaMesesRegistro(List<AyudaFechaReserva> listaMesesRegistro) {
+        this.listaMesesRegistro = listaMesesRegistro;
+    }
+
+    public List<AyudaFechaReserva> getListaDiasRegistro() {
+        return listaDiasRegistro;
+    }
+
+    public void setListaDiasRegistro(List<AyudaFechaReserva> listaDiasRegistro) {
+        this.listaDiasRegistro = listaDiasRegistro;
     }
 
 }

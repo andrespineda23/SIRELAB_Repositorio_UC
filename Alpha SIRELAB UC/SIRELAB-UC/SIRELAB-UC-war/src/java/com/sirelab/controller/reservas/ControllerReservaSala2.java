@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
 public class ControllerReservaSala2 implements Serializable {
 
     static Logger logger = Logger.getLogger(ControllerReservaSala2.class);
-    
+
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
@@ -58,10 +58,15 @@ public class ControllerReservaSala2 implements Serializable {
     public ControllerReservaSala2() {
     }
 
+    public void recibirInformacionReserva(AyudaReservaSala ayudaReserva) {
+        System.out.println("reserva 2");
+        reservaSala = ayudaReserva;
+        System.out.println("llego a la reserva 2 con info: "+reservaSala);
+    }
+
     @PostConstruct
     public void init() {
         adicionarElementos = false;
-        reservaSala = (AyudaReservaSala) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaSala");
         parametroTipoReserva = null;
         parametroGuiaLaboratorio = null;
         parametroAsignaturaPorPlanEstudio = null;
@@ -219,10 +224,11 @@ public class ControllerReservaSala2 implements Serializable {
             reservaSalaRegistro.setSalalaboratorio(reservaSala.getSalaLaboratorio());
             reservaSalaRegistro.setTiporeservasala(parametroTipoReserva.getNombretiporeserva());
             Reserva reservaPersona = administrarReservasBO.registrarNuevaReservaSala(reservaRegistro, reservaSalaRegistro);
+
             if (null != reservaPersona) {
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("reservaPersona", reservaPersona);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("nombreAsignatura", parametroAsignaturaPorPlanEstudio.getAsignatura().getNombreasignatura());
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("rutaGuia", parametroGuiaLaboratorio.getUbicacionguia());
+                reservaSala.setReserva(reservaPersona);
+                reservaSala.setNombreAsignatura(parametroAsignaturaPorPlanEstudio.getAsignatura().getNombreasignatura());
+                reservaSala.setRutaGuia(parametroGuiaLaboratorio.getUbicacionguia());
             }
             limpiarDatosParaPaso3();
         } catch (Exception e) {
@@ -270,6 +276,7 @@ public class ControllerReservaSala2 implements Serializable {
 
     public String cancelarReserva() {
         limpiarInformacion();
+        reservaSala = null;
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaSala");
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
@@ -281,6 +288,10 @@ public class ControllerReservaSala2 implements Serializable {
                 return "iniciodocente";
             }
         }
+    }
+
+    public AyudaReservaSala enviarAyudaReservaSalaPasoSiguiente() {
+        return reservaSala;
     }
 
     public void descargarGuiaLaboratorio() {

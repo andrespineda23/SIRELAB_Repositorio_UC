@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.recursoslaboratorio;
 
+import com.sirelab.ayuda.AyudaFechaReserva;
 import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoIngresoInsumoBOInterface;
 import com.sirelab.bo.interfacebo.recursos.GestionarRecursoInsumosBOInterface;
@@ -16,6 +17,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -69,6 +72,11 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     private boolean activarInsumo;
     private String paginaAnterior;
     private MensajesConstantes constantes;
+    private Integer fechaAnio;
+    private AyudaFechaReserva fechaRegistroMes;
+    private AyudaFechaReserva fechaRegistroDia;
+    private List<AyudaFechaReserva> listaMesesRegistro;
+    private List<AyudaFechaReserva> listaDiasRegistro;
 
     public ControllerRegistrarIngresoInsumo() {
     }
@@ -115,6 +123,58 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
         this.paginaAnterior = page;
     }
 
+    private void cargarFechaRegistro() {
+        Date fechaHoy = new Date();
+        fechaAnio = fechaHoy.getYear() + 1900;
+        listaMesesRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesRegistro.add(ayuda);
+        }
+        fechaRegistroMes = obtenerMesExacto(fechaHoy.getMonth());
+        actualizarInformacionRegistroDia();
+        fechaRegistroDia = obtenerDiaExacto(fechaHoy.getDate());
+    }
+
+    private AyudaFechaReserva obtenerMesExacto(int mes) {
+        AyudaFechaReserva ayuda = null;
+        for (int i = 0; i < listaMesesRegistro.size(); i++) {
+            if (mes == listaMesesRegistro.get(i).getParametro()) {
+                ayuda = listaMesesRegistro.get(i);
+                break;
+            }
+        }
+        return ayuda;
+    }
+
+    private AyudaFechaReserva obtenerDiaExacto(int dia) {
+        AyudaFechaReserva ayuda = null;
+        for (int i = 0; i < listaDiasRegistro.size(); i++) {
+            if (dia == listaDiasRegistro.get(i).getParametro()) {
+                ayuda = listaDiasRegistro.get(i);
+                break;
+            }
+        }
+        return ayuda;
+    }
+
+    public void actualizarInformacionRegistroDia() {
+        Calendar ahoraCal = Calendar.getInstance();
+        ahoraCal.set(Integer.valueOf(fechaAnio), fechaRegistroMes.getParametro(), 1);
+        int diaFin = ahoraCal.getActualMaximum(Calendar.DATE);
+        int diaInicio = 1;
+        listaDiasRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = diaInicio; i < diaFin + 1; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setMensajeMostrar(String.valueOf(i));
+            ayuda.setParametro(i);
+            listaDiasRegistro.add(ayuda);
+        }
+    }
+
     public void actualizarInformacionInsumo() {
         nuevoInsumo = null;
         nuevoCantidadMin = "0";
@@ -137,16 +197,15 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     }
 
     public void validarFechaIngresoInsumo() {
-        if (Utilidades.validarNulo(nuevoFecha)) {
-            if (!Utilidades.fechaIngresadaCorrecta(nuevoFecha)) {
-                validacionesFecha = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
-            } else {
-                validacionesFecha = true;
-            }
-        } else {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaAnio);
+        cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
+        cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
+        if (!Utilidades.fechaIngresadaCorrecta(cal.getTime().toString())) {
             validacionesFecha = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha es obligatoria. Formato (dd/mm/yyyy)"));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha ingresada es incorrecta. Formato (dd/mm/yyyy)"));
+        } else {
+            validacionesFecha = true;
         }
     }
 
@@ -243,7 +302,20 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     private void almacenarNuevoIngresoInsumoEnSistema() {
         try {
             IngresoInsumo ingresoNuevo = new IngresoInsumo();
-            ingresoNuevo.setFechaingreso(new Date(nuevoFecha));
+            Calendar cal = Calendar.getInstance();
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            cal.set(Calendar.YEAR, fechaAnio);
+            cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
+            cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
+            Date fecha1 = null;
+            try {
+                fecha1 = format.parse(cal.getTime().toString());
+                ingresoNuevo.setFechaingreso(fecha1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             Integer cantidad = Integer.valueOf(nuevoCantidad);
             ingresoNuevo.setCantidadingreso(cantidad);
             if (Utilidades.validarNulo(nuevoCosto) && (!nuevoCosto.isEmpty()) && (nuevoCosto.trim().length() > 0)) {
@@ -524,18 +596,17 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     private void almacenarNuevoInsumoEIngresoEnSistema() {
         IngresoInsumo ingresoNuevo = new IngresoInsumo();
         String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
-            Date fecha1 = null;
-            Date fecha2 = null;
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date fecha1 = null;
+        Date fecha2 = null;
 
-            try {
-                fecha1 = format.parse(nuevoFecha);
-                ingresoNuevo.setFechaingreso(fecha1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            
-        
+        try {
+            fecha1 = format.parse(nuevoFecha);
+            ingresoNuevo.setFechaingreso(fecha1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Integer cantidad = Integer.valueOf(nuevoCantidad);
         ingresoNuevo.setCantidadingreso(cantidad);
         if (Utilidades.validarNulo(nuevoCosto) && (!nuevoCosto.isEmpty()) && (nuevoCosto.trim().length() > 0)) {
