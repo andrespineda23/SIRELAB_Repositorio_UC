@@ -56,7 +56,6 @@ public final class Utilidades {
      * @return true-Palabra correcta / false-Palabra incorrecta
      */
     public static boolean validarCaracterString(String str) {
-        logger.error("validarCaracterString data : " + str);
         boolean respuesta = false;
         Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[ÁÉÍÓÚ]|[áéíóú]|[ñÑ]|\\s)+");
         Matcher matcher = pattern.matcher(str);

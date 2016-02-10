@@ -103,7 +103,7 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         int anioRegistro = movimientoInsumoDetalle.getFechamovimiento().getYear() + 1900;
         int anioActual = new Date().getYear() + 1900;
         listaAniosRegistro = new ArrayList<AyudaFechaReserva>();
-        for (int i = anioRegistro; i <= anioActual; i++) {
+        for (int i = 2000; i <= anioActual; i++) {
             AyudaFechaReserva ayuda = new AyudaFechaReserva();
             ayuda.setMensajeMostrar(String.valueOf(i));
             ayuda.setParametro(i);
@@ -156,6 +156,21 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         return ayuda;
     }
 
+    public void actualizarInformacionAnio() {
+        listaMesesRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesRegistro.add(ayuda);
+        }
+        fechaRegistroMes = obtenerMesExacto(0);
+        actualizarInformacionRegistroDia();
+        fechaRegistroDia = obtenerDiaExacto(1);
+        modificacionesRegistro = true;
+    }
+
     public void actualizarInformacionRegistroDia() {
         Calendar ahoraCal = Calendar.getInstance();
         ahoraCal.set(fechaRegistroAnio.getParametro(), fechaRegistroMes.getParametro(), 1);
@@ -168,6 +183,10 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
             ayuda.setParametro(i);
             listaDiasRegistro.add(ayuda);
         }
+        modificacionesRegistro = true;
+    }
+
+    public void modificacionDias() {
         modificacionesRegistro = true;
     }
 
@@ -255,9 +274,6 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
         if (validacionesTipo == false) {
             retorno = false;
         }
-        if (validacionesFecha == false) {
-            retorno = false;
-        }
         return retorno;
     }
 
@@ -287,22 +303,12 @@ public class ControllerDetallesMovimientoInsumo implements Serializable {
             movimientoInsumoDetalle.setTipomovimiento(editarTipoMovimiento);
             movimientoInsumoDetalle.setCantidadmovimiento(Integer.parseInt(editarCantidadMovimiento));
             movimientoInsumoDetalle.setCostomovimiento(Long.parseLong(editarCostoMovimiento));
-
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.YEAR, fechaRegistroAnio.getParametro());
             cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
             cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
-            Date fecha1 = null;
-
-            try {
-                fecha1 = format.parse(cal.getTime().toString());
-                movimientoInsumoDetalle.setFechamovimiento(fecha1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+            Date fecha1 = cal.getTime();
+            movimientoInsumoDetalle.setFechamovimiento(fecha1);
             movimientoInsumoDetalle.setInsumo(editarInsumo);
             gestionarRecursoMovimientosInsumoBO.editarMovimientoInsumo(movimientoInsumoDetalle);
         } catch (Exception e) {

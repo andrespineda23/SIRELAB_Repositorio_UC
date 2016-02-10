@@ -10,194 +10,168 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>        
-
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <!--[if IE]>
-            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-            <![endif]-->
-        <!-- Favicon Icon -->
-        <link rel="icon" href="../../assets/img/favicon.ico" />
-        <title>Sistema de Información de Recursos de Laboratorios</title>
-        <!-- BOOTSTRAP CORE CSS -->
-        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
-        <!-- ION ICONS STYLES -->
-        <link href="../../assets/css/ionicons.css" rel="stylesheet" />
-        <!-- FONT AWESOME ICONS STYLES -->
-        <link href="../../assets/css/font-awesome.css" rel="stylesheet" />
-        <!-- CUSTOM CSS -->
-        <link href="../../assets/css/style.css" rel="stylesheet" />
-        <!-- IE10 viewport hack  -->
-        <script src="../../assets/js/ie-10-view-port.js"></script>
-
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-        <link href="../../assets/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
-
-        <!-- IE10 viewport hack  -->
-        <script src="../../assets/js/bootstrap.js"></script>
-
-        <script type="text/javascript">
-            function DisabledDomingo(date) {
-                var day = date.getDay();
-                // If day == 1 then it is MOnday
-                if (day == 0) {
-                    return [false];
-                } else {
-                    return [true];
-                }
-            }
-            $(function () {
-                $("#form\\:inputFechaInicio").datepicker({
-                    dateFormat: "dd/mm/yy",
-                    beforeShowDay: DisabledDomingo
-                });
-                $("#form\\:inputFechaFin").datepicker({
-                    dateFormat: "dd/mm/yy",
-                    beforeShowDay: DisabledDomingo
-                });
-            });
-            // Traducción al español
-            $(function ($) {
-                $.datepicker.regional['es'] = {
-                    closeText: 'Cerrar',
-                    prevText: 'Ant',
-                    nextText: 'Sig',
-                    currentText: 'Hoy',
-                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-                    weekHeader: 'Sm',
-                    dateFormat: 'dd/mm/yy',
-                    firstDay: 1,
-                    isRTL: false,
-                    showMonthAfterYear: false,
-                    yearSuffix: ''
-                };
-                $.datepicker.setDefaults($.datepicker.regional['es']);
-            });
-        </script>
     </h:head>
-    <h:body  onload="nobackbutton();" style="background-image: url('http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg'); background-repeat: repeat; background-position: 0% 0%; background-attachment: fixed; background-color: #ffffff;">
-        <h:form id="form">
-            <div id="header">
-                <header>
+    <h:body  onload="nobackbutton();">
+        <ui:composition template="/xhtml/template/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
                     <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 logo-wrapper">
-                                <img src="../../assets/img/logo-universidad-central.png" alt=""/>
-                            </div>
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Variables Reservas</a></li>
+                                <li class="active">Registrar Periodo Academico</li>
+                            </ol>
                         </div>
-                    </div>
-                </header>
-            </div>
-            <div class="container">
-                <br></br>
-                <br></br>
-                <br></br>
-                <div class="row">
-                    <ol class="breadcrumb">
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Variables Reservas</a></li>
-                        <li class="active">Registrar Periodo Academico</li>
-                    </ol>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 row">
-                        <div class="row col-md-12">
-                            <h2 class="info">
-                                Información Registro
-                            </h2>
-                            <p>
-                                Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
-                            </p>
-                            <p>
-                                Este registro es unicamente para el ingreso de periodos academicos.
-                            </p>
-                        </div>
-
-                        <div class="col-md-12 row">
-                            <fieldset>
-                                <legend class="text-info">Datos Basicos</legend>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Detalle Periodo Academico*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerRegistrarPeriodoAcademico.inputDetalle}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarDetalle()}" execute="inputDetalle" render="inputDetalle msnNombre" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarPeriodoAcademico.inputFechaInicio}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnFechaInicio" for="inputFechaInicio" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Fecha Finalización*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarPeriodoAcademico.inputFechaFin}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputFechaFin" requiredMessage="La Fecha Final es obligatoria.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnFechaFin" for="inputFechaFin" style="color: red"/></h6>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="row col-md-12">
+                                    <h2 class="info">
+                                        Información Registro
+                                    </h2>
+                                    <p>
+                                        Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                    </p>
+                                    <p>
+                                        Este registro es unicamente para el ingreso de periodos academicos.
+                                    </p>
                                 </div>
 
-                            </fieldset>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <hr class="intro-divider"/>
-                            <div class="row col-md-12">
-                                <div class="text-center">
-                                    <h5>
-                                        Resultados del Formulario
-                                    </h5>
-                                    <strong>
-                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPeriodoAcademico.mensajeFormulario}" style="color: #{controllerRegistrarPeriodoAcademico.colorMensaje}}"/>
-                                    </strong>
+                                <div class="col-md-12 row">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Detalle Periodo Academico*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerRegistrarPeriodoAcademico.inputDetalle}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarDetalle()}" execute="inputDetalle" render="inputDetalle msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <label for="fechaInicioAnio">
+                                                    Año Fecha Inicio
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaInicioAnio}" class="form-control"  id="fechaInicioAnio">
+                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaAniosInicio}" var="pfechaInicioAnio"
+                                                                   itemLabel="#{pfechaInicioAnio.mensajeMostrar}" itemValue="#{pfechaInicioAnio}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionAnioInicio()}" execute="@this" render="@this fechaInicioMes fechaInicioDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaInicioMes">
+                                                    Mes Fecha Inicio
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaInicioMes}" class="form-control"  id="fechaInicioMes">
+                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaMesesInicio}" var="pfechaInicioMes"
+                                                                   itemLabel="#{pfechaInicioMes.mensajeMostrar}" itemValue="#{pfechaInicioMes}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionInicioDia()}" execute="@this" render="@this fechaInicioDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaInicioDia">
+                                                    Día Fecha Inicio
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaInicioDia}" class="form-control"  id="fechaInicioDia">
+                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaDiasInicio}" var="pfechaInicioDia"
+                                                                   itemLabel="#{pfechaInicioDia.mensajeMostrar}" itemValue="#{pfechaInicioDia}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <label for="fechaFinAnio">
+                                                    Año Fecha Fin
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaFinAnio}" class="form-control"  id="fechaFinAnio">
+                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaAniosFin}" var="pfechaFinAnio"
+                                                                   itemLabel="#{pfechaFinAnio.mensajeMostrar}" itemValue="#{pfechaFinAnio}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionAnioFin()}" execute="@this" render="@this fechaFinMes fechaFinDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaFinMes">
+                                                    Mes Fecha Fin
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaFinMes}" class="form-control"  id="fechaFinMes">
+                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaMesesFin}" var="pfechaFinMes"
+                                                                   itemLabel="#{pfechaFinMes.mensajeMostrar}" itemValue="#{pfechaFinMes}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionFinDia()}" execute="@this" render="@this fechaFinDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaFinDia">
+                                                    Día Fecha Fin
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaFinDia}" class="form-control"  id="fechaFinDia">
+                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaDiasFin}" var="pfechaFinDia"
+                                                                   itemLabel="#{pfechaFinDia.mensajeMostrar}" itemValue="#{pfechaFinDia}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPeriodoAcademico.mensajeFormulario}" style="color: #{controllerRegistrarPeriodoAcademico.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarPeriodoAcademico.activarAceptar}" actionListener="#{controllerRegistrarPeriodoAcademico.registrarPeriodoAcademico()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarPeriodoAcademico.cerrarPagina()}" actionListener="#{controllerVariablesReserva.iniciarInformacionTablas()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarPeriodoAcademico.activarLimpiar}" actionListener="#{controllerRegistrarPeriodoAcademico.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
                                 </div>
-                                <br></br>
-                            </div>
-                            <hr class="intro-divider"/>
-                            <div class="right pull-right">
-                                <h:commandButton value="Registrar" disabled="#{controllerRegistrarPeriodoAcademico.activarAceptar}" actionListener="#{controllerRegistrarPeriodoAcademico.registrarPeriodoAcademico()}" class="btn btn-success" >
-                                    <f:ajax execute="@form" render="form" />
-                                </h:commandButton>
-                                <span></span>
-                                <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarPeriodoAcademico.cerrarPagina()}" actionListener="#{controllerVariablesReserva.iniciarInformacionTablas()}" immediate="true">
-                                    <f:ajax execute="@form" render="form" />
-                                </h:commandButton>
-                                <span></span>
-                                <span></span>
-                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarPeriodoAcademico.activarLimpiar}" actionListener="#{controllerRegistrarPeriodoAcademico.cambiarActivarCasillas()}" >
-                                    <f:ajax execute="@form" render="form" />
-                                </h:commandButton>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div id="footer">
-                <footer>
-                    <div class="container">
-                        <div class="row text-center">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                &#169; 2015 - SIRELAB | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Andrés Pineda </a> 
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
-        </h:form>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
     </h:body>
 </html>

@@ -52,10 +52,7 @@ and open the template in the editor.
                 }
             }
             $(function () {
-                $("#form\\:inputFechaInicio").datepicker({
-                    dateFormat: "dd/mm/yy",
-                    beforeShowDay: DisabledDomingo
-                });
+
                 $("#form\\:inputFechaFin").datepicker({
                     dateFormat: "dd/mm/yy",
                     beforeShowDay: DisabledDomingo
@@ -146,21 +143,85 @@ and open the template in the editor.
                                     </h:inputText>
                                     <h6><h:message id="msnValor" for="inputValor" style="color: red"/></h6>
                                 </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarConvenio.inputFechaInicio}" disabled="#{controllerRegistrarConvenio.activarCasillas}" required="true" class="form-control" id="inputFechaInicio" requiredMessage="La Fecha Inicial es obligatoria.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarConvenio.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnFechaInicio" for="inputFechaInicio" style="color: red"/></h6>
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label for="fechaInicioAnio">
+                                            Año Fecha Inicio
+                                        </label>
+                                        <span></span>
+                                        <span></span>
+                                        <h:selectOneMenu value="#{controllerRegistrarConvenio.fechaInicioAnio}" class="form-control"  id="fechaInicioAnio">
+                                            <f:selectItems value="#{controllerRegistrarConvenio.listaAniosInicio}" var="pfechaInicioAnio"
+                                                           itemLabel="#{pfechaInicioAnio.mensajeMostrar}" itemValue="#{pfechaInicioAnio}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarConvenio.actualizarInformacionAnioInicio()}" execute="@this" render="@this fechaInicioMes fechaInicioDia"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaInicioMes">
+                                            Mes Fecha Inicio
+                                        </label>
+                                        <span></span>
+                                        <span></span>
+                                        <h:selectOneMenu value="#{controllerRegistrarConvenio.fechaInicioMes}" class="form-control"  id="fechaInicioMes">
+                                            <f:selectItems value="#{controllerRegistrarConvenio.listaMesesInicio}" var="pfechaInicioMes"
+                                                           itemLabel="#{pfechaInicioMes.mensajeMostrar}" itemValue="#{pfechaInicioMes}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarConvenio.actualizarInformacionInicioDia()}" execute="@this" render="@this fechaInicioDia"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaInicioDia">
+                                            Día Fecha Inicio
+                                        </label>
+                                        <span></span>
+                                        <span></span>
+                                        <h:selectOneMenu value="#{controllerRegistrarConvenio.fechaInicioDia}" class="form-control"  id="fechaInicioDia">
+                                            <f:selectItems value="#{controllerRegistrarConvenio.listaDiasInicio}" var="pfechaInicioDia"
+                                                           itemLabel="#{pfechaInicioDia.mensajeMostrar}" itemValue="#{pfechaInicioDia}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                        </h:selectOneMenu>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Fecha Finalización*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarConvenio.inputFechaFin}" disabled="#{controllerRegistrarConvenio.activarCasillas}" class="form-control" id="inputFechaFin" >
-                                        <f:ajax event="change" listener="#{controllerRegistrarConvenio.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
-                                        <f:ajax event="blur" listener="#{controllerRegistrarConvenio.validarFechaFin()}" execute="inputFechaFin" render="inputFechaFin msnFechaFin" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnFechaFin" for="inputFechaFin" style="color: red"/></h6>
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label for="fechaFinAnio">
+                                            Año Fecha Fin
+                                        </label>
+                                        <span></span>
+                                        <span></span>
+                                        <h:selectOneMenu value="#{controllerRegistrarConvenio.fechaFinAnio}" class="form-control"  id="fechaFinAnio">
+                                            <f:selectItems value="#{controllerRegistrarConvenio.listaAniosFin}" var="pfechaFinAnio"
+                                                           itemLabel="#{pfechaFinAnio.mensajeMostrar}" itemValue="#{pfechaFinAnio}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarConvenio.actualizarInformacionAnioFin()}" execute="@this" render="@this fechaFinMes fechaFinDia"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaFinMes">
+                                            Mes Fecha Fin
+                                        </label>
+                                        <span></span>
+                                        <span></span>
+                                        <h:selectOneMenu value="#{controllerRegistrarConvenio.fechaFinMes}" class="form-control"  id="fechaFinMes">
+                                            <f:selectItems value="#{controllerRegistrarConvenio.listaMesesFin}" var="pfechaFinMes"
+                                                           itemLabel="#{pfechaFinMes.mensajeMostrar}" itemValue="#{pfechaFinMes}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarConvenio.actualizarInformacionFinDia()}" execute="@this" render="@this fechaFinDia"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaFinDia">
+                                            Día Fecha Fin
+                                        </label>
+                                        <span></span>
+                                        <span></span>
+                                        <h:selectOneMenu value="#{controllerRegistrarConvenio.fechaFinDia}" class="form-control"  id="fechaFinDia">
+                                            <f:selectItems value="#{controllerRegistrarConvenio.listaDiasFin}" var="pfechaFinDia"
+                                                           itemLabel="#{pfechaFinDia.mensajeMostrar}" itemValue="#{pfechaFinDia}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                        </h:selectOneMenu>
+                                    </div>
                                 </div>
                             </fieldset>
                             <br></br>
@@ -198,6 +259,8 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+            <br></br>
+            <br></br>
             <div id="footer">
                 <footer>
                     <div class="container">

@@ -186,7 +186,7 @@ public class ControllerDetallesEquipo implements Serializable {
         int anioRegistro = equipoElementoDetalles.getFechaadquisicion().getYear() + 1900;
         int anioActual = new Date().getYear() + 1900;
         listaAniosRegistro = new ArrayList<AyudaFechaReserva>();
-        for (int i = anioRegistro; i <= anioActual; i++) {
+        for (int i = 2000; i <= anioActual; i++) {
             AyudaFechaReserva ayuda = new AyudaFechaReserva();
             ayuda.setMensajeMostrar(String.valueOf(i));
             ayuda.setParametro(i);
@@ -239,6 +239,21 @@ public class ControllerDetallesEquipo implements Serializable {
         return ayuda;
     }
 
+    public void actualizarInformacionAnio() {
+        listaMesesRegistro = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesRegistro.add(ayuda);
+        }
+        fechaRegistroMes = obtenerMesExacto(0);
+        actualizarInformacionRegistroDia();
+        fechaRegistroDia = obtenerDiaExacto(1);
+        modificacionRegistro = true;
+    }
+
     public void actualizarInformacionRegistroDia() {
         Calendar ahoraCal = Calendar.getInstance();
         ahoraCal.set(fechaRegistroAnio.getParametro(), fechaRegistroMes.getParametro(), 1);
@@ -251,6 +266,11 @@ public class ControllerDetallesEquipo implements Serializable {
             ayuda.setParametro(i);
             listaDiasRegistro.add(ayuda);
         }
+        modificacionRegistro = true;
+    }
+
+    public void modificacionDias() {
+        modificacionRegistro = true;
     }
 
     public void activarEditarRegistro() {
@@ -664,9 +684,6 @@ public class ControllerDetallesEquipo implements Serializable {
         if (validacionesEstado == false) {
             retorno = false;
         }
-        if (validacionesFecha == false) {
-            retorno = false;
-        }
         if (validacionesInventario == false) {
             retorno = false;
         }
@@ -733,25 +750,12 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setSeriequipo(nombreEquipoElemento);
 
             equipoElementoDetalles.setEspecificacionestecnicas(especificacionEquipoElemento);
-
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.YEAR, fechaRegistroAnio.getParametro());
             cal.set(Calendar.MONTH, fechaRegistroMes.getParametro());
             cal.set(Calendar.DATE, fechaRegistroDia.getParametro());
-            Date fechaAdq = null;
-            if (null != fechaEquipoElemento && !fechaEquipoElemento.isEmpty()) {
-                try {
-                    fechaAdq = format.parse(cal.getTime().toString());
-                    equipoElementoDetalles.setFechaadquisicion(fechaAdq);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                equipoElementoDetalles.setFechaadquisicion(null);
-            }
-
+            Date fechaAdq = cal.getTime();
+            equipoElementoDetalles.setFechaadquisicion(fechaAdq);
             equipoElementoDetalles.setCantidadequipo(Integer.valueOf(cantidadEquipoElemento).intValue());
             if (Utilidades.validarNulo(inversionEquipoElemento) && (!inversionEquipoElemento.isEmpty()) && (inversionEquipoElemento.trim().length() > 0)) {
                 equipoElementoDetalles.setCostoadquisicion(Integer.valueOf(inversionEquipoElemento));

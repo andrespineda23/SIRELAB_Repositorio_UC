@@ -112,20 +112,20 @@ public class ControllerDetallesConvenio implements Serializable {
         int anioActual = new Date().getYear() + 1900;
         listaAniosInicio = new ArrayList<AyudaFechaReserva>();
         listaAniosFin = new ArrayList<AyudaFechaReserva>();
-        for (int i = anioRegistro1; i <= anioActual; i++) {
+        for (int i = 2000; i <= anioActual; i++) {
             AyudaFechaReserva ayuda = new AyudaFechaReserva();
             ayuda.setMensajeMostrar(String.valueOf(i));
             ayuda.setParametro(i);
             listaAniosInicio.add(ayuda);
         }
-        for (int i = anioRegistro2; i <= anioActual; i++) {
+        for (int i = 2000; i <= anioActual; i++) {
             AyudaFechaReserva ayuda = new AyudaFechaReserva();
             ayuda.setMensajeMostrar(String.valueOf(i));
             ayuda.setParametro(i);
             listaAniosFin.add(ayuda);
         }
         fechaInicioAnio = obtenerAnioActual(anioRegistro1, 1);
-        fechaFinAnio = obtenerAnioActual(anioRegistro1, 2);
+        fechaFinAnio = obtenerAnioActual(anioRegistro2, 2);
         listaMesesInicio = new ArrayList<AyudaFechaReserva>();
         listaMesesFin = new ArrayList<AyudaFechaReserva>();
         for (int i = 0; i < 12; i++) {
@@ -204,6 +204,36 @@ public class ControllerDetallesConvenio implements Serializable {
         return ayuda;
     }
 
+    public void actualizarInformacionAnioInicio() {
+        listaMesesInicio = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesInicio.add(ayuda);
+        }
+        fechaInicioMes = obtenerMesExacto(0, 1);
+        actualizarInformacionInicioDia();
+        fechaInicioDia = obtenerDiaExacto(1, 1);
+        modificacionesRegistro = true;
+    }
+
+    public void actualizarInformacionAnioFin() {
+        listaMesesFin = new ArrayList<AyudaFechaReserva>();
+        for (int i = 0; i < 12; i++) {
+            AyudaFechaReserva ayuda = new AyudaFechaReserva();
+            ayuda.setParametro(i);
+            int mes = i + 1;
+            ayuda.setMensajeMostrar(String.valueOf(mes));
+            listaMesesFin.add(ayuda);
+        }
+        fechaFinMes = obtenerMesExacto(0, 1);
+        actualizarInformacionFinDia();
+        fechaFinDia = obtenerDiaExacto(1, 2);
+        modificacionesRegistro = true;
+    }
+
     public void actualizarInformacionInicioDia() {
         Calendar ahoraCal = Calendar.getInstance();
         ahoraCal.set(fechaInicioAnio.getParametro(), fechaInicioMes.getParametro(), 1);
@@ -231,6 +261,10 @@ public class ControllerDetallesConvenio implements Serializable {
             ayuda.setParametro(i);
             listaDiasFin.add(ayuda);
         }
+        modificacionesRegistro = true;
+    }
+
+    public void actualizarInformacionDias() {
         modificacionesRegistro = true;
     }
 
@@ -334,12 +368,6 @@ public class ControllerDetallesConvenio implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesFechaFin == false) {
-            retorno = false;
-        }
-        if (validacionesFechaInicio == false) {
-            retorno = false;
-        }
         return retorno;
     }
 
@@ -390,8 +418,6 @@ public class ControllerDetallesConvenio implements Serializable {
             convenioEditar.setValor(Integer.valueOf(inputValor));
             convenioEditar.setEstado(estadoConvenio);
             convenioEditar.setDescripcion(inputDescripcion);
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.YEAR, fechaInicioAnio.getParametro());
             cal.set(Calendar.MONTH, fechaInicioMes.getParametro());
@@ -402,12 +428,6 @@ public class ControllerDetallesConvenio implements Serializable {
             cal2.set(Calendar.DATE, fechaFinDia.getParametro());
             Date fecha1 = cal.getTime();
             Date fecha2 = cal2.getTime();
-            try {
-                fecha1 = format.parse(cal.getTime().toString());
-                fecha2 = format.parse(cal2.getTime().toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
             convenioEditar.setFechainicial(fecha1);
             convenioEditar.setFechafinal(fecha2);
             gestionarConvenioBO.editarConvenio(convenioEditar);
