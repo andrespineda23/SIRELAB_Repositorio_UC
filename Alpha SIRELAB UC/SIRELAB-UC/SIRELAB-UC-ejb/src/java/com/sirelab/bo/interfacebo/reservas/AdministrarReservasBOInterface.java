@@ -19,6 +19,8 @@ import com.sirelab.entidades.ReservaEquipoElemento;
 import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.entidades.SalaLaboratorioxServicios;
+import com.sirelab.entidades.ServiciosSala;
 import com.sirelab.entidades.TipoReserva;
 import java.math.BigInteger;
 import java.util.Date;
@@ -79,5 +81,11 @@ public interface AdministrarReservasBOInterface {
     public void actualizarGuiaLaboratorioReserva(ReservaSala reservaSala);
 
     public TipoReserva obtenerTipoReservaPorId(BigInteger idRegistro);
+
+    public List<ServiciosSala> listaServiciosSalaActivos();
+
+    public List<SalaLaboratorio> consultarSalaLaboratorioPorIdLaboratorioYServicio(BigInteger laboratorio, BigInteger servicio);
+
+    public List<ReservaSala> obtenerReservasSalaPorParametros(SalaLaboratorio sala, Date fecha);
 
 }

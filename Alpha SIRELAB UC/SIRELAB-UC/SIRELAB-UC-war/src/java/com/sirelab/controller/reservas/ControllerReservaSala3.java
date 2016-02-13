@@ -46,16 +46,17 @@ public class ControllerReservaSala3 implements Serializable {
     }
 
     public void cargarInformacionReserva(AyudaReservaSala ayudaReserva) {
-        reservaSala = ayudaReserva;
-        nombreAsignatura = ayudaReserva.getNombreAsignatura();
-        rutaGuia = ayudaReserva.getRutaGuia();
-        reservaPersona = ayudaReserva.getReserva();
-        valorReserva = 0;
-        obtenerCostoFinalReserva();
+        
     }
 
     @PostConstruct
     public void init() {
+        reservaSala = AyudaReservaSala.getInstance();
+        nombreAsignatura = AyudaReservaSala.getInstance().getNombreAsignatura();
+        rutaGuia = AyudaReservaSala.getInstance().getRutaGuia();
+        reservaPersona = AyudaReservaSala.getInstance().getReserva();
+        valorReserva = 0;
+        obtenerCostoFinalReserva();
     }
 
     private void obtenerCostoFinalReserva() {

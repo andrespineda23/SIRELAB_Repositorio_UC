@@ -119,4 +119,19 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<ReservaSala> buscarReservaSalasSalaPorParametros(BigInteger idSala, Date fecha) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio=:idSala AND p.reserva.fechareserva=:fecha");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("fecha", fecha);
+            query.setParameter("idSala", idSala);
+            List<ReservaSala> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaSalasSalaPorParametros ReservaSalaDAO : " + e.toString());
+            return null;
+        }
+    }
 }

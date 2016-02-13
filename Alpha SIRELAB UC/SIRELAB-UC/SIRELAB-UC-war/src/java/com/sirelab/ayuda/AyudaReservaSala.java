@@ -7,6 +7,7 @@ package com.sirelab.ayuda;
 
 import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.entidades.ServiciosSala;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,19 +18,25 @@ import java.util.Date;
 public class AyudaReservaSala implements Serializable {
 
     private String horaInicio;
+    private String horaFin;
     private Date fechaReserva;
     private SalaLaboratorio salaLaboratorio;
     private Reserva reserva;
     private String nombreAsignatura;
     private String rutaGuia;
+    private ServiciosSala servicioSala;
 
-    public AyudaReservaSala() {
+    private static AyudaReservaSala instance = null;
+
+    protected AyudaReservaSala() {
+        // Exists only to defeat instantiation.
     }
 
-    public AyudaReservaSala(String horaInicio, Date fechaReserva, SalaLaboratorio salaLaboratorio) {
-        this.horaInicio = horaInicio;
-        this.fechaReserva = fechaReserva;
-        this.salaLaboratorio = salaLaboratorio;
+    public static AyudaReservaSala getInstance() {
+        if (instance == null) {
+            instance = new AyudaReservaSala();
+        }
+        return instance;
     }
 
     public String getHoraInicio() {
@@ -79,7 +86,21 @@ public class AyudaReservaSala implements Serializable {
     public void setRutaGuia(String rutaGuia) {
         this.rutaGuia = rutaGuia;
     }
-    
-    
+
+    public ServiciosSala getServicioSala() {
+        return servicioSala;
+    }
+
+    public void setServicioSala(ServiciosSala servicioSala) {
+        this.servicioSala = servicioSala;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
+    }
 
 }

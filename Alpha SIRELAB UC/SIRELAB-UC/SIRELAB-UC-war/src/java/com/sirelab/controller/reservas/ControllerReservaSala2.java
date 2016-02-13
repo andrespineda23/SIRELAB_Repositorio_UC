@@ -60,12 +60,13 @@ public class ControllerReservaSala2 implements Serializable {
 
     public void recibirInformacionReserva(AyudaReservaSala ayudaReserva) {
         System.out.println("reserva 2");
-        reservaSala = ayudaReserva;
+        
         System.out.println("llego a la reserva 2 con info: "+reservaSala);
     }
 
     @PostConstruct
     public void init() {
+        reservaSala =  AyudaReservaSala.getInstance();
         adicionarElementos = false;
         parametroTipoReserva = null;
         parametroGuiaLaboratorio = null;
@@ -226,9 +227,10 @@ public class ControllerReservaSala2 implements Serializable {
             Reserva reservaPersona = administrarReservasBO.registrarNuevaReservaSala(reservaRegistro, reservaSalaRegistro);
 
             if (null != reservaPersona) {
-                reservaSala.setReserva(reservaPersona);
-                reservaSala.setNombreAsignatura(parametroAsignaturaPorPlanEstudio.getAsignatura().getNombreasignatura());
-                reservaSala.setRutaGuia(parametroGuiaLaboratorio.getUbicacionguia());
+                AyudaReservaSala.getInstance().setReserva(reservaPersona);
+                AyudaReservaSala.getInstance().setNombreAsignatura(parametroAsignaturaPorPlanEstudio.getAsignatura().getNombreasignatura());
+                AyudaReservaSala.getInstance().setRutaGuia(parametroGuiaLaboratorio.getUbicacionguia());
+                System.out.println("guardo la info en la segunda parte: "+AyudaReservaSala.getInstance().getNombreAsignatura());
             }
             limpiarDatosParaPaso3();
         } catch (Exception e) {

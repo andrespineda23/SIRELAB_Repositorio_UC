@@ -148,6 +148,22 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
             return null;
         }
     }
+    
+    @Override
+    public List<SalaLaboratorioxServicios> buscarSalasLaboratorioxServiciosPorLaboratorioyServicio(BigInteger laboratorio, BigInteger servicio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.laboratorio.idlaboratorio=:laboratorio AND p.serviciosala.idserviciossala=:servicio");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            query.setParameter("servicio", servicio);
+            List<SalaLaboratorioxServicios> registro =  query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarSalaLaboratorioxServiciosPorLaboratorioyServicio SalaLaboratorioxServiciosDAO : " + e.toString());
+            return null;
+        }
+    }
 
     @Override
     public List<SalaLaboratorioxServicios> buscarSalaLaboratorioxServiciosPorFiltrado(Map<String, String> filters) {

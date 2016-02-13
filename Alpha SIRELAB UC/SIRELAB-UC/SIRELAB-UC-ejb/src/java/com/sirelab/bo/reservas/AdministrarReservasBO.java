@@ -24,6 +24,8 @@ import com.sirelab.dao.interfacedao.ReservaEquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaSalaDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
+import com.sirelab.dao.interfacedao.SalaLaboratorioxServiciosDAOInterface;
+import com.sirelab.dao.interfacedao.ServiciosSalaDAOInterface;
 import com.sirelab.dao.interfacedao.TipoReservaDAOInterface;
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Docente;
@@ -41,8 +43,11 @@ import com.sirelab.entidades.ReservaEquipoElemento;
 import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.entidades.SalaLaboratorioxServicios;
+import com.sirelab.entidades.ServiciosSala;
 import com.sirelab.entidades.TipoReserva;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -57,7 +62,7 @@ import org.apache.log4j.Logger;
 public class AdministrarReservasBO implements AdministrarReservasBOInterface {
 
     static Logger logger = Logger.getLogger(AdministrarReservasBO.class);
-    
+
     @EJB
     ReservaDAOInterface reservaDAO;
     @EJB
@@ -94,6 +99,10 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
     ReservaModuloLaboratorioDAOInterface reservaModuloLaboratorioDAO;
     @EJB
     ModuloLaboratorioDAOInterface moduloLaboratorioDAO;
+    @EJB
+    SalaLaboratorioxServiciosDAOInterface salaLaboratorioxServiciosDAO;
+    @EJB
+    ServiciosSalaDAOInterface serviciosSalaDAO;
 
     @Override
     public List<ReservaSala> consultarReservasSalaPorPersona(BigInteger persona) {
@@ -168,6 +177,25 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
         try {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivos(laboratorio);
             return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO consultarSalaLaboratorioPorIdLaboratorio: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<SalaLaboratorio> consultarSalaLaboratorioPorIdLaboratorioYServicio(BigInteger laboratorio, BigInteger servicio) {
+        try {
+            List<SalaLaboratorioxServicios> lista = salaLaboratorioxServiciosDAO.buscarSalasLaboratorioxServiciosPorLaboratorioyServicio(laboratorio, servicio);
+            if (null != lista) {
+                List<SalaLaboratorio> salas = new ArrayList<SalaLaboratorio>();
+                for (int i = 0; i < lista.size(); i++) {
+                    salas.add(lista.get(i).getSalalaboratorio());
+                }
+                return salas;
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO consultarSalaLaboratorioPorIdLaboratorio: " + e.toString());
             return null;
@@ -389,6 +417,27 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             return registro;
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO actualizarGuiaLaboratorioReserva: " + e.toString());
+            return null;
+        }
+    }
+
+    //@Override
+    public List<ServiciosSala> listaServiciosSalaActivos() {
+        try {
+            List<ServiciosSala> lista = serviciosSalaDAO.consultarServiciosSalaActivos();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO listaServiciosSalaActivos: " + e.toString());
+            return null;
+        }
+    }
+
+    public List<ReservaSala> obtenerReservasSalaPorParametros(SalaLaboratorio sala, Date fecha) {
+        try {
+            List<ReservaSala> lista = reservaSalaDAO.buscarReservaSalasSalaPorParametros(sala.getIdsalalaboratorio(), fecha);
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO obtenerReservasSalaPorParametros: " + e.toString());
             return null;
         }
     }

@@ -56,12 +56,12 @@ and open the template in the editor.
                                                         <label>
                                                             Hora de Reserva 
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaSala3.reservaSala.horaInicio}:00"/>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaSala3.reservaSala.horaInicio}:00 - #{controllerReservaSala3.reservaSala.horaFin}:00"/>
                                                     </div>
                                                 </div>
                                             </div> 
                                             <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
                                                     <div class="form-group">
                                                         <label>
                                                             Laboratorio
@@ -69,12 +69,20 @@ and open the template in the editor.
                                                         <h:inputText readonly="true" class="form-control"  value="#{controllerReservaSala3.reservaSala.salaLaboratorio.laboratorio.nombrelaboratorio}"/>
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
                                                     <div class="form-group">
                                                         <label>
                                                             Sala de Laboratorio
                                                         </label>
                                                         <h:inputText readonly="true" class="form-control"  value="#{controllerReservaSala3.reservaSala.salaLaboratorio.nombresala}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Servicio Prestado
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaSala3.reservaSala.servicioSala.nombreservicio}"/>
                                                     </div>
                                                 </div>
                                             </div> 
