@@ -310,8 +310,8 @@ public class ControllerRegistrarComponente implements Serializable {
             componenteNuevo.setTipocomponente(nuevoTipoComponente);
             gestionarPlantaComponentesEquiposBO.crearComponenteEquipo(componenteNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema : " + e.toString(),e);
         }
     }
 

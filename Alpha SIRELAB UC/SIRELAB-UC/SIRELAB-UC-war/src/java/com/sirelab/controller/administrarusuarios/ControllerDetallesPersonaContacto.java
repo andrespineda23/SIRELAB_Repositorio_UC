@@ -373,8 +373,8 @@ public class ControllerDetallesPersonaContacto implements Serializable {
             personaContactoEditar.setConvenioporentidad(inputConvenioPorEntidad);
             administrarPersonasContactoBO.editarPersonaContado(personaContactoEditar);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto:  " + e.toString());
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto : " + e.toString());
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto : " + e.toString(),e);
         }
     }
 

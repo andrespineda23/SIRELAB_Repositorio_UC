@@ -131,8 +131,8 @@ public class ControllerAdministrarSedes implements Serializable {
                 bloquearPagSigSede = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarSedes buscarSedesPorParametros : " + e.toString(),e);
         }
     }
 
@@ -225,7 +225,7 @@ public class ControllerAdministrarSedes implements Serializable {
                 editarNombre = sedeEditar.getNombresede();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarSedes cargarInformacionUsuarioEditar : " + e.toString());
+            logger.error("Error ControllerGestionarSedes cargarInformacionUsuarioEditar : " + e.toString(),e);
         }
     }
 
@@ -267,7 +267,7 @@ public class ControllerAdministrarSedes implements Serializable {
             limpiarEditarSede();
 //            context.execute("registroExitosoSede.show()");
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarSedes almacenarModificacion : " + e.toString());
+            logger.error("Error ControllerGestionarSedes almacenarModificacion : " + e.toString(),e);
             //context.execute("registroFallidoSede.show()");
         }
     }

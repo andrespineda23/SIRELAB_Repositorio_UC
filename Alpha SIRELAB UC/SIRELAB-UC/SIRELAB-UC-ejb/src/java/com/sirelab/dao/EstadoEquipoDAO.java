@@ -36,7 +36,7 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
             em.persist(estadoEquipo);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearEstadoEquipo EstadoEquipoDAO : " + e.toString());
+            logger.error("Error crearEstadoEquipo EstadoEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
         try {
             em.merge(estadoEquipo);
         } catch (Exception e) {
-            logger.error("Error editarEstadoEquipo EstadoEquipoDAO : " + e.toString());
+            logger.error("Error editarEstadoEquipo EstadoEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
         try {
             em.remove(em.merge(estadoEquipo));
         } catch (Exception e) {
-            logger.error("Error eliminarEstadoEquipo EstadoEquipoDAO : " + e.toString());
+            logger.error("Error eliminarEstadoEquipo EstadoEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
     public List<EstadoEquipo> consultarEstadosEquipos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EstadoEquipo p");
+            Query query = em.createQuery("SELECT p FROM EstadoEquipo p ORDER BY p.nombreestadoequipo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EstadoEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarEstadosEquipos EstadoEquipoDAO : " + e.toString());
+            logger.error("Error consultarEstadosEquipos EstadoEquipoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
             EstadoEquipo registro = (EstadoEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstadoEquipoPorID EstadoEquipoDAO : " + e.toString());
+            logger.error("Error buscarEstadoEquipoPorID EstadoEquipoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -97,7 +97,7 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
             EstadoEquipo registro = (EstadoEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstadoEquipoPorNombre EstadoEquipoDAO : " + e.toString());
+            logger.error("Error buscarEstadoEquipoPorNombre EstadoEquipoDAO : " + e.toString(),e);
             return null;
         }
     }

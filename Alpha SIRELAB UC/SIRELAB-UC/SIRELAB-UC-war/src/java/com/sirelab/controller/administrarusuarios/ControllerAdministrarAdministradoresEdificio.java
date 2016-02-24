@@ -167,8 +167,8 @@ public class ControllerAdministrarAdministradoresEdificio implements Serializabl
                 bloquearPagSigEncargadoPorEdificio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarAdministradoresEdificio buscarAdministradoresEdificioPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarAdministradoresEdificio buscarAdministradoresEdificioPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarAdministradoresEdificio buscarAdministradoresEdificioPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarAdministradoresEdificio buscarAdministradoresEdificioPorParametros : " + e.toString(),e);
         }
     }
 
@@ -293,8 +293,8 @@ public class ControllerAdministrarAdministradoresEdificio implements Serializabl
                 parametroEdificio = new Edificio();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarAdministradoresEdificio actualizarSedes:  " + e.toString());
-            logger.error("Error ControllerAdministrarAdministradoresEdificio actualizarSedes : " + e.toString());
+            logger.error("Error ControllerAdministrarAdministradoresEdificio actualizarSedes:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarAdministradoresEdificio actualizarSedes : " + e.toString(),e);
         }
     }
 

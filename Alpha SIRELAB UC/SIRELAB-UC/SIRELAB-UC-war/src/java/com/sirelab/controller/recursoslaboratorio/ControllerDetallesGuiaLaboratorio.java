@@ -284,8 +284,8 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
             }
             gestionarRecursoGuiasLaboratorioBO.modificarGuiaLaboratorio(guiaLaboratorioDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema:  " + e.toString());
-            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema : " + e.toString(),e);
         }
     }
 

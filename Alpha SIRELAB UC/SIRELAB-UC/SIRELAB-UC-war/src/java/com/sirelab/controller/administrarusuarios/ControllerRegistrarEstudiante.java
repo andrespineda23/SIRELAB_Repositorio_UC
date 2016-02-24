@@ -119,8 +119,8 @@ public class ControllerRegistrarEstudiante implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputCarrera", new FacesMessage("El campo Carrera es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  " + e.toString());
-            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras : " + e.toString());
+            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras : " + e.toString(),e);
         }
     }
 
@@ -420,8 +420,8 @@ public class ControllerRegistrarEstudiante implements Serializable {
             estudianteNueva.setTipoestudiante(inputTipo);
             gestionarLoginSistemaBO.almacenarNuevoEstudianteEnSistema(usuarioNuevo, personaNueva, estudianteNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  " + e.toString());
-            logger.error("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString(),e);
         }
     }
 

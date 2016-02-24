@@ -33,7 +33,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             em.persist(proveedor);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearProveedor ProveedorDAO : " + e.toString());
+            logger.error("Error crearProveedor ProveedorDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
         try {
             em.merge(proveedor);
         } catch (Exception e) {
-            logger.error("Error editarProveedor ProveedorDAO : " + e.toString());
+            logger.error("Error editarProveedor ProveedorDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
         try {
             em.remove(em.merge(proveedor));
         } catch (Exception e) {
-            logger.error("Error eliminarProveedor ProveedorDAO : " + e.toString());
+            logger.error("Error eliminarProveedor ProveedorDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class ProveedorDAO implements ProveedorDAOInterface {
     public List<Proveedor> consultarProveedores() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Proveedor p");
+            Query query = em.createQuery("SELECT p FROM Proveedor p ORDER BY p.nitproveedor ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Proveedor> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarProveedores ProveedorDAO : " + e.toString());
+            logger.error("Error consultarProveedores ProveedorDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             Proveedor registro = (Proveedor) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarProveedorPorID ProveedorDAO : " + e.toString());
+            logger.error("Error buscarProveedorPorID ProveedorDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -94,7 +94,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             Proveedor registro = (Proveedor) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarProveedorPorNIT ProveedorDAO : " + e.toString());
+            logger.error("Error buscarProveedorPorNIT ProveedorDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -115,7 +115,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarProveedoresPorFiltrado ProveedorDAO : " + e.toString());
+            logger.error("Error buscarProveedoresPorFiltrado ProveedorDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -155,8 +155,8 @@ public class ControllerRegistrarSede implements Serializable {
             nuevaSede.setEstado(true);
             gestionarSedeBO.crearNuevaSede(nuevaSede);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarSede almacenarNuevoSedeEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarSede almacenarNuevoSedeEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarSede almacenarNuevoSedeEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarSede almacenarNuevoSedeEnSistema : " + e.toString(),e);
         }
     }
 

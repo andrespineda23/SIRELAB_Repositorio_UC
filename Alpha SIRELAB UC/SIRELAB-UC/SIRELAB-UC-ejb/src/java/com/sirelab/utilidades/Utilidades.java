@@ -200,5 +200,27 @@ public final class Utilidades {
             return false;
         }
     }
+    
+    public static boolean fechaDiferidaIngresadaCorrectaReservas(Date fechaValidar) {
+        try {
+            boolean retorno = false;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaHoy = new Date();
+            String fechaStr = sdf.format(fechaHoy);
+            fechaHoy = sdf.parse(fechaStr);
+
+            if (fechaValidar.compareTo(fechaHoy) > 0) {
+                retorno = true;
+            } else if (fechaValidar.compareTo(fechaHoy) < 0) {
+                retorno = false;
+            } else if (fechaValidar.compareTo(fechaHoy) == 0) {
+                retorno = true;
+            }
+            return retorno;
+        } catch (Exception e) {
+            logger.error("Error en la validacion de la fecha de reserva: "+e.getMessage(),e);
+            return false;
+        }
+    }
 
 }

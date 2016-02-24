@@ -31,7 +31,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
         try {
             estadoReservaDAO.crearEstadoReserva(estadoReserva);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosReservasBO crearEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO crearEstadoReserva : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
         try {
             estadoReservaDAO.editarEstadoReserva(estadoReserva);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosReservasBO editarEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO editarEstadoReserva : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
         try {
             estadoReservaDAO.eliminarEstadoReserva(estadoReserva);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
             EstadoReserva registro = estadoReservaDAO.buscarEstadoReservaPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO borrarEstadoReserva : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableEstadosReservasBO implements GestionarVariableEsta
             List<EstadoReserva> lista = estadoReservaDAO.consultarEstadosReservas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosReservasBO consultarEstadosReservasRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableEstadosReservasBO consultarEstadosReservasRegistrados : " + e.toString(),e);
             return null;
         }
     }

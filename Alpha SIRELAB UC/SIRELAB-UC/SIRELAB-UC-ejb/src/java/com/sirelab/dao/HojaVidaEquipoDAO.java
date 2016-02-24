@@ -36,7 +36,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
             em.persist(hojavidaequipo);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error crearHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
         try {
             em.merge(hojavidaequipo);
         } catch (Exception e) {
-            logger.error("Error editarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error editarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
         try {
             em.remove(em.merge(hojavidaequipo));
         } catch (Exception e) {
-            logger.error("Error eliminarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error eliminarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
     public List<HojaVidaEquipo> consultarHojasVidaEquipo() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM HojaVidaEquipo p");
+            Query query = em.createQuery("SELECT p FROM HojaVidaEquipo p ORDER BY p.fechaevento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<HojaVidaEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarHojasVidaEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error consultarHojasVidaEquipo HojaVidaEquipoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -76,13 +76,13 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
     public List<HojaVidaEquipo> consultarHojaVidaPorIDEquipo(BigInteger idRegistro) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM HojaVidaEquipo p WHERE p.equipoelemento.idequipoelemento=:idRegistro ORDER BY p.fechaevento");
+            Query query = em.createQuery("SELECT p FROM HojaVidaEquipo p WHERE p.equipoelemento.idequipoelemento=:idRegistro ORDER BY p.fechaevento ORDER BY p.fechaevento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idRegistro", idRegistro);
             List<HojaVidaEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarHojaVidaPorIDEquipo HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error consultarHojaVidaPorIDEquipo HojaVidaEquipoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -97,7 +97,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
             HojaVidaEquipo registro = (HojaVidaEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarHojaVidaEquipoPorID HojaVidaEquipoDAO : " + e.toString());
+            logger.error("Error buscarHojaVidaEquipoPorID HojaVidaEquipoDAO : " + e.toString(),e);
             return null;
         }
     }

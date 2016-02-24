@@ -421,8 +421,8 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  " + e.toString());
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString(),e);
         }
     }
 
@@ -443,8 +443,8 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(),e);
         }
     }
 
@@ -458,8 +458,8 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(),e);
         }
     }
 
@@ -776,8 +776,8 @@ public class ControllerDetallesEquipo implements Serializable {
             gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles, cambioModulo, equipoCambio);
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString(),e);
         }
     }
 

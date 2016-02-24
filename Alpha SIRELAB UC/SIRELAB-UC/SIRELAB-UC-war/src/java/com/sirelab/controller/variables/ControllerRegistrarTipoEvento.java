@@ -97,8 +97,8 @@ public class ControllerRegistrarTipoEvento implements Serializable {
             tipoNuevo.setDetalleevento(inputDetalle);
             gestionarVariableTiposEventoBO.crearTipoEvento(tipoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarTipoEvento almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

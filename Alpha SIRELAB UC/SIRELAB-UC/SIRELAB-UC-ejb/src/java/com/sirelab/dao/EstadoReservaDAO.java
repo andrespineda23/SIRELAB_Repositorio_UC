@@ -36,7 +36,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
             em.persist(estadoReserva);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearEstadoReserva EstadoReservaDAO : " + e.toString());
+            logger.error("Error crearEstadoReserva EstadoReservaDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
         try {
             em.merge(estadoReserva);
         } catch (Exception e) {
-            logger.error("Error editarEstadoReserva EstadoReservaDAO : " + e.toString());
+            logger.error("Error editarEstadoReserva EstadoReservaDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
         try {
             em.remove(em.merge(estadoReserva));
         } catch (Exception e) {
-            logger.error("Error eliminarEstadoReserva EstadoReservaDAO : " + e.toString());
+            logger.error("Error eliminarEstadoReserva EstadoReservaDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
     public List<EstadoReserva> consultarEstadosReservas() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EstadoReserva p");
+            Query query = em.createQuery("SELECT p FROM EstadoReserva p ORDER BY p.nombreestadoreserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EstadoReserva> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarEstadosReservas EstadoReservaDAO : " + e.toString());
+            logger.error("Error consultarEstadosReservas EstadoReservaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
             EstadoReserva registro = (EstadoReserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstadoReservaPorID EstadoReservaDAO : " + e.toString());
+            logger.error("Error buscarEstadoReservaPorID EstadoReservaDAO : " + e.toString(),e);
             return null;
         }
     }

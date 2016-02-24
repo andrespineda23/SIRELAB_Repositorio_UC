@@ -222,8 +222,8 @@ public class ControllerRegistrarManual implements Serializable {
                 guiaNuevo.setUbicacionmanual(nuevoUbicacion);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString(),e);
         }
     }
 

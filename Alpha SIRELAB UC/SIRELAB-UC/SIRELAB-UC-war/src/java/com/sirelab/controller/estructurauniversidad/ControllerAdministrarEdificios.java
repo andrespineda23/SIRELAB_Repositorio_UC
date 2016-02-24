@@ -134,8 +134,8 @@ public class ControllerAdministrarEdificios implements Serializable {
                 bloquearPagSigEdificio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEdificios buscarEdificiosPorParametros : " + e.toString(),e);
         }
     }
 

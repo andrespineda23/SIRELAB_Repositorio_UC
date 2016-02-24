@@ -34,7 +34,7 @@ public class SedeDAO implements SedeDAOInterface {
             em.persist(sede);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearSede SedeDAO : " + e.toString());
+            logger.error("Error crearSede SedeDAO : " + e.toString(),e);
         }
     }
 
@@ -44,7 +44,7 @@ public class SedeDAO implements SedeDAOInterface {
             em.clear();
             em.merge(sede);
         } catch (Exception e) {
-            logger.error("Error editarSede SedeDAO : " + e.toString());
+            logger.error("Error editarSede SedeDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class SedeDAO implements SedeDAOInterface {
             em.clear();
             em.remove(em.merge(sede));
         } catch (Exception e) {
-            logger.error("Error eliminarSede SedeDAO : " + e.toString());
+            logger.error("Error eliminarSede SedeDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class SedeDAO implements SedeDAOInterface {
     public List<Sede> consultarSedes() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Sede p");
+            Query query = em.createQuery("SELECT p FROM Sede p ORDER BY p.nombresede ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Sede> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarSedes SedeDAO : " + e.toString());
+            logger.error("Error consultarSedes SedeDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -75,12 +75,12 @@ public class SedeDAO implements SedeDAOInterface {
     public List<Sede> consultarSedesActivos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Sede p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM Sede p WHERE p.estado=TRUE ORDER BY p.nombresede ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Sede> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarSedes SedeDAO : " + e.toString());
+            logger.error("Error consultarSedes SedeDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -95,7 +95,7 @@ public class SedeDAO implements SedeDAOInterface {
             Sede registro = (Sede) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSedePorID SedeDAO : " + e.toString());
+            logger.error("Error buscarSedePorID SedeDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -116,7 +116,7 @@ public class SedeDAO implements SedeDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarSedesPorFiltrado SedeDAO : " + e.toString());
+            logger.error("Error buscarSedesPorFiltrado SedeDAO : " + e.toString(),e);
             return null;
         }
     }

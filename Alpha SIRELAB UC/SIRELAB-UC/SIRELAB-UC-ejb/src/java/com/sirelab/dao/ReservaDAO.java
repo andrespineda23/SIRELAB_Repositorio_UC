@@ -8,6 +8,7 @@ package com.sirelab.dao;
 import com.sirelab.dao.interfacedao.ReservaDAOInterface;
 import com.sirelab.entidades.Reserva;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class ReservaDAO implements ReservaDAOInterface {
 
     static Logger logger = Logger.getLogger(ReservaDAO.class);
-    
+
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -37,7 +38,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             em.persist(reserva);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearReserva ReservaDAO : " + e.toString());
+            logger.error("Error crearReserva ReservaDAO : " + e.toString(), e);
         }
     }
 
@@ -46,7 +47,7 @@ public class ReservaDAO implements ReservaDAOInterface {
         try {
             em.merge(reserva);
         } catch (Exception e) {
-            logger.error("Error editarReserva ReservaDAO : " + e.toString());
+            logger.error("Error editarReserva ReservaDAO : " + e.toString(), e);
         }
     }
 
@@ -55,7 +56,7 @@ public class ReservaDAO implements ReservaDAOInterface {
         try {
             em.remove(em.merge(reserva));
         } catch (Exception e) {
-            logger.error("Error eliminarReserva ReservaDAO : " + e.toString());
+            logger.error("Error eliminarReserva ReservaDAO : " + e.toString(), e);
         }
     }
 
@@ -68,7 +69,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarReservas ReservaDAO : " + e.toString());
+            logger.error("Error consultarReservas ReservaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -83,7 +84,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             Reserva registro = (Reserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaPorID ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservaPorID ReservaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -100,10 +101,11 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservasPorPersona ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservasPorPersona ReservaDAO : " + e.toString(), e);
             return null;
         }
     }
+
     @Override
     public Reserva buscarUltimaReservaPersona(BigInteger persona, String horaInicio, Date fecha) {
         try {
@@ -116,7 +118,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             Reserva registro = (Reserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarUltimaReservaPersona ReservaDAO : " + e.toString());
+            logger.error("Error buscarUltimaReservaPersona ReservaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -131,7 +133,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservasPorFecha ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservasPorFecha ReservaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -146,7 +148,29 @@ public class ReservaDAO implements ReservaDAOInterface {
             List<Reserva> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservasPorEstadoReserva ReservaDAO : " + e.toString());
+            logger.error("Error buscarReservasPorEstadoReserva ReservaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public Integer obtenerCantidadReservasDia(Date fecha) {
+        try {
+            em.clear();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaStr = formato.format(fecha);
+            fecha = new Date(fechaStr);
+            Query query = em.createQuery("SELECT p FROM Reserva p WHERE p.fechareserva=:fecha");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("fecha", fecha);
+            List<Reserva> registro = query.getResultList();
+            if (null != registro) {
+                return registro.size();
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            logger.error("Error obtenerCantidadReservasDia ReservaDAO : " + e.toString(), e);
             return null;
         }
     }

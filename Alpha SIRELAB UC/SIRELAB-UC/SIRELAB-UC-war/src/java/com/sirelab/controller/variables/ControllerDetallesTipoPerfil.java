@@ -173,8 +173,8 @@ public class ControllerDetallesTipoPerfil implements Serializable {
             tipoPerfilEditar.setNombreregistro(inputNombreRegistro);
             gestionarVariableTiposPerfilesBO.editarTipoPerfil(tipoPerfilEditar);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesTipoPerfil almacenarModificacionRegistro:  " + e.toString());
-            logger.error("Error ControllerDetallesTipoPerfil almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallesTipoPerfil almacenarModificacionRegistro:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesTipoPerfil almacenarModificacionRegistro: " + e.toString(),e);
         }
     }
 

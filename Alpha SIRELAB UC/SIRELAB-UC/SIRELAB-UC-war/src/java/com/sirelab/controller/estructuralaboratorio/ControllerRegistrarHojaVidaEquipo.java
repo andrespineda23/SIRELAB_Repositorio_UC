@@ -373,8 +373,8 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
             reggNuevo.setEquipoelemento(equipoElemento);
             gestionarPlantaHojasVidaEquiposBO.crearHojaVidaEquipo(reggNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

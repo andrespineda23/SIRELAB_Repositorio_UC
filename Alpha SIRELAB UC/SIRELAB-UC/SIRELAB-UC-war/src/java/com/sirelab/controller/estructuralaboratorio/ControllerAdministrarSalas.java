@@ -296,8 +296,8 @@ public class ControllerAdministrarSalas implements Serializable {
                 bloquearPagSigSala = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaSalas buscarSalasLaboratorioPorParametros : " + e.toString(),e);
         }
     }
 

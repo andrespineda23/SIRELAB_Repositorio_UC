@@ -38,7 +38,7 @@ public class ManualDAO implements ManualDAOInterface {
             em.persist(manual);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearManual ManualDAO : " + e.toString());
+            logger.error("Error crearManual ManualDAO : " + e.toString(),e);
         }
     }
 
@@ -47,7 +47,7 @@ public class ManualDAO implements ManualDAOInterface {
         try {
             em.merge(manual);
         } catch (Exception e) {
-            logger.error("Error editarManual ManualDAO : " + e.toString());
+            logger.error("Error editarManual ManualDAO : " + e.toString(),e);
         }
     }
 
@@ -56,7 +56,7 @@ public class ManualDAO implements ManualDAOInterface {
         try {
             em.remove(em.merge(manual));
         } catch (Exception e) {
-            logger.error("Error eliminarManual ManualDAO : " + e.toString());
+            logger.error("Error eliminarManual ManualDAO : " + e.toString(),e);
         }
     }
 
@@ -64,12 +64,12 @@ public class ManualDAO implements ManualDAOInterface {
     public List<Manual> consultarManuales() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Manual p");
+            Query query = em.createQuery("SELECT p FROM Manual p ORDER BY p.nombremanual ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Manual> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarManuales ManualDAO : " + e.toString());
+            logger.error("Error consultarManuales ManualDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -84,7 +84,7 @@ public class ManualDAO implements ManualDAOInterface {
             Manual registro = (Manual) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarManualPorID ManualDAO : " + e.toString());
+            logger.error("Error buscarManualPorID ManualDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -99,7 +99,7 @@ public class ManualDAO implements ManualDAOInterface {
             Manual registro = (Manual) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarManualPorUbicacion ManualDAO : " + e.toString());
+            logger.error("Error buscarManualPorUbicacion ManualDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -120,7 +120,7 @@ public class ManualDAO implements ManualDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarManualesPorFiltrado ManualDAO : " + e.toString());
+            logger.error("Error buscarManualesPorFiltrado ManualDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -199,7 +199,7 @@ public class ManualDAO implements ManualDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimoManualRegistrado ManualDAO : " + e.toString());
+            logger.error("Error obtenerUltimoManualRegistrado ManualDAO : " + e.toString(),e);
             return null;
         }
     }

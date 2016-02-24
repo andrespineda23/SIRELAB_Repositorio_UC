@@ -177,8 +177,8 @@ public class ControllerAdministrarDocentes implements Serializable {
                 bloquearPagSigDocente = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString(),e);
         }
     }
 
@@ -301,8 +301,8 @@ public class ControllerAdministrarDocentes implements Serializable {
                 parametroDepartamento = new Departamento();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarDocentes actualizarFacultades:  " + e.toString());
-            logger.error("Error ControllerAdministrarDocentes actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerAdministrarDocentes actualizarFacultades:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarDocentes actualizarFacultades : " + e.toString(),e);
         }
     }
 

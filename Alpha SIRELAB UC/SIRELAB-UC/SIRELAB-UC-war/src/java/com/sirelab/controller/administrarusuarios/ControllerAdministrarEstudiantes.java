@@ -189,8 +189,8 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 bloquearPagSigEstudiante = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString(),e);
         }
     }
 
@@ -325,8 +325,8 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 parametroPlanEst = new PlanEstudios();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos:  " + e.toString());
-            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEstudiantes actualizarDepartamentos : " + e.toString(),e);
         }
     }
 
@@ -345,8 +345,8 @@ public class ControllerAdministrarEstudiantes implements Serializable {
                 parametroPlanEst = new PlanEstudios();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras:  " + e.toString());
-            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras : " + e.toString());
+            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEstudiantes actualizarCarreras : " + e.toString(),e);
         }
     }
 

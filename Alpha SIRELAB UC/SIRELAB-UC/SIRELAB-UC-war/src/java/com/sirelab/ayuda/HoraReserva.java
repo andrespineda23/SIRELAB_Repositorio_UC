@@ -13,6 +13,8 @@ public class HoraReserva {
 
     private String horaMostrar;
     private Integer hora;
+    private Integer horaModuloInicio;
+    private Integer horaModuloFin;
 
     public HoraReserva() {
     }
@@ -31,6 +33,22 @@ public class HoraReserva {
 
     public void setHora(Integer hora) {
         this.hora = hora;
+    }
+
+    public Integer getHoraModuloInicio() {
+        return horaModuloInicio;
+    }
+
+    public void setHoraModuloInicio(Integer horaModuloInicio) {
+        this.horaModuloInicio = horaModuloInicio;
+    }
+
+    public Integer getHoraModuloFin() {
+        return horaModuloFin;
+    }
+
+    public void setHoraModuloFin(Integer horaModuloFin) {
+        this.horaModuloFin = horaModuloFin;
     }
 
 }

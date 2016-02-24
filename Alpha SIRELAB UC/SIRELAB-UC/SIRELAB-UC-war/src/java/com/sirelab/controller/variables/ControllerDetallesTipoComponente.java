@@ -109,8 +109,8 @@ public class ControllerDetallesTipoComponente implements Serializable {
             tipoComponenteDetalle.setNombretipo(inputNombre);
             gestionarVariableTiposComponenteBO.editarTipoComponente(tipoComponenteDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetalleTipoComponente almacenarModificacionRegistro:  " + e.toString());
-            logger.error("Error ControllerDetalleTipoComponente almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetalleTipoComponente almacenarModificacionRegistro:  " + e.toString(),e);
+            logger.error("Error ControllerDetalleTipoComponente almacenarModificacionRegistro: " + e.toString(),e);
         }
     }
 

@@ -242,8 +242,8 @@ public class ControllerRegistrarProveedor implements Serializable {
             }
             gestionarRecursoProveedoresBO.crearNuevoProveedor(nuevaProveedor);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema : " + e.toString(),e);
         }
     }
 

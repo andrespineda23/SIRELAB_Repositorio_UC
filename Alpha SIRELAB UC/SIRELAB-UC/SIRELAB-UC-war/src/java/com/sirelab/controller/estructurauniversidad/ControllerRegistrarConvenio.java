@@ -397,8 +397,8 @@ public class ControllerRegistrarConvenio implements Serializable {
             convenioNuevo.setFechafinal(fecha2);
             gestionarConvenioBO.crearConvenio(convenioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarConvenio almacenarFinNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarConvenio almacenarFinNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarConvenio almacenarFinNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarConvenio almacenarFinNuevo: " + e.toString(),e);
         }
     }
 

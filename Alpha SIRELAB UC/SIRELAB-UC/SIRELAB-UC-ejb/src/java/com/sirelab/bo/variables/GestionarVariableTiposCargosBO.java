@@ -31,7 +31,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
         try {
             tipoCargoDAO.crearTipoCargo(tipoCargo);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposCargosBO crearTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO crearTipoCargo : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
         try {
             tipoCargoDAO.editarTipoCargo(tipoCargo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposCargosBO editarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO editarTipoCargo : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
         try {
             tipoCargoDAO.eliminarTipoCargo(tipoCargo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
             TipoCargo registro = tipoCargoDAO.buscarTipoCargoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableTiposCargosBO implements GestionarVariableTiposCar
             List<TipoCargo> lista = tipoCargoDAO.consultarTiposCargos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString());
+            logger.error("Error GestionarVariableTiposCargosBO borrarTipoCargo : " + e.toString(),e);
             return null;
         }
     }

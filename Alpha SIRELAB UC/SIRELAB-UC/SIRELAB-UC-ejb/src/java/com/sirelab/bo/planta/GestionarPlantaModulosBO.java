@@ -52,7 +52,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarDepartamentosRegistrados : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarDepartamentosRegistrados : " + e.toString(),e);
             return null;
         }
     }
@@ -63,7 +63,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<Departamento> lista = departamentoDAO.consultarDepartamentosActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarDepartamentosRegistrados : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarDepartamentosRegistrados : " + e.toString(),e);
             return null;
         }
     }
@@ -74,7 +74,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -85,7 +85,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -96,7 +96,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO obtenerEncargadoLaboratorioPorID : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO obtenerEncargadoLaboratorioPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -107,7 +107,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<Laboratorio> lista = laboratorioDAO.consultarLaboratorios();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -118,7 +118,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<Sede> lista = sedeDAO.consultarSedes();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarSedesRegistradas : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarSedesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -129,7 +129,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<Edificio> lista = edificioDAO.buscarEdificiosPorIDSede(sede);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarEdificiosPorIDSede : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarEdificiosPorIDSede : " + e.toString(),e);
             return null;
         }
     }
@@ -140,7 +140,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorEdificio(edificio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratorioPorIDEdificio : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratorioPorIDEdificio : " + e.toString(),e);
             return null;
         }
     }
@@ -151,7 +151,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratorioPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratorioPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -162,7 +162,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorio(laboratorio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratorioPorIDLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratorioPorIDLaboratorio : " + e.toString(),e);
             return null;
         }
     }
@@ -173,7 +173,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<ModuloLaboratorio> lista = moduloLaboratorioDAO.buscarModulosLaboratoriosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarModulosLaboratorioPorParametro : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarModulosLaboratorioPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -183,7 +183,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
         try {
             moduloLaboratorioDAO.crearModuloLaboratorio(moduloLaboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO crearNuevoModuloLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO crearNuevoModuloLaboratorio : " + e.toString(),e);
         }
     }
 
@@ -192,7 +192,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
         try {
             moduloLaboratorioDAO.editarModuloLaboratorio(moduloLaboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO modificarInformacionModuloLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO modificarInformacionModuloLaboratorio : " + e.toString(),e);
         }
     }
 
@@ -202,7 +202,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             ModuloLaboratorio registro = moduloLaboratorioDAO.buscarModuloLaboratorioPorID(idModuloLaboratorio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO obtenerModuloLaboratorioPorIDModuloLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO obtenerModuloLaboratorioPorIDModuloLaboratorio : " + e.toString(),e);
             return null;
         }
     }
@@ -213,7 +213,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             ModuloLaboratorio registro = moduloLaboratorioDAO.buscarModuloLaboratorioPorCodigoYSala(codigo, sala);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO obtenerModuloLaboratorioPorCodigoYSala : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO obtenerModuloLaboratorioPorCodigoYSala : " + e.toString(),e);
             return null;
         }
     }
@@ -224,7 +224,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivos(laboratorio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratoriosActivosPorIDLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO consultarSalasLaboratoriosActivosPorIDLaboratorio : " + e.toString(),e);
             return null;
         }
     }
@@ -235,7 +235,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             SalaLaboratorio registro = salaLaboratorioDAO.buscarSalaLaboratorioPorID(sala);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO obtenerSalaLaboratorioPorID : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO obtenerSalaLaboratorioPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -251,7 +251,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
                 return 0;
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO validarCantidadModulosSala : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO validarCantidadModulosSala : " + e.toString(),e);
             return -1;
         }
     }
@@ -262,7 +262,7 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorEdificio(edificio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaModulosBO obtenerSalasLaboratorioPorEdificio : " + e.toString());
+            logger.error("Error GestionarPlantaModulosBO obtenerSalasLaboratorioPorEdificio : " + e.toString(),e);
             return null;
         }
     }

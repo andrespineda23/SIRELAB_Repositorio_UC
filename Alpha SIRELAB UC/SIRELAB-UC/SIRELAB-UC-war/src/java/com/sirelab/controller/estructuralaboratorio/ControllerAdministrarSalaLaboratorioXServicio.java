@@ -161,8 +161,8 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
                 bloquearPagSigSalaLaboratorioxServicio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros : " + e.toString(),e);
         }
     }
 

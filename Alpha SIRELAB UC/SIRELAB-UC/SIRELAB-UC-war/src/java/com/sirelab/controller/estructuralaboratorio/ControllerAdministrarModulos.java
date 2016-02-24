@@ -250,8 +250,8 @@ public class ControllerAdministrarModulos implements Serializable {
                 bloquearPagSigModulo = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString(),e);
         }
     }
 

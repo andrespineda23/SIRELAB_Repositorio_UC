@@ -225,8 +225,8 @@ public class ControllerDetallesEstudiante implements Serializable {
             }
             modificacionesRegistroEstudiante();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante actualizarCarreras:  " + e.toString());
-            logger.error("Error ControllerDetallesEstudiante actualizarCarreras : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiante actualizarCarreras:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEstudiante actualizarCarreras : " + e.toString(),e);
         }
     }
 
@@ -496,8 +496,8 @@ public class ControllerDetallesEstudiante implements Serializable {
             administrarEstudiantesBO.actualizarInformacionEstudiante(estudianteDetalles);
             restaurarInformacionEstudiante();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEstudiante almacenarNuevoEstudianteEnSistema : " + e.toString(),e);
         }
     }
 
@@ -527,8 +527,8 @@ public class ControllerDetallesEstudiante implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante activarEstudiante:  " + e.toString());
-            logger.error("Error ControllerDetallesEstudiantes activarEstudiante : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiante activarEstudiante:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEstudiantes activarEstudiante : " + e.toString(),e);
         }
     }
 
@@ -550,8 +550,8 @@ public class ControllerDetallesEstudiante implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEstudiante inactivarEstudiante:  " + e.toString());
-            logger.error("Error ControllerDetallesEstudiantes inactivarEstudiante : " + e.toString());
+            logger.error("Error ControllerDetallesEstudiante inactivarEstudiante:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEstudiantes inactivarEstudiante : " + e.toString(),e);
         }
     }
 

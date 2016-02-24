@@ -40,7 +40,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO consultarDepartamentoPorCodigo : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultarDepartamentoPorCodigo : " + e.toString(),e);
             return null;
         }
     }
@@ -51,7 +51,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO consultaLaboratorioPorCodigo : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultaLaboratorioPorCodigo : " + e.toString(),e);
             return null;
         }
     }
@@ -61,7 +61,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
         try {
             tipoPerfilDAO.crearTipoPerfil(tipoPerfil);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO crearTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO crearTipoPerfil : " + e.toString(),e);
         }
     }
 
@@ -70,7 +70,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
         try {
             tipoPerfilDAO.editarTipoPerfil(tipoPerfil);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO editarTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO editarTipoPerfil : " + e.toString(),e);
         }
     }
 
@@ -79,7 +79,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
         try {
             tipoPerfilDAO.eliminarTipoPerfil(tipoPerfil);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString(),e);
         }
     }
 
@@ -89,7 +89,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             TipoPerfil registro = tipoPerfilDAO.buscarTipoPerfilPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorID : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             TipoPerfil registro = tipoPerfilDAO.buscarTipoPerfilPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorCodigo : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO consultarTipoPerfilPorCodigo : " + e.toString(),e);
             return null;
         }
     }
@@ -111,7 +111,7 @@ public class GestionarVariableTiposPerfilesBO implements GestionarVariableTiposP
             List<TipoPerfil> lista = tipoPerfilDAO.consultarTiposPerfiles();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString());
+            logger.error("Error GestionarVariableTiposPerfilesBO borrarTipoPerfil : " + e.toString(),e);
             return null;
         }
     }

@@ -187,8 +187,8 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 bloquearPagSigEncargadoLaboratorio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios buscarEncargadosLaboratoriosPorParametros : " + e.toString(),e);
         }
     }
 
@@ -323,8 +323,8 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 parametroLaboratorio = new Laboratorio();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades:  " + e.toString());
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarFacultades : " + e.toString(),e);
         }
     }
 
@@ -343,8 +343,8 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
                 parametroLaboratorio = new Laboratorio();
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos:  " + e.toString());
-            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEncargadosLaboratorios actualizarDepartamentos : " + e.toString(),e);
         }
     }
 

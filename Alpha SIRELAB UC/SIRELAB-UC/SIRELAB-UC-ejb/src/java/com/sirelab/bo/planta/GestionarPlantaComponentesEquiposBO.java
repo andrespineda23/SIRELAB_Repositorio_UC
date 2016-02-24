@@ -50,7 +50,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             List<TipoComponente> lista = tipoComponenteDAO.consultarTiposComponentes();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO consultarTiposComponentesRegistrados : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarTiposComponentesRegistrados : " + e.toString(),e);
             return null;
         }
     }
@@ -61,7 +61,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             EquipoElemento registro = equipoElementoDAO.buscarEquipoElementoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO consultarEquipoElementoPorID : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarEquipoElementoPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             ComponenteEquipo registro = componenteEquipoDAO.buscarComponenteEquipoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponenteEquipoPorID : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponenteEquipoPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             List<ComponenteEquipo> lista = componenteEquipoDAO.consultarComponentesEquiposPorEquipo(idRegistro);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponentesEquipoPorIDEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponentesEquipoPorIDEquipo : " + e.toString(),e);
             return null;
         }
     }
@@ -94,7 +94,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             ComponenteEquipo registro = componenteEquipoDAO.buscarComponenteEquipoPorCodigoYEquipo(codigo, equipo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponentePorCodigoYEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO consultarComponentePorCodigoYEquipo : " + e.toString(),e);
             return null;
         }
     }
@@ -114,7 +114,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
                     + componenteEquipo.getTipocomponente() + ") PARA EL EQUIPO " + componenteEquipo.getEquipoelemento().getInventarioequipo());
             hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO crearComponenteEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO crearComponenteEquipo : " + e.toString(),e);
         }
     }
 
@@ -160,7 +160,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
                 hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVidaCambio);
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO editarComponenteEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO editarComponenteEquipo : " + e.toString(),e);
         }
     }
 
@@ -169,7 +169,7 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
         try {
             componenteEquipoDAO.eliminarComponenteEquipo(componenteEquipo);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaComponentesEquiposBO eliminarComponenteEquipo : " + e.toString());
+            logger.error("Error GestionarPlantaComponentesEquiposBO eliminarComponenteEquipo : " + e.toString(),e);
         }
     }
 }

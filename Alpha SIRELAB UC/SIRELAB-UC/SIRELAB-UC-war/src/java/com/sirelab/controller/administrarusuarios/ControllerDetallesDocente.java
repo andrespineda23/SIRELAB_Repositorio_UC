@@ -209,8 +209,8 @@ public class ControllerDetallesDocente implements Serializable {
             }
             modificacionesRegistroDocente();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente actualizarFacultades:  " + e.toString());
-            logger.error("Error ControllerDetallesDocente actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerDetallesDocente actualizarFacultades:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesDocente actualizarFacultades : " + e.toString(),e);
         }
     }
 
@@ -485,8 +485,8 @@ public class ControllerDetallesDocente implements Serializable {
             administrarDocentesBO.actualizarInformacionDocente(docenteDetalles);
             restaurarInformacionDocente();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente almacenarNuevoDocenteEnSistema:  " + e.toString());
-            logger.error("Error modificarInformacionDocente almacenarNuevoDocenteEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesDocente almacenarNuevoDocenteEnSistema:  " + e.toString(),e);
+            logger.error("Error modificarInformacionDocente almacenarNuevoDocenteEnSistema : " + e.toString(),e);
         }
     }
 
@@ -516,8 +516,8 @@ public class ControllerDetallesDocente implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente activarDocente:  " + e.toString());
-            logger.error("Error ControllerDetallesDocentes activarDocente : " + e.toString());
+            logger.error("Error ControllerDetallesDocente activarDocente:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesDocentes activarDocente : " + e.toString(),e);
         }
     }
 
@@ -539,8 +539,8 @@ public class ControllerDetallesDocente implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente inactivarDocente:  " + e.toString());
-            logger.error("Error ControllerDetallesDocentes inactivarDocente : " + e.toString());
+            logger.error("Error ControllerDetallesDocente inactivarDocente:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesDocentes inactivarDocente : " + e.toString(),e);
         }
     }
 

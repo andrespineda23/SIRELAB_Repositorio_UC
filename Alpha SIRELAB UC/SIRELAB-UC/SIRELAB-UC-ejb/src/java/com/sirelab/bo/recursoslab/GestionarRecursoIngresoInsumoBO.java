@@ -39,7 +39,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             List<Insumo> lista = insumoDAO.consultarInsumos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoIngresoInsumoBO consultarInsumosRegistrados: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO consultarInsumosRegistrados: " + e.toString(),e);
             return null;
         }
     }
@@ -53,7 +53,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             modificar.setCantidadexistencia(cantidad);
             insumoDAO.editarInsumo(modificar);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoIngresoInsumoBO crearIngresoInsumo: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO crearIngresoInsumo: " + e.toString(),e);
         }
     }
 
@@ -65,7 +65,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             ingresoInsumo.setInsumo(nuevo);
             ingresoInsumoDAO.crearIngresoInsumo(ingresoInsumo);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString(),e);
         }
     }
 
@@ -75,7 +75,7 @@ public class GestionarRecursoIngresoInsumoBO implements GestionarRecursoIngresoI
             List<Proveedor> lista = proveedorDAOInterface.consultarProveedores();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString());
+            logger.error("Error GestionarRecursoIngresoInsumoBO crearInsumoInsumoConInsumo: " + e.toString(),e);
             return null;
         }
     }

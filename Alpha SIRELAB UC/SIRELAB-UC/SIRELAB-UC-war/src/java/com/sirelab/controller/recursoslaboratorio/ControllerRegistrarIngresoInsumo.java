@@ -360,8 +360,8 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
             ingresoNuevo.setInsumo(nuevoInsumo);
             gestionarRecursoIngresoInsumoBO.crearIngresoInsumo(ingresoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarIngresoInsumo almacenarNuevoIngresoInsumoEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarIngresoInsumo almacenarNuevoIngresoInsumoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarIngresoInsumo almacenarNuevoIngresoInsumoEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarIngresoInsumo almacenarNuevoIngresoInsumoEnSistema : " + e.toString(),e);
         }
     }
 

@@ -158,8 +158,8 @@ public class ControllerRegistrarDepartamento implements Serializable {
             departamentoNuevo.setEstado(true);
             gestionarDepartamentosBO.crearNuevaDepartamento(departamentoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema : " + e.toString(),e);
         }
     }
 

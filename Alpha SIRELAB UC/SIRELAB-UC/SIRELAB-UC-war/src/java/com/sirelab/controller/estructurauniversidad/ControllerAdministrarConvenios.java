@@ -118,8 +118,8 @@ public class ControllerAdministrarConvenios implements Serializable {
                 bloquearPagSigConvenio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarConvenios buscarConveniosPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarConvenios buscarConveniosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarConvenios buscarConveniosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarConvenios buscarConveniosPorParametros : " + e.toString(),e);
         }
     }
 

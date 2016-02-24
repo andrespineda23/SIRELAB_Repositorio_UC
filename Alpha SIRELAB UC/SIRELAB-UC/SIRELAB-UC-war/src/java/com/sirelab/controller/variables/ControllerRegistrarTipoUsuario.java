@@ -91,8 +91,8 @@ public class ControllerRegistrarTipoUsuario implements Serializable {
             tipoNuevo.setNombretipousuario(inputNombre);
             gestionarVariableTiposUsuarioBO.crearTipoUsuario(tipoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarTipoUsuario almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

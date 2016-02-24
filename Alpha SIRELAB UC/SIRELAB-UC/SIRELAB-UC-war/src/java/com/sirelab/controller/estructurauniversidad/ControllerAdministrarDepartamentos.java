@@ -133,8 +133,8 @@ public class ControllerAdministrarDepartamentos implements Serializable {
                 bloquearPagSigDepartamento = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarDepartamentos buscarDepartamentosPorParametros : " + e.toString(),e);
         }
     }
 

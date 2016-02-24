@@ -36,7 +36,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             em.persist(convenio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error crearConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
         try {
             em.merge(convenio);
         } catch (Exception e) {
-            logger.error("Error editarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error editarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
         try {
             em.remove(em.merge(convenio));
         } catch (Exception e) {
-            logger.error("Error eliminarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error eliminarConvenioPorEntidad ConvenioPorEntidadDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
     public List<ConvenioPorEntidad> consultarConveniosPorEntidad() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ConvenioPorEntidad p ORDER BY p.convenio.nombreconvenio ASC");
+            Query query = em.createQuery("SELECT p FROM ConvenioPorEntidad p ORDER BY p.entidadexterna.identidadexterna ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ConvenioPorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarConveniosPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error consultarConveniosPorEntidad ConvenioPorEntidadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             ConvenioPorEntidad registro = (ConvenioPorEntidad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarConvenioPorEntidadPorID ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorEntidadPorID ConvenioPorEntidadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -98,7 +98,7 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
             ConvenioPorEntidad registro = (ConvenioPorEntidad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarConvenioPorEntidadPorParametros ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorEntidadPorParametros ConvenioPorEntidadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -107,13 +107,13 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
     public List<ConvenioPorEntidad> consultarConveniosPorEntidadPorEntidad(BigInteger entidad) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ConvenioPorEntidad p WHERE p.entidadexterna.identidadexterna=:entidad");
+            Query query = em.createQuery("SELECT p FROM ConvenioPorEntidad p WHERE p.entidadexterna.identidadexterna=:entidad ORDER BY p.entidadexterna.identidadexterna ASC");
             query.setParameter("entidad", entidad);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ConvenioPorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarConveniosPorEntidadPorEntidad ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error consultarConveniosPorEntidadPorEntidad ConvenioPorEntidadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -122,13 +122,13 @@ public class ConvenioPorEntidadDAO implements ConvenioPorEntidadDAOInterface {
     public List<ConvenioPorEntidad> consultarConveniosPorEntidadPorConvenio(BigInteger convenio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ConvenioPorEntidad p WHERE p.convenio.idconvenio=:convenio");
+            Query query = em.createQuery("SELECT p FROM ConvenioPorEntidad p WHERE p.convenio.idconvenio=:convenio ORDER BY p.entidadexterna.identidadexterna ASC");
             query.setParameter("convenio", convenio);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ConvenioPorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarConveniosPorEntidadPorConvenio ConvenioPorEntidadDAO : " + e.toString());
+            logger.error("Error consultarConveniosPorEntidadPorConvenio ConvenioPorEntidadDAO : " + e.toString(),e);
             return null;
         }
     }

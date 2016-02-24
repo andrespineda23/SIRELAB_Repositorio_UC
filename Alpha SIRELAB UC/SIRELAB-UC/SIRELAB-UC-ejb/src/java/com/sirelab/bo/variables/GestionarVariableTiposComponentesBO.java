@@ -31,7 +31,7 @@ public class GestionarVariableTiposComponentesBO implements GestionarVariableTip
         try {
             tipoComponenteDAO.crearTipoComponente(tipoComponente);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposComponentesBO crearTipoComponente : " + e.toString());
+            logger.error("Error GestionarVariableTiposComponentesBO crearTipoComponente : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableTiposComponentesBO implements GestionarVariableTip
         try {
             tipoComponenteDAO.editarTipoComponente(tipoComponente);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposComponentesBO editarTipoComponente : " + e.toString());
+            logger.error("Error GestionarVariableTiposComponentesBO editarTipoComponente : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableTiposComponentesBO implements GestionarVariableTip
         try {
             tipoComponenteDAO.eliminarTipoComponente(tipoComponente);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposComponentesBO borrarTipoComponente : " + e.toString());
+            logger.error("Error GestionarVariableTiposComponentesBO borrarTipoComponente : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableTiposComponentesBO implements GestionarVariableTip
             TipoComponente registro = tipoComponenteDAO.buscarTipoComponentePorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposComponentesBO borrarTipoComponente : " + e.toString());
+            logger.error("Error GestionarVariableTiposComponentesBO borrarTipoComponente : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableTiposComponentesBO implements GestionarVariableTip
             List<TipoComponente> lista = tipoComponenteDAO.consultarTiposComponentes();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposComponentesBO borrarTipoComponente : " + e.toString());
+            logger.error("Error GestionarVariableTiposComponentesBO borrarTipoComponente : " + e.toString(),e);
             return null;
         }
     }

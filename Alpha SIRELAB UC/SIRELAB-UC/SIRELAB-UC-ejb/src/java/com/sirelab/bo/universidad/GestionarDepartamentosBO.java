@@ -36,7 +36,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -48,7 +48,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO consultarDepartamentosPorParametro : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO consultarDepartamentosPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -69,7 +69,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
         try {
             departamentoDAO.crearDepartamento(departamento);
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString(),e);
         }
     }
 
@@ -78,7 +78,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
         try {
             departamentoDAO.editarDepartamento(departamento);
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString(),e);
         }
     }
 
@@ -88,7 +88,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             Departamento registro = departamentoDAO.buscarDepartamentoPorID(idDepartamento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -99,7 +99,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString(),e);
             return null;
         }
     }
@@ -124,7 +124,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString());
+            logger.error("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString(),e);
             return null;
         }
     }

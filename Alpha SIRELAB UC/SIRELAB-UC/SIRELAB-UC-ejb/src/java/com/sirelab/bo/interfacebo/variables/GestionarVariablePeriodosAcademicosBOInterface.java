@@ -22,4 +22,6 @@ public interface GestionarVariablePeriodosAcademicosBOInterface {
     public void editarPeriodoAcademico(PeriodoAcademico periodo);
 
     public PeriodoAcademico consultarPeriodoAcademicoPorID(BigInteger idRegistro);
+
+    public Integer obtenerPeriodosAcademicosActivos();
 }

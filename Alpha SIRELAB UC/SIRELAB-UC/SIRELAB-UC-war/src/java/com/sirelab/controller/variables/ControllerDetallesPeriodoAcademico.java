@@ -314,6 +314,17 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
         return retorno;
     }
 
+    private boolean validarPeriodosAcademicosExistentes() {
+        Integer cantidad = gestionarVariablePeriodosAcademicosBO.obtenerPeriodosAcademicosActivos();
+        boolean respuest = true;
+        if (null != cantidad) {
+            if (cantidad > 1) {
+                respuest = false;
+            }
+        }
+        return respuest;
+    }
+
     public void registrarModificacionPeriodoAcademico() {
         if (modificacionesRegistro == true) {
             if (validarValidacionesRegistro() == true) {
@@ -335,10 +346,15 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
                 comparacion = date1.compareTo(date2);
 
                 if (comparacion < 0) {
-                    almacenarModificacionRegistro();
-                    cargarInformacionRegistro();
-                    colorMensaje = "green";
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    if (validarPeriodosAcademicosExistentes() == true) {
+                        almacenarModificacionRegistro();
+                        cargarInformacionRegistro();
+                        colorMensaje = "green";
+                        mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                    } else {
+                        colorMensaje = "red";
+                        mensajeFormulario = "Existe registrado un periodo academico a la fecha. Cierre el periodo para continuar.";
+                    }
                 } else {
                     colorMensaje = "red";
                     mensajeFormulario = "La fecha final es menor o igual que la fecha inicial, por favor corregir para continuar.";
@@ -370,8 +386,8 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
             periodoAcademicoEditar.setFechafinal(fecha2);
             gestionarVariablePeriodosAcademicosBO.editarPeriodoAcademico(periodoAcademicoEditar);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro:  " + e.toString());
-            logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro:  " + e.toString(),e);
+            logger.error("Error ControllerDetallePeriodoAcademico almacenarModificacionRegistro: " + e.toString(),e);
         }
     }
 

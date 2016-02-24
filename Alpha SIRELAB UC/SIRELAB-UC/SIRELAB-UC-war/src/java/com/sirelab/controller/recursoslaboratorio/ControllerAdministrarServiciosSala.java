@@ -130,8 +130,8 @@ public class ControllerAdministrarServiciosSala implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalServiciosSala);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarServiciosSala buscarServiciosSalaPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarServiciosSala buscarServiciosSalaPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarServiciosSala buscarServiciosSalaPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarServiciosSala buscarServiciosSalaPorParametros : " + e.toString(),e);
         }
     }
 

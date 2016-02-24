@@ -36,7 +36,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
             em.persist(tipoPerfil);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoPerfil TipoPerfilDAO : " + e.toString());
+            logger.error("Error crearTipoPerfil TipoPerfilDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
         try {
             em.merge(tipoPerfil);
         } catch (Exception e) {
-            logger.error("Error editarTipoPerfil TipoPerfilDAO : " + e.toString());
+            logger.error("Error editarTipoPerfil TipoPerfilDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
         try {
             em.remove(em.merge(tipoPerfil));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoPerfil TipoPerfilDAO : " + e.toString());
+            logger.error("Error eliminarTipoPerfil TipoPerfilDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
     public List<TipoPerfil> consultarTiposPerfiles() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoPerfil p");
+            Query query = em.createQuery("SELECT p FROM TipoPerfil p ORDER BY p.idtipoperfil ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<TipoPerfil> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposPerfiles TipoPerfilDAO : " + e.toString());
+            logger.error("Error consultarTiposPerfiles TipoPerfilDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
             TipoPerfil registro = (TipoPerfil) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoPerfilPorID TipoPerfilDAO : " + e.toString());
+            logger.error("Error buscarTipoPerfilPorID TipoPerfilDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -97,7 +97,7 @@ public class TipoPerfilDAO implements TipoPerfilDAOInterface {
             TipoPerfil registro = (TipoPerfil) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoPerfilPorCodigo TipoPerfilDAO : " + e.toString());
+            logger.error("Error buscarTipoPerfilPorCodigo TipoPerfilDAO : " + e.toString(),e);
             return null;
         }
     }

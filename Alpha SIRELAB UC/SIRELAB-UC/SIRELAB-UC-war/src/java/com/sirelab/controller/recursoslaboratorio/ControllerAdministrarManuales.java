@@ -120,8 +120,8 @@ public class ControllerAdministrarManuales implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalManual);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarManuales buscarLaboratoriosPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarManuales buscarLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarManuales buscarLaboratoriosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarManuales buscarLaboratoriosPorParametros : " + e.toString(),e);
         }
     }
 

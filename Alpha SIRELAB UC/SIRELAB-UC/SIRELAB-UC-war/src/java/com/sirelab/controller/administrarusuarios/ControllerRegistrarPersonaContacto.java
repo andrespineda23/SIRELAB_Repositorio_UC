@@ -409,8 +409,8 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
             personaCNueva.setConvenioporentidad(inputConvenioPorEntidad);
             administrarPersonasContactoBO.crearPersonaContado(usuarioNuevo, personaNueva, personaCNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema : " + e.toString(),e);
         }
     }
 

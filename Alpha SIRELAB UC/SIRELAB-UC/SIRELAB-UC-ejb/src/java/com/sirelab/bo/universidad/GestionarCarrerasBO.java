@@ -41,7 +41,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarCarrerasBO consultarFacultadesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -52,7 +52,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarCarrerasBO consultarFacultadesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -63,7 +63,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarCarrerasBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -74,7 +74,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarCarrerasBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -85,7 +85,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             List<Carrera> lista = carreraDAO.buscarCarrerasPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO consultarCarrerasPorParametro : " + e.toString());
+            logger.error("Error GestionarCarrerasBO consultarCarrerasPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -95,7 +95,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
         try {
             carreraDAO.crearCarrera(carrera);
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO crearNuevaCarrera : " + e.toString());
+            logger.error("Error GestionarCarrerasBO crearNuevaCarrera : " + e.toString(),e);
         }
     }
 
@@ -104,7 +104,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
         try {
             carreraDAO.editarCarrera(carrera);
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO modificarInformacionCarrera : " + e.toString());
+            logger.error("Error GestionarCarrerasBO modificarInformacionCarrera : " + e.toString(),e);
         }
     }
 
@@ -114,7 +114,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             Carrera registro = carreraDAO.buscarCarreraPorID(idCarrera);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarCarrerasBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -125,7 +125,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
             Carrera registro = carreraDAO.buscarCarreraPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO obtenerCarreraPorCodigoYDepartamento : " + e.toString());
+            logger.error("Error GestionarCarrerasBO obtenerCarreraPorCodigoYDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -150,7 +150,7 @@ public class GestionarCarrerasBO implements GestionarCarrerasBOInterface {
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarCarrerasBO validarCambioEstadoCarrera : " + e.toString());
+            logger.error("Error GestionarCarrerasBO validarCambioEstadoCarrera : " + e.toString(),e);
             return null;
         }
     }

@@ -266,8 +266,8 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             laboratorioNuevo.setDepartamento(nuevoDepartamento);
             gestionarPlantaLaboratoriosBO.crearNuevoLaboratorio(laboratorioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema:  " + e.toString());
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString(),e);
 
         }
     }

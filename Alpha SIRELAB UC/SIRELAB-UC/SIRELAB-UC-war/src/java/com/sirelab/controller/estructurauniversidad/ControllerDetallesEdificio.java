@@ -185,8 +185,8 @@ public class ControllerDetallesEdificio implements Serializable {
             edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString(),e);
         }
     }
 

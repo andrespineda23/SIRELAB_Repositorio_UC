@@ -369,8 +369,8 @@ public class ControllerDetallesAdministrador implements Serializable {
             administrarAdministradoresBO.actualizarInformacionAdministrador(administradorDetalles);
             restaurarInformacionAdministrador();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador:  " + e.toString());
-            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador : " + e.toString());
+            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador : " + e.toString(),e);
         }
     }
 
@@ -400,8 +400,8 @@ public class ControllerDetallesAdministrador implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministrador activarAdministrador:  " + e.toString());
-            logger.error("Error ControllerDetallesAdministradores activarAdministrador : " + e.toString());
+            logger.error("Error ControllerDetallesAdministrador activarAdministrador:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradores activarAdministrador : " + e.toString(),e);
         }
     }
 
@@ -423,8 +423,8 @@ public class ControllerDetallesAdministrador implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministrador inactivarAdministrador:  " + e.toString());
-            logger.error("Error ControllerDetallesAdministradores inactivarAdministrador : " + e.toString());
+            logger.error("Error ControllerDetallesAdministrador inactivarAdministrador:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradores inactivarAdministrador : " + e.toString(),e);
         }
     }
 

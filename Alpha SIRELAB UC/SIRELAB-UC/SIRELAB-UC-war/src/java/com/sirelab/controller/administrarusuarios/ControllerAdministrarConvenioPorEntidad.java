@@ -121,8 +121,8 @@ public class ControllerAdministrarConvenioPorEntidad implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalConvenioPorEntidad);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarConveniosPorEntidad buscarConveniosPorEntidadPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarConveniosPorEntidad buscarConveniosPorEntidadPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarConveniosPorEntidad buscarConveniosPorEntidadPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarConveniosPorEntidad buscarConveniosPorEntidadPorParametros : " + e.toString(),e);
         }
     }
 

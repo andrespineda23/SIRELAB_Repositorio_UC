@@ -438,8 +438,8 @@ public class ControllerRegistrarSala implements Serializable {
             List<ServiciosSala> lista = obtenerServiciosARegistrar();
             gestionarPlantaSalasBO.crearNuevaSalaLaboratorio(salaNuevo, lista);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema:  " + e.toString());
-            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema : " + e.toString(),e);
         }
     }
 

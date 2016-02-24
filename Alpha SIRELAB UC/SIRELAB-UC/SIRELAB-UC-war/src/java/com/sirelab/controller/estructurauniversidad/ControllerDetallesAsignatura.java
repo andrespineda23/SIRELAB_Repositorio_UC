@@ -208,8 +208,8 @@ public class ControllerDetallesAsignatura implements Serializable {
             asignaturaDetalles.setNumerocreditos(creditos.intValue());
             gestionarAsignaturasBO.modificarInformacionAsignatura(asignaturaDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  " + e.toString());
-            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema : " + e.toString(),e);
         }
     }
 

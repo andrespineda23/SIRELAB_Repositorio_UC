@@ -172,8 +172,8 @@ public class ControllerAdministrarPersonaContacto implements Serializable {
                 bloquearPagSigPersonaContacto = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarPersonasContacto buscarPersonasContactoPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarPersonasContacto buscarPersonasContactoPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarPersonasContacto buscarPersonasContactoPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarPersonasContacto buscarPersonasContactoPorParametros : " + e.toString(),e);
         }
     }
 

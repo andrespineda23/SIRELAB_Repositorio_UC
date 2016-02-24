@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 public class ReservaSalaDAO implements ReservaSalaDAOInterface {
 
     static Logger logger = Logger.getLogger(ReservaSalaDAO.class);
-    
+
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -37,7 +37,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             em.persist(reserva);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearReservaSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error crearReservaSala ReservaSalaDAO : " + e.toString(), e);
         }
     }
 
@@ -46,7 +46,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
         try {
             em.merge(reserva);
         } catch (Exception e) {
-            logger.error("Error editarReservaSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error editarReservaSala ReservaSalaDAO : " + e.toString(), e);
         }
     }
 
@@ -55,7 +55,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
         try {
             em.remove(em.merge(reserva));
         } catch (Exception e) {
-            logger.error("Error eliminarReservaSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error eliminarReservaSala ReservaSalaDAO : " + e.toString(), e);
         }
     }
 
@@ -68,7 +68,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             List<ReservaSala> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarReservaSalasSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error consultarReservaSalasSala ReservaSalaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             ReservaSala registro = (ReservaSala) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaSalaPorID ReservaSalaDAO : " + e.toString());
+            logger.error("Error buscarReservaSalaPorID ReservaSalaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             ReservaSala registro = (ReservaSala) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaSalaPorFechaHoraSala ReservaSalaDAO : " + e.toString());
+            logger.error("Error buscarReservaSalaPorFechaHoraSala ReservaSalaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -109,28 +109,46 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
     public List<ReservaSala> buscarReservaSalasSalaPorPersona(BigInteger persona) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.reserva.persona.idpersona=:persona");
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.reserva.persona.idpersona=:persona  ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("persona", persona);
             List<ReservaSala> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaSalasSalaPorPersona ReservaSalaDAO : " + e.toString());
+            logger.error("Error buscarReservaSalasSalaPorPersona ReservaSalaDAO : " + e.toString(), e);
             return null;
         }
     }
+
     @Override
     public List<ReservaSala> buscarReservaSalasSalaPorParametros(BigInteger idSala, Date fecha) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio=:idSala AND p.reserva.fechareserva=:fecha");
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio=:idSala AND p.reserva.fechareserva=:fecha  ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("fecha", fecha);
             query.setParameter("idSala", idSala);
             List<ReservaSala> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaSalasSalaPorParametros ReservaSalaDAO : " + e.toString());
+            logger.error("Error buscarReservaSalasSalaPorParametros ReservaSalaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<ReservaSala> buscarReservaSalaParaReservaModulo(BigInteger sala, Date fecha, BigInteger tipoReserva) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio=:idSala AND p.reserva.fechareserva=:fecha AND p.reserva.tiporeserva =:tipoReserva  ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("fecha", fecha);
+            query.setParameter("idSala", sala);
+            query.setParameter("tipoReserva", tipoReserva);
+            List<ReservaSala> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaSalaParaReservaModulo ReservaSalaDAO : " + e.toString(), e);
             return null;
         }
     }

@@ -39,7 +39,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             em.persist(encargado);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error crearEdificio EncargadoPorEdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             em.clear();
             em.merge(encargado);
         } catch (Exception e) {
-            logger.error("Error editarEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error editarEdificio EncargadoPorEdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             em.clear();
             em.remove(em.merge(encargado));
         } catch (Exception e) {
-            logger.error("Error eliminarEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error eliminarEdificio EncargadoPorEdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -67,12 +67,12 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
     public List<EncargadoPorEdificio> consultarEncargadosPorEdificio() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.estado=TRUE ORDER BY p.administradoredificio.persona.identificacionpersona ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarEncargadosPorEdificio EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error consultarEncargadosPorEdificio EncargadoPorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -87,7 +87,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             EncargadoPorEdificio registro = (EncargadoPorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEdificioPorID EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificioPorID EncargadoPorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -96,13 +96,13 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
     public List<EncargadoPorEdificio> buscarEncargadosPorEdificioPorIDEdificio(BigInteger idEdificio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.edificio.idedificio=:idEdificio");
+            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.edificio.idedificio=:idEdificio ORDER BY p.administradoredificio.persona.identificacionpersona ASC");
             query.setParameter("idEdificio", idEdificio);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -110,13 +110,13 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
     public List<EncargadoPorEdificio> buscarEncargadosPorEdificioPorIDAdministrador(BigInteger idAdministrador) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.administradoredificio.idadministradoredificio=:idAdministrador");
+            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.administradoredificio.idadministradoredificio=:idAdministrador ORDER BY p.administradoredificio.persona.identificacionpersona ASC");
             query.setParameter("idAdministrador", idAdministrador);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadosPorEdificioPorIDAdministrador EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEncargadosPorEdificioPorIDAdministrador EncargadoPorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -125,13 +125,13 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
     public List<EncargadoPorEdificio> buscarEncargadosPorEdificioActivosPorIDSede(BigInteger idEdificio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.edificio.idedificio=:idEdificio AND p.estado=true");
+            Query query = em.createQuery("SELECT p FROM EncargadoPorEdificio p WHERE p.edificio.idedificio=:idEdificio AND p.estado=true ORDER BY p.administradoredificio.persona.identificacionpersona ASC");
             query.setParameter("idEdificio", idEdificio);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EncargadoPorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarEncargadosPorEdificioPorIDSede EncargadoPorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -146,13 +146,13 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + "administradoredificio.persona.nombrespersona ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + "administradoredificio.persona.identificacionpersona ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<EncargadoPorEdificio> tq = em.createQuery(consulta, EncargadoPorEdificio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarAdministradoresEdificioPorFiltrado EncargadoPorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradoresEdificioPorFiltrado EncargadoPorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -257,8 +257,8 @@ public class ControllerDetallesProveedor implements Serializable {
             }
             gestionarRecursoProveedoresBO.modificarInformacionProveedor(proveedorDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema : " + e.toString(),e);
         }
     }
 

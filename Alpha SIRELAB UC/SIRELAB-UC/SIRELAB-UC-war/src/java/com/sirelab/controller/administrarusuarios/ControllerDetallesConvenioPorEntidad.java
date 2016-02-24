@@ -188,8 +188,8 @@ public class ControllerDetallesConvenioPorEntidad implements Serializable {
             administrarConveniosPorEntidadBO.editarConvenioPorEntidad(convenioPorEntidadDetalle);
             restaurarInformacionConvenioPorEntidad();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesConvenioPorEntidad modificarInformacionConvenioPorEntidad:  " + e.toString());
-            logger.error("Error ControllerDetallesConvenioPorEntidad modificarInformacionConvenioPorEntidad : " + e.toString());
+            logger.error("Error ControllerDetallesConvenioPorEntidad modificarInformacionConvenioPorEntidad:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesConvenioPorEntidad modificarInformacionConvenioPorEntidad : " + e.toString(),e);
         }
     }
 

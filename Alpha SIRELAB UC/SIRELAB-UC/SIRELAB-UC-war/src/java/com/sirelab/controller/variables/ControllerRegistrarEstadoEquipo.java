@@ -97,8 +97,8 @@ public class ControllerRegistrarEstadoEquipo implements Serializable {
             estadoNuevo.setNombreestadoequipo(inputNombre);
             gestionarVariableEstadosEquiposBO.crearEstadoEquipo(estadoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstadoEquipo almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarEstadoEquipo almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarEstadoEquipo almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEstadoEquipo almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

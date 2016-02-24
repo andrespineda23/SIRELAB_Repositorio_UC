@@ -449,8 +449,8 @@ public class ControllerDetallesSala implements Serializable {
             }
             modificacionesRegistroSala();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaSala actualizarSedes:  " + e.toString());
-            logger.error("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaSala actualizarSedes:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString(),e);
         }
     }
 
@@ -567,8 +567,8 @@ public class ControllerDetallesSala implements Serializable {
             gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
             gestionarPlantaSalasBO.almacenarModificacionesSalaServicio(listaServiciosAsociados);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  " + e.toString());
-            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema : " + e.toString(),e);
         }
     }
 
@@ -592,8 +592,8 @@ public class ControllerDetallesSala implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString(),e);
         }
     }
 
@@ -612,8 +612,8 @@ public class ControllerDetallesSala implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString(),e);
         }
     }
 

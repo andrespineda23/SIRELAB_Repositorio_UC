@@ -36,7 +36,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
             em.persist(insumo);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearIngresoInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error crearIngresoInsumo IngresoInsumoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
         try {
             em.merge(insumo);
         } catch (Exception e) {
-            logger.error("Error editarIngresoInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error editarIngresoInsumo IngresoInsumoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
         try {
             em.remove(em.merge(insumo));
         } catch (Exception e) {
-            logger.error("Error eliminarIngresoInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error eliminarIngresoInsumo IngresoInsumoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
     public List<IngresoInsumo> consultarIngresoInsumos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM IngresoInsumo p");
+            Query query = em.createQuery("SELECT p FROM IngresoInsumo p ORDER BY p.fechaingreso ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<IngresoInsumo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarIngresoInsumos IngresoInsumoDAO : " + e.toString());
+            logger.error("Error consultarIngresoInsumos IngresoInsumoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
             IngresoInsumo registro = (IngresoInsumo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarIngresoInsumoPorID IngresoInsumoDAO : " + e.toString());
+            logger.error("Error buscarIngresoInsumoPorID IngresoInsumoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -91,13 +91,13 @@ public class IngresoInsumoDAO implements IngresoInsumoDAOInterface {
     public List<IngresoInsumo> buscarIngresoInsumoPorIdInsumo(BigInteger idInsumo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM IngresoInsumo p WHERE p.insumo.idinsumo=:idInsumo");
+            Query query = em.createQuery("SELECT p FROM IngresoInsumo p WHERE p.insumo.idinsumo=:idInsumo ORDER BY p.fechaingreso ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idInsumo", idInsumo);
             List<IngresoInsumo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarIngresoInsumoPorIdInsumo IngresoInsumoDAO : " + e.toString());
+            logger.error("Error buscarIngresoInsumoPorIdInsumo IngresoInsumoDAO : " + e.toString(),e);
             return null;
         }
     }

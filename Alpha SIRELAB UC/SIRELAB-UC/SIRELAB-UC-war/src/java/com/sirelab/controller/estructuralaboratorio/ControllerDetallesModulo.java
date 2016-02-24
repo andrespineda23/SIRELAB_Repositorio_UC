@@ -473,8 +473,8 @@ public class ControllerDetallesModulo implements Serializable {
             gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
             restaurarInformacionModuloLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema : " + e.toString(),e);
 
         }
     }
@@ -499,8 +499,8 @@ public class ControllerDetallesModulo implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString(),e);
         }
     }
 
@@ -519,8 +519,8 @@ public class ControllerDetallesModulo implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString(),e);
         }
     }
 

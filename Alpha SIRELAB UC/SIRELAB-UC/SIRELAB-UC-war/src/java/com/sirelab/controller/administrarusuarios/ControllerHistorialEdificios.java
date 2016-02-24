@@ -168,8 +168,8 @@ public class ControllerHistorialEdificios implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:sedeAdministradorEdificio", new FacesMessage("El campo Sede es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerHistorialEdificios actualizarSedes:  " + e.toString());
-            logger.error("Error ControllerHistorialEdificios actualizarSedes : " + e.toString());
+            logger.error("Error ControllerHistorialEdificios actualizarSedes:  " + e.toString(),e);
+            logger.error("Error ControllerHistorialEdificios actualizarSedes : " + e.toString(),e);
         }
     }
 
@@ -200,8 +200,8 @@ public class ControllerHistorialEdificios implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:edificioNuevo", new FacesMessage("El campo Edificio es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerHistorialEdificios actualizarEdificios:  " + e.toString());
-            logger.error("Error ControllerHistorialEdificios actualizarEdificios : " + e.toString());
+            logger.error("Error ControllerHistorialEdificios actualizarEdificios:  " + e.toString(),e);
+            logger.error("Error ControllerHistorialEdificios actualizarEdificios : " + e.toString(),e);
         }
     }
 

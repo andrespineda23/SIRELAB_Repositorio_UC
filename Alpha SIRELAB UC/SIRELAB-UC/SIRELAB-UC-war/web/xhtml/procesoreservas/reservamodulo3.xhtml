@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -38,7 +38,7 @@ and open the template in the editor.
                                                         <label>
                                                             Número de Reserva
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control" value="#{controllerReservaModulo3.reservaPersona.numeroreserva}"/>
+                                                        <h:inputText readonly="true" class="form-control" value="#{controllerReservaModulo3.reservaModulo.reserva.numeroreserva}"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
@@ -56,7 +56,7 @@ and open the template in the editor.
                                                         <label>
                                                             Hora de Reserva 
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo3.reservaModulo.horaInicio}:00"/>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo3.reservaModulo.horaInicio}:00 - #{controllerReservaModulo3.reservaModulo.horaFin}:00"/>
                                                     </div>
                                                 </div>
                                             </div> 
@@ -79,6 +79,14 @@ and open the template in the editor.
                                                 </div>
                                             </div> 
                                             <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                     <div class="form-group">
+                                                        <label>
+                                                            Modulo Sala Laboratorio
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo3.reservaModulo.moduloLaboratorio.codigomodulo}"/>
+                                                    </div>
+                                                </div>
                                                 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
                                                     <div class="form-group">
                                                         <label>

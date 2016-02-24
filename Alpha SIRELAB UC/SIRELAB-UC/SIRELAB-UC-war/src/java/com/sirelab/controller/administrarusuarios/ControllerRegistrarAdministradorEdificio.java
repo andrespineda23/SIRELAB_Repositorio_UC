@@ -117,8 +117,8 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputEdificio", new FacesMessage("El campo Sede es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios:  " + e.toString());
-            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString());
+            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString(),e);
         }
     }
 
@@ -135,8 +135,8 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputEdificio", new FacesMessage("El campo Edificio es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios:  " + e.toString());
-            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString());
+            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarAdministradorEdificio actualizarEdificios : " + e.toString(),e);
         }
     }
 
@@ -480,8 +480,8 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
             nuevoRegistro.setNumeroatencion(inputNAtencion);
             administrarAdministradoresEdificioBO.almacenarNuevoAdministradorEdificioEnSistema(usuarioNuevo, personaNueva, nuevoRegistro, inputEdificio);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAdministradorEdificio almacenarNuevoAdministradorEdificioEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarAdministradorEdificio almacenarNuevoAdministradorEdificioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarAdministradorEdificio almacenarNuevoAdministradorEdificioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarAdministradorEdificio almacenarNuevoAdministradorEdificioEnSistema : " + e.toString(),e);
         }
     }
 

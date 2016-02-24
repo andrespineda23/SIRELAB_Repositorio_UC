@@ -196,8 +196,8 @@ public class ControllerDetallesDepartamento implements Serializable {
             departamentoDetalles.setEstado(editarEstado);
             gestionarDepartamentosBO.modificarInformacionDepartamento(departamentoDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema : " + e.toString(),e);
         }
     }
 

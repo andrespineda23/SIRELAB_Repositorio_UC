@@ -36,7 +36,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             em.persist(horario);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearHorarioAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error crearHorarioAtencion HorarioAtencionDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
         try {
             em.merge(horario);
         } catch (Exception e) {
-            logger.error("Error editarHorarioAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error editarHorarioAtencion HorarioAtencionDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
         try {
             em.remove(em.merge(horario));
         } catch (Exception e) {
-            logger.error("Error eliminarHorarioAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error eliminarHorarioAtencion HorarioAtencionDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
     public List<HorarioAtencion> consultarHorariosAtencion() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM HorarioAtencion p");
+            Query query = em.createQuery("SELECT p FROM HorarioAtencion p ORDER BY p.codigohorario ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<HorarioAtencion> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarHorariosAtencion HorarioAtencionDAO : " + e.toString());
+            logger.error("Error consultarHorariosAtencion HorarioAtencionDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             HorarioAtencion registro = (HorarioAtencion) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarHorarioAtencionPorID HorarioAtencionDAO : " + e.toString());
+            logger.error("Error buscarHorarioAtencionPorID HorarioAtencionDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -97,7 +97,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
             HorarioAtencion registro = (HorarioAtencion) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarHorarioAtencionPorCodigo HorarioAtencionDAO : " + e.toString());
+            logger.error("Error buscarHorarioAtencionPorCodigo HorarioAtencionDAO : " + e.toString(),e);
             return null;
         }
     }

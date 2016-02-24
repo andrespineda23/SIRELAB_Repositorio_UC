@@ -184,8 +184,8 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
             salaSalaLaboratorioPorServicioDetalles.setEstado(editarEstado);
             gestionarPlantaSalaLaboratorioxServiciosBO.editarSalaLaboratorioxServicios(salaSalaLaboratorioPorServicioDetalles);;
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema : " + e.toString(),e);
 
         }
     }

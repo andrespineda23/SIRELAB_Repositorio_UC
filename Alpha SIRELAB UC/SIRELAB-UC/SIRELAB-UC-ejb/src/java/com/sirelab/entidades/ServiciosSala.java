@@ -39,6 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ServiciosSala.findByCostoservicio", query = "SELECT s FROM ServiciosSala s WHERE s.costoservicio = :costoservicio"),
     @NamedQuery(name = "ServiciosSala.findByEstado", query = "SELECT s FROM ServiciosSala s WHERE s.estado = :estado")})
 public class ServiciosSala implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviciosala")
+    private Collection<Reserva> reservaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -157,6 +159,15 @@ public class ServiciosSala implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.ServiciosSala[ idserviciossala=" + idserviciossala + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Reserva> getReservaCollection() {
+        return reservaCollection;
+    }
+
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
+        this.reservaCollection = reservaCollection;
     }
 
 }

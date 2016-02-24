@@ -167,8 +167,8 @@ public class ControllerRegistrarServiciosSala implements Serializable {
             servicioNuevo.setEstado(true);
             gestionarRecursoServiciosSalaBO.crearNuevoServiciosSala(servicioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema : " + e.toString(),e);
         }
     }
 

@@ -48,7 +48,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO consultarFacultadesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO consultarFacultadesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -92,7 +92,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<Carrera> lista = carreraDAO.consultarCarrerasPorDepartamento(departamentos);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO consultarPlanesEstudiosPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO consultarPlanesEstudiosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -103,7 +103,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<Carrera> lista = carreraDAO.consultarCarrerasActivosPorDepartamento(departamentos);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO consultarPlanesEstudiosPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO consultarPlanesEstudiosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -114,7 +114,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<PlanEstudios> lista = planEstudiosDAO.buscarPlanesEstudiosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO consultarPlanesEstudiosPorParametro : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO consultarPlanesEstudiosPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -134,7 +134,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO crearNuevoPlanEstudio : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO crearNuevoPlanEstudio : " + e.toString(),e);
         }
     }
 
@@ -143,7 +143,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
         try {
             planEstudiosDAO.editarPlanEstudios(planEstudio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO modificarInformacionPlanEstudios : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO modificarInformacionPlanEstudios : " + e.toString(),e);
         }
     }
     
@@ -154,7 +154,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
                 asignaturaPorPlanEstudioDAO.editarAsignaturaPorPlanEstudio(lista.get(i));
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO modificarInformacionAsignaturaPorPlanEstudio : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO modificarInformacionAsignaturaPorPlanEstudio : " + e.toString(),e);
         }
     }
 
@@ -164,7 +164,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             PlanEstudios registro = planEstudiosDAO.buscarPlanEstudiosPorID(idPlanEstudio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO obtenerPlanEstudiosPorIDPlanEstudio : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO obtenerPlanEstudiosPorIDPlanEstudio : " + e.toString(),e);
             return null;
         }
     }
@@ -175,7 +175,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             PlanEstudios registro = planEstudiosDAO.buscarPlanEstudiosPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO obtenerPlanEstudioPorCodigo : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO obtenerPlanEstudioPorCodigo : " + e.toString(),e);
             return null;
         }
     }
@@ -200,7 +200,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO validarCambioEstadoPlan : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO validarCambioEstadoPlan : " + e.toString(),e);
             return null;
         }
     }
@@ -211,7 +211,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<Asignatura> lista = asignaturaDAO.consultarAsignaturasActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO obtenerAsignaturasRegistradas : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO obtenerAsignaturasRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -222,7 +222,7 @@ public class GestionarPlanesEstudiosBO implements GestionarPlanesEstudiosBOInter
             List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.consultarAsignaturaPorPlanEstudiosIdPlanEstudio(plan);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanesEstudiosBO obtenerAsignaturaPorPlanEstudioPorIdPlan : " + e.toString());
+            logger.error("Error GestionarPlanesEstudiosBO obtenerAsignaturaPorPlanEstudioPorIdPlan : " + e.toString(),e);
             return null;
         }
     }

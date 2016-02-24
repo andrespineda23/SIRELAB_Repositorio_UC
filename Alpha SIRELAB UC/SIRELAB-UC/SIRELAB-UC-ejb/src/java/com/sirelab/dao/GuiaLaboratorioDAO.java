@@ -38,7 +38,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             em.persist(guia);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error crearGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -47,7 +47,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
         try {
             em.merge(guia);
         } catch (Exception e) {
-            logger.error("Error editarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error editarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -56,7 +56,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
         try {
             em.remove(em.merge(guia));
         } catch (Exception e) {
-            logger.error("Error eliminarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -64,12 +64,12 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
     public List<GuiaLaboratorio> consultarGuiasLaboratorio() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM GuiaLaboratorio p");
+            Query query = em.createQuery("SELECT p FROM GuiaLaboratorio p ORDER BY p.nombreguia ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<GuiaLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -77,13 +77,13 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
     public List<GuiaLaboratorio> consultarGuiasLaboratorioPorIdAreaPlan(BigInteger areaPlan) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM GuiaLaboratorio p WHERE p.asignaturaporplanestudio.idasignaturaporplanestudio=:areaPlan");
+            Query query = em.createQuery("SELECT p FROM GuiaLaboratorio p WHERE p.asignaturaporplanestudio.idasignaturaporplanestudio=:areaPlan ORDER BY p.nombreguia ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("areaPlan", areaPlan);
             List<GuiaLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -98,7 +98,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             GuiaLaboratorio registro = (GuiaLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarGuiaLaboratorioPorID GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarGuiaLaboratorioPorID GuiaLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -113,7 +113,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             GuiaLaboratorio registro = (GuiaLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarGuiaLaboratorioPorUbicacion GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarGuiaLaboratorioPorUbicacion GuiaLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -134,7 +134,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarGuiasLaboratorioPorFiltrado GuiaLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarGuiasLaboratorioPorFiltrado GuiaLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }

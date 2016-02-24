@@ -50,7 +50,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             List<Carrera> lista = carreraDAO.consultarCarreras();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarCarrerasRegistradas : " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarCarrerasRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -61,7 +61,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(carrera);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarPlanesEstidoPorCarrera : " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarPlanesEstidoPorCarrera : " + e.toString(),e);
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             List<GuiaLaboratorio> lista = guiaLaboratorioDAO.buscarGuiasLaboratorioPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarGuiasLaboratorioPorParametro : " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarGuiasLaboratorioPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             GuiaLaboratorio registro = guiaLaboratorioDAO.buscarGuiaLaboratorioPorUbicacion(ubicacion);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarGuiaLaboratorioPorUbicacion : " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarGuiaLaboratorioPorUbicacion : " + e.toString(),e);
             return null;
         }
     }
@@ -94,7 +94,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             List<Asignatura> lista = asignaturaDAO.consultarAsignaturas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarAsignaturasRegistradas: " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarAsignaturasRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -105,7 +105,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             List<GuiaLaboratorio> lista = guiaLaboratorioDAO.consultarGuiasLaboratorio();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarGuiasLaboratorioRegistradas: " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarGuiasLaboratorioRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -116,7 +116,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             GuiaLaboratorio registro = guiaLaboratorioDAO.buscarGuiaLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO obtenerGuiaLaboratorioPorID: " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO obtenerGuiaLaboratorioPorID: " + e.toString(),e);
             return null;
         }
     }
@@ -126,7 +126,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
         try {
             guiaLaboratorioDAO.crearGuiaLaboratorio(guiaLaboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO crearGuiaLaboratorio: " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO crearGuiaLaboratorio: " + e.toString(),e);
         }
     }
 
@@ -135,7 +135,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
         try {
             guiaLaboratorioDAO.editarGuiaLaboratorio(guiaLaboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO modificarGuiaLaboratorio: " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO modificarGuiaLaboratorio: " + e.toString(),e);
         }
     }
 
@@ -144,7 +144,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
         try {
             guiaLaboratorioDAO.eliminarGuiaLaboratorio(guiaLaboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO borrarGuiaLaboratorio: " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO borrarGuiaLaboratorio: " + e.toString(),e);
         }
     }
 
@@ -154,7 +154,7 @@ public class GestionarRecursoGuiasLaboratorioBO implements GestionarRecursoGuias
             List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.consultarAsignaturaPorPlanEstudiosIdPlanEstudio(plan);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarAsignaturaPorPlanEstudioPorIDPlan: " + e.toString());
+            logger.error("Error GestionarRecursoGuiasLaboratorioBO consultarAsignaturaPorPlanEstudioPorIDPlan: " + e.toString(),e);
             return null;
         }
     }

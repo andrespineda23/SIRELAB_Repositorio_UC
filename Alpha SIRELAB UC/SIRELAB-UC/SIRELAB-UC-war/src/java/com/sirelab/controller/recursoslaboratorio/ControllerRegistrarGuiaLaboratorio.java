@@ -288,8 +288,8 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             guiaNuevo.setAsignaturaporplanestudio(nuevoAsignatura);
             gestionarRecursoGuiaLaboratorioBO.crearGuiaLaboratorio(guiaNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema : " + e.toString(),e);
         }
     }
 

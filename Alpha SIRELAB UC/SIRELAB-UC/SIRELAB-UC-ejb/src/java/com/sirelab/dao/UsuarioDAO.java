@@ -33,7 +33,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             em.flush();
             logger.error("Fin crear usuario");
         } catch (Exception e) {
-            logger.error("Error crearUsuario UsuarioDAO : " + e.toString());
+            logger.error("Error crearUsuario UsuarioDAO : " + e.toString(),e);
         }
     }
 
@@ -43,7 +43,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             em.merge(usuario);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error editarUsuario UsuarioDAO : " + e.toString());
+            logger.error("Error editarUsuario UsuarioDAO : " + e.toString(),e);
         }
     }
 
@@ -53,7 +53,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             em.remove(em.merge(usuario));
             em.flush();
         } catch (Exception e) {
-            logger.error("Error eliminarUsuario UsuarioDAO : " + e.toString());
+            logger.error("Error eliminarUsuario UsuarioDAO : " + e.toString(),e);
         }
     }
 
@@ -66,7 +66,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             List<Usuario> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarUsuarios UsuarioDAO : " + e.toString());
+            logger.error("Error consultarUsuarios UsuarioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
             Usuario registro = (Usuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarUsuarioPorID UsuarioDAO : " + e.toString());
+            logger.error("Error buscarUsuarioPorID UsuarioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -101,7 +101,7 @@ public class UsuarioDAO implements UsuarioDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimoUsuarioRegistrado UsuarioDAO : " + e.toString());
+            logger.error("Error obtenerUltimoUsuarioRegistrado UsuarioDAO : " + e.toString(),e);
             return null;
         }
     }

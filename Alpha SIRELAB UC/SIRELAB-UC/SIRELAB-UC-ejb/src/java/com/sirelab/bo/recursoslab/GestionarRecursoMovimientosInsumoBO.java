@@ -48,7 +48,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             List<MovimientoInsumo> lista = movimientoInsumoDAO.consultarMovimientosInsumoPorInsumo(insumo);
             return lista;
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO consultarMovimientosInsumoPorIDInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO consultarMovimientosInsumoPorIDInsumo: " + e.toString(),e);
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             Insumo registro = insumoDAO.buscarInsumoPorID(insumo);
             return registro;
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO obtenerInsumoPorID: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerInsumoPorID: " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             MovimientoInsumo registro = movimientoInsumoDAO.buscarMovimientoInsumoPorID(movimientoInsumo);
             return registro;
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO obtenerMovimientoInsumoPorID: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerMovimientoInsumoPorID: " + e.toString(),e);
             return null;
         }
     }
@@ -84,7 +84,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             registro.setCantidadexistencia(cantidad);
             insumoDAO.editarInsumo(registro);
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString(),e);
         }
     }
     @Override
@@ -101,7 +101,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             movimientoInsumoAEquipo.setMovimientoinsumo(movimiento);
             movimientoInsumoAEquipoDAO.crearMovimientoInsumoAEquipo(movimientoInsumoAEquipo);
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO crearMovimientoInsumo: " + e.toString(),e);
         }
     }
 
@@ -110,7 +110,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
         try {
             movimientoInsumoDAO.editarMovimientoInsumo(movimientoInsumo);
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO editarMovimientoInsumo: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO editarMovimientoInsumo: " + e.toString(),e);
         }
     }
 
@@ -120,7 +120,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             List<TipoMovimiento> lista = tipoMovimientoDAO.consultarTiposMovimientos();
             return lista;
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO obtenerTipoMovimientoRegistrado: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerTipoMovimientoRegistrado: " + e.toString(),e);
             return null;
         }
     }
@@ -131,7 +131,7 @@ public class GestionarRecursoMovimientosInsumoBO implements GestionarRecursoMovi
             List<EquipoElemento> lista = equipoElementoDAO.consultarEquiposElementos();
             return lista;
         } catch (Exception e) {
-            logger.error("GestionarRecursoMovimientosInsumoBO obtenerEquipoElementoRegistrado: " + e.toString());
+            logger.error("GestionarRecursoMovimientosInsumoBO obtenerEquipoElementoRegistrado: " + e.toString(),e);
             return null;
         }
     }

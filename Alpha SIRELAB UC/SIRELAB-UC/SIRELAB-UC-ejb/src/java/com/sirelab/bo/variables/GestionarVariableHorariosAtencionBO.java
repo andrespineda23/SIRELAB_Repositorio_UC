@@ -33,7 +33,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
             List<HorarioAtencion> lista = horarioAtencionInterface.consultarHorariosAtencion();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableHorariosAtencionBO consultarPeriodosAcademicos: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO consultarPeriodosAcademicos: " + e.toString(),e);
             return null;
         }
     }
@@ -44,7 +44,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
             HorarioAtencion registro = horarioAtencionInterface.buscarHorarioAtencionPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorID: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorID: " + e.toString(),e);
             return null;
         }
     }
@@ -55,7 +55,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
             HorarioAtencion registro = horarioAtencionInterface.buscarHorarioAtencionPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorCodigo: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO consultarHorarioAtencionPorCodigo: " + e.toString(),e);
             return null;
         }
     }
@@ -65,7 +65,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
         try {
             horarioAtencionInterface.crearHorarioAtencion(horario);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableHorariosAtencionBO crearHorarioAtencion: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO crearHorarioAtencion: " + e.toString(),e);
         }
     }
 
@@ -74,7 +74,7 @@ public class GestionarVariableHorariosAtencionBO implements GestionarVariableHor
         try {
             horarioAtencionInterface.editarHorarioAtencion(horario);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableHorariosAtencionBO editarHorarioAtencion: " + e.toString());
+            logger.error("Error GestionarVariableHorariosAtencionBO editarHorarioAtencion: " + e.toString(),e);
         }
     }
 }

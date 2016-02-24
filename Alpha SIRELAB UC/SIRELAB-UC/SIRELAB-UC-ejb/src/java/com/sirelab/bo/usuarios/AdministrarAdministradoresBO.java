@@ -37,7 +37,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             List<Persona> lista = personaDAO.buscarAdministradoresPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO consultarAdministradoresPorParametro : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO consultarAdministradoresPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -48,7 +48,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorID(idPersona);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorIDPersona : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorIDPersona : " + e.toString(),e);
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorCorreoYNumeroIdentificacion(correo, documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreoNumDocumento : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreoNumDocumento : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorDocumento(documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorDocumento : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorDocumento : " + e.toString(),e);
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreo : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorCorreo : " + e.toString(),e);
             return null;
         }
     }
@@ -92,7 +92,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             Persona registro = personaDAO.buscarPersonaPorUsuario(usuario);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorUsuario : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO obtenerAdministradorPorUsuario : " + e.toString(),e);
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
         try {
             personaDAO.editarPersona(administrador);
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString(),e);
         }
     }
 
@@ -111,7 +111,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString(),e);
         }
     }
 
@@ -127,7 +127,7 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             personaNuevo.setUsuario(usuarioRegistrado);
             personaDAO.crearPersona(personaNuevo);
         } catch (Exception e) {
-            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
+            logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString(),e);
         }
     }
 }

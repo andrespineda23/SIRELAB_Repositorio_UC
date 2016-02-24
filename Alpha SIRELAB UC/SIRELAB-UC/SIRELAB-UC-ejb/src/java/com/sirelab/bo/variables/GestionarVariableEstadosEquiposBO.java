@@ -31,7 +31,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
         try {
             estadoEquipoDAO.crearEstadoEquipo(estadoEquipo);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosEquiposBO crearEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO crearEstadoEquipo : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
         try {
             estadoEquipoDAO.editarEstadoEquipo(estadoEquipo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosEquiposBO editarEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO editarEstadoEquipo : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
         try {
             estadoEquipoDAO.eliminarEstadoEquipo(estadoEquipo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
             EstadoEquipo registro = estadoEquipoDAO.buscarEstadoEquipoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO borrarEstadoEquipo : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableEstadosEquiposBO implements GestionarVariableEstad
             List<EstadoEquipo> lista = estadoEquipoDAO.consultarEstadosEquipos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableEstadosEquiposBO consultarEstadosEquiposRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableEstadosEquiposBO consultarEstadosEquiposRegistrados : " + e.toString(),e);
             return null;
         }
     }

@@ -37,7 +37,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
             em.persist(sectorEntidad);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearSectorEntidad SectorEntidadDAO : " + e.toString());
+            logger.error("Error crearSectorEntidad SectorEntidadDAO : " + e.toString(),e);
         }
     }
 
@@ -46,7 +46,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
         try {
             em.merge(sectorEntidad);
         } catch (Exception e) {
-            logger.error("Error editarSectorEntidad SectorEntidadDAO : " + e.toString());
+            logger.error("Error editarSectorEntidad SectorEntidadDAO : " + e.toString(),e);
         }
     }
 
@@ -55,7 +55,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
         try {
             em.remove(em.merge(sectorEntidad));
         } catch (Exception e) {
-            logger.error("Error eliminarSectorEntidad SectorEntidadDAO : " + e.toString());
+            logger.error("Error eliminarSectorEntidad SectorEntidadDAO : " + e.toString(),e);
         }
     }
 
@@ -63,12 +63,12 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
     public List<SectorEntidad> consultarSectoresEntidad() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SectorEntidad p");
+            Query query = em.createQuery("SELECT p FROM SectorEntidad p ORDER BY p.nombre ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<SectorEntidad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposMovimientos SectorEntidadDAO : " + e.toString());
+            logger.error("Error consultarTiposMovimientos SectorEntidadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class SectorEntidadDAO implements SectorEntidadDAOInterface {
             SectorEntidad registro = (SectorEntidad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSectorEntidadPorID SectorEntidadDAO : " + e.toString());
+            logger.error("Error buscarSectorEntidadPorID SectorEntidadDAO : " + e.toString(),e);
             return null;
         }
     }

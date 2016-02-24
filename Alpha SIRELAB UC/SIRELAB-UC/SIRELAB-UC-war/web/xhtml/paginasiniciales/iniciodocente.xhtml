@@ -172,7 +172,7 @@ and open the template in the editor.
                                         <h2 class=" head-line section-heading">Reservas</h2>
                                         <p>Por medio de esta funcionalidad usted podra realizar procesos de consulta de alguna reserva realizada, cancelación o solicitar una nueva área de trabajo para realizar alguna practica. Si tiene algunda duda acerca del proceso recuerde que en la parte superior de la pagina se encuentra un instructivo para realizar este proceso.</p>
                                         <row>
-                                            <h:commandButton class="btn btn-info btn-block" value="Consultar Reservas Sala" action="consultarreservassala" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
+                                            <h:commandButton class="btn btn-info btn-block" value="Consultar Reservas Reaizadas" action="consultarreservas" actionListener="#{controllerConsultarReservas.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
                                         </row>
                                         <br></br>
                                         <row>
@@ -180,12 +180,9 @@ and open the template in the editor.
                                         </row>
                                         <br></br>
                                         <row>
-                                            <h:commandButton class="btn btn-danger btn-block" value="Consultar Reservas Modulo" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservasModulo.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
+                                            <h:commandButton class="btn btn-info btn-block" value="Consultar Reservas Modulo" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservasModulo.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
                                         </row>
                                         <br></br>
-                                        <row>
-                                            <h:commandButton class="btn btn-warning btn-block" disabled="true" value="Realizar Reserva Modulo" action="reservamodulo1" />
-                                        </row>
                                     </div>
                                 </div>
                             </div>

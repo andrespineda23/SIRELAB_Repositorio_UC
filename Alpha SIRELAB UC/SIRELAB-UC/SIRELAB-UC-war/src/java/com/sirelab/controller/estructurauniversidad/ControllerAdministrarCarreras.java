@@ -146,8 +146,8 @@ public class ControllerAdministrarCarreras implements Serializable {
                 bloquearPagSigCarrera = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarCarreras buscarCarrerasPorParametros : " + e.toString(),e);
         }
     }
 

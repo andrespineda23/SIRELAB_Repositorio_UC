@@ -34,7 +34,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             em.persist(estudiante);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearEstudiante EstudianteDAO : " + e.toString());
+            logger.error("Error crearEstudiante EstudianteDAO : " + e.toString(),e);
         }
     }
 
@@ -46,7 +46,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             em.merge(estudiante);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error editarEstudiante EstudianteDAO : " + e.toString());
+            logger.error("Error editarEstudiante EstudianteDAO : " + e.toString(),e);
         }
     }
 
@@ -56,7 +56,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             em.clear();
             em.remove(em.merge(estudiante));
         } catch (Exception e) {
-            logger.error("Error eliminarEstudiante EstudianteDAO : " + e.toString());
+            logger.error("Error eliminarEstudiante EstudianteDAO : " + e.toString(),e);
         }
     }
 
@@ -64,12 +64,12 @@ public class EstudianteDAO implements EstudianteDAOInterface {
     public List<Estudiante> consultarEstudiantes() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Estudiante p");
+            Query query = em.createQuery("SELECT p FROM Estudiante p ORDER BY p.persona.identificacionpersona ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Estudiante> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarEstudiantes EstudianteDAO : " + e.toString());
+            logger.error("Error consultarEstudiantes EstudianteDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -84,7 +84,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             Estudiante registro = (Estudiante) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstudiantePorID EstudianteDAO : " + e.toString());
+            logger.error("Error buscarEstudiantePorID EstudianteDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -99,7 +99,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             Estudiante registro = (Estudiante) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstudiantePorDocumento EstudianteDAO : " + e.toString());
+            logger.error("Error buscarEstudiantePorDocumento EstudianteDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -114,7 +114,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             Estudiante registro = (Estudiante) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstudiantePorCorreo EstudianteDAO : " + e.toString());
+            logger.error("Error buscarEstudiantePorCorreo EstudianteDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -129,7 +129,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             Estudiante registro = (Estudiante) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstudiantePorIDPersona EstudianteDAO : " + e.toString());
+            logger.error("Error buscarEstudiantePorIDPersona EstudianteDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -144,13 +144,13 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.identificacionpersona ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<Estudiante> tq = em.createQuery(consulta, Estudiante.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarEstudiantesPorFiltrado EstudianteDAO : " + e.toString());
+            logger.error("Error buscarEstudiantesPorFiltrado EstudianteDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -280,7 +280,7 @@ public class EstudianteDAO implements EstudianteDAOInterface {
             Estudiante registro = (Estudiante) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEstudiantePorDocumentoYCorreo EstudianteDAO : " + e.toString());
+            logger.error("Error buscarEstudiantePorDocumentoYCorreo EstudianteDAO : " + e.toString(),e);
             return null;
         }
     }

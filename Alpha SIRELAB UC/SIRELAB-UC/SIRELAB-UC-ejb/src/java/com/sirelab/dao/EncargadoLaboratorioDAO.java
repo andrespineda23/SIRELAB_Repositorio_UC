@@ -33,7 +33,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             em.persist(encargadolaboratorio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error crearEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
         try {
             em.merge(encargadolaboratorio);
         } catch (Exception e) {
-            logger.error("Error editarEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error editarEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
         try {
             em.remove(em.merge(encargadolaboratorio));
         } catch (Exception e) {
-            logger.error("Error eliminarEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
     public List<EncargadoLaboratorio> consultarEncargadosLaboratorios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EncargadoLaboratorio p");
+            Query query = em.createQuery("SELECT p FROM EncargadoLaboratorio p ORDER BY p.persona.identificacionpersona");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EncargadoLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarEncargadoLaboratorios EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error consultarEncargadoLaboratorios EncargadoLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             logger.error("registro: "+registro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadoLaboratorioPorID EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarEncargadoLaboratorioPorID EncargadoLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -96,7 +96,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             EncargadoLaboratorio registro = (EncargadoLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadoLaboratorioPorIDPersona EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarEncargadoLaboratorioPorIDPersona EncargadoLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -112,7 +112,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             EncargadoLaboratorio registro = (EncargadoLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadoLaboratorioPorPorCorreoNumDocumento EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarEncargadoLaboratorioPorPorCorreoNumDocumento EncargadoLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -127,7 +127,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             EncargadoLaboratorio registro = (EncargadoLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadoLaboratorioPorPorCorreo EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarEncargadoLaboratorioPorPorCorreo EncargadoLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -142,7 +142,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             EncargadoLaboratorio registro = (EncargadoLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEncargadoLaboratorioPorPorDocumento EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarEncargadoLaboratorioPorPorDocumento EncargadoLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -157,13 +157,13 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.nombrespersona ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".persona.identificacionpersona ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<EncargadoLaboratorio> tq = em.createQuery(consulta, EncargadoLaboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarEncargadosLaboratoriosPorFiltrado EncargadoLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarEncargadosLaboratoriosPorFiltrado EncargadoLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }

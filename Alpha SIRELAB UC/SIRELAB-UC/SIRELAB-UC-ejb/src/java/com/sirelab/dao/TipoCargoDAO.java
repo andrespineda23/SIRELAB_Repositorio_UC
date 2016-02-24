@@ -36,7 +36,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
             em.persist(tipoCargo);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoCargo TipoCargoDAO : " + e.toString());
+            logger.error("Error crearTipoCargo TipoCargoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
         try {
             em.merge(tipoCargo);
         } catch (Exception e) {
-            logger.error("Error editarTipoCargo TipoCargoDAO : " + e.toString());
+            logger.error("Error editarTipoCargo TipoCargoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
         try {
             em.remove(em.merge(tipoCargo));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoCargo TipoCargoDAO : " + e.toString());
+            logger.error("Error eliminarTipoCargo TipoCargoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
     public List<TipoCargo> consultarTiposCargos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoCargo p");
+            Query query = em.createQuery("SELECT p FROM TipoCargo p ORDER BY p.nombrecargo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<TipoCargo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposCargos TipoCargoDAO : " + e.toString());
+            logger.error("Error consultarTiposCargos TipoCargoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
             TipoCargo registro = (TipoCargo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoCargoPorID TipoCargoDAO : " + e.toString());
+            logger.error("Error buscarTipoCargoPorID TipoCargoDAO : " + e.toString(),e);
             return null;
         }
     }

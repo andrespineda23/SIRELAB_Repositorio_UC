@@ -39,7 +39,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             logger.error("Creo el administradoedificio");
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error crearAdministradorEdificio AdministradorEdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -48,7 +48,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
         try {
             em.merge(administradoredificio);
         } catch (Exception e) {
-            logger.error("Error editarAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error editarAdministradorEdificio AdministradorEdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -57,7 +57,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
         try {
             em.remove(em.merge(administradoredificio));
         } catch (Exception e) {
-            logger.error("Error eliminarAdministradorEdificio AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error eliminarAdministradorEdificio AdministradorEdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -65,12 +65,12 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
     public List<AdministradorEdificio> consultarAdministradoresEdificio() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM AdministradorEdificio p");
+            Query query = em.createQuery("SELECT p FROM AdministradorEdificio p ORDER BY p.persona.identificacionpersona ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<AdministradorEdificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarAdministradorEdificios AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error consultarAdministradorEdificios AdministradorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -85,7 +85,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarAdministradorEdificioPorID AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorID AdministradorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarAdministradorEdificioPorIDPersona AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorIDPersona AdministradorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -116,7 +116,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarAdministradorEdificioPorPorCorreoNumDocumento AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorPorCorreoNumDocumento AdministradorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -131,7 +131,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarAdministradorEdificioPorPorCorreo AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorPorCorreo AdministradorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -146,7 +146,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
             AdministradorEdificio registro = (AdministradorEdificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarAdministradorEdificioPorPorDocumento AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error buscarAdministradorEdificioPorPorDocumento AdministradorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -170,7 +170,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaAdministradorEdificioRegistrada AdministradorEdificioDAO : " + e.toString());
+            logger.error("Error obtenerUltimaAdministradorEdificioRegistrada AdministradorEdificioDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -33,7 +33,7 @@ public class CarreraDAO implements CarreraDAOInterface {
             em.persist(carrera);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearCarrera CarreraDAO : " + e.toString());
+            logger.error("Error crearCarrera CarreraDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class CarreraDAO implements CarreraDAOInterface {
         try {
             em.merge(carrera);
         } catch (Exception e) {
-            logger.error("Error editarCarrera CarreraDAO : " + e.toString());
+            logger.error("Error editarCarrera CarreraDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class CarreraDAO implements CarreraDAOInterface {
         try {
             em.remove(em.merge(carrera));
         } catch (Exception e) {
-            logger.error("Error eliminarCarrera CarreraDAO : " + e.toString());
+            logger.error("Error eliminarCarrera CarreraDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class CarreraDAO implements CarreraDAOInterface {
     public List<Carrera> consultarCarreras() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Carrera p ");
+            Query query = em.createQuery("SELECT p FROM Carrera p ORDER BY p.codigocarrera ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Carrera> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarCarreras CarreraDAO : " + e.toString());
+            logger.error("Error consultarCarreras CarreraDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -72,12 +72,12 @@ public class CarreraDAO implements CarreraDAOInterface {
     public List<Carrera> consultarCarrerasActivos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.estado=TRUE ORDER BY p.codigocarrera ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Carrera> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarCarreras CarreraDAO : " + e.toString());
+            logger.error("Error consultarCarreras CarreraDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -92,7 +92,7 @@ public class CarreraDAO implements CarreraDAOInterface {
             Carrera registro = (Carrera) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarCarreraPorID CarreraDAO : " + e.toString());
+            logger.error("Error buscarCarreraPorID CarreraDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -108,7 +108,7 @@ public class CarreraDAO implements CarreraDAOInterface {
             Carrera registro = (Carrera) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarCarreraPorCodigoYDepartamento CarreraDAO : " + e.toString());
+            logger.error("Error buscarCarreraPorCodigoYDepartamento CarreraDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -123,7 +123,7 @@ public class CarreraDAO implements CarreraDAOInterface {
             Carrera registro = (Carrera) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarCarreraPorCodigo CarreraDAO : " + e.toString());
+            logger.error("Error buscarCarreraPorCodigo CarreraDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -132,13 +132,13 @@ public class CarreraDAO implements CarreraDAOInterface {
     public List<Carrera> consultarCarrerasPorDepartamento(BigInteger idDepartamento) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.departamento.iddepartamento=:idDepartamento");
+            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.departamento.iddepartamento=:idDepartamento ORDER BY p.codigocarrera ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idDepartamento", idDepartamento);
             List<Carrera> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarCarreras CarreraDAO : " + e.toString());
+            logger.error("Error consultarCarreras CarreraDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -146,13 +146,13 @@ public class CarreraDAO implements CarreraDAOInterface {
     public List<Carrera> consultarCarrerasActivosPorDepartamento(BigInteger idDepartamento) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.departamento.iddepartamento=:idDepartamento AND p.estado=true");
+            Query query = em.createQuery("SELECT p FROM Carrera p WHERE p.departamento.iddepartamento=:idDepartamento AND p.estado=true ORDER BY p.codigocarrera ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idDepartamento", idDepartamento);
             List<Carrera> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarCarreras CarreraDAO : " + e.toString());
+            logger.error("Error consultarCarreras CarreraDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -167,13 +167,13 @@ public class CarreraDAO implements CarreraDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombrecarrera ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigocarrera ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<Carrera> tq = em.createQuery(consulta, Carrera.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarCarrerasPorFiltrado CarreraDAO : " + e.toString());
+            logger.error("Error buscarCarrerasPorFiltrado CarreraDAO : " + e.toString(),e);
             return null;
         }
     }

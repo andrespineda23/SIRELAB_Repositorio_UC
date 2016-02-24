@@ -31,7 +31,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
         try {
             sectorEntidadDAO.crearSectorEntidad(sectorEntidad);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableSectoresEntidadesBO crearSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO crearSectorEntidad : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
         try {
             sectorEntidadDAO.editarSectorEntidad(sectorEntidad);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableSectoresEntidadesBO editarSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO editarSectorEntidad : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
         try {
             sectorEntidadDAO.eliminarSectorEntidad(sectorEntidad);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
             SectorEntidad registro = sectorEntidadDAO.buscarSectorEntidadPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO borrarSectorEntidad : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableSectoresEntidadesBO implements GestionarVariableSe
             List<SectorEntidad> lista = sectorEntidadDAO.consultarSectoresEntidad();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableSectoresEntidadesBO consultarSectoresEntidadesRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableSectoresEntidadesBO consultarSectoresEntidadesRegistrados : " + e.toString(),e);
             return null;
         }
     }

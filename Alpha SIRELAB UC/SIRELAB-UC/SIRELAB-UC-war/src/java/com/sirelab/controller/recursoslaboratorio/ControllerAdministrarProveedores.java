@@ -130,8 +130,8 @@ public class ControllerAdministrarProveedores implements Serializable {
                 bloquearPagSigProveedor = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarProveedores buscarProveedoresPorParametros : " + e.toString(),e);
         }
     }
 

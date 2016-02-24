@@ -32,7 +32,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
             List<Sede> lista = sedeDAO.buscarSedesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO consultarSedesPorParametro : " + e.toString());
+            logger.error("Error GestionarSedeBO consultarSedesPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -42,7 +42,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
         try {
             sedeDAO.crearSede(sede);
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString());
+            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
         try {
             sedeDAO.editarSede(sede);
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString());
+            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString(),e);
         }
     }
 
@@ -61,7 +61,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
             Sede registro = sedeDAO.buscarSedePorID(idSede);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO obtenerSedePorIDSede : " + e.toString());
+            logger.error("Error GestionarSedeBO obtenerSedePorIDSede : " + e.toString(),e);
             return null;
         }
     }
@@ -86,7 +86,7 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO validarcambioEstadoSede : " + e.toString());
+            logger.error("Error GestionarSedeBO validarcambioEstadoSede : " + e.toString(),e);
             return null;
         }
     }

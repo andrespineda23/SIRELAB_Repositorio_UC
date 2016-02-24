@@ -81,9 +81,6 @@ public class ControllerReservaSala3 implements Serializable {
 
     public String cerrarDatosReserva() {
         valorReserva = 0;
-        reservaPersona = null;
-        reservaSala = null;
-        nombreAsignatura = "";
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             return "iniciodocente";

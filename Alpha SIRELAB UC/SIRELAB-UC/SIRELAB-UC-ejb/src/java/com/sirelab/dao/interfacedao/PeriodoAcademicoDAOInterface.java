@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface PeriodoAcademicoDAOInterface {
 
+    public Integer obtenerCantidadPeriodosAcademicosActivos() ;
+    
     public void crearPeriodoAcademico(PeriodoAcademico periodo);
 
     public void editarPeriodoAcademico(PeriodoAcademico periodo);

@@ -36,7 +36,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
             em.persist(manual);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearManualHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error crearManualHasEquipo ManualHasEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
         try {
             em.merge(manual);
         } catch (Exception e) {
-            logger.error("Error editarManualHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error editarManualHasEquipo ManualHasEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
         try {
             em.remove(em.merge(manual));
         } catch (Exception e) {
-            logger.error("Error eliminarManualHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error eliminarManualHasEquipo ManualHasEquipoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
     public List<ManualHasEquipo> consultarManualHasEquipoesHasEquipo() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ManualHasEquipo p");
+            Query query = em.createQuery("SELECT p FROM ManualHasEquipo p ORDER BY p.equipoelemento.inventarioequipo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ManualHasEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarManualHasEquipoesHasEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error consultarManualHasEquipoesHasEquipo ManualHasEquipoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
             ManualHasEquipo registro = (ManualHasEquipo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarManualHasEquipoPorID ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error buscarManualHasEquipoPorID ManualHasEquipoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -91,13 +91,13 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
     public List<ManualHasEquipo> buscarManualHasEquipoPorEquipo(BigInteger equipo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ManualHasEquipo p WHERE p.equipoelemento.idequipoelemento=:equipo");
+            Query query = em.createQuery("SELECT p FROM ManualHasEquipo p WHERE p.equipoelemento.idequipoelemento=:equipo ORDER BY p.equipoelemento.inventarioequipo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("equipo", equipo);
             List<ManualHasEquipo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarManualHasEquipoPorEquipo ManualHasEquipoDAO : " + e.toString());
+            logger.error("Error buscarManualHasEquipoPorEquipo ManualHasEquipoDAO : " + e.toString(),e);
             return null;
         }
     }

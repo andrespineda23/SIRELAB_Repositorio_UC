@@ -116,8 +116,8 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputFacultad", new FacesMessage("El campo Facultad es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente actualizarFacultades:  " + e.toString());
-            logger.error("Error ControllerRegistrarDocente actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente actualizarFacultades:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente actualizarFacultades : " + e.toString(),e);
         }
     }
 
@@ -130,8 +130,8 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Departamento es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos:  " + e.toString());
-            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString(),e);
         }
     }
 
@@ -144,8 +144,8 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputCargo", new FacesMessage("El campo Cargo es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente actualizarCargos:  " + e.toString());
-            logger.error("Error ControllerRegistrarDocente actualizarCargos : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente actualizarCargos:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente actualizarCargos : " + e.toString(),e);
         }
     }
 
@@ -459,8 +459,8 @@ public class ControllerRegistrarDocente implements Serializable {
             docenteNueva.setCargo(inputCargo);
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString(),e);
         }
     }
 

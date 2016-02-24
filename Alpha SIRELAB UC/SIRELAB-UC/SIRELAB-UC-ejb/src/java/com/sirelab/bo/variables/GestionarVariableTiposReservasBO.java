@@ -31,7 +31,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
         try {
             tipoReservaDAO.crearTipoReserva(tipoReserva);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposReservasBO crearTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO crearTipoReserva : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
         try {
             tipoReservaDAO.editarTipoReserva(tipoReserva);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposReservasBO editarTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO editarTipoReserva : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
         try {
             tipoReservaDAO.eliminarTipoReserva(tipoReserva);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
             TipoReserva registro = tipoReservaDAO.buscarTipoReservaPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO borrarTipoReserva : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableTiposReservasBO implements GestionarVariableTiposR
             List<TipoReserva> lista = tipoReservaDAO.consultarTiposReservas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposReservasBO consultarTiposReservasRegistrados : " + e.toString());
+            logger.error("Error GestionarVariableTiposReservasBO consultarTiposReservasRegistrados : " + e.toString(),e);
             return null;
         }
     }

@@ -38,7 +38,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             em.persist(convenio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearConvenio ConvenioDAO : " + e.toString());
+            logger.error("Error crearConvenio ConvenioDAO : " + e.toString(),e);
         }
     }
 
@@ -48,7 +48,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             em.merge(convenio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error editarConvenio ConvenioDAO : " + e.toString());
+            logger.error("Error editarConvenio ConvenioDAO : " + e.toString(),e);
         }
     }
 
@@ -58,7 +58,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             em.remove(em.merge(convenio));
             em.flush();
         } catch (Exception e) {
-            logger.error("Error eliminarConvenio ConvenioDAO : " + e.toString());
+            logger.error("Error eliminarConvenio ConvenioDAO : " + e.toString(),e);
         }
     }
 
@@ -71,7 +71,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             List<Convenio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarConvenios ConvenioDAO : " + e.toString());
+            logger.error("Error consultarConvenios ConvenioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -84,7 +84,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             List<Convenio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarConveniosActivos ConvenioDAO : " + e.toString());
+            logger.error("Error consultarConveniosActivos ConvenioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -99,7 +99,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             Convenio registro = (Convenio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarConvenioPorID ConvenioDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorID ConvenioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -120,7 +120,7 @@ public class ConvenioDAO implements ConvenioDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarConvenioPorFiltrado ConvenioDAO : " + e.toString());
+            logger.error("Error buscarConvenioPorFiltrado ConvenioDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -284,7 +284,7 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
                 estudianteDAO.crearEstudiante(reporte.getListaEstudiantes().get(i));
             }
         } catch (Exception e) {
-            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoEstudianteEnSistema : " + e.toString());
+            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoEstudianteEnSistema : " + e.toString(),e);
         }
     }
 }

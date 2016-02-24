@@ -33,7 +33,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             em.persist(departamento);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearDepartamento DepartamentoDAO : " + e.toString());
+            logger.error("Error crearDepartamento DepartamentoDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
         try {
             em.merge(departamento);
         } catch (Exception e) {
-            logger.error("Error editarDepartamento DepartamentoDAO : " + e.toString());
+            logger.error("Error editarDepartamento DepartamentoDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
         try {
             em.remove(em.merge(departamento));
         } catch (Exception e) {
-            logger.error("Error eliminarDepartamento DepartamentoDAO : " + e.toString());
+            logger.error("Error eliminarDepartamento DepartamentoDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public List<Departamento> consultarDepartamentos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p");
+            Query query = em.createQuery("SELECT p FROM Departamento p ORDER BY p.codigodepartamento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Departamento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.err.println("Error consultarDepartamentos DepartamentoDAO : " + e.toString());
+            logger.error("Error consultarDepartamentos DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -72,12 +72,12 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public List<Departamento> consultarDepartamentosActivos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.estado=TRUE ORDER BY p.codigodepartamento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Departamento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.err.println("Error consultarDepartamentos DepartamentoDAO : " + e.toString());
+            logger.error("Error consultarDepartamentos DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -92,7 +92,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             Departamento registro = (Departamento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.err.println("Error buscarDepartamentoPorID DepartamentoDAO : " + e.toString());
+            logger.error("Error buscarDepartamentoPorID DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -107,7 +107,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             Departamento registro = (Departamento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.err.println("Error buscarDepartamentoPorCodigo DepartamentoDAO : " + e.toString());
+            logger.error("Error buscarDepartamentoPorCodigo DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -122,7 +122,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             Departamento registro = (Departamento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.err.println("Error buscarDepartamentoPorNombre DepartamentoDAO : " + e.toString());
+            logger.error("Error buscarDepartamentoPorNombre DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -131,13 +131,13 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public List<Departamento> buscarDepartamentosPorIDFacultad(BigInteger idFacultad) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.facultad.idfacultad=:idFacultad");
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.facultad.idfacultad=:idFacultad ORDER BY p.codigodepartamento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idFacultad", idFacultad);
             List<Departamento> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.err.println("Error buscarDepartamentosPorIDFacultad DepartamentoDAO : " + e.toString());
+            logger.error("Error buscarDepartamentosPorIDFacultad DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -145,13 +145,13 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public List<Departamento> buscarDepartamentosActivosPorIDFacultad(BigInteger idFacultad) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.facultad.idfacultad=:idFacultad AND p.estado=true");
+            Query query = em.createQuery("SELECT p FROM Departamento p WHERE p.facultad.idfacultad=:idFacultad AND p.estado=true ORDER BY p.codigodepartamento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idFacultad", idFacultad);
             List<Departamento> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            System.err.println("Error buscarDepartamentosPorIDFacultad DepartamentoDAO : " + e.toString());
+            logger.error("Error buscarDepartamentosPorIDFacultad DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -166,13 +166,13 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombredepartamento ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigodepartamento ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<Departamento> tq = em.createQuery(consulta, Departamento.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarDepartamentosPorFiltrado DepartamentoDAO : " + e.toString());
+            logger.error("Error buscarDepartamentosPorFiltrado DepartamentoDAO : " + e.toString(),e);
             return null;
         }
     }

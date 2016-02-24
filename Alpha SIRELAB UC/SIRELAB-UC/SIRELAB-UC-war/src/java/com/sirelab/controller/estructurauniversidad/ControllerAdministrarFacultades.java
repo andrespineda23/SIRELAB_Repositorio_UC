@@ -117,8 +117,8 @@ public class ControllerAdministrarFacultades implements Serializable {
                 bloquearPagSigFacultad = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarFacultades buscarFacultadesPorParametros : " + e.toString(),e);
         }
     }
 

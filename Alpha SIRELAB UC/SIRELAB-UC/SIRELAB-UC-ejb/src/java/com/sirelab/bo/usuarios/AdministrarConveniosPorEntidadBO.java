@@ -47,7 +47,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<Convenio> lista = convenioDAOInterface.consultarConvenios();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO consultarConveniosRegistrados: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO consultarConveniosRegistrados: " + e.toString(),e);
             return null;
         }
     }
@@ -58,7 +58,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<Convenio> lista = convenioDAOInterface.consultarConveniosActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO consultarConveniosRegistrados: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO consultarConveniosRegistrados: " + e.toString(),e);
             return null;
         }
     }
@@ -69,7 +69,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<EntidadExterna> lista = entidadExternaDAO.consultarEntidadesExternas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO consultarEntidadesExternasRegistradas: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO consultarEntidadesExternasRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -80,7 +80,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<EntidadExterna> lista = entidadExternaDAO.consultarEntidadesExternasActivas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO consultarEntidadesExternasActivasRegistradas: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO consultarEntidadesExternasActivasRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -91,7 +91,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidad();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO buscarConveniosPorEntidad: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO buscarConveniosPorEntidad: " + e.toString(),e);
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidadPorEntidad(entidad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO buscarConveniosPorEntidadPorIdEntidad: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO buscarConveniosPorEntidadPorIdEntidad: " + e.toString(),e);
             return null;
         }
     }
@@ -113,7 +113,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidadPorConvenio(convenio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO buscarConveniosPorEntidadPorIdConvenio: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO buscarConveniosPorEntidadPorIdConvenio: " + e.toString(),e);
             return null;
         }
     }
@@ -123,7 +123,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
         try {
             convenioPorEntidadDAO.crearConvenioPorEntidad(convenio);
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO crearConvenioPorEntidad: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO crearConvenioPorEntidad: " + e.toString(),e);
         }
     }
 
@@ -137,7 +137,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             }
             convenioPorEntidadDAO.editarConvenioPorEntidad(convenio);
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO editarConvenioPorEntidad: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO editarConvenioPorEntidad: " + e.toString(),e);
         }
     }
 
@@ -158,7 +158,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             ConvenioPorEntidad registro = convenioPorEntidadDAO.buscarConvenioPorEntidadPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorID: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorID: " + e.toString(),e);
             return null;
         }
     }
@@ -169,7 +169,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             ConvenioPorEntidad registro = convenioPorEntidadDAO.buscarConvenioPorEntidadPorParametros(entidad, convenio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorParametros: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorParametros: " + e.toString(),e);
             return null;
         }
     }
@@ -180,7 +180,7 @@ public class AdministrarConveniosPorEntidadBO implements AdministrarConveniosPor
             List<ConvenioPorEntidad> lista = convenioPorEntidadDAO.consultarConveniosPorEntidadPorEntidad(idEntidad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorIdEntidad: " + e.toString());
+            logger.error("Error AdministrarConveniosPorEntidadBO obtenerConvenioPorEntidadPorIdEntidad: " + e.toString(),e);
             return null;
         }
     }

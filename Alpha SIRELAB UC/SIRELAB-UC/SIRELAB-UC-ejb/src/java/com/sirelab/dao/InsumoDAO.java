@@ -38,7 +38,7 @@ public class InsumoDAO implements InsumoDAOInterface {
             em.persist(insumo);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearInsumo InsumoDAO : " + e.toString());
+            logger.error("Error crearInsumo InsumoDAO : " + e.toString(),e);
         }
     }
 
@@ -47,7 +47,7 @@ public class InsumoDAO implements InsumoDAOInterface {
         try {
             em.merge(insumo);
         } catch (Exception e) {
-            logger.error("Error editarInsumo InsumoDAO : " + e.toString());
+            logger.error("Error editarInsumo InsumoDAO : " + e.toString(),e);
         }
     }
 
@@ -56,7 +56,7 @@ public class InsumoDAO implements InsumoDAOInterface {
         try {
             em.remove(em.merge(insumo));
         } catch (Exception e) {
-            logger.error("Error eliminarInsumo InsumoDAO : " + e.toString());
+            logger.error("Error eliminarInsumo InsumoDAO : " + e.toString(),e);
         }
     }
 
@@ -64,12 +64,12 @@ public class InsumoDAO implements InsumoDAOInterface {
     public List<Insumo> consultarInsumos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Insumo p");
+            Query query = em.createQuery("SELECT p FROM Insumo p ORDER BY p.codigoinsumo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Insumo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarInsumos InsumoDAO : " + e.toString());
+            logger.error("Error consultarInsumos InsumoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -84,7 +84,7 @@ public class InsumoDAO implements InsumoDAOInterface {
             Insumo registro = (Insumo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarInsumoPorID InsumoDAO : " + e.toString());
+            logger.error("Error buscarInsumoPorID InsumoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -99,7 +99,7 @@ public class InsumoDAO implements InsumoDAOInterface {
             Insumo registro = (Insumo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarInsumoPorCodigo InsumoDAO : " + e.toString());
+            logger.error("Error buscarInsumoPorCodigo InsumoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -120,7 +120,7 @@ public class InsumoDAO implements InsumoDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarInsumosPorFiltrado InsumoDAO : " + e.toString());
+            logger.error("Error buscarInsumosPorFiltrado InsumoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -201,7 +201,7 @@ public class InsumoDAO implements InsumoDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaInsumoRegistrada InsumoDAO : " + e.toString());
+            logger.error("Error obtenerUltimaInsumoRegistrada InsumoDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -347,8 +347,8 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
             restaurarInformacionEntidadExterna();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna:  " + e.toString());
-            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna : " + e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEntidadExterna modificarInformacionEntidadExterna : " + e.toString(),e);
         }
     }
 
@@ -390,8 +390,8 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEntidadExterna activarEntidadExterna:  " + e.toString());
-            logger.error("Error ControllerDetallesEntidadesExternas activarEntidadExterna : " + e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna activarEntidadExterna:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEntidadesExternas activarEntidadExterna : " + e.toString(),e);
         }
     }
 
@@ -417,8 +417,8 @@ public class ControllerDetallesEntidadExterna implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEntidadExterna inactivarEntidadExterna:  " + e.toString());
-            logger.error("Error ControllerDetallesEntidadesExternas inactivarEntidadExterna : " + e.toString());
+            logger.error("Error ControllerDetallesEntidadExterna inactivarEntidadExterna:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEntidadesExternas inactivarEntidadExterna : " + e.toString(),e);
         }
     }
 

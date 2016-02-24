@@ -72,7 +72,7 @@ public class ControllerDetallesReservaSala implements Serializable {
             listaGuiaLaboratorios = null;
             reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesReservaSala guardarNuevaGuiaLaboratorio: " + e.toString());
+            logger.error("Error ControllerDetallesReservaSala guardarNuevaGuiaLaboratorio: " + e.toString(),e);
         }
     }
 

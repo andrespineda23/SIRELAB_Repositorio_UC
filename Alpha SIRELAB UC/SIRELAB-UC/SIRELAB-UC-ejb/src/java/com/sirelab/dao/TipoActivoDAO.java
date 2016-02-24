@@ -36,7 +36,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
             em.persist(tipoActivo);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoActivo TipoActivoDAO : " + e.toString());
+            logger.error("Error crearTipoActivo TipoActivoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
         try {
             em.merge(tipoActivo);
         } catch (Exception e) {
-            logger.error("Error editarTipoActivo TipoActivoDAO : " + e.toString());
+            logger.error("Error editarTipoActivo TipoActivoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
         try {
             em.remove(em.merge(tipoActivo));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoActivo TipoActivoDAO : " + e.toString());
+            logger.error("Error eliminarTipoActivo TipoActivoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
     public List<TipoActivo> consultarTiposActivos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoActivo p");
+            Query query = em.createQuery("SELECT p FROM TipoActivo p ORDER BY p.nombretipoactivo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<TipoActivo> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposActivos TipoActivoDAO : " + e.toString());
+            logger.error("Error consultarTiposActivos TipoActivoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
             TipoActivo registro = (TipoActivo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoActivoPorID TipoActivoDAO : " + e.toString());
+            logger.error("Error buscarTipoActivoPorID TipoActivoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -97,7 +97,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
             TipoActivo registro = (TipoActivo) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoActivoPorNombre TipoActivoDAO : " + e.toString());
+            logger.error("Error buscarTipoActivoPorNombre TipoActivoDAO : " + e.toString(),e);
             return null;
         }
     }

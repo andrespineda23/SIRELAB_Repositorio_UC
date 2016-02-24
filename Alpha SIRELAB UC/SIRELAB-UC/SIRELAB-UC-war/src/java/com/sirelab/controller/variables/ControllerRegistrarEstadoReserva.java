@@ -97,8 +97,8 @@ public class ControllerRegistrarEstadoReserva implements Serializable {
             estadoNuevo.setNombreestadoreserva(inputNombre);
             gestionarVariableEstadosReservaBO.crearEstadoReserva(estadoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstadoReserva almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarEstadoReserva almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarEstadoReserva almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEstadoReserva almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

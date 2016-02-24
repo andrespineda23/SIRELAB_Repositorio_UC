@@ -155,8 +155,8 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalEntidadExterna);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarEntidadesExternas buscarEntidadesExternasPorParametros : " + e.toString(),e);
         }
     }
 

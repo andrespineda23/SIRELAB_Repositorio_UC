@@ -33,7 +33,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             em.persist(facultad);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearFacultad FacultadDAO : " + e.toString());
+            logger.error("Error crearFacultad FacultadDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class FacultadDAO implements FacultadDAOInterface {
         try {
             em.merge(facultad);
         } catch (Exception e) {
-            logger.error("Error editarFacultad FacultadDAO : " + e.toString());
+            logger.error("Error editarFacultad FacultadDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class FacultadDAO implements FacultadDAOInterface {
         try {
             em.remove(em.merge(facultad));
         } catch (Exception e) {
-            logger.error("Error eliminarFacultad FacultadDAO : " + e.toString());
+            logger.error("Error eliminarFacultad FacultadDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class FacultadDAO implements FacultadDAOInterface {
     public List<Facultad> consultarFacultades() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Facultad p");
+            Query query = em.createQuery("SELECT p FROM Facultad p ORDER BY p.codigofacultad ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Facultad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarFacultades FacultadDAO : " + e.toString());
+            logger.error("Error consultarFacultades FacultadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -72,12 +72,12 @@ public class FacultadDAO implements FacultadDAOInterface {
     public List<Facultad> consultarFacultadesActivas() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Facultad p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM Facultad p WHERE p.estado=TRUE ORDER BY p.codigofacultad ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Facultad> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarFacultades FacultadDAO : " + e.toString());
+            logger.error("Error consultarFacultades FacultadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -92,7 +92,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             Facultad registro = (Facultad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarFacultadPorID FacultadDAO : " + e.toString());
+            logger.error("Error buscarFacultadPorID FacultadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -107,7 +107,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             Facultad registro = (Facultad) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarFacultadPorCodigo FacultadDAO : " + e.toString());
+            logger.error("Error buscarFacultadPorCodigo FacultadDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -128,7 +128,7 @@ public class FacultadDAO implements FacultadDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarFacultadesPorFiltrado FacultadDAO : " + e.toString());
+            logger.error("Error buscarFacultadesPorFiltrado FacultadDAO : " + e.toString(),e);
             return null;
         }
     }

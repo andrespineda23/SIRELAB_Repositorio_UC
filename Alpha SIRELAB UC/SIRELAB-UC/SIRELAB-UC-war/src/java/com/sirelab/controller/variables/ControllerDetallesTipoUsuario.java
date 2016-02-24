@@ -103,8 +103,8 @@ public class ControllerDetallesTipoUsuario implements Serializable {
             tipoUsuarioDetalle.setNombretipousuario(inputNombre);
             gestionarVariableTiposUsuarioBO.editarTipoUsuario(tipoUsuarioDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesTipoUsuario almacenarModificacionRegistro:  " + e.toString());
-            logger.error("Error ControllerDetallesTipoUsuario almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallesTipoUsuario almacenarModificacionRegistro:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesTipoUsuario almacenarModificacionRegistro: " + e.toString(),e);
         }
     }
 

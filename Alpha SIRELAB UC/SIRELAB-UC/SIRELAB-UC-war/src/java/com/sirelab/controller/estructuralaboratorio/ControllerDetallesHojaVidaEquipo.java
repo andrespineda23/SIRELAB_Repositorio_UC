@@ -398,8 +398,8 @@ public class ControllerDetallesHojaVidaEquipo implements Serializable {
             hojaVidaEquipoDetalle.setFechaevento(fecha2);
             gestionarPlantaHojasVidaEquiposBO.editarHojaVidaEquipo(hojaVidaEquipoDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro:  " + e.toString());
-            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarHojaVidaEquipo almacenarModificacionRegistro: " + e.toString(),e);
         }
     }
 

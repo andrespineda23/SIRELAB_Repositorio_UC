@@ -36,7 +36,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
             em.persist(tipoMovimiento);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoMovimiento TipoMovimientoDAO : " + e.toString());
+            logger.error("Error crearTipoMovimiento TipoMovimientoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
         try {
             em.merge(tipoMovimiento);
         } catch (Exception e) {
-            logger.error("Error editarTipoMovimiento TipoMovimientoDAO : " + e.toString());
+            logger.error("Error editarTipoMovimiento TipoMovimientoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
         try {
             em.remove(em.merge(tipoMovimiento));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoMovimiento TipoMovimientoDAO : " + e.toString());
+            logger.error("Error eliminarTipoMovimiento TipoMovimientoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
     public List<TipoMovimiento> consultarTiposMovimientos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoMovimiento p");
+            Query query = em.createQuery("SELECT p FROM TipoMovimiento p ORDER BY p.nombretipo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<TipoMovimiento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposMovimientos TipoMovimientoDAO : " + e.toString());
+            logger.error("Error consultarTiposMovimientos TipoMovimientoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
             TipoMovimiento registro = (TipoMovimiento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoMovimientoPorID TipoMovimientoDAO : " + e.toString());
+            logger.error("Error buscarTipoMovimientoPorID TipoMovimientoDAO : " + e.toString(),e);
             return null;
         }
     }

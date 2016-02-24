@@ -44,7 +44,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             List<Convenio> lista = convenioDAO.buscarConvenioPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarConveniosBO consultarConveniosPorParametro : " + e.toString());
+            logger.error("Error GestionarConveniosBO consultarConveniosPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -54,7 +54,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
         try {
             convenioDAO.crearConvenio(convenio);
         } catch (Exception e) {
-            logger.error("Error GestionarConveniosBO crearConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO crearConvenio : " + e.toString(),e);
         }
     }
 
@@ -67,7 +67,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             logger.error("EJB");
             convenioDAO.editarConvenio(convenio);
         } catch (Exception e) {
-            logger.error("Error GestionarConveniosBO editarConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO editarConvenio : " + e.toString(),e);
         }
     }
 
@@ -95,7 +95,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
         try {
             convenioDAO.eliminarConvenio(convenio);
         } catch (Exception e) {
-            logger.error("Error GestionarConveniosBO borrarConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO borrarConvenio : " + e.toString(),e);
         }
     }
 
@@ -105,7 +105,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             Convenio registro = convenioDAO.buscarConvenioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarConveniosBO consultarConvenioPorID : " + e.toString());
+            logger.error("Error GestionarConveniosBO consultarConvenioPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -116,7 +116,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
             List<Convenio> lista = convenioDAO.consultarConvenios();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarConveniosBO consultarConveniosRegistrados : " + e.toString());
+            logger.error("Error GestionarConveniosBO consultarConveniosRegistrados : " + e.toString(),e);
             return null;
         }
     }
@@ -131,7 +131,7 @@ public class GestionarConveniosBO implements GestionarConveniosBOInterface {
                 return false;
             }
         } catch (Exception e) {
-            logger.error("Error GestionarConveniosBO validarCambioEstadoConvenio : " + e.toString());
+            logger.error("Error GestionarConveniosBO validarCambioEstadoConvenio : " + e.toString(),e);
             return null;
         }
     }

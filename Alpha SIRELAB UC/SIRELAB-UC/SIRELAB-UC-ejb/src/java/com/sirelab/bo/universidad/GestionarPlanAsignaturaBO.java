@@ -45,7 +45,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             List<Carrera> lista = carreraDAO.consultarCarreras();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO obtenerCarrerasRegistradas: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO obtenerCarrerasRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -55,7 +55,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             List<Carrera> lista = carreraDAO.consultarCarrerasActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO obtenerCarrerasRegistradas: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO obtenerCarrerasRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -66,7 +66,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(carrera);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO obtenerPlanEstudiosPorCarrera: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO obtenerPlanEstudiosPorCarrera: " + e.toString(),e);
             return null;
 
         }
@@ -77,7 +77,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosActivosPorCarrera(carrera);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO obtenerPlanEstudiosPorCarrera: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO obtenerPlanEstudiosPorCarrera: " + e.toString(),e);
             return null;
 
         }
@@ -89,7 +89,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             List<Asignatura> lista = asignaturaDAO.consultarAsignaturas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO consultarAsignaturasRegistradas: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO consultarAsignaturasRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             List<Asignatura> lista = asignaturaDAO.consultarAsignaturasActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO consultarAsignaturasRegistradas: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO consultarAsignaturasRegistradas: " + e.toString(),e);
             return null;
         }
     }
@@ -110,7 +110,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
         try {
             asignaturaPorPlanEstudioDAO.crearAsignaturaPorPlanEstudio(asignaturaPorPlanEstudio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO crearAsignaturaPorPlanEstudio: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO crearAsignaturaPorPlanEstudio: " + e.toString(),e);
         }
     }
 
@@ -119,7 +119,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
         try {
             asignaturaPorPlanEstudioDAO.editarAsignaturaPorPlanEstudio(asignaturaPorPlanEstudio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO editarAsignaturaPorPlanEstudio: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO editarAsignaturaPorPlanEstudio: " + e.toString(),e);
         }
     }
     
@@ -129,7 +129,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
            AsignaturaPorPlanEstudio registro = asignaturaPorPlanEstudioDAO.buscarAsignaturaPorPlanEstudioPorPlanYAsignatura(plan, asignatura);
            return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO buscarAsignaturaPorPlanEstudioPorIDS: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO buscarAsignaturaPorPlanEstudioPorIDS: " + e.toString(),e);
             return null;
         }
     }
@@ -140,7 +140,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             AsignaturaPorPlanEstudio registro = asignaturaPorPlanEstudioDAO.buscarAsignaturaPorPlanEstudioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO obtenerAsignaturaPorPlanEstudioPorID: " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO obtenerAsignaturaPorPlanEstudioPorID: " + e.toString(),e);
             return null;
         }
     }
@@ -151,7 +151,7 @@ public class GestionarPlanAsignaturaBO implements GestionarPlanAsignaturaBOInter
             List<AsignaturaPorPlanEstudio> lista = asignaturaPorPlanEstudioDAO.buscarAsignaturaPorPlanEstudioPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlanAsignaturaBO consultarAsignaturaPorPlanPorParametro : " + e.toString());
+            logger.error("Error GestionarPlanAsignaturaBO consultarAsignaturaPorPlanPorParametro : " + e.toString(),e);
             return null;
         }
     }

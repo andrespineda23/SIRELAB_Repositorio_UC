@@ -31,4 +31,6 @@ public interface ReservaSalaDAOInterface {
     public ReservaSala buscarReservaSalaPorFechaHoraSala(Date fecha, String horaInicio, BigInteger sala);
 
     public List<ReservaSala> buscarReservaSalasSalaPorParametros(BigInteger idSala, Date fecha);
+
+    public List<ReservaSala> buscarReservaSalaParaReservaModulo(BigInteger sala, Date fecha, BigInteger tipoReserva);
 }

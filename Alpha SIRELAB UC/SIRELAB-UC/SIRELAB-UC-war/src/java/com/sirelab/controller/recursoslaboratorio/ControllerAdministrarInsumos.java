@@ -132,8 +132,8 @@ public class ControllerAdministrarInsumos implements Serializable {
                 bloquearPagSigInsumo = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarInsumos buscarInsumosPorParametros : " + e.toString(),e);
         }
     }
 

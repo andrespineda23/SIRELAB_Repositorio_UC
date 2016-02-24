@@ -33,7 +33,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             em.persist(persona);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearPersona PersonaDAO : " + e.toString());
+            logger.error("Error crearPersona PersonaDAO : " + e.toString(),e);
         }
     }
 
@@ -43,7 +43,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             em.merge(persona);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error editarPersona PersonaDAO : " + e.toString());
+            logger.error("Error editarPersona PersonaDAO : " + e.toString(),e);
         }
     }
 
@@ -53,7 +53,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             em.remove(em.merge(persona));
             em.flush();
         } catch (Exception e) {
-            logger.error("Error eliminarPersona PersonaDAO : " + e.toString());
+            logger.error("Error eliminarPersona PersonaDAO : " + e.toString(),e);
         }
     }
 
@@ -66,7 +66,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             List<Persona> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarPersonas PersonaDAO : " + e.toString());
+            logger.error("Error consultarPersonas PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorID PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorID PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -101,7 +101,7 @@ public class PersonaDAO implements PersonaDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaPersonaRegistrada PersonaDAO : " + e.toString());
+            logger.error("Error obtenerUltimaPersonaRegistrada PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -117,7 +117,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorCorreoYNumeroIdentificacion PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorCorreoYNumeroIdentificacion PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -132,7 +132,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorDocumento PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorDocumento PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -147,7 +147,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorCorreo PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorCorreo PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -162,7 +162,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorUsuario PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonaPorUsuario PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -178,7 +178,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error obtenerPersonaLoginUserPassword PersonaDAO : " + e.toString());
+            logger.error("Error obtenerPersonaLoginUserPassword PersonaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -198,7 +198,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarPersonasPorFiltrado PersonaDAO : " + e.toString());
+            logger.error("Error buscarPersonasPorFiltrado PersonaDAO : " + e.toString(),e);
             return null;
         }
     }

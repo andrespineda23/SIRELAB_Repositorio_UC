@@ -97,8 +97,8 @@ public class ControllerRegistrarTipoActivo implements Serializable {
             tipoNuevo.setNombretipoactivo(inputNombre);
             gestionarVariableTiposActivoBO.crearTipoActivo(tipoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarTipoActivo almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarTipoActivo almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoActivo almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarTipoActivo almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

@@ -167,8 +167,8 @@ public class ControllerRegistrarEdificio implements Serializable {
             edificioNuevo.setEstado(true);
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema : " + e.toString(),e);
         }
     }
 

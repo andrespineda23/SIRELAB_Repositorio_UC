@@ -6,6 +6,8 @@
 package com.sirelab.ayuda;
 
 import com.sirelab.entidades.ModuloLaboratorio;
+import com.sirelab.entidades.Reserva;
+import com.sirelab.entidades.ServiciosSala;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,16 +18,25 @@ import java.util.Date;
 public class AyudaReservaModulo implements Serializable {
 
     private String horaInicio;
-    private Date fechaReserva;
+    private String horaFin;
     private ModuloLaboratorio moduloLaboratorio;
+    private Date fechaReserva;
+    private Reserva reserva;
+    private String nombreAsignatura;
+    private String rutaGuia;
+    private ServiciosSala servicioSala;
 
-    public AyudaReservaModulo() {
+    private static AyudaReservaModulo instance = null;
+
+    protected AyudaReservaModulo() {
+        // Exists only to defeat instantiation.
     }
 
-    public AyudaReservaModulo(String horaInicio, Date fechaReserva, ModuloLaboratorio moduloLaboratorio) {
-        this.horaInicio = horaInicio;
-        this.fechaReserva = fechaReserva;
-        this.moduloLaboratorio = moduloLaboratorio;
+    public static AyudaReservaModulo getInstance() {
+        if (instance == null) {
+            instance = new AyudaReservaModulo();
+        }
+        return instance;
     }
 
     public String getHoraInicio() {
@@ -36,12 +47,12 @@ public class AyudaReservaModulo implements Serializable {
         this.horaInicio = horaInicio;
     }
 
-    public Date getFechaReserva() {
-        return fechaReserva;
+    public String getHoraFin() {
+        return horaFin;
     }
 
-    public void setFechaReserva(Date fechaReserva) {
-        this.fechaReserva = fechaReserva;
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
     }
 
     public ModuloLaboratorio getModuloLaboratorio() {
@@ -50,6 +61,46 @@ public class AyudaReservaModulo implements Serializable {
 
     public void setModuloLaboratorio(ModuloLaboratorio moduloLaboratorio) {
         this.moduloLaboratorio = moduloLaboratorio;
+    }
+
+    public Date getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public void setFechaReserva(Date fechaReserva) {
+        this.fechaReserva = fechaReserva;
+    }
+
+    public Reserva getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
+    }
+
+    public String getNombreAsignatura() {
+        return nombreAsignatura;
+    }
+
+    public void setNombreAsignatura(String nombreAsignatura) {
+        this.nombreAsignatura = nombreAsignatura;
+    }
+
+    public String getRutaGuia() {
+        return rutaGuia;
+    }
+
+    public void setRutaGuia(String rutaGuia) {
+        this.rutaGuia = rutaGuia;
+    }
+
+    public ServiciosSala getServicioSala() {
+        return servicioSala;
+    }
+
+    public void setServicioSala(ServiciosSala servicioSala) {
+        this.servicioSala = servicioSala;
     }
 
 }

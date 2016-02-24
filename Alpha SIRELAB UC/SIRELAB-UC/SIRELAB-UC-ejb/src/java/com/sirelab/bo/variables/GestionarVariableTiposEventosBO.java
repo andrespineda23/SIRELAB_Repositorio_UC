@@ -32,7 +32,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
         try {
             tipoEventoDAO.crearTipoEvento(tipoEvento);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposEventosBO crearTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO crearTipoEvento : " + e.toString(),e);
         }
     }
 
@@ -41,7 +41,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
         try {
             tipoEventoDAO.editarTipoEvento(tipoEvento);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposEventosBO editarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO editarTipoEvento : " + e.toString(),e);
         }
     }
 
@@ -50,7 +50,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
         try {
             tipoEventoDAO.eliminarTipoEvento(tipoEvento);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString(),e);
         }
     }
 
@@ -60,7 +60,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
             TipoEvento registro = tipoEventoDAO.buscarTipoEventoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString(),e);
             return null;
         }
     }
@@ -71,7 +71,7 @@ public class GestionarVariableTiposEventosBO implements GestionarVariableTiposEv
             List<TipoEvento> lista = tipoEventoDAO.consultarTiposEventos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString());
+            logger.error("Error GestionarVariableTiposEventosBO borrarTipoEvento : " + e.toString(),e);
             return null;
         }
     }

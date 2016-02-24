@@ -28,7 +28,7 @@ public class GestionarRecursoProveedoresBO implements GestionarRecursoProveedore
             List<Proveedor> lista = proveedorDAO.buscarProveedoresPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoProveedoresBO consultarProveedoresPorParametro : " + e.toString());
+            logger.error("Error GestionarRecursoProveedoresBO consultarProveedoresPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -38,7 +38,7 @@ public class GestionarRecursoProveedoresBO implements GestionarRecursoProveedore
         try {
             proveedorDAO.crearProveedor(proveedor);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoProveedoresBO crearNuevoProveedor : " + e.toString());
+            logger.error("Error GestionarRecursoProveedoresBO crearNuevoProveedor : " + e.toString(),e);
         }
     }
 
@@ -47,7 +47,7 @@ public class GestionarRecursoProveedoresBO implements GestionarRecursoProveedore
         try {
             proveedorDAO.editarProveedor(proveedor);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoProveedoresBO modificarInformacionProveedor : " + e.toString());
+            logger.error("Error GestionarRecursoProveedoresBO modificarInformacionProveedor : " + e.toString(),e);
         }
     }
 
@@ -57,7 +57,7 @@ public class GestionarRecursoProveedoresBO implements GestionarRecursoProveedore
             Proveedor registro = proveedorDAO.buscarProveedorPorID(idProveedor);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoProveedoresBO obtenerProveedorPorIDProveedor : " + e.toString());
+            logger.error("Error GestionarRecursoProveedoresBO obtenerProveedorPorIDProveedor : " + e.toString(),e);
             return null;
         }
     }
@@ -68,7 +68,7 @@ public class GestionarRecursoProveedoresBO implements GestionarRecursoProveedore
             Proveedor registro = proveedorDAO.buscarProveedorPorNIT(nitProveedor);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoProveedoresBO obtenerProveedorPorNIT : " + e.toString());
+            logger.error("Error GestionarRecursoProveedoresBO obtenerProveedorPorNIT : " + e.toString(),e);
             return null;
         }
     }

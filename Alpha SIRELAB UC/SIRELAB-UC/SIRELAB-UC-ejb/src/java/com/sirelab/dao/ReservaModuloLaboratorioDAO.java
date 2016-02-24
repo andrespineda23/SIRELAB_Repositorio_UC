@@ -37,7 +37,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             em.persist(reserva);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error crearReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -46,7 +46,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
         try {
             em.merge(reserva);
         } catch (Exception e) {
-            logger.error("Error editarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error editarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -55,7 +55,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
         try {
             em.remove(em.merge(reserva));
         } catch (Exception e) {
-            logger.error("Error eliminarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -63,12 +63,12 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     public List<ReservaModuloLaboratorio> consultarReservaModuloLaboratoriosModuloLaboratorio() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p");
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p  ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ReservaModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarReservaModuloLaboratoriosModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error consultarReservaModuloLaboratoriosModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             ReservaModuloLaboratorio registro = (ReservaModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaModuloLaboratorioPorID ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratorioPorID ReservaModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             ReservaModuloLaboratorio registro = (ReservaModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -109,7 +109,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     public List<ReservaModuloLaboratorio> buscarCantidadReservaModuloLaboratorioPorParametros(Date fecha, String horaInicio, BigInteger sala) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio =:sala AND p.reserva.fechareserva =:fecha AND p.reserva.horainicio=:horaInicio");
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio =:sala AND p.reserva.fechareserva =:fecha AND p.reserva.horainicio=:horaInicio  ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("fecha", fecha);
             query.setParameter("horaInicio", horaInicio);
@@ -117,7 +117,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             List<ReservaModuloLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratorioPorFechaHoraModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -126,13 +126,13 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratoriosModuloLaboratorioPorPersona(BigInteger persona) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.persona.idpersona=:persona");
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.persona.idpersona=:persona  ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("persona", persona);
             List<ReservaModuloLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaModuloLaboratoriosModuloLaboratorioPorPersona ReservaModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarReservaModuloLaboratoriosModuloLaboratorioPorPersona ReservaModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -141,13 +141,13 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     public List<ReservaModuloLaboratorio> buscarReservaModuloPorPersona(BigInteger persona) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.persona.idpersona=:persona");
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.persona.idpersona=:persona ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("persona", persona);
             List<ReservaModuloLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarReservaModulosModuloPorPersona ReservaModuloDAO : " + e.toString());
+            logger.error("Error buscarReservaModulosModuloPorPersona ReservaModuloDAO : " + e.toString(),e);
             return null;
         }
     }

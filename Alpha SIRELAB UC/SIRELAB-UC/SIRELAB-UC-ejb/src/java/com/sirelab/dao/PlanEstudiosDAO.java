@@ -33,7 +33,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             em.persist(planestudios);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearPlanEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error crearPlanEstudios PlanEstudiosDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
         try {
             em.merge(planestudios);
         } catch (Exception e) {
-            logger.error("Error editarPlanEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error editarPlanEstudios PlanEstudiosDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
         try {
             em.remove(em.merge(planestudios));
         } catch (Exception e) {
-            logger.error("Error eliminarPlanEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error eliminarPlanEstudios PlanEstudiosDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
     public List<PlanEstudios> consultarPlanesEstudios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.estado=TRUE ORDER BY p.codigoplanestudio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<PlanEstudios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarPlanesEstudios PlanEstudiosDAO : " + e.toString());
+            logger.error("Error consultarPlanesEstudios PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             PlanEstudios registro = (PlanEstudios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPlanEstudiosPorID PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanEstudiosPorID PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -95,7 +95,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             PlanEstudios registro = (PlanEstudios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPlanEstudiosPorCodigoYCarrera PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanEstudiosPorCodigoYCarrera PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -110,7 +110,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             PlanEstudios registro = (PlanEstudios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPlanEstudiosPorCodigo PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanEstudiosPorCodigo PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -119,13 +119,13 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
     public List<PlanEstudios> consultarPlanesEstudiosPorCarrera(BigInteger idCarrera) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.carrera.idcarrera=:idCarrera");
+            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.carrera.idcarrera=:idCarrera ORDER BY p.codigoplanestudio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idCarrera", idCarrera);
             List<PlanEstudios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarPlanesEstudiosPorCarrera PlanEstudiosDAO : " + e.toString());
+            logger.error("Error consultarPlanesEstudiosPorCarrera PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -134,13 +134,13 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
     public List<PlanEstudios> consultarPlanesEstudiosActivosPorCarrera(BigInteger idCarrera) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.carrera.idcarrera=:idCarrera AND p.estado=true");
+            Query query = em.createQuery("SELECT p FROM PlanEstudios p WHERE p.carrera.idcarrera=:idCarrera AND p.estado=true ORDER BY p.codigoplanestudio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idCarrera", idCarrera);
             List<PlanEstudios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarPlanesEstudiosActivosPorCarrera PlanEstudiosDAO : " + e.toString());
+            logger.error("Error consultarPlanesEstudiosActivosPorCarrera PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -161,7 +161,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarPlanesEstudiosPorFiltrado PlanEstudiosDAO : " + e.toString());
+            logger.error("Error buscarPlanesEstudiosPorFiltrado PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -258,7 +258,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaPlanEstudiosRegistrada PlanEstudiosDAO : " + e.toString());
+            logger.error("Error obtenerUltimaPlanEstudiosRegistrada PlanEstudiosDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -31,7 +31,7 @@ public class GestionarVariableTiposActivosBO implements GestionarVariableTiposAc
         try {
             tipoActivoDAO.crearTipoActivo(tipoActivo);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposActivosBO crearTipoActivo : " + e.toString());
+            logger.error("Error GestionarVariableTiposActivosBO crearTipoActivo : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableTiposActivosBO implements GestionarVariableTiposAc
         try {
             tipoActivoDAO.editarTipoActivo(tipoActivo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposActivosBO editarTipoActivo : " + e.toString());
+            logger.error("Error GestionarVariableTiposActivosBO editarTipoActivo : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableTiposActivosBO implements GestionarVariableTiposAc
         try {
             tipoActivoDAO.eliminarTipoActivo(tipoActivo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposActivosBO borrarTipoActivo : " + e.toString());
+            logger.error("Error GestionarVariableTiposActivosBO borrarTipoActivo : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableTiposActivosBO implements GestionarVariableTiposAc
             TipoActivo registro = tipoActivoDAO.buscarTipoActivoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposActivosBO borrarTipoActivo : " + e.toString());
+            logger.error("Error GestionarVariableTiposActivosBO borrarTipoActivo : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableTiposActivosBO implements GestionarVariableTiposAc
             List<TipoActivo> lista = tipoActivoDAO.consultarTiposActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposActivosBO borrarTipoActivo : " + e.toString());
+            logger.error("Error GestionarVariableTiposActivosBO borrarTipoActivo : " + e.toString(),e);
             return null;
         }
     }

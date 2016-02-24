@@ -72,7 +72,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
             Persona persona = personaDAO.buscarPersonaPorID(secuenciaPersona);
             return persona;
         } catch (Exception e) {
-            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorUsuarioModificar: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorUsuarioModificar: " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
         try {
             personaDAO.editarPersona(persona);
         } catch (Exception e) {
-            logger.error("Error GestionarConfigurarUsuarioBO actualizarInformacionPersona: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO actualizarInformacionPersona: " + e.toString(),e);
         }
     }
 
@@ -91,7 +91,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            logger.error("Error GestionarConfigurarUsuarioBO actualizarContraseniaPersona: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO actualizarContraseniaPersona: " + e.toString(),e);
         }
     }
 
@@ -101,7 +101,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
             Persona persona = personaDAO.buscarPersonaPorCorreo(correo);
             return persona;
         } catch (Exception e) {
-            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorEmail: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorEmail: " + e.toString(),e);
             return null;
         }
     }
@@ -112,7 +112,7 @@ public class GestionarConfigurarUsuarioBO implements GestionarConfigurarUsuarioB
             Persona persona = personaDAO.buscarPersonaPorDocumento(documento);
             return persona;
         } catch (Exception e) {
-            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorDocumento: " + e.toString());
+            logger.error("Error GestionarConfigurarUsuarioBO obtenerPersonaPorDocumento: " + e.toString(),e);
             return null;
         }
     }

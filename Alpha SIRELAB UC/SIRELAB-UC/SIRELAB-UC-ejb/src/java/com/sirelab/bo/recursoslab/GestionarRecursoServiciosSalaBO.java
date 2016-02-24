@@ -50,7 +50,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarParametroServiciosSalaBO consultarFacultadesRegistradas : " + e.toString());
+            logger.error("Error AdministrarParametroServiciosSalaBO consultarFacultadesRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -61,7 +61,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarParametroServiciosSalaBO consultarDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error AdministrarParametroServiciosSalaBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarParametroServiciosSalaBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            logger.error("Error AdministrarParametroServiciosSalaBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
             List<ServiciosSala> lista = serviciosSalaDAO.buscarServiciosSalaPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaServiciosSalaBO consultarServiciosSalaPorParametro : " + e.toString());
+            logger.error("Error GestionarPlantaServiciosSalaBO consultarServiciosSalaPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -93,7 +93,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
         try {
             serviciosSalaDAO.crearServiciosSala(servicio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaServiciosSalaBO crearNuevaServiciosSala : " + e.toString());
+            logger.error("Error GestionarPlantaServiciosSalaBO crearNuevaServiciosSala : " + e.toString(),e);
         }
     }
 
@@ -102,7 +102,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
         try {
             serviciosSalaDAO.editarServiciosSala(servicio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaServiciosSalaBO modificarInformacionServiciosSala : " + e.toString());
+            logger.error("Error GestionarPlantaServiciosSalaBO modificarInformacionServiciosSala : " + e.toString(),e);
         }
     }
 
@@ -112,7 +112,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
             ServiciosSala registro = serviciosSalaDAO.buscarServiciosSalaPorID(idServiciosSala);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaServiciosSalaBO obtenerServiciosSalaPorIDServiciosSala : " + e.toString());
+            logger.error("Error GestionarPlantaServiciosSalaBO obtenerServiciosSalaPorIDServiciosSala : " + e.toString(),e);
             return null;
         }
     }
@@ -123,7 +123,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
             ServiciosSala registro = serviciosSalaDAO.buscarServiciosSalaPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaServiciosSalaBO obtenerServiciosSalaPorCodigo : " + e.toString());
+            logger.error("Error GestionarPlantaServiciosSalaBO obtenerServiciosSalaPorCodigo : " + e.toString(),e);
             return null;
         }
     }
@@ -148,7 +148,7 @@ public class GestionarRecursoServiciosSalaBO implements GestionarRecursoServicio
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaServiciosSalaBO validarCambioEstadoServicio : " + e.toString());
+            logger.error("Error GestionarPlantaServiciosSalaBO validarCambioEstadoServicio : " + e.toString(),e);
             return null;
         }
     }

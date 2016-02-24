@@ -36,7 +36,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
             em.persist(tipoReserva);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoReserva TipoReservaDAO : " + e.toString());
+            logger.error("Error crearTipoReserva TipoReservaDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
         try {
             em.merge(tipoReserva);
         } catch (Exception e) {
-            logger.error("Error editarTipoReserva TipoReservaDAO : " + e.toString());
+            logger.error("Error editarTipoReserva TipoReservaDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
         try {
             em.remove(em.merge(tipoReserva));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoReserva TipoReservaDAO : " + e.toString());
+            logger.error("Error eliminarTipoReserva TipoReservaDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
     public List<TipoReserva> consultarTiposReservas() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoReserva p");
+            Query query = em.createQuery("SELECT p FROM TipoReserva p ORDER BY p.nombretiporeserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<TipoReserva> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposReservas TipoReservaDAO : " + e.toString());
+            logger.error("Error consultarTiposReservas TipoReservaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
             TipoReserva registro = (TipoReserva) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoReservaPorID TipoReservaDAO : " + e.toString());
+            logger.error("Error buscarTipoReservaPorID TipoReservaDAO : " + e.toString(),e);
             return null;
         }
     }

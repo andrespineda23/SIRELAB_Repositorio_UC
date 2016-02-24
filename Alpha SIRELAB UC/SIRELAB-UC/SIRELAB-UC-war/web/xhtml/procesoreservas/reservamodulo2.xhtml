@@ -46,12 +46,11 @@ and open the template in the editor.
                                                 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
                                                     <div class="form-group">
                                                         <label>
-                                                            Hora de Inicio
+                                                            Hora de Inicio - Hora Final
                                                         </label>
-                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo2.reservaModulo.horaInicio}:00"/>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo2.reservaModulo.horaInicio}:00 - #{controllerReservaModulo2.reservaModulo.horaFin}:00 "/>
                                                     </div>
-                                                </div>
-                                            </div> 
+                                                </div>                               </div> 
                                             <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
                                                     <div class="form-group">
@@ -71,17 +70,29 @@ and open the template in the editor.
                                                 </div>
                                             </div> 
                                             <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Modulo Sala Laboratorio
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo2.reservaModulo.moduloLaboratorio.codigomodulo}"/>
+                                                    </div>
+                                                </div>
+                                               <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Servicio Prestado
+                                                        </label>
+                                                        <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo2.reservaModulo.servicioSala.nombreservicio}"/>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
                                                 <div class="form-group">
                                                     <label>
                                                         Tipo de Reserva
                                                     </label>
                                                     <h:inputText readonly="true" class="form-control"  value="#{controllerReservaModulo2.parametroTipoReserva.nombretiporeserva}"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-11">
-                                                        ¿Desea adicionar equipos adicionales a su reserva?
-                                                    </label>
-                                                    <h:selectBooleanCheckbox class="col-xs-1" value="#{controllerReservaModulo2.adicionarElementos}"/>
                                                 </div>
                                             </div> 
                                         </fieldset>

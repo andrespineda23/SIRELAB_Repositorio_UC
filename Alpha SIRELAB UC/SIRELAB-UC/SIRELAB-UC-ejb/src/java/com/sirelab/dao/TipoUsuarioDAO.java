@@ -31,7 +31,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             em.persist(tipoUsuario);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoUsuario TipoUsuarioDAO : " + e.toString());
+            logger.error("Error crearTipoUsuario TipoUsuarioDAO : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
         try {
             em.merge(tipoUsuario);
         } catch (Exception e) {
-            logger.error("Error editarTipoUsuario TipoUsuarioDAO : " + e.toString());
+            logger.error("Error editarTipoUsuario TipoUsuarioDAO : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
         try {
             em.remove(em.merge(tipoUsuario));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoUsuario TipoUsuarioDAO : " + e.toString());
+            logger.error("Error eliminarTipoUsuario TipoUsuarioDAO : " + e.toString(),e);
         }
     }
 
@@ -62,7 +62,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             List<TipoUsuario> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposUsuarios TipoUsuarioDAO : " + e.toString());
+            logger.error("Error consultarTiposUsuarios TipoUsuarioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -77,7 +77,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             TipoUsuario registro = (TipoUsuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoUsuarioPorID TipoUsuarioDAO : " + e.toString());
+            logger.error("Error buscarTipoUsuarioPorID TipoUsuarioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -92,7 +92,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             TipoUsuario registro = (TipoUsuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoUsuarioPorNombre TipoUsuarioDAO : " + e.toString());
+            logger.error("Error buscarTipoUsuarioPorNombre TipoUsuarioDAO : " + e.toString(),e);
             return null;
         }
     }

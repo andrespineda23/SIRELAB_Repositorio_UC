@@ -31,7 +31,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
         try {
             tipoUsuarioDAO.crearTipoUsuario(tipoUsuario);;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposUsuariosBO crearTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO crearTipoUsuario : " + e.toString(),e);
         }
     }
 
@@ -40,7 +40,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
         try {
             tipoUsuarioDAO.editarTipoUsuario(tipoUsuario);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposUsuariosBO editarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO editarTipoUsuario : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
         try {
             tipoUsuarioDAO.eliminarTipoUsuario(tipoUsuario);
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
             TipoUsuario registro = tipoUsuarioDAO.buscarTipoUsuarioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString(),e);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class GestionarVariableTiposUsuarioBO implements GestionarVariableTiposUs
             List<TipoUsuario> lista = tipoUsuarioDAO.consultarTiposUsuarios();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString());
+            logger.error("Error GestionarVariableTiposUsuariosBO borrarTipoUsuario : " + e.toString(),e);
             return null;
         }
     }

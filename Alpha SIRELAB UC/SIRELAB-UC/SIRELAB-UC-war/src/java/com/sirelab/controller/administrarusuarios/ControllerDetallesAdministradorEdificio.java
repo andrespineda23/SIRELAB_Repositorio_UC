@@ -420,8 +420,8 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             administrarAdministradoresEdificioBO.actualizarInformacionAdministradorEdificio(encargadoPorEdificioDetalles.getAdministradoredificio());
             restaurarInformacionAdministradorEdificio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio:  " + e.toString());
-            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio : " + e.toString(),e);
 
         }
     }
@@ -452,8 +452,8 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio activarAdministradorEdificio:  " + e.toString());
-            logger.error("Error ControllerDetallesAdministradoresEdificio activarAdministradorEdificio : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradorEdificio activarAdministradorEdificio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradoresEdificio activarAdministradorEdificio : " + e.toString(),e);
         }
     }
 
@@ -475,8 +475,8 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio inactivarAdministradorEdificio:  " + e.toString());
-            logger.error("Error ControllerDetallesAdministradoresEdificio inactivarAdministradorEdificio : " + e.toString());
+            logger.error("Error ControllerDetallesAdministradorEdificio inactivarAdministradorEdificio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradoresEdificio inactivarAdministradorEdificio : " + e.toString(),e);
         }
     }
 

@@ -34,7 +34,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             em.persist(edificio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearEdificio EdificioDAO : " + e.toString());
+            logger.error("Error crearEdificio EdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -44,7 +44,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             em.clear();
             em.merge(edificio);
         } catch (Exception e) {
-            logger.error("Error editarEdificio EdificioDAO : " + e.toString());
+            logger.error("Error editarEdificio EdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             em.clear();
             em.remove(em.merge(edificio));
         } catch (Exception e) {
-            logger.error("Error eliminarEdificio EdificioDAO : " + e.toString());
+            logger.error("Error eliminarEdificio EdificioDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class EdificioDAO implements EdificioDAOInterface {
     public List<Edificio> consultarEdificios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.estado=TRUE ORDER BY p.direccion ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Edificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarEdificios EdificioDAO : " + e.toString());
+            logger.error("Error consultarEdificios EdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             Edificio registro = (Edificio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEdificioPorID EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificioPorID EdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -91,13 +91,13 @@ public class EdificioDAO implements EdificioDAOInterface {
     public List<Edificio> buscarEdificiosPorIDSede(BigInteger idSede) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.sede.idsede=:idSede");
+            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.sede.idsede=:idSede ORDER BY p.direccion ASC");
             query.setParameter("idSede", idSede);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Edificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -106,13 +106,13 @@ public class EdificioDAO implements EdificioDAOInterface {
     public List<Edificio> buscarEdificiosActivosPorIDSede(BigInteger idSede) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.sede.idsede=:idSede AND p.estado=true");
+            Query query = em.createQuery("SELECT p FROM Edificio p WHERE p.sede.idsede=:idSede AND p.estado=true ORDER BY p.direccion ASC");
             query.setParameter("idSede", idSede);
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Edificio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificiosPorIDSede EdificioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -133,7 +133,7 @@ public class EdificioDAO implements EdificioDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarEdificiosPorFiltrado EdificioDAO : " + e.toString());
+            logger.error("Error buscarEdificiosPorFiltrado EdificioDAO : " + e.toString(),e);
             return null;
         }
     }

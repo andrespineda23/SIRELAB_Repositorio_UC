@@ -170,7 +170,7 @@ public class ControllerCargueArchivos implements Serializable {
             ouputStream.flush();
             ouputStream.close();
         } catch (Exception e) {
-            logger.error("Error en descargarArchivoErrores txt ControllerCargueArchivos:  " + e.toString());
+            logger.error("Error en descargarArchivoErrores txt ControllerCargueArchivos:  " + e.toString(),e);
         }
     }
 
@@ -183,8 +183,8 @@ public class ControllerCargueArchivos implements Serializable {
             archivo = null;
             disableAcciones = true;
         } catch (Exception e) {
-            logger.error("Error ControllerCargueArchivos imprimirArchivo: " + e.toString());
-            logger.error("Error ControllerCargueArchivos imprimirArchivo: " + e.toString());
+            logger.error("Error ControllerCargueArchivos imprimirArchivo: " + e.toString(),e);
+            logger.error("Error ControllerCargueArchivos imprimirArchivo: " + e.toString(),e);
         }
     }
 

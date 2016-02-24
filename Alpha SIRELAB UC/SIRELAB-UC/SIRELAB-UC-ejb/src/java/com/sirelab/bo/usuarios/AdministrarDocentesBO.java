@@ -52,7 +52,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             List<Docente> lista = docenteDAO.buscarDocentesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO consultarDocentesPorParametro : " + e.toString());
+            logger.error("Error AdministrarDocentesBO consultarDocentesPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -63,7 +63,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             Docente registro = docenteDAO.buscarDocentePorID(idDocente);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerDocentePorIDDocente : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerDocentePorIDDocente : " + e.toString(),e);
             return null;
         }
     }
@@ -74,7 +74,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             List<TipoCargo> lista = tipoCargoDAO.consultarTiposCargos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerListaTiposCargos : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerListaTiposCargos : " + e.toString(),e);
             return null;
         }
     }
@@ -85,7 +85,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerListaFacultades : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerListaFacultades : " + e.toString(),e);
             return null;
         }
     }
@@ -95,7 +95,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerListaFacultadesActivas : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerListaFacultadesActivas : " + e.toString(),e);
             return null;
         }
     }
@@ -106,7 +106,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(idFacultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerDepartamentosPorIDFacultad : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerDepartamentosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -116,7 +116,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(idFacultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerDepartamentosActivosPorIDFacultad : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerDepartamentosActivosPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -127,7 +127,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             Docente registro = docenteDAO.obtenerDocentePorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerDocentePorCorreo : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerDocentePorCorreo : " + e.toString(),e);
             return null;
         }
     }
@@ -138,7 +138,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             Docente registro = docenteDAO.obtenerDocentePorDocumento(documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerDocentePorDocumento : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerDocentePorDocumento : " + e.toString(),e);
             return null;
         }
     }
@@ -149,7 +149,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             Docente registro = docenteDAO.obtenerDocentePorCorreoDocumento(correo, documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO obtenerDocentePorCorreoNumDocumento : " + e.toString());
+            logger.error("Error AdministrarDocentesBO obtenerDocentePorCorreoNumDocumento : " + e.toString(),e);
             return null;
         }
     }
@@ -159,7 +159,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
         try {
             docenteDAO.editarDocente(docente);
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO actualizarInformacionDocente : " + e.toString());
+            logger.error("Error AdministrarDocentesBO actualizarInformacionDocente : " + e.toString(),e);
         }
     }
 
@@ -168,7 +168,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
         try {
             personaDAO.editarPersona(persona);
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO actualizarInformacionPersona : " + e.toString());
+            logger.error("Error AdministrarDocentesBO actualizarInformacionPersona : " + e.toString(),e);
         }
     }
 
@@ -177,7 +177,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO actualizarInformacionUsuario : " + e.toString());
+            logger.error("Error AdministrarDocentesBO actualizarInformacionUsuario : " + e.toString(),e);
 
         }
     }
@@ -199,7 +199,7 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             docenteNuevo.setPersona(personaRegistrada);
             docenteDAO.crearDocente(docenteNuevo);
         } catch (Exception e) {
-            logger.error("Error AdministrarDocentesBO almacenarNuevoDocenteEnSistema : " + e.toString());
+            logger.error("Error AdministrarDocentesBO almacenarNuevoDocenteEnSistema : " + e.toString(),e);
         }
     }
 

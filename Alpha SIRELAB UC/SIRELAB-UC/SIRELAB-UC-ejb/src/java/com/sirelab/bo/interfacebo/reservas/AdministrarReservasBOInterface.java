@@ -88,4 +88,8 @@ public interface AdministrarReservasBOInterface {
 
     public List<ReservaSala> obtenerReservasSalaPorParametros(SalaLaboratorio sala, Date fecha);
 
+    public Integer obtenerNumeroReservaDia(Date fecha);
+
+    public List<ReservaSala> obtenerReservasModuloSalas(Date fecha, BigInteger sala);
+
 }

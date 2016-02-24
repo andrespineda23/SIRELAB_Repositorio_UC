@@ -160,8 +160,8 @@ public class ControllerRegistrarTipoPerfil implements Serializable {
             tipoNuevo.setNombreregistro(inputNombreRegistro);
             gestionarVariableTiposPerfilesBO.crearTipoPerfil(tipoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarTipoPerfil almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarTipoPerfil almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarTipoPerfil almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarTipoPerfil almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

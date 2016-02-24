@@ -129,7 +129,7 @@ public class ControllerIndex implements Serializable {
                 paginaRecuperacion = "";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString());
+            logger.error("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString(),e);
             paginaRecuperacion = "";
         }
     }
@@ -275,7 +275,7 @@ public class ControllerIndex implements Serializable {
         } catch (NoResultException nre) {
             logger.error("NoResultException loginUsuario ControllerIndex : " + nre.toString());
         } catch (Exception e) {
-            logger.error("Error ControllerIndex loginUsuario: " + e.toString());
+            logger.error("Error ControllerIndex loginUsuario: " + e.toString(),e);
         }
     }
 

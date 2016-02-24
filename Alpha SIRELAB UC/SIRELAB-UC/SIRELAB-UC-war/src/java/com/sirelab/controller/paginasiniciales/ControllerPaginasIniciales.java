@@ -73,7 +73,7 @@ public class ControllerPaginasIniciales implements Serializable {
                 //session.invalidate();
             }
         } catch (Exception e) {
-            logger.error("Error al cerrar la sesion del usuario : " + e.toString());
+            logger.error("Error al cerrar la sesion del usuario : " + e.toString(),e);
         }
         return "index";
     }

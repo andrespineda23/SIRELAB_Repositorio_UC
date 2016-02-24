@@ -245,8 +245,8 @@ public class ControllerDetallesHorarioAtencion implements Serializable {
             horarioAtencionDetalles.setHoracierresabado(horaCierreSabado.toString());
             gestionarVariableHorariosAtencionBO.editarHorarioAtencion(horarioAtencionDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro:  " + e.toString());
-            logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro: " + e.toString());
+            logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesHorarioAtencion almacenarModificacionRegistro: " + e.toString(),e);
         }
     }
 

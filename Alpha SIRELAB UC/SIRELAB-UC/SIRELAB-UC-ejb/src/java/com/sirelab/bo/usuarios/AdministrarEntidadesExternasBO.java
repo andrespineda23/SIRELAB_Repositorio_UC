@@ -53,7 +53,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             List<EntidadExterna> lista = entidadExternaDAO.buscarEntidadesExternasPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO consultarEntidadesExternasPorParametro : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO consultarEntidadesExternasPorParametro : " + e.toString(),e);
             return null;
         }
 
@@ -65,7 +65,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorID(idEntidadExterna);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorIDEntidadExterna : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorIDEntidadExterna : " + e.toString(),e);
             return null;
         }
     }
@@ -76,7 +76,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorCorreoNumDocumento(correo, documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorCorreoNumDocumento : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorCorreoNumDocumento : " + e.toString(),e);
             return null;
         }
     }
@@ -87,7 +87,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorCorreo : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorCorreo : " + e.toString(),e);
             return null;
         }
     }
@@ -98,7 +98,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorIdentificacionEntidad(identificacion);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorIdentificacion : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO obtenerEntidadExternaPorIdentificacion : " + e.toString(),e);
             return null;
         }
     }
@@ -113,7 +113,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             }
             entidadExternaDAO.editarEntidadExterna(entidadExterna);
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO actualizarInformacionEntidadExterna : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO actualizarInformacionEntidadExterna : " + e.toString(),e);
         }
     }
 
@@ -141,7 +141,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
         try {
             personaDAO.editarPersona(persona);
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO actualizarInformacionPersona : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO actualizarInformacionPersona : " + e.toString(),e);
         }
     }
 
@@ -150,7 +150,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO actualizarInformacionUsuario : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO actualizarInformacionUsuario : " + e.toString(),e);
         }
     }
 
@@ -159,7 +159,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
         try {
             entidadExternaDAO.crearEntidadExterna(entidadNueva);
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO almacenarNuevaEntidadExternaEnSistema : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO almacenarNuevaEntidadExternaEnSistema : " + e.toString(),e);
         }
     }
 
@@ -183,7 +183,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
                 }
             }
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO validarCambioEstadoEntidad : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO validarCambioEstadoEntidad : " + e.toString(),e);
             return null;
         }
     }
@@ -194,7 +194,7 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
             List<SectorEntidad> lista = sectorEntidadDAO.consultarSectoresEntidad();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEntidadesExternasBO validarCambioEstadoEntidad : " + e.toString());
+            logger.error("Error AdministrarEntidadesExternasBO validarCambioEstadoEntidad : " + e.toString(),e);
             return null;
         }
     }

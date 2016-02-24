@@ -122,8 +122,8 @@ public class ControllerRegistrarSalaLaboratorioXServicio implements Serializable
             laboratorioNuevo.setSalalaboratorio(nuevoSalaLaboratorio);
             gestionarPlantaSalaLaboratorioxServiciosBO.crearSalaLaboratorioxServicios(laboratorioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarSalaLaboratorioXServicio almacenarNuevoSalaLaboratorioXServicioEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarSalaLaboratorioXServicio almacenarNuevoSalaLaboratorioXServicioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarSalaLaboratorioXServicio almacenarNuevoSalaLaboratorioXServicioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarSalaLaboratorioXServicio almacenarNuevoSalaLaboratorioXServicioEnSistema : " + e.toString(),e);
 
         }
     }

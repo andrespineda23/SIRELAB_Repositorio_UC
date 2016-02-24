@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head> 
+    </h:head>
+    <h:body  onload="nobackbutton();" >
+        <ui:composition template="/xhtml/template/templateresponsive.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Consultar Reservas</li>
+                            </ol>
+                        </div>
+                        <div class="row col-md-12 col-lg-12">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-7">
+                                    Por medio de la siguiente pagina usted puede consultar las reservas realizadas en el transcurso del tiempo. Puede consultar información de reservas historicas, es decir, reservas que ya se encuentran anterior a la fecha de hoy. A su vez, puede consultar reservas que esten proximas a realizarse.
+                                    En esta pagina encontrara las reservas de sala de laboratorio y de modulos de sala que han sido realizadas.
+                                </div>
+                                <div class="col-md-5 col-lg-5">
+                                    <div class="form-group">
+                                        <label for="tipoConsulta">
+                                            Seleccione el tipo de consulta de reserva a realizar.
+                                        </label>
+                                        <h:selectOneMenu value="#{controllerConsultarReservas.tipoConsulta}"
+                                                         class="form-control"
+                                                         id="tipoConsulta">
+                                            <f:selectItem itemLabel="EN PROCESO DE" itemValue="1" />
+                                            <f:selectItem itemLabel="HISTORIAL" itemValue="2" />
+                                            <f:ajax event="change" listener="#{controllerConsultarReservas.cambiarTipoConsulta()}" execute="@this" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-sm hidden-xs">
+                                <br></br>
+                                <br></br>
+                            </div>
+                            <div class="row">
+                                <div id="resultadosBusquedaRS" class="row clearfix col-md-12 col-lg-12 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>Lista de Reservas Solicitadas - Salas</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTableRS" var="itemRS" 
+                                                         styleClass="table table-striped table-hover table-responsive hidden-sm hidden-xs" 
+                                                         value="#{controllerConsultarReservas.listaReservasSalaTemporal}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Reserva"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS.reserva.numeroreserva}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS.reserva.fechareserva}" >
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Hora Inicial"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS.reserva.horainicio}:00"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Hora Final"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS.reserva.horafin}:00"/>
+                                                </h:column>  
+                                                <h:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Estado"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS.reserva.estadoreserva.nombreestadoreserva}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Tipo Reserva"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS.reserva.tiporeserva.nombretiporeserva}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Sala"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS.salalaboratorio.nombresala}"/>
+                                                </h:column>  
+                                            </h:dataTable>
+                                            <h:dataTable id="dataTableRS2" var="itemRS2" 
+                                                         styleClass="table table-striped table-hover table-responsive hidden-lg hidden-md" 
+                                                         value="#{controllerConsultarReservas.listaReservasSalaTemporal}"> 
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS2.reserva.fechareserva}" >
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Horario"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS2.reserva.horainicio}:00 - #{itemRS2.reserva.horafin}:00"/>
+                                                </h:column>   
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Sala"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRS2.salalaboratorio.nombresala}"/>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </div>
+                                    </fieldset>
+                                    <div>
+                                        <br></br>
+                                        <br></br>
+                                    </div>
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>Lista de Reservas Solicitadas - Modulos</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTableRM" var="itemRM" 
+                                                         styleClass="table table-striped table-hover table-responsive hidden-sm hidden-xs" 
+                                                         value="#{controllerConsultarReservas.listaReservasModuloLaboratorioTemporal}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Reserva"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.reserva.numeroreserva}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.reserva.fechareserva}" >
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Hora Inicial"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.reserva.horainicio}:00"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Hora Final"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.reserva.horafin}:00"/>
+                                                </h:column>  
+                                                <h:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Estado"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.reserva.estadoreserva.nombreestadoreserva}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Tipo Reserva"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.reserva.tiporeserva.nombretiporeserva}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Sala"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.modulolaboratorio.salalaboratorio.nombresala}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Cod. Modulo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.modulolaboratorio.codigomodulo}"/>
+                                                </h:column>  
+                                            </h:dataTable>
+                                            <h:dataTable id="dataTableRM2" var="itemRM2" 
+                                                         styleClass="table table-striped table-hover table-responsive hidden-lg hidden-md" 
+                                                         value="#{controllerConsultarReservas.listaReservasModuloLaboratorioTemporal}"> 
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM2.reserva.fechareserva}" >
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Horario"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM2.reserva.horainicio}:00 - #{itemRM2.reserva.horafin}:00"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Sala"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.modulolaboratorio.salalaboratorio.nombresala}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Cod. Modulo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{itemRM.modulolaboratorio.codigomodulo}"/>
+                                                </h:column>  
+                                            </h:dataTable>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-11 col-lg-11 hidden-sm hidden-xs"></div>
+                            <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1">
+                                <h:commandButton value="Atras" action="#{controllerConsultarReservas.limpiarDatos()}" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

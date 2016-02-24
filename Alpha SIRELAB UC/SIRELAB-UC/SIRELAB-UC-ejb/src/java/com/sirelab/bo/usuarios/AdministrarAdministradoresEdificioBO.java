@@ -58,7 +58,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             List<EncargadoPorEdificio> lista = encargadoPorEdificioDAOInterface.buscarEncargadosPorEdificioPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO consultarEncargadosPorEdificioPorParametro : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO consultarEncargadosPorEdificioPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -69,7 +69,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             EncargadoPorEdificio registro = encargadoPorEdificioDAOInterface.buscarEncargadoPorEdificioPorID(idEncargadoPorEdificio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoPorEdificioPorIDEncargadoPorEdificio : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEncargadoPorEdificioPorIDEncargadoPorEdificio : " + e.toString(),e);
             return null;
         }
     }
@@ -80,7 +80,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             List<Sede> lista = sedeDAO.consultarSedes();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerListaSedes : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerListaSedes : " + e.toString(),e);
             return null;
         }
     }
@@ -91,7 +91,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             List<Sede> lista = sedeDAO.consultarSedesActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerListaSedesActivos : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerListaSedesActivos : " + e.toString(),e);
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             List<Edificio> lista = edificioDAO.buscarEdificiosPorIDSede(idSede);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEdificiosPorIDSede : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEdificiosPorIDSede : " + e.toString(),e);
             return null;
         }
     }
@@ -113,7 +113,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             List<Edificio> lista = edificioDAO.buscarEdificiosActivosPorIDSede(idSede);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEdificiosPorIDSede : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerEdificiosPorIDSede : " + e.toString(),e);
             return null;
         }
     }
@@ -124,7 +124,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             AdministradorEdificio registro = administradorEdificioDAO.buscarAdministradorEdificioPorPorCorreoNumDocumento(correo, documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerAdministradorEdificioPorCorreoNumDocumento : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerAdministradorEdificioPorCorreoNumDocumento : " + e.toString(),e);
             return null;
         }
     }
@@ -135,7 +135,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             AdministradorEdificio registro = administradorEdificioDAO.buscarAdministradorEdificioPorPorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerAdministradorEdificioPorCorreo : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerAdministradorEdificioPorCorreo : " + e.toString(),e);
             return null;
         }
     }
@@ -146,7 +146,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             AdministradorEdificio registro = administradorEdificioDAO.buscarAdministradorEdificioPorPorDocumento(documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerAdministradorEdificioPorDocumento : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerAdministradorEdificioPorDocumento : " + e.toString(),e);
             return null;
         }
     }
@@ -156,7 +156,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
         try {
             administradorEdificioDAO.editarAdministradorEdificio(administradorEdificio);
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionAdministradorEdificio : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionAdministradorEdificio : " + e.toString(),e);
         }
     }
 
@@ -165,7 +165,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
         try {
             personaDAO.editarPersona(persona);
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionPersona : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionPersona : " + e.toString(),e);
         }
     }
 
@@ -174,7 +174,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionUsuario : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionUsuario : " + e.toString(),e);
 
         }
     }
@@ -202,7 +202,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             encargadoPorEdificio.setAdministradoredificio(ultimoAdministradorEdificio);
             encargadoPorEdificioDAOInterface.crearEncargadoPorEdificio(encargadoPorEdificio);
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO almacenarNuevoAdministradorEdificioEnSistema : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO almacenarNuevoAdministradorEdificioEnSistema : " + e.toString(),e);
         }
     }
 
@@ -215,7 +215,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             encargadoPorEdificio.setAdministradoredificio(administradorEdificio);
             encargadoPorEdificioDAOInterface.crearEncargadoPorEdificio(encargadoPorEdificio);
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO registrarAsocioEncargadoEdificio : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO registrarAsocioEncargadoEdificio : " + e.toString(),e);
         }
     }
 
@@ -224,7 +224,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
         try {
             encargadoPorEdificioDAOInterface.editarEncargadoPorEdificio(encargadoPorEdificio);
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO registrarAsocioEncargadoEdificio : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO registrarAsocioEncargadoEdificio : " + e.toString(),e);
         }
     }
 
@@ -234,7 +234,7 @@ public class AdministrarAdministradoresEdificioBO implements AdministrarAdminist
             List<EncargadoPorEdificio> lista = encargadoPorEdificioDAOInterface.buscarEncargadosPorEdificioPorIDAdministrador(idAdministrador);
             return lista;
         } catch (Exception e) {
-            logger.error("Error AdministrarEncargadosLaboratoriosBO buscarEncargadosPorEdificioPorIDAdministrador : " + e.toString());
+            logger.error("Error AdministrarEncargadosLaboratoriosBO buscarEncargadosPorEdificioPorIDAdministrador : " + e.toString(),e);
             return null;
         }
     }

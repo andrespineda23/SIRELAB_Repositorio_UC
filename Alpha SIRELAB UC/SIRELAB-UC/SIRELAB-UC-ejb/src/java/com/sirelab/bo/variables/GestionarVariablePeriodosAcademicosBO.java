@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 public class GestionarVariablePeriodosAcademicosBO implements GestionarVariablePeriodosAcademicosBOInterface {
 
     static Logger logger = Logger.getLogger(GestionarVariablePeriodosAcademicosBO.class);
-    
+
     @EJB
     PeriodoAcademicoDAOInterface periodoAcademicoInterface;
 
@@ -32,7 +32,7 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
             List<PeriodoAcademico> lista = periodoAcademicoInterface.consultarPeriodosAcademicos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarVariablePeriodosAcademicosBO consultarPeriodosAcademicos: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO consultarPeriodosAcademicos: " + e.toString(),e);
             return null;
         }
     }
@@ -42,7 +42,7 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
         try {
             periodoAcademicoInterface.crearPeriodoAcademico(periodo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariablePeriodosAcademicosBO crearPeriodoAcademico: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO crearPeriodoAcademico: " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
         try {
             periodoAcademicoInterface.editarPeriodoAcademico(periodo);
         } catch (Exception e) {
-            logger.error("Error GestionarVariablePeriodosAcademicosBO editarPeriodoAcademico: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO editarPeriodoAcademico: " + e.toString(),e);
         }
     }
 
@@ -61,7 +61,17 @@ public class GestionarVariablePeriodosAcademicosBO implements GestionarVariableP
             PeriodoAcademico registro = periodoAcademicoInterface.buscarPeriodoAcademicoPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarVariablePeriodosAcademicosBO consultarPeriodoAcademicoPorID: " + e.toString());
+            logger.error("Error GestionarVariablePeriodosAcademicosBO consultarPeriodoAcademicoPorID: " + e.toString(),e);
+            return null;
+        }
+    }
+
+    @Override 
+    public Integer obtenerPeriodosAcademicosActivos() {
+        try {
+            return periodoAcademicoInterface.obtenerCantidadPeriodosAcademicosActivos();
+        } catch (Exception e) {
+            logger.error("Error obtenerPeriodosAcademicosActivos consultarPeriodoAcademicoPorID: " + e.toString(),e);
             return null;
         }
     }

@@ -33,7 +33,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             em.persist(modulolaboratorio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error crearModuloLaboratorio ModuloLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
         try {
             em.merge(modulolaboratorio);
         } catch (Exception e) {
-            logger.error("Error editarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error editarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
         try {
             em.remove(em.merge(modulolaboratorio));
         } catch (Exception e) {
-            logger.error("Error eliminarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
     public List<ModuloLaboratorio> consultarModulosLaboratorios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p");
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p ORDER BY p.codigomodulo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarModulosLaboratorios ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error consultarModulosLaboratorios ModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             ModuloLaboratorio registro = (ModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarModuloLaboratorioPorID ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioPorID ModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -95,7 +95,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             ModuloLaboratorio registro = (ModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarModuloLaboratorioPorCodigoYSala ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioPorCodigoYSala ModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -104,13 +104,13 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
     public List<ModuloLaboratorio> buscarModuloLaboratorioPorIDSalaLaboratorio(BigInteger idSala) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.salalaboratorio.idsalalaboratorio=:idSala");
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.salalaboratorio.idsalalaboratorio=:idSala ORDER BY p.codigomodulo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idSala", idSala);
             List<ModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarModuloLaboratorioPorIDDepartamento ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioPorIDDepartamento ModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -118,13 +118,13 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
     public List<ModuloLaboratorio> buscarModuloLaboratorioActivosPorIDSalaLaboratorio(BigInteger idSala) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.salalaboratorio.idsalalaboratorio=:idSala AND p.estadomodulo=true");
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.salalaboratorio.idsalalaboratorio=:idSala AND p.estadomodulo=true  ORDER BY p.codigomodulo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idSala", idSala);
             List<ModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarModuloLaboratorioActivosPorIDSalaLaboratorio ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModuloLaboratorioActivosPorIDSalaLaboratorio ModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -145,7 +145,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarModulosLaboratoriosPorFiltrado ModuloLaboratorioDAO : " + e.toString());
+            logger.error("Error buscarModulosLaboratoriosPorFiltrado ModuloLaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -134,8 +134,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Facultad es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString());
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString(),e);
         }
     }
 
@@ -159,8 +159,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Departamento es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString());
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString(),e);
         }
     }
 
@@ -517,8 +517,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             encargadoNueva.setTipoperfil(inputPerfil);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString(),e);
         }
     }
 

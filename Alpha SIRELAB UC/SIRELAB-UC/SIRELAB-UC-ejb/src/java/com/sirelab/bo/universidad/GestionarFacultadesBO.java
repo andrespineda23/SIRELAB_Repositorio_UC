@@ -32,7 +32,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             List<Facultad> lista = facultadDAO.buscarFacultadesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO consultarFacultadesPorParametro : " + e.toString());
+            logger.error("Error GestionarFacultadBO consultarFacultadesPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -42,7 +42,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
         try {
             facultadDAO.crearFacultad(facultad);
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString());
+            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
         try {
             facultadDAO.editarFacultad(facultad);
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString());
+            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString(),e);
         }
     }
 
@@ -61,7 +61,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             Facultad registro = facultadDAO.buscarFacultadPorID(idFacultad);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDFacultad : " + e.toString());
+            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDFacultad : " + e.toString(),e);
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             Facultad registro = facultadDAO.buscarFacultadPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDCodigo : " + e.toString());
+            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDCodigo : " + e.toString(),e);
             return null;
         }
     }
@@ -97,7 +97,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO Override : " + e.toString());
+            logger.error("Error GestionarFacultadBO Override : " + e.toString(),e);
             return null;
         }
     }

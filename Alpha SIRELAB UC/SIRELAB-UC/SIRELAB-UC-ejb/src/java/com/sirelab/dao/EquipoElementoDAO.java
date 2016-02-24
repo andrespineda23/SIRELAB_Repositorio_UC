@@ -38,7 +38,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             em.persist(equipoelemento);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearEquipoElemento EquipoElementoDAO : " + e.toString());
+            logger.error("Error crearEquipoElemento EquipoElementoDAO : " + e.toString(),e);
         }
     }
 
@@ -48,7 +48,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             em.merge(equipoelemento);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error editarEquipoElemento EquipoElementoDAO : " + e.toString());
+            logger.error("Error editarEquipoElemento EquipoElementoDAO : " + e.toString(),e);
         }
     }
 
@@ -58,7 +58,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             em.remove(em.merge(equipoelemento));
             em.flush();
         } catch (Exception e) {
-            logger.error("Error eliminarEquipoElemento EquipoElementoDAO : " + e.toString());
+            logger.error("Error eliminarEquipoElemento EquipoElementoDAO : " + e.toString(),e);
         }
     }
 
@@ -66,12 +66,12 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
     public List<EquipoElemento> consultarEquiposElementos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EquipoElemento p");
+            Query query = em.createQuery("SELECT p FROM EquipoElemento p ORDER BY p.inventarioequipo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EquipoElemento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarEquiposElementos EquipoElementoDAO : " + e.toString());
+            logger.error("Error consultarEquiposElementos EquipoElementoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -86,7 +86,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             EquipoElemento registro = (EquipoElemento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEquipoElementoPorID EquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarEquipoElementoPorID EquipoElementoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             EquipoElemento registro = (EquipoElemento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarEquipoElementoPorCodigoYModulo EquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarEquipoElementoPorCodigoYModulo EquipoElementoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -117,13 +117,13 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombreequipo ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".inventarioequipo ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<EquipoElemento> tq = em.createQuery(consulta, EquipoElemento.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarEquiposElementosPorFiltrado EquipoElementoDAO : " + e.toString());
+            logger.error("Error buscarEquiposElementosPorFiltrado EquipoElementoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -245,7 +245,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaEquipoElementoRegistrada EquipoElementoDAO : " + e.toString());
+            logger.error("Error obtenerUltimaEquipoElementoRegistrada EquipoElementoDAO : " + e.toString(),e);
             return null;
         }
     }

@@ -164,8 +164,6 @@ public class ControllerConsultarReservasSala implements Serializable {
             cargarDatosHistoricos();
             inicializarDatosPaginacion();
         }
-        logger.error("Cambio la consulta");
-        logger.error("tipo : " + tipoConsulta);
     }
 
     private void cargarDatosHistoricos() {

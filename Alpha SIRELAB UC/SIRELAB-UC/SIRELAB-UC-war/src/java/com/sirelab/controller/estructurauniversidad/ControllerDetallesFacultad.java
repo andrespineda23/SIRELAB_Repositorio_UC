@@ -177,8 +177,8 @@ public class ControllerDetallesFacultad implements Serializable {
             facultadDetalles.setNombrefacultad(editarNombre);
             gestionarFacultadBO.modificarInformacionFacultad(facultadDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema : " + e.toString(),e);
         }
     }
 

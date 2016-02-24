@@ -327,8 +327,8 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
                 gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumoAEquipo(movimientoNuevo, equipoElemento);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString(),e);
         }
     }
 

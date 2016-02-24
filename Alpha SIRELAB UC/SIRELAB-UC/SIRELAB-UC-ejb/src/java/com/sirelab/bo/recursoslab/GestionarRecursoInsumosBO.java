@@ -33,7 +33,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
             List<Insumo> lista = insumoDAO.buscarInsumosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoInsumosBO consultarInsumosPorParametro : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO consultarInsumosPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -43,7 +43,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
         try {
             insumoDAO.crearInsumo(insumo);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoInsumosBO crearNuevoInsumo : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO crearNuevoInsumo : " + e.toString(),e);
         }
     }
 
@@ -52,7 +52,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
         try {
             insumoDAO.editarInsumo(insumo);
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoInsumosBO modificarInformacionInsumo : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO modificarInformacionInsumo : " + e.toString(),e);
         }
     }
 
@@ -62,7 +62,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
             Insumo registro = insumoDAO.buscarInsumoPorID(idInsumo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoInsumosBO obtenerInsumoPorIDProveedor : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO obtenerInsumoPorIDProveedor : " + e.toString(),e);
             return null;
         }
     }
@@ -73,7 +73,7 @@ public class GestionarRecursoInsumosBO implements GestionarRecursoInsumosBOInter
             Insumo registro = insumoDAO.buscarInsumoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarRecursoInsumosBO obtenerInsumoPorCodigo : " + e.toString());
+            logger.error("Error GestionarRecursoInsumosBO obtenerInsumoPorCodigo : " + e.toString(),e);
             return null;
         }
     }

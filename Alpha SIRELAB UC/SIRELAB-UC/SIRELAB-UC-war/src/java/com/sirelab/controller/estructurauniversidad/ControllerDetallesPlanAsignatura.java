@@ -176,8 +176,8 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
             planAsignaturaDetalles.setPlanestudio(editarPlan);
             gestionarPlanAsignaturaBO.editarAsignaturaPorPlanEstudio(planAsignaturaDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema:  " + e.toString());
-            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema : " + e.toString());
+            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema : " + e.toString(),e);
         }
     }
 

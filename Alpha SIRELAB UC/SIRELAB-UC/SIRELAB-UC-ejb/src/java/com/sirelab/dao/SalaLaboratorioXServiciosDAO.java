@@ -38,7 +38,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
             em.persist(salalaboratorioxarea);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearSalaLaboratorioxServicios SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error crearSalaLaboratorioxServicios SalaLaboratorioxServiciosDAO : " + e.toString(),e);
         }
     }
 
@@ -47,7 +47,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
         try {
             em.merge(salalaboratorioxarea);
         } catch (Exception e) {
-            logger.error("Error editarSalaLaboratorioxServicios SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error editarSalaLaboratorioxServicios SalaLaboratorioxServiciosDAO : " + e.toString(),e);
         }
     }
 
@@ -56,7 +56,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
         try {
             em.remove(em.merge(salalaboratorioxarea));
         } catch (Exception e) {
-            logger.error("Error eliminarSalaLaboratorioxServicios SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error eliminarSalaLaboratorioxServicios SalaLaboratorioxServiciosDAO : " + e.toString(),e);
         }
     }
 
@@ -64,12 +64,12 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
     public List<SalaLaboratorioxServicios> consultarSalaLaboratorioxServicios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p ORDER BY p.salalaboratorio.codigosala");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<SalaLaboratorioxServicios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarSalaLaboratorioxServiciossPorAreas SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error consultarSalaLaboratorioxServiciossPorAreas SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -78,12 +78,12 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
     public List<SalaLaboratorioxServicios> consultarSalaLaboratorioxServiciosActivos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.estado=true");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.estado=true ORDER BY p.salalaboratorio.codigosala");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<SalaLaboratorioxServicios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarSalaLaboratorioxServiciossPorAreas SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error consultarSalaLaboratorioxServiciossPorAreas SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -92,13 +92,13 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
     public List<SalaLaboratorioxServicios> consultarSalaLaboratorioxServiciosPorSala(BigInteger sala) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.idsalalaboratorio=:sala");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.idsalalaboratorio=:sala ORDER BY p.salalaboratorio.codigosala");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("sala", sala);
             List<SalaLaboratorioxServicios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarSalaLaboratorioxServiciosPorSala SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error consultarSalaLaboratorioxServiciosPorSala SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -107,13 +107,13 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
     public List<SalaLaboratorioxServicios> consultarSalaLaboratorioxServiciosPorServicio(BigInteger servicio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.serviciosala=:servicio");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.serviciosala=:servicio ORDER BY p.salalaboratorio.codigosala");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("servicio", servicio);
             List<SalaLaboratorioxServicios> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarSalaLaboratorioxServiciosPorServicio SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error consultarSalaLaboratorioxServiciosPorServicio SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -128,7 +128,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
             SalaLaboratorioxServicios registro = (SalaLaboratorioxServicios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalaLaboratorioxServiciosPorID SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error buscarSalaLaboratorioxServiciosPorID SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -144,7 +144,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
             SalaLaboratorioxServicios registro = (SalaLaboratorioxServicios) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalaLaboratorioxServiciosPorLabYArea SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error buscarSalaLaboratorioxServiciosPorLabYArea SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -153,14 +153,46 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
     public List<SalaLaboratorioxServicios> buscarSalasLaboratorioxServiciosPorLaboratorioyServicio(BigInteger laboratorio, BigInteger servicio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.laboratorio.idlaboratorio=:laboratorio AND p.serviciosala.idserviciossala=:servicio");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.laboratorio.idlaboratorio=:laboratorio AND p.serviciosala.idserviciossala=:servicio ORDER BY p.salalaboratorio.codigosala");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("laboratorio", laboratorio);
             query.setParameter("servicio", servicio);
             List<SalaLaboratorioxServicios> registro =  query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalaLaboratorioxServiciosPorLaboratorioyServicio SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error buscarSalaLaboratorioxServiciosPorLaboratorioyServicio SalaLaboratorioxServiciosDAO : " + e.toString(),e);
+            return null;
+        }
+    }
+    
+    @Override
+    public List<SalaLaboratorioxServicios> buscarSalasLaboratorioxServiciosPorLaboratorioyServicioActivo(BigInteger laboratorio, BigInteger servicio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.laboratorio.idlaboratorio=:laboratorio AND p.estado=true AND p.serviciosala.idserviciossala=:servicio ORDER BY p.salalaboratorio.codigosala");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            query.setParameter("servicio", servicio);
+            List<SalaLaboratorioxServicios> registro =  query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarSalaLaboratorioxServiciosPorLaboratorioyServicio SalaLaboratorioxServiciosDAO : " + e.toString(),e);
+            return null;
+        }
+    }
+    
+    @Override
+    public List<SalaLaboratorioxServicios> buscarSalasLaboratorioxServiciosPorLaboratorioyServicioActivoPublico(BigInteger laboratorio, BigInteger servicio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.laboratorio.idlaboratorio=:laboratorio AND p.salalaboratorio.salaprivada=false AND p.estado=true AND p.serviciosala.idserviciossala=:servicio ORDER BY p.salalaboratorio.codigosala");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            query.setParameter("servicio", servicio);
+            List<SalaLaboratorioxServicios> registro =  query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarSalaLaboratorioxServiciosPorLaboratorioyServicio SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -180,7 +212,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarSalaLaboratorioxServiciossPorFiltrado SalaLaboratorioxServiciosDAO : " + e.toString());
+            logger.error("Error buscarSalaLaboratorioxServiciossPorFiltrado SalaLaboratorioxServiciosDAO : " + e.toString(),e);
             return null;
         }
     }

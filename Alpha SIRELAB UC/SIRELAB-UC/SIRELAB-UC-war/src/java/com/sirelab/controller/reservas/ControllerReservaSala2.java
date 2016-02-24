@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.reservas;
 
+import com.sirelab.ayuda.AyudaReservaModulo;
 import com.sirelab.ayuda.AyudaReservaSala;
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
@@ -20,6 +21,7 @@ import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -56,17 +58,11 @@ public class ControllerReservaSala2 implements Serializable {
     private boolean adicionarElementos;
 
     public ControllerReservaSala2() {
-    }
-
-    public void recibirInformacionReserva(AyudaReservaSala ayudaReserva) {
-        System.out.println("reserva 2");
-        
-        System.out.println("llego a la reserva 2 con info: "+reservaSala);
+        reservaSala = AyudaReservaSala.getInstance();
     }
 
     @PostConstruct
     public void init() {
-        reservaSala =  AyudaReservaSala.getInstance();
         adicionarElementos = false;
         parametroTipoReserva = null;
         parametroGuiaLaboratorio = null;
@@ -80,14 +76,7 @@ public class ControllerReservaSala2 implements Serializable {
         validacionesGuia = false;
         validacionesAsignatura = false;
         validacionesPlan = false;
-        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
-        if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-            parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("1"));
-        } else {
-            if ("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("3"));
-            }
-        }
+
     }
 
     public void actualizarPlanEstudios() {
@@ -173,9 +162,9 @@ public class ControllerReservaSala2 implements Serializable {
             Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(reservaSala.getFechaReserva(), reservaSala.getHoraInicio(), reservaSala.getSalaLaboratorio().getIdsalalaboratorio());
             if (null != respuestaReserva) {
                 if (respuestaReserva == true) {
-                    Boolean respuesta2 = administrarReservasBO.validarReservaModuloSalaDisposible(reservaSala.getFechaReserva(), reservaSala.getHoraInicio(), reservaSala.getSalaLaboratorio().getIdsalalaboratorio());
-                    if (null != respuesta2) {
-                        if (respuesta2 == true) {
+                    //Boolean respuesta2 = administrarReservasBO.validarReservaModuloSalaDisposible(reservaSala.getFechaReserva(), reservaSala.getHoraInicio(), reservaSala.getSalaLaboratorio().getIdsalalaboratorio());
+                    //if (null != respuesta2) {
+                        //if (respuesta2 == true) {
                             //Proceso siguiente de la reservaRegistro
                             registrarReservaEnSistema();
                             if (adicionarElementos == false) {
@@ -183,11 +172,11 @@ public class ControllerReservaSala2 implements Serializable {
                             } else {
                                 paginaSiguiente = "reservasala3";
                             }
-                        } else {
-                            mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
-                            colorMensaje = "red";
-                        }
-                    }
+                        //} else {
+                        //    mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
+                        //    colorMensaje = "red";
+                        //}
+                    //}
                 } else {
                     mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
                     colorMensaje = "red";
@@ -215,9 +204,19 @@ public class ControllerReservaSala2 implements Serializable {
             reservaRegistro.setPersona(personaReserva);
             PeriodoAcademico periodo = administrarReservasBO.obtenerUltimoPeriodoAcademico();
             reservaRegistro.setPeriodoacademico(periodo);
-            reservaRegistro.setNumeroreserva("0");
+            Integer numeroReserva = administrarReservasBO.obtenerNumeroReservaDia(AyudaReservaSala.getInstance().getFechaReserva());
+            SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
+            String fechaStr = formato.format(AyudaReservaSala.getInstance().getFechaReserva());
+            if (null != numeroReserva) {
+                String numReserva = fechaStr + " - " + numeroReserva.toString();
+                reservaRegistro.setNumeroreserva(numReserva);
+            } else {
+                String numReserva = fechaStr + " - " + 1;
+                reservaRegistro.setNumeroreserva(numReserva);
+            }
             reservaRegistro.setValorreserva(0);
             reservaRegistro.setTiporeserva(parametroTipoReserva);
+            reservaRegistro.setServiciosala(reservaSala.getServicioSala());
             //
             ReservaSala reservaSalaRegistro = new ReservaSala();
             reservaSalaRegistro.setAsignaturaporplanestudio(parametroAsignaturaPorPlanEstudio);
@@ -230,11 +229,11 @@ public class ControllerReservaSala2 implements Serializable {
                 AyudaReservaSala.getInstance().setReserva(reservaPersona);
                 AyudaReservaSala.getInstance().setNombreAsignatura(parametroAsignaturaPorPlanEstudio.getAsignatura().getNombreasignatura());
                 AyudaReservaSala.getInstance().setRutaGuia(parametroGuiaLaboratorio.getUbicacionguia());
-                System.out.println("guardo la info en la segunda parte: "+AyudaReservaSala.getInstance().getNombreAsignatura());
+                System.out.println("guardo la info en la segunda parte: " + AyudaReservaSala.getInstance().getNombreAsignatura());
             }
             limpiarDatosParaPaso3();
         } catch (Exception e) {
-            logger.error("Error ControllerPaso2Reserva registrarReservaEnSistema: " + e.toString());
+            logger.error("Error ControllerPaso2Reserva registrarReservaEnSistema: " + e.toString(), e);
         }
     }
 
@@ -278,7 +277,6 @@ public class ControllerReservaSala2 implements Serializable {
 
     public String cancelarReserva() {
         limpiarInformacion();
-        reservaSala = null;
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaSala");
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
@@ -308,6 +306,17 @@ public class ControllerReservaSala2 implements Serializable {
     }
 
     public TipoReserva getParametroTipoReserva() {
+        if (null == parametroTipoReserva) {
+            UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+            if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("1"));
+            } else {
+                if ("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                    parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("3"));
+                }
+            }
+        }
+        actualizarTipo();
         return parametroTipoReserva;
     }
 

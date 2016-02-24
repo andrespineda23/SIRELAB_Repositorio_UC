@@ -35,12 +35,12 @@ public class ControllerReservaModulo3 implements Serializable {
     private Integer valorReserva;
 
     public ControllerReservaModulo3() {
+        reservaModulo = AyudaReservaModulo.getInstance();
+        reservaPersona = reservaModulo.getReserva();
     }
 
     @PostConstruct
     public void init() {
-        reservaModulo = (AyudaReservaModulo) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaModulo");
-        reservaPersona = (Reserva) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaPersona");
         valorReserva = 0;
         obtenerCostoFinalReserva();
     }
@@ -66,11 +66,8 @@ public class ControllerReservaModulo3 implements Serializable {
     }
 
     public String cerrarDatosReserva() {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaModulo");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaPersona");
         valorReserva = 0;
         reservaPersona = null;
-        reservaModulo = null;
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             return "iniciodocente";

@@ -33,7 +33,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             em.persist(laboratorio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearLaboratorio LaboratorioDAO : " + e.toString());
+            logger.error("Error crearLaboratorio LaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -42,7 +42,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
         try {
             em.merge(laboratorio);
         } catch (Exception e) {
-            logger.error("Error editarLaboratorio LaboratorioDAO : " + e.toString());
+            logger.error("Error editarLaboratorio LaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -51,7 +51,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
         try {
             em.remove(em.merge(laboratorio));
         } catch (Exception e) {
-            logger.error("Error eliminarLaboratorio LaboratorioDAO : " + e.toString());
+            logger.error("Error eliminarLaboratorio LaboratorioDAO : " + e.toString(),e);
         }
     }
 
@@ -59,12 +59,12 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
     public List<Laboratorio> consultarLaboratorios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Laboratorio p");
+            Query query = em.createQuery("SELECT p FROM Laboratorio p ORDER BY p.codigolaboratorio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
+            logger.error("Error consultarLaboratorios LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -72,12 +72,12 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
     public List<Laboratorio> consultarLaboratoriosActivos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.estado=TRUE");
+            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.estado=TRUE ORDER BY p.codigolaboratorio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
+            logger.error("Error consultarLaboratorios LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -92,7 +92,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             Laboratorio registro = (Laboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarLaboratorioPorID LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorID LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -108,7 +108,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             Laboratorio registro = (Laboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarLaboratorioPorCodigoYDepartamento LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorCodigoYDepartamento LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -123,7 +123,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             Laboratorio registro = (Laboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarLaboratorioPorCodigo LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorCodigo LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -132,13 +132,13 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
     public List<Laboratorio> buscarLaboratorioPorIDDepartamento(BigInteger idDepartamento) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.departamento.iddepartamento=:idDepartamento");
+            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.departamento.iddepartamento=:idDepartamento ORDER BY p.codigolaboratorio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idDepartamento", idDepartamento);
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarLaboratorioPorIDDepartamento LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioPorIDDepartamento LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -147,13 +147,13 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
     public List<Laboratorio> buscarLaboratorioActivosPorIDDepartamento(BigInteger idDepartamento) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.departamento.iddepartamento=:idDepartamento AND p.estado=true");
+            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.departamento.iddepartamento=:idDepartamento AND p.estado=true ORDER BY p.codigolaboratorio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idDepartamento", idDepartamento);
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error buscarLaboratorioActivosPorIDDepartamento LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratorioActivosPorIDDepartamento LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -174,7 +174,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarLaboratoriosPorFiltrado LaboratorioDAO : " + e.toString());
+            logger.error("Error buscarLaboratoriosPorFiltrado LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -267,7 +267,7 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaLaboratorioRegistrada LaboratorioDAO : " + e.toString());
+            logger.error("Error obtenerUltimaLaboratorioRegistrada LaboratorioDAO : " + e.toString(),e);
             return null;
         }
     }

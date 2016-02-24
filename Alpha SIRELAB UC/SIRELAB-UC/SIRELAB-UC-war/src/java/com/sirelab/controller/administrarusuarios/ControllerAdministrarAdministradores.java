@@ -144,8 +144,8 @@ public class ControllerAdministrarAdministradores implements Serializable {
                 bloquearPagSigAdministrador = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros:  " + e.toString());
-            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros : " + e.toString());
+            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerAdministrarAdministradores buscarAdministradoresPorParametros : " + e.toString(),e);
         }
     }
 

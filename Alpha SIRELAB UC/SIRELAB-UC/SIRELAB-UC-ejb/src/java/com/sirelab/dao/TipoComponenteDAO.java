@@ -36,7 +36,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
             em.persist(tipoComponente);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoComponente TipoComponenteDAO : " + e.toString());
+            logger.error("Error crearTipoComponente TipoComponenteDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
         try {
             em.merge(tipoComponente);
         } catch (Exception e) {
-            logger.error("Error editarTipoComponente TipoComponenteDAO : " + e.toString());
+            logger.error("Error editarTipoComponente TipoComponenteDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
         try {
             em.remove(em.merge(tipoComponente));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoComponente TipoComponenteDAO : " + e.toString());
+            logger.error("Error eliminarTipoComponente TipoComponenteDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
     public List<TipoComponente> consultarTiposComponentes() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoComponente p");
+            Query query = em.createQuery("SELECT p FROM TipoComponente p ORDER BY p.nombretipo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<TipoComponente> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposComponentes TipoComponenteDAO : " + e.toString());
+            logger.error("Error consultarTiposComponentes TipoComponenteDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
             TipoComponente registro = (TipoComponente) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoComponentePorID TipoComponenteDAO : " + e.toString());
+            logger.error("Error buscarTipoComponentePorID TipoComponenteDAO : " + e.toString(),e);
             return null;
         }
     }

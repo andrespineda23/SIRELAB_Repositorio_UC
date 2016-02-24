@@ -227,8 +227,8 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
             nuevoHorario.setHoracierresabado(horaCierreSabado.toString());
             gestionarVariableHorariosAtencionBO.crearHorarioAtencion(nuevoHorario);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro:  " + e.toString());
-            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString());
+            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString(),e);
         }
     }
 

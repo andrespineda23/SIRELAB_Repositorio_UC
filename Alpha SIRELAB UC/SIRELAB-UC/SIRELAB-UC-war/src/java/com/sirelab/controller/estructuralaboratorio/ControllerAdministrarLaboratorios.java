@@ -223,8 +223,8 @@ public class ControllerAdministrarLaboratorios implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalLaboratorio);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString(),e);
         }
     }
 

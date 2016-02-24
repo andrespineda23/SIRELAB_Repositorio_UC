@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
 public class ControllerReservaModulo2 implements Serializable {
 
     static Logger logger = Logger.getLogger(ControllerReservaModulo2.class);
-    
+
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
@@ -46,12 +46,12 @@ public class ControllerReservaModulo2 implements Serializable {
     private boolean adicionarElementos;
 
     public ControllerReservaModulo2() {
+        reservaModulo = AyudaReservaModulo.getInstance();
     }
 
     @PostConstruct
     public void init() {
         adicionarElementos = false;
-        reservaModulo = (AyudaReservaModulo) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("reservaModulo");
         parametroTipoReserva = null;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
@@ -68,55 +68,41 @@ public class ControllerReservaModulo2 implements Serializable {
         }
     }
 
-    private boolean validarResultadosValidacion() {
-        boolean retorno = true;
-        if (validacionesTipo == false) {
-            retorno = false;
-        }
-        return retorno;
-    }
-
     public String finalizarProcesoReserva() {
         String paginaSiguiente = "";
-        if (validarResultadosValidacion() == true) {
-            Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(reservaModulo.getFechaReserva(), String.valueOf(reservaModulo.getHoraInicio()), reservaModulo.getModuloLaboratorio().getSalalaboratorio().getIdsalalaboratorio());
-            if (null != respuestaReserva) {
-                if (respuestaReserva == true) {
-                    List<ReservaModuloLaboratorio> reservaModuloLaboratorio = administrarReservasBO.obtenerCantidadReservasModuloPorParametros(reservaModulo.getFechaReserva(), String.valueOf(reservaModulo.getHoraInicio()), reservaModulo.getModuloLaboratorio().getSalalaboratorio().getIdsalalaboratorio());
-                    List<ModuloLaboratorio> moduloLaboratorio = administrarReservasBO.obtenerModuloLaboratoriosPorSala(reservaModulo.getModuloLaboratorio().getSalalaboratorio().getIdsalalaboratorio());
-                    int cantidadReserva = 0;
-                    int cantidadModulo = 0;
-                    if (Utilidades.validarNulo(reservaModuloLaboratorio)) {
-                        cantidadReserva = reservaModuloLaboratorio.size();
-                    }
-                    if (Utilidades.validarNulo(moduloLaboratorio)) {
-                        cantidadModulo = moduloLaboratorio.size();
-                    }
-                    if (cantidadReserva < cantidadModulo) {
-                        for (int i = 0; i < cantidadModulo; i++) {
-                            for (int j = 0; j < cantidadReserva; j++) {
-                                if (moduloLaboratorio.get(i).getIdmodulolaboratorio().equals(reservaModuloLaboratorio.get(j).getModulolaboratorio().getIdmodulolaboratorio())) {
-                                    moduloLaboratorio.remove(i);
-                                }
+        Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(reservaModulo.getFechaReserva(), String.valueOf(reservaModulo.getHoraInicio()), reservaModulo.getModuloLaboratorio().getSalalaboratorio().getIdsalalaboratorio());
+        if (null != respuestaReserva) {
+            if (respuestaReserva == true) {
+                List<ReservaModuloLaboratorio> reservaModuloLaboratorio = administrarReservasBO.obtenerCantidadReservasModuloPorParametros(reservaModulo.getFechaReserva(), String.valueOf(reservaModulo.getHoraInicio()), reservaModulo.getModuloLaboratorio().getSalalaboratorio().getIdsalalaboratorio());
+                List<ModuloLaboratorio> moduloLaboratorio = administrarReservasBO.obtenerModuloLaboratoriosPorSala(reservaModulo.getModuloLaboratorio().getSalalaboratorio().getIdsalalaboratorio());
+                int cantidadReserva = 0;
+                int cantidadModulo = 0;
+                if (Utilidades.validarNulo(reservaModuloLaboratorio)) {
+                    cantidadReserva = reservaModuloLaboratorio.size();
+                }
+                if (Utilidades.validarNulo(moduloLaboratorio)) {
+                    cantidadModulo = moduloLaboratorio.size();
+                }
+                if (cantidadReserva < cantidadModulo) {
+                    for (int i = 0; i < cantidadModulo; i++) {
+                        for (int j = 0; j < cantidadReserva; j++) {
+                            if (moduloLaboratorio.get(i).getIdmodulolaboratorio().equals(reservaModuloLaboratorio.get(j).getModulolaboratorio().getIdmodulolaboratorio())) {
+                                moduloLaboratorio.remove(i);
                             }
                         }
-                        reservaModulo.setModuloLaboratorio(moduloLaboratorio.get(0));
-                        paginaSiguiente = "reservamodulo3";
-                        registrarReservaEnSistema();
-                    } else {
-                        mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad.";
-                        colorMensaje = "red";
                     }
+                    reservaModulo.setModuloLaboratorio(moduloLaboratorio.get(0));
+                    paginaSiguiente = "reservamodulo3";
+                    registrarReservaEnSistema();
                 } else {
-                    mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
+                    mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad.";
                     colorMensaje = "red";
                 }
+            } else {
+                mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
+                colorMensaje = "red";
             }
-        } else {
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar";
-            colorMensaje = "red";
         }
-
         return paginaSiguiente;
     }
 
@@ -128,6 +114,7 @@ public class ControllerReservaModulo2 implements Serializable {
             Reserva reservaRegistro = new Reserva();
             EstadoReserva estado = administrarReservasBO.obtenerEstadoReservaPorId(new BigInteger("1"));
             reservaRegistro.setEstadoreserva(estado);
+            reservaRegistro.setServiciosala(reservaModulo.getServicioSala());
             reservaRegistro.setFechareserva(reservaModulo.getFechaReserva());
             reservaRegistro.setHorainicio(reservaModulo.getHoraInicio());
             Integer horafinal = Integer.valueOf(reservaModulo.getHoraInicio()) + 2;
@@ -147,7 +134,7 @@ public class ControllerReservaModulo2 implements Serializable {
             }
             limpiarDatosParaPaso3();
         } catch (Exception e) {
-            logger.error("Error ControllerPaso2Reserva registrarReservaEnSistema: " + e.toString());
+            logger.error("Error ControllerPaso2Reserva registrarReservaEnSistema: " + e.toString(),e);
         }
     }
 
@@ -166,7 +153,6 @@ public class ControllerReservaModulo2 implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         validacionesTipo = false;
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaModulo");
 
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {

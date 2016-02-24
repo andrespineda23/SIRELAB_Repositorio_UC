@@ -163,8 +163,8 @@ public class ControllerAdministrarPlanesEstudio implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalPlanEstudio);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlanesEstudios buscarPlanesEstudiosPorParametros : " + e.toString(),e);
         }
     }
 

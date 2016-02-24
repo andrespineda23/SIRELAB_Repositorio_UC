@@ -301,8 +301,8 @@ public class ControllerAdministrarEquipos implements Serializable {
                 bloquearPagSigEquipo = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros:  " + e.toString());
-            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros : " + e.toString());
+            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaEquiposElementos buscarEquiposElementosPorParametros : " + e.toString(),e);
         }
     }
 

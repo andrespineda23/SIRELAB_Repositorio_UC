@@ -39,7 +39,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
             em.persist(asignatura);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error crearAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
         }
     }
 
@@ -49,7 +49,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
             em.clear();
             em.merge(asignatura);
         } catch (Exception e) {
-            logger.error("Error editarAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error editarAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
             em.clear();
             em.remove(em.merge(asignatura));
         } catch (Exception e) {
-            logger.error("Error eliminarAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error eliminarAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
         }
     }
 
@@ -67,12 +67,12 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
     public List<AsignaturaPorPlanEstudio> consultarAsignaturasPorPlanEstudio() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p");
+            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p  ORDER BY p.asignatura.codigoasignatura ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<AsignaturaPorPlanEstudio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarAsignaturasPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error consultarAsignaturasPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -81,13 +81,13 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
     public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosIdPlanEstudio(BigInteger planEstudio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p WHERE p.planestudio.idplanestudios=:planEstudio");
+            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p WHERE p.planestudio.idplanestudios=:planEstudio  ORDER BY p.asignatura.codigoasignatura ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("planEstudio", planEstudio);
             List<AsignaturaPorPlanEstudio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarAsignaturaPorPlanEstudiosIdPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error consultarAsignaturaPorPlanEstudiosIdPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -95,13 +95,13 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
     public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosActivoIdPlanEstudio(BigInteger planEstudio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p WHERE p.planestudio.idplanestudios=:planEstudio AND p.estado=true");
+            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p WHERE p.planestudio.idplanestudios=:planEstudio AND p.estado=true  ORDER BY p.asignatura.codigoasignatura ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("planEstudio", planEstudio);
             List<AsignaturaPorPlanEstudio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarAsignaturaPorPlanEstudiosIdPlanEstudio consultarAsignaturaPorPlanEstudiosActivoIdPlanEstudio : " + e.toString());
+            logger.error("Error consultarAsignaturaPorPlanEstudiosIdPlanEstudio consultarAsignaturaPorPlanEstudiosActivoIdPlanEstudio : " + e.toString(),e);
             return null;
         }
     }
@@ -110,13 +110,13 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
     public List<AsignaturaPorPlanEstudio> consultarAsignaturaPorPlanEstudiosIdAsignatura(BigInteger asignatura) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p WHERE p.asignatura.idasignatura=:asignatura");
+            Query query = em.createQuery("SELECT p FROM AsignaturaPorPlanEstudio p WHERE p.asignatura.idasignatura=:asignatura  ORDER BY p.asignatura.codigoasignatura ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("asignatura", asignatura);
             List<AsignaturaPorPlanEstudio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarAsignaturaPorPlanEstudiosIdAsignatura AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error consultarAsignaturaPorPlanEstudiosIdAsignatura AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -131,7 +131,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
             AsignaturaPorPlanEstudio registro = (AsignaturaPorPlanEstudio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarAsignaturaPorPlanEstudioPorID AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error buscarAsignaturaPorPlanEstudioPorID AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -147,7 +147,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
             AsignaturaPorPlanEstudio registro = (AsignaturaPorPlanEstudio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarAsignaturaPorPlanEstudioPorPlanYAsignatura AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error buscarAsignaturaPorPlanEstudioPorPlanYAsignatura AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -162,13 +162,13 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".estado ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".asignatura.codigoasignatura ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<AsignaturaPorPlanEstudio> tq = em.createQuery(consulta, AsignaturaPorPlanEstudio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarAsignaturaPorPlanEstudioPorPlanEstudioPorFiltrado AsignaturaPorPlanEstudioDAO : " + e.toString());
+            logger.error("Error buscarAsignaturaPorPlanEstudioPorPlanEstudioPorFiltrado AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
             return null;
         }
     }

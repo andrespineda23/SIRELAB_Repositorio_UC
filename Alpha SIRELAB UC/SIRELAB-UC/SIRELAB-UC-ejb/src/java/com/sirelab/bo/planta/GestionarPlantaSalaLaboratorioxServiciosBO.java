@@ -53,7 +53,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             SalaLaboratorioxServicios registro = salaLaboratorioXServiciosDAO.buscarSalaLaboratorioxServiciosPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorID : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -64,7 +64,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerEncargadoLaboratorioPorID : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerEncargadoLaboratorioPorID : " + e.toString(),e);
             return null;
         }
     }
@@ -75,7 +75,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             SalaLaboratorioxServicios registro = salaLaboratorioXServiciosDAO.buscarSalaLaboratorioxServiciosPorSalayServicio(sala, servicio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorSalayServicio : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorSalayServicio : " + e.toString(),e);
             return null;
         }
     }
@@ -86,7 +86,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<SalaLaboratorioxServicios> lista = salaLaboratorioXServiciosDAO.buscarSalaLaboratorioxServiciosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioxServiciosPorParametro : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioxServiciosPorParametro : " + e.toString(),e);
             return null;
         }
     }
@@ -97,7 +97,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString(),e);
             return null;
         }
     }
@@ -109,7 +109,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<Laboratorio> lista = laboratorioDAO.consultarLaboratorios();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosRegistrados : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosRegistrados : " + e.toString(),e);
             return null;
         }
     }
@@ -120,7 +120,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<Departamento> lista = departamentoDAO.consultarDepartamentosActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString(),e);
             return null;
         }
     }
@@ -131,7 +131,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -142,7 +142,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorio(laboratorio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboraatorioPorIDLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboraatorioPorIDLaboratorio : " + e.toString(),e);
             return null;
         }
     }
@@ -153,7 +153,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosActivosPorIDDepartamento : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosActivosPorIDDepartamento : " + e.toString(),e);
             return null;
         }
     }
@@ -164,7 +164,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivos(laboratorio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratoriosActivosPorIDLaboratorio : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratoriosActivosPorIDLaboratorio : " + e.toString(),e);
             return null;
         }
     }
@@ -175,7 +175,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<ServiciosSala> lista = serviciosSalaDAO.consultarServiciosSala();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarServiciosSalaRegistradas : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarServiciosSalaRegistradas : " + e.toString(),e);
             return null;
         }
     }
@@ -185,7 +185,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
         try {
             salaLaboratorioXServiciosDAO.crearSalaLaboratorioxServicios(registro);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO crearSalaLaboratorioxServicios : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO crearSalaLaboratorioxServicios : " + e.toString(),e);
         }
     }
 
@@ -194,7 +194,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
         try {
             salaLaboratorioXServiciosDAO.editarSalaLaboratorioxServicios(registro);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO editarSalaLaboratorioxServicios : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO editarSalaLaboratorioxServicios : " + e.toString(),e);
         }
     }
 
@@ -203,7 +203,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
         try {
             salaLaboratorioXServiciosDAO.eliminarSalaLaboratorioxServicios(registro);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO eliminarSalaLaboratorioxServicios : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO eliminarSalaLaboratorioxServicios : " + e.toString(),e);
         }
     }
 
@@ -213,7 +213,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             SalaLaboratorio registro = salaLaboratorioDAO.buscarSalaLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerSalaLaboratorioPorId : " + e.toString());
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerSalaLaboratorioPorId : " + e.toString(),e);
             return null;
         }
     }

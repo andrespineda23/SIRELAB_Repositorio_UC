@@ -41,7 +41,7 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
             logger.info("Mensaje Info");
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearServiciosSala ServiciosSalaDAO : " + e.toString());
+            logger.error("Error crearServiciosSala ServiciosSalaDAO : " + e.toString(),e);
         }
     }
 
@@ -50,7 +50,7 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
         try {
             em.merge(serviciossala);
         } catch (Exception e) {
-            logger.error("Error editarServiciosSala ServiciosSalaDAO : " + e.toString());
+            logger.error("Error editarServiciosSala ServiciosSalaDAO : " + e.toString(),e);
         }
     }
 
@@ -59,7 +59,7 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
         try {
             em.remove(em.merge(serviciossala));
         } catch (Exception e) {
-            logger.error("Error eliminarServiciosSala ServiciosSalaDAO : " + e.toString());
+            logger.error("Error eliminarServiciosSala ServiciosSalaDAO : " + e.toString(),e);
         }
     }
 
@@ -67,12 +67,12 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
     public List<ServiciosSala> consultarServiciosSala() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ServiciosSala p");
+            Query query = em.createQuery("SELECT p FROM ServiciosSala p ORDER BY p.codigoservicio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ServiciosSala> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarAreasProfundizacion ServiciosSalaDAO : " + e.toString());
+            logger.error("Error consultarAreasProfundizacion ServiciosSalaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -80,12 +80,12 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
     public List<ServiciosSala> consultarServiciosSalaActivos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ServiciosSala p WHERE p.estado=true");
+            Query query = em.createQuery("SELECT p FROM ServiciosSala p WHERE p.estado=true ORDER BY p.codigoservicio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ServiciosSala> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarAreasProfundizacion ServiciosSalaDAO : " + e.toString());
+            logger.error("Error consultarAreasProfundizacion ServiciosSalaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
             ServiciosSala registro = (ServiciosSala) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarServiciosSalaPorID ServiciosSalaDAO : " + e.toString());
+            logger.error("Error buscarServiciosSalaPorID ServiciosSalaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -115,7 +115,7 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
             ServiciosSala registro = (ServiciosSala) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarServiciosSalaPorCodigo ServiciosSalaDAO : " + e.toString());
+            logger.error("Error buscarServiciosSalaPorCodigo ServiciosSalaDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -130,13 +130,13 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + ".nombreservicio ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".codigoservicio ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<ServiciosSala> tq = em.createQuery(consulta, ServiciosSala.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarAreasProfundizacionPorFiltrado ServiciosSalaDAO : " + e.toString());
+            logger.error("Error buscarAreasProfundizacionPorFiltrado ServiciosSalaDAO : " + e.toString(),e);
             return null;
         }
     }

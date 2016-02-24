@@ -36,7 +36,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
             em.persist(tipoEvento);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearTipoEvento TipoEventoDAO : " + e.toString());
+            logger.error("Error crearTipoEvento TipoEventoDAO : " + e.toString(),e);
         }
     }
 
@@ -45,7 +45,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
         try {
             em.merge(tipoEvento);
         } catch (Exception e) {
-            logger.error("Error editarTipoEvento TipoEventoDAO : " + e.toString());
+            logger.error("Error editarTipoEvento TipoEventoDAO : " + e.toString(),e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
         try {
             em.remove(em.merge(tipoEvento));
         } catch (Exception e) {
-            logger.error("Error eliminarTipoEvento TipoEventoDAO : " + e.toString());
+            logger.error("Error eliminarTipoEvento TipoEventoDAO : " + e.toString(),e);
         }
     }
 
@@ -62,12 +62,12 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
     public List<TipoEvento> consultarTiposEventos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoEvento p");
+            Query query = em.createQuery("SELECT p FROM TipoEvento p ORDER BY p.detalleevento ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<TipoEvento> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarTiposEventos TipoEventoDAO : " + e.toString());
+            logger.error("Error consultarTiposEventos TipoEventoDAO : " + e.toString(),e);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
             TipoEvento registro = (TipoEvento) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarTipoEventoPorID TipoEventoDAO : " + e.toString());
+            logger.error("Error buscarTipoEventoPorID TipoEventoDAO : " + e.toString(),e);
             return null;
         }
     }

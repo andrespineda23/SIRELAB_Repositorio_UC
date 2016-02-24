@@ -285,6 +285,17 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         }
     }
 
+    private boolean validarPeriodosAcademicosExistentes() {
+        Integer cantidad = gestionarVariablePeriodosAcademicosBO.obtenerPeriodosAcademicosActivos();
+        boolean respuest = true;
+        if (null != cantidad) {
+            if (cantidad > 0) {
+                respuest = false;
+            }
+        }
+        return respuest;
+    }
+
     private boolean validarValidacionesRegistro() {
         boolean retorno = true;
         if (validacionesDetalle == false) {
@@ -310,13 +321,18 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
             comparacion = date1.compareTo(date2);
 
             if (comparacion < 0) {
-                almacenarRegistroNuevo();
-                restaurarFormulario();
-                activarLimpiar = false;
-                activarAceptar = true;
-                activarCasillas = true;
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarPeriodosAcademicosExistentes() == true) {
+                    almacenarRegistroNuevo();
+                    restaurarFormulario();
+                    activarLimpiar = false;
+                    activarAceptar = true;
+                    activarCasillas = true;
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "Existe registrado un periodo academico a la fecha. Cierre el periodo para continuar.";
+                }
             } else {
                 colorMensaje = "red";
                 mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
@@ -345,8 +361,8 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
             periodoNuevo.setFechainicial(fecha1);
             gestionarVariablePeriodosAcademicosBO.crearPeriodoAcademico(periodoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo:  " + e.toString());
-            logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo: " + e.toString());
+            logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
 

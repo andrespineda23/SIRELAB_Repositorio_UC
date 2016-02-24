@@ -233,8 +233,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades:  " + e.toString());
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades : " + e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades : " + e.toString(),e);
         }
     }
 
@@ -259,8 +259,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos:  " + e.toString());
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos : " + e.toString(),e);
         }
     }
 
@@ -537,8 +537,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
             restaurarInformacionEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio : " + e.toString(),e);
 
         }
     }
@@ -569,8 +569,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio activarEncargadoLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesEncargadosLaboratorios activarEncargadoLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio activarEncargadoLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadosLaboratorios activarEncargadoLaboratorio : " + e.toString(),e);
         }
     }
 
@@ -592,8 +592,8 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio inactivarEncargadoLaboratorio:  " + e.toString());
-            logger.error("Error ControllerDetallesEncargadosLaboratorios inactivarEncargadoLaboratorio : " + e.toString());
+            logger.error("Error ControllerDetallesEncargadoLaboratorio inactivarEncargadoLaboratorio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadosLaboratorios inactivarEncargadoLaboratorio : " + e.toString(),e);
         }
     }
 

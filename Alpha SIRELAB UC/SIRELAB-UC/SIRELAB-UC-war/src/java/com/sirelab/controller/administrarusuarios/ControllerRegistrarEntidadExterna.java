@@ -299,8 +299,8 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             entidadexternaNueva.setTelefonoentidad(inputTelefono1);
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(entidadexternaNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString(),e);
         }
     }
 

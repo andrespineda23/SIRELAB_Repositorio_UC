@@ -261,8 +261,8 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             List<Asignatura> lista = cargarAsignaturas();
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo, lista);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  " + e.toString());
-            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString());
+            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString(),e);
         }
     }
 
