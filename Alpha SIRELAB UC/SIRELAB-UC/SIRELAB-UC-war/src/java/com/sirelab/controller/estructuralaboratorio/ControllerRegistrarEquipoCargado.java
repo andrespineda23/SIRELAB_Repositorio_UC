@@ -67,6 +67,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
     private String colorMensaje;
+    private boolean nuevoTipo;
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private boolean fechaDiferida;
@@ -93,6 +94,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         nuevoCostoAlquilerEquipo = "0";
         nuevoCostoInversionEquipo = "0";
         Date fecha = new Date();
+        nuevoTipo = false;
         DateFormat df = DateFormat.getDateInstance();
         nuevoFechaAdquisicionEquipo = df.format(fecha);
         validacionesCosto = true;
@@ -459,6 +461,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
             equipoNuevo.setMarcaequipo(nuevoMarcaEquipo);
             equipoNuevo.setSeriequipo(nuevoSerieEquipo);
             equipoNuevo.setModeloequipo(nuevoModeloEquipo);
+            equipoNuevo.setPrivado(nuevoTipo);
             equipoNuevo.setCantidadequipo(Integer.valueOf("1"));
             if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty()) && (nuevoCostoInversionEquipo.trim().length() > 0)) {
                 equipoNuevo.setCostoadquisicion(Integer.valueOf(nuevoCostoInversionEquipo));
@@ -494,8 +497,8 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString(), e);
         }
     }
 
@@ -516,6 +519,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         nuevoProveedorEquipo = null;
         //
         fechaDiferida = true;
+        nuevoTipo = false;
         validacionesCosto = true;
         validacionesEspecificacion = true;
         validacionesEstado = false;
@@ -542,6 +546,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         nuevoModeloEquipo = null;
         nuevoMarcaEquipo = null;
         nuevoSerieEquipo = null;
+        nuevoTipo = false;
         nuevoEspecificacionEquipo = null;
         nuevoCostoAlquilerEquipo = "0";
         nuevoCostoInversionEquipo = "0";
@@ -824,6 +829,14 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
 
     public void setListaDiasRegistro(List<AyudaFechaReserva> listaDiasRegistro) {
         this.listaDiasRegistro = listaDiasRegistro;
+    }
+
+    public boolean isNuevoTipo() {
+        return nuevoTipo;
+    }
+
+    public void setNuevoTipo(boolean nuevoTipo) {
+        this.nuevoTipo = nuevoTipo;
     }
 
 }

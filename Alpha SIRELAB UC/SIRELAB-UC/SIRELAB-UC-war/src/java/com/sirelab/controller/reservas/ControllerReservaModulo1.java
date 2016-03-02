@@ -10,7 +10,6 @@ import com.sirelab.ayuda.AyudaReservaModulo;
 import com.sirelab.ayuda.AyudaReservaSala;
 import com.sirelab.ayuda.HoraReserva;
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
-import static com.sirelab.controller.reservas.ControllerReservaModulo2.logger;
 import com.sirelab.entidades.EstadoReserva;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
@@ -290,7 +289,7 @@ public class ControllerReservaModulo1 implements Serializable {
             Reserva reservaPersona = administrarReservasBO.registrarNuevaReservaModulo(reservaRegistro, reservaModuloRegistro);
             AyudaReservaModulo.getInstance().setReserva(reservaPersona);
         } catch (Exception e) {
-            logger.error("Error ControllerPaso1Reserva registrarReservaEnSistema: " + e.toString(), e);
+            
         }
     }
 
@@ -304,7 +303,7 @@ public class ControllerReservaModulo1 implements Serializable {
         } else {
             if (laboratorio == true && servicio == false) {
                 parametroSala = new SalaLaboratorio();
-                listaSalaLaboratorio = administrarReservasBO.consultarSalaLaboratorioPorIdLaboratorio(parametroLaboratorio.getIdlaboratorio());
+                listaSalaLaboratorio = administrarReservasBO.consultarSalaLaboratorioPorIdLaboratorioReserva(parametroLaboratorio.getIdlaboratorio());
                 activarSala = false;
             } else {
                 parametroSala = new SalaLaboratorio();

@@ -175,4 +175,18 @@ public class ReservaDAO implements ReservaDAOInterface {
         }
     }
 
+    @Override
+    public Reserva buscarReservaPorNumero(String numero) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Reserva p WHERE p.numeroreserva=:numero");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("numero", numero);
+            Reserva registro = (Reserva) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaPorNumero ReservaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
 }

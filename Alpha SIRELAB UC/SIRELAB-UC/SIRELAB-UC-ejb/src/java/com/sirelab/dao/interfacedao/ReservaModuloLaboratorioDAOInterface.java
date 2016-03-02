@@ -33,4 +33,6 @@ public interface ReservaModuloLaboratorioDAOInterface {
     public List<ReservaModuloLaboratorio> buscarCantidadReservaModuloLaboratorioPorParametros(Date fecha, String horaInicio, BigInteger sala);
 
     public List<ReservaModuloLaboratorio> buscarReservaModuloPorPersona(BigInteger persona);
+
+    public ReservaModuloLaboratorio buscarReservaModuloLaboratorioPorIdReserva(BigInteger reserva);
 }

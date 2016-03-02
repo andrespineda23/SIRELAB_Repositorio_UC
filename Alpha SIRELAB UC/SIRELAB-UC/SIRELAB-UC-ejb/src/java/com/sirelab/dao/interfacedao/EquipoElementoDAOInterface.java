@@ -30,5 +30,7 @@ public interface EquipoElementoDAOInterface {
 
     public EquipoElemento buscarEquipoElementoPorCodigoYModulo(String codigo, BigInteger modulo);
 
+    public List<EquipoElemento> consultarEquiposElementosBodegaPublicos(BigInteger sala);
+
     public EquipoElemento obtenerUltimaEquipoElementoRegistrada();
 }

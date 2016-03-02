@@ -87,6 +87,20 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             return null;
         }
     }
+    @Override
+    public ReservaModuloLaboratorio buscarReservaModuloLaboratorioPorIdReserva(BigInteger reserva) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.idreserva=:reserva");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("reserva", reserva);
+            ReservaModuloLaboratorio registro = (ReservaModuloLaboratorio) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaModuloLaboratorioPorIdReserva ReservaModuloLaboratorioDAO : " + e.toString(),e);
+            return null;
+        }
+    }
 
     @Override
     public ReservaModuloLaboratorio buscarReservaModuloLaboratorioPorFechaHoraSala(Date fecha, String horaInicio, BigInteger sala) {

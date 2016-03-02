@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
 
     static Logger logger = Logger.getLogger(SalaLaboratorioDAO.class);
-    
+
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -33,7 +33,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             em.persist(salalaboratorio);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearSalaLaboratorio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error crearSalaLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
         }
     }
 
@@ -42,7 +42,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
         try {
             em.merge(salalaboratorio);
         } catch (Exception e) {
-            logger.error("Error editarSalaLaboratorio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error editarSalaLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
         }
     }
 
@@ -51,7 +51,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
         try {
             em.remove(em.merge(salalaboratorio));
         } catch (Exception e) {
-            logger.error("Error eliminarSalaLaboratorio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error eliminarSalaLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
         }
     }
 
@@ -64,7 +64,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             List<SalaLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarSalasLaboratorios SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error consultarSalasLaboratorios SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             SalaLaboratorio registro = (SalaLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalaLaboratorioPorID SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalaLaboratorioPorID SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -94,10 +94,11 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             List<SalaLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalasLaboratoriosPorEdificio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalasLaboratoriosPorEdificio SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
+
     @Override
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorDepartamento(BigInteger departamento) {
         try {
@@ -108,7 +109,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             List<SalaLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalasLaboratoriosPorDepartamento SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalasLaboratoriosPorDepartamento SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -125,7 +126,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             SalaLaboratorio registro = (SalaLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalaLaboratorioPorEdificioyLaboratorio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalaLaboratorioPorEdificioyLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -140,7 +141,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             List<SalaLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -155,12 +156,11 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             List<SalaLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
-    
-    
+
     @Override
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioActivosPublicos(BigInteger laboratorio) {
         try {
@@ -171,7 +171,37 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             List<SalaLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<SalaLaboratorio> buscarBodegasPorLaboratorio(BigInteger laboratorio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratorio.idlaboratorio=:laboratorio AND p.esbodega=true AND p.estadosala=true ORDER BY p.codigosala ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarBodegasPorLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioActivosPublicosReserva(BigInteger laboratorio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.laboratorio.idlaboratorio=:laboratorio AND p.esbodega=false AND p.estadosala=true AND p.salaprivada=false ORDER BY p.codigosala ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarSalasLaboratoriosPorLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -192,7 +222,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarSalasLaboratoriosPorFiltrado SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarSalasLaboratoriosPorFiltrado SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -309,7 +339,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaSalaLaboratorioRegistrada SalaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error obtenerUltimaSalaLaboratorioRegistrada SalaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }

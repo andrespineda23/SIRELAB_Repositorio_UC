@@ -99,6 +99,18 @@ and open the template in the editor.
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnProveedorEquipo" for="proveedorEquipoElemento" style="color: red"/></h6>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="editarTipo">
+                                            Tipo de Equipo*
+                                        </label>
+                                        <h:selectOneMenu value="#{controllerDetallesEquipo.editarTipo}"
+                                                         class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
+                                                         id="editarTipo">
+                                            <f:selectItem itemLabel="PUBLICO" itemValue="false" />
+                                            <f:selectItem itemLabel="PRIVADO" itemValue="true" />
+                                            <f:ajax event="change" listener="#{controllerDetallesEquipo.actualizarTipoEquipo()}" execute="editarTipo" />
+                                        </h:selectOneMenu>
+                                    </div>
                                     <fieldset>
                                         <legend class="h5 text-info">Datos Opcionales</legend>
                                         <div class="form-group">

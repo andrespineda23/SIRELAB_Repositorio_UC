@@ -185,7 +185,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
     public List<SalaLaboratorioxServicios> buscarSalasLaboratorioxServiciosPorLaboratorioyServicioActivoPublico(BigInteger laboratorio, BigInteger servicio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.laboratorio.idlaboratorio=:laboratorio AND p.salalaboratorio.salaprivada=false AND p.estado=true AND p.serviciosala.idserviciossala=:servicio ORDER BY p.salalaboratorio.codigosala");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorioxServicios p WHERE p.salalaboratorio.laboratorio.idlaboratorio=:laboratorio AND p.salalaboratorio.salaprivada=false AND p.estado=true AND p.serviciosala.idserviciossala=:servicio AND p.salalaboratorio.esbodega=false ORDER BY p.salalaboratorio.codigosala");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("laboratorio", laboratorio);
             query.setParameter("servicio", servicio);

@@ -75,6 +75,20 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
             return null;
         }
     }
+    @Override
+    public List<EquipoElemento> consultarEquiposElementosBodegaPublicos(BigInteger sala) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM EquipoElemento p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio=:sala AND p.privado=false ORDER BY p.inventarioequipo ASC");
+            query.setParameter("sala", sala);
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<EquipoElemento> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error consultarEquiposElementosBodegaPublicos EquipoElementoDAO : " + e.toString(),e);
+            return null;
+        }
+    }
 
     @Override
     public EquipoElemento buscarEquipoElementoPorID(BigInteger idRegistro) {

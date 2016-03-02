@@ -25,6 +25,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -45,12 +46,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SalaLaboratorio.findByEstadosala", query = "SELECT s FROM SalaLaboratorio s WHERE s.estadosala = :estadosala"),
     @NamedQuery(name = "SalaLaboratorio.findByCapacidadsala", query = "SELECT s FROM SalaLaboratorio s WHERE s.capacidadsala = :capacidadsala"),
     @NamedQuery(name = "SalaLaboratorio.findByValorinversion", query = "SELECT s FROM SalaLaboratorio s WHERE s.valorinversion = :valorinversion"),
-    @NamedQuery(name = "SalaLaboratorio.findBySalaprivada", query = "SELECT s FROM SalaLaboratorio s WHERE s.salaprivada = :salaprivada")})
+    @NamedQuery(name = "SalaLaboratorio.findBySalaprivada", query = "SELECT s FROM SalaLaboratorio s WHERE s.salaprivada = :salaprivada"),
+    @NamedQuery(name = "SalaLaboratorio.findByCostosaladigitado", query = "SELECT s FROM SalaLaboratorio s WHERE s.costosaladigitado = :costosaladigitado"),
+    @NamedQuery(name = "SalaLaboratorio.findByEsbodega", query = "SELECT s FROM SalaLaboratorio s WHERE s.esbodega = :esbodega")})
 public class SalaLaboratorio implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
     private Collection<ModuloLaboratorio> moduloLaboratorioCollection;
-    @Column(name = "costosaladigitado")
-    private Boolean costosaladigitado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -94,14 +95,16 @@ public class SalaLaboratorio implements Serializable {
     private BigInteger valorinversion;
     @Column(name = "salaprivada")
     private Boolean salaprivada;
+    @Column(name = "costosaladigitado")
+    private Boolean costosaladigitado;
+    @Column(name = "esbodega")
+    private Boolean esbodega;
     @JoinColumn(name = "laboratorio", referencedColumnName = "idlaboratorio")
     @ManyToOne(optional = false)
     private Laboratorio laboratorio;
     @JoinColumn(name = "edificio", referencedColumnName = "idedificio")
     @ManyToOne(optional = false)
     private Edificio edificio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
-    private Collection<SalaLaboratorioxServicios> salaLaboratorioxServiciosCollection;
     @Transient
     private String strEstado;
     @Transient
@@ -221,6 +224,22 @@ public class SalaLaboratorio implements Serializable {
         this.salaprivada = salaprivada;
     }
 
+    public Boolean getCostosaladigitado() {
+        return costosaladigitado;
+    }
+
+    public void setCostosaladigitado(Boolean costosaladigitado) {
+        this.costosaladigitado = costosaladigitado;
+    }
+
+    public Boolean getEsbodega() {
+        return esbodega;
+    }
+
+    public void setEsbodega(Boolean esbodega) {
+        this.esbodega = esbodega;
+    }
+
     public Laboratorio getLaboratorio() {
         return laboratorio;
     }
@@ -235,15 +254,6 @@ public class SalaLaboratorio implements Serializable {
 
     public void setEdificio(Edificio edificio) {
         this.edificio = edificio;
-    }
-
-    @XmlTransient
-    public Collection<SalaLaboratorioxServicios> getSalaLaboratorioxServiciosCollection() {
-        return salaLaboratorioxServiciosCollection;
-    }
-
-    public void setSalaLaboratorioxServiciosCollection(Collection<SalaLaboratorioxServicios> salaLaboratorioxServiciosCollection) {
-        this.salaLaboratorioxServiciosCollection = salaLaboratorioxServiciosCollection;
     }
 
     @Override
@@ -296,14 +306,6 @@ public class SalaLaboratorio implements Serializable {
 
     public void setStrNombreEstado(String strNombreEstado) {
         this.strNombreEstado = strNombreEstado;
-    }
-
-    public Boolean getCostosaladigitado() {
-        return costosaladigitado;
-    }
-
-    public void setCostosaladigitado(Boolean costosaladigitado) {
-        this.costosaladigitado = costosaladigitado;
     }
 
     @XmlTransient

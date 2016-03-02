@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head> 
+    </h:head>
+    <h:body  onload="nobackbutton();" >
+        <ui:composition template="/xhtml/template/templateresponsive.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Reserva Equipo Adicional</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>Información de la Reserva</strong></legend></h3>
+                                            <br></br>
+                                            <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                    <p>
+                                                        A continuación usted podra adicionar equipos adicionales a alguna reserva realizada (reserva de sala o reserva de modulo). Dichos equipos se prestaran unicamente en la reserva solicitada.
+                                                        Los equipos que pueden ser usados para la reserva seran aquellos que se encuentran dentro de la bodega de la sala de laboratorio.
+                                                        Para adicionar un equipo a la reserva ingrese el número de la reserva generado al finalizar el proceso e ingreselo en la casilla indicada.
+                                                        <br></br>
+                                                        <strong style="color: red">NOTA: Recuerde seleccionar equipos que se encuentren ubicados en el mismo edificio donde va a tomar su reserva para evitar inconvenientes de entrega.</strong>
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="numeroReserva">
+                                                            Número de Reserva
+                                                        </label>
+                                                        <h:inputText value="#{controllerReservaEquipo.numeroReserva}" id="numeroReserva" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <br></br>
+                                            <br></br>
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                            <div class="right pull-right">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" action="#{controllerReservaEquipo.consultarNumeroReserva()}" >
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                                <span></span>
+                                                <span></span>
+                                                <h:commandButton  value="Inicio" class="btn btn-primary right" action="#{controllerReservaEquipo.cancelarProcesoReserva()}" immediate="true">
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                        <hr class="intro-divider"/>
+                                        <div class="row col-md-12">
+                                            <div class="text-center" >
+                                                <strong>
+                                                    <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerReservaEquipo.mensajeFormulario}" />
+                                                </strong>
+                                            </div>
+                                            <br></br>
+                                        </div>
+                                        <hr class="intro-divider"/>
+                                    </div>
+                                    <div >
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue" ><strong>Equipos posibles para adicionar</strong></legend></h3>
+                                            <h:dataTable id="dataTable1" var="item"  rendered="#{controllerReservaEquipo.disabledTablas}"
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerReservaEquipo.listaEquiposTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre - Código"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipo.nombreequipo}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Código"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipo.inventarioequipo}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Marca - Modelo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipo.marcaequipo} - #{item.equipo.modeloequipo}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Ubicación"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipo.modulolaboratorio.salalaboratorio.edificio.descripcionedificio}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="----"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Adicionar" disabled="#{item.equipo.privado eq true}" actionListener="#{controllerReservaEquipo.adicionarEquipoReserva(item)}">
+                                                        <f:ajax execute="@form" render="form" />
+                                                    </h:commandLink>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerReservaEquipo.cargarPaginaAnteriorEquipo()}" disabled="#{controllerReservaEquipo.bloquearPagAntEquipo}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerReservaEquipo.cargarPaginaSiguienteEquipo()}" disabled="#{controllerReservaEquipo.bloquearPagSigEquipo}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </fieldset>
+                                        <br></br>
+                                        <br></br>
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>Equipos para la Reserva</strong></legend></h3>
+                                            <h:dataTable id="dataTable2" var="item2"  rendered="#{controllerReservaEquipo.disabledTablas}"
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerReservaEquipo.listaEquiposReservaTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre - Código"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item2.equipo.nombreequipo}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Código"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item2.equipo.inventarioequipo}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Marca - Modelo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item2.equipo.marcaequipo} - #{item2.equipo.modeloequipo}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Ubicación"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item2.equipo.modulolaboratorio.salalaboratorio.edificio.descripcionedificio}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerReservaEquipo.cargarPaginaAnteriorEquipoReserva()}" disabled="#{controllerReservaEquipo.bloquearPagAntEquipo2}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerReservaEquipo.cargarPaginaSiguienteEquipoReserva()}" disabled="#{controllerReservaEquipo.bloquearPagSigEquipo2}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </fieldset>
+                                        <br></br>
+                                        <div class="row">
+                                            <div class="col-md-11"></div>
+                                            <div class="col-md-1">
+                                                <h:commandButton value="Guardar" actionListener="#{controllerReservaEquipo.almacenarReservasEquipos()}" rendered="#{controllerReservaEquipo.disabledTablas}" class="btn btn-primary">
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -20,6 +20,8 @@ public interface SalaLaboratorioDAOInterface {
 
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioActivos(BigInteger laboratorio);
 
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioActivosPublicosReserva(BigInteger laboratorio);
+
     public SalaLaboratorio buscarSalaLaboratorioPorCodigoyEdificioyLaboratorio(String codigo, BigInteger edificio, BigInteger laboratorio);
 
     public void crearSalaLaboratorio(SalaLaboratorio salalaboratorio);
@@ -39,6 +41,8 @@ public interface SalaLaboratorioDAOInterface {
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorEdificio(BigInteger edificio);
 
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorio(BigInteger laboratorio);
-    
+
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorioActivosPublicos(BigInteger laboratorio);
+
+    public List<SalaLaboratorio> buscarBodegasPorLaboratorio(BigInteger laboratorio);
 }

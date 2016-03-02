@@ -135,7 +135,7 @@ and open the template in the editor.
                                         <h6><h:message id="msnUbicacionSala" for="nuevoUbicacionSala" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <label for="parametroEstado">
+                                        <label for="nuevoTipo">
                                             Tipo de Sala*
                                         </label>
                                         <h:selectOneMenu value="#{controllerRegistrarSala.nuevoTipo}"
@@ -143,6 +143,17 @@ and open the template in the editor.
                                                          id="nuevoTipo">
                                             <f:selectItem itemLabel="PUBLICA" itemValue="false" />
                                             <f:selectItem itemLabel="PRIVADA" itemValue="true" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nuevoBodega">
+                                            ¿La sala a ingresar es una bodega de equipos? (Recuerde que esta seleccion no puede modificarse)*
+                                        </label>
+                                        <h:selectOneMenu value="#{controllerRegistrarSala.nuevoTipo}"
+                                                         class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}"
+                                                         id="nuevoBodega">
+                                            <f:selectItem itemLabel="NO ES BODEGA" itemValue="false" />
+                                            <f:selectItem itemLabel="ES UNA BODEGA" itemValue="true" />
                                         </h:selectOneMenu>
                                     </div>
                                 </fieldset>
@@ -162,7 +173,7 @@ and open the template in the editor.
                                 <br></br>
                                 <fieldset>
                                     <legend class="text-info">Tipos de servicios que prestará la Sala</legend>
-                                    <div class="row" >
+                                    <div class="row">
                                         <h:dataTable id="dataTable" var="item" 
                                                      styleClass="table table-condensed table-responsive"  
                                                      value="#{controllerRegistrarSala.listaAsociacionServicios}">

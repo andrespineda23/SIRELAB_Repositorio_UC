@@ -95,7 +95,7 @@ and open the template in the editor.
                                         <h:inputText readonly="true" value="#{controllerDetallesSala.salaLaboratorioDetalles.strEstado}" required="true" class="form-control" id="estadoSalaLaboratorio" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="parametroEstado">
+                                        <label for="editarTipo">
                                             Tipo de Sala*
                                         </label>
                                         <h:selectOneMenu value="#{controllerDetallesSala.editarTipo}"
@@ -104,6 +104,17 @@ and open the template in the editor.
                                             <f:selectItem itemLabel="PUBLICA" itemValue="false" />
                                             <f:selectItem itemLabel="PRIVADA" itemValue="true" />
                                             <f:ajax event="change" listener="#{controllerDetallesSala.actualizarTipoSala()}" execute="editarTipo" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editarBodega">
+                                            ¿Es bodega?*
+                                        </label>
+                                        <h:selectOneMenu value="#{controllerDetallesSala.salaLaboratorioDetalles.esbodega}"
+                                                         class="form-control" readonly="true"
+                                                         id="editarBodega">
+                                            <f:selectItem itemLabel="NO ES BODEGA" itemValue="false" />
+                                            <f:selectItem itemLabel="ES UNA BODEGA" itemValue="true" />
                                         </h:selectOneMenu>
                                     </div>
                                 </fieldset>

@@ -448,7 +448,7 @@ public class ControllerReservaSala1 implements Serializable {
         } else {
             if (laboratorio == true && servicio == false) {
                 parametroSala = new SalaLaboratorio();
-                listaSalaLaboratorio = administrarReservasBO.consultarSalaLaboratorioPorIdLaboratorio(parametroLaboratorio.getIdlaboratorio());
+                listaSalaLaboratorio = administrarReservasBO.consultarSalaLaboratorioPorIdLaboratorioReserva(parametroLaboratorio.getIdlaboratorio());
                 activarSala = false;
             } else {
                 parametroSala = new SalaLaboratorio();

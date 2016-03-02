@@ -7,6 +7,7 @@ package com.sirelab.bo.interfacebo.reservas;
 
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Docente;
+import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoReserva;
 import com.sirelab.entidades.GuiaLaboratorio;
 import com.sirelab.entidades.Laboratorio;
@@ -92,4 +93,17 @@ public interface AdministrarReservasBOInterface {
 
     public List<ReservaSala> obtenerReservasModuloSalas(Date fecha, BigInteger sala);
 
+    public Reserva obtenerReservaPorNumero(String numero);
+
+    public ReservaModuloLaboratorio obtenterReservaModuloPorIdReserva(BigInteger reserva);
+
+    public ReservaSala obtenterReservaSalaPorIdReserva(BigInteger reserva);
+
+    public void almacenarReservaEquipo(ReservaEquipoElemento reserva);
+
+    public List<SalaLaboratorio> consultarSalaLaboratorioPorIdLaboratorioReserva(BigInteger laboratorio);
+
+    public List<SalaLaboratorio> buscarBodegaPorLaboratorioEdificio(BigInteger laboratorio);
+
+    public List<EquipoElemento> obtenerEquiposBodega(BigInteger bodega);
 }

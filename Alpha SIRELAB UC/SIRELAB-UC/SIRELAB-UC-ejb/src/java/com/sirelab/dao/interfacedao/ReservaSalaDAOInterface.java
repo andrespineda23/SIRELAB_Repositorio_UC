@@ -33,4 +33,6 @@ public interface ReservaSalaDAOInterface {
     public List<ReservaSala> buscarReservaSalasSalaPorParametros(BigInteger idSala, Date fecha);
 
     public List<ReservaSala> buscarReservaSalaParaReservaModulo(BigInteger sala, Date fecha, BigInteger tipoReserva);
+
+    public ReservaSala buscarReservaSalaPorIdReserva(BigInteger reserva);
 }

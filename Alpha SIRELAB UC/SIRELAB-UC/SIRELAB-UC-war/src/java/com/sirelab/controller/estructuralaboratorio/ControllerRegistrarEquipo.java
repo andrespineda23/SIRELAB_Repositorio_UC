@@ -62,6 +62,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     private TipoActivo nuevoTipoActivoEquipo;
     private EstadoEquipo nuevoEstadoEquipoEquipo;
     private Proveedor nuevoProveedorEquipo;
+    private boolean nuevoTipo;
     //
     private boolean validacionesNombre, validacionesInventario, validacionesMarca, validacionesModelo, validacionesSerie;
     private boolean validacionesCosto, validacionesInversion, validacionesEspecificacion;
@@ -90,6 +91,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         constantes = new MensajesConstantes();
         activarAceptar = false;
         activarLimpiar = true;
+        nuevoTipo = false;
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
@@ -522,6 +524,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setMarcaequipo(nuevoMarcaEquipo);
             equipoNuevo.setSeriequipo(nuevoSerieEquipo);
             equipoNuevo.setModeloequipo(nuevoModeloEquipo);
+            equipoNuevo.setPrivado(nuevoTipo);
             equipoNuevo.setCantidadequipo(Integer.valueOf("1"));
             if (Utilidades.validarNulo(nuevoCostoInversionEquipo) && (!nuevoCostoInversionEquipo.isEmpty()) && (nuevoCostoInversionEquipo.trim().length() > 0)) {
                 equipoNuevo.setCostoadquisicion(Integer.valueOf(nuevoCostoInversionEquipo));
@@ -547,8 +550,8 @@ public class ControllerRegistrarEquipo implements Serializable {
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
             gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString(), e);
         }
     }
 
@@ -558,6 +561,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         activarNuevoSalaLaboratorio = true;
         nuevoNombreEquipo = null;
         nuevoInventarioEquipo = null;
+        nuevoTipo = false;
         nuevoModeloEquipo = null;
         nuevoMarcaEquipo = null;
         nuevoSerieEquipo = null;
@@ -611,6 +615,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoCostoInversionEquipo = "0";
         nuevoFechaAdquisicionEquipo = null;
         nuevoLaboratorio = null;
+        nuevoTipo = false;
         nuevoSalaLaboratorioEquipo = null;
         nuevoModuloLaboratorioEquipo = null;
         nuevoTipoActivoEquipo = null;
@@ -938,6 +943,14 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void setListaDiasRegistro(List<AyudaFechaReserva> listaDiasRegistro) {
         this.listaDiasRegistro = listaDiasRegistro;
+    }
+
+    public boolean isNuevoTipo() {
+        return nuevoTipo;
+    }
+
+    public void setNuevoTipo(boolean nuevoTipo) {
+        this.nuevoTipo = nuevoTipo;
     }
 
 }

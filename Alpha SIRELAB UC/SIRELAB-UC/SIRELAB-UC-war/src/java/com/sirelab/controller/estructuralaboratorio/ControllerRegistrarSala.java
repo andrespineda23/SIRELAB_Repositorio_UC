@@ -58,6 +58,7 @@ public class ControllerRegistrarSala implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private boolean nuevoTipo;
+    private boolean nuevoBodega;
     private BigInteger idLaboratorio;
     private MensajesConstantes constantes;
 
@@ -68,6 +69,7 @@ public class ControllerRegistrarSala implements Serializable {
     public void init() {
         constantes = new MensajesConstantes();
         nuevoTipo = false;
+        nuevoBodega = false;
         activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -279,6 +281,7 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
         nuevoTipo = false;
+        nuevoBodega = false;
         nuevoDescripcionSala = null;
         nuevoCostoSala = null;
         nuevoCapacidadSala = null;
@@ -395,6 +398,7 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
         nuevoTipo = false;
+        nuevoBodega = false;
         costoAlquilerDigitado = false;
         nuevoDescripcionSala = null;
         nuevoCostoSala = null;
@@ -422,6 +426,7 @@ public class ControllerRegistrarSala implements Serializable {
             salaNuevo.setNombresala(nuevoNombreSala);
             salaNuevo.setCodigosala(nuevoCodigoSala);
             salaNuevo.setSalaprivada(nuevoTipo);
+            salaNuevo.setEsbodega(nuevoBodega);
             salaNuevo.setCostosaladigitado(costoAlquilerDigitado);
             salaNuevo.setPisoubicacion(nuevoUbicacionSala);
             salaNuevo.setDescripcionsala(nuevoDescripcionSala);
@@ -438,8 +443,8 @@ public class ControllerRegistrarSala implements Serializable {
             List<ServiciosSala> lista = obtenerServiciosARegistrar();
             gestionarPlantaSalasBO.crearNuevaSalaLaboratorio(salaNuevo, lista);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema : " + e.toString(), e);
         }
     }
 
@@ -633,6 +638,14 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void setCostoAlquilerDigitado(boolean costoAlquilerDigitado) {
         this.costoAlquilerDigitado = costoAlquilerDigitado;
+    }
+
+    public boolean isNuevoBodega() {
+        return nuevoBodega;
+    }
+
+    public void setNuevoBodega(boolean nuevoBodega) {
+        this.nuevoBodega = nuevoBodega;
     }
 
 }

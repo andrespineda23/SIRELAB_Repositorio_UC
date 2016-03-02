@@ -180,7 +180,11 @@ and open the template in the editor.
                                         </row>
                                         <br></br>
                                         <row>
-                                            <h:commandButton class="btn btn-info btn-block" value="Consultar Reservas Modulo" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservasModulo.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
+                                            <h:commandButton class="btn btn-success btn-block" value="Realizar Reserva Modulo" action="reservamodulo1" actionListener="#{controllerReservaModulo1.cargarInformacionReserva()}"/>
+                                        </row>
+                                        <br></br>
+                                        <row>
+                                            <h:commandButton class="btn btn-success btn-block" value="Adicionar Equipo a Reserva" action="reservaequipo" />
                                         </row>
                                         <br></br>
                                     </div>

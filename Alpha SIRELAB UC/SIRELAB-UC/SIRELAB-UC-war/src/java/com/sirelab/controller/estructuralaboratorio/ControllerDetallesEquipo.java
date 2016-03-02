@@ -79,6 +79,7 @@ public class ControllerDetallesEquipo implements Serializable {
     private String alquilerEquipoElemento, cantidadEquipoElemento, inversionEquipoElemento;
     private String especificacionEquipoElemento;
     private String fechaEquipoElemento;
+    private boolean editarTipo;
     //
     //
     private boolean validacionesNombre, validacionesInventario, validacionesMarca, validacionesModelo, validacionesSerie;
@@ -152,7 +153,7 @@ public class ControllerDetallesEquipo implements Serializable {
         alquilerEquipoElemento = equipoElementoDetalles.getCostoalquiler().toString();
         cantidadEquipoElemento = String.valueOf(equipoElementoDetalles.getCantidadequipo());
         inversionEquipoElemento = equipoElementoDetalles.getCostoadquisicion().toString();
-
+        editarTipo = equipoElementoDetalles.getPrivado();
         marcaEquipoElemento = equipoElementoDetalles.getMarcaequipo();
         modeloEquipoElemento = equipoElementoDetalles.getModeloequipo();
         serieEquipoElemento = equipoElementoDetalles.getSeriequipo();
@@ -345,6 +346,10 @@ public class ControllerDetallesEquipo implements Serializable {
         }
     }
 
+    public void actualizarTipoEquipo() {
+        modificacionesRegistroEquipoElemento();
+    }
+
     private Edificio obtenerEdificio(BigInteger usuario) {
         Edificio edificio = administrarValidadorTipoUsuario.buscarEdificioPorIdEncargadoEdificio(usuario);
         return edificio;
@@ -421,8 +426,8 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString(), e);
         }
     }
 
@@ -443,8 +448,8 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -458,8 +463,8 @@ public class ControllerDetallesEquipo implements Serializable {
             }
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -743,6 +748,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 cambioModulo = true;
                 equipoCambio = equipoElementoDetalles;
             }
+            equipoElementoDetalles.setPrivado(editarTipo);
             equipoElementoDetalles.setNombreequipo(nombreEquipoElemento);
             equipoElementoDetalles.setInventarioequipo(inventarioEquipoElemento);
             equipoElementoDetalles.setMarcaequipo(nombreEquipoElemento);
@@ -776,8 +782,8 @@ public class ControllerDetallesEquipo implements Serializable {
             gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles, cambioModulo, equipoCambio);
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString(), e);
         }
     }
 
@@ -1104,6 +1110,14 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void setListaDiasRegistro(List<AyudaFechaReserva> listaDiasRegistro) {
         this.listaDiasRegistro = listaDiasRegistro;
+    }
+
+    public boolean isEditarTipo() {
+        return editarTipo;
+    }
+
+    public void setEditarTipo(boolean editarTipo) {
+        this.editarTipo = editarTipo;
     }
 
 }

@@ -11,6 +11,7 @@ import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
+import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstadoReservaDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
 import com.sirelab.dao.interfacedao.GuiaLaboratorioDAOInterface;
@@ -30,6 +31,7 @@ import com.sirelab.dao.interfacedao.TipoReservaDAOInterface;
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.EntidadExterna;
+import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoReserva;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.GuiaLaboratorio;
@@ -49,7 +51,9 @@ import com.sirelab.entidades.TipoReserva;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import org.apache.log4j.Logger;
@@ -103,6 +107,8 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
     SalaLaboratorioxServiciosDAOInterface salaLaboratorioxServiciosDAO;
     @EJB
     ServiciosSalaDAOInterface serviciosSalaDAO;
+    @EJB
+    EquipoElementoDAOInterface equipoElementoDAO;
 
     @Override
     public List<ReservaSala> consultarReservasSalaPorPersona(BigInteger persona) {
@@ -174,6 +180,17 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
 
     @Override
     public List<SalaLaboratorio> consultarSalaLaboratorioPorIdLaboratorio(BigInteger laboratorio) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivosPublicos(laboratorio);
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO consultarSalaLaboratorioPorIdLaboratorio: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<SalaLaboratorio> consultarSalaLaboratorioPorIdLaboratorioReserva(BigInteger laboratorio) {
         try {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivosPublicos(laboratorio);
             return lista;
@@ -454,6 +471,60 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             return reservaSalaDAO.buscarReservaSalaParaReservaModulo(sala, fecha, tipo.getIdtiporeserva());
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO obtenerReservasModuloSalas: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public Reserva obtenerReservaPorNumero(String numero) {
+        try {
+            return reservaDAO.buscarReservaPorNumero(numero);
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO obtenerReservaPorNumero: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public ReservaSala obtenterReservaSalaPorIdReserva(BigInteger reserva) {
+        try {
+            return reservaSalaDAO.buscarReservaSalaPorIdReserva(reserva);
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO obtenterReservaSalaPorIdReserva: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public ReservaModuloLaboratorio obtenterReservaModuloPorIdReserva(BigInteger reserva) {
+        try {
+            return reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorIdReserva(reserva);
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO obtenterReservaModuloPorIdReserva: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public void almacenarReservaEquipo(ReservaEquipoElemento reserva) {
+        try {
+            reservaEquipoElementoDAO.crearReservaEquipoElemento(reserva);
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO almacenarReservaEquipo: " + e.toString(), e);
+        }
+    }
+
+    public List<SalaLaboratorio> buscarBodegaPorLaboratorioEdificio(BigInteger laboratorio) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarBodegasPorLaboratorio(laboratorio);
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO buscarBodegaPorLaboratorioEdificio: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<EquipoElemento> obtenerEquiposBodega(BigInteger bodega) {
+        try {
+            return equipoElementoDAO.consultarEquiposElementosBodegaPublicos(bodega);
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO obtenerEquiposBodega: " + e.toString(), e);
             return null;
         }
     }

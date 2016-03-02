@@ -7,10 +7,8 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,18 +18,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "equipoelemento")
@@ -48,15 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EquipoElemento.findByCantidadequipo", query = "SELECT e FROM EquipoElemento e WHERE e.cantidadequipo = :cantidadequipo"),
     @NamedQuery(name = "EquipoElemento.findByCostoalquiler", query = "SELECT e FROM EquipoElemento e WHERE e.costoalquiler = :costoalquiler"),
     @NamedQuery(name = "EquipoElemento.findByCostoadquisicion", query = "SELECT e FROM EquipoElemento e WHERE e.costoadquisicion = :costoadquisicion"),
-    @NamedQuery(name = "EquipoElemento.findByFechaadquisicion", query = "SELECT e FROM EquipoElemento e WHERE e.fechaadquisicion = :fechaadquisicion")})
+    @NamedQuery(name = "EquipoElemento.findByFechaadquisicion", query = "SELECT e FROM EquipoElemento e WHERE e.fechaadquisicion = :fechaadquisicion"),
+    @NamedQuery(name = "EquipoElemento.findByPrivado", query = "SELECT e FROM EquipoElemento e WHERE e.privado = :privado")})
 public class EquipoElemento implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
-    private Collection<HojaVidaEquipo> hojaVidaEquipoCollection;
-    @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
-    @ManyToOne(optional = false)
-    private Proveedor proveedor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipo")
-    private Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,9 +88,14 @@ public class EquipoElemento implements Serializable {
     @Column(name = "fechaadquisicion")
     @Temporal(TemporalType.DATE)
     private Date fechaadquisicion;
+    @Column(name = "privado")
+    private Boolean privado;
     @JoinColumn(name = "tipoactivo", referencedColumnName = "idtipoactivo")
     @ManyToOne(optional = false)
     private TipoActivo tipoactivo;
+    @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
+    @ManyToOne(optional = false)
+    private Proveedor proveedor;
     @JoinColumn(name = "modulolaboratorio", referencedColumnName = "idmodulolaboratorio")
     @ManyToOne(optional = false)
     private ModuloLaboratorio modulolaboratorio;
@@ -139,7 +134,7 @@ public class EquipoElemento implements Serializable {
     }
 
     public void setNombreequipo(String nombreequipo) {
-        this.nombreequipo = nombreequipo.toUpperCase();
+        this.nombreequipo = nombreequipo;
     }
 
     public String getMarcaequipo() {
@@ -150,7 +145,7 @@ public class EquipoElemento implements Serializable {
     }
 
     public void setMarcaequipo(String marcaequipo) {
-        this.marcaequipo = marcaequipo.toUpperCase();
+        this.marcaequipo = marcaequipo;
     }
 
     public String getInventarioequipo() {
@@ -161,7 +156,7 @@ public class EquipoElemento implements Serializable {
     }
 
     public void setInventarioequipo(String inventarioequipo) {
-        this.inventarioequipo = inventarioequipo.toUpperCase();
+        this.inventarioequipo = inventarioequipo;
     }
 
     public String getModeloequipo() {
@@ -172,7 +167,7 @@ public class EquipoElemento implements Serializable {
     }
 
     public void setModeloequipo(String modeloequipo) {
-        this.modeloequipo = modeloequipo.toUpperCase();
+        this.modeloequipo = modeloequipo;
     }
 
     public String getSeriequipo() {
@@ -183,7 +178,7 @@ public class EquipoElemento implements Serializable {
     }
 
     public void setSeriequipo(String seriequipo) {
-        this.seriequipo = seriequipo.toUpperCase();
+        this.seriequipo = seriequipo;
     }
 
     public String getEspecificacionestecnicas() {
@@ -194,7 +189,7 @@ public class EquipoElemento implements Serializable {
     }
 
     public void setEspecificacionestecnicas(String especificacionestecnicas) {
-        this.especificacionestecnicas = especificacionestecnicas.toUpperCase();
+        this.especificacionestecnicas = especificacionestecnicas;
     }
 
     public int getCantidadequipo() {
@@ -229,12 +224,28 @@ public class EquipoElemento implements Serializable {
         this.fechaadquisicion = fechaadquisicion;
     }
 
+    public Boolean getPrivado() {
+        return privado;
+    }
+
+    public void setPrivado(Boolean privado) {
+        this.privado = privado;
+    }
+
     public TipoActivo getTipoactivo() {
         return tipoactivo;
     }
 
     public void setTipoactivo(TipoActivo tipoactivo) {
         this.tipoactivo = tipoactivo;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     public ModuloLaboratorio getModulolaboratorio() {
@@ -276,32 +287,6 @@ public class EquipoElemento implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.EquipoElemento[ idequipoelemento=" + idequipoelemento + " ]";
-    }
-
-    @XmlTransient
-    public Collection<MovimientoInsumoAEquipo> getMovimientoInsumoAEquipoCollection() {
-        return movimientoInsumoAEquipoCollection;
-    }
-
-    public void setMovimientoInsumoAEquipoCollection(Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection) {
-        this.movimientoInsumoAEquipoCollection = movimientoInsumoAEquipoCollection;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    @XmlTransient
-    public Collection<HojaVidaEquipo> getHojaVidaEquipoCollection() {
-        return hojaVidaEquipoCollection;
-    }
-
-    public void setHojaVidaEquipoCollection(Collection<HojaVidaEquipo> hojaVidaEquipoCollection) {
-        this.hojaVidaEquipoCollection = hojaVidaEquipoCollection;
     }
     
 }
