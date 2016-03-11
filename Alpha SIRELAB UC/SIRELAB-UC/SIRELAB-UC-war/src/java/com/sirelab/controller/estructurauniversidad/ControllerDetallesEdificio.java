@@ -116,7 +116,7 @@ public class ControllerDetallesEdificio implements Serializable {
         if (Utilidades.validarNulo(editarDireccion) && (!editarDireccion.isEmpty()) && (editarDireccion.trim().length() > 0)) {
             int tam = editarDireccion.length();
             if (tam >= 8) {
-                if (!Utilidades.validarCaracterString(editarDireccion)) {
+                if (!Utilidades.validarDirecciones(editarDireccion)) {
                     validacionesDireccion = false;
                     FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta. " + constantes.USUARIO_DIRECCION));
                 } else {

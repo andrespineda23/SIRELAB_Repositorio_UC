@@ -190,7 +190,7 @@ public class CarreraDAO implements CarreraDAOInterface {
                     }
                     if ("parametroNombre".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".codigocarrera")
+                                .append(".nombrecarrera")
                                 .append(") Like :parametroNombre");
                         camposFiltro++;
                     }

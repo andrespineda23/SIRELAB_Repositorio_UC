@@ -102,7 +102,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
         inputEstado = personaContactoEditar.getPersona().getUsuario().getEstado();
         inputID = personaContactoEditar.getPersona().getIdentificacionpersona();
         inputTelefono1 = personaContactoEditar.getPersona().getTelefono1persona();
-        inputTelefono2 = personaContactoEditar.getPersona().getTelefono1persona();
+        inputTelefono2 = personaContactoEditar.getPersona().getTelefono2persona();
         inputDireccion = personaContactoEditar.getPersona().getDireccionpersona();
         listaCoveniosPorEntidad = administrarPersonasContactoBO.obtenerConveniosPorEntidadRegistrados();
     }

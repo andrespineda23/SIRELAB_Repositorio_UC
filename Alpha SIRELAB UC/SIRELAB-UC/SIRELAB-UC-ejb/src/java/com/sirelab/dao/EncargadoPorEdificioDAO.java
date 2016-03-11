@@ -146,7 +146,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
-            String consulta = jpql2 + " " + "ORDER BY " + alias + "administradoredificio.persona.identificacionpersona ASC";
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".administradoredificio.persona.identificacionpersona ASC";
             logger.error("consulta : " + consulta);
             TypedQuery<EncargadoPorEdificio> tq = em.createQuery(consulta, EncargadoPorEdificio.class);
             tq = asignarValores(tq, filters);

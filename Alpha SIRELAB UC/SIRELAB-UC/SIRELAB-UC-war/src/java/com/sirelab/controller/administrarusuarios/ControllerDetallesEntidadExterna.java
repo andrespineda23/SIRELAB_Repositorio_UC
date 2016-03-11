@@ -339,10 +339,10 @@ public class ControllerDetallesEntidadExterna implements Serializable {
     public void modificarInformacionEntidadExterna() {
         try {
             entidadExternaDetalles.setNombreentidad(nombreEntidadExterna);
-            entidadExternaDetalles.setDireccionentidad(direccionEntidadExterna);
-            entidadExternaDetalles.setEmailentidad(correoEntidadExterna);
+            entidadExternaDetalles.setDireccionentidad(null == direccionEntidadExterna ? "" :  direccionEntidadExterna);
+            entidadExternaDetalles.setEmailentidad(null == correoEntidadExterna ? "" :  correoEntidadExterna);
             entidadExternaDetalles.setIdentificacion(identificacionEntidadExterna);
-            entidadExternaDetalles.setTelefonoentidad(telefono1EntidadExterna);
+            entidadExternaDetalles.setTelefonoentidad(null == telefono1EntidadExterna ? "" :  telefono1EntidadExterna);
             entidadExternaDetalles.setSector(sectorEntidadExterna);
             administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
             restaurarInformacionEntidadExterna();

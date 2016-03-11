@@ -184,7 +184,7 @@ and open the template in the editor.
                                         </h:commandButton>
                                     </div>
                                     <div class="col-md-2">
-                                        <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesDocente.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesDocente.restaurarInformacionDocente()}" class="btn btn-default right" >
+                                        <h:commandButton id="buttonRestaurar" disabled="#{controllerDetallesDocente.activarEditar}" value="RESTAURAR" actionListener="#{controllerDetallesDocente.restaurarInformacionDocente()}" class="btn btn-default right" immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                     </div>

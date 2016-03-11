@@ -71,11 +71,14 @@ public class TipoCargo implements Serializable {
     }
 
     public String getNombrecargo() {
+        if(null != nombrecargo){
+        return nombrecargo.toUpperCase();
+        }
         return nombrecargo;
     }
 
     public void setNombrecargo(String nombrecargo) {
-        this.nombrecargo = nombrecargo;
+        this.nombrecargo = nombrecargo.toUpperCase();
     }
 
     @XmlTransient

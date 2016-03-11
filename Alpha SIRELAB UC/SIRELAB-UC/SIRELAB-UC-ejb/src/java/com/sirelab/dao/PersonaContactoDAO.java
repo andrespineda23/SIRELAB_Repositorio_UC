@@ -198,25 +198,25 @@ public class PersonaContactoDAO implements PersonaContactoDAOInterface {
                     }
                     if ("parametroNombre".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".nombre")
+                                .append(".persona.nombrespersona")
                                 .append(") Like :parametroNombre");
                         camposFiltro++;
                     }
                     if ("parametroApellido".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".apellido")
+                                .append(".persona.apellidospersona")
                                 .append(") Like :parametroApellido");
                         camposFiltro++;
                     }
                     if ("parametroDocumento".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".identificacion")
+                                .append(".persona.identificacionpersona")
                                 .append(") Like :parametroDocumento");
                         camposFiltro++;
                     }
                     if ("parametroCorreo".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".correo")
+                                .append(".persona.emailpersona")
                                 .append(") Like :parametroCorreo");
                         camposFiltro++;
                     }

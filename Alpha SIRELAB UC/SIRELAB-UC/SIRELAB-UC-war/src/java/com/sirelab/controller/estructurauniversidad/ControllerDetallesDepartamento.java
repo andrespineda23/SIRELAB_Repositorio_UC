@@ -109,7 +109,7 @@ public class ControllerDetallesDepartamento implements Serializable {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
             int tam = editarCodigo.length();
             if (tam >= 4) {
-                if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
+                if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)==true) {
                     Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(editarCodigo);
                     if (null != registro) {
                         if (departamentoDetalles.getIddepartamento().equals(registro.getIddepartamento())) {

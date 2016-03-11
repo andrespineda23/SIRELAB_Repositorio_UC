@@ -305,7 +305,7 @@ public class ControllerAdministrarAdministradoresEdificio implements Serializabl
      */
     public String verDetallesEncargadoPorEdificio() {
         limpiarProcesoBusqueda();
-        return "detallesencargadolaboratorio";
+        return "detallesadministradoredificio";
     }
 
     /*

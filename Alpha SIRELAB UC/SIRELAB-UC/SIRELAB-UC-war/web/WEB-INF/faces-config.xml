@@ -2647,18 +2647,18 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/administrarusuarios/administrarencargadoslaboratorios.xhtml</from-view-id>
+        <from-view-id>/xhtml/administrarusuarios/administraradministradoresedificio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>detallesencargadolaboratorio</from-outcome>
-            <to-view-id>/xhtml/administrarusuarios/detallesencargadolaboratorio.xhtml</to-view-id>
+            <from-outcome>detallesadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/detallesadministradoredificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/administrarusuarios/detallesencargadolaboratorio.xhtml</from-view-id>
+        <from-view-id>/xhtml/administrarusuarios/detallesadministradoredificio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrarencargadoslaboratorios</from-outcome>
-            <to-view-id>/xhtml/administrarusuarios/administrarencargadoslaboratorios.xhtml</to-view-id>
+            <from-outcome>administraradministradoresedificio</from-outcome>
+            <to-view-id>/xhtml/administrarusuarios/administraradministradoresedificio.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

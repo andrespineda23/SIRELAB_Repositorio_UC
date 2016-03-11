@@ -67,7 +67,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
-
+ 
     /**
      * Metodo encargado de asignar los valores del encargado laboratorio que
      * sera visualizado
@@ -105,7 +105,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
      */
     public void recibirIDEncargadoEdificioDetalles(BigInteger idEncargadoPorEdificio) {
         this.idEncargadoPorEdificio = idEncargadoPorEdificio;
-        encargadoPorEdificioDetalles = administrarAdministradoresEdificioBO.obtenerEncargadoPorEdificioPorIDEncargadoPorEdificio(idEncargadoPorEdificio);
+        encargadoPorEdificioDetalles = administrarAdministradoresEdificioBO.obtenerEncargadoPorEdificioPorIDEncargadoPorEdificio(this.idEncargadoPorEdificio);
         if (encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getUsuario().getEstado() == true) {
             disabledActivar = true;
             disabledInactivar = false;
@@ -113,6 +113,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             disabledActivar = false;
             disabledInactivar = true;
         }
+        System.out.println("Llego el metodo X: "+idEncargadoPorEdificio);
         asignarValoresVariablesAdministradorEdificio();
     }
 

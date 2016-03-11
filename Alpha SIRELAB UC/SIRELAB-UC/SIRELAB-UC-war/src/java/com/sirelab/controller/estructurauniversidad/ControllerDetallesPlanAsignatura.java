@@ -97,7 +97,7 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
     public void actualizarCarrera() {
         if (Utilidades.validarNulo(editarCarrera)) {
             editarPlan = null;
-            listaPlanEstudios = gestionarPlanAsignaturaBO.obtenerPlanEstudiosPorCarrera(editarPlan.getIdplanestudios());
+            listaPlanEstudios = gestionarPlanAsignaturaBO.obtenerPlanEstudiosPorCarrera(editarCarrera.getIdcarrera());
             activarModificacionPlan = false;
             validacionesCarrera = true;
         } else {

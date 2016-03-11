@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SectorEntidad.findByIdsectorentidad", query = "SELECT s FROM SectorEntidad s WHERE s.idsectorentidad = :idsectorentidad"),
     @NamedQuery(name = "SectorEntidad.findByNombre", query = "SELECT s FROM SectorEntidad s WHERE s.nombre = :nombre")})
 public class SectorEntidad implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,11 +72,14 @@ public class SectorEntidad implements Serializable {
     }
 
     public String getNombre() {
+        if (null != nombre) {
+            return nombre.toUpperCase();
+        }
         return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();;
     }
 
     @XmlTransient
@@ -111,5 +115,5 @@ public class SectorEntidad implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.SectorEntidad[ idsectorentidad=" + idsectorentidad + " ]";
     }
-    
+
 }

@@ -161,7 +161,12 @@ public class ControllerDetallesEstudiante implements Serializable {
      * Metodo encargado de restaurar la información del estudiante
      */
     public String restaurarInformacionEstudiante() {
-        estudianteDetalles = new Estudiante();
+        limpiarDatosFormulario();
+        return "administrarestudiantes";
+    }
+    
+    public void limpiarDatosFormulario(){
+    estudianteDetalles = new Estudiante();
         estudianteDetalles = administrarEstudiantesBO.obtenerEstudiantePorIDEstudiante(idEstudiante);
         if (estudianteDetalles.getPersona().getUsuario().getEstado() == true) {
             disabledActivar = true;
@@ -191,7 +196,6 @@ public class ControllerDetallesEstudiante implements Serializable {
         mensajeFormulario = "N/A";
         validacionesCarrera = true;
         asignarValoresVariablesEstudiante();
-        return "administrarestudiantes";
     }
 
     public void actualizarTipoUsuarioSeleccionado() {

@@ -195,7 +195,7 @@ public class EntidadExternaDAO implements EntidadExternaDAOInterface {
                     }
                     if ("parametroDocumento".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".identidadexterna")
+                                .append(".identificacion")
                                 .append(") Like :parametroDocumento");
                         camposFiltro++;
                     }

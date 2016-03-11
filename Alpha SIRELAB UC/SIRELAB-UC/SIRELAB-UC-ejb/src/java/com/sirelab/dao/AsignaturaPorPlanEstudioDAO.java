@@ -183,25 +183,25 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
                     if (camposFiltro > 0) {
                         wheres.append(" AND ");
                     }
-                    if ("parametroCarrera".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "planestudio.carrera.idcarrera");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
-                    if ("parametroPlanEstudio".equals(entry.getKey())) {
+                    if ("parametroPlan".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "planestudio.idplanestudios");
                         wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
+                        camposFiltro=10;
                     }
                     if ("parametroAsignatura".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "asignatura.idasignatura");
                         wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
+                        camposFiltro=10;
                     }
                     if ("parametroEstado".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "estado");
                         wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
+                        camposFiltro=10;
+                    }
+                    if ("parametroCarrera".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "planestudio.carrera.idcarrera");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro=10;
                     }
                 }
             }
@@ -225,7 +225,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
                 if ("parametroCarrera".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
                 }
-                if ("parametroPlanEstudio".equals(entry.getKey())) {
+                if ("parametroPlan".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
                 }
                 if ("parametroEstado".equals(entry.getKey())) {

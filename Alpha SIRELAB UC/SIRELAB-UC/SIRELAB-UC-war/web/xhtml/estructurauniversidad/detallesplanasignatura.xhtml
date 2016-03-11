@@ -106,7 +106,7 @@ and open the template in the editor.
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarplanasignatura" actionListener="#{controllerDetallesPlanAsignatura.restaurarInformacionPlanEstudio()}" immediate="true">
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesPlanAsignatura.restaurarInformacionPlanEstudio()}" actionListener="#{controllerAdministrarPlanAsignatura.limpiarDatos()}" immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                     </div>
