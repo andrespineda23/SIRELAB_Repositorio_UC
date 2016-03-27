@@ -23,7 +23,6 @@ and open the template in the editor.
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
                                 <li><a href="#">...</a></li>
-                                <li><a href="#">Administrar Hoja Vida</a></li>
                                 <li class="active">Detalles Registro H.V.</li>
                             </ol>
                         </div>
@@ -40,137 +39,51 @@ and open the template in the editor.
                                         Este registro es unicamente para el ingreso de periodos academicos.
                                     </p>
                                 </div>
-
                                 <div class="col-md-12 row">
                                     <fieldset>
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Detalle Evento*"/></strong>
-                                            <h:inputText maxlength="800" value="#{controllerDetallesHojaVidaEquipo.inputDetalle}" readonly="true" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerDetallesHojaVidaEquipo.validarDetalle()}" execute="inputDetalle" render="inputDetalle msnNombre" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputDetalle}" readonly="true"  class="form-control" id="inputDetalle" />
                                         </div>
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <label for="fechaEventoAnio">
-                                                    Año Fecha Evento
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerDetallesHojaVidaEquipo.fechaEventoAnio}" class="form-control"  id="fechaEventoAnio">
-                                                    <f:selectItems value="#{controllerDetallesHojaVidaEquipo.listaAniosEvento}" var="pfechaEventoAnio"
-                                                                   itemLabel="#{pfechaEventoAnio.mensajeMostrar}" itemValue="#{pfechaEventoAnio}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.actualizarInformacionAnioEvento()}" execute="@this" render="@this fechaEventoMes fechaEventoDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaEventoMes">
-                                                    Mes Fecha Evento
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerDetallesHojaVidaEquipo.fechaEventoMes}" class="form-control"  id="fechaEventoMes">
-                                                    <f:selectItems value="#{controllerDetallesHojaVidaEquipo.listaMesesEvento}" var="pfechaEventoMes"
-                                                                   itemLabel="#{pfechaEventoMes.mensajeMostrar}" itemValue="#{pfechaEventoMes}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.actualizarInformacionEventoDia()}" execute="@this" render="@this fechaEventoDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaEventoDia">
-                                                    Día Fecha Evento
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerDetallesHojaVidaEquipo.fechaEventoDia}" class="form-control"  id="fechaEventoDia">
-                                                    <f:selectItems value="#{controllerDetallesHojaVidaEquipo.listaDiasEvento}" var="pfechaEventoDia"
-                                                                   itemLabel="#{pfechaEventoDia.mensajeMostrar}" itemValue="#{pfechaEventoDia}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.modificarDias()}" execute="@this" render="@this"/>
-                                                </h:selectOneMenu>
-                                            </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Registro*"/></strong>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputFechaRegistro}" readonly="true"  class="form-control" id="inputDetalle" />
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                         </div>
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <label for="fechaRegistroAnio">
-                                                    Año Fecha Registro
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerDetallesHojaVidaEquipo.fechaRegistroAnio}" class="form-control"  id="fechaRegistroAnio">
-                                                    <f:selectItems value="#{controllerDetallesHojaVidaEquipo.listaAniosRegistro}" var="pfechaRegistroAnio"
-                                                                   itemLabel="#{pfechaRegistroAnio.mensajeMostrar}" itemValue="#{pfechaRegistroAnio}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.actualizarInformacionAnioRegistro()}" execute="@this" render="@this fechaRegistroMes fechaRegistroDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaRegistroMes">
-                                                    Mes Fecha Registro
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerDetallesHojaVidaEquipo.fechaRegistroMes}" class="form-control"  id="fechaRegistroMes">
-                                                    <f:selectItems value="#{controllerDetallesHojaVidaEquipo.listaMesesRegistro}" var="pfechaRegistroMes"
-                                                                   itemLabel="#{pfechaRegistroMes.mensajeMostrar}" itemValue="#{pfechaRegistroMes}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.actualizarInformacionRegistroDia()}" execute="@this" render="@this fechaRegistroDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaRegistroDia">
-                                                    Día Fecha Registro
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerDetallesHojaVidaEquipo.fechaRegistroDia}" class="form-control"  id="fechaRegistroDia">
-                                                    <f:selectItems value="#{controllerDetallesHojaVidaEquipo.listaDiasRegistro}" var="pfechaRegistroDia"
-                                                                   itemLabel="#{pfechaRegistroDia.mensajeMostrar}" itemValue="#{pfechaRegistroDia}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.modificarDias()}" execute="@this" render="@this"/>
-                                                </h:selectOneMenu>
-                                            </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Inicio Evento*"/></strong>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputFechaEvento}" readonly="true"  class="form-control" id="inputDetalle" />
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Fin Evento*"/></strong>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputFechaFinEvento}" readonly="true"  class="form-control" id="inputDetalle" />
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Tipo Evento*"/></strong>
-                                            <h:selectOneMenu value="#{controllerDetallesHojaVidaEquipo.inputTipoEvento}"
-                                                             class="form-control" readonly="true"
-                                                             id="inputTipoEvento">
-                                                <f:selectItems value="#{controllerDetallesHojaVidaEquipo.listaTiposEventos}" var="tipo"
-                                                               itemLabel="#{tipo.detalleevento}" itemValue="#{tipo}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerDetallesHojaVidaEquipo.validarTipoEvento()}" execute="inputTipoEvento" render="msnTipoEvento inputTipoEvento"/>
-                                            </h:selectOneMenu>
-                                            <h6><h:message id="msnTipoEvento" for="inputTipoEvento" style="color: red"/></h6>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputTipoEvento.detalleevento}" readonly="true"  class="form-control" id="inputDetalle" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Observación Evento*"/></strong>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputObservacion}" readonly="true"  class="form-control" id="inputDetalle" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Usuario*"/></strong>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputUsuario}" readonly="true"  class="form-control" id="inputDetalle" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Costo*"/></strong>
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputCosto}" readonly="true"  class="form-control" id="inputDetalle" />
                                         </div>
                                     </fieldset>
                                     <br></br>
                                     <br></br>
                                     <br></br>
                                     <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <hr class="intro-divider"/>
-                                    <div class="row col-md-12">
-                                        <div class="text-center">
-                                            <h5>
-                                                Resultados del Formulario
-                                            </h5>
-                                            <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesHojaVidaEquipo.mensajeFormulario}" style="color: #{controllerDetallesHojaVidaEquipo.colorMensaje}}"/>
-                                            </strong>
-                                        </div>
-                                        <br></br>
-                                    </div>
                                     <hr class="intro-divider"/>
                                     <div class="right pull-right">
-                                        <h:commandButton value="Detalles" actionListener="#{controllerDetallesHojaVidaEquipo.registrarModificacionHojaVidaEquipo()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
                                         <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesHojaVidaEquipo.cerrarPagina()}" actionListener="#{controllerHojaVidaEquipo.recibirIDEquipoElemento(controllerDetallesHojaVidaEquipo.hojaVidaEquipoDetalle.equipoelemento.idequipoelemento)}" immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>

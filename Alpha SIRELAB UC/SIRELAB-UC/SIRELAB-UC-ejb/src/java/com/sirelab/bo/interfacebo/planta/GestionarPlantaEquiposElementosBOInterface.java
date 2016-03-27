@@ -25,9 +25,9 @@ public interface GestionarPlantaEquiposElementosBOInterface {
 
     public EquipoElemento obtenerEquipoElementoPorIDEquipoElemento(BigInteger idEquipoElemento);
 
-    public void modificarInformacionEquipoElemento(EquipoElemento equipoElemento, boolean cambio,  EquipoElemento equipoCambio);
+    public void modificarInformacionEquipoElemento(EquipoElemento equipoElemento, String usuario, boolean cambioEstado);
 
-    public void crearNuevoEquipoElemento(EquipoElemento equipoElemento);
+    public void crearNuevoEquipoElemento(EquipoElemento equipoElemento, String usuario);
 
     public List<EquipoElemento> consultarEquiposElementosPorParametro(Map<String, String> filtros);
 

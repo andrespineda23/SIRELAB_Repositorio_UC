@@ -71,6 +71,7 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
     public void init() {
         cantidadRegistros = "N/A";
         activarLaboratorio = true;
+        activarSala = true;
         parametroEstado = 1;
         parametroDepartamento = new Departamento();
         parametroLaboratorio = new Laboratorio();
@@ -241,17 +242,20 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
         bloquearPagSigSalaLaboratorioxServicio = true;
         cantidadRegistros = "N/A";
         return paginaAnterior;
-    }
+    } 
 
     public void limpiarDatos() {
         cantidadRegistros = "N/A";
         activarLaboratorio = true;
+        activarSala = true;
         parametroDepartamento = new Departamento();
         parametroServicio = new ServiciosSala();
         parametroLaboratorio = new Laboratorio();
+        parametroSala = new SalaLaboratorio();
         inicializarFiltros();
         parametroEstado = 1;
         listaLaboratorios = null;
+        listaSalaLaboratorio = null;
         listaSalaLaboratorioxServicios = null;
         listaSalaLaboratorioxServiciosTabla = null;
         posicionSalaLaboratorioxServicioTabla = 0;

@@ -138,7 +138,7 @@ and open the template in the editor.
                                                          class="form-control" disabled="#{controllerDetallesSala.activarLaboratorio}"
                                                          id="laboratorioSalaLaboratorio">
                                             <f:selectItems value="#{controllerDetallesSala.listaLaboratorios}" var="laboratorio"
-                                                           itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                                           itemLabel="#{laboratorio.strNombreEstado}" itemValue="#{laboratorio}"/>
                                             <f:converter converterId="ConverterGenerico" />
                                             <f:ajax event="change" listener="#{controllerDetallesSala.actualizarLaboratorios()}" execute="laboratorioSalaLaboratorio" render="@this msnLaboratorio"/>
                                         </h:selectOneMenu>
@@ -164,7 +164,7 @@ and open the template in the editor.
                                                          id="edificioSalaLaboratorio">
                                             <f:selectItem itemLabel="Seleccione Edificio" itemValue="null" />
                                             <f:selectItems value="#{controllerDetallesSala.listaEdificios}" var="edificio"
-                                                           itemLabel="#{edificio.strEstado}" itemValue="#{edificio}"/>
+                                                           itemLabel="#{edificio.strNombreEstado}" itemValue="#{edificio}"/>
                                             <f:converter converterId="ConverterGenerico" />
                                             <f:ajax event="change" listener="#{controllerDetallesSala.actualizarEdificios()}" execute="edificioSalaLaboratorio" render="@this msnEdificioSala"/>
                                         </h:selectOneMenu>

@@ -129,7 +129,7 @@ public class ControllerIndex implements Serializable {
                 paginaRecuperacion = "";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString(),e);
+            logger.error("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString(), e);
             paginaRecuperacion = "";
         }
     }
@@ -189,93 +189,83 @@ public class ControllerIndex implements Serializable {
     }
 
     private void ingresarAlSistema() {
-        if (validarProcesoLogin() == true) {
-            loginUsuario();
-        } else {
-            mensajeFormulario = "Existen errores en el proceso de ingreso.";
-            paginaSiguiente = "";
-        }
-    }
-
-    /**
-     * Metodo encargado del login al sistema de información idTipoUsuario : 1-
-     * Administrador / 2- Docente / 3- Estudiante / 4-EncargadoLab /
-     * 5-EntidadExterna
-     *
-     */
-    private void loginUsuario() {
-        paginaSiguiente = null;
         try {
-            Persona personaLogin = null;
-            if ((usuarioLogin != null && (!usuarioLogin.isEmpty()) && (usuarioLogin.trim().length() > 0)) && (passwordLogin != null && (!passwordLogin.isEmpty()) && (passwordLogin.trim().length() > 0))) {
-                personaLogin = gestionarLoginSistemaBO.obtenerPersonaLogin(usuarioLogin, passwordLogin);
-                usuarioLogin = null;
-                passwordLogin = null;
-                if (personaLogin != null) {
-                    BigInteger idTipoUsuario = personaLogin.getUsuario().getTipousuario().getIdtipousuario();
-                    usuarioLoginSistema = new UsuarioLogin();
-                    BigInteger secuenciaLogin = new BigInteger("1");
-                    if (secuenciaLogin.equals(idTipoUsuario)) {
-                        usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOR");
-                        usuarioLoginSistema.setIdUsuarioLogin(personaLogin.getIdpersona());
-                        usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getNombreusuario());
-                        paginaSiguiente = "inicioadministrador";
-                    } else {
-                        secuenciaLogin = new BigInteger("3");
-                        Object usuarioFinal = gestionarLoginSistemaBO.obtenerUsuarioFinalLogin(idTipoUsuario, personaLogin.getIdpersona());
+            if (validarProcesoLogin() == true) {
+                paginaSiguiente = null;
+                Persona personaLogin = null;
+                if ((usuarioLogin != null && (!usuarioLogin.isEmpty()) && (usuarioLogin.trim().length() > 0)) && (passwordLogin != null && (!passwordLogin.isEmpty()) && (passwordLogin.trim().length() > 0))) {
+                    personaLogin = gestionarLoginSistemaBO.obtenerPersonaLogin(usuarioLogin, passwordLogin);
+                    usuarioLogin = null;
+                    passwordLogin = null;
+                    if (personaLogin != null) {
+                        BigInteger idTipoUsuario = personaLogin.getUsuario().getTipousuario().getIdtipousuario();
+                        usuarioLoginSistema = new UsuarioLogin();
+                        BigInteger secuenciaLogin = new BigInteger("1");
                         if (secuenciaLogin.equals(idTipoUsuario)) {
-                            Estudiante estudianteLogin = (Estudiante) usuarioFinal;
-                            usuarioLoginSistema.setNombreTipoUsuario("ESTUDIANTE");
-                            usuarioLoginSistema.setIdUsuarioLogin(estudianteLogin.getIdestudiante());
-                            usuarioLoginSistema.setUserUsuario(estudianteLogin.getPersona().getUsuario().getNombreusuario());
-                            paginaSiguiente = "inicioestudiante";
+                            usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOR");
+                            usuarioLoginSistema.setIdUsuarioLogin(personaLogin.getIdpersona());
+                            usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getNombreusuario());
+                            paginaSiguiente = "inicioadministrador";
                         } else {
-                            secuenciaLogin = new BigInteger("2");
+                            secuenciaLogin = new BigInteger("3");
+                            Object usuarioFinal = gestionarLoginSistemaBO.obtenerUsuarioFinalLogin(idTipoUsuario, personaLogin.getIdpersona());
                             if (secuenciaLogin.equals(idTipoUsuario)) {
-                                Docente docenteLogin = (Docente) usuarioFinal;
-                                usuarioLoginSistema.setNombreTipoUsuario("DOCENTE");
-                                usuarioLoginSistema.setIdUsuarioLogin(docenteLogin.getIddocente());
-                                usuarioLoginSistema.setUserUsuario(docenteLogin.getPersona().getUsuario().getNombreusuario());
-                                paginaSiguiente = "iniciodocente";
+                                Estudiante estudianteLogin = (Estudiante) usuarioFinal;
+                                usuarioLoginSistema.setNombreTipoUsuario("ESTUDIANTE");
+                                usuarioLoginSistema.setIdUsuarioLogin(estudianteLogin.getIdestudiante());
+                                usuarioLoginSistema.setUserUsuario(estudianteLogin.getPersona().getUsuario().getNombreusuario());
+                                paginaSiguiente = "inicioestudiante";
                             } else {
-                                secuenciaLogin = new BigInteger("4");
+                                secuenciaLogin = new BigInteger("2");
                                 if (secuenciaLogin.equals(idTipoUsuario)) {
-                                    EncargadoLaboratorio encargadoLabLogin = (EncargadoLaboratorio) usuarioFinal;
-                                    usuarioLoginSistema.setNombreTipoUsuario("ENCARGADOLAB");
-                                    usuarioLoginSistema.setIdUsuarioLogin(encargadoLabLogin.getIdencargadolaboratorio());
-                                    usuarioLoginSistema.setUserUsuario(encargadoLabLogin.getPersona().getUsuario().getNombreusuario());
-                                    paginaSiguiente = "iniciolaboratorista";
+                                    Docente docenteLogin = (Docente) usuarioFinal;
+                                    usuarioLoginSistema.setNombreTipoUsuario("DOCENTE");
+                                    usuarioLoginSistema.setIdUsuarioLogin(docenteLogin.getIddocente());
+                                    usuarioLoginSistema.setUserUsuario(docenteLogin.getPersona().getUsuario().getNombreusuario());
+                                    paginaSiguiente = "iniciodocente";
                                 } else {
-                                    secuenciaLogin = new BigInteger("5");
+                                    secuenciaLogin = new BigInteger("4");
                                     if (secuenciaLogin.equals(idTipoUsuario)) {
-                                        PersonaContacto entidadExternaLogin = (PersonaContacto) usuarioFinal;
-                                        usuarioLoginSistema.setNombreTipoUsuario("ENTIDADEXTERNA");
-                                        usuarioLoginSistema.setIdUsuarioLogin(entidadExternaLogin.getIdpersonacontacto());
-                                        usuarioLoginSistema.setUserUsuario(entidadExternaLogin.getPersona().getUsuario().getNombreusuario());
-                                        paginaSiguiente = "inicioentidadexterna";
+                                        EncargadoLaboratorio encargadoLabLogin = (EncargadoLaboratorio) usuarioFinal;
+                                        usuarioLoginSistema.setNombreTipoUsuario("ENCARGADOLAB");
+                                        usuarioLoginSistema.setIdUsuarioLogin(encargadoLabLogin.getIdencargadolaboratorio());
+                                        usuarioLoginSistema.setUserUsuario(encargadoLabLogin.getPersona().getUsuario().getNombreusuario());
+                                        paginaSiguiente = "iniciolaboratorista";
                                     } else {
-                                        AdministradorEdificio administradorEdificio = (AdministradorEdificio) usuarioFinal;
-                                        usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOREDIFICIO");
-                                        usuarioLoginSistema.setIdUsuarioLogin(administradorEdificio.getIdadministradoredificio());
-                                        usuarioLoginSistema.setUserUsuario(administradorEdificio.getPersona().getUsuario().getNombreusuario());
-                                        paginaSiguiente = "inicioadministradoredificio";
+                                        secuenciaLogin = new BigInteger("5");
+                                        if (secuenciaLogin.equals(idTipoUsuario)) {
+                                            PersonaContacto entidadExternaLogin = (PersonaContacto) usuarioFinal;
+                                            usuarioLoginSistema.setNombreTipoUsuario("ENTIDADEXTERNA");
+                                            usuarioLoginSistema.setIdUsuarioLogin(entidadExternaLogin.getIdpersonacontacto());
+                                            usuarioLoginSistema.setUserUsuario(entidadExternaLogin.getPersona().getUsuario().getNombreusuario());
+                                            paginaSiguiente = "inicioentidadexterna";
+                                        } else {
+                                            AdministradorEdificio administradorEdificio = (AdministradorEdificio) usuarioFinal;
+                                            usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOREDIFICIO");
+                                            usuarioLoginSistema.setIdUsuarioLogin(administradorEdificio.getIdadministradoredificio());
+                                            usuarioLoginSistema.setUserUsuario(administradorEdificio.getPersona().getUsuario().getNombreusuario());
+                                            paginaSiguiente = "inicioadministradoredificio";
+                                        }
                                     }
                                 }
                             }
                         }
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionUsuario", usuarioLoginSistema);
+                        numeroConexiones = personaLogin.getUsuario().getNumeroconexiones();
+                        personaLogin.getUsuario().setNumeroconexiones(numeroConexiones + 1);
+                        gestionarLoginSistemaBO.actualizarUsuario(personaLogin.getUsuario());
+                    } else {
+                        mensajeFormulario = "El usuario ingresado no existe.";
                     }
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionUsuario", usuarioLoginSistema);
-                    numeroConexiones = personaLogin.getUsuario().getNumeroconexiones();
-                    personaLogin.getUsuario().setNumeroconexiones(numeroConexiones + 1);
-                    gestionarLoginSistemaBO.actualizarUsuario(personaLogin.getUsuario());
-                } else {
-                    mensajeFormulario = "El usuario ingresado no existe.";
                 }
+            } else {
+                mensajeFormulario = "Existen errores en el proceso de ingreso.";
+                paginaSiguiente = "";
             }
         } catch (NoResultException nre) {
             logger.error("NoResultException loginUsuario ControllerIndex : " + nre.toString());
         } catch (Exception e) {
-            logger.error("Error ControllerIndex loginUsuario: " + e.toString(),e);
+            logger.error("Error ControllerIndex loginUsuario: " + e.toString(), e);
         }
     }
 

@@ -36,7 +36,7 @@ and open the template in the editor.
                                         Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
                                     </p>
                                     <p>
-                                        Este registro es unicamente para el ingreso de tipos eventos.
+                                        Este registro es unicamente para el ingreso de tipos eventos. Recuerde que el mensaje de Observación sera visualizado de manera inicial en el registro de la hoja de vida del equipo.
                                     </p>
                                 </div>
 
@@ -50,9 +50,14 @@ and open the template in the editor.
                                             </h:inputText>
                                             <h6><h:message id="msnDetalle" for="inputDetalle" style="color: red"/></h6>
                                         </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Observación Evento*"/></strong>
+                                            <h:inputText maxlength="200" value="#{controllerRegistrarTipoEvento.inputObservacion}" disabled="#{controllerRegistrarTipoEvento.activarCasillas}" required="true" class="form-control" id="inputObservacion" requiredMessage="El campo Observación es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarTipoEvento.validarObservacion()}" execute="inputObservacion" render="inputObservacion msnObservacion" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnObservacion" for="inputObservacion" style="color: red"/></h6>
+                                        </div>
                                     </fieldset>
-                                    <br></br>
-                                    <br></br>
                                     <br></br>
                                     <br></br>
                                     <br></br>

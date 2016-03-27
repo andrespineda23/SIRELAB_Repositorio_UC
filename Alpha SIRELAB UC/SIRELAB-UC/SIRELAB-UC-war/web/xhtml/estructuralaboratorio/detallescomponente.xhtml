@@ -112,6 +112,16 @@ and open the template in the editor.
                                             </h:inputText>
                                             <h6><h:message id="msnSerialComponente" for="editarSerialComponente" style="color: red"/></h6>
                                         </div>
+                                      <div class="form-group">
+                                            <strong><h:outputText value="Costo Adquisición"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="10"  value="#{controllerDetallesComponente.editarCostoComponente}" class="form-control" id="editarCostoComponente" >
+                                                    <f:ajax event="blur" listener="#{controllerDetallesComponente.validarCostoComponente()}" execute="editarCostoComponente" render="editarCostoComponente msnCostoComponente" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">$</span>
+                                            </div>
+                                            <h6><h:message id="msnCostoComponente" for="editarCostoComponente" style="color: red"/></h6>
+                                        </div>
                                     </fieldset>
                                 </fieldset>
                                 <hr class="intro-divider"/>

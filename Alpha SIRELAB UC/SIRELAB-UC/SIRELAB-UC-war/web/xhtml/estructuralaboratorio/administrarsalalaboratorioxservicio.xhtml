@@ -70,7 +70,7 @@ and open the template in the editor.
                                                                 Sala de Laboratorio
                                                             </label>
                                                             <h:selectOneMenu value="#{controllerAdministrarSalaLaboratorioXServicio.parametroSala}"
-                                                                             class="form-control" 
+                                                                             class="form-control" disabled="#{controllerAdministrarSalaLaboratorioXServicio.activarSala}"
                                                                              id="parametroSala">
                                                                 <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
                                                                 <f:selectItems value="#{controllerAdministrarSalaLaboratorioXServicio.listaSalaLaboratorio}" var="sala"

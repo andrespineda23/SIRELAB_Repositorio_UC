@@ -7,8 +7,10 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -47,6 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EquipoElemento.findByFechaadquisicion", query = "SELECT e FROM EquipoElemento e WHERE e.fechaadquisicion = :fechaadquisicion"),
     @NamedQuery(name = "EquipoElemento.findByPrivado", query = "SELECT e FROM EquipoElemento e WHERE e.privado = :privado")})
 public class EquipoElemento implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
+    private Collection<ComponenteEquipo> componenteEquipoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
+    private Collection<HojaVidaEquipo> hojaVidaEquipoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -287,6 +295,24 @@ public class EquipoElemento implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.EquipoElemento[ idequipoelemento=" + idequipoelemento + " ]";
+    }
+
+    @XmlTransient
+    public Collection<HojaVidaEquipo> getHojaVidaEquipoCollection() {
+        return hojaVidaEquipoCollection;
+    }
+
+    public void setHojaVidaEquipoCollection(Collection<HojaVidaEquipo> hojaVidaEquipoCollection) {
+        this.hojaVidaEquipoCollection = hojaVidaEquipoCollection;
+    }
+
+    @XmlTransient
+    public Collection<ComponenteEquipo> getComponenteEquipoCollection() {
+        return componenteEquipoCollection;
+    }
+
+    public void setComponenteEquipoCollection(Collection<ComponenteEquipo> componenteEquipoCollection) {
+        this.componenteEquipoCollection = componenteEquipoCollection;
     }
     
 }

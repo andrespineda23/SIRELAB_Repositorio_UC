@@ -118,7 +118,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
     public SalaLaboratorio buscarSalaLaboratorioPorCodigoyEdificioyLaboratorio(String codigo, BigInteger edificio, BigInteger laboratorio) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.codigosala=:codigo AND p.edificio.idedificio=:edificio AND p.laboratorio=:laboratorio");
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.codigosala=:codigo AND p.edificio.idedificio=:edificio AND p.laboratorio.idlaboratorio=:laboratorio");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("codigo", codigo);
             query.setParameter("edificio", edificio);

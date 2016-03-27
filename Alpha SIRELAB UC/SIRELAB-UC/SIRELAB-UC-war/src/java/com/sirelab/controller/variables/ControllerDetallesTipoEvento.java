@@ -31,8 +31,8 @@ public class ControllerDetallesTipoEvento implements Serializable {
     @EJB
     GestionarVariableTiposEventosBOInterface gestionarVariableTiposEventoBO;
 
-    private String inputDetalle;
-    private boolean validacionesDetalle;
+    private String inputDetalle, inputObservacion;
+    private boolean validacionesDetalle, validacionesObservacion;
     private String mensajeFormulario;
     private BigInteger idTipoEvento;
     private TipoEvento tipoEventoDetalle;
@@ -62,6 +62,8 @@ public class ControllerDetallesTipoEvento implements Serializable {
         if (null != tipoEventoDetalle) {
             inputDetalle = tipoEventoDetalle.getDetalleevento();
             validacionesDetalle = true;
+            inputObservacion = tipoEventoDetalle.getObservacion();
+            validacionesObservacion = true;
             modificacionesRegistro = false;
         }
     }
@@ -74,22 +76,37 @@ public class ControllerDetallesTipoEvento implements Serializable {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. " + constantes.VARIABLE_NOMBRE));
                 }
             } else {
                 validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. " + constantes.VARIABLE_NOMBRE));
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. "+constantes.VARIABLE_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El detalle se encuentra incorrecto. " + constantes.VARIABLE_NOMBRE));
         }
         modificacionesRegistro = true;
     }
 
+    public void validarObservacion() {
+        if (Utilidades.validarNulo(inputObservacion) && (!inputObservacion.isEmpty()) && (inputObservacion.trim().length() > 0)) {
+            int tam = inputObservacion.length();
+            if (tam >= 6) {
+                validacionesObservacion = true;
+            } else {
+                validacionesObservacion = false;
+                FacesContext.getCurrentInstance().addMessage("form:inputObservacion", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.VARIABLE_NOMBRE));
+            }
+        } else {
+            validacionesObservacion = false;
+            FacesContext.getCurrentInstance().addMessage("form:inputObservacion", new FacesMessage("La observación se encuentra incorrecta. " + constantes.VARIABLE_NOMBRE));
+        }
+    }
+
     public void registrarModificacionTipoEvento() {
         if (modificacionesRegistro == true) {
-            if (validacionesDetalle == true) {
+            if (validacionesDetalle == true && validacionesObservacion == true) {
                 almacenarModificacionRegistro();
                 cargarInformacionRegistro();
                 colorMensaje = "green";
@@ -107,10 +124,10 @@ public class ControllerDetallesTipoEvento implements Serializable {
     private void almacenarModificacionRegistro() {
         try {
             tipoEventoDetalle.setDetalleevento(inputDetalle);
+            tipoEventoDetalle.setObservacion(inputObservacion);
             gestionarVariableTiposEventoBO.editarTipoEvento(tipoEventoDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetalleTipoEvento almacenarModificacionRegistro:  " + e.toString(),e);
-            logger.error("Error ControllerDetalleTipoEvento almacenarModificacionRegistro: " + e.toString(),e);
+            logger.error("Error ControllerDetalleTipoEvento almacenarModificacionRegistro: " + e.toString(), e);
         }
     }
 
@@ -122,6 +139,8 @@ public class ControllerDetallesTipoEvento implements Serializable {
     public void cancelarTipoEvento() {
         inputDetalle = null;
         validacionesDetalle = false;
+        inputObservacion = null;
+        validacionesObservacion = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         modificacionesRegistro = false;
@@ -152,6 +171,14 @@ public class ControllerDetallesTipoEvento implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public String getInputObservacion() {
+        return inputObservacion;
+    }
+
+    public void setInputObservacion(String inputObservacion) {
+        this.inputObservacion = inputObservacion;
     }
 
 }

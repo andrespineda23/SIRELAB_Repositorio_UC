@@ -78,7 +78,7 @@ and open the template in the editor.
                                                         <f:selectItems value="#{controllerAdministrarModulos.listaLaboratorio}" var="area"
                                                                        itemLabel="#{area.nombrelaboratorio}" itemValue="#{area}"/>
                                                         <f:converter converterId="ConverterGenerico" />
-                                                        <f:ajax event="change" listener="#{controllerAdministrarModulos.activarLaboratorio()}" execute="parametroLaboratorio" render="@this parametroSalaLaboratorio"/>
+                                                        <f:ajax event="change" listener="#{controllerAdministrarModulos.actualizarLaboratorio()}" execute="parametroLaboratorio" render="@this parametroSalaLaboratorio"/>
                                                     </h:selectOneMenu>
                                                 </div>
                                                 <div class="col-md-6">

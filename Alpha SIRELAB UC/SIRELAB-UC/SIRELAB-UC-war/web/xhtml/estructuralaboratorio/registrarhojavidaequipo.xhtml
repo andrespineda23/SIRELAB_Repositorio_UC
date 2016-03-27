@@ -23,7 +23,6 @@ and open the template in the editor.
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
                                 <li><a href="#">...</a></li>
-                                <li><a href="#">Administrar Hoja de Vida</a></li>
                                 <li class="active">Registrar Registro H.V.</li>
                             </ol>
                         </div>
@@ -37,7 +36,7 @@ and open the template in the editor.
                                         Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
                                     </p>
                                     <p>
-                                        Este registro es unicamente para el ingreso de periodos academicos.
+                                        Este registro es unicamente para ingresar un nuevo elemento en la hoja de vida del equipo.
                                     </p>
                                 </div>
 
@@ -51,45 +50,12 @@ and open the template in the editor.
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
                                         </div>
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <label for="fechaEventoAnio">
-                                                    Año Fecha Evento
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaEventoAnio}" class="form-control"  id="fechaEventoAnio">
-                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaAniosEvento}" var="pfechaEventoAnio"
-                                                                   itemLabel="#{pfechaEventoAnio.mensajeMostrar}" itemValue="#{pfechaEventoAnio}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarHojaVidaEquipo.actualizarInformacionAnioEvento()}" execute="@this" render="@this fechaEventoMes fechaEventoDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaEventoMes">
-                                                    Mes Fecha Evento
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaEventoMes}" class="form-control"  id="fechaEventoMes">
-                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaMesesEvento}" var="pfechaEventoMes"
-                                                                   itemLabel="#{pfechaEventoMes.mensajeMostrar}" itemValue="#{pfechaEventoMes}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarHojaVidaEquipo.actualizarInformacionEventoDia()}" execute="@this" render="@this fechaEventoDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaEventoDia">
-                                                    Día Fecha Evento
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaEventoDia}" class="form-control"  id="fechaEventoDia">
-                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaDiasEvento}" var="pfechaEventoDia"
-                                                                   itemLabel="#{pfechaEventoDia.mensajeMostrar}" itemValue="#{pfechaEventoDia}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                </h:selectOneMenu>
-                                            </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Costo*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarHojaVidaEquipo.inputCosto}" disabled="#{controllerRegistrarHojaVidaEquipo.activarCasillas}" required="true" class="form-control" id="inputCosto" requiredMessage="El campo Costo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarHojaVidaEquipo.validarCosto()}" execute="inputCosto" render="inputCosto msnCosto" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCosto" for="inputCosto" style="color: red"/></h6>
                                         </div>
                                         <div class="form-inline">
                                             <div class="form-group">
@@ -127,6 +93,86 @@ and open the template in the editor.
                                                 <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaRegistroDia}" class="form-control"  id="fechaRegistroDia">
                                                     <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaDiasRegistro}" var="pfechaRegistroDia"
                                                                    itemLabel="#{pfechaRegistroDia.mensajeMostrar}" itemValue="#{pfechaRegistroDia}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <label for="fechaEventoAnio">
+                                                    Año Fecha Inicio Evento
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaEventoAnio}" class="form-control"  id="fechaEventoAnio">
+                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaAniosEvento}" var="pfechaEventoAnio"
+                                                                   itemLabel="#{pfechaEventoAnio.mensajeMostrar}" itemValue="#{pfechaEventoAnio}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarHojaVidaEquipo.actualizarInformacionAnioEvento()}" execute="@this" render="@this fechaEventoMes fechaEventoDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaEventoMes">
+                                                    Mes Fecha Inicio Evento
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaEventoMes}" class="form-control"  id="fechaEventoMes">
+                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaMesesEvento}" var="pfechaEventoMes"
+                                                                   itemLabel="#{pfechaEventoMes.mensajeMostrar}" itemValue="#{pfechaEventoMes}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarHojaVidaEquipo.actualizarInformacionEventoDia()}" execute="@this" render="@this fechaEventoDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaEventoDia">
+                                                    Día Fecha Inicio Evento
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaEventoDia}" class="form-control"  id="fechaEventoDia">
+                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaDiasEvento}" var="pfechaEventoDia"
+                                                                   itemLabel="#{pfechaEventoDia.mensajeMostrar}" itemValue="#{pfechaEventoDia}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <label for="fechaFinEventoAnio">
+                                                    Año Fecha Fin Evento
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaFinEventoAnio}" class="form-control"  id="fechaFinEventoAnio">
+                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaAniosFinEvento}" var="pfechaFinEventoAnio"
+                                                                   itemLabel="#{pfechaFinEventoAnio.mensajeMostrar}" itemValue="#{pfechaFinEventoAnio}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarHojaVidaEquipo.actualizarInformacionAnioFinEvento()}" execute="@this" render="@this fechaFinEventoMes fechaFinEventoDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaFinEventoMes">
+                                                    Mes Fecha Fin Evento
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaFinEventoMes}" class="form-control"  id="fechaFinEventoMes">
+                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaMesesFinEvento}" var="pfechaFinEventoMes"
+                                                                   itemLabel="#{pfechaFinEventoMes.mensajeMostrar}" itemValue="#{pfechaFinEventoMes}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarHojaVidaEquipo.actualizarInformacionEventoFinDia()}" execute="@this" render="@this fechaFinEventoDia"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fechaFinEventoDia">
+                                                    Día Fecha Fin Evento
+                                                </label>
+                                                <span></span>
+                                                <span></span>
+                                                <h:selectOneMenu value="#{controllerRegistrarHojaVidaEquipo.fechaFinEventoDia}" class="form-control"  id="fechaFinEventoDia">
+                                                    <f:selectItems value="#{controllerRegistrarHojaVidaEquipo.listaDiasFinEvento}" var="pfechaFinEventoDia"
+                                                                   itemLabel="#{pfechaFinEventoDia.mensajeMostrar}" itemValue="#{pfechaFinEventoDia}"/>
                                                     <f:converter converterId="ConverterGenerico" />
                                                 </h:selectOneMenu>
                                             </div>

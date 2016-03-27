@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body  onload="nobackbutton();">
+        <ui:composition template="/xhtml/template/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Tranferencia Equipos / Componentes</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <h2 class="info">
+                                    Información Registro
+                                </h2>
+                                <p>
+                                    Los campos marcados con (*) son obligatorios. Los caracteres especiales estan prohibidos para el registro de la información. 
+                                </p>
+                                <p>
+                                    Este registro es unicamente para transferir equipos de un modulo a otro, o transferir componentes de un equipo a otro equipo.
+                                </p>
+                            </div>
+                            <div class="col-md-12 row">
+                                <fieldset>
+                                    <legend class="text-info">Equipo/Componente que sera transferido de ubicación</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Laboratorio*"/></strong>
+                                        <h:selectOneMenu value="#{controllerTransferenciaElementos.laboratorioTransferencia}"
+                                                         class="form-control" 
+                                                         id="laboratorioTransferencia">
+                                            <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaLaboratorioTransferencia}" var="area"
+                                                           itemLabel="#{area.strNombreEstado}" itemValue="#{area}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarLaboratorioTransferencia()}" execute="laboratorioTransferencia" render="form"/>
+                                        </h:selectOneMenu>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Sala de Laboratorio*"/></strong>
+                                        <h:selectOneMenu  value="#{controllerTransferenciaElementos.salaLaboratorioTransferencia}"
+                                                          class="form-control" disabled="#{controllerTransferenciaElementos.activarSalaTransferencia}"
+                                                          id="salaLaboratorioTransferencia">
+                                            <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaSalaLaboratorioTransferencia}" var="sala"
+                                                           itemLabel="#{sala.strNombreEstado}" itemValue="#{sala}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarSalaTransferencia()}" execute="salaLaboratorioTransferencia" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Modulo/Banco de Trabajo*"/></strong>
+                                        <h:selectOneMenu  value="#{controllerTransferenciaElementos.moduloLaboratorioTransferencia}"
+                                                          class="form-control" disabled="#{controllerTransferenciaElementos.activarModuloTransferencia}"
+                                                          id="moduloLaboratorioTransferencia">
+                                            <f:selectItem itemLabel="Seleccione Modulo/Banco" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaModuloLaboratorioTransferencia}" var="modulo"
+                                                           itemLabel="#{modulo.strNombreEstado}" itemValue="#{modulo}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarModuloTransferencia()}" execute="moduloLaboratorioTransferencia" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Equipo de Trabajo*"/></strong>
+                                        <h:selectOneMenu  value="#{controllerTransferenciaElementos.equipoElementoTransferencia}"
+                                                          class="form-control" disabled="#{controllerTransferenciaElementos.activarEquipoTransferencia}"
+                                                          id="equipoElementoTransferencia">
+                                            <f:selectItem itemLabel="Seleccione equipo" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaEquipoElementoTransferencia}" var="equipo"
+                                                           itemLabel="#{equipo.nombreequipo}" itemValue="#{equipo}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarEquipoTransferencia()}" execute="equipoElementoTransferencia" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="¿El elemento que sera transferido es un equipo (de ser un componente elimine esta propiedad)?*"/></strong>
+                                        <h:selectBooleanCheckbox  value="#{controllerTransferenciaElementos.transferirComponente}" >
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.activarComponente()}" render="form"/>
+                                        </h:selectBooleanCheckbox>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Componente de Equipo*"/></strong>
+                                        <h:selectOneMenu  value="#{controllerTransferenciaElementos.componenteEquipoTransferencia}"
+                                                          class="form-control" disabled="#{controllerTransferenciaElementos.activarComponenteTransferencia}"
+                                                          id="componenteEquipoTransferencia">
+                                            <f:selectItem itemLabel="Seleccione componente" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaComponenteEquipoTransferencia}" var="componente"
+                                                           itemLabel="#{componente.nombrecomponente}" itemValue="#{componente}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarComponenteTransferencia()}" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="text-info">Modulo/Equipo donde sera tranferido el elemento a mover</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Laboratorio*"/></strong>
+                                        <h:selectOneMenu value="#{controllerTransferenciaElementos.laboratorio}"
+                                                         class="form-control"  disabled="#{controllerTransferenciaElementos.activarLaboratorio}"
+                                                         id="laboratorio">
+                                            <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaLaboratorio}" var="area"
+                                                           itemLabel="#{area.strNombreEstado}" itemValue="#{area}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarLaboratorio()}" execute="laboratorio" render="form"/>
+                                        </h:selectOneMenu>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Sala de Laboratorio*"/></strong>
+                                        <h:selectOneMenu  value="#{controllerTransferenciaElementos.salaLaboratorio}"
+                                                          class="form-control" disabled="#{controllerTransferenciaElementos.activarSala}"
+                                                          id="salaLaboratorio">
+                                            <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaSalaLaboratorio}" var="sala"
+                                                           itemLabel="#{sala.strNombreEstado}" itemValue="#{sala}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarSala()}" execute="salaLaboratorio" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Modulo/Banco de Trabajo*"/></strong>
+                                        <h:selectOneMenu  value="#{controllerTransferenciaElementos.moduloLaboratorio}"
+                                                          class="form-control" disabled="#{controllerTransferenciaElementos.activarModulo}"
+                                                          id="moduloLaboratorio">
+                                            <f:selectItem itemLabel="Seleccione Modulo/Banco" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaModuloLaboratorio}" var="modulo"
+                                                           itemLabel="#{modulo.strNombreEstado}" itemValue="#{modulo}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerTransferenciaElementos.actualizarModulo()}" execute="moduloLaboratorio" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Equipo de Trabajo*"/></strong>
+                                        <h:selectOneMenu  value="#{controllerTransferenciaElementos.equipoElemento}"
+                                                          class="form-control" disabled="#{controllerTransferenciaElementos.activarEquipo}"
+                                                          id="equipoElemento">
+                                            <f:selectItem itemLabel="Seleccione equipo" itemValue="null" />
+                                            <f:selectItems value="#{controllerTransferenciaElementos.listaEquipoElemento}" var="equipo"
+                                                           itemLabel="#{equipo.nombreequipo}" itemValue="#{equipo}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </fieldset>
+                                <hr class="intro-divider"/>
+                                <div class="row col-md-12">
+                                    <div class="text-center">
+                                        <h5>
+                                            Resultados del Formulario
+                                        </h5>
+                                        <strong>
+                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerTransferenciaElementos.mensajeFormulario}" style="color: #{controllerTransferenciaElementos.colorMensaje}}"/>
+                                        </strong>
+                                    </div>
+                                    <br></br>
+                                </div>
+                                <hr class="intro-divider"/>
+                                <div class="right pull-right">
+                                    <h:commandButton class="btn btn-success" disabled="#{controllerTransferenciaElementos.inactivarAceptar}" value="Registrar" actionListener="#{controllerTransferenciaElementos.almacenarTransferenciaElemento()}">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                    <span></span>
+                                    <span></span>
+                                    <h:commandButton class="btn btn-danger" value="Cancelar" action="#{controllerTransferenciaElementos.retornarPaginaAnterior()}" immediate="true">
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

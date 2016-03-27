@@ -15,6 +15,7 @@ import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.TipoActivo;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -485,7 +486,6 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
                     fecha1 = format.parse(cal.getTime().toString());
                     equipoNuevo.setFechaadquisicion(fecha1);
                 } catch (ParseException e) {
-                    e.printStackTrace();
                 }
             } else {
                 equipoNuevo.setFechaadquisicion(fecha1);
@@ -495,9 +495,9 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
             equipoNuevo.setTipoactivo(nuevoTipoActivoEquipo);
             equipoNuevo.setEstadoequipo(nuevoEstadoEquipoEquipo);
             equipoNuevo.setProveedor(nuevoProveedorEquipo);
-            gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo);
+            UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+            gestionarPlantaEquiposElementosBO.crearNuevoEquipoElemento(equipoNuevo,usuarioLoginSistema.getUserUsuario());
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema:  " + e.toString(), e);
             logger.error("Error ControllerGestionarPlantaEquipoElemento almacenarNuevoEquipoEnSistema : " + e.toString(), e);
         }
     }

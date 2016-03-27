@@ -198,7 +198,7 @@ public class ControllerAdministrarModulos implements Serializable {
                 filtros.put("parametroEstado", "true");
             }
             if (parametroEstado == 2) {
-                filtros.put("parametroEstado", "true");
+                filtros.put("parametroEstado", "false");
             }
         }
         if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {

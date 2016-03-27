@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "tipoevento")
@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TipoEvento.findAll", query = "SELECT t FROM TipoEvento t"),
     @NamedQuery(name = "TipoEvento.findByIdtipoevento", query = "SELECT t FROM TipoEvento t WHERE t.idtipoevento = :idtipoevento"),
-    @NamedQuery(name = "TipoEvento.findByDetalleevento", query = "SELECT t FROM TipoEvento t WHERE t.detalleevento = :detalleevento")})
+    @NamedQuery(name = "TipoEvento.findByDetalleevento", query = "SELECT t FROM TipoEvento t WHERE t.detalleevento = :detalleevento"),
+    @NamedQuery(name = "TipoEvento.findByObservacion", query = "SELECT t FROM TipoEvento t WHERE t.observacion = :observacion")})
 public class TipoEvento implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoevento")
     private Collection<HojaVidaEquipo> hojaVidaEquipoCollection;
@@ -49,6 +50,9 @@ public class TipoEvento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "detalleevento")
     private String detalleevento;
+    @Size(max = 200)
+    @Column(name = "observacion")
+    private String observacion;
 
     public TipoEvento() {
     }
@@ -76,6 +80,14 @@ public class TipoEvento implements Serializable {
 
     public void setDetalleevento(String detalleevento) {
         this.detalleevento = detalleevento.toUpperCase();
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     @Override

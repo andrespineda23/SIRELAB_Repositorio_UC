@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "componenteequipo")
@@ -39,9 +39,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ComponenteEquipo.findByMarcacomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.marcacomponente = :marcacomponente"),
     @NamedQuery(name = "ComponenteEquipo.findByModelocomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.modelocomponente = :modelocomponente"),
     @NamedQuery(name = "ComponenteEquipo.findBySerialcomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.serialcomponente = :serialcomponente"),
-    @NamedQuery(name = "ComponenteEquipo.findByEstadocomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.estadocomponente = :estadocomponente")})
+    @NamedQuery(name = "ComponenteEquipo.findByEstadocomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.estadocomponente = :estadocomponente"),
+    @NamedQuery(name = "ComponenteEquipo.findByCostocomponente", query = "SELECT c FROM ComponenteEquipo c WHERE c.costocomponente = :costocomponente")})
 public class ComponenteEquipo implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,6 +74,9 @@ public class ComponenteEquipo implements Serializable {
     private String serialcomponente;
     @Column(name = "estadocomponente")
     private Boolean estadocomponente;
+    @Size(max = 10)
+    @Column(name = "costocomponente")
+    private String costocomponente;
     @JoinColumn(name = "tipocomponente", referencedColumnName = "idtipocomponente")
     @ManyToOne(optional = false)
     private TipoComponente tipocomponente;
@@ -90,7 +93,7 @@ public class ComponenteEquipo implements Serializable {
         this.idcomponenteequipo = idcomponenteequipo;
     }
 
-    public ComponenteEquipo(BigInteger idcomponenteequipo, String nombrecomponente, String descripcioncomponente, String codigocomponete) {
+    public ComponenteEquipo(BigInteger idcomponenteequipo, String codigocomponete, String nombrecomponente, String descripcioncomponente) {
         this.idcomponenteequipo = idcomponenteequipo;
         this.codigocomponete = codigocomponete;
         this.nombrecomponente = nombrecomponente;
@@ -174,10 +177,19 @@ public class ComponenteEquipo implements Serializable {
         }
         return strEstado;
     }
-
+   
     public void setStrEstado(String strEstado) {
         this.strEstado = strEstado;
     }
+    
+     public String getCostocomponente() {
+        return costocomponente;
+    }
+
+    public void setCostocomponente(String costocomponente) {
+        this.costocomponente = costocomponente;
+    }
+
 
     public TipoComponente getTipocomponente() {
         return tipocomponente;
@@ -219,5 +231,5 @@ public class ComponenteEquipo implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.ComponenteEquipo[ idcomponenteequipo=" + idcomponenteequipo + " ]";
     }
-
+    
 }

@@ -10,6 +10,7 @@ import com.sirelab.bo.interfacebo.planta.GestionarPlantaComponentesEquiposBOInte
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.TipoComponente;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -34,11 +35,11 @@ public class ControllerDetallesComponente implements Serializable {
     @EJB
     GestionarPlantaComponentesEquiposBOInterface gestionarPlantaComponentesEquiposBO;
 
-    private String editarNombreComponente, editarCodigoComponente, editarDescripcionComponente, editarMarcaComponente, editarModeloComponente, editarSerialComponente;
+    private String editarNombreComponente, editarCodigoComponente, editarDescripcionComponente, editarMarcaComponente, editarModeloComponente, editarSerialComponente, editarCostoComponente;
     private List<TipoComponente> listaTiposComponentes;
     private TipoComponente editarTipoComponente;
     private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesMarca, validacionesTipo;
-    private boolean validacionesModelo, validacionesSerial;
+    private boolean validacionesModelo, validacionesSerial, validacionesCosto;
     private String mensajeFormulario;
     private EquipoElemento editarEquipoElemento;
     private ComponenteEquipo componenteEquipoDetalle;
@@ -73,6 +74,7 @@ public class ControllerDetallesComponente implements Serializable {
             editarModeloComponente = componenteEquipoDetalle.getModelocomponente();
             editarNombreComponente = componenteEquipoDetalle.getNombrecomponente();
             editarSerialComponente = componenteEquipoDetalle.getSerialcomponente();
+            editarCostoComponente = componenteEquipoDetalle.getCostocomponente();
             editarEquipoElemento = componenteEquipoDetalle.getEquipoelemento();
             editarTipoComponente = componenteEquipoDetalle.getTipocomponente();
             listaTiposComponentes = gestionarPlantaComponentesEquiposBO.consultarTiposComponentesRegistrados();
@@ -82,6 +84,7 @@ public class ControllerDetallesComponente implements Serializable {
             validacionesCodigo = true;
             validacionesDescripcion = true;
             validacionesNombre = true;
+            validacionesCosto = true;
             validacionesMarca = true;
             validacionesTipo = true;
         }
@@ -147,6 +150,23 @@ public class ControllerDetallesComponente implements Serializable {
         } else {
             validacionesMarca = false;
             FacesContext.getCurrentInstance().addMessage("form:editarMarcaComponente", new FacesMessage("La marca es obligatoria. " + constantes.INVENTARIO_MARCA));
+        }
+        modificacionesRegistro = true;
+    }
+
+    public void validarCostoComponente() {
+        if (Utilidades.validarNulo(editarCostoComponente) && (!editarCostoComponente.isEmpty()) && (editarCostoComponente.trim().length() > 0)) {
+            if (editarCostoComponente.length() <= 10) {
+                if (Utilidades.isNumber(editarCostoComponente)) {
+                    validacionesCosto = true;
+                } else {
+                    validacionesCosto = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarCostoComponente", new FacesMessage("El costo se encuentra incorrecto. " + constantes.INVENTARIO_COST_ALQ));
+                }
+            } else {
+                validacionesCosto = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarCostoComponente", new FacesMessage("El tamaño maximo permitido es 10 caracteres. " + constantes.INVENTARIO_COST_ALQ));
+            }
         }
         modificacionesRegistro = true;
     }
@@ -234,6 +254,7 @@ public class ControllerDetallesComponente implements Serializable {
         editarNombreComponente = null;
         editarCodigoComponente = null;
         editarMarcaComponente = null;
+        editarCostoComponente = "0";
         editarDescripcionComponente = null;
         editarSerialComponente = null;
         editarModeloComponente = null;
@@ -245,6 +266,7 @@ public class ControllerDetallesComponente implements Serializable {
         validacionesTipo = false;
         validacionesCodigo = false;
         validacionesDescripcion = false;
+        validacionesCosto = true;
         validacionesNombre = false;
         validacionesMarca = true;
         colorMensaje = "black";
@@ -272,6 +294,9 @@ public class ControllerDetallesComponente implements Serializable {
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            retorno = false;
+        }
+        if (validacionesCosto == false) {
             retorno = false;
         }
         if (validacionesNombre == false) {
@@ -317,14 +342,6 @@ public class ControllerDetallesComponente implements Serializable {
 
     public void almacenaModificacionComponente() {
         try {
-            EquipoElemento equipoCambio = null;
-            boolean cambioEquipo;
-            if (componenteEquipoDetalle.getEquipoelemento().getIdequipoelemento().equals(editarEquipoElemento.getIdequipoelemento())) {
-                cambioEquipo = false;
-            } else {
-                cambioEquipo = true;
-                equipoCambio = componenteEquipoDetalle.getEquipoelemento();
-            }
             componenteEquipoDetalle.setNombrecomponente(editarNombreComponente);
             componenteEquipoDetalle.setCodigocomponete(editarCodigoComponente);
             componenteEquipoDetalle.setMarcacomponente(editarMarcaComponente);
@@ -332,10 +349,11 @@ public class ControllerDetallesComponente implements Serializable {
             componenteEquipoDetalle.setSerialcomponente(editarSerialComponente);
             componenteEquipoDetalle.setModelocomponente(editarModeloComponente);
             componenteEquipoDetalle.setTipocomponente(editarTipoComponente);
-            gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle, cambioEquipo,equipoCambio);
+            componenteEquipoDetalle.setCostocomponente(editarCostoComponente);
+            UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+            gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle, usuarioLoginSistema.getUserUsuario());
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesComponente almacenaModificacionComponente:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesComponente almacenaModificacionComponente : " + e.toString(),e);
+            logger.error("Error ControllerDetallesComponente almacenaModificacionComponente:  " + e.toString(), e);
         }
     }
 
@@ -442,6 +460,14 @@ public class ControllerDetallesComponente implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public String getEditarCostoComponente() {
+        return editarCostoComponente;
+    }
+
+    public void setEditarCostoComponente(String editarCostoComponente) {
+        this.editarCostoComponente = editarCostoComponente;
     }
 
 }

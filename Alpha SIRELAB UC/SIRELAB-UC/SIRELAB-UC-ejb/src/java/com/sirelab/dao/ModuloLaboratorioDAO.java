@@ -160,10 +160,10 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
                     if (camposFiltro > 0) {
                         wheres.append(" AND ");
                     }
-                    if ("parametroNombre".equals(entry.getKey())) {
+                    if ("parametroCodigo".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".nombremodulo")
-                                .append(") Like :parametroNombre");
+                                .append(".codigomodulo")
+                                .append(") Like :parametroCodigo");
                         camposFiltro++;
                     }
                     if ("parametroDetalle".equals(entry.getKey())) {
@@ -202,7 +202,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
     private TypedQuery<ModuloLaboratorio> asignarValores(TypedQuery<ModuloLaboratorio> tq, Map<String, String> filters) {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             if (null != entry.getValue() && !entry.getValue().isEmpty()) {
-                if (("parametroNombre".equals(entry.getKey()))
+                if (("parametroCodigo".equals(entry.getKey()))
                         || ("parametroDetalle".equals(entry.getKey()))) {
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }

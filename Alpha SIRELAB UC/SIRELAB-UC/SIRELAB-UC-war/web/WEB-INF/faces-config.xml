@@ -3236,4 +3236,56 @@
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>transferenciaelementos</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/transferenciaelementos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/transferenciaelementos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministrador</from-outcome>
+            <to-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>transferenciaelementos</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/transferenciaelementos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/transferenciaelementos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciolaboratorista</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>transferenciaelementos</from-outcome>
+            <to-view-id>/xhtml/estructuralaboratorio/transferenciaelementos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/estructuralaboratorio/transferenciaelementos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    
 </faces-config>

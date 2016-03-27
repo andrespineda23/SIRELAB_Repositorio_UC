@@ -37,8 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HojaVidaEquipo.findByIdhojavidaequipo", query = "SELECT h FROM HojaVidaEquipo h WHERE h.idhojavidaequipo = :idhojavidaequipo"),
     @NamedQuery(name = "HojaVidaEquipo.findByFecharegistro", query = "SELECT h FROM HojaVidaEquipo h WHERE h.fecharegistro = :fecharegistro"),
     @NamedQuery(name = "HojaVidaEquipo.findByFechaevento", query = "SELECT h FROM HojaVidaEquipo h WHERE h.fechaevento = :fechaevento"),
-    @NamedQuery(name = "HojaVidaEquipo.findByDetalleevento", query = "SELECT h FROM HojaVidaEquipo h WHERE h.detalleevento = :detalleevento")})
+    @NamedQuery(name = "HojaVidaEquipo.findByDetalleevento", query = "SELECT h FROM HojaVidaEquipo h WHERE h.detalleevento = :detalleevento"),
+    @NamedQuery(name = "HojaVidaEquipo.findByUsuariomodificacion", query = "SELECT h FROM HojaVidaEquipo h WHERE h.usuariomodificacion = :usuariomodificacion"),
+    @NamedQuery(name = "HojaVidaEquipo.findByCosto", query = "SELECT h FROM HojaVidaEquipo h WHERE h.costo = :costo"),
+    @NamedQuery(name = "HojaVidaEquipo.findByObservaciones", query = "SELECT h FROM HojaVidaEquipo h WHERE h.observaciones = :observaciones"),
+    @NamedQuery(name = "HojaVidaEquipo.findByFechafinevento", query = "SELECT h FROM HojaVidaEquipo h WHERE h.fechafinevento = :fechafinevento")})
 public class HojaVidaEquipo implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +65,18 @@ public class HojaVidaEquipo implements Serializable {
     @Size(min = 1, max = 800)
     @Column(name = "detalleevento")
     private String detalleevento;
+    @Size(max = 30)
+    @Column(name = "usuariomodificacion")
+    private String usuariomodificacion;
+    @Size(max = 10)
+    @Column(name = "costo")
+    private String costo;
+    @Size(max = 500)
+    @Column(name = "observaciones")
+    private String observaciones;
+    @Column(name = "fechafinevento")
+    @Temporal(TemporalType.DATE)
+    private Date fechafinevento;
     @JoinColumn(name = "tipoevento", referencedColumnName = "idtipoevento")
     @ManyToOne(optional = false)
     private TipoEvento tipoevento;
@@ -113,6 +130,38 @@ public class HojaVidaEquipo implements Serializable {
         this.detalleevento = detalleevento;
     }
 
+    public String getUsuariomodificacion() {
+        return usuariomodificacion;
+    }
+
+    public void setUsuariomodificacion(String usuariomodificacion) {
+        this.usuariomodificacion = usuariomodificacion;
+    }
+
+    public String getCosto() {
+        return costo;
+    }
+
+    public void setCosto(String costo) {
+        this.costo = costo;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Date getFechafinevento() {
+        return fechafinevento;
+    }
+
+    public void setFechafinevento(Date fechafinevento) {
+        this.fechafinevento = fechafinevento;
+    }
+
     public TipoEvento getTipoevento() {
         return tipoevento;
     }
@@ -153,5 +202,5 @@ public class HojaVidaEquipo implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.HojaVidaEquipo[ idhojavidaequipo=" + idhojavidaequipo + " ]";
     }
-    
+
 }

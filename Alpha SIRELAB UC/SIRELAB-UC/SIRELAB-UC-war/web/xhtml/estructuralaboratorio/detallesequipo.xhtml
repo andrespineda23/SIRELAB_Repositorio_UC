@@ -202,7 +202,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Laboratorio*"/></strong>
                                         <h:selectOneMenu value="#{controllerDetallesEquipo.laboratorioEquipoElemento}"
-                                                         class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
+                                                         class="form-control" disabled="true"
                                                          id="laboratorioEquipoElemento">
                                             <f:selectItems value="#{controllerDetallesEquipo.listaLaboratorio}" var="area"
                                                            itemLabel="#{area.strNombreEstado}" itemValue="#{area}"/>
@@ -213,7 +213,7 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Sala de Laboratorio*"/></strong>
-                                        <h:selectOneMenu disabled="#{controllerDetallesEquipo.activarSalaLaboratorio}" value="#{controllerDetallesEquipo.salaEquipoElemento}"
+                                        <h:selectOneMenu disabled="true" value="#{controllerDetallesEquipo.salaEquipoElemento}"
                                                          class="form-control"
                                                          id="salaEquipoElemento">
                                             <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
@@ -226,7 +226,7 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Modulo/Banco de Trabajo*"/></strong>
-                                        <h:selectOneMenu disabled="#{controllerDetallesEquipo.activarModuloLaboratorio}" value="#{controllerDetallesEquipo.moduloEquipoElemento}"
+                                        <h:selectOneMenu disabled="true" value="#{controllerDetallesEquipo.moduloEquipoElemento}"
                                                          class="form-control"
                                                          id="moduloEquipoElemento">
                                             <f:selectItem itemLabel="Seleccione Modulo/Banco" itemValue="null" />

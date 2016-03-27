@@ -99,6 +99,7 @@ public class ControllerDetallesEquipo implements Serializable {
     private List<AyudaFechaReserva> listaAniosRegistro;
     private List<AyudaFechaReserva> listaMesesRegistro;
     private List<AyudaFechaReserva> listaDiasRegistro;
+    private EstadoEquipo estadoEquipoRespaldo;
 
     public ControllerDetallesEquipo() {
     }
@@ -173,6 +174,7 @@ public class ControllerDetallesEquipo implements Serializable {
 
         tipoActivoEquipoElemento = equipoElementoDetalles.getTipoactivo();
         estadoEquipoElemento = equipoElementoDetalles.getEstadoequipo();
+        estadoEquipoRespaldo = equipoElementoDetalles.getEstadoequipo();
         proveedorEquipoElemento = equipoElementoDetalles.getProveedor();
 
         listaTiposActivos = gestionarPlantaEquiposElementosBO.consultarTiposActivosRegistrador();
@@ -740,14 +742,6 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void modificarInformacionEquipoElemento() {
         try {
-            EquipoElemento equipoCambio = null;
-            boolean cambioModulo;
-            if (equipoElementoDetalles.getModulolaboratorio().getIdmodulolaboratorio().equals(moduloEquipoElemento.getIdmodulolaboratorio())) {
-                cambioModulo = false;
-            } else {
-                cambioModulo = true;
-                equipoCambio = equipoElementoDetalles;
-            }
             equipoElementoDetalles.setPrivado(editarTipo);
             equipoElementoDetalles.setNombreequipo(nombreEquipoElemento);
             equipoElementoDetalles.setInventarioequipo(inventarioEquipoElemento);
@@ -778,12 +772,15 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setEstadoequipo(estadoEquipoElemento);
             equipoElementoDetalles.setTipoactivo(tipoActivoEquipoElemento);
             equipoElementoDetalles.setProveedor(proveedorEquipoElemento);
-
-            gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles, cambioModulo, equipoCambio);
+            UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+            if (estadoEquipoRespaldo.getIdestadoequipo().equals(estadoEquipoElemento.getIdestadoequipo())) {
+                gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles,usuarioLoginSistema.getUserUsuario(),false);
+            } else {
+                gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles,usuarioLoginSistema.getUserUsuario(),true);
+            }
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesPlantaEquipo almacenarNuevoEquipoElementoEnSistema : " + e.toString(), e);
+            logger.error("Error ControllerDetallesPlantaEquipo modificarInformacionEquipoElemento:  " + e.toString(), e);
         }
     }
 

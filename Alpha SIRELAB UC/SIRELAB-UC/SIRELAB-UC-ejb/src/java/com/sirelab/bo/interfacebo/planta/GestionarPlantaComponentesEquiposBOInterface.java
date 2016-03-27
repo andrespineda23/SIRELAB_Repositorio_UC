@@ -25,9 +25,9 @@ public interface GestionarPlantaComponentesEquiposBOInterface {
 
     public ComponenteEquipo consultarComponentePorCodigoYEquipo(String codigo, BigInteger equipo);
 
-    public void crearComponenteEquipo(ComponenteEquipo componenteEquipo);
+    public void crearComponenteEquipo(ComponenteEquipo componenteEquipo,String usuario);
 
-    public void editarComponenteEquipo(ComponenteEquipo componenteEquipo, boolean cambioEquipo,  EquipoElemento equipoCambio);
+    public void editarComponenteEquipo(ComponenteEquipo componenteEquipo, String usuario);
 
     public void eliminarComponenteEquipo(ComponenteEquipo componenteEquipo);
 
