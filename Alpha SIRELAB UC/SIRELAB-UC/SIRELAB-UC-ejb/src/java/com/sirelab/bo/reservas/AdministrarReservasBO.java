@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -525,6 +526,23 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             return equipoElementoDAO.consultarEquiposElementosBodegaPublicos(bodega);
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO obtenerEquiposBodega: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public void actualizarInformacionReserva(Reserva reserva) {
+        try {
+            reservaDAO.editarReserva(reserva);
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO actualizarInformacionReserva: " + e.toString(), e);
+        }
+    }
+
+    public EstadoReserva obtenerEstadoCancelacionReserva() {
+        try {
+            return estadoReservaDAO.buscarEstadoReservaPorID(new BigInteger("3"));
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO obtenerEstadoCancelacionReserva: " + e.toString(), e);
             return null;
         }
     }

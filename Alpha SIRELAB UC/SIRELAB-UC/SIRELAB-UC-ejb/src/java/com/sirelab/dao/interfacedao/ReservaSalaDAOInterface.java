@@ -9,6 +9,7 @@ import com.sirelab.entidades.ReservaSala;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -35,4 +36,6 @@ public interface ReservaSalaDAOInterface {
     public List<ReservaSala> buscarReservaSalaParaReservaModulo(BigInteger sala, Date fecha, BigInteger tipoReserva);
 
     public ReservaSala buscarReservaSalaPorIdReserva(BigInteger reserva);
+
+    public List<ReservaSala> buscarReservaSalaPorFiltrado(Map<String, String> filters);
 }

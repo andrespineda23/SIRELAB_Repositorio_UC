@@ -9,6 +9,7 @@ import com.sirelab.entidades.ReservaModuloLaboratorio;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -35,4 +36,6 @@ public interface ReservaModuloLaboratorioDAOInterface {
     public List<ReservaModuloLaboratorio> buscarReservaModuloPorPersona(BigInteger persona);
 
     public ReservaModuloLaboratorio buscarReservaModuloLaboratorioPorIdReserva(BigInteger reserva);
+
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorFiltrado(Map<String, String> filters);
 }

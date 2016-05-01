@@ -106,4 +106,8 @@ public interface AdministrarReservasBOInterface {
     public List<SalaLaboratorio> buscarBodegaPorLaboratorioEdificio(BigInteger laboratorio);
 
     public List<EquipoElemento> obtenerEquiposBodega(BigInteger bodega);
+
+    public void actualizarInformacionReserva(Reserva reserva);
+    
+    public EstadoReserva obtenerEstadoCancelacionReserva();
 }

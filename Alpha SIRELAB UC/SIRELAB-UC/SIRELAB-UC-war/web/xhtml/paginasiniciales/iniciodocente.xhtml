@@ -148,7 +148,7 @@ and open the template in the editor.
                         <div class="content-section-b">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <hr class="section-heading-spacer"/>
                                         <div class="clearfix"></div>
                                         <h2 class=" head-line section-heading"><strong>Guías de Laboratorio</strong></h2>
@@ -156,6 +156,18 @@ and open the template in the editor.
                                         <br></br>
                                         <div class="row">    
                                             <h:commandButton value="Adicionar" action="registrarguialaboratorio" actionListener="#{controllerRegistrarGuiaLaboratorio.recibirPaginaAnterior('iniciodocente')}" class="btn btn-block btn-default"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <hr class="section-heading-spacer"/>
+                                        <div class="clearfix"></div>
+                                        <h2 class=" head-line section-heading"><strong>Consulta Laboratorios</strong></h2>
+                                        <p> Por medio de esta funcionalidad usted podra consultar información relacionada con la infraestructura de los laboratorios de la universidad. Puede consultar información de salas de laboratorio, modulos de laboratorio y equipos de laboratorio. <strong>ESTA FUNCIONALIDAD TAN SOLO ES DE CONSULTA</strong>.</p>
+                                        <br></br>
+                                        <div class="row">    
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"><h:commandButton value="Consultar Sala" action="consultarsalas" class="btn btn-block btn-default"/></div>
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"><h:commandButton value="Consultar Modulo" action="consultarmodulos" class="btn btn-block btn-danger"/></div>
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"><h:commandButton value="Consultar Equipo" action="consultarequipos" class="btn btn-block btn-info"/></div>
                                         </div>
                                     </div>
                                 </div>

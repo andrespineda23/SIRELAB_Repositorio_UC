@@ -40,6 +40,7 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
     GestionarRecursoGuiasLaboratorioBOInterface gestionarRecursoGuiaLaboratorioBO;
 
     private String parametroNombre;
+    private String parametroCodigo;
     private List<Asignatura> listaAsignaturas;
     private Asignatura parametroAsignatura;
     //
@@ -66,6 +67,7 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
     public void init() {
         cantidadRegistros = "N/A";
         activarExport = true;
+        parametroCodigo = null;
         parametroNombre = null;
         parametroAsignatura = null;
         altoTabla = "150";
@@ -87,12 +89,16 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
         filtros = new HashMap<String, String>();
         filtros.put("parametroNombre", null);
         filtros.put("parametroAsignatura", null);
+        filtros.put("parametroCodigo", null);
         agregarFiltrosAdicionales();
     }
 
     private void agregarFiltrosAdicionales() {
         if ((Utilidades.validarNulo(parametroNombre) == true) && (!parametroNombre.isEmpty()) && (parametroNombre.trim().length() > 0)) {
             filtros.put("parametroNombre", parametroNombre.toString());
+        }
+        if ((Utilidades.validarNulo(parametroCodigo) == true) && (!parametroCodigo.isEmpty()) && (parametroCodigo.trim().length() > 0)) {
+            filtros.put("parametroCodigo", parametroCodigo.toString());
         }
         if ((Utilidades.validarNulo(parametroAsignatura) == true)) {
             if (parametroAsignatura.getIdasignatura() != null) {
@@ -132,8 +138,8 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalGuiaLaboratorio);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarGuiasLaboratorio buscarLaboratoriosPorParametros:  " + e.toString(),e);
-            logger.error("Error ControllerAdministrarGuiasLaboratorio buscarLaboratoriosPorParametros : " + e.toString(),e);
+            logger.error("Error ControllerAdministrarGuiasLaboratorio buscarLaboratoriosPorParametros:  " + e.toString(), e);
+            logger.error("Error ControllerAdministrarGuiasLaboratorio buscarLaboratoriosPorParametros : " + e.toString(), e);
         }
     }
 
@@ -193,6 +199,7 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
 
     public String limpiarProcesoBusqueda() {
         activarExport = true;
+        parametroCodigo = null;
         parametroNombre = null;
         parametroAsignatura = null;
         listaGuiasLaboratorio = null;
@@ -210,6 +217,7 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
     public void limpiarDatos() {
         activarExport = true;
         parametroNombre = null;
+        parametroCodigo = null;
         parametroAsignatura = null;
         listaGuiasLaboratorio = null;
         listaGuiasLaboratorioTabla = null;
@@ -333,6 +341,14 @@ public class ControllerAdministrarGuiasLaboratorio implements Serializable {
 
     public void setCantidadRegistros(String cantidadRegistros) {
         this.cantidadRegistros = cantidadRegistros;
+    }
+
+    public String getParametroCodigo() {
+        return parametroCodigo;
+    }
+
+    public void setParametroCodigo(String parametroCodigo) {
+        this.parametroCodigo = parametroCodigo;
     }
 
 }

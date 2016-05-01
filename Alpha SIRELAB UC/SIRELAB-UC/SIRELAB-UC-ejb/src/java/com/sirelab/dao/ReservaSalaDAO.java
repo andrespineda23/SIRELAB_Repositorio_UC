@@ -10,10 +10,12 @@ import com.sirelab.entidades.ReservaSala;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 
 /**
@@ -107,7 +109,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
     public ReservaSala buscarReservaSalaPorFechaHoraSala(Date fecha, String horaInicio, BigInteger sala) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio =:sala AND p.reserva.fechareserva =:fecha AND p.reserva.horainicio=:horaInicio");
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio =:sala  AND p.reserva.estadoreserva.idestadoreserva !=1 AND p.reserva.fechareserva =:fecha AND p.reserva.horainicio=:horaInicio");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("fecha", fecha);
             query.setParameter("horaInicio", horaInicio);
@@ -166,5 +168,73 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             logger.error("Error buscarReservaSalaParaReservaModulo ReservaSalaDAO : " + e.toString(), e);
             return null;
         }
+    }
+    
+     @Override
+    public List<ReservaSala> buscarReservaSalaPorFiltrado(Map<String, String> filters) {
+        try {
+            final String alias = "a";
+            final StringBuilder jpql = new StringBuilder();
+            String jpql2;
+            jpql.append("SELECT a FROM ").append(ReservaSala.class.getSimpleName()).append(" " + alias);
+            //
+            jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
+            //
+            String consulta = jpql2 + " " + "ORDER BY " + alias + ".reserva.horainicio ASC";
+            logger.error("consulta : " + consulta);
+            TypedQuery<ReservaSala> tq = em.createQuery(consulta, ReservaSala.class);
+            tq = asignarValores(tq, filters);
+            return tq.getResultList();
+        } catch (Exception e) {
+            logger.error("Error buscarReservaSalaPorFiltrado ReservaSalaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    private String adicionarFiltros(String jpql, Map<String, String> filters, String alias) {
+        final StringBuilder wheres = new StringBuilder();
+        int camposFiltro = 0;
+        if (null != filters && !filters.isEmpty()) {
+            wheres.append(" WHERE ");
+            for (Map.Entry<String, String> entry : filters.entrySet()) {
+                if (null != entry.getValue() && !entry.getValue().isEmpty()) {
+                    if (camposFiltro > 0) {
+                        wheres.append(" AND ");
+                    }
+                    if ("parametroNumero".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".reserva.numeroreserva")
+                                .append(") Like :parametroNumero");
+                        camposFiltro++;
+                    }
+                    if ("parametroFecha".equals(entry.getKey())) {
+                        wheres.append(alias).append(".reserva." + "fechareserva");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
+                }
+            }
+        }
+        jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
+        logger.error(jpql);
+        if (jpql.trim()
+                .endsWith("WHERE")) {
+            jpql = jpql.replace("WHERE", "");
+        }
+        return jpql;
+    }
+
+    private TypedQuery<ReservaSala> asignarValores(TypedQuery<ReservaSala> tq, Map<String, String> filters) {
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            if (null != entry.getValue() && !entry.getValue().isEmpty()) {
+                if ("parametroNumero".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
+                if ("parametroFecha".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), new Date(entry.getValue()));
+                }
+            }
+        }
+        return tq;
     }
 }

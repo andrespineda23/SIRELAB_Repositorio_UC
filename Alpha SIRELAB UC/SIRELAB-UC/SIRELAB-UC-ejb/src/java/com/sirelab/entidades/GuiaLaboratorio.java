@@ -7,9 +7,7 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,16 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "guialaboratorio")
@@ -38,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "GuiaLaboratorio.findByIdguialaboratorio", query = "SELECT g FROM GuiaLaboratorio g WHERE g.idguialaboratorio = :idguialaboratorio"),
     @NamedQuery(name = "GuiaLaboratorio.findByNombreguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.nombreguia = :nombreguia"),
     @NamedQuery(name = "GuiaLaboratorio.findByDescripcion", query = "SELECT g FROM GuiaLaboratorio g WHERE g.descripcion = :descripcion"),
-    @NamedQuery(name = "GuiaLaboratorio.findByUbicacionguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.ubicacionguia = :ubicacionguia")})
+    @NamedQuery(name = "GuiaLaboratorio.findByUbicacionguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.ubicacionguia = :ubicacionguia"),
+    @NamedQuery(name = "GuiaLaboratorio.findByCodigoguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.codigoguia = :codigoguia")})
 public class GuiaLaboratorio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,8 +58,9 @@ public class GuiaLaboratorio implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "ubicacionguia")
     private String ubicacionguia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guialaboratorio")
-    private Collection<ReservaSala> reservaSalaCollection;
+    @Size(max = 10)
+    @Column(name = "codigoguia")
+    private String codigoguia;
     @JoinColumn(name = "asignaturaporplanestudio", referencedColumnName = "idasignaturaporplanestudio")
     @ManyToOne(optional = false)
     private AsignaturaPorPlanEstudio asignaturaporplanestudio;
@@ -119,13 +117,12 @@ public class GuiaLaboratorio implements Serializable {
         this.ubicacionguia = ubicacionguia;
     }
 
-    @XmlTransient
-    public Collection<ReservaSala> getReservaSalaCollection() {
-        return reservaSalaCollection;
+    public String getCodigoguia() {
+        return codigoguia;
     }
 
-    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
-        this.reservaSalaCollection = reservaSalaCollection;
+    public void setCodigoguia(String codigoguia) {
+        this.codigoguia = codigoguia;
     }
 
     public AsignaturaPorPlanEstudio getAsignaturaporplanestudio() {

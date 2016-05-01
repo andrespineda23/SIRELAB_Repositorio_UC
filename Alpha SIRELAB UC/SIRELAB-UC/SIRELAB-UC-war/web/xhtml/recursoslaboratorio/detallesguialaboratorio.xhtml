@@ -51,6 +51,12 @@ and open the template in the editor.
                                             <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
+                                            <strong><h:outputText value="Codigo Guía*"/></strong>
+                                            <h:inputText value="#{controllerDetallesGuiaLaboratorio.editarCodigo}" class="form-control" id="editarNombre" >
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
                                             <strong><h:outputText value="Descripción Guía*"/></strong>
                                             <h:inputText maxlength="300" value="#{controllerDetallesGuiaLaboratorio.editarDescripcion}"  required="true" class="form-control" id="editarDescripcion" requiredMessage="El campo Descripcion es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesGuiaLaboratorio.validarDescripcionGuiaLaboratorio()}" execute="editarDescripcion" render="editarDescripcion msnDescripcion" />

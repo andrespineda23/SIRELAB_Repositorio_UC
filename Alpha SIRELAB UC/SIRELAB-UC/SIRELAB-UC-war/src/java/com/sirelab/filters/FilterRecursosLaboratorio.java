@@ -20,7 +20,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -110,7 +109,7 @@ public class FilterRecursosLaboratorio implements Filter {
         usuarioLoginSistema = (UsuarioLogin) req.getSession().getAttribute("sessionUsuario");
         String contextPath = req.getContextPath();
         if (null != usuarioLoginSistema) {
-            if (("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) || ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario()))) {
+            if (("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) || ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) || ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario()))) {
             } else {
                 ControllerPaginasIniciales obj = new ControllerPaginasIniciales();
                 obj.cerrarSession();

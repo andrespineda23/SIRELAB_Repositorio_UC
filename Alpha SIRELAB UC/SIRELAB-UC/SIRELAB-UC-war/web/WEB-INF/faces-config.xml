@@ -3286,6 +3286,166 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarsalas</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarsalas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarsalas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciodocente</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarmodulos</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarmodulos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarmodulos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciodocente</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarequipos</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarequipos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarequipos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciodocente</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservasusuario2</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservasusuarios2.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservasusuarios2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciolaboratorista</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservasusuario2</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservasusuarios2.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservasusuarios2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservasusuarios2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesreservausuario2</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/detallesreservausuario2.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/detallesreservausuario2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservasusuario2</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservasusuarios2.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservasusuario</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciolaboratorista</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservasusuario</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesreservausuario2</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/detallesreservausuario2.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/detallesreservausuario2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservasusuario</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 
     
 </faces-config>

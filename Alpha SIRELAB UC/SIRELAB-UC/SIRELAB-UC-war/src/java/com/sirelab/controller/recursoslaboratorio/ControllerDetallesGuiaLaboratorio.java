@@ -49,7 +49,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     private boolean activarModificacionPlanEstudios;
     private boolean activarModificacionAsignatura;
     //
-    private String editarNombre, editarDescripcion;
+    private String editarNombre, editarCodigo, editarDescripcion;
     private Carrera editarCarrera;
     private PlanEstudios editarPlanEstudios;
     private AsignaturaPorPlanEstudio editarAsignatura;
@@ -99,6 +99,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
         editarDescripcion = guiaLaboratorioDetalle.getDescripcion();
         editarCarrera = guiaLaboratorioDetalle.getAsignaturaporplanestudio().getPlanestudio().getCarrera();
         editarNombre = guiaLaboratorioDetalle.getNombreguia();
+        editarCodigo = guiaLaboratorioDetalle.getCodigoguia();
         editarAsignatura = guiaLaboratorioDetalle.getAsignaturaporplanestudio();
         listaCarreras = gestionarRecursoGuiasLaboratorioBO.consultarCarrerasRegistradas();
         //
@@ -277,6 +278,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
         try {
             guiaLaboratorioDetalle.setDescripcion(editarDescripcion);
             guiaLaboratorioDetalle.setNombreguia(editarNombre);
+            guiaLaboratorioDetalle.setCodigoguia(editarCodigo);
             guiaLaboratorioDetalle.setAsignaturaporplanestudio(editarAsignatura);
             if (modificacionArchivo == true) {
                 cargarGuiaAServidor();
@@ -284,8 +286,8 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
             }
             gestionarRecursoGuiasLaboratorioBO.modificarGuiaLaboratorio(guiaLaboratorioDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema : " + e.toString(), e);
         }
     }
 
@@ -432,6 +434,14 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
 
     public void setArchivo(Part archivo) {
         this.archivo = archivo;
+    }
+
+    public String getEditarCodigo() {
+        return editarCodigo;
+    }
+
+    public void setEditarCodigo(String editarCodigo) {
+        this.editarCodigo = editarCodigo;
     }
 
 }

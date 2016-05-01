@@ -39,7 +39,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     @EJB
     GestionarRecursoGuiasLaboratorioBOInterface gestionarRecursoGuiaLaboratorioBO;
 
-    private String nuevoNombre, nuevoDescripcion;
+    private String nuevoNombre, nuevoDescripcion, nuevoCodigo;
     private Part archivo;
     private List<Carrera> listaCarreras;
     private List<PlanEstudios> listaPlanEstudios;
@@ -75,6 +75,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         nuevoAsignatura = null;
         nuevoPlanEstudio = null;
         nuevoNombre = null;
+        nuevoCodigo = null;
         nuevoCarrera = null;
         archivo = null;
         validacionesDescripcion = false;
@@ -113,17 +114,17 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.RECURSO_GUIA_NOM));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.RECURSO_GUIA_NOM));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_GUIA_NOM));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.RECURSO_GUIA_NOM));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.RECURSO_GUIA_NOM));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.RECURSO_GUIA_NOM));
         }
 
     }
@@ -135,11 +136,11 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
                 validacionesDescripcion = true;
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres. "+constantes.RECURSO_GUIA_DES));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("El tamaño minimo permitido es 20 caracteres. " + constantes.RECURSO_GUIA_DES));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción es obligatoria. "+constantes.RECURSO_GUIA_DES));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción es obligatoria. " + constantes.RECURSO_GUIA_DES));
         }
     }
 
@@ -283,13 +284,14 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             cargarGuiaAServidor();
             GuiaLaboratorio guiaNuevo = new GuiaLaboratorio();
             guiaNuevo.setNombreguia(nuevoNombre);
+            guiaNuevo.setCodigoguia(nuevoCodigo);
             guiaNuevo.setDescripcion(nuevoDescripcion);
             guiaNuevo.setUbicacionguia(rutaArchivo);
             guiaNuevo.setAsignaturaporplanestudio(nuevoAsignatura);
             gestionarRecursoGuiaLaboratorioBO.crearGuiaLaboratorio(guiaNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema : " + e.toString(), e);
         }
     }
 
@@ -298,6 +300,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         activarAsignatura = true;
         activarPlan = true;
         nuevoDescripcion = null;
+        nuevoCodigo = null;
         archivo = null;
         nuevoNombre = null;
         nuevoAsignatura = null;
@@ -325,6 +328,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         nuevoPlanEstudio = null;
         validacionesDescripcion = false;
         validacionesNombre = false;
+        nuevoCodigo = null;
         validacionesArchivo = false;
         validacionesAsignatura = false;
         validacionesCarrera = false;
@@ -488,6 +492,14 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public String getNuevoCodigo() {
+        return nuevoCodigo;
+    }
+
+    public void setNuevoCodigo(String nuevoCodigo) {
+        this.nuevoCodigo = nuevoCodigo;
     }
 
 }

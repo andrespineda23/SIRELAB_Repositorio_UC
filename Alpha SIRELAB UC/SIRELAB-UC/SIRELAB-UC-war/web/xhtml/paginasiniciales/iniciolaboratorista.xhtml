@@ -44,6 +44,33 @@ and open the template in the editor.
                     </div>
                     <!--HOME SECTION END  -->
                     <!-- ABOUT SECTION START-->
+                    <section id="reservas">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                                    <img src="../../assets/img/imagenprueba.jpg" class="img-side img-responsive center-block " style="border: #101010" alt="" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h2 class="head-line">Control de <strong>Reservas</strong></h2> 
+                                    <p>
+                                        Por medio de la siguiente funcionalidad puede controlar las reservas realizadas por los usuarios. Puede administrar dichas reservas, iniciar las reservas o cancelarlas. 
+                                        Las reservas que tiene poder de administrar son las relacionadas con las salas de laboratorio y modulos/banco de laboratorio.
+                                        Además, puede realizar reservas para usuarios que deseen un MODULO para realizar alguna practica.
+
+                                    </p> 
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">  
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <h:commandButton value="Administrar Reservas Sala" actionListener="#{controllerConsultarReservasUsuarios.recibirPaginaAnterior('iniciolaboratorista')}" action="consultarreservasusuario" class="btn btn-block btn-info"/>
+                                                <h:commandButton value="Administrar Reservas Modulo/Banco" actionListener="#{controllerConsultarReservasUsuarios2.recibirPaginaAnterior('iniciolaboratorista')}" action="consultarreservasusuario2" class="btn btn-block btn-danger"/>
+                                                <h:commandButton value="Realizar Reserva Modulo/Banco" actionListener="#{controllerAdministrarAdministradoresEdificio.recibirPaginaAnterior('iniciolaboratorista')}"  class="btn btn-block btn-success"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                     <section id="usuarios">
                         <div class="container">
                             <div class="row">
@@ -59,7 +86,7 @@ and open the template in the editor.
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="row pad-bottom">
                                                 <div class="row">
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                                         <h:commandButton value="Estudiante" actionListener="#{controllerAdministrarEstudiantes.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarestudiantes" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Docente" actionListener="#{controllerAdministrarDocentes.recibirPaginaAnterior('iniciolaboratorista')}" action="administrardocentes" class="btn btn-block btn-info"/>
                                                         <h:commandButton value="Entidad Externa" actionListener="#{controllerAdministrarEntidadesExternas.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarentidadesexternas" class="btn btn-block btn-info"/>
@@ -70,7 +97,7 @@ and open the template in the editor.
                                                             <h4>Usuarios</h4>
                                                         </div>                   
                                                     </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                                         <h:commandButton value="Personal Entidad Externa" actionListener="#{controllerAdministrarPersonaContacto.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarpersonacontacto" class="btn btn-block btn-danger"/>
                                                         <h:commandButton value="Laboratorista" actionListener="#{controllerAdministrarEncargadosLaboratorios.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarencargadoslaboratorios" class="btn btn-block btn-danger"/>
                                                     </div>
@@ -107,7 +134,7 @@ and open the template in the editor.
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="row pad-bottom">
                                                 <div class="row">
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                                         <h:commandButton value="Laboratorio" disabled="#{controllerPaginasIniciales.inactivarOpcLaboratorio()}" actionListener="#{controllerAdministrarLaboratorios.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarlaboratorios" class="btn btn-block btn-info" immediate="true"/>
                                                         <br></br>
                                                         <h:commandButton value="Sala de Laboratorio" actionListener="#{controllerAdministrarSalas.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarsalas" class="btn btn-block btn-info"/>
@@ -117,7 +144,7 @@ and open the template in the editor.
                                                             <i class="ion-thermometer"></i>
                                                         </div>                   
                                                     </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                                         <h:commandButton value="Modulo/Banco de Trabajo" actionListener="#{controllerAdministrarModulos.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarmodulos" class="btn btn-block btn-danger"/>
                                                         <br></br>
                                                         <h:commandButton value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipos.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarequipos" class="btn btn-block btn-danger"/>
@@ -157,7 +184,7 @@ and open the template in the editor.
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="row pad-bottom">
                                                 <div class="row">
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                                         <h:commandButton value="Insumo" actionListener="#{controllerAdministrarInsumos.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarinsumos" class="btn btn-block btn-info"/>
                                                         <br></br>
                                                         <h:commandButton value="Proveedor" actionListener="#{controllerAdministrarProveedores.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarproveedores" class="btn btn-block btn-info"/>
@@ -169,7 +196,7 @@ and open the template in the editor.
                                                             <i class="ion-wifi"></i>
                                                         </div>                   
                                                     </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                                         <h:commandButton disabled="true" value="Manual de Equipo" actionListener="#{controllerAdministrarManuales.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarmanuales" class="btn btn-block btn-danger"/>
                                                         <br></br>
                                                         <h:commandButton disabled="true" value="Guía de Laboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarguiaslaboratorio" class="btn btn-block btn-danger"/>

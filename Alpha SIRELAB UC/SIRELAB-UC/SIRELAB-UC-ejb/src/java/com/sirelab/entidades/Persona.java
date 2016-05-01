@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByTelefono2persona", query = "SELECT p FROM Persona p WHERE p.telefono2persona = :telefono2persona"),
     @NamedQuery(name = "Persona.findByDireccionpersona", query = "SELECT p FROM Persona p WHERE p.direccionpersona = :direccionpersona")})
 public class Persona implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private Collection<PersonaContacto> personaContactoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
@@ -98,6 +100,8 @@ public class Persona implements Serializable {
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @Transient
+    private String nombreCompleto;
 
     public Persona() {
     }
@@ -283,6 +287,15 @@ public class Persona implements Serializable {
 
     public void setPersonaContactoCollection(Collection<PersonaContacto> personaContactoCollection) {
         this.personaContactoCollection = personaContactoCollection;
+    }
+
+    public String getNombreCompleto() {
+        nombreCompleto = nombrespersona + " " + apellidospersona;
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
 }

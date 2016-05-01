@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
 
     static Logger logger = Logger.getLogger(GuiaLaboratorioDAO.class);
-    
+
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -38,7 +38,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             em.persist(guia);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error crearGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(), e);
         }
     }
 
@@ -47,7 +47,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
         try {
             em.merge(guia);
         } catch (Exception e) {
-            logger.error("Error editarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error editarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(), e);
         }
     }
 
@@ -56,7 +56,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
         try {
             em.remove(em.merge(guia));
         } catch (Exception e) {
-            logger.error("Error eliminarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error eliminarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(), e);
         }
     }
 
@@ -69,10 +69,11 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             List<GuiaLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
+
     @Override
     public List<GuiaLaboratorio> consultarGuiasLaboratorioPorIdAreaPlan(BigInteger areaPlan) {
         try {
@@ -83,7 +84,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             List<GuiaLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error consultarGuiasLaboratorio GuiaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -98,11 +99,11 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             GuiaLaboratorio registro = (GuiaLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarGuiaLaboratorioPorID GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarGuiaLaboratorioPorID GuiaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
-    
+
     @Override
     public GuiaLaboratorio buscarGuiaLaboratorioPorUbicacion(String ubicacion) {
         try {
@@ -113,7 +114,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             GuiaLaboratorio registro = (GuiaLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarGuiaLaboratorioPorUbicacion GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarGuiaLaboratorioPorUbicacion GuiaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -134,7 +135,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarGuiasLaboratorioPorFiltrado GuiaLaboratorioDAO : " + e.toString(),e);
+            logger.error("Error buscarGuiasLaboratorioPorFiltrado GuiaLaboratorioDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -153,6 +154,12 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
                         wheres.append("UPPER(").append(alias)
                                 .append(".nombreguia")
                                 .append(") Like :parametroNombre");
+                        camposFiltro++;
+                    }
+                    if ("parametroCodigo".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".codigoguia")
+                                .append(") Like :parametroCodigo");
                         camposFiltro++;
                     }
                     if ("parametroAsignatura".equals(entry.getKey())) {
@@ -177,6 +184,9 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             if (null != entry.getValue() && !entry.getValue().isEmpty()) {
                 if ("parametroNombre".equals(entry.getKey())) {
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
+                if ("parametroCodigo".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
                 if ("parametroAsignatura".equals(entry.getKey())) {

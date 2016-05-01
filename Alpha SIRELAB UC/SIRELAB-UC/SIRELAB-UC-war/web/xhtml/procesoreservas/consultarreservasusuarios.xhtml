@@ -16,13 +16,13 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="formularioGeneral">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
                             <ol class="breadcrumb">
                                 <li><a href="#">Inicio</a></li>
-                                <li class="active">Administrar Guías Laboratorio</li>
+                                <li class="active">Sistema de Reservas SIRELAB</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -30,39 +30,24 @@ and open the template in the editor.
                                 <div class="container">
                                     <div class="row clearfix">
                                         <fieldset style="border: black;border-radius: 10px">
-                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN GUÍAS LABORATORIO</strong></legend></h3>
+                                            <h3><legend style="color: darkblue"><strong>INFORMACIÓN RESERVAS</strong></legend></h3>
                                             <div class="row col-md-12">
                                                 <fieldset style="border: black;border-radius: 10px; color: black"> 
-                                                    <legend class="h5">I. Basica</legend>
-                                                    <div class="col-md-4">
+                                                    <legend class="h5">Parámetros Consulta</legend>
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="parametroNombre">
-                                                                Nombre Guía
+                                                            <label for="parametroNumero">
+                                                                Numero Reserva
                                                             </label>
-                                                            <h:inputText maxlength="100" value="#{controllerAdministrarGuiasLaboratorio.parametroNombre}" class="form-control" id="parametroNombre" />
+                                                            <h:inputText maxlength="45" value="#{controllerConsultarReservasUsuarios.parametroNumero}" class="form-control" id="parametroNumero" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-5">
                                                         <div class="form-group">
-                                                            <label for="parametroCodigo">
-                                                                Codigo Guía
+                                                            <label for="parametroFecha">
+                                                                Fecha Reserva (dd/mm/yyyy)
                                                             </label>
-                                                            <h:inputText maxlength="10" value="#{controllerAdministrarGuiasLaboratorio.parametroCodigo}" class="form-control" id="parametroCodigo" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="parametroAsignatura">
-                                                                Asignatura
-                                                            </label>
-                                                            <h:selectOneMenu value="#{controllerAdministrarGuiasLaboratorio.parametroAsignatura}"
-                                                                             class="form-control"
-                                                                             id="parametroAsignatura">
-                                                                <f:selectItem itemLabel="Seleccione Asignatura" itemValue="null" />
-                                                                <f:selectItems value="#{controllerAdministrarGuiasLaboratorio.listaAsignaturas}" var="asignatura"
-                                                                               itemLabel="#{asignatura.nombreasignatura}" itemValue="#{asignatura}"/>
-                                                                <f:converter converterId="ConverterGenerico" />
-                                                            </h:selectOneMenu>
+                                                            <h:inputText maxlength="45" value="#{controllerConsultarReservasUsuarios.parametroFecha}" class="form-control" id="parametroFecha" />
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -71,17 +56,12 @@ and open the template in the editor.
                                         <br></br>
                                         <div class="col-md-12">
                                             <div class="col-md-2">
-                                                <h:outputText value="Cantidad de registros: #{controllerAdministrarGuiasLaboratorio.cantidadRegistros}"/>
+                                                <h:outputText value="Cantidad de registros: #{controllerConsultarReservasUsuarios.cantidadRegistros}"/>
                                             </div>
                                             <div class="col-md-8">
-                                            </div>
-                                            <div class="col-md-1">
-                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerAdministrarGuiasLaboratorio.buscarGuiasLaboratorioPorParametros()}">
-                                                    <f:ajax execute="@form" render="formularioGeneral" />
-                                                </h:commandButton>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <h:commandButton id="buttonLimpiar" value="Limpiar" actionListener="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}" class="btn btn-default right" >
+                                            </div> 
+                                            <div class="col-md-2">
+                                                <h:commandButton id="buttonConsultar" value="Consultar" class="btn btn-primary right" actionListener="#{controllerConsultarReservasUsuarios.buscarReservasPorParametros()}">
                                                     <f:ajax execute="@form" render="formularioGeneral" />
                                                 </h:commandButton>
                                             </div>
@@ -90,45 +70,57 @@ and open the template in the editor.
                                     <br></br>
                                     <div id="resultadosBusqueda" class="row clearfix">
                                         <fieldset style="border: black;border-radius: 10px;">
-                                            <h3><legend style="color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend></h3>
+                                            <h3><legend style="color: darkblue"><strong>RESERVAS DEL DÍA</strong></legend></h3>
                                             <div class="row">
-                                                <h:dataTable id="dataTable" var="item"  
+                                                <h:dataTable id="dataTable" var="item" 
                                                              styleClass="table table-striped table-hover table-responsive" 
-                                                             value="#{controllerAdministrarGuiasLaboratorio.listaGuiasLaboratorioTabla}">
+                                                             value="#{controllerConsultarReservasUsuarios.listaReservaSalaTabla}">
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Nombre"/>
+                                                            <h:outputText value="Numero"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.nombreguia}"/>
+                                                        <h:outputText value="#{item.reserva.numeroreserva}"/>
                                                     </h:column>  
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Asignatura"/>
+                                                            <h:outputText value="Fecha"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.asignaturaporplanestudio.asignatura.nombreasignatura}"/>
+                                                        <h:outputText value="#{item.reserva.fechareserva}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="Descargar"/>
+                                                            <h:outputText value="Hora"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Descargar" actionListener="#{controllerAdministrarGuiasLaboratorio.descargarGuiaLaboratorio(item.ubicacionguia)}"/>
+                                                        <h:outputText value="#{item.reserva.horainicio}:00 - #{item.reserva.horafin}:00"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Tipo"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.reserva.tiporeserva.nombretiporeserva}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Ubicación"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.salalaboratorio.nombresala}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" action="detallesguialaboratorio" actionListener="#{controllerDetallesGuiaLaboratorio.recibirIDGuiasLaboratorioDetalles(item.idguialaboratorio)}"/>
+                                                        <h:commandLink value="Ver" action="detallesreservausuario" actionListener="#{controllerDetallesReservaUsuario.recibirIdReservaSala(item.idreservasala)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>
                                                             <ul class="pager">
                                                                 <li>
-                                                                    <h:commandLink value="Anterior" actionListener="#{controllerAdministrarGuiasLaboratorio.cargarPaginaAnteriorGuiaLaboratorio()}" disabled="#{controllerAdministrarGuiasLaboratorio.bloquearPagAntGuiaLaboratorio}">
+                                                                    <h:commandLink value="Anterior" actionListener="#{controllerConsultarReservasUsuarios.cargarPaginaAnteriorReservaSala()}" disabled="#{controllerConsultarReservasUsuarios.bloquearPagAntReservaSala}">
                                                                         <f:ajax execute="@form" render="formularioGeneral" />
                                                                     </h:commandLink>
                                                                 </li>
                                                                 <li>
-                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarGuiasLaboratorio.cargarPaginaSiguienteGuiaLaboratorio()}" disabled="#{controllerAdministrarGuiasLaboratorio.bloquearPagSigGuiaLaboratorio}">
+                                                                    <h:commandLink value="Siguiente" actionListener="#{controllerConsultarReservasUsuarios.cargarPaginaSiguienteReservaSala()}" disabled="#{controllerConsultarReservasUsuarios.bloquearPagSigReservaSala}">
                                                                         <f:ajax execute="@form" render="formularioGeneral" />
                                                                     </h:commandLink>
                                                                 </li>
@@ -145,15 +137,14 @@ and open the template in the editor.
                         <br></br>
                         <div class="row">
                             <div class="col-md-1">
-                                <h:commandButton value="Nueva Guía" class="btn btn-success" action="registrarguialaboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}"/>
+                                <h:commandButton class="btn btn-success" value="Cerrar Reserva" action="#{controllerConsultarReservasUsuarios.dirigirPaginaNuevoRegistro()}"/>
                             </div>
                             <div class="col-md-10"></div>
                             <div class="col-md-1">
-                                <h:commandButton value="Atras" action="#{controllerAdministrarGuiasLaboratorio.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
+                                <h:commandButton value="Atras" action="#{controllerConsultarReservasUsuarios.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
                             </div>
                         </div>
                     </div>
-
                 </h:form>
             </ui:define>  
         </ui:composition>
