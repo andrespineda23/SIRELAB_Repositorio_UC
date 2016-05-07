@@ -5,21 +5,28 @@
  */
 package com.sirelab.bo.cargue;
 
-import com.sirelab.bo.GestionarLoginSistemaBO;
 import com.sirelab.bo.interfacebo.cargue.AdministrarCargueArchivoEstudianteBOInterface;
+import com.sirelab.dao.interfacedao.AsignaturaDAOInterface;
+import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
+import com.sirelab.entidades.Asignatura;
+import com.sirelab.entidades.AsignaturaPorPlanEstudio;
+import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.TipoUsuario;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.EncriptarContrasenia;
+import com.sirelab.utilidades.ReporteCargueAsignatura;
+import com.sirelab.utilidades.ReporteCargueAsignaturaPlan;
 import com.sirelab.utilidades.ReporteCargueEstudiante;
+import com.sirelab.utilidades.ReporteCarguePlan;
 import com.sirelab.utilidades.Utilidades;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -38,21 +45,25 @@ import org.apache.log4j.Logger;
  */
 @Stateful
 public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueArchivoEstudianteBOInterface {
-    
+
     static Logger logger = Logger.getLogger(AdministrarCargueArchivoEstudianteBO.class);
 
     @EJB
     TipoUsuarioDAOInterface tipoUsuarioDAO;
     @EJB
-    EstudianteDAOInterface estudianteDAO;
-    @EJB
     CarreraDAOInterface carreraDAO;
     @EJB
     PlanEstudiosDAOInterface planEstudiosDAO;
     @EJB
+    EstudianteDAOInterface estudianteDAO;
+    @EJB
     UsuarioDAOInterface usuarioDAO;
     @EJB
     PersonaDAOInterface personaDAO;
+    @EJB
+    AsignaturaDAOInterface asignaturaDAO;
+    @EJB
+    AsignaturaPorPlanEstudioDAOInterface asignaturaPorPlanEstudioDAO;
 
     @Override
     public ReporteCargueEstudiante cargarDatosArchivoEstudiante(String path) {
@@ -255,7 +266,7 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
                 }
                 reporteRegistos = new ReporteCargueEstudiante();
                 reporteRegistos.setArchivoVacio(false);
-                reporteRegistos.setCantidadRegistros(numFilas-1);
+                reporteRegistos.setCantidadRegistros(numFilas - 1);
                 reporteRegistos.setListaErrores(listaErrores);
                 reporteRegistos.setListaEstudiantes(listaEstudiantes);
                 reporteRegistos.setListaPersonas(listaPersona);
@@ -284,7 +295,291 @@ public class AdministrarCargueArchivoEstudianteBO implements AdministrarCargueAr
                 estudianteDAO.crearEstudiante(reporte.getListaEstudiantes().get(i));
             }
         } catch (Exception e) {
-            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoEstudianteEnSistema : " + e.toString(),e);
+            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoEstudianteEnSistema : " + e.toString(), e);
         }
+    }
+
+    @Override
+    public void almacenarNuevoAsignaturaEnSistema(ReporteCargueAsignatura reporte) {
+        try {
+            for (int i = 0; i < reporte.getCantidadRegistros(); i++) {
+                asignaturaDAO.crearAsignatura(reporte.getListaAsignaturas().get(i));
+            }
+        } catch (Exception e) {
+            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoAsignaturaEnSistema : " + e.toString(), e);
+        }
+    }
+
+    @Override
+    public void almacenarNuevoPlanEnSistema(ReporteCarguePlan reporte) {
+        try {
+            for (int i = 0; i < reporte.getCantidadRegistros(); i++) {
+                planEstudiosDAO.crearPlanEstudios(reporte.getListaPlanEstudios().get(i));
+            }
+        } catch (Exception e) {
+            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoAsignaturaEnSistema : " + e.toString(), e);
+        }
+    }
+
+    @Override
+    public void almacenarNuevoAsignaturaPlanEnSistema(ReporteCargueAsignaturaPlan reporte) {
+        try {
+            for (int i = 0; i < reporte.getCantidadRegistros(); i++) {
+                asignaturaPorPlanEstudioDAO.crearAsignaturaPorPlanEstudio(reporte.getListaAsignaturaisgnaPlan().get(i));
+            }
+        } catch (Exception e) {
+            logger.error("Error AdministrarCargueArchivosBO almacenarNuevoAsignaturaEnSistema : " + e.toString(), e);
+        }
+    }
+
+    @Override
+    public ReporteCargueAsignatura cargarDatosArchivoAisgnatura(String path) {
+        ReporteCargueAsignatura reporteRegistos = null;
+        try {
+            List<Asignatura> listaAsignatura = null;
+            List<String> listaErrores = null;
+            Workbook archivoExcel = Workbook.getWorkbook(new java.io.File(path));
+            Sheet hoja = archivoExcel.getSheet(0);
+            int numColumnas = hoja.getColumns();
+            int numFilas = hoja.getRows();
+            logger.error("numFilas : " + (numFilas - 1));
+            logger.error("getColumns : " + numColumnas);
+            if (numColumnas > 0 && numFilas > 1) {
+                String data;
+                listaAsignatura = new ArrayList<Asignatura>();
+                listaErrores = new ArrayList<String>();;
+                for (int fila = 1; fila < numFilas; fila++) { // Recorre cada fila de la hoja 
+                    Asignatura nuevaAsignatura = new Asignatura();
+                    String mensajeError = "";
+                    logger.error("registro numero : " + fila);
+                    for (int columna = 0; columna < numColumnas; columna++) { // Recorre cada columna de la fila 
+                        data = hoja.getCell(columna, fila).getContents();
+                        switch (columna) {//0-CODIGO_ASIGNATURA
+                            case 0: {
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    if (Utilidades.validarCaracteresAlfaNumericos(data)) {
+                                        Asignatura registro = asignaturaDAO.buscarAsignaturaPorCodigo(data);
+                                        if (null == registro) {
+                                            nuevaAsignatura.setCodigoasignatura(data);
+                                        } else {
+                                            mensajeError = "Registro (" + (fila + 1) + "). Codigo ya registrado. / ";
+                                        }
+                                    } else {
+                                        mensajeError = "Registro (" + (fila + 1) + "). Codigo incorrecto. / ";
+                                    }
+                                } else {
+                                    mensajeError = "Registro (" + (fila + 1) + "). Codigo vacio. / ";
+                                }
+                                break;
+                            }
+                            case 1: {//1-NOMBRE_ASIGNATURA
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    if (Utilidades.validarCaracterString(data)) {
+                                        nuevaAsignatura.setNombreasignatura(data);
+                                    } else {
+                                        mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Nombre incorrecto. / ";
+                                    }
+                                } else {
+                                    mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Nombre vacio. / ";
+                                }
+                                break;
+                            }
+                            case 2: {//2-CREDITOS
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    if (Utilidades.isNumber(data)) {
+                                        nuevaAsignatura.setNumerocreditos(Integer.valueOf(data));
+                                    } else {
+                                        mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Número incorrecto. / ";
+                                    }
+                                } else {
+                                    mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Número vacio. / ";
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    nuevaAsignatura.setEstado(true);
+                    logger.error("mensajeError : " + mensajeError);
+                    listaAsignatura.add(nuevaAsignatura);
+                    if (null != mensajeError && (!mensajeError.isEmpty())) {
+                        listaErrores.add(mensajeError);
+                    }
+                }
+                reporteRegistos = new ReporteCargueAsignatura();
+                reporteRegistos.setArchivoVacio(false);
+                reporteRegistos.setCantidadRegistros(numFilas - 1);
+                reporteRegistos.setListaErrores(listaErrores);
+                reporteRegistos.setListaAsignaturas(listaAsignatura);
+            } else {
+                reporteRegistos = new ReporteCargueAsignatura();
+                reporteRegistos.setArchivoVacio(true);
+                reporteRegistos.setCantidadRegistros(0);
+            }
+        } catch (IOException | BiffException | IndexOutOfBoundsException ioe) {
+            logger.error("Error AdministrarCargueArchivoEstudianteBO cargarDatosArchivoAsignatura: " + ioe.toString());
+        }
+        return reporteRegistos;
+    }
+
+    public ReporteCarguePlan cargarDatosArchivoPlan(String path) {
+        ReporteCarguePlan reporteRegistos = null;
+        try {
+            List<PlanEstudios> listaPlanEstudios = null;
+            List<String> listaErrores = null;
+            Workbook archivoExcel = Workbook.getWorkbook(new java.io.File(path));
+            Sheet hoja = archivoExcel.getSheet(0);
+            int numColumnas = hoja.getColumns();
+            int numFilas = hoja.getRows();
+            logger.error("numFilas : " + (numFilas - 1));
+            logger.error("getColumns : " + numColumnas);
+            if (numColumnas > 0 && numFilas > 1) {
+                String data;
+                listaPlanEstudios = new ArrayList<PlanEstudios>();
+                listaErrores = new ArrayList<String>();;
+                for (int fila = 1; fila < numFilas; fila++) { // Recorre cada fila de la hoja 
+                    PlanEstudios nuevaPlanEstudios = new PlanEstudios();
+                    String mensajeError = "";
+                    logger.error("registro numero : " + fila);
+                    for (int columna = 0; columna < numColumnas; columna++) { // Recorre cada columna de la fila 
+                        data = hoja.getCell(columna, fila).getContents();
+                        switch (columna) {//0-CODIGO_PLAN_ESTUDIO
+                            case 0: {
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    if (Utilidades.validarCaracteresAlfaNumericos(data)) {
+                                        PlanEstudios registro = planEstudiosDAO.buscarPlanEstudiosPorCodigo(data);
+                                        if (null == registro) {
+                                            nuevaPlanEstudios.setCodigoplanestudio(data);
+                                        } else {
+                                            mensajeError = "Registro (" + (fila + 1) + "). Codigo ya registrado. / ";
+                                        }
+                                    } else {
+                                        mensajeError = "Registro (" + (fila + 1) + "). Codigo incorrecto. / ";
+                                    }
+                                } else {
+                                    mensajeError = "Registro (" + (fila + 1) + "). Codigo vacio. / ";
+                                }
+                                break;
+                            }
+                            case 1: {//1-NOMBRE_PLAN_ESTUDIO
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    if (Utilidades.validarCaracteresAlfaNumericos(data)) {
+                                        nuevaPlanEstudios.setNombreplanestudio(data);
+                                    } else {
+                                        mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Nombre incorrecto. / ";
+                                    }
+                                } else {
+                                    mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Nombre vacio. / ";
+                                }
+                                break;
+                            }
+                            case 2: {//2-CREDITOS
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    Carrera carrera = carreraDAO.buscarCarreraPorCodigo(data);
+                                    if (Utilidades.validarNulo(carrera)) {
+                                        nuevaPlanEstudios.setCarrera(carrera);
+                                    } else {
+                                        mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Carrera no registrada. / ";
+                                    }
+                                } else {
+                                    mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Carrera vacia. / ";
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    nuevaPlanEstudios.setEstado(true);
+                    logger.error("mensajeError : " + mensajeError);
+                    listaPlanEstudios.add(nuevaPlanEstudios);
+                    if (null != mensajeError && (!mensajeError.isEmpty())) {
+                        listaErrores.add(mensajeError);
+                    }
+                }
+                reporteRegistos = new ReporteCarguePlan();
+                reporteRegistos.setArchivoVacio(false);
+                reporteRegistos.setCantidadRegistros(numFilas - 1);
+                reporteRegistos.setListaErrores(listaErrores);
+                reporteRegistos.setListaPlanEstudios(listaPlanEstudios);
+            } else {
+                reporteRegistos = new ReporteCarguePlan();
+                reporteRegistos.setArchivoVacio(true);
+                reporteRegistos.setCantidadRegistros(0);
+            }
+        } catch (IOException | BiffException | IndexOutOfBoundsException ioe) {
+            logger.error("Error AdministrarCargueArchivoEstudianteBO cargarDatosArchivoPlanEstudios: " + ioe.toString());
+        }
+        return reporteRegistos;
+    }
+
+    public ReporteCargueAsignaturaPlan cargarDatosArchivoAsignaturaPlan(String path) {
+        ReporteCargueAsignaturaPlan reporteRegistos = null;
+        try {
+            List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudio = null;
+            List<String> listaErrores = null;
+            Workbook archivoExcel = Workbook.getWorkbook(new java.io.File(path));
+            Sheet hoja = archivoExcel.getSheet(0);
+            int numColumnas = hoja.getColumns();
+            int numFilas = hoja.getRows();
+            logger.error("numFilas : " + (numFilas - 1));
+            logger.error("getColumns : " + numColumnas);
+            if (numColumnas > 0 && numFilas > 1) {
+                String data;
+                listaAsignaturaPorPlanEstudio = new ArrayList<AsignaturaPorPlanEstudio>();
+                listaErrores = new ArrayList<String>();
+                for (int fila = 1; fila < numFilas; fila++) { // Recorre cada fila de la hoja 
+                    AsignaturaPorPlanEstudio nuevaAsignaturaPorPlanEstudio = new AsignaturaPorPlanEstudio();
+                    String mensajeError = "";
+                    logger.error("registro numero : " + fila);
+                    for (int columna = 0; columna < numColumnas; columna++) { // Recorre cada columna de la fila 
+                        data = hoja.getCell(columna, fila).getContents();
+                        switch (columna) {//0-CODIGO_PLAN_ESTUDIO
+                            case 0: {
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    Asignatura asignatura = asignaturaDAO.buscarAsignaturaPorCodigo(data);
+                                    if (Utilidades.validarNulo(data)) {
+                                        nuevaAsignaturaPorPlanEstudio.setAsignatura(asignatura);
+                                    } else {
+                                        mensajeError = "Registro (" + (fila + 1) + "). Asignatura no registrada. / ";
+                                    }
+                                } else {
+                                    mensajeError = "Registro (" + (fila + 1) + "). Asignatura vacia. / ";
+                                }
+                                break;
+                            }
+                            case 1: {//1-PLAN_ESTUDIO
+                                if (Utilidades.validarNulo(data) && (!data.isEmpty())) {
+                                    PlanEstudios plan = planEstudiosDAO.buscarPlanEstudiosPorCodigo(data);
+                                    if (Utilidades.validarNulo(plan)) {
+                                        nuevaAsignaturaPorPlanEstudio.setPlanestudio(plan);
+                                    } else {
+                                        mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Plan de Estudio no registrado. / ";
+                                    }
+                                } else {
+                                    mensajeError = mensajeError + "Registro (" + (fila + 1) + "). Plan de Estudio vacio. / ";
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    nuevaAsignaturaPorPlanEstudio.setEstado(true);
+                    logger.error("mensajeError : " + mensajeError);
+                    listaAsignaturaPorPlanEstudio.add(nuevaAsignaturaPorPlanEstudio);
+                    if (null != mensajeError && (!mensajeError.isEmpty())) {
+                        listaErrores.add(mensajeError);
+                    }
+                }
+                reporteRegistos = new ReporteCargueAsignaturaPlan();
+                reporteRegistos.setArchivoVacio(false);
+                reporteRegistos.setCantidadRegistros(numFilas - 1);
+                reporteRegistos.setListaErrores(listaErrores);
+                reporteRegistos.setListaAsignaturaisgnaPlan(listaAsignaturaPorPlanEstudio);
+            } else {
+                reporteRegistos = new ReporteCargueAsignaturaPlan();
+                reporteRegistos.setArchivoVacio(true);
+                reporteRegistos.setCantidadRegistros(0);
+            }
+        } catch (IOException | BiffException | IndexOutOfBoundsException ioe) {
+            logger.error("Error AdministrarCargueArchivoEstudianteBO cargarDatosArchivoAsignaturaPorPlanEstudio: " + ioe.toString());
+        }
+        return reporteRegistos;
     }
 }

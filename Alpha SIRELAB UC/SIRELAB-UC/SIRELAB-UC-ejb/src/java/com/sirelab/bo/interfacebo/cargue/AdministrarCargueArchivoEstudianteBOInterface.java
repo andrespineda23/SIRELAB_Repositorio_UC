@@ -5,14 +5,28 @@
  */
 package com.sirelab.bo.interfacebo.cargue;
 
+import com.sirelab.utilidades.ReporteCargueAsignatura;
+import com.sirelab.utilidades.ReporteCargueAsignaturaPlan;
 import com.sirelab.utilidades.ReporteCargueEstudiante;
-import java.util.List;
+import com.sirelab.utilidades.ReporteCarguePlan;
 
 /**
  *
  * @author ELECTRONICA
  */
 public interface AdministrarCargueArchivoEstudianteBOInterface {
+
+    public void almacenarNuevoAsignaturaEnSistema(ReporteCargueAsignatura reporte);
+
+    public void almacenarNuevoPlanEnSistema(ReporteCarguePlan reporte);
+
+    public void almacenarNuevoAsignaturaPlanEnSistema(ReporteCargueAsignaturaPlan reporte);
+
+    public ReporteCargueAsignatura cargarDatosArchivoAisgnatura(String path);
+
+    public ReporteCargueAsignaturaPlan cargarDatosArchivoAsignaturaPlan(String path);
+
+    public ReporteCarguePlan cargarDatosArchivoPlan(String path);
 
     public void almacenarNuevoEstudianteEnSistema(ReporteCargueEstudiante reporte);
 

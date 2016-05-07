@@ -39,6 +39,7 @@ and open the template in the editor.
                                                         <f:selectItem itemLabel="Plan Estudio" itemValue="2" />
                                                         <f:selectItem itemLabel="Asignatura" itemValue="3" />
                                                         <f:selectItem itemLabel="Horario" itemValue="4" />
+                                                        <f:selectItem itemLabel="Asignatura x Plan Estudio" itemValue="5" />
                                                         <f:ajax event="change" listener="#{controllerCargueArchivos.actualizarTipoCargue()}" execute="tipoCargue" render="@this resultados archivo btnAceptar"/>
                                                     </h:selectOneMenu>
                                                 </div>
@@ -71,32 +72,41 @@ and open the template in the editor.
                                                 A continuación se encuentran los templates de los procesos de cargue masivo.
                                             </p>
                                             <div class="center-block">
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="center-block">
                                                         <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
                                                         <br></br>
-                                                        <h:commandButton value="Estudiante" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                        <h:commandButton value="Estudiante" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate(1)}"/>   
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="center-block">
                                                         <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
                                                         <br></br>
-                                                        <h:commandButton value="Plan Estudio" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                        <h:commandButton value="Plan Estudio" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate(2)}"/>   
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="center-block">
                                                         <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
                                                         <br></br>
-                                                        <h:commandButton value="Asignatura" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                        <h:commandButton value="Asignatura" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate(3)}"/>   
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                            </div>
+                                            <div class="center-block">
+                                                <div class="col-md-4">
                                                     <div class="center-block">
                                                         <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
                                                         <br></br>
-                                                        <h:commandButton value="Horarios" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate()}"/>   
+                                                        <h:commandButton value="Horarios" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate(4)}"/>   
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="center-block">
+                                                        <img alt="300x400" class="img-responsive img-rounded" src="../../img/imagen_xls.png" />
+                                                        <br></br>
+                                                        <h:commandButton value="Asignatura-Plan Estudio" class="btn btn-warning" actionListener="#{controllerCargueArchivos.descargarArchivoTemplate(5)}"/>   
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,19 +116,6 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class="row">
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
                             <br></br>
                         </div>
                         <div class="row">
