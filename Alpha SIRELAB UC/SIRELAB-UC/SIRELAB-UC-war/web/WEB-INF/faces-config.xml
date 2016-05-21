@@ -44,8 +44,26 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
-        <from-view-id>/xhtml/seguridad/login.xhtml</from-view-id>
+        <from-view-id>/xhtml/seguridad/recuperarcontrasena.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>recuperarcontrasena</from-outcome>
+            <to-view-id>/xhtml/seguridad/recuperarcontrasena.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/seguridad/recuperarcontrasena.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>recuperacionexitosa</from-outcome>
             <to-view-id>/xhtml/seguridad/recuperacionexitosa.xhtml</to-view-id>
@@ -60,6 +78,25 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/seguridad/recuperarcontrasena.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>errorrecuperacion</from-outcome>
+            <to-view-id>/xhtml/seguridad/errorrecuperacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/seguridad/errorrecuperacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
     
     <navigation-rule>
         <from-view-id>/xhtml/variablesentorno/variablesusuario.xhtml</from-view-id>

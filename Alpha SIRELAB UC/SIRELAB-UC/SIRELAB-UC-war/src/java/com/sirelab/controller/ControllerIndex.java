@@ -122,15 +122,15 @@ public class ControllerIndex implements Serializable {
                     paginaRecuperacion = "recuperacionexitosa";
                 } else {
                     mensajeFormularioRecupera = "El usuario ingresado no existe.";
-                    paginaRecuperacion = "";
+                    paginaRecuperacion = "errorrecuperacion";
                 }
             } else {
                 mensajeFormularioRecupera = "Existen errores en el proceso de recuperación.";
-                paginaRecuperacion = "";
+                paginaRecuperacion = "errorrecuperacion";
             }
         } catch (Exception e) {
             logger.error("Error ControllerIndex recuperarContraseñaUsuario :" + e.toString(), e);
-            paginaRecuperacion = "";
+            paginaRecuperacion = "errorrecuperacion";
         }
     }
 
@@ -150,7 +150,7 @@ public class ControllerIndex implements Serializable {
 
     public void validarCorreoRecuperacion() {
         if ((Utilidades.validarNulo(correoRecuperacion)) && (!correoRecuperacion.isEmpty()) && (correoRecuperacion.trim().length() > 0)) {
-            String correo = correoRecuperacion + "@ucentral.edu.co";
+            String correo = correoRecuperacion;
             if (Utilidades.validarCorreoElectronico(correo) == false) {
                 validacionesCorreo = false;
                 FacesContext.getCurrentInstance().addMessage("form:formRecuperacion:correoRecuperacion", new FacesMessage("El correo esta incorrecto."));

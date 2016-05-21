@@ -284,6 +284,12 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             cargarGuiaAServidor();
             GuiaLaboratorio guiaNuevo = new GuiaLaboratorio();
             guiaNuevo.setNombreguia(nuevoNombre);
+            List<GuiaLaboratorio> totalidad = gestionarRecursoGuiaLaboratorioBO.consultarGuiasLaboratorioRegistradas();
+            if (null != totalidad) {
+                nuevoCodigo = "GL" + String.valueOf(totalidad.size());
+            } else {
+                nuevoCodigo = "GL" + String.valueOf(1);
+            }
             guiaNuevo.setCodigoguia(nuevoCodigo);
             guiaNuevo.setDescripcion(nuevoDescripcion);
             guiaNuevo.setUbicacionguia(rutaArchivo);

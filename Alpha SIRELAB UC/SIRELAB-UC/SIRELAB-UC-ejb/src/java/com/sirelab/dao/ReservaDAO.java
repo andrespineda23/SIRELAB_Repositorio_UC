@@ -157,13 +157,13 @@ public class ReservaDAO implements ReservaDAOInterface {
     public Integer obtenerCantidadReservasDia(Date fecha) {
         try {
             em.clear();
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            String fechaStr = formato.format(fecha);
-            fecha = new Date(fechaStr);
-            Query query = em.createQuery("SELECT p FROM Reserva p WHERE p.fechareserva=:fecha");
+            //SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            //String fechaStr = formato.format(fecha);
+            //fcha = new Date(fechaStr);
+            Query query = em.createQuery("SELECT p FROM Reserva p");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("fecha", fecha);
             List<Reserva> registro = query.getResultList();
+            System.out.println("registro: "+registro);
             if (null != registro) {
                 return registro.size();
             } else {
