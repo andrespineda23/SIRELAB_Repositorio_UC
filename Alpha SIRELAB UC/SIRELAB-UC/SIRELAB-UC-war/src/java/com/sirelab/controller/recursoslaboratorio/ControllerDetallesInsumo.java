@@ -48,6 +48,7 @@ public class ControllerDetallesInsumo implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesInsumo() {
     }
@@ -64,6 +65,7 @@ public class ControllerDetallesInsumo implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         constantes = new MensajesConstantes();
+        mensajeError = "";
         BasicConfigurator.configure();
     }
 
@@ -89,6 +91,7 @@ public class ControllerDetallesInsumo implements Serializable {
         editarDescripcion = insumoDetalles.getDescripcioninsumo();
         editarMarca = insumoDetalles.getMarcainsumo();
         editarModelo = insumoDetalles.getModeloinsumo();
+        mensajeError = "";
         editarNombre = insumoDetalles.getNombreinsumo();
     }
 
@@ -215,25 +218,33 @@ public class ControllerDetallesInsumo implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesCantidadExistencia == false) {
+            mensajeError = mensajeError + " - Cant. Existencia - ";
             retorno = false;
         }
         if (validacionesCantidadMin == false) {
+            mensajeError = mensajeError + " - Cant. Minima - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesMarca == false) {
+            mensajeError = mensajeError + " - Marca - ";
             retorno = false;
         }
         if (validacionesModelo == false) {
+            mensajeError = mensajeError + " - Modelo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
        
@@ -259,12 +270,12 @@ public class ControllerDetallesInsumo implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -287,7 +298,6 @@ public class ControllerDetallesInsumo implements Serializable {
             insumoDetalles.setDescripcioninsumo(editarDescripcion);
             gestionarRecursoInsumosBO.modificarInformacionInsumo(insumoDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerDetallesInsumo almacenarModificacionInsumoEnSistema : " + e.toString(),e);
         }
     }

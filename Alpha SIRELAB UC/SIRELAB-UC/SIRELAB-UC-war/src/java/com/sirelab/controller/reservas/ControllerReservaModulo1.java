@@ -236,12 +236,12 @@ public class ControllerReservaModulo1 implements Serializable {
                 limpiarInformacion();
             } else {
                 mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad. Intente en otro horario";
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
             }
 
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar";
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
         }
         return paso2;
     }

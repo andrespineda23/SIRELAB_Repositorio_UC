@@ -74,13 +74,6 @@ and open the template in the editor.
                                             </div>
                                             <h6><h:message id="msnEmail" for="inputEmail" style="color: red"/></h6>
                                         </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Nombre Usuario"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerRegistrarPersonaContactoCargado.inputUsuario}" disabled="#{controllerRegistrarPersonaContactoCargado.activarCasillas}" class="form-control" required="true" id="inputUsuario" requiredMessage="El campo Usuario es obligatorio." >
-                                                <f:ajax event="blur" listener="#{controllerRegistrarPersonaContactoCargado.validarUsuarioPersonaContacto()}" execute="inputUsuario" render="inputUsuario msnUsuario" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnUsuario" for="inputUsuario" style="color: red"/></h6>
-                                        </div>
                                         <fieldset>
                                             <legend class="h5 text-info">Datos Opcionales</legend>
                                             <div class="form-group">
@@ -107,7 +100,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Entidad Externa*"/></strong>
-                                            <h:inputText value="#{controllerRegistrarPersonaContactoCargado.convenioPorEntidad.entidadexterna.persona.nombrespersona}" disabled="true" class="form-control" />
+                                            <h:inputText value="#{controllerRegistrarPersonaContactoCargado.convenioPorEntidad.entidadexterna.nombreentidad}" disabled="true" class="form-control" />
                                         </div>
                                     </fieldset>
                                     <hr class="intro-divider"/>
@@ -117,7 +110,7 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarPersonaContactoCargado.mensajeFormulario}" style="color: #{controllerRegistrarPersonaContactoCargado.colorMensaje}}"/>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarPersonaContactoCargado.mensajeFormulario}" style="color: #{controllerRegistrarPersonaContactoCargado.colorMensaje}; resize: none; text-align: center; "/>
                                             </strong>
                                         </div>
                                         <br></br>

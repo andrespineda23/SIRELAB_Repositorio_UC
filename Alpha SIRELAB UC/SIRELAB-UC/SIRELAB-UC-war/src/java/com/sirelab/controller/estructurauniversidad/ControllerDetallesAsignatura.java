@@ -42,6 +42,7 @@ public class ControllerDetallesAsignatura implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesAsignatura() {
     }
@@ -74,7 +75,7 @@ public class ControllerDetallesAsignatura implements Serializable {
         validacionesCodigo = true;
         validacionesCredito = true;
         validacionesNombre = true;
-
+mensajeError = "";
     }
 
     public void recibirIDAsignaturasDetalles(BigInteger idDetalle) {
@@ -154,13 +155,17 @@ public class ControllerDetallesAsignatura implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesCredito == false) {
+            mensajeError = mensajeError + " - Creditos - ";
             retorno = false;
         }
         return retorno;
@@ -186,16 +191,16 @@ public class ControllerDetallesAsignatura implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "Existen planes de estudio asociados. Imposible cambiar el estado de la asignatura.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el plan de estudio seleccionado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -209,7 +214,6 @@ public class ControllerDetallesAsignatura implements Serializable {
             gestionarAsignaturasBO.modificarInformacionAsignatura(asignaturaDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema : " + e.toString(),e);
         }
     }
 

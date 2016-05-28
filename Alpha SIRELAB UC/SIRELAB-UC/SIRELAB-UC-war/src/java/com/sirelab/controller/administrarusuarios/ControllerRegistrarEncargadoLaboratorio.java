@@ -66,12 +66,14 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarEncargadoLaboratorio() {
     }
 
     @PostConstruct
     public void init() {
+        mensajeError = "";
         constantes = new MensajesConstantes();
         activarLimpiar = true;
         activarAceptar = false;
@@ -134,8 +136,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Facultad es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString(), e);
         }
     }
 
@@ -159,8 +161,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Departamento es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(), e);
         }
     }
 
@@ -346,40 +347,53 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + "- Apellido - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + "- Departamento - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + "- Correo Inst. - ";
             retorno = false;
         }
         if (validacionesCorreoOpcional == false) {
+            mensajeError = mensajeError + "- Correo Pers. - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + "- Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + "- Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + "- Nombre - ";
             retorno = false;
         }
         if (validacionesPerfil == false) {
+            mensajeError = mensajeError + "- Tipo Perfil - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + "- Facultad - ";
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
+            mensajeError = mensajeError + "- Laboratorio - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + "- Num. Extensión - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + "- Telefono Cel. - ";
             retorno = false;
         }
         return retorno;
@@ -401,8 +415,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -411,6 +425,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         activarLaboratorio = true;
         inputApellido = null;
         inputFacultad = null;
+        mensajeError = "";
         inputTelefono1 = null;
         inputTelefono2 = null;
         inputDireccion = null;
@@ -443,6 +458,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         mensajeFormulario = "N/A";
         activarCasillas = false;
         activarAceptar = false;
+        mensajeError = "";
         activarLimpiar = true;
         colorMensaje = "black";
         activarDepartamento = true;
@@ -517,8 +533,8 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             encargadoNueva.setTipoperfil(inputPerfil);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString(), e);
         }
     }
 

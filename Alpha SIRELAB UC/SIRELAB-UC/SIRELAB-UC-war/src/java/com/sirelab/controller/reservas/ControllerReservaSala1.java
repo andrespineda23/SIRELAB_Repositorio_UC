@@ -407,20 +407,20 @@ public class ControllerReservaSala1 implements Serializable {
                             limpiarInformacion();
                         } else {
                             mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
-                            colorMensaje = "red";
+                            colorMensaje = "#FF0000";
                         }
                     }
                 } else {
                     mensajeFormulario = "Recuerde que tiene un maximo de 15 días para asignar la reserva. Rectfique la información para continuar.";
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                 }
             } else {
                 mensajeFormulario = "La fecha ingresada es menor a la del día. Solo se realizan reservas para tiempo futuro no mayor a 15 días.";
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
             }
         } else {
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar";
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
         }
         return paso2;
     }

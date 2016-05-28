@@ -40,6 +40,7 @@ public class ControllerDetallesFacultad implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesFacultad() {
     }
@@ -68,6 +69,7 @@ public class ControllerDetallesFacultad implements Serializable {
         editarEstado = facultadDetalles.getEstado();
         editarCodigo = facultadDetalles.getCodigofacultad();
         editarNombre = facultadDetalles.getNombrefacultad();
+        mensajeError = "";
     }
 
     public void recibirIDFacultadesDetalles(BigInteger idFacultadDetalle) {
@@ -129,10 +131,13 @@ public class ControllerDetallesFacultad implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -161,12 +166,12 @@ public class ControllerDetallesFacultad implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "La facultad tiene departamentos asociados. Es imposible cambiar el estado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -177,7 +182,6 @@ public class ControllerDetallesFacultad implements Serializable {
             facultadDetalles.setNombrefacultad(editarNombre);
             gestionarFacultadBO.modificarInformacionFacultad(facultadDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema : " + e.toString(),e);
         }
     }

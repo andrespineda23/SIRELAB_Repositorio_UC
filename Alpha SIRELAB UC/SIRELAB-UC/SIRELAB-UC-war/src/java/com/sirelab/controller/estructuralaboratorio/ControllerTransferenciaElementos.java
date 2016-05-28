@@ -73,7 +73,7 @@ public class ControllerTransferenciaElementos implements Serializable {
     }
 
     public void recibirPaginaAnterior(String pagina) {
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
         transferirComponente = true;
         colorMensaje = "black";
         this.paginaAnterior = pagina;
@@ -107,7 +107,7 @@ public class ControllerTransferenciaElementos implements Serializable {
         activarEquipoTransferencia = true;
         activarModuloTransferencia = true;
         activarSalaTransferencia = true;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
         colorMensaje = "black";
         salaLaboratorioTransferencia = null;
         activarLaboratorio = true;
@@ -359,7 +359,7 @@ public class ControllerTransferenciaElementos implements Serializable {
             colorMensaje = "green";
         } else {
             mensajeFormulario = "Seleccione todos los parámetros para el proceso de transferencia de elementos";
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
         }
     }
 

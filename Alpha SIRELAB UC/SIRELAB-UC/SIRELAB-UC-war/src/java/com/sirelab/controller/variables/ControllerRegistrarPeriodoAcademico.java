@@ -330,15 +330,15 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "Existe registrado un periodo academico a la fecha. Cierre el periodo para continuar.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
             }
         } else {
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }

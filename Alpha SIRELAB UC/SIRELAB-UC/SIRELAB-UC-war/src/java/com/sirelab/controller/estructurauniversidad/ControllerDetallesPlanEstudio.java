@@ -55,6 +55,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     private boolean editarEstado;
     private List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudio;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesPlanEstudio() {
     }
@@ -88,6 +89,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     }
 
     public void asignarValoresVariablesPlanEstudio() {
+        mensajeError = "";
         editarCarrera = planEstudiosDetalles.getCarrera();
         editarEstado = planEstudiosDetalles.getEstado();
         editarCodigo = planEstudiosDetalles.getCodigoplanestudio();
@@ -215,19 +217,25 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         if (validacionesCarrera == false) {
+            mensajeError = mensajeError + " - Carrera - ";
             retorno = false;
         }
         return retorno;
@@ -276,24 +284,24 @@ public class ControllerDetallesPlanEstudio implements Serializable {
                             colorMensaje = "green";
                             mensajeFormulario = "El formulario ha sido ingresado con exito.";
                         } else {
-                            colorMensaje = "red";
+                            colorMensaje = "#FF0000";
                             mensajeFormulario = "Existen asignaturas asociadas. Imposible cambiar el estado del plan de estudio.";
                         }
                     } else {
-                        colorMensaje = "red";
+                        colorMensaje = "#FF0000";
                         mensajeFormulario = "Es necesario que al menos una asignatura se encuentre asociada al plan de estudio.";
                     }
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Seleccione una carrera para continuar con el proceso.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -306,7 +314,6 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             gestionarPlanesEstudiosBO.modificarInformacionPlanEstudios(planEstudiosDetalles);
             gestionarPlanesEstudiosBO.modificarInformacionAsignaturaPorPlanEstudio(listaAsignaturaPorPlanEstudio);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema : " + e.toString(),e);
         }
     }

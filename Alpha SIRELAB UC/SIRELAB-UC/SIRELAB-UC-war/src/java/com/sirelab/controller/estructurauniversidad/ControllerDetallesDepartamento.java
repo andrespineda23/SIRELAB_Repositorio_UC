@@ -45,6 +45,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesDepartamento() {
     }
@@ -72,6 +73,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     }
 
     public void asignarValoresVariablesDepartamento() {
+        mensajeError = "";
         editarFacultad = departamentoDetalles.getFacultad();
         editarCodigo = departamentoDetalles.getCodigodepartamento();
         editarNombre = departamentoDetalles.getNombredepartamento();
@@ -159,13 +161,17 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -179,12 +185,12 @@ public class ControllerDetallesDepartamento implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Existen carreras asociadas. Imposible cambiar el estado del departamento.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -197,7 +203,6 @@ public class ControllerDetallesDepartamento implements Serializable {
             gestionarDepartamentosBO.modificarInformacionDepartamento(departamentoDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema : " + e.toString(),e);
         }
     }
 

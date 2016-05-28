@@ -46,6 +46,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarAsignatura() {
     }
@@ -64,6 +65,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
         validacionesCodigo = false;
         validacionesCredito = false;
         validacionesNombre = false;
+        mensajeError = "";
         BasicConfigurator.configure();
     }
 
@@ -123,13 +125,17 @@ public class ControllerRegistrarAsignatura implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesCredito == false) {
+            mensajeError = mensajeError + " - Creditos - ";
             retorno = false;
         }
 
@@ -156,12 +162,12 @@ public class ControllerRegistrarAsignatura implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado con el plan de estudio seleccionado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -175,7 +181,6 @@ public class ControllerRegistrarAsignatura implements Serializable {
             asignaturaNueva.setNumerocreditos(creditos.intValue());
             gestionarAsignaturasBO.crearAsignatura(asignaturaNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarAsignatura almacenarNuevoAsignaturaEnSistema : " + e.toString(),e);
         }
     }
@@ -186,6 +191,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
         nuevoNombre = null;
         validacionesCodigo = false;
         validacionesCredito = false;
+        mensajeError = "";
         validacionesNombre = false;
         mensajeFormulario = "";
     }
@@ -201,6 +207,7 @@ public class ControllerRegistrarAsignatura implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarAceptar = false;
+        mensajeError = "";
         activarCasillas = false;
     }
 

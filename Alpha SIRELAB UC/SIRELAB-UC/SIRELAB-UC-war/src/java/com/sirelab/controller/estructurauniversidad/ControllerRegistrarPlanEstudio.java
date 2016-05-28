@@ -57,6 +57,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarPlanEstudio() {
     }
@@ -75,6 +76,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesCarrera = false;
         validacionesCodigo = false;
         validacionesDepartamento = false;
+        mensajeError = "";
         validacionesFacultad = false;
         validacionesNombre = false;
         activarLimpiar = true;
@@ -99,7 +101,6 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     }
 
     public void actualizarFacultad() {
-
         if (Utilidades.validarNulo(nuevoFacultad)) {
             nuevoDepartamento = null;
             listaDepartamentos = gestionarPlanesEstudiosBO.consultarDepartamentosActivosPorIDFacultad(nuevoFacultad.getIdfacultad());
@@ -187,19 +188,25 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         if (validacionesCarrera == false) {
+            mensajeError = mensajeError + " - Carrera - ";
             retorno = false;
         }
         return retorno;
@@ -238,16 +245,16 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "Es necesario asociar al menos una asignatura al plan de estudio.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -261,7 +268,6 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             List<Asignatura> lista = cargarAsignaturas();
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo, lista);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString(),e);
         }
     }
@@ -280,6 +286,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     }
 
     public void limpiarFormulario() {
+        mensajeError = "";
         activarNuevoCarrera = true;
         activarNuevoDepartamento = true;
         nuevoCarrera = null;
@@ -308,6 +315,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         nuevoNombre = null;
         validacionesCarrera = false;
         validacionesCodigo = false;
+        mensajeError ="";
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;

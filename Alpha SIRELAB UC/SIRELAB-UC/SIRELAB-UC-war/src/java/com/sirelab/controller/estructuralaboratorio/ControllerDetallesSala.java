@@ -79,6 +79,7 @@ public class ControllerDetallesSala implements Serializable {
     private TipoPerfil tipoPerfil;
     private List<SalaLaboratorioxServicios> listaServiciosAsociados;
     private boolean costoAlquilerDigitado;
+    private String mensajeError;
 
     public ControllerDetallesSala() {
     }
@@ -124,6 +125,7 @@ public class ControllerDetallesSala implements Serializable {
     }
 
     public void asignarValoresVariablesSalaLaboratorio() {
+        mensajeError = "";
         editarTipo = salaLaboratorioDetalles.getSalaprivada();
         nombreSalaLaboratorio = salaLaboratorioDetalles.getNombresala();
         codigoSalaLaboratorio = salaLaboratorioDetalles.getCodigosala();
@@ -449,7 +451,6 @@ public class ControllerDetallesSala implements Serializable {
             }
             modificacionesRegistroSala();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaSala actualizarSedes:  " + e.toString(),e);
             logger.error("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString(),e);
         }
     }
@@ -466,37 +467,49 @@ public class ControllerDetallesSala implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo Alquiler - ";
             retorno = false;
         }
         if (validacionesCapacidad == false) {
+            mensajeError = mensajeError + " - Capacidad - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
+            mensajeError = mensajeError + " - Laboratorio - ";
             retorno = false;
         }
         if (validacionesEdificio == false) {
+            mensajeError = mensajeError + " - Edificio - ";
             retorno = false;
         }
         if (validacionesInversion == false) {
+            mensajeError = mensajeError + " - Costo Inversión - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesSede == false) {
+            mensajeError = mensajeError + " - Sede - ";
             retorno = false;
         }
         if (validacionesUbicacion == false) {
+            mensajeError = mensajeError + " - Ubicación - ";
             retorno = false;
         }
         return retorno;
@@ -538,16 +551,16 @@ public class ControllerDetallesSala implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "La sala de laboratorio debe tener asociado al menos 1 servicio.";
                 }
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -568,7 +581,6 @@ public class ControllerDetallesSala implements Serializable {
             gestionarPlantaSalasBO.almacenarModificacionesSalaServicio(listaServiciosAsociados);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema : " + e.toString(),e);
         }
     }
 
@@ -588,7 +600,7 @@ public class ControllerDetallesSala implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha activado la sala.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
@@ -608,7 +620,7 @@ public class ControllerDetallesSala implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado la sala.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {

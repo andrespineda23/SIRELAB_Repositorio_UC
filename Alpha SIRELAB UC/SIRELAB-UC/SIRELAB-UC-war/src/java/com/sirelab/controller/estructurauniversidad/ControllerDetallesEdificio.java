@@ -48,6 +48,7 @@ public class ControllerDetallesEdificio implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesEdificio() {
     }
@@ -77,6 +78,7 @@ public class ControllerDetallesEdificio implements Serializable {
     }
 
     public void asignarValoresVariablesEdificio() {
+        mensajeError = "";
         editarDescripcion = edificioDetalles.getDescripcionedificio();
         editarDireccion = edificioDetalles.getDireccion();
         editarSede = edificioDetalles.getSede();
@@ -149,16 +151,21 @@ public class ControllerDetallesEdificio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesSede == false) {
+            mensajeError = mensajeError + " - Sede - ";
             retorno = false;
         }
         if (validacionesHorario == false) {
+            mensajeError = mensajeError + " - Horario - ";
             retorno = false;
         }
         return retorno;
@@ -171,8 +178,8 @@ public class ControllerDetallesEdificio implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -185,7 +192,6 @@ public class ControllerDetallesEdificio implements Serializable {
             edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString(),e);
         }
     }

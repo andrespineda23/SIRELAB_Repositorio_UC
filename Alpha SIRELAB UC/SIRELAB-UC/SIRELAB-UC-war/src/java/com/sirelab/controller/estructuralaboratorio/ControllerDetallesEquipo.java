@@ -80,6 +80,7 @@ public class ControllerDetallesEquipo implements Serializable {
     private String especificacionEquipoElemento;
     private String fechaEquipoElemento;
     private boolean editarTipo;
+    private String mensajeError;
     //
     //
     private boolean validacionesNombre, validacionesInventario, validacionesMarca, validacionesModelo, validacionesSerie;
@@ -158,6 +159,7 @@ public class ControllerDetallesEquipo implements Serializable {
         marcaEquipoElemento = equipoElementoDetalles.getMarcaequipo();
         modeloEquipoElemento = equipoElementoDetalles.getModeloequipo();
         serieEquipoElemento = equipoElementoDetalles.getSeriequipo();
+        mensajeError ="";
 
         especificacionEquipoElemento = equipoElementoDetalles.getEspecificacionestecnicas();
         Date fecha = equipoElementoDetalles.getFechaadquisicion();
@@ -429,7 +431,6 @@ public class ControllerDetallesEquipo implements Serializable {
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarAreasProfundizacion : " + e.toString(), e);
         }
     }
 
@@ -451,7 +452,6 @@ public class ControllerDetallesEquipo implements Serializable {
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -466,7 +466,6 @@ public class ControllerDetallesEquipo implements Serializable {
             modificacionesRegistroEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesPlantaEquipo actualizarSalasLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -658,46 +657,61 @@ public class ControllerDetallesEquipo implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesSerie == false) {
+            mensajeError = mensajeError + " - Serie - ";
             retorno = false;
         }
         if (validacionesTipo == false) {
+            mensajeError = mensajeError + " - Tipo Activo - ";
             retorno = false;
         }
         if (validacionesProveedor == false) {
+            mensajeError = mensajeError + " - Proveedor - ";
             retorno = false;
         }
         if (validacionesSala == false) {
+            mensajeError = mensajeError + " - Sala - ";
             retorno = false;
         }
         if (validacionesModulo == false) {
+            mensajeError = mensajeError + " - Modulo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesMarca == false) {
+            mensajeError = mensajeError + " - Marca - ";
             retorno = false;
         }
         if (validacionesModelo == false) {
+            mensajeError = mensajeError + " - Modelo - ";
             retorno = false;
         }
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo Alquiler - ";
             retorno = false;
         }
         if (validacionesEspecificacion == false) {
+            mensajeError = mensajeError + " - Especificación - ";
             retorno = false;
         }
         if (validacionesEstado == false) {
+            mensajeError = mensajeError + " - Estado - ";
             retorno = false;
         }
         if (validacionesInventario == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesInversion == false) {
+            mensajeError = mensajeError + " - Costo Inversión - ";
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
+            mensajeError = mensajeError + " - Laboratorio - ";
             retorno = false;
         }
         return retorno;
@@ -726,12 +740,12 @@ public class ControllerDetallesEquipo implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
-                    mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El codigo ya esta registrado en el sistema.";
                 }
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
             }
         } else {
             colorMensaje = "black";

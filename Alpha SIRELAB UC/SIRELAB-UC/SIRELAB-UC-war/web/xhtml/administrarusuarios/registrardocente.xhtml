@@ -91,7 +91,7 @@ and open the template in the editor.
                                             </div>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número de Extensión"/></strong>
-                                                <h:inputText maxlength="20" value="#{controllerRegistrarDocente.inputTelefono1}" disabled="#{controllerRegistrarDocente.activarCasillas}" class="form-control" id="inputTelefono1" >
+                                                <h:inputText maxlength="4" value="#{controllerRegistrarDocente.inputTelefono1}" disabled="#{controllerRegistrarDocente.activarCasillas}" class="form-control" id="inputTelefono1" >
                                                     <f:ajax event="blur" listener="#{controllerRegistrarDocente.validarDatosNumericosDocente(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"/></h6>
@@ -161,7 +161,7 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarDocente.mensajeFormulario}" style="color: #{controllerRegistrarDocente.colorMensaje}}"/>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarDocente.mensajeFormulario}" style="color: #{controllerRegistrarDocente.colorMensaje}; resize: none; text-align: center; "/>
                                             </strong>
                                         </div>
                                         <br></br>

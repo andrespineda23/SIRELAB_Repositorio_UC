@@ -50,6 +50,7 @@ public class ControllerDetallesManual implements Serializable {
     private boolean modificacionArchivo;
     private boolean activarUbicacion, activarArchivo;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesManual() {
     }
@@ -78,6 +79,7 @@ public class ControllerDetallesManual implements Serializable {
 
     public void asignarValoresVariablesManual() {
         editarTipo = manualDetalle.getTipomanual();
+        mensajeError = "";
         editarNombre = manualDetalle.getNombremanual();
         //
         validacionesTipo = true;
@@ -191,16 +193,21 @@ public class ControllerDetallesManual implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesTipo == false) {
+            mensajeError = mensajeError + " - Tipo - ";
             retorno = false;
         }
         if (validacionesArchivo == false) {
+            mensajeError = mensajeError + " - Archivo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesUbicacion == false) {
+            mensajeError = mensajeError + " - Ubicación - ";
             retorno = false;
         }
         return retorno;
@@ -213,8 +220,8 @@ public class ControllerDetallesManual implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -231,7 +238,6 @@ public class ControllerDetallesManual implements Serializable {
             gestionarRecursoManualesBO.editarManual(manualDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarManuales almacenarModificacionManualEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarManuales almacenarModificacionManualEnSistema : " + e.toString(),e);
         }
     }
 

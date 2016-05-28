@@ -94,7 +94,7 @@ and open the template in the editor.
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Cantidad de horas para una reserva*"/></strong>
+                                            <strong><h:outputText value="Número de horas que tendra la reserva para cada sala que pertenezca al laboratorio*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesLaboratorio.laboratorioDetalles.bloquehorareserva}"
                                                              class="form-control" 
                                                              id="editarBloque">
@@ -116,7 +116,7 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesLaboratorio.mensajeFormulario}" style="color: #{controllerDetallesLaboratorio.colorMensaje}}"/>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerDetallesLaboratorio.mensajeFormulario}" style="color: #{controllerDetallesLaboratorio.colorMensaje}; resize: none; text-align: center; "/>
                                             </strong>
                                         </div>
                                         <br></br>

@@ -49,6 +49,7 @@ public class ControllerDetallesAdministrador implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesAdministrador() {
     }
@@ -83,6 +84,7 @@ public class ControllerDetallesAdministrador implements Serializable {
      * visualizado
      */
     public void asignarValoresVariablesAdministrador() {
+        mensajeError = "";
         nombreAdministrador = administradorDetalles.getNombrespersona();
         apellidoAdministrador = administradorDetalles.getApellidospersona();
         correoAdministrador = administradorDetalles.getEmailpersona();
@@ -312,25 +314,33 @@ public class ControllerDetallesAdministrador implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + " - Apellido - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + " - Correo - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + " - Tel. Fijo - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + " - Tel. Celular - ";
             retorno = false;
         }
         return retorno;
@@ -343,8 +353,8 @@ public class ControllerDetallesAdministrador implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
             }
         } else {
             restaurarInformacionAdministrador();
@@ -370,7 +380,6 @@ public class ControllerDetallesAdministrador implements Serializable {
             restaurarInformacionAdministrador();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesAdministrador modificarInformacionAdministrador : " + e.toString(),e);
         }
     }
 
@@ -396,7 +405,7 @@ public class ControllerDetallesAdministrador implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha activado el administrador.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
@@ -419,11 +428,10 @@ public class ControllerDetallesAdministrador implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el administrador.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministrador inactivarAdministrador:  " + e.toString(),e);
             logger.error("Error ControllerDetallesAdministradores inactivarAdministrador : " + e.toString(),e);
         }
     }

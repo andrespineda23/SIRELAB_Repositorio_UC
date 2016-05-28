@@ -47,6 +47,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarModuloCargado() {
     }
@@ -68,6 +69,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         nuevoCostoModulo = null;
         nuevoCapacidadModulo = null;
         nuevoInversionModulo = null;
+        mensajeError = "";
         constantes = new MensajesConstantes();
         BasicConfigurator.configure();
     }
@@ -93,6 +95,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         validacionesInversion = true;
         nuevoCodigoModulo = null;
         nuevoDetalleModulo = null;
+        mensajeError = "";
         nuevoCostoModulo = null;
         nuevoCapacidadModulo = null;
         nuevoInversionModulo = null;
@@ -174,19 +177,25 @@ public class ControllerRegistrarModuloCargado implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo Alquiler - ";
             retorno = false;
         }
         if (validacionesCapacidad == false) {
+            mensajeError = mensajeError + " - Capacidad - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesDetalle == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesInversion == false) {
+            mensajeError = mensajeError + " - Costo Inversión - ";
             retorno = false;
         }
         return retorno;
@@ -216,12 +225,12 @@ public class ControllerRegistrarModuloCargado implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -249,6 +258,7 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         validacionesCosto = true;
         validacionesInversion = true;
         mensajeFormulario = "";
+        mensajeError = "";
         nuevoCodigoModulo = null;
         nuevoDetalleModulo = null;
         nuevoCostoModulo = null;

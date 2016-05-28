@@ -50,6 +50,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesAdministradorEdificio() {
     }
@@ -73,6 +74,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
      * sera visualizado
      */
     public void asignarValoresVariablesAdministradorEdificio() {
+        mensajeError = "";
         nombreAdministradorEdificio = encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getNombrespersona();
         apellidoAdministradorEdificio = encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getApellidospersona();
         correoAdministradorEdificio = encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getEmailpersona();
@@ -113,7 +115,6 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             disabledActivar = false;
             disabledInactivar = true;
         }
-        System.out.println("Llego el metodo X: "+idEncargadoPorEdificio);
         asignarValoresVariablesAdministradorEdificio();
     }
 
@@ -354,33 +355,42 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
             retorno = false;
+            mensajeError = mensajeError + " - Apellido - ";
         }
-
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + " - Correo Inst. - ";
             retorno = false;
         }
         if (validacionesCorreoOpcional == false) {
+            mensajeError = mensajeError + " - Correo Pers. - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
 
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + " - Telefono Fijo - ";
             retorno = false;
         }
         if (validacionesNAtencion == false) {
+            mensajeError = mensajeError + " - Número Atención - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + " - Telefono Celular - ";
             retorno = false;
         }
         return retorno;
@@ -393,8 +403,8 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
             }
         } else {
             colorMensaje = "black";
@@ -422,8 +432,6 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             restaurarInformacionAdministradorEdificio();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio : " + e.toString(),e);
-
         }
     }
 
@@ -449,12 +457,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha activado el personal de laboratorio.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesAdministradorEdificio activarAdministradorEdificio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesAdministradoresEdificio activarAdministradorEdificio : " + e.toString(),e);
         }
     }
 
@@ -472,11 +479,10 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el personal de laboratorio.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio inactivarAdministradorEdificio:  " + e.toString(),e);
             logger.error("Error ControllerDetallesAdministradoresEdificio inactivarAdministradorEdificio : " + e.toString(),e);
         }
     }

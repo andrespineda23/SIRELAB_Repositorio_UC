@@ -41,6 +41,7 @@ public class ControllerDetallesSede implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesSede() {
     }
@@ -70,6 +71,7 @@ public class ControllerDetallesSede implements Serializable {
     public void asignarValoresVariablesSede() {
         editarDireccion = sedeDetalles.getDireccionsede();
         editarNombre = sedeDetalles.getNombresede();
+        mensajeError = "";
         editarEstado = sedeDetalles.getEstado();
         editarTelefono = sedeDetalles.getTelefonosede();
     }
@@ -152,14 +154,17 @@ public class ControllerDetallesSede implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
-
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesTelefono == false) {
+            mensajeError = mensajeError + " - Telefono - ";
             retorno = false;
         }
         return retorno;
@@ -173,12 +178,12 @@ public class ControllerDetallesSede implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Existen edificios asociados. Imposible cambiar estado de sede.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -190,7 +195,6 @@ public class ControllerDetallesSede implements Serializable {
             sedeDetalles.setEstado(editarEstado);
             gestionarSedeBO.modificarInformacionSede(sedeDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSede almacenarModificacionSedeEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerDetallesSede almacenarModificacionSedeEnSistema : " + e.toString(),e);
         }
     }

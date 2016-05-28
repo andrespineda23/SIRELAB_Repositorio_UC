@@ -62,6 +62,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
     private boolean perfilConsulta;
     private TipoPerfil tipoPerfil;
     private UsuarioLogin usuarioLoginSistema;
+    private String mensajeError;
 
     public ControllerDetallesLaboratorio() {
     }
@@ -157,6 +158,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
     }
 
     public void asignarValoresVariablesLaboratorio() {
+        mensajeError = "";
         editarCodigo = laboratorioDetalles.getCodigolaboratorio();
         editarDepartamento = laboratorioDetalles.getDepartamento();
         editarEstado = laboratorioDetalles.getEstado();
@@ -205,19 +207,19 @@ public class ControllerDetallesLaboratorio implements Serializable {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             int tam = editarNombre.length();
             if (tam >= 4) {
-                if (!Utilidades.validarCaracterString(editarNombre)) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE_LAB));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.INVENTARIO_NOMBRE_LAB));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE_LAB));
         }
     }
 
@@ -243,16 +245,21 @@ public class ControllerDetallesLaboratorio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         return retorno;
@@ -276,12 +283,12 @@ public class ControllerDetallesLaboratorio implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el departamento seleccionado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 

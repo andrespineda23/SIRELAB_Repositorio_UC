@@ -174,17 +174,17 @@ public class ControllerReservaSala2 implements Serializable {
                     }
                         //} else {
                     //    mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
-                    //    colorMensaje = "red";
+                    //    colorMensaje = "#FF0000";
                     //}
                     //}
                 } else {
                     mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                 }
             }
         } else {
             mensajeFormulario = "Existen errores en el formulario. Por favor, solucionar para continuar";
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
         }
         return paginaSiguiente;
     }

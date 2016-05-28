@@ -63,6 +63,7 @@ public class ControllerDetallesConvenio implements Serializable {
     private List<AyudaFechaReserva> listaAniosFin;
     private List<AyudaFechaReserva> listaMesesFin;
     private List<AyudaFechaReserva> listaDiasFin;
+    private String mensajeError;
 
     public ControllerDetallesConvenio() {
     }
@@ -82,6 +83,7 @@ public class ControllerDetallesConvenio implements Serializable {
 
     private void cargarInformacionRegistro() {
         convenioEditar = gestionarConvenioBO.consultarConvenioPorID(idConvenio);
+        mensajeError = "";
         if (null != convenioEditar) {
             inputNombre = convenioEditar.getNombreconvenio();
             inputDescripcion = convenioEditar.getDescripcion();
@@ -360,12 +362,15 @@ public class ControllerDetallesConvenio implements Serializable {
     private boolean validarValidacionesRegistro() {
         boolean retorno = true;
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - "; 
             retorno = false;
         }
         if (validacionesValor == false) {
+            mensajeError = mensajeError + " - Valor - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -399,12 +404,12 @@ public class ControllerDetallesConvenio implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
                 }
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
             }
         } else {
             colorMensaje = "black";
@@ -432,7 +437,6 @@ public class ControllerDetallesConvenio implements Serializable {
             convenioEditar.setFechafinal(fecha2);
             gestionarConvenioBO.editarConvenio(convenioEditar);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarConvenio almacenarRegistroNuevo: " + e.toString(),e);
         }
     }
@@ -441,6 +445,7 @@ public class ControllerDetallesConvenio implements Serializable {
         inputNombre = null;
         inputDescripcion = null;
         inputValor = "0";
+        mensajeError = "";
         inputFechaInicio = null;
         inputFechaFin = null;
         validacionesNombre = false;

@@ -40,6 +40,7 @@ public class ControllerDetallesServiciosSala implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesServiciosSala() {
     }
@@ -71,6 +72,7 @@ public class ControllerDetallesServiciosSala implements Serializable {
         editarNombre = serviciosSalaDetalle.getNombreservicio();
         editarCosto = String.valueOf(serviciosSalaDetalle.getCostoservicio());
         editarEstado = serviciosSalaDetalle.getEstado();
+        mensajeError = "";
     }
 
     public void recibirIDServiciosSalaDetalles(BigInteger idArea) {
@@ -136,13 +138,17 @@ public class ControllerDetallesServiciosSala implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -183,16 +189,16 @@ public class ControllerDetallesServiciosSala implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "Existen asociaciones con salas de laboratorios. Imposible cambiar el estado.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -204,7 +210,6 @@ public class ControllerDetallesServiciosSala implements Serializable {
             serviciosSalaDetalle.setCostoservicio(Integer.parseInt(editarCosto));
             gestionarRecursoServiciosSalaBO.modificarInformacionServiciosSala(serviciosSalaDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesServiciosSala almacenarModificacionServiciosSala:  " + e.toString(),e);
             logger.error("Error ControllerDetallesServiciosSala almacenarModificacionServiciosSala : " + e.toString(),e);
         }
     }

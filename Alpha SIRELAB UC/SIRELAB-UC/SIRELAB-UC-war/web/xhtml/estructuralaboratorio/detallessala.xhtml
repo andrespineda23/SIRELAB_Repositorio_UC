@@ -60,8 +60,8 @@ and open the template in the editor.
                                         <h:selectOneMenu value="#{controllerDetallesSala.costoAlquilerDigitado}"
                                                          class="form-control" readonly="#{controllerDetallesSala.activarEditar}" 
                                                          id="costoAlquilerDigitado">
-                                            <f:selectItem itemLabel="DIGITADO MANUALMENTE" itemValue="false" />
-                                            <f:selectItem itemLabel="CALCULADO POR VALORES MODULOS" itemValue="true" />
+                                            <f:selectItem itemLabel="DIGITADO MANUALMENTE POR EL PERSONAL" itemValue="false" />
+                                            <f:selectItem itemLabel="CALCULADO EN BASE AL VALOR DE USO PARA RESERVA DE CADA MODULO" itemValue="true" />
                                             <f:ajax event="change" listener="#{controllerDetallesSala.cambiarCostoAlquilerDigitado()}" execute="@this" render="costoSalaLaboratorio msnCostoAlquilerDigitado"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnCostoAlquilerDigitado" for="costoAlquilerDigitado" style="color: red"/></h6>
@@ -69,7 +69,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Costo Alquiler*"/></strong>
                                         <div class="input-group">
-                                            <h:inputText maxlength="10"  value="#{controllerDetallesSala.costoSalaLaboratorio}" required="true" class="form-control" id="costoSalaLaboratorio" requiredMessage="El campo Costo es obligatorio." readonly="#{controllerDetallesSala.activarEditar}">
+                                            <h:inputText maxlength="10" readonly="#{controllerDetallesSala.costoAlquilerDigitado}" value="#{controllerDetallesSala.costoSalaLaboratorio}" required="true" class="form-control" id="costoSalaLaboratorio" requiredMessage="El campo Costo es obligatorio." disabled="#{controllerDetallesSala.activarEditar}">
                                                 <f:ajax event="blur" listener="#{controllerDetallesSala.validarCostoAlquilerSala()}" execute="costoSalaLaboratorio" render="costoSalaLaboratorio msnCostoSala" />
                                             </h:inputText>
                                             <span class="input-group-addon">$</span>
@@ -226,7 +226,7 @@ and open the template in the editor.
                                         Resultados del Formulario
                                     </h5>
                                     <strong>
-                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesSala.mensajeFormulario}" style="color: #{controllerDetallesSala.colorMensaje}}"/>
+                                        <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerDetallesSala.mensajeFormulario}" style="color: #{controllerDetallesSala.colorMensaje}; resize: none; text-align: center; "/>
                                     </strong>
                                 </div>
                                 <br></br>

@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SalaLaboratorio.findByCostosaladigitado", query = "SELECT s FROM SalaLaboratorio s WHERE s.costosaladigitado = :costosaladigitado"),
     @NamedQuery(name = "SalaLaboratorio.findByEsbodega", query = "SELECT s FROM SalaLaboratorio s WHERE s.esbodega = :esbodega")})
 public class SalaLaboratorio implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
     private Collection<ModuloLaboratorio> moduloLaboratorioCollection;
 
@@ -139,35 +140,47 @@ public class SalaLaboratorio implements Serializable {
     }
 
     public String getCodigosala() {
+        if (null != codigosala) {
+            return codigosala.toUpperCase();
+        }
         return codigosala;
     }
 
     public void setCodigosala(String codigosala) {
-        this.codigosala = codigosala;
+        this.codigosala = codigosala.toUpperCase();
     }
 
     public String getNombresala() {
+        if (null != nombresala) {
+            return nombresala.toUpperCase();
+        }
         return nombresala;
     }
 
     public void setNombresala(String nombresala) {
-        this.nombresala = nombresala;
+        this.nombresala = nombresala.toUpperCase();
     }
 
     public String getPisoubicacion() {
+        if (null != pisoubicacion) {
+            return pisoubicacion.toUpperCase();
+        }
         return pisoubicacion;
     }
 
     public void setPisoubicacion(String pisoubicacion) {
-        this.pisoubicacion = pisoubicacion;
+        this.pisoubicacion = pisoubicacion.toUpperCase();
     }
 
     public String getDescripcionsala() {
+        if (null != descripcionsala) {
+            return descripcionsala.toUpperCase();
+        }
         return descripcionsala;
     }
 
     public void setDescripcionsala(String descripcionsala) {
-        this.descripcionsala = descripcionsala;
+        this.descripcionsala = descripcionsala.toUpperCase();
     }
 
     public long getCostoalquiler() {

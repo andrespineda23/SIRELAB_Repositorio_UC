@@ -65,6 +65,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     private List<AyudaFechaReserva> listaAniosRegistro;
     private List<AyudaFechaReserva> listaMesesRegistro;
     private List<AyudaFechaReserva> listaDiasRegistro;
+    private String mensajeError;
 
     public ControllerRegistrarMovimientoInsumo() {
     }
@@ -73,6 +74,7 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
     public void init() {
         constantes = new MensajesConstantes();
         asociarEquipo = true;
+        mensajeError = "";
         fechaDiferida = true;
         validacionesCantidad = false;
         validacionesCosto = false;
@@ -267,22 +269,28 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
         listaEquiposElementos = null;
         equipoElemento = null;
         activarCasillas = false;
+        mensajeError = "";
         return "administrarmovimientoinsumo";
     }
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCantidad == false) {
+            mensajeError = mensajeError + " - Cantidad - ";
             retorno = false;
         }
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo - ";
             retorno = false;
         }
         if (validacionesTipo == false) {
+            mensajeError = mensajeError + " - Tipo - ";
             retorno = false;
         }
         if (asociarEquipo == false) {
             if (!Utilidades.validarNulo(equipoElemento)) {
+                mensajeError = mensajeError + " - Equipo - ";
                 retorno = false;
             }
         }
@@ -303,8 +311,8 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -327,13 +335,13 @@ public class ControllerRegistrarMovimientoInsumo implements Serializable {
                 gestionarRecursoMovimientosInsumoBO.crearMovimientoInsumoAEquipo(movimientoNuevo, equipoElemento);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarMovimiento almacenaNuevoMovimientoEnSistema : " + e.toString(), e);
         }
     }
 
     private void limpiarFormulario() {
         nuevoTipoMovimiento = null;
+        mensajeError = "";
         nuevoCantidadMovimiento = null;
         Date fecha = new Date();
         DateFormat df = DateFormat.getDateInstance();

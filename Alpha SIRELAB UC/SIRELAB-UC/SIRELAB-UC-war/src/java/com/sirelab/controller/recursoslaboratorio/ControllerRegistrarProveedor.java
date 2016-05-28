@@ -42,6 +42,7 @@ public class ControllerRegistrarProveedor implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarProveedor() {
     }
@@ -65,6 +66,7 @@ public class ControllerRegistrarProveedor implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         activarAceptar = false;
+        mensajeError = "";
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
@@ -183,22 +185,29 @@ public class ControllerRegistrarProveedor implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesNIT == false) {
+            mensajeError = mensajeError + " - NIT - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesTelefono == false) {
+            mensajeError = mensajeError + " - Telefono - ";
             retorno = false;
         }
         if (validacionesVendedor == false) {
+            mensajeError = mensajeError + " - Nombre Vendedor - ";
             retorno = false;
         }
         if (validacionesTelVendedor == false) {
+            mensajeError = mensajeError + " - Tel. Vendedor - ";
             retorno = false;
         }
         return retorno;
@@ -218,7 +227,7 @@ public class ControllerRegistrarProveedor implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }

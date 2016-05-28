@@ -96,11 +96,11 @@ public class ControllerReservaModulo2 implements Serializable {
                     registrarReservaEnSistema();
                 } else {
                     mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad.";
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                 }
             } else {
                 mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
             }
         }
         return paginaSiguiente;

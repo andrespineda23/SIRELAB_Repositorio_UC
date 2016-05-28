@@ -56,6 +56,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private String mensajeError;
 
     public ControllerRegistrarEstudiante() {
     }
@@ -73,6 +74,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
+        mensajeError = "";
         validacionesID = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
@@ -119,8 +121,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputCarrera", new FacesMessage("El campo Carrera es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEstudiante actualizarCarreras:  " + e.toString(), e);
         }
     }
 
@@ -297,37 +298,49 @@ public class ControllerRegistrarEstudiante implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + " - Apellido - ";
             retorno = false;
         }
         if (validacionesCarrera == false) {
+            mensajeError = mensajeError + " - Carrera - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + " - Correo Inst. - ";
             retorno = false;
         }
         if (validacionesCorreoOpcional == false) {
+            mensajeError = mensajeError + " - Correo Secund. - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesPlanEstudio == false) {
+            mensajeError = mensajeError + " - Plan Estd. - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + " - Tel. Fijo - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + " - Tel. Celular - ";
             retorno = false;
         }
         return retorno;
+
     }
 
     /**
@@ -346,8 +359,8 @@ public class ControllerRegistrarEstudiante implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
 
     }
@@ -382,6 +395,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
         inputNombre = null;
         inputPlanEstudio = null;
         inputTelefono1 = null;
+        mensajeError = "";
         inputTelefono2 = null;
         inputSemestre = 1;
         inputTipo = 1;
@@ -420,8 +434,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
             estudianteNueva.setTipoestudiante(inputTipo);
             gestionarLoginSistemaBO.almacenarNuevoEstudianteEnSistema(usuarioNuevo, personaNueva, estudianteNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEstudiante almacenarNuevoEstudianteEnSistema  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarUsuario almacenarNuevoEstudianteEnSistema : " + e.toString(), e);
         }
     }
 
@@ -443,6 +456,7 @@ public class ControllerRegistrarEstudiante implements Serializable {
         inputEmailOpcional = null;
         inputDireccion = null;
         inputEmail = null;
+
         inputID = null;
         inputNombre = null;
         inputPlanEstudio = null;

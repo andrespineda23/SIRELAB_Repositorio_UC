@@ -48,6 +48,7 @@ public class ControllerRegistrarComponente implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarComponente() {
     }
@@ -55,6 +56,7 @@ public class ControllerRegistrarComponente implements Serializable {
     @PostConstruct
     public void init() {
         constantes = new MensajesConstantes();
+        mensajeError = "";
         activarLimpiar = true;
         activarAceptar = false;
         colorMensaje = "black";
@@ -237,6 +239,7 @@ public class ControllerRegistrarComponente implements Serializable {
         nuevoCodigoComponente = null;
         nuevoMarcaComponente = null;
         nuevoDescripcionComponente = null;
+        mensajeError ="";
         nuevoCostoComponente = "0";
         nuevoSerialComponente = null;
         nuevoModeloComponente = null;
@@ -261,28 +264,37 @@ public class ControllerRegistrarComponente implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesTipo == false) {
+            mensajeError = mensajeError + " - Tipo Componente - ";
             retorno = false;
         }
         if (validacionesSerial == false) {
+            mensajeError = mensajeError + " - Serie - ";
             retorno = false;
         }
         if (validacionesModelo == false) {
+            mensajeError = mensajeError + " - Modelo - ";
             retorno = false;
         }
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesMarca == false) {
+            mensajeError = mensajeError + " - Marca - ";
             retorno = false;
         }
         return retorno;
@@ -312,12 +324,12 @@ public class ControllerRegistrarComponente implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el equipo asociado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -337,7 +349,6 @@ public class ControllerRegistrarComponente implements Serializable {
             UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
             gestionarPlantaComponentesEquiposBO.crearComponenteEquipo(componenteNuevo, usuarioLoginSistema.getUserUsuario());
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema:  " + e.toString(), e);
             logger.error("Error ControllerRegistrarComponente almacenaNuevoComponenteEnSistema : " + e.toString(), e);
         }
     }
@@ -359,6 +370,7 @@ public class ControllerRegistrarComponente implements Serializable {
         validacionesTipo = false;
         validacionesNombre = false;
         validacionesMarca = true;
+        mensajeError = "";
         validacionesCosto = true;
     }
 

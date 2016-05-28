@@ -56,12 +56,12 @@ and open the template in the editor.
                                         <h6><h:message id="msnNombreSala" for="nuevoNombreSala" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Tipo de Costo*"/></strong>
-                                        <h:selectOneMenu disabled="#{controllerRegistrarSala.activarNuevoEdificio}" value="#{controllerRegistrarSala.costoAlquilerDigitado}"
-                                                         class="form-control"
+                                        <strong><h:outputText value="Valor de Costo de la Sala (Por Reserva)*"/></strong>
+                                        <h:selectOneMenu value="#{controllerRegistrarSala.costoAlquilerDigitado}" 
+                                                         class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}" 
                                                          id="costoAlquilerDigitado">
-                                            <f:selectItem itemLabel="DIGITADO MANUALMENTE" itemValue="false" />
-                                            <f:selectItem itemLabel="CALCULADO POR VALORES MODULOS" itemValue="true" />
+                                            <f:selectItem itemLabel="DIGITADO MANUALMENTE POR EL PERSONAL" itemValue="false" />
+                                            <f:selectItem itemLabel="CALCULADO EN BASE AL VALOR DE USO PARA RESERVA DE CADA MODULO" itemValue="true" />
                                             <f:ajax event="change" listener="#{controllerRegistrarSala.cambiarCostoAlquilerDigitado()}" execute="@this" render="nuevoCostoSala msnCostoAlquilerDigitado"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnCostoAlquilerDigitado" for="costoAlquilerDigitado" style="color: red"/></h6>
@@ -69,7 +69,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Costo Alquiler*"/></strong>
                                         <div class="input-group">
-                                            <h:inputText maxlength="10"  value="#{controllerRegistrarSala.nuevoCostoSala}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoCostoSala" requiredMessage="El campo Costo es obligatorio.">
+                                            <h:inputText maxlength="10"  value="#{controllerRegistrarSala.nuevoCostoSala}" readonly="#{controllerRegistrarSala.costoAlquilerDigitado}" disabled="#{controllerRegistrarSala.activarCasillas}" required="true" class="form-control" id="nuevoCostoSala" requiredMessage="El campo Costo es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarSala.validarCostoAlquilerSala()}" execute="nuevoCostoSala" render="nuevoCostoSala msnCostoSala" />
                                             </h:inputText>
                                             <span class="input-group-addon">$</span>
@@ -200,7 +200,7 @@ and open the template in the editor.
                                             Resultados del Formulario
                                         </h5>
                                         <strong>
-                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarSala.mensajeFormulario}" style="color: #{controllerRegistrarSala.colorMensaje}}"/>
+                                            <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarSala.mensajeFormulario}" style="color: #{controllerRegistrarSala.colorMensaje}; resize: none; text-align: center; "/>
                                         </strong>
                                     </div>
                                     <br></br>

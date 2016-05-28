@@ -49,6 +49,7 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
+    private String mensajeError;
 
     public ControllerDetallesPlanAsignatura() {
     }
@@ -76,6 +77,7 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
     }
 
     public void asignarValoresVariablesPlanAsignatura() {
+        mensajeError = "";
         editarAsignatura = planAsignaturaDetalles.getAsignatura();
         editarEstado = planAsignaturaDetalles.getEstado();
         editarPlan = planAsignaturaDetalles.getPlanestudio();
@@ -129,13 +131,17 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesPlan == false) {
+            mensajeError = mensajeError + " - Plan Estd. - ";
             retorno = false;
         }
         if (validacionesCarrera == false) {
+            mensajeError = mensajeError + " - Carrera - ";
             retorno = false;
         }
         if (validacionesAsignatura == false) {
+            mensajeError = mensajeError + " - Asignatura - ";
             retorno = false;
         }
         return retorno;
@@ -160,12 +166,12 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El registro ya esta almacenado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -177,7 +183,6 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
             gestionarPlanAsignaturaBO.editarAsignaturaPorPlanEstudio(planAsignaturaDetalles);
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema : " + e.toString(),e);
         }
     }
 

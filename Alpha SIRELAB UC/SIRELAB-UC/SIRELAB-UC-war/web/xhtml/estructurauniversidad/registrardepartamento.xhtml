@@ -44,7 +44,7 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Codigo Departamento*"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerRegistrarDepartamento.nuevoCodigo}" disabled="#{controllerRegistrarDepartamento.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                            <h:inputText maxlength="15" value="#{controllerRegistrarDepartamento.nuevoCodigo}" disabled="#{controllerRegistrarDepartamento.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarDepartamento.validarCodigoDepartamento()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
                                             </h:inputText>
                                             <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
@@ -84,7 +84,7 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarDepartamento.mensajeFormulario}" style="color: #{controllerRegistrarDepartamento.colorMensaje}}"/>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarDepartamento.mensajeFormulario}" style="color: #{controllerRegistrarDepartamento.colorMensaje}; resize: none; text-align: center; "/>
                                             </strong>
                                         </div>
                                         <br></br>

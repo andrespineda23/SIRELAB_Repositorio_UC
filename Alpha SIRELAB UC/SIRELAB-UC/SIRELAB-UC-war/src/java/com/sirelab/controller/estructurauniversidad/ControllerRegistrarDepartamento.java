@@ -44,6 +44,7 @@ public class ControllerRegistrarDepartamento implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarDepartamento() {
     }
@@ -60,6 +61,7 @@ public class ControllerRegistrarDepartamento implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         constantes = new MensajesConstantes();
+        mensajeError = "";
         activarCasillas = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
@@ -122,13 +124,17 @@ public class ControllerRegistrarDepartamento implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -144,8 +150,8 @@ public class ControllerRegistrarDepartamento implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -159,7 +165,6 @@ public class ControllerRegistrarDepartamento implements Serializable {
             gestionarDepartamentosBO.crearNuevaDepartamento(departamentoNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarDepartamento almacenarNuevoDepartamentoEnSistema : " + e.toString(),e);
         }
     }
 
@@ -170,6 +175,7 @@ public class ControllerRegistrarDepartamento implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         validacionesCodigo = false;
+        mensajeError = "";
         mensajeFormulario = "";
     }
 
@@ -185,6 +191,7 @@ public class ControllerRegistrarDepartamento implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        mensajeError = "";
         listaFacultades = null;
     }
 

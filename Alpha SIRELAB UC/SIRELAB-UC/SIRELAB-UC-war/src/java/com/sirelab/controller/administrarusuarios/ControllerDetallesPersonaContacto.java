@@ -53,6 +53,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
     private List<ConvenioPorEntidad> listaCoveniosPorEntidad;
     private ConvenioPorEntidad inputConvenioPorEntidad;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesPersonaContacto() {
     }
@@ -83,6 +84,7 @@ public class ControllerDetallesPersonaContacto implements Serializable {
      */
     public void asignarValoresVariablesPersonaContacto() {
         validacionesNombre = true;
+        mensajeError = "";
         validacionesApellido = true;
         validacionesCorreo = true;
         validacionesCorreoOpc = true;
@@ -207,11 +209,11 @@ public class ControllerDetallesPersonaContacto implements Serializable {
                     validacionesCorreoOpc = true;
                 } else {
                     validacionesCorreoOpc = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El correo ingresado es incorrecto. "+constantes.USUARIO_CORREO_OPC));
+                    FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El correo ingresado es incorrecto. " + constantes.USUARIO_CORREO_OPC));
                 }
             } else {
                 validacionesCorreoOpc = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.USUARIO_CORREO_OPC));
+                FacesContext.getCurrentInstance().addMessage("form:inputEmailOpc", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.USUARIO_CORREO_OPC));
             }
         }
         modificacionRegistro = true;
@@ -225,15 +227,15 @@ public class ControllerDetallesPersonaContacto implements Serializable {
                     validacionesID = true;
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputID", new FacesMessage("El numero identificación se encuentra incorrecto. "+constantes.USUARIO_ID));
+                    FacesContext.getCurrentInstance().addMessage("form:inputID", new FacesMessage("El numero identificación se encuentra incorrecto. " + constantes.USUARIO_ID));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputID", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.USUARIO_ID));
+                FacesContext.getCurrentInstance().addMessage("form:inputID", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.USUARIO_ID));
             }
         } else {
             validacionesID = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputID", new FacesMessage("El numero identificación es obligatorio. "+constantes.USUARIO_ID));
+            FacesContext.getCurrentInstance().addMessage("form:inputID", new FacesMessage("El numero identificación es obligatorio. " + constantes.USUARIO_ID));
         }
         modificacionRegistro = true;
     }
@@ -245,11 +247,11 @@ public class ControllerDetallesPersonaContacto implements Serializable {
                 if (Utilidades.validarCaracteresAlfaNumericos(inputDireccion)) {
                     validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("La dirección es incorrecta. "+constantes.USUARIO_DIRECCION));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("La dirección es incorrecta. " + constantes.USUARIO_DIRECCION));
                     validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
+                FacesContext.getCurrentInstance().addMessage("form:inputDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. " + constantes.USUARIO_DIRECCION));
                 validacionesDireccion = false;
             }
         }
@@ -262,13 +264,13 @@ public class ControllerDetallesPersonaContacto implements Serializable {
                 if (tam == 7) {
                     if ((Utilidades.isNumber(inputTelefono1)) == false) {
                         validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELFIJO));
+                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
                     } else {
                         validacionesTel1 = true;
                     }
                 } else {
                     validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELFIJO));
+                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
                 }
             }
         } else {
@@ -277,13 +279,13 @@ public class ControllerDetallesPersonaContacto implements Serializable {
                 if (tam == 10) {
                     if ((Utilidades.isNumber(inputTelefono2)) == false) {
                         validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
+                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
                     } else {
                         validacionesTel2 = true;
                     }
                 } else {
                     validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
+                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
                 }
             }
         }
@@ -302,31 +304,37 @@ public class ControllerDetallesPersonaContacto implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + "- Apellido - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
-            retorno = false;
-        }
-        if (validacionesCorreoOpc == false) {
-            retorno = false;
-        }
-        if (validacionesConvenioPorEntidad == false) {
+            mensajeError = mensajeError + "- Correo Principal - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + "- Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + "- Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + "- Nombre - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + "- Telefono Fijo - ";
+            retorno = false;
+        }
+        if (validacionesCorreoOpc == false) {
+            mensajeError = mensajeError + "- Correo Opcional - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + "- Telefono Celular - ";
             retorno = false;
         }
         return retorno;
@@ -344,8 +352,8 @@ public class ControllerDetallesPersonaContacto implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
             }
         } else {
             colorMensaje = "black";
@@ -373,8 +381,8 @@ public class ControllerDetallesPersonaContacto implements Serializable {
             personaContactoEditar.setConvenioporentidad(inputConvenioPorEntidad);
             administrarPersonasContactoBO.editarPersonaContado(personaContactoEditar);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarModificacionPersonaContacto : " + e.toString(), e);
         }
     }
 

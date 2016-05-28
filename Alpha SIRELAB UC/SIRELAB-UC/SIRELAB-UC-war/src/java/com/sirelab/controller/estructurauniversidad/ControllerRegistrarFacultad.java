@@ -39,6 +39,7 @@ public class ControllerRegistrarFacultad implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarFacultad() {
     }
@@ -49,6 +50,7 @@ public class ControllerRegistrarFacultad implements Serializable {
         activarAceptar = false;
         nuevoCodigo = null;
         nuevoNombre = null;
+        mensajeError = "";
         validacionesCodigo = false;
         validacionesNombre = false;
         activarLimpiar = true;
@@ -107,10 +109,13 @@ public class ControllerRegistrarFacultad implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -126,7 +131,8 @@ public class ControllerRegistrarFacultad implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "red";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -138,7 +144,6 @@ public class ControllerRegistrarFacultad implements Serializable {
             nuevaFacultad.setEstado(true);
             gestionarFacultadBO.crearNuevaFacultad(nuevaFacultad);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarFacultad almacenarNuevoFacultadEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarFacultad almacenarNuevoFacultadEnSistema : " + e.toString(),e);
         }
     }
@@ -147,8 +152,10 @@ public class ControllerRegistrarFacultad implements Serializable {
         nuevoCodigo = null;
         nuevoNombre = null;
         validacionesCodigo = false;
+        mensajeError = "";
         validacionesNombre = false;
-        mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeFormulario = "N/A";
     }
 
     public void cancelarRegistroFacultad() {
@@ -161,6 +168,7 @@ public class ControllerRegistrarFacultad implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        mensajeError = "";
     }
 
     public void cambiarActivarCasillas() {

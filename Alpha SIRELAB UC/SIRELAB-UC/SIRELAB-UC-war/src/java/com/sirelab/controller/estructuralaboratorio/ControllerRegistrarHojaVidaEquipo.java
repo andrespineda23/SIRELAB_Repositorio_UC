@@ -447,11 +447,11 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "La fecha registro es menor que la fecha evento, por favor corregir para continuar.";
             }
         } else {
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }

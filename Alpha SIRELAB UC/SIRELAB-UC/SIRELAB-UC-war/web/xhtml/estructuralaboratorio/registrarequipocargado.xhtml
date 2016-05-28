@@ -44,7 +44,7 @@ and open the template in the editor.
                                     <legend class="text-info">Datos Basicos</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Codigo Inventario Equipo*"/></strong>
-                                        <h:inputText maxlength="45"  value="#{controllerRegistrarEquipoCargado.nuevoInventarioEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" required="true" class="form-control" id="nuevoInventarioEquipo" requiredMessage="El campo Inventario es obligatorio.">
+                                        <h:inputText maxlength="20"  value="#{controllerRegistrarEquipoCargado.nuevoInventarioEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" required="true" class="form-control" id="nuevoInventarioEquipo" requiredMessage="El campo Inventario es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarInventarioEquipo()}" execute="nuevoInventarioEquipo" render="nuevoInventarioEquipo msnInventarioEquipo" />
                                         </h:inputText>
                                         <h6><h:message id="msnInventarioEquipo" for="nuevoInventarioEquipo" style="color: red"/></h6>
@@ -202,15 +202,15 @@ and open the template in the editor.
                                     <legend class="text-info">Información Laboratorio</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Laboratorio*"/></strong>
-                                        <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoSalaLaboratorioEquipo.laboratorio.nombrelaboratorio}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
+                                        <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoSalaLaboratorioEquipo.laboratorio.nombrelaboratorio}" disabled="true" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Sala de Laboratorio*"/></strong>
-                                        <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoSalaLaboratorioEquipo.nombresala}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
+                                        <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoSalaLaboratorioEquipo.nombresala}" disabled="true" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Modulo/Banco de Trabajo*"/></strong>
-                                        <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoModuloLaboratorioEquipo.detallemodulo}" disabled="true" class="form-control" id="nuevoSalaLaboratorioModulo"/>
+                                        <h:inputText value="#{controllerRegistrarEquipoCargado.nuevoModuloLaboratorioEquipo.detallemodulo}" disabled="true" class="form-control" />
                                     </div>
                                 </fieldset>
                                 <hr class="intro-divider"/>
@@ -220,7 +220,7 @@ and open the template in the editor.
                                             Resultados del Formulario
                                         </h5>
                                         <strong>
-                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarEquipoCargado.mensajeFormulario}" style="color: #{controllerRegistrarEquipoCargado.colorMensaje}}"/>
+                                            <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarEquipoCargado.mensajeFormulario}" style="color: #{controllerRegistrarEquipoCargado.colorMensaje}; resize: none; text-align: center; "/>
                                         </strong>
                                     </div>
                                     <br></br>

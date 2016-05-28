@@ -55,6 +55,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarPersonaContacto() {
     }
@@ -62,6 +63,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
     @PostConstruct
     public void init() {
         constantes = new MensajesConstantes();
+        mensajeError = "";
         activarConvenio = true;
         activarAceptar = false;
         activarLimpiar = true;
@@ -275,34 +277,45 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + " - Apellido - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + " - Correo Principal - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesConvenio == false) {
+            mensajeError = mensajeError + " - Convenio - ";
             retorno = false;
         }
         if (validacionesEntidad == false) {
+            mensajeError = mensajeError + " - Entidad - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + " - Telefono Fijo - ";
             retorno = false;
         }
         if (validacionesCorreoOpc == false) {
+            mensajeError = mensajeError + " - Correo Opcional - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + " - Telefono Celular - ";
             retorno = false;
         }
         return retorno;
@@ -318,8 +331,8 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -333,6 +346,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
         activarCasillas = false;
         colorMensaje = "black";
         validacionesNombre = false;
+        mensajeError = "";
         activarConvenio = true;
         validacionesApellido = false;
         validacionesCorreo = false;
@@ -359,6 +373,7 @@ public class ControllerRegistrarPersonaContacto implements Serializable {
     }
 
     public void limpiarFormulario() {
+        mensajeError = "";
         validacionesNombre = false;
         validacionesApellido = false;
         activarConvenio = true;

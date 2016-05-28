@@ -252,11 +252,11 @@ public class ControllerHistorialEdificios implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El formulario de nuevo registro presenta errores.";
             }
         } else {
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
             mensajeFormulario = "Debe existir al menos un edificio asociado al personal.";
         }
     }

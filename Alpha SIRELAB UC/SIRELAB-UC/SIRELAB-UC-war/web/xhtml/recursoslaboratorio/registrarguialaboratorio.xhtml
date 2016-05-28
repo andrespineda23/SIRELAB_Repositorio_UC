@@ -51,11 +51,6 @@ and open the template in the editor.
                                             <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Codigo Guía*"/></strong>
-                                            <h:inputText maxlength="10" value="#{controllerRegistrarGuiaLaboratorio.nuevoCodigo}" readonly="true" class="form-control" id="nuevoCodigo" >
-                                            </h:inputText>
-                                        </div>
-                                        <div class="form-group">
                                             <strong><h:outputText value="Descripción Guía*"/></strong>
                                             <h:inputText maxlength="300" value="#{controllerRegistrarGuiaLaboratorio.nuevoDescripcion}" disabled="#{controllerRegistrarGuiaLaboratorio.activarCasillas}" required="true" class="form-control" id="nuevoDescripcion" requiredMessage="El campo Descripcion es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarGuiaLaboratorio.validarDescripcionGuiaLaboratorio()}" execute="nuevoDescripcion" render="nuevoDescripcion msnDescripcion" />
@@ -118,7 +113,7 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarGuiaLaboratorio.mensajeFormulario}" style="color: #{controllerRegistrarGuiaLaboratorio.colorMensaje}}"/>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarGuiaLaboratorio.mensajeFormulario}" style="color: #{controllerRegistrarGuiaLaboratorio.colorMensaje}; resize: none; text-align: center; "/>
                                             </strong>
                                         </div>
                                         <br></br>

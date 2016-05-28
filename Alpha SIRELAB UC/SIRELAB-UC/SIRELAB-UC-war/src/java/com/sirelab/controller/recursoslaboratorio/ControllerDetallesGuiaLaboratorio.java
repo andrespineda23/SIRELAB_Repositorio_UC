@@ -64,6 +64,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     private Part archivo;
     private boolean modificacionArchivo;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesGuiaLaboratorio() {
     }
@@ -95,6 +96,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     }
 
     public void asignarValoresVariablesGuiaLaboratorio() {
+        mensajeError = "";
         editarPlanEstudios = guiaLaboratorioDetalle.getAsignaturaporplanestudio().getPlanestudio();
         editarDescripcion = guiaLaboratorioDetalle.getDescripcion();
         editarCarrera = guiaLaboratorioDetalle.getAsignaturaporplanestudio().getPlanestudio().getCarrera();
@@ -241,22 +243,29 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesArchivo == false) {
+            mensajeError = mensajeError + " - Archivo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesCarrera == false) {
+            mensajeError = mensajeError + " - Carrera - ";
             retorno = false;
         }
         if (validacionesAsignatura == false) {
+            mensajeError = mensajeError + " - Asignatura - ";
             retorno = false;
         }
         if (validacionesPlanEstudios == false) {
+            mensajeError = mensajeError + " - Plan Estudio - ";
             retorno = false;
         }
         return retorno;
@@ -269,8 +278,8 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -287,7 +296,6 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
             gestionarRecursoGuiasLaboratorioBO.modificarGuiaLaboratorio(guiaLaboratorioDetalle);
         } catch (Exception e) {
             logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema:  " + e.toString(), e);
-            logger.error("Error ControllerGestionarGuiasLaboratorio almacenarModificacionGuiaLaboratorioEnSistema : " + e.toString(), e);
         }
     }
 

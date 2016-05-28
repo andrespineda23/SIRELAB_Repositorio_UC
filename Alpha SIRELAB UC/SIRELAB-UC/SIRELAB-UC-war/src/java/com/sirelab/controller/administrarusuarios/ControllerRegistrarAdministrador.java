@@ -45,6 +45,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarAdministrador() {
     }
@@ -62,6 +63,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
+        mensajeError = "";
         validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
@@ -278,34 +280,45 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + " - Apellido - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + " - Correo - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesPassw == false) {
+            mensajeError = mensajeError + " - Contraseña - ";
             retorno = false;
         }
         if (validacionesPassw2 == false) {
+            mensajeError = mensajeError + " - Contraseña Respaldo - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + " - Tel. FIjo - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + " - Tel. Celular - ";
             retorno = false;
         }
         if (validacionesUsuario == false) {
+            mensajeError = mensajeError + " - Usuario - ";
             retorno = false;
         }
         return retorno;
@@ -325,8 +338,8 @@ public class ControllerRegistrarAdministrador implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -348,7 +361,6 @@ public class ControllerRegistrarAdministrador implements Serializable {
             administrarAdministradoresBO.almacenarNuevaPersonaEnSistema(usuarioNuevo, personaNueva);
             cancelarRegistroAdministrador();
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString(),e);
         }
     }
@@ -374,6 +386,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
         nuevoNombre = null;
         nuevoTelefono1 = null;
         nuevoTelefono2 = null;
+        mensajeError = "";
         nuevoUsuario = null;
     }
 
@@ -406,6 +419,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
         nuevoTelefono1 = null;
         nuevoTelefono2 = null;
         nuevoUsuario = null;
+        mensajeError = "";
     }
 
     public void cambiarActivarCasillas() {

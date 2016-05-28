@@ -49,6 +49,7 @@ public class ControllerDetallesCarrera implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesCarrera() {
     }
@@ -79,6 +80,7 @@ public class ControllerDetallesCarrera implements Serializable {
     }
 
     public void asignarValoresVariablesCarrera() {
+        mensajeError = "";
         editarCodigo = carreraDetalles.getCodigocarrera();
         editarDepartamento = carreraDetalles.getDepartamento();
         editarFacultad = carreraDetalles.getDepartamento().getFacultad();
@@ -178,16 +180,21 @@ public class ControllerDetallesCarrera implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         return retorno;
@@ -214,20 +221,20 @@ public class ControllerDetallesCarrera implements Serializable {
                         colorMensaje = "green";
                         mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     } else {
-                        colorMensaje = "red";
+                        colorMensaje = "#FF0000";
                         mensajeFormulario = "Existen asociados planes de estudio. Imposible cambiar el estado de la carrera.";
                     }
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Seleccione un departamento para continuar con el proceso.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -239,7 +246,6 @@ public class ControllerDetallesCarrera implements Serializable {
             carreraDetalles.setEstado(editarEstado);
             gestionarCarrerasBO.modificarInformacionCarrera(carreraDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema : " + e.toString(),e);
         }
     }

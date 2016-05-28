@@ -79,6 +79,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     private List<AyudaFechaReserva> listaAniosRegistro;
     private List<AyudaFechaReserva> listaMesesRegistro;
     private List<AyudaFechaReserva> listaDiasRegistro;
+    private String mensajeError;
 
     public ControllerRegistrarEquipoCargado() {
     }
@@ -87,6 +88,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     public void init() {
         constantes = new MensajesConstantes();
         activarAceptar = false;
+        mensajeError = "";
         activarLimpiar = true;
         fechaDiferida = true;
         colorMensaje = "black";
@@ -385,37 +387,49 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesSerie == false) {
+            mensajeError = mensajeError + " - Serie - ";
             retorno = false;
         }
         if (validacionesTipo == false) {
+            mensajeError = mensajeError + " - Tipo Activo - ";
             retorno = false;
         }
         if (validacionesProveedor == false) {
+            mensajeError = mensajeError + " - Proveedor - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesMarca == false) {
+            mensajeError = mensajeError + " - Marca - ";
             retorno = false;
         }
         if (validacionesModelo == false) {
+    mensajeError = mensajeError + " - Modelo - ";
             retorno = false;
         }
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo Alquiler - ";
             retorno = false;
         }
         if (validacionesEspecificacion == false) {
+            mensajeError = mensajeError + " - Especificación - ";
             retorno = false;
         }
         if (validacionesEstado == false) {
+            mensajeError = mensajeError + " - Estado - ";
             retorno = false;
         }
         if (validacionesInventario == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesInversion == false) {
+            mensajeError = mensajeError + " - Costo Inversión - ";
             retorno = false;
         }
         return retorno;
@@ -445,12 +459,12 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -505,6 +519,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
     public void limpiarFormulario() {
         nuevoNombreEquipo = null;
         nuevoInventarioEquipo = null;
+        mensajeError = "";
         nuevoModeloEquipo = null;
         nuevoMarcaEquipo = null;
         nuevoSerieEquipo = null;
@@ -559,6 +574,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
         validacionesEspecificacion = true;
         validacionesEstado = false;
         validacionesFecha = true;
+        mensajeError = "";
         validacionesInventario = false;
         validacionesInversion = true;
         validacionesMarca = true;

@@ -60,6 +60,7 @@ public class ControllerRegistrarConvenio implements Serializable {
     private List<AyudaFechaReserva> listaAniosFin;
     private List<AyudaFechaReserva> listaMesesFin;
     private List<AyudaFechaReserva> listaDiasFin;
+    private String mensajeError;
 
     public ControllerRegistrarConvenio() {
     }
@@ -69,6 +70,7 @@ public class ControllerRegistrarConvenio implements Serializable {
         constantes = new MensajesConstantes();
         inputNombre = null;
         inputDescripcion = null;
+        mensajeError = "";
         inputValor = "0";
         Date fecha1 = new Date();
         DateFormat df = DateFormat.getDateInstance();
@@ -325,12 +327,15 @@ public class ControllerRegistrarConvenio implements Serializable {
     private boolean validarValidacionesFin() {
         boolean retorno = true;
         if (validacionesValor == false) {
+            mensajeError = mensajeError + " - Valor - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -367,12 +372,12 @@ public class ControllerRegistrarConvenio implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "La fecha final es menor que la fecha inicial, por favor corregir para continuar.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -397,7 +402,6 @@ public class ControllerRegistrarConvenio implements Serializable {
             convenioNuevo.setFechafinal(fecha2);
             gestionarConvenioBO.crearConvenio(convenioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarConvenio almacenarFinNuevo:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarConvenio almacenarFinNuevo: " + e.toString(),e);
         }
     }
@@ -420,6 +424,7 @@ public class ControllerRegistrarConvenio implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        mensajeError = "";
     }
 
     public String cerrarPagina() {
@@ -436,6 +441,7 @@ public class ControllerRegistrarConvenio implements Serializable {
         inputFechaInicio = df.format(fecha1);
         inputFechaFin = df.format(fecha1);
         validacionesNombre = false;
+        mensajeError = "";
         validacionesDescripcion = false;
         validacionesValor = true;
         validacionesFechaFin = false;

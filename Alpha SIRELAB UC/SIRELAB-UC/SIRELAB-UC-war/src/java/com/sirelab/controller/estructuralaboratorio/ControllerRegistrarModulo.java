@@ -54,6 +54,7 @@ public class ControllerRegistrarModulo implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarModulo() {
     }
@@ -80,6 +81,7 @@ public class ControllerRegistrarModulo implements Serializable {
         nuevoDetalleModulo = null;
         nuevoCostoModulo = null;
         nuevoCapacidadModulo = null;
+        mensajeError = "";
         nuevoInversionModulo = null;
         nuevoDepartamentoModulo = null;
         nuevoLaboratorioModulo = null;
@@ -90,6 +92,7 @@ public class ControllerRegistrarModulo implements Serializable {
     public void limpiarRegistroModuloLaboratorio() {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        mensajeError = "";
         activarAceptar = false;
         colorMensaje = "black";
         activarCasillas = false;
@@ -122,7 +125,7 @@ public class ControllerRegistrarModulo implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoDetalleModulo)) {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesDetalle = true;
                 }
@@ -132,7 +135,7 @@ public class ControllerRegistrarModulo implements Serializable {
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El detalle es obligatorio. " + constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoDetalleModulo", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
 
     }
@@ -240,28 +243,37 @@ public class ControllerRegistrarModulo implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo Alquiler - ";
             retorno = false;
         }
         if (validacionesCapacidad == false) {
+            mensajeError = mensajeError + " - Capacidad - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesDetalle == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesInversion == false) {
+            mensajeError = mensajeError + " - Costo Inversión - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
+            mensajeError = mensajeError + " - Laboratorio - ";
             retorno = false;
         }
         if (validacionesSala == false) {
+            mensajeError = mensajeError + " - Sala - ";
             retorno = false;
         }
         return retorno;
@@ -306,16 +318,16 @@ public class ControllerRegistrarModulo implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "La sala ya se encuentra llena. No es posible crear el modulo. Capacidad maxima (" + nuevoSalaLaboratorioModulo.getCapacidadsala() + ").";
                 }
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistea.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -343,6 +355,7 @@ public class ControllerRegistrarModulo implements Serializable {
         validacionesDepartamento = false;
         validacionesSala = false;
         validacionesCapacidad = true;
+        mensajeError ="";
         validacionesCosto = true;
         validacionesInversion = true;
         mensajeFormulario = "";

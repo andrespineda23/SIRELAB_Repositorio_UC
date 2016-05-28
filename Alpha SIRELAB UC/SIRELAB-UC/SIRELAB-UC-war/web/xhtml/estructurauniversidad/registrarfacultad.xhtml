@@ -44,7 +44,7 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Codigo Facultad*"/></strong>
-                                            <h:inputText maxlength="10" value="#{controllerRegistrarFacultad.nuevoCodigo}" disabled="#{controllerRegistrarFacultad.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                            <h:inputText maxlength="15" value="#{controllerRegistrarFacultad.nuevoCodigo}" disabled="#{controllerRegistrarFacultad.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarFacultad.validarCodigoFacultad()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
                                             </h:inputText>
                                             <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
@@ -73,7 +73,7 @@ and open the template in the editor.
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarFacultad.mensajeFormulario}" style="color: #{controllerRegistrarFacultad.colorMensaje}}"/>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarFacultad.mensajeFormulario}" style="color: #{controllerRegistrarFacultad.colorMensaje}; resize: none; text-align: center; "/>
                                             </strong>
                                         </div>
                                         <br></br>

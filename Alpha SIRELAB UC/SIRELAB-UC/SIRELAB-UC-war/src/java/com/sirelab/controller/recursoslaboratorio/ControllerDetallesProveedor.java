@@ -42,6 +42,7 @@ public class ControllerDetallesProveedor implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesProveedor() {
     }
@@ -75,6 +76,7 @@ public class ControllerDetallesProveedor implements Serializable {
     }
 
     public void asignarValoresVariablesProveedor() {
+        mensajeError = "";
         editarDireccion = proveedorDetalle.getDireccionproveedor();
         editarNIT = proveedorDetalle.getNitproveedor();
         editarNombre = proveedorDetalle.getNombreproveedor();
@@ -206,22 +208,29 @@ public class ControllerDetallesProveedor implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesNIT == false) {
+            mensajeError = mensajeError + " - NIT - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesVendedor == false) {
+            mensajeError = mensajeError + " - Nombre Vendedor - ";
             retorno = false;
         }
         if (validacionesTelefono == false) {
+            mensajeError = mensajeError + " - Telefono - ";
             retorno = false;
         }
         if (validacionesTelVendedor == false) {
+            mensajeError = mensajeError + " - Tel. Vendedor - ";
             retorno = false;
         }
         return retorno;
@@ -234,8 +243,8 @@ public class ControllerDetallesProveedor implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -257,7 +266,6 @@ public class ControllerDetallesProveedor implements Serializable {
             }
             gestionarRecursoProveedoresBO.modificarInformacionProveedor(proveedorDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerDetallesProveedor almacenarModificacionesProveedorEnSistema : " + e.toString(),e);
         }
     }

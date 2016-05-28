@@ -50,6 +50,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
+    private String mensajeError;
 
     public ControllerDetallesSalaLaboratorioXServicio() {
     }
@@ -74,6 +75,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
         colorMensaje = "black";
         salaSalaLaboratorioPorServicioDetalles = new SalaLaboratorioxServicios();
         recibirIDSalaLaboratorioxServiciosDetalles(this.idSalaLaboratorioPorServicio);
+        mensajeError = "";
         return "administrarlaboratoriosporareas";
     }
 
@@ -88,6 +90,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
         if (Utilidades.validarNulo(editarLaboratorio)) {
             listaSalaLaboratorios = gestionarPlantaSalaLaboratorioxServiciosBO.consultarSalaLaboratorioPorIDLaboratorio(editarLaboratorio.getIdlaboratorio());
         }
+        mensajeError = "";
         idSalaLaboratorio = editarSalaLaboratorio.getIdsalalaboratorio();
     }
 
@@ -133,13 +136,17 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesLaboratorio == false) {
+            mensajeError = mensajeError + " - Laboratorio - ";
             retorno = false;
         }
         if (validacionesSalaLaboratorio == false) {
+            mensajeError = mensajeError + " - Sala - ";
             retorno = false;
         }
         if (validacionesServicio == false) {
+            mensajeError = mensajeError + " - Servicio - ";
             retorno = false;
         }
         return retorno;
@@ -164,16 +171,16 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Seleccione la sala de laboratorio antes de continuar.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -184,8 +191,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
             salaSalaLaboratorioPorServicioDetalles.setEstado(editarEstado);
             gestionarPlantaSalaLaboratorioxServiciosBO.editarSalaLaboratorioxServicios(salaSalaLaboratorioPorServicioDetalles);;
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema:  " + e.toString(), e);
 
         }
     }

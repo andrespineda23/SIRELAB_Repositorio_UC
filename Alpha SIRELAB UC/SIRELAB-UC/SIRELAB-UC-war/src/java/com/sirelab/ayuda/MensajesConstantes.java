@@ -14,7 +14,7 @@ public class MensajesConstantes {
     public final String USUARIO_NOMBRE = "Formato (Solo letras) / Tamaño (Min 2 - Max 45)";
     public final String USUARIO_APELLIDO = "Formato (Solo letras) / Tamaño (Min 2 - Max 45)";
     public final String USUARIO_ID = "Formato (1122334455) / Tamaño (Min 6 - Max 20)";
-    public final String USUARIO_CORREO = "Formato (ejemplocorreo) / Tamaño (Min 4 - Max 29)";
+    public final String USUARIO_CORREO = "Formato (ejemplocorreo@correo.com) / Tamaño (Min 4 - Max 29)";
     public final String ENTIDAD_CORREO = "Formato (ejemplocorreo@entidad.com) / Tamaño (Min 15 - Max 45)";
     public final String USUARIO_CORREO_OPC = "Formato (ejemplocorreo@dominio.com) / Tamaño (Min 15 - Max 60)";
     public final String USUARIO_TELFIJO = "Formato (3239868) / Tamaño (7 caract.)";
@@ -23,6 +23,7 @@ public class MensajesConstantes {
     public final String USUARIO_DIRECCION = "Formato (Av Cra 30 # 21 23 sur) / Tamaño (Min 8 - Max 45)";
     public final String ENTIDAD_TELEFONO = "Formato (Fijo - Extension - Celular) / Tamaño (Max 45)";
     public final String INVENTARIO_NOMBRE = "Formato (componente prueba) / Tamaño (Min 4 - Max 45)";
+    public final String INVENTARIO_NOMBRE_LAB = "Formato (ejemplo 1) / Tamaño (Min 4 - Max 45)";
     public final String INVENTARIO_CODIGO = "Formato (1111) / Tamaño (Min 4 - Max 20)";
     public final String INVENTARIO_CODIGO_LAB = "Formato (1111) / Tamaño (Min 4 - Max 10)";
     public final String INVENTARIO_MARCA = "Formato (marca prueba) / Tamaño (Min 2 - Max 45)";

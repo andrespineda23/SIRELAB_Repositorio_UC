@@ -38,7 +38,6 @@ public class ControllerRegistrarDocente implements Serializable {
     //
 
     private String inputNombre, inputApellido, inputID, inputEmail, inputEmailOpcional, inputTelefono1, inputTelefono2, inputDireccion;
-    ;
     private List<Facultad> listaFacultades;
     private Facultad inputFacultad;
     private List<Departamento> listaDepartamentos;
@@ -57,12 +56,14 @@ public class ControllerRegistrarDocente implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarDocente() {
     }
 
     @PostConstruct
     public void init() {
+        mensajeError = "";
         constantes = new MensajesConstantes();
         activarAceptar = false;
         activarLimpiar = true;
@@ -116,8 +117,7 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputFacultad", new FacesMessage("El campo Facultad es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente actualizarFacultades:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarDocente actualizarFacultades : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente actualizarFacultades : " + e.toString(), e);
         }
     }
 
@@ -130,8 +130,7 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputDepartamento", new FacesMessage("El campo Departamento es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente actualizarDepartamentos : " + e.toString(), e);
         }
     }
 
@@ -144,8 +143,7 @@ public class ControllerRegistrarDocente implements Serializable {
                 FacesContext.getCurrentInstance().addMessage("form:inputCargo", new FacesMessage("El campo Cargo es obligatorio."));
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente actualizarCargos:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarDocente actualizarCargos : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente actualizarCargos : " + e.toString(), e);
         }
     }
 
@@ -311,37 +309,49 @@ public class ControllerRegistrarDocente implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + " - Apellido - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + " - Correo Inst. - ";
             retorno = false;
         }
         if (validacionesCorreoOpcional == false) {
+            mensajeError = mensajeError + " - Correo Pers. - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         if (validacionesCargo == false) {
+            mensajeError = mensajeError + " - Cargo - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + " - Num. Extensión - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + " - Telefono Celular - ";
             retorno = false;
         }
         return retorno;
@@ -364,8 +374,8 @@ public class ControllerRegistrarDocente implements Serializable {
             logger.error("Funciona sin problema");
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -391,6 +401,7 @@ public class ControllerRegistrarDocente implements Serializable {
         validacionesDepartamento = false;
         //
         activarDepartamento = true;
+        mensajeError = "";
         inputApellido = null;
         inputFacultad = null;
         inputDireccion = null;
@@ -419,6 +430,7 @@ public class ControllerRegistrarDocente implements Serializable {
         validacionesDepartamento = false;
         validacionesCorreoOpcional = true;
         //
+        mensajeError = "";
         activarDepartamento = true;
         inputApellido = null;
         inputFacultad = null;
@@ -459,8 +471,8 @@ public class ControllerRegistrarDocente implements Serializable {
             docenteNueva.setCargo(inputCargo);
             administrarDocentesBO.almacenarNuevoDocenteEnSistema(usuarioNuevo, personaNueva, docenteNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarDocente almacenarNuevoDocenteEnSistema : " + e.toString(), e);
         }
     }
 

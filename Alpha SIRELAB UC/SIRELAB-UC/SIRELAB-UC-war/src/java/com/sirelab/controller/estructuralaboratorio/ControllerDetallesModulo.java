@@ -71,6 +71,7 @@ public class ControllerDetallesModulo implements Serializable {
     private MensajesConstantes constantes;
     private boolean perfilConsulta;
     private TipoPerfil tipoPerfil;
+    private String mensajeError;
 
     public ControllerDetallesModulo() {
     }
@@ -118,6 +119,7 @@ public class ControllerDetallesModulo implements Serializable {
     }
 
     public void asignarValoresVariablesModuloLaboratorio() {
+        mensajeError = "";
         detalleModuloLaboratorio = moduloLaboratorioDetalles.getDetallemodulo();
         codigoModuloLaboratorio = moduloLaboratorioDetalles.getCodigomodulo();
         costoModuloLaboratorio = moduloLaboratorioDetalles.getCostoalquiler().toString();
@@ -309,7 +311,7 @@ public class ControllerDetallesModulo implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(detalleModuloLaboratorio)) {
                     validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:detalleModuloLaboratorio", new FacesMessage("El detalle ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:detalleModuloLaboratorio", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
                 } else {
                     validacionesDetalle = true;
                 }
@@ -319,7 +321,7 @@ public class ControllerDetallesModulo implements Serializable {
             }
         } else {
             validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:detalleModuloLaboratorio", new FacesMessage("El detalle es obligatorio. " + constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:detalleModuloLaboratorio", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
         }
         modificacionesRegistroModuloLaboratorio();
     }
@@ -383,28 +385,37 @@ public class ControllerDetallesModulo implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo Alquiler - ";
             retorno = false;
         }
         if (validacionesCapacidad == false) {
+            mensajeError = mensajeError + " - Capacidad - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesDetalle == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesInversion == false) {
+            mensajeError = mensajeError + " - Costo Inversión - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
+            mensajeError = mensajeError + " - Laboratorio - ";
             retorno = false;
         }
         if (validacionesSala == false) {
+            mensajeError = mensajeError + " - Sala - ";
             retorno = false;
         }
         return retorno;
@@ -444,16 +455,16 @@ public class ControllerDetallesModulo implements Serializable {
                         colorMensaje = "green";
                         mensajeFormulario = "El formulario ha sido ingresado con exito.";
                     } else {
-                        colorMensaje = "red";
+                        colorMensaje = "#FF0000";
                         mensajeFormulario = "La sala ya se encuentra llena. No es posible crear el modulo. Capacidad maxima (" + salaModuloLaboratorio.getCapacidadsala() + ").";
                     }
                 } else {
-                    colorMensaje = "red";
-                    mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El codigo ya esta registrado en el sistema.";
                 }
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
             }
         } else {
             restaurarInformacionModuloLaboratorio();
@@ -474,7 +485,6 @@ public class ControllerDetallesModulo implements Serializable {
             restaurarInformacionModuloLaboratorio();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema : " + e.toString(),e);
 
         }
     }
@@ -495,7 +505,7 @@ public class ControllerDetallesModulo implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha activado el modulo/banco de trabajo.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
@@ -515,7 +525,7 @@ public class ControllerDetallesModulo implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el modulo/banco de trabajo.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {

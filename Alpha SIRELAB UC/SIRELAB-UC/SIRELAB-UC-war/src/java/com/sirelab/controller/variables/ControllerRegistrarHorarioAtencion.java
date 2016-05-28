@@ -158,15 +158,15 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
                     validacionesCodigo = true;
                 } else {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto."));
+                    FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. "+constantes.VARIABLE_COD));
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El tamaño minimo permitido es 2 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.VARIABLE_COD));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto."));
+            FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. "+constantes.VARIABLE_COD));
         }
     }
 
@@ -207,11 +207,11 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
-            colorMensaje = "red";
+            colorMensaje = "#FF0000";
             mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
         }
     }

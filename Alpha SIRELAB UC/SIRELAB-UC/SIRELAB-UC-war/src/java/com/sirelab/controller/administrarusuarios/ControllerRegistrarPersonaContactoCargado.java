@@ -48,6 +48,7 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private String mensajeError;
 
     public ControllerRegistrarPersonaContactoCargado() {
     }
@@ -74,6 +75,7 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         inputEmail = null;
         inputID = null;
         inputNombre = null;
+        mensajeError = "";
         BasicConfigurator.configure();
     }
 
@@ -238,28 +240,37 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError + "- Apellido - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + "- Correo Principal - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + "- Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + "- Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + "- Nombre - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + "- Telefono Fijo - ";
             retorno = false;
         }
         if (validacionesCorreoOpc == false) {
+            mensajeError = mensajeError + "- Correo Opcional - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError + "- Telefono Celular - ";
             retorno = false;
         }
         return retorno;
@@ -275,8 +286,8 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -319,6 +330,7 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
         validacionesTel2 = true;
         validacionesDireccion = false;
         //
+        mensajeError = "";
         inputApellido = null;
         inputDireccion = null;
         inputTelefono1 = null;
@@ -355,8 +367,7 @@ public class ControllerRegistrarPersonaContactoCargado implements Serializable {
             personaCNueva.setConvenioporentidad(convenioPorEntidad);
             administrarPersonasContactoBO.crearPersonaContado(usuarioNuevo, personaNueva, personaCNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarPersonaContacto almacenarNuevoPersonaContactoEnSistema : " + e.toString(), e);
         }
     }
 

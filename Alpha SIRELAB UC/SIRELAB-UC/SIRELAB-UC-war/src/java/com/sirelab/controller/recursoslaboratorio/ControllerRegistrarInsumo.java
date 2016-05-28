@@ -47,6 +47,7 @@ public class ControllerRegistrarInsumo implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarInsumo() {
     }
@@ -72,6 +73,7 @@ public class ControllerRegistrarInsumo implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        mensajeError = "";
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
@@ -191,25 +193,33 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesCantidadExistencia == false) {
+            mensajeError = mensajeError + " - Cant. Existencia - ";
             retorno = false;
         }
         if (validacionesCantidadMin == false) {
+            mensajeError = mensajeError + " - Cant. Minima - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesMarca == false) {
+            mensajeError = mensajeError + " - Marca - ";
             retorno = false;
         }
         if (validacionesModelo == false) {
+            mensajeError = mensajeError + " - Modelo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
 
@@ -240,12 +250,12 @@ public class ControllerRegistrarInsumo implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -270,13 +280,13 @@ public class ControllerRegistrarInsumo implements Serializable {
             gestionarRecursoInsumosBO.crearNuevoInsumo(nuevaInsumo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarInsumo almacenarNuevoInsumoEnSistema : " + e.toString(),e);
         }
     }
 
     public void limpiarFormulario() {
         nuevoCantidadExistencia = "0";
         nuevoCantidadMin = "0";
+        mensajeError = "";
         nuevoCodigo = null;
         nuevoDescripcion = null;
         nuevoMarca = null;
@@ -305,6 +315,7 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesCantidadExistencia = true;
         validacionesCantidadMin = true;
         validacionesDescripcion = true;
+        mensajeError = "";
         validacionesMarca = true;
         validacionesModelo = true;
         mensajeFormulario = "N/A";

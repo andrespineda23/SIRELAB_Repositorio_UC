@@ -152,11 +152,11 @@ public class ControllerDetallesTipoPerfil implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
                 }
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
             }
         } else {

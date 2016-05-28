@@ -53,12 +53,14 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarEntidadExterna() {
     }
 
     @PostConstruct
     public void init() {
+        mensajeError = "";
         constantes = new MensajesConstantes();
         activarAceptar = false;
         activarLimpiar = true;
@@ -200,22 +202,29 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesSector == false) {
+            mensajeError = mensajeError + " - Sector - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError + " - Correo - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError + " - Telefono - ";
             retorno = false;
         }
         return retorno;
@@ -237,14 +246,15 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
     public void limpiarFormulario() {
         validacionesNombre = false;
         validacionesSector = false;
+        mensajeError = "";
         validacionesCorreo = false;
         validacionesID = false;
         validacionesTel1 = false;
@@ -273,6 +283,7 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
         validacionesID = false;
         validacionesTel1 = false;
         validacionesDireccion = false;
+        mensajeError = "";
         listaSectorEntidad = null;
         mensajeFormulario = "";
         inputSector = null;
@@ -299,8 +310,8 @@ public class ControllerRegistrarEntidadExterna implements Serializable {
             entidadexternaNueva.setTelefonoentidad(inputTelefono1);
             administrarEntidadesExternasBO.almacenarNuevaEntidadExternaEnSistema(entidadexternaNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEntidadExternaEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarEntidadExterna almacenarNuevoEntidadExternaEnSistema : " + e.toString(), e);
         }
     }
 

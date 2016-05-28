@@ -48,6 +48,7 @@ public class ControllerDetallesComponente implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesComponente() {
     }
@@ -88,6 +89,7 @@ public class ControllerDetallesComponente implements Serializable {
             validacionesMarca = true;
             validacionesTipo = true;
         }
+        mensajeError = "";
         modificacionesRegistro = false;
     }
 
@@ -254,6 +256,7 @@ public class ControllerDetallesComponente implements Serializable {
         editarNombreComponente = null;
         editarCodigoComponente = null;
         editarMarcaComponente = null;
+        mensajeError = "";
         editarCostoComponente = "0";
         editarDescripcionComponente = null;
         editarSerialComponente = null;
@@ -281,28 +284,37 @@ public class ControllerDetallesComponente implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesSerial == false) {
+            mensajeError = mensajeError + " - Serial - ";
             retorno = false;
         }
         if (validacionesTipo == false) {
+            mensajeError = mensajeError + " - Tipo Componente - ";
             retorno = false;
         }
         if (validacionesModelo == false) {
+            mensajeError = mensajeError + " - Modelo - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripcion - ";
             retorno = false;
         }
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesMarca == false) {
+            mensajeError = mensajeError + " - Marca - ";
             retorno = false;
         }
         return retorno;
@@ -331,12 +343,12 @@ public class ControllerDetallesComponente implements Serializable {
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 cargarInformacionRegistro();
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el equipo asociado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 

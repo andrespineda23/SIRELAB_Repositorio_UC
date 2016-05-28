@@ -44,12 +44,14 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private String mensajeError;
 
     public ControllerRegistrarConvenioPorEntidad() {
     }
 
     @PostConstruct
     public void init() {
+        mensajeError = "";
         activarAceptar = false;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -85,10 +87,13 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesConvenio == false) {
+            mensajeError = mensajeError + " - Convenio - ";
             retorno = false;
         }
         if (validacionesEntidad == false) {
+            mensajeError = mensajeError + " - Entidad - ";
             retorno = false;
         }
         return retorno;
@@ -118,12 +123,12 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -132,6 +137,7 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
         validacionesEntidad = false;
         mensajeFormulario = "";
         inputConvenio = null;
+        mensajeError = "";
         inputEntidadExterna = null;
     }
 
@@ -146,6 +152,7 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
         colorMensaje = "black";
         validacionesConvenio = false;
         validacionesEntidad = false;
+        mensajeError = "";
         mensajeFormulario = "";
         inputConvenio = null;
         inputEntidadExterna = null;
@@ -165,8 +172,8 @@ public class ControllerRegistrarConvenioPorEntidad implements Serializable {
             nuevoRegistro.setEstado(true);
             administrarConveniosPorEntidadBO.crearConvenioPorEntidad(nuevoRegistro);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarConvenioPorEntidad almacenarNuevoConvenioPorEntidadEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarConvenioPorEntidad almacenarNuevoConvenioPorEntidadEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarConvenioPorEntidad almacenarNuevoConvenioPorEntidadEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarConvenioPorEntidad almacenarNuevoConvenioPorEntidadEnSistema : " + e.toString(), e);
         }
     }
 

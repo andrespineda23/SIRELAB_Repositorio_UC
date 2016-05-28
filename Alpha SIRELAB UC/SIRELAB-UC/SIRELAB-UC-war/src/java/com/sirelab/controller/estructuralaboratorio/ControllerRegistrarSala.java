@@ -61,12 +61,14 @@ public class ControllerRegistrarSala implements Serializable {
     private boolean nuevoBodega;
     private BigInteger idLaboratorio;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarSala() {
     }
 
     @PostConstruct
     public void init() {
+        mensajeError = "";
         constantes = new MensajesConstantes();
         nuevoTipo = false;
         nuevoBodega = false;
@@ -275,6 +277,7 @@ public class ControllerRegistrarSala implements Serializable {
 
     public String limpiarRegistroSalaLaboratorio() {
         activarNuevoEdificio = true;
+        mensajeError = "";
         activarAceptar = false;
         costoAlquilerDigitado = false;
         nuevoNombreSala = null;
@@ -312,31 +315,41 @@ public class ControllerRegistrarSala implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo Alquiler - ";
             retorno = false;
         }
         if (validacionesCapacidad == false) {
+            mensajeError = mensajeError + " - Capacidad - ";
             retorno = false;
         }
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesEdificio == false) {
+            mensajeError = mensajeError + " - Edificio - ";
             retorno = false;
         }
         if (validacionesInversion == false) {
+            mensajeError = mensajeError + " - Costo Inversión - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesSede == false) {
+            mensajeError = mensajeError + " - Sede - ";
             retorno = false;
         }
         if (validacionesUbicacion == false) {
+            mensajeError = mensajeError + " - Ubicación - ";
             retorno = false;
         }
         return retorno;
@@ -379,16 +392,16 @@ public class ControllerRegistrarSala implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "Para ingresar la sala es necesario que exista una asociacion con un servicio.";
                 }
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el edificio y laboratorio por area seleccionado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -398,6 +411,7 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoCodigoSala = null;
         nuevoUbicacionSala = null;
         nuevoTipo = false;
+        mensajeError = "";
         nuevoBodega = false;
         costoAlquilerDigitado = false;
         nuevoDescripcionSala = null;
@@ -416,6 +430,7 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesInversion = true;
         validacionesNombre = false;
         validacionesSede = false;
+        mensajeError = "";
         validacionesUbicacion = false;
         cargarAsociacionServicios();
     }

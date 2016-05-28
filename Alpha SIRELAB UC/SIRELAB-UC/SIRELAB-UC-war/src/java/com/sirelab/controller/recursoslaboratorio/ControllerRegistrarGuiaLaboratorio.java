@@ -61,6 +61,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
     private String rutaArchivo;
     private String paginaAnterior;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarGuiaLaboratorio() {
     }
@@ -90,6 +91,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
+        mensajeError = "";
     }
 
     public void recibirPaginaAnterior(String page) {
@@ -202,11 +204,8 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         } else {
             validacionesPlan = false;
             validacionesAsignatura = false;
-
             listaAsignaturas = null;
-
             nuevoAsignatura = null;
-
             activarAsignatura = true;
         }
     }
@@ -221,22 +220,29 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesArchivo == false) {
+            mensajeError = mensajeError + " - Archivo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesAsignatura == false) {
+            mensajeError = mensajeError + " - Asignatura - ";
             retorno = false;
         }
         if (validacionesPlan == false) {
+            mensajeError = mensajeError + " - Plan Estd. - ";
             retorno = false;
         }
         if (validacionesCarrera == false) {
+            mensajeError = mensajeError + " - Carrera - ";
             retorno = false;
         }
         return retorno;
@@ -252,8 +258,8 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El codigo ingresado ya se encuentra registrado. Errores: "+mensajeError;
         }
     }
 
@@ -297,7 +303,6 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             gestionarRecursoGuiaLaboratorioBO.crearGuiaLaboratorio(guiaNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema:  " + e.toString(), e);
-            logger.error("Error ControllerRegistrarGuiaLaboratorio almacenarNuevoGuiaLaboratorioEnSistema : " + e.toString(), e);
         }
     }
 
@@ -309,6 +314,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         nuevoCodigo = null;
         archivo = null;
         nuevoNombre = null;
+        mensajeError = "";
         nuevoAsignatura = null;
         nuevoCarrera = null;
         nuevoPlanEstudio = null;
@@ -336,6 +342,7 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
         validacionesNombre = false;
         nuevoCodigo = null;
         validacionesArchivo = false;
+        mensajeError = "";
         validacionesAsignatura = false;
         validacionesCarrera = false;
         validacionesPlan = false;

@@ -49,8 +49,8 @@ and open the template in the editor.
                                         <h6><h:message id="msnCodigoModulo" for="nuevoCodigoModulo" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Detalle Modulo*"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerRegistrarModulo.nuevoDetalleModulo}" disabled="#{controllerRegistrarModulo.activarCasillas}" required="true" class="form-control" id="nuevoDetalleModulo" requiredMessage="El campo Detalle es obligatorio.">
+                                        <strong><h:outputText value="Nombre Modulo*"/></strong>
+                                        <h:inputText maxlength="45" value="#{controllerRegistrarModulo.nuevoDetalleModulo}" disabled="#{controllerRegistrarModulo.activarCasillas}" required="true" class="form-control" id="nuevoDetalleModulo" requiredMessage="El campo Nombre es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerRegistrarModulo.validarDetalleModulo()}" execute="nuevoDetalleModulo" render="nuevoDetalleModulo msnDetalleModulo" />
                                         </h:inputText>
                                         <h6><h:message id="msnDetalleModulo" for="nuevoDetalleModulo" style="color: red"/></h6>
@@ -135,7 +135,7 @@ and open the template in the editor.
                                             Resultados del Formulario
                                         </h5>
                                         <strong>
-                                            <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarModulo.mensajeFormulario}" style="color: #{controllerRegistrarModulo.colorMensaje}}"/>
+                                            <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarModulo.mensajeFormulario}" style="color: #{controllerRegistrarModulo.colorMensaje}; resize: none; text-align: center; "/>
                                         </strong>
                                     </div>
                                     <br></br>

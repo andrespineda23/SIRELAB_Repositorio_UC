@@ -48,6 +48,7 @@ public class ControllerRegistrarManual implements Serializable {
     private String rutaArchivo;
     private boolean activarUbicacion, activarArchivo;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarManual() {
     }
@@ -70,6 +71,7 @@ public class ControllerRegistrarManual implements Serializable {
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
+        mensajeError = "";
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
@@ -80,17 +82,17 @@ public class ControllerRegistrarManual implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.RECURSO_NOM_MAN));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.RECURSO_NOM_MAN));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 5 caracteres."+constantes.RECURSO_NOM_MAN));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 5 caracteres." + constantes.RECURSO_NOM_MAN));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.RECURSO_NOM_MAN));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.RECURSO_NOM_MAN));
         }
 
     }
@@ -102,11 +104,11 @@ public class ControllerRegistrarManual implements Serializable {
                 validacionesUbicacion = true;
             } else {
                 validacionesUbicacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacion", new FacesMessage("El tamaño minimo permitido es 7 caracteres. "+constantes.RECURSO_INS_UBI));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacion", new FacesMessage("El tamaño minimo permitido es 7 caracteres. " + constantes.RECURSO_INS_UBI));
             }
         } else {
             validacionesUbicacion = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacion", new FacesMessage("El campo ubicación es obligatorio. "+constantes.RECURSO_INS_UBI));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoUbicacion", new FacesMessage("El campo ubicación es obligatorio. " + constantes.RECURSO_INS_UBI));
         }
     }
 
@@ -157,16 +159,21 @@ public class ControllerRegistrarManual implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesTipo == false) {
+            mensajeError = mensajeError + " - Tipo - ";
             retorno = false;
         }
         if (validacionesArchivo == false) {
+            mensajeError = mensajeError + " - Archivo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesUbicacion == false) {
+            mensajeError = mensajeError + " - Ubicación - ";
             retorno = false;
         }
         return retorno;
@@ -182,8 +189,8 @@ public class ControllerRegistrarManual implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El codigo ingresado ya se encuentra registrado. Errores: " + mensajeError;
         }
     }
 
@@ -222,13 +229,13 @@ public class ControllerRegistrarManual implements Serializable {
                 guiaNuevo.setUbicacionmanual(nuevoUbicacion);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString(), e);
         }
     }
 
     public void limpiarFormulario() {
         rutaArchivo = "";
+        mensajeError = "";
         activarArchivo = true;
         activarUbicacion = false;
         nuevoTipo = "FISICO";
@@ -239,7 +246,7 @@ public class ControllerRegistrarManual implements Serializable {
         validacionesArchivo = false;
         validacionesNombre = false;
         validacionesUbicacion = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
     }
 
     public void cancelarRegistroManual() {
@@ -257,6 +264,7 @@ public class ControllerRegistrarManual implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         activarAceptar = false;
+        mensajeError = "";
         colorMensaje = "black";
         activarCasillas = false;
     }

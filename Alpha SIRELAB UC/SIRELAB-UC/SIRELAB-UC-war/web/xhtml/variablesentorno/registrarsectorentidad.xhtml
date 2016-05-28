@@ -63,13 +63,13 @@ and open the template in the editor.
                                     <br></br>
                                     <br></br>
                                     <hr class="intro-divider"/>
-                                    <div class="row col-md-12">
+                                    <div class="row col-md-12 resizableArea">
                                         <div class="text-center">
                                             <h5>
                                                 Resultados del Formulario
                                             </h5>
                                             <strong>
-                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarSectorEntidad.mensajeFormulario}" style="color: #{controllerRegistrarSectorEntidad.colorMensaje}}"/>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerRegistrarSectorEntidad.mensajeFormulario}" style="color: #{controllerRegistrarSectorEntidad.colorMensaje}; resize: none; text-align: center; "/>
                                             </strong>
                                         </div>
                                         <br></br>

@@ -63,6 +63,7 @@ public class ControllerDetallesDocente implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerDetallesDocente() {
     }
@@ -101,6 +102,7 @@ public class ControllerDetallesDocente implements Serializable {
      * Metodo encargado de asignar los valores del docente que sera visualizado
      */
     public void asignarValoresVariablesDocente() {
+        mensajeError = "";
         cargoDocente = docenteDetalles.getCargo();
         nombreDocente = docenteDetalles.getPersona().getNombrespersona();
         apellidoDocente = docenteDetalles.getPersona().getApellidospersona();
@@ -412,37 +414,49 @@ public class ControllerDetallesDocente implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesApellido == false) {
+            mensajeError = mensajeError  + " - Apellido - "; 
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError  + " - Departamento - "; 
             retorno = false;
         }
         if (validacionesCorreo == false) {
+            mensajeError = mensajeError  + " - Correo Inst. - "; 
             retorno = false;
         }
         if (validacionesCorreoOpcional == false) {
+            mensajeError = mensajeError  + " - Correo Pers. - "; 
             retorno = false;
         }
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError  + " - Dirección - "; 
             retorno = false;
         }
         if (validacionesID == false) {
+            mensajeError = mensajeError  + " - Identificación - "; 
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError  + " - Nombre - "; 
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError  + " - Facultad - "; 
             retorno = false;
         }
         if (validacionesCargo == false) {
+            mensajeError = mensajeError  + " - Cargo - "; 
             retorno = false;
         }
         if (validacionesTel1 == false) {
+            mensajeError = mensajeError  + " - Núm. Extensión - "; 
             retorno = false;
         }
         if (validacionesTel2 == false) {
+            mensajeError = mensajeError  + " - Telefono Celular - "; 
             retorno = false;
         }
         return retorno;
@@ -455,8 +469,8 @@ public class ControllerDetallesDocente implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
             }
         } else {
             colorMensaje = "black";
@@ -485,7 +499,6 @@ public class ControllerDetallesDocente implements Serializable {
             administrarDocentesBO.actualizarInformacionDocente(docenteDetalles);
             restaurarInformacionDocente();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDocente almacenarNuevoDocenteEnSistema:  " + e.toString(),e);
             logger.error("Error modificarInformacionDocente almacenarNuevoDocenteEnSistema : " + e.toString(),e);
         }
     }
@@ -512,7 +525,7 @@ public class ControllerDetallesDocente implements Serializable {
                 mensajeFormulario = "Se ha activado el docente.";
                 colorMensaje = "green";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
@@ -535,7 +548,7 @@ public class ControllerDetallesDocente implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "Se ha inactivado el docente.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {

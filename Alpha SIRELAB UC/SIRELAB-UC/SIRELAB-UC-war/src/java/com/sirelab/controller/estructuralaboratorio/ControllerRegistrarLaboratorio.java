@@ -62,6 +62,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     private MensajesConstantes constantes;
     private boolean perfilConsulta;
     private TipoPerfil tipoPerfil;
+    private String mensajeError;
 
     public ControllerRegistrarLaboratorio() {
     }
@@ -75,6 +76,8 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         mensajeFormulario = "N/A";
         nuevoCodigo = null;
         nuevoDepartamento = null;
+        activarNuevoDepartamento = true;
+        activarNuevoFacultad = false;
         nuevoNombre = null;
         nuevoFacultad = null;
         nuevoBloque = "1";
@@ -84,6 +87,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         BasicConfigurator.configure();
+        mensajeError = "";
         constantes = new MensajesConstantes();
     }
 
@@ -175,19 +179,19 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
             int tam = nuevoNombre.length();
             if (tam >= 4) {
-                if (!Utilidades.validarCaracterString(nuevoNombre)) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.INVENTARIO_NOMBRE_LAB));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo es 4 caracteres. " + constantes.INVENTARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo es 4 caracteres. " + constantes.INVENTARIO_NOMBRE_LAB));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.INVENTARIO_NOMBRE_LAB));
         }
     }
 
@@ -213,16 +217,21 @@ public class ControllerRegistrarLaboratorio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         return retorno;
@@ -248,12 +257,12 @@ public class ControllerRegistrarLaboratorio implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "El codigo ya esta registrado con el departamento seleccionado.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -262,11 +271,11 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             Laboratorio laboratorioNuevo = new Laboratorio();
             laboratorioNuevo.setNombrelaboratorio(nuevoNombre);
             laboratorioNuevo.setEstado(true);
+            laboratorioNuevo.setBloquehorareserva(nuevoBloque);
             laboratorioNuevo.setCodigolaboratorio(nuevoCodigo);
             laboratorioNuevo.setDepartamento(nuevoDepartamento);
             gestionarPlantaLaboratoriosBO.crearNuevoLaboratorio(laboratorioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString(),e);
 
         }
@@ -280,6 +289,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         nuevoNombre = null;
         nuevoFacultad = null;
         //
+        mensajeError = "";
         validacionesCodigo = false;
         validacionesDepartamento = false;
         validacionesFacultad = false;
@@ -291,6 +301,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     public void cancelarRegistroLaboratorio() {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        mensajeError = "";
         colorMensaje = "black";
         activarAceptar = false;
         activarCasillas = false;

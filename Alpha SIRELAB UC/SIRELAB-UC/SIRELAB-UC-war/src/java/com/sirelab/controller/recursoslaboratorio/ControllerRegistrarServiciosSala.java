@@ -39,6 +39,7 @@ public class ControllerRegistrarServiciosSala implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarServiciosSala() {
     }
@@ -57,6 +58,7 @@ public class ControllerRegistrarServiciosSala implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
+        mensajeError = "";
         BasicConfigurator.configure();
     }
 
@@ -117,13 +119,17 @@ public class ControllerRegistrarServiciosSala implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesCosto == false) {
+            mensajeError = mensajeError + " - Costo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         return retorno;
@@ -149,12 +155,12 @@ public class ControllerRegistrarServiciosSala implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -167,8 +173,7 @@ public class ControllerRegistrarServiciosSala implements Serializable {
             servicioNuevo.setEstado(true);
             gestionarRecursoServiciosSalaBO.crearNuevoServiciosSala(servicioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarServiciosSala almacenarNuevoServiciosSalaEnSistema : " + e.toString(), e);
         }
     }
 
@@ -180,6 +185,8 @@ public class ControllerRegistrarServiciosSala implements Serializable {
         validacionesNombre = false;
         validacionesCosto = false;
         mensajeFormulario = "";
+        colorMensaje = "black";
+        mensajeError = "";
     }
 
     public void cancelarRegistroServiciosSala() {
@@ -190,6 +197,7 @@ public class ControllerRegistrarServiciosSala implements Serializable {
         validacionesCosto = false;
         validacionesNombre = false;
         mensajeFormulario = "N/A";
+        mensajeError = "";
         activarLimpiar = true;
         activarAceptar = false;
         colorMensaje = "black";

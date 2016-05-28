@@ -49,8 +49,8 @@ and open the template in the editor.
                                         <h6><h:message id="msnCodigoModulo" for="codigoModuloLaboratorio" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Detalle Modulo*"/></strong>
-                                        <h:inputText maxlength="45" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.detalleModuloLaboratorio}" required="true" class="form-control" id="detalleModuloLaboratorio" requiredMessage="El campo Detalle es obligatorio.">
+                                        <strong><h:outputText value="Nombre Modulo*"/></strong>
+                                        <h:inputText maxlength="45" readonly="#{controllerDetallesModulo.activarEditar}" value="#{controllerDetallesModulo.detalleModuloLaboratorio}" required="true" class="form-control" id="detalleModuloLaboratorio" requiredMessage="El campo Nombre es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerDetallesModulo.validarDetalleModulo()}" execute="detalleModuloLaboratorio" render="detalleModuloLaboratorio msnDetalleModulo" />
                                         </h:inputText>
                                         <h6><h:message id="msnDetalleModulo" for="detalleModuloLaboratorio" style="color: red"/></h6>
@@ -138,7 +138,7 @@ and open the template in the editor.
                                         Resultados del Formulario
                                     </h5>
                                     <strong>
-                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesModulo.mensajeFormulario}" style="color: #{controllerDetallesModulo.colorMensaje}}"/>
+                                        <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerDetallesModulo.mensajeFormulario}" style="color: #{controllerDetallesModulo.colorMensaje}; resize: none; text-align: center; "/>
                                     </strong>
                                 </div>
                                 <br></br>

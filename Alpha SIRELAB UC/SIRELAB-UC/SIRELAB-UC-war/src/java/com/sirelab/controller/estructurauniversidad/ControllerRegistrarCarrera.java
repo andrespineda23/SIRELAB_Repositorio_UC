@@ -48,6 +48,7 @@ public class ControllerRegistrarCarrera implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarCarrera() {
     }
@@ -69,6 +70,7 @@ public class ControllerRegistrarCarrera implements Serializable {
         nuevoFacultad = null;
         nuevoNombre = null;
         constantes = new MensajesConstantes();
+        mensajeError = "";
         BasicConfigurator.configure();
     }
 
@@ -145,6 +147,7 @@ public class ControllerRegistrarCarrera implements Serializable {
         validacionesNombre = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
+        mensajeError = "";
         colorMensaje = "black";
         activarCasillas = false;
         nuevoCodigo = null;
@@ -157,16 +160,21 @@ public class ControllerRegistrarCarrera implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesCodigo == false) {
+            mensajeError = mensajeError + " - Codigo - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         return retorno;
@@ -192,12 +200,12 @@ public class ControllerRegistrarCarrera implements Serializable {
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
-                colorMensaje = "red";
+                colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
             }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -211,7 +219,6 @@ public class ControllerRegistrarCarrera implements Serializable {
             gestionarCarrerasBO.crearNuevaCarrera(carreraNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarCarrera almacenarNuevoCarreraEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarCarrera almacenarNuevoCarreraEnSistema : " + e.toString(),e);
         }
     }
 
@@ -226,6 +233,7 @@ public class ControllerRegistrarCarrera implements Serializable {
         nuevoDepartamento = null;
         nuevoFacultad = null;
         nuevoNombre = null;
+        mensajeError = "";
     }
 
     public void cambiarActivarCasillas() {

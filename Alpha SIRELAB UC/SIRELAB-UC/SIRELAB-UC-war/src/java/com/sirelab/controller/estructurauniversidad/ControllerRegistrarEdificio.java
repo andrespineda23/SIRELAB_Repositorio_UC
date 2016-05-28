@@ -47,6 +47,7 @@ public class ControllerRegistrarEdificio implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private MensajesConstantes constantes;
+    private String mensajeError;
 
     public ControllerRegistrarEdificio() {
     }
@@ -63,6 +64,7 @@ public class ControllerRegistrarEdificio implements Serializable {
         validacionesSede = false;
         validacionesSede = false;
         activarLimpiar = true;
+        mensajeError = "";
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
@@ -127,16 +129,21 @@ public class ControllerRegistrarEdificio implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesDireccion == false) {
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            mensajeError = mensajeError + " - Descripción - ";
             retorno = false;
         }
         if (validacionesSede == false) {
+            mensajeError = mensajeError + " - Sede - ";
             retorno = false;
         }
         if (validacionesHorario == false) {
+            mensajeError = mensajeError + " - Horario - ";
             retorno = false;
         }
         return retorno;
@@ -152,8 +159,8 @@ public class ControllerRegistrarEdificio implements Serializable {
             colorMensaje = "green";
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
         }
     }
 
@@ -167,7 +174,6 @@ public class ControllerRegistrarEdificio implements Serializable {
             edificioNuevo.setEstado(true);
             gestionarEdificiosBO.crearNuevaEdificio(edificioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarEdificio almacenarNuevoEdificioEnSistema : " + e.toString(),e);
         }
     }
@@ -180,6 +186,7 @@ public class ControllerRegistrarEdificio implements Serializable {
         validacionesDescripcion = false;
         validacionesDireccion = true;
         validacionesSede = false;
+        mensajeError = "";
         validacionesHorario = false;
         mensajeFormulario = "";
     }
@@ -190,6 +197,7 @@ public class ControllerRegistrarEdificio implements Serializable {
         nuevoSede = null;
         activarAceptar = false;
         nuevoHorario = null;
+        mensajeError = "";
         validacionesDescripcion = false;
         validacionesDireccion = true;
         validacionesSede = false;

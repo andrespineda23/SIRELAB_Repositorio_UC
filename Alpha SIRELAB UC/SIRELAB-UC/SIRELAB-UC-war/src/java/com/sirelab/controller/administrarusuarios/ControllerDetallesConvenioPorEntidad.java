@@ -49,6 +49,7 @@ public class ControllerDetallesConvenioPorEntidad implements Serializable {
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
+    private String mensajeError;
 
     public ControllerDetallesConvenioPorEntidad() {
     }
@@ -91,6 +92,7 @@ public class ControllerDetallesConvenioPorEntidad implements Serializable {
     public void recibirIDConveniosPorEntidadDetalles(BigInteger idConvenioPorEntidad) {
         this.idConvenioPorEntidad = idConvenioPorEntidad;
         convenioPorEntidadDetalle = administrarConveniosPorEntidadBO.obtenerConvenioPorEntidadPorID(idConvenioPorEntidad);
+        mensajeError = "";
         asignarValoresVariablesConvenioPorEntidad();
     }
 
@@ -131,10 +133,13 @@ public class ControllerDetallesConvenioPorEntidad implements Serializable {
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        mensajeError = "";
         if (validacionesConvenio == false) {
+            mensajeError = mensajeError + " - Convenio - ";
             retorno = false;
         }
         if (validacionesEntidad == false) {
+            mensajeError = mensajeError + " - Entidad - ";
             retorno = false;
         }
         return retorno;
@@ -163,12 +168,12 @@ public class ControllerDetallesConvenioPorEntidad implements Serializable {
                     colorMensaje = "green";
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
-                    colorMensaje = "red";
+                    colorMensaje = "#FF0000";
                     mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
                 }
             } else {
-                colorMensaje = "red";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
             }
         } else {
             colorMensaje = "black";
@@ -188,7 +193,6 @@ public class ControllerDetallesConvenioPorEntidad implements Serializable {
             administrarConveniosPorEntidadBO.editarConvenioPorEntidad(convenioPorEntidadDetalle);
             restaurarInformacionConvenioPorEntidad();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesConvenioPorEntidad modificarInformacionConvenioPorEntidad:  " + e.toString(),e);
             logger.error("Error ControllerDetallesConvenioPorEntidad modificarInformacionConvenioPorEntidad : " + e.toString(),e);
         }
     }
