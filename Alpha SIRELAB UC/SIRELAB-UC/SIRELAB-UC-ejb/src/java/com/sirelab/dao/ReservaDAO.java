@@ -122,6 +122,25 @@ public class ReservaDAO implements ReservaDAOInterface {
             return null;
         }
     }
+    
+    
+    @Override
+    public Reserva buscarUltimaReservaPersonaConEstado(BigInteger persona, String horaInicio, Date fecha) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Reserva p WHERE p.persona.idpersona=:persona AND p.horainicio=:horaInicio AND p.fechareserva=:fecha AND p.estadoreserva.idestadoreserva=:estado");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("persona", persona);
+            query.setParameter("horaInicio", horaInicio);
+            query.setParameter("fecha", fecha);
+            query.setParameter("estado", BigInteger.valueOf(1));
+            Reserva registro = (Reserva) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarUltimaReservaPersona ReservaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
 
     @Override
     public List<Reserva> buscarReservasPorFecha(Date fecha) {

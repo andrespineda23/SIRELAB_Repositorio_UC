@@ -123,7 +123,7 @@ and open the template in the editor.
                                             <f:selectItems value="#{controllerRegistrarSala.listaEdificios}" var="edificio"
                                                            itemLabel="#{edificio.descripcionedificio}" itemValue="#{edificio}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarEdificios()}" execute="nuevoSedeSala" render="@this msnEdificioSala"/>
+                                            <f:ajax event="change" listener="#{controllerRegistrarSala.actualizarEdificios()}" execute="nuevoEdificioSala" render="@this msnEdificioSala"/>
                                         </h:selectOneMenu>
                                         <h6><h:message id="msnEdificioSala" for="nuevoEdificioSala" style="color: red"/></h6>
                                     </div>
@@ -171,6 +171,24 @@ and open the template in the editor.
                                     </div>
                                 </fieldset>
                                 <br></br>
+                                <div class="form-group">
+                                    <strong><h:outputText value="A continuación seleccione los diferentes servicios que prestara la sala de laboratorio. Por medio del boton ADICIONAR puede agregar el servicio a la sala*"/></strong>
+                                </div>
+                                <div class="form-inline">
+                                    <h:selectOneMenu value="#{controllerRegistrarSala.serviciosSala}"
+                                                     class="form-control" disabled="#{controllerRegistrarSala.activarCasillas}"
+                                                     id="serviciosSala">
+                                        <f:selectItem itemLabel="Seleccione servicio a adicionar" itemValue="null" />
+                                        <f:selectItems value="#{controllerRegistrarSala.listaServiciosSalas}" var="servicio"
+                                                       itemLabel="#{servicio.nombreservicio}" itemValue="#{servicio}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerRegistrarSala.validarServicio()}" render="@this adicionar"/>
+                                    </h:selectOneMenu>
+                                    <h:commandButton id="adicionar" class="btn btn-success" disabled="#{controllerRegistrarSala.activarAdicionar}" value="Adicionar" actionListener="#{controllerRegistrarSala.adicionarServicioASala()}">
+                                        <f:ajax execute="dataTable" render="dataTable serviciosSala adicionar" />
+                                    </h:commandButton>
+                                </div>
+                                <br></br>
                                 <fieldset>
                                     <legend class="text-info">Tipos de servicios que prestará la Sala</legend>
                                     <div class="row">
@@ -179,16 +197,16 @@ and open the template in the editor.
                                                      value="#{controllerRegistrarSala.listaAsociacionServicios}">
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="Servicio"/>
+                                                    <h:outputText value="Nombre"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.servicio.nombreservicio}"/>
                                             </h:column>  
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="Adicionar"/>
+                                                    <h:outputText value="Código"/>
                                                 </f:facet>
-                                                <h:selectBooleanCheckbox disabled="#{controllerRegistrarSala.activarCasillas}" value="#{item.activo}"/>
-                                            </h:column>
+                                                <h:outputText value="#{item.servicio.codigoservicio}"/>
+                                            </h:column>  
                                         </h:dataTable>
                                     </div>
                                 </fieldset>

@@ -19,6 +19,7 @@ import com.sirelab.dao.interfacedao.GuiaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
+import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaDAOInterface;
@@ -40,6 +41,7 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.ReservaEquipoElemento;
@@ -68,6 +70,8 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
 
     static Logger logger = Logger.getLogger(AdministrarReservasBO.class);
 
+    @EJB
+    PersonaContactoDAOInterface personaContactoDAO;
     @EJB
     ReservaDAOInterface reservaDAO;
     @EJB
@@ -218,6 +222,33 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             }
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO consultarSalaLaboratorioPorIdLaboratorio: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean validarReservasPersonaSegunHoraFecha(BigInteger usuario, String tipoUsuario, String horaInicio, Date fecha) {
+        try {
+            Persona persona = new Persona();
+            if ("ESTUDIANTE".equalsIgnoreCase(tipoUsuario)) {
+                Estudiante estudiante = estudianteDAO.buscarEstudiantePorID(usuario);
+                persona = estudiante.getPersona();
+            } else if ("DOCENTE".equalsIgnoreCase(tipoUsuario)) {
+                Docente docente = docenteDAO.buscarDocentePorID(usuario);
+                persona = docente.getPersona();
+            } else if ("ENTIDADEXTERNA".equalsIgnoreCase(tipoUsuario)) {
+                PersonaContacto personaContacto = personaContactoDAO.buscarPersonaContactoPorID(usuario);
+                persona = personaContacto.getPersona();
+            }
+
+            Reserva reserva = reservaDAO.buscarUltimaReservaPersonaConEstado(persona.getIdpersona(), horaInicio, fecha);
+            if (null != reserva) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO validarReservasPersonaSegunHoraFecha: " + e.toString(), e);
             return null;
         }
     }

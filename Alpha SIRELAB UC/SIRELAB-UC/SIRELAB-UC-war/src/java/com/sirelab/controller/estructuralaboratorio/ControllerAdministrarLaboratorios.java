@@ -82,6 +82,7 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         parametroDepartamento = new Departamento();
         altoTabla = "150";
         inicializarFiltros();
+        activarDepartamento = true;
         listaLaboratoriosTabla = null;
         listaLaboratorios = null;
         posicionLaboratorioTabla = 0;
@@ -223,7 +224,6 @@ public class ControllerAdministrarLaboratorios implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalLaboratorio);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros:  " + e.toString(),e);
             logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString(),e);
         }
     }

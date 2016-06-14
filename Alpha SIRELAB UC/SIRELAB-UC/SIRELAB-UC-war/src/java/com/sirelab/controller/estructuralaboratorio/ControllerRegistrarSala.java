@@ -47,6 +47,8 @@ public class ControllerRegistrarSala implements Serializable {
     private List<Sede> listaSedes;
     private List<Edificio> listaEdificios;
     private List<AsociacionServicios> listaAsociacionServicios;
+    private List<ServiciosSala> listaServiciosSalas;
+    private ServiciosSala serviciosSala;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesUbicacion;
     private boolean validacionesCapacidad, validacionesCosto, validacionesInversion;
@@ -62,6 +64,7 @@ public class ControllerRegistrarSala implements Serializable {
     private BigInteger idLaboratorio;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarAdicionar;
 
     public ControllerRegistrarSala() {
     }
@@ -69,11 +72,13 @@ public class ControllerRegistrarSala implements Serializable {
     @PostConstruct
     public void init() {
         mensajeError = "";
+        activarAdicionar = true;
         constantes = new MensajesConstantes();
         nuevoTipo = false;
         nuevoBodega = false;
         activarAceptar = false;
         activarLimpiar = true;
+        serviciosSala = null;
         colorMensaje = "black";
         costoAlquilerDigitado = false;
         activarCasillas = false;
@@ -102,22 +107,9 @@ public class ControllerRegistrarSala implements Serializable {
         BasicConfigurator.configure();
     }
 
-    private void cargarAsociacionServicios() {
-        List<ServiciosSala> lista = gestionarPlantaSalasBO.consultarServiciosSalaActivosRegistradas();
-        listaAsociacionServicios = new ArrayList<AsociacionServicios>();
-        if (null != lista) {
-            for (int i = 0; i < lista.size(); i++) {
-                AsociacionServicios obj = new AsociacionServicios(null, false);
-                obj.setServicio(lista.get(i));
-                listaAsociacionServicios.add(obj);
-            }
-        }
-    }
-
     public void recibirIdLaboratorio(BigInteger laboratorio) {
         idLaboratorio = laboratorio;
         nuevoLaboratorioSala = gestionarPlantaSalasBO.obtenerLaboratorioPorId(idLaboratorio);
-        cargarAsociacionServicios();
     }
 
     public void validarNombreSala() {
@@ -305,12 +297,36 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesSede = false;
         validacionesUbicacion = false;
         mensajeFormulario = "N/A";
+        activarAdicionar = true;
         listaAsociacionServicios = null;
+        listaServiciosSalas = gestionarPlantaSalasBO.consultarServiciosSalaActivosRegistradas();
+        serviciosSala = null;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
         idLaboratorio = null;
         return "administrarlaboratorios";
+    }
+
+    public void validarServicio() {
+        if (null != serviciosSala) {
+            activarAdicionar = false;
+        } else {
+            activarAdicionar = true;
+        }
+    }
+
+    public void adicionarServicioASala() {
+        AsociacionServicios asociacion = new AsociacionServicios();
+        asociacion.setServicio(serviciosSala);
+        asociacion.setActivo(true);
+        if (null == listaAsociacionServicios) {
+            listaAsociacionServicios = new ArrayList<AsociacionServicios>();
+        }
+        listaAsociacionServicios.add(asociacion);
+        listaServiciosSalas.remove(serviciosSala);
+        serviciosSala = null;
+        validarServicio();
     }
 
     private boolean validarResultadosValidacion() {
@@ -401,7 +417,7 @@ public class ControllerRegistrarSala implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -413,6 +429,7 @@ public class ControllerRegistrarSala implements Serializable {
         nuevoTipo = false;
         mensajeError = "";
         nuevoBodega = false;
+        activarAdicionar = true;
         costoAlquilerDigitado = false;
         nuevoDescripcionSala = null;
         nuevoCostoSala = null;
@@ -432,7 +449,8 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesSede = false;
         mensajeError = "";
         validacionesUbicacion = false;
-        cargarAsociacionServicios();
+        listaServiciosSalas = gestionarPlantaSalasBO.consultarServiciosSalaActivosRegistradas();
+        serviciosSala = null;
     }
 
     public void almacenaNuevoSalaEnSistema() {
@@ -661,6 +679,33 @@ public class ControllerRegistrarSala implements Serializable {
 
     public void setNuevoBodega(boolean nuevoBodega) {
         this.nuevoBodega = nuevoBodega;
+    }
+
+    public List<ServiciosSala> getListaServiciosSalas() {
+        if (null == listaServiciosSalas) {
+            listaServiciosSalas = gestionarPlantaSalasBO.consultarServiciosSalaActivosRegistradas();
+        }
+        return listaServiciosSalas;
+    }
+
+    public void setListaServiciosSalas(List<ServiciosSala> listaServiciosSalas) {
+        this.listaServiciosSalas = listaServiciosSalas;
+    }
+
+    public ServiciosSala getServiciosSala() {
+        return serviciosSala;
+    }
+
+    public void setServiciosSala(ServiciosSala serviciosSala) {
+        this.serviciosSala = serviciosSala;
+    }
+
+    public boolean isActivarAdicionar() {
+        return activarAdicionar;
+    }
+
+    public void setActivarAdicionar(boolean activarAdicionar) {
+        this.activarAdicionar = activarAdicionar;
     }
 
 }

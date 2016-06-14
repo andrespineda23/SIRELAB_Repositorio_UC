@@ -18,6 +18,7 @@ import com.sirelab.entidades.ServiciosSala;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -398,13 +399,22 @@ public class ControllerReservaSala1 implements Serializable {
                     Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(fechaReserva, String.valueOf(horaReserva.getHora()), parametroSala.getIdsalalaboratorio());
                     if (null != respuestaReserva) {
                         if (respuestaReserva == true) {
-                            AyudaReservaSala.getInstance().setFechaReserva(fechaReserva);
-                            AyudaReservaSala.getInstance().setSalaLaboratorio(parametroSala);
-                            AyudaReservaSala.getInstance().setHoraInicio(String.valueOf(horaReserva.getHora()));
-                            AyudaReservaSala.getInstance().setHoraFin(String.valueOf(horaReservaSalida.getHora()));
-                            AyudaReservaSala.getInstance().setServicioSala(parametroServicio);
-                            paso2 = "reservasala2";
-                            limpiarInformacion();
+                            UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+                            Boolean respuestaValidacion = administrarReservasBO.validarReservasPersonaSegunHoraFecha(usuarioLoginSistema.getIdUsuarioLogin(), usuarioLoginSistema.getNombreTipoUsuario(), String.valueOf(horaReserva.getHora()), fechaReserva);
+                            if (null != respuestaValidacion) {
+                                if (true == respuestaValidacion) {
+                                    AyudaReservaSala.getInstance().setFechaReserva(fechaReserva);
+                                    AyudaReservaSala.getInstance().setSalaLaboratorio(parametroSala);
+                                    AyudaReservaSala.getInstance().setHoraInicio(String.valueOf(horaReserva.getHora()));
+                                    AyudaReservaSala.getInstance().setHoraFin(String.valueOf(horaReservaSalida.getHora()));
+                                    AyudaReservaSala.getInstance().setServicioSala(parametroServicio);
+                                    paso2 = "reservasala2";
+                                    limpiarInformacion();
+                                } else {
+                                    mensajeFormulario = "Recuerde que no puede tener dos reservas asginadas a la misma hora. El usuario ya tiene asociada otra reserva a la misma hora.";
+                                    colorMensaje = "#FF0000";
+                                }
+                            }
                         } else {
                             mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
                             colorMensaje = "#FF0000";
@@ -485,6 +495,8 @@ public class ControllerReservaSala1 implements Serializable {
         listaHora = null;
         listaLaboratorios = null;
         listaSalaLaboratorio = null;
+        listaServicios = null;
+        parametroServicio = null;
         parametroLaboratorio = null;
         parametroSala = null;
         horaIngreso = null;

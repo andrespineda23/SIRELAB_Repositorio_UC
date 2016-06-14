@@ -36,9 +36,7 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
     @Override
     public void crearServiciosSala(ServiciosSala serviciossala) {
         try {
-            BasicConfigurator.configure();
             em.persist(serviciossala);
-            logger.info("Mensaje Info");
             em.flush();
         } catch (Exception e) {
             logger.error("Error crearServiciosSala ServiciosSalaDAO : " + e.toString(),e);

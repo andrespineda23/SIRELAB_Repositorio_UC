@@ -108,6 +108,8 @@ public interface AdministrarReservasBOInterface {
     public List<EquipoElemento> obtenerEquiposBodega(BigInteger bodega);
 
     public void actualizarInformacionReserva(Reserva reserva);
-    
+
     public EstadoReserva obtenerEstadoCancelacionReserva();
+
+    public Boolean validarReservasPersonaSegunHoraFecha(BigInteger usuario, String tipoUsuario, String horaInicio, Date fecha);
 }

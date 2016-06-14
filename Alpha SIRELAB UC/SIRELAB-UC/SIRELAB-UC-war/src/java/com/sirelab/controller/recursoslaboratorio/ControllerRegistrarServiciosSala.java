@@ -169,7 +169,11 @@ public class ControllerRegistrarServiciosSala implements Serializable {
             ServiciosSala servicioNuevo = new ServiciosSala();
             servicioNuevo.setNombreservicio(nuevoNombre);
             servicioNuevo.setCodigoservicio(nuevoCodigo);
-            servicioNuevo.setCostoservicio(Integer.valueOf(nuevoCosto).intValue());
+            if (null != nuevoCosto && !nuevoCosto.isEmpty()) {
+                servicioNuevo.setCostoservicio(Integer.valueOf(nuevoCosto).intValue());
+            } else {
+                servicioNuevo.setCostoservicio(Integer.valueOf("0").intValue());
+            }
             servicioNuevo.setEstado(true);
             gestionarRecursoServiciosSalaBO.crearNuevoServiciosSala(servicioNuevo);
         } catch (Exception e) {

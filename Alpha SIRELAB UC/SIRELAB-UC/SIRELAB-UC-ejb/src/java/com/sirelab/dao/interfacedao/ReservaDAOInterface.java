@@ -37,4 +37,6 @@ public interface ReservaDAOInterface {
     public Integer obtenerCantidadReservasDia(Date fecha);
 
     public Reserva buscarReservaPorNumero(String numero);
+
+    public Reserva buscarUltimaReservaPersonaConEstado(BigInteger persona, String horaInicio, Date fecha);
 }

@@ -46,7 +46,7 @@ public class ControllerReservaSala3 implements Serializable {
     }
 
     public void cargarInformacionReserva(AyudaReservaSala ayudaReserva) {
-        
+
     }
 
     @PostConstruct
@@ -80,6 +80,11 @@ public class ControllerReservaSala3 implements Serializable {
     }
 
     public String cerrarDatosReserva() {
+        valorReserva = 0;
+        reservaSala = null;
+        nombreAsignatura = null;
+        rutaGuia = null;
+        reservaPersona = null;
         valorReserva = 0;
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {

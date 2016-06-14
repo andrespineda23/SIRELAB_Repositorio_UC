@@ -218,25 +218,34 @@ public class ControllerReservaModulo1 implements Serializable {
             if (Utilidades.validarNulo(moduloLaboratorio)) {
                 cantidadModulo = moduloLaboratorio.size();
             }
-            if (cantidadReserva < cantidadModulo) {
-                for (int i = 0; i < cantidadModulo; i++) {
-                    for (int j = 0; j < cantidadReserva; j++) {
-                        if (moduloLaboratorio.get(i).getIdmodulolaboratorio().equals(reservaModuloLaboratorio.get(j).getModulolaboratorio().getIdmodulolaboratorio())) {
-                            moduloLaboratorio.remove(i);
+            UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+            Boolean respuestaValidacion = administrarReservasBO.validarReservasPersonaSegunHoraFecha(usuarioLoginSistema.getIdUsuarioLogin(), usuarioLoginSistema.getNombreTipoUsuario(), String.valueOf(horaReserva.getHora()), fechaReserva);
+            if (null != respuestaValidacion) {
+                if (true == respuestaValidacion) {
+                    if (cantidadReserva < cantidadModulo) {
+                        for (int i = 0; i < cantidadModulo; i++) {
+                            for (int j = 0; j < cantidadReserva; j++) {
+                                if (moduloLaboratorio.get(i).getIdmodulolaboratorio().equals(reservaModuloLaboratorio.get(j).getModulolaboratorio().getIdmodulolaboratorio())) {
+                                    moduloLaboratorio.remove(i);
+                                }
+                            }
                         }
+                        AyudaReservaModulo.getInstance().setFechaReserva(fechaReserva);
+                        AyudaReservaModulo.getInstance().setModuloLaboratorio(moduloLaboratorio.get(0));
+                        AyudaReservaModulo.getInstance().setHoraInicio(String.valueOf(horaReserva.getHoraModuloInicio()));
+                        AyudaReservaModulo.getInstance().setHoraFin(String.valueOf(horaReserva.getHoraModuloFin()));
+                        AyudaReservaModulo.getInstance().setServicioSala(parametroServicio);
+                        paso2 = "reservamodulo3";
+                        registrarReservaEnSistema();
+                        limpiarInformacion();
+                    } else {
+                        mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad. Intente en otro horario";
+                        colorMensaje = "#FF0000";
                     }
+                } else {
+                    mensajeFormulario = "Recuerde que no puede tener dos reservas asginadas a la misma hora. El usuario ya tiene asociada otra reserva a la misma hora.";
+                    colorMensaje = "#FF0000";
                 }
-                AyudaReservaModulo.getInstance().setFechaReserva(fechaReserva);
-                AyudaReservaModulo.getInstance().setModuloLaboratorio(moduloLaboratorio.get(0));
-                AyudaReservaModulo.getInstance().setHoraInicio(String.valueOf(horaReserva.getHoraModuloInicio()));
-                AyudaReservaModulo.getInstance().setHoraFin(String.valueOf(horaReserva.getHoraModuloFin()));
-                AyudaReservaModulo.getInstance().setServicioSala(parametroServicio);
-                paso2 = "reservamodulo3";
-                registrarReservaEnSistema();
-                limpiarInformacion();
-            } else {
-                mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad. Intente en otro horario";
-                colorMensaje = "#FF0000";
             }
 
         } else {
@@ -289,7 +298,7 @@ public class ControllerReservaModulo1 implements Serializable {
             Reserva reservaPersona = administrarReservasBO.registrarNuevaReservaModulo(reservaRegistro, reservaModuloRegistro);
             AyudaReservaModulo.getInstance().setReserva(reservaPersona);
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -340,6 +349,8 @@ public class ControllerReservaModulo1 implements Serializable {
         listaLaboratorios = null;
         listaSalaLaboratorio = null;
         parametroLaboratorio = null;
+        listaServicios = null;
+        parametroServicio = null;
         parametroSala = null;
         activarHora = true;
     }

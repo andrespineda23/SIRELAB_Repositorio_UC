@@ -86,8 +86,12 @@ public class ControllerReservaSala2 implements Serializable {
             activarAsignatura = false;
             activarGuia = true;
             validacionesGuia = false;
+            validacionesAsignatura = false;
             validacionesPlan = true;
             validacionesAsignatura = false;
+            parametroGuiaLaboratorio = null;
+            parametroAsignaturaPorPlanEstudio = null;
+
         } else {
             validacionesPlan = false;
             validacionesGuia = false;
@@ -95,10 +99,8 @@ public class ControllerReservaSala2 implements Serializable {
 
             listaAsignaturaPorPlanEstudio = null;
             listaGuiaLaboratorio = null;
-
-            parametroAsignaturaPorPlanEstudio = null;
             parametroGuiaLaboratorio = null;
-
+            parametroAsignaturaPorPlanEstudio = null;
             activarAsignatura = true;
             activarGuia = true;
         }
@@ -114,11 +116,8 @@ public class ControllerReservaSala2 implements Serializable {
         } else {
             validacionesGuia = false;
             validacionesAsignatura = false;
-
             listaGuiaLaboratorio = null;
-
             parametroGuiaLaboratorio = null;
-
             activarGuia = true;
         }
     }
@@ -172,7 +171,7 @@ public class ControllerReservaSala2 implements Serializable {
                     } else {
                         paginaSiguiente = "reservasala3";
                     }
-                        //} else {
+                    //} else {
                     //    mensajeFormulario = "La reserva que ha solicitado ya ha sido asignada a otro usuario.";
                     //    colorMensaje = "#FF0000";
                     //}
@@ -205,7 +204,6 @@ public class ControllerReservaSala2 implements Serializable {
             PeriodoAcademico periodo = administrarReservasBO.obtenerUltimoPeriodoAcademico();
             reservaRegistro.setPeriodoacademico(periodo);
             Integer numeroReserva = administrarReservasBO.obtenerNumeroReservaDia(AyudaReservaSala.getInstance().getFechaReserva());
-            System.out.println("numeroReserva: " + numeroReserva);
             SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
             String fechaStr = formato.format(AyudaReservaSala.getInstance().getFechaReserva());
             if (null != numeroReserva) {
