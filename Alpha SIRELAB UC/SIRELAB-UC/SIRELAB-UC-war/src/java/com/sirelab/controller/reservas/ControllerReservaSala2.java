@@ -309,11 +309,7 @@ public class ControllerReservaSala2 implements Serializable {
             UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
             if ("DOCENTE".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
                 parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("1"));
-            } else {
-                if ("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                    parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("3"));
-                }
-            }
+            } 
         }
         actualizarTipo();
         return parametroTipoReserva;

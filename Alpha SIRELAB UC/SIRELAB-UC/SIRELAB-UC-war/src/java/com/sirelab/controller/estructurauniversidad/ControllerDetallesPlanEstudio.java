@@ -15,6 +15,7 @@ import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -53,9 +54,13 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     private Logger logger = Logger.getLogger(getClass().getName());
     private String colorMensaje;
     private boolean editarEstado;
-    private List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudio;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudio;
+    private List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudioTabla;
+    private int posicionAsignaturaTabla;
+    private int tamTotalAsignatura;
+    private boolean bloquearPagSigAsignatura, bloquearPagAntAsignatura;
 
     public ControllerDetallesPlanEstudio() {
     }
@@ -106,6 +111,66 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             listaCarreras = gestionarPlanesEstudiosBO.consultarCarrerasPorIDDepartamento(editarDepartamento.getIddepartamento());
         }
         listaAsignaturaPorPlanEstudio = gestionarPlanesEstudiosBO.obtenerAsignaturaPorPlanEstudioPorIdPlan(idPlanEstudios);
+        if (null != listaAsignaturaPorPlanEstudio) {
+            listaAsignaturaPorPlanEstudioTabla = new ArrayList<AsignaturaPorPlanEstudio>();
+            tamTotalAsignatura = listaAsignaturaPorPlanEstudio.size();
+        }
+        posicionAsignaturaTabla = 0;
+        cargarDatosAsignaturaTabla();
+    }
+
+    private void cargarDatosAsignaturaTabla() {
+        if (tamTotalAsignatura < 10) {
+            for (int i = 0; i < tamTotalAsignatura; i++) {
+                listaAsignaturaPorPlanEstudioTabla.add(listaAsignaturaPorPlanEstudio.get(i));
+            }
+            bloquearPagSigAsignatura = true;
+            bloquearPagAntAsignatura = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaAsignaturaPorPlanEstudioTabla.add(listaAsignaturaPorPlanEstudio.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteAsignatura() {
+        listaAsignaturaPorPlanEstudioTabla = new ArrayList<AsignaturaPorPlanEstudio>();
+        posicionAsignaturaTabla = posicionAsignaturaTabla + 10;
+        int diferencia = tamTotalAsignatura - posicionAsignaturaTabla;
+        if (diferencia > 10) {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + 10); i++) {
+                listaAsignaturaPorPlanEstudioTabla.add(listaAsignaturaPorPlanEstudio.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = false;
+        } else {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + diferencia); i++) {
+                listaAsignaturaPorPlanEstudioTabla.add(listaAsignaturaPorPlanEstudio.get(i));
+            }
+            bloquearPagSigAsignatura = true;
+            bloquearPagAntAsignatura = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorAisgnatura() {
+        listaAsignaturaPorPlanEstudioTabla = new ArrayList<AsignaturaPorPlanEstudio>();
+        posicionAsignaturaTabla = posicionAsignaturaTabla - 10;
+        int diferencia = tamTotalAsignatura - posicionAsignaturaTabla;
+        if (diferencia == tamTotalAsignatura) {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + 10); i++) {
+                listaAsignaturaPorPlanEstudioTabla.add(listaAsignaturaPorPlanEstudio.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = true;
+        } else {
+            for (int i = posicionAsignaturaTabla; i < (posicionAsignaturaTabla + 10); i++) {
+                listaAsignaturaPorPlanEstudioTabla.add(listaAsignaturaPorPlanEstudio.get(i));
+            }
+            bloquearPagSigAsignatura = false;
+            bloquearPagAntAsignatura = false;
+        }
     }
 
     public void recibirIDPlanesEstudioDetalles(BigInteger idRegistro) {
@@ -166,17 +231,17 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+ constantes.U_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.U_NOMBRE_PLAN));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+ constantes.U_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_NOMBRE_PLAN));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. "+ constantes.U_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.U_NOMBRE_PLAN));
         }
     }
 
@@ -186,17 +251,17 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+ constantes.U_CODIGO_CARR));
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.U_CODIGO_CARR));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+ constantes.U_CODIGO_CARR));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.U_CODIGO_CARR));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. "+ constantes.U_CODIGO_CARR));
+            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. " + constantes.U_CODIGO_CARR));
         }
     }
 
@@ -301,7 +366,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -314,7 +379,7 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             gestionarPlanesEstudiosBO.modificarInformacionPlanEstudios(planEstudiosDetalles);
             gestionarPlanesEstudiosBO.modificarInformacionAsignaturaPorPlanEstudio(listaAsignaturaPorPlanEstudio);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema : " + e.toString(), e);
         }
     }
 
@@ -445,6 +510,54 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     public void setListaAsignaturaPorPlanEstudio(List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudio) {
         this.listaAsignaturaPorPlanEstudio = listaAsignaturaPorPlanEstudio;
+    }
+
+    public String getMensajeError() {
+        return mensajeError;
+    }
+
+    public void setMensajeError(String mensajeError) {
+        this.mensajeError = mensajeError;
+    }
+
+    public List<AsignaturaPorPlanEstudio> getListaAsignaturaPorPlanEstudioTabla() {
+        return listaAsignaturaPorPlanEstudioTabla;
+    }
+
+    public void setListaAsignaturaPorPlanEstudioTabla(List<AsignaturaPorPlanEstudio> listaAsignaturaPorPlanEstudioTabla) {
+        this.listaAsignaturaPorPlanEstudioTabla = listaAsignaturaPorPlanEstudioTabla;
+    }
+
+    public int getPosicionAsignaturaTabla() {
+        return posicionAsignaturaTabla;
+    }
+
+    public void setPosicionAsignaturaTabla(int posicionAsignaturaTabla) {
+        this.posicionAsignaturaTabla = posicionAsignaturaTabla;
+    }
+
+    public int getTamTotalAsignatura() {
+        return tamTotalAsignatura;
+    }
+
+    public void setTamTotalAsignatura(int tamTotalAsignatura) {
+        this.tamTotalAsignatura = tamTotalAsignatura;
+    }
+
+    public boolean isBloquearPagSigAsignatura() {
+        return bloquearPagSigAsignatura;
+    }
+
+    public void setBloquearPagSigAsignatura(boolean bloquearPagSigAsignatura) {
+        this.bloquearPagSigAsignatura = bloquearPagSigAsignatura;
+    }
+
+    public boolean isBloquearPagAntAsignatura() {
+        return bloquearPagAntAsignatura;
+    }
+
+    public void setBloquearPagAntAsignatura(boolean bloquearPagAntAsignatura) {
+        this.bloquearPagAntAsignatura = bloquearPagAntAsignatura;
     }
 
 }

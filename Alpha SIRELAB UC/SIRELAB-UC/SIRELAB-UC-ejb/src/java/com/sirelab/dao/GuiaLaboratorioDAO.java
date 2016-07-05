@@ -46,6 +46,7 @@ public class GuiaLaboratorioDAO implements GuiaLaboratorioDAOInterface {
     public void editarGuiaLaboratorio(GuiaLaboratorio guia) {
         try {
             em.merge(guia);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarGuiaLaboratorio GuiaLaboratorioDAO : " + e.toString(), e);
         }

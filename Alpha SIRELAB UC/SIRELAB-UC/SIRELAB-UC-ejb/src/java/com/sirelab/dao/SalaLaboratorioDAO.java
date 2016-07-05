@@ -41,6 +41,7 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
     public void editarSalaLaboratorio(SalaLaboratorio salalaboratorio) {
         try {
             em.merge(salalaboratorio);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarSalaLaboratorio SalaLaboratorioDAO : " + e.toString(), e);
         }

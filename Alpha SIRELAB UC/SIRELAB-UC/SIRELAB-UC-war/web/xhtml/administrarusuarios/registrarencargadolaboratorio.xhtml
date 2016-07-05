@@ -86,14 +86,14 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número de Extension"/></strong>
-                                            <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono1}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono1" >
+                                            <h:inputText maxlength="50"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono1}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono1" >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDatosNumericosEncargadoLaboratorio(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                             </h:inputText>
                                             <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"></h:message></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número Celular"/></strong>
-                                            <h:inputText maxlength="20"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono2}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono2" >
+                                            <h:inputText maxlength="50"  value="#{controllerRegistrarEncargadoLaboratorio.inputTelefono2}" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}" class="form-control" id="inputTelefono2" >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarEncargadoLaboratorio.validarDatosNumericosEncargadoLaboratorio(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
                                             </h:inputText>
                                             <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"></h:message></h6>
@@ -150,16 +150,13 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Tipo Perfil*"/></strong>
-                                        <h:selectOneMenu value="#{controllerRegistrarEncargadoLaboratorio.inputPerfil}"
-                                                         class="form-control" disabled="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}"
-                                                         id="inputPerfil">
-                                            <f:selectItem itemLabel="Seleccione Tipo Perfil" itemValue="null" />
-                                            <f:selectItems value="#{controllerRegistrarEncargadoLaboratorio.listaTiposPerfiles}" var="perfil"
-                                                           itemLabel="#{perfil.informacionPerfil}" itemValue="#{perfil}"/>
-                                            <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerRegistrarEncargadoLaboratorio.actualizarTipoPerfil()}" execute="inputPerfil" render="msnPerfil"/>
+                                        <h:selectOneMenu readonly="#{controllerRegistrarEncargadoLaboratorio.activarCasillas}"
+                                                         value="#{controllerRegistrarEncargadoLaboratorio.tipoPerfilConsulta}"
+                                                         class="form-control"
+                                                         id="perfilEncargadoLaboratorio">
+                                            <f:selectItem itemLabel="USUARIO DE ADMINISTRACIÓN TOTAL DE INFORMACIÓN" itemValue="false" />
+                                            <f:selectItem itemLabel="USUARIO DE SOLO CONSULTA" itemValue="true" />
                                         </h:selectOneMenu>
-                                        <h6><h:message id="msnPerfil" for="inputPerfil" style="color: red"></h:message></h6>
                                     </div>
                                 </fieldset>
                                 <hr class="intro-divider"/>

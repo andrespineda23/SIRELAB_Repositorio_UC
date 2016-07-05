@@ -47,6 +47,7 @@ public class ServiciosSalaDAO implements ServiciosSalaDAOInterface{
     public void editarServiciosSala(ServiciosSala serviciossala) {
         try {
             em.merge(serviciossala);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarServiciosSala ServiciosSalaDAO : " + e.toString(),e);
         }

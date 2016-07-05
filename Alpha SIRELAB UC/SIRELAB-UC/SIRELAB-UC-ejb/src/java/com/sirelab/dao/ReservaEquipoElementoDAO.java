@@ -44,6 +44,7 @@ public class ReservaEquipoElementoDAO implements ReservaEquipoElementoDAOInterfa
     public void editarReservaEquipoElemento(ReservaEquipoElemento reserva) {
         try {
             em.merge(reserva);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarReservaEquipoElemento ReservaEquipoElementoDAO : " + e.toString(),e);
         }

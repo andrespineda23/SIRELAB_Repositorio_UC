@@ -43,6 +43,7 @@ public class EdificioDAO implements EdificioDAOInterface {
         try {
             em.clear();
             em.merge(edificio);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarEdificio EdificioDAO : " + e.toString(),e);
         }

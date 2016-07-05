@@ -5,7 +5,6 @@
  */
 package com.sirelab.dao.interfacedao;
 
-import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Estudiante;
 import java.math.BigInteger;
 import java.util.List;

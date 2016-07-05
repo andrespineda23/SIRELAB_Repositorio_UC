@@ -50,19 +50,6 @@ public class ControllerReservaModulo3 implements Serializable {
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionUsuario");
-        if (("ENTIDADEXTERNA".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) || ("PERSONACONTACTO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario()))) {
-            List<ReservaEquipoElemento> lista = administrarReservasBO.obtenerReservasEquipoPorIdReserva(reservaPersona.getIdreserva());
-            if (null != lista) {
-                Integer costo = 0;
-                for (int i = 0; i < lista.size(); i++) {
-                    costo = costo + (lista.get(i).getEquipoelemento().getCostoalquiler() * lista.get(i).getEquipoelemento().getCantidadequipo());
-                }
-                valorReserva = valorReserva + costo;
-            }
-            valorReserva = valorReserva + reservaModulo.getModuloLaboratorio().getCostoalquiler().intValue();
-            reservaPersona.setValorreserva(valorReserva);
-            administrarReservasBO.actualizarValorReserva(reservaPersona);
-        }
     }
 
     public String cerrarDatosReserva() {

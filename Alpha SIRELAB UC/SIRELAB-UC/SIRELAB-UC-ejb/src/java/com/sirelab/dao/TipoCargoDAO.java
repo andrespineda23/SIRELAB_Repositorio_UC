@@ -44,6 +44,7 @@ public class TipoCargoDAO implements TipoCargoDAOInterface {
     public void editarTipoCargo(TipoCargo tipoCargo) {
         try {
             em.merge(tipoCargo);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarTipoCargo TipoCargoDAO : " + e.toString(),e);
         }

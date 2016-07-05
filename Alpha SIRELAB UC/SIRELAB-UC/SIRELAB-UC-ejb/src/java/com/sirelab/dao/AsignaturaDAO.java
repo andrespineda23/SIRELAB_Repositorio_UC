@@ -44,6 +44,7 @@ public class AsignaturaDAO implements AsignaturaDAOInterface {
         try {
             em.clear();
             em.merge(asignatura);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarAsignatura AsignaturaDAO : " + e.toString(),e);
         }

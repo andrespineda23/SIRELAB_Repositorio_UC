@@ -44,6 +44,7 @@ public class EstadoEquipoDAO implements EstadoEquipoDAOInterface {
     public void editarEstadoEquipo(EstadoEquipo estadoEquipo) {
         try {
             em.merge(estadoEquipo);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarEstadoEquipo EstadoEquipoDAO : " + e.toString(),e);
         }

@@ -46,6 +46,7 @@ public class InsumoDAO implements InsumoDAOInterface {
     public void editarInsumo(Insumo insumo) {
         try {
             em.merge(insumo);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarInsumo InsumoDAO : " + e.toString(),e);
         }

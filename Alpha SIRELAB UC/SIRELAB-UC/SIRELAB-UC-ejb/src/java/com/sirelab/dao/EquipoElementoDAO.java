@@ -47,6 +47,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
         try {
             em.merge(equipoelemento);
             em.flush();
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarEquipoElemento EquipoElementoDAO : " + e.toString(),e);
         }

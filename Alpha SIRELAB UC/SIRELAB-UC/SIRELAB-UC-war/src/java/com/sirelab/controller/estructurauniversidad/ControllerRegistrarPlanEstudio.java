@@ -47,6 +47,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     private Departamento nuevoDepartamento;
     private Carrera nuevoCarrera;
     private List<Asignatura> listaAsignaturas;
+    private Asignatura asignatura;
     private List<AsociacionPlanAsignatura> listaAsociacionPlanAsignatura;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesFacultad, validacionesDepartamento, validacionesCarrera;
@@ -58,12 +59,14 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     private boolean activarAceptar;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarAdicionar;
 
     public ControllerRegistrarPlanEstudio() {
     }
 
     @PostConstruct
     public void init() {
+        activarAdicionar = true;
         constantes = new MensajesConstantes();
         activarAceptar = false;
         activarNuevoCarrera = true;
@@ -84,20 +87,34 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         activarCasillas = false;
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
-        cargarAsociacionPlanAsignatura();
     }
 
-    private void cargarAsociacionPlanAsignatura() {
-        listaAsignaturas = gestionarPlanesEstudiosBO.obtenerAsignaturasRegistradas();
-        if (null != listaAsignaturas) {
-            listaAsociacionPlanAsignatura = new ArrayList<AsociacionPlanAsignatura>();
-            for (int i = 0; i < listaAsignaturas.size(); i++) {
-                AsociacionPlanAsignatura nuevo = new AsociacionPlanAsignatura();
-                nuevo.setActivo(false);
-                nuevo.setAsignatura(listaAsignaturas.get(i));
-                listaAsociacionPlanAsignatura.add(nuevo);
-            }
+    public void validarAsignatura() {
+        if (null != asignatura) {
+            activarAdicionar = false;
+        } else {
+            activarAdicionar = true;
         }
+    }
+
+    public void adicionarAsignatura() {
+        AsociacionPlanAsignatura asociacion = new AsociacionPlanAsignatura();
+        asociacion.setAsignatura(asignatura);
+        asociacion.setActivo(true);
+        if (null == listaAsociacionPlanAsignatura) {
+            listaAsociacionPlanAsignatura = new ArrayList<AsociacionPlanAsignatura>();
+        }
+        listaAsociacionPlanAsignatura.add(asociacion);
+        listaAsignaturas.remove(asignatura);
+        asignatura = null;
+        validarAsignatura();
+    }
+
+    public void quitarAsignaturaSeleccionado(AsociacionPlanAsignatura item) {
+        listaAsociacionPlanAsignatura.remove(item);
+        listaAsignaturas.add(item.getAsignatura());
+        asignatura = null;
+        validarAsignatura();
     }
 
     public void actualizarFacultad() {
@@ -152,37 +169,37 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.U_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.U_NOMBRE_PLAN));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_NOMBRE_PLAN));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.U_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.U_NOMBRE_PLAN));
         }
     }
 
     public void validarCodigoPlanEstudio() {
         if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty()) && (nuevoCodigo.trim().length() > 0)) {
             int tam = nuevoCodigo.length();
-            if (tam >= 6) {
+            if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.U_CODIGO_CARR));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.U_CODIGO_CARR));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.U_CODIGO_CARR));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.U_CODIGO_CARR));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.U_CODIGO_CARR));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio. " + constantes.U_CODIGO_CARR));
         }
     }
 
@@ -254,7 +271,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -268,7 +285,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             List<Asignatura> lista = cargarAsignaturas();
             gestionarPlanesEstudiosBO.crearNuevoPlanEstudio(planNuevo, lista);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarPlanEstudio almacenarNuevoPlanEstudioEnSistema : " + e.toString(), e);
         }
     }
 
@@ -293,6 +310,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         nuevoCodigo = null;
         nuevoDepartamento = null;
         nuevoFacultad = null;
+        activarAdicionar = true;
         nuevoNombre = null;
         validacionesCarrera = false;
         validacionesCodigo = false;
@@ -300,7 +318,6 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "";
-        cargarAsociacionPlanAsignatura();
     }
 
     public void cancelarRegistroPlanEstudio() {
@@ -315,12 +332,13 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         nuevoNombre = null;
         validacionesCarrera = false;
         validacionesCodigo = false;
-        mensajeError ="";
+        mensajeError = "";
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "N/A";
         activarAceptar = false;
+        activarAdicionar = true;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -464,6 +482,9 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
     }
 
     public List<Asignatura> getListaAsignaturas() {
+        if (null == listaAsignaturas) {
+            listaAsignaturas = gestionarPlanesEstudiosBO.obtenerAsignaturasRegistradas();
+        }
         return listaAsignaturas;
     }
 
@@ -477,6 +498,30 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
 
     public void setListaAsociacionPlanAsignatura(List<AsociacionPlanAsignatura> listaAsociacionPlanAsignatura) {
         this.listaAsociacionPlanAsignatura = listaAsociacionPlanAsignatura;
+    }
+
+    public Asignatura getAsignatura() {
+        return asignatura;
+    }
+
+    public void setAsignatura(Asignatura asignatura) {
+        this.asignatura = asignatura;
+    }
+
+    public String getMensajeError() {
+        return mensajeError;
+    }
+
+    public void setMensajeError(String mensajeError) {
+        this.mensajeError = mensajeError;
+    }
+
+    public boolean isActivarAdicionar() {
+        return activarAdicionar;
+    }
+
+    public void setActivarAdicionar(boolean activarAdicionar) {
+        this.activarAdicionar = activarAdicionar;
     }
 
 }

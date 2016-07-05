@@ -76,14 +76,14 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número Fijo"/></strong>
-                                            <h:inputText maxlength="20"  value="#{controllerRegistrarEstudiante.inputTelefono1}" disabled="#{controllerRegistrarEstudiante.activarCasillas}" class="form-control" id="inputTelefono1"  >
+                                            <h:inputText maxlength="50"  value="#{controllerRegistrarEstudiante.inputTelefono1}" disabled="#{controllerRegistrarEstudiante.activarCasillas}" class="form-control" id="inputTelefono1"  >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarDatosNumericosEstudiante(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1"/>
                                             </h:inputText>
                                             <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número Celular"/></strong>
-                                            <h:inputText maxlength="20"  value="#{controllerRegistrarEstudiante.inputTelefono2}" disabled="#{controllerRegistrarEstudiante.activarCasillas}" class="form-control" id="inputTelefono2" >
+                                            <h:inputText maxlength="50"  value="#{controllerRegistrarEstudiante.inputTelefono2}" disabled="#{controllerRegistrarEstudiante.activarCasillas}" class="form-control" id="inputTelefono2" >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarEstudiante.validarDatosNumericosEstudiante(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2"/>
                                             </h:inputText>
                                             <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"/></h6>
@@ -174,7 +174,7 @@ and open the template in the editor.
                                 </h:commandButton>
                                 <span></span>
                                 <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="index" actionListener="#{controllerRegistrarEstudiante.cancelarRegistroEstudiante()}" immediate="true">
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="administrarestudiantes" actionListener="#{controllerRegistrarEstudiante.cancelarRegistroEstudiante()}" immediate="true">
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                                 <span></span>

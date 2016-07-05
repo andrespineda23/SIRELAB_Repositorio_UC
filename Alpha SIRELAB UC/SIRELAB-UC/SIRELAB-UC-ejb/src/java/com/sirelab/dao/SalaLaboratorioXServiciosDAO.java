@@ -46,6 +46,7 @@ public class SalaLaboratorioXServiciosDAO implements SalaLaboratorioxServiciosDA
     public void editarSalaLaboratorioxServicios(SalaLaboratorioxServicios salalaboratorioxarea) {
         try {
             em.merge(salalaboratorioxarea);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarSalaLaboratorioxServicios SalaLaboratorioxServiciosDAO : " + e.toString(),e);
         }

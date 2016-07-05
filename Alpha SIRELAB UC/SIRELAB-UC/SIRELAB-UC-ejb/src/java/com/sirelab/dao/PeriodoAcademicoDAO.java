@@ -37,7 +37,7 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
             em.persist(periodo);
             em.flush();
         } catch (Exception e) {
-            logger.error("Error crearPeriodoAcademico PeriodoAcademicoDAO : " + e.toString(),e);
+            logger.error("Error crearPeriodoAcademico PeriodoAcademicoDAO : " + e.toString(), e);
         }
     }
 
@@ -45,8 +45,9 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
     public void editarPeriodoAcademico(PeriodoAcademico periodo) {
         try {
             em.merge(periodo);
+            em.flush();
         } catch (Exception e) {
-            logger.error("Error editarPeriodoAcademico PeriodoAcademicoDAO : " + e.toString(),e);
+            logger.error("Error editarPeriodoAcademico PeriodoAcademicoDAO : " + e.toString(), e);
         }
     }
 
@@ -55,7 +56,7 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
         try {
             em.remove(em.merge(periodo));
         } catch (Exception e) {
-            logger.error("Error eliminarPeriodoAcademico PeriodoAcademicoDAO : " + e.toString(),e);
+            logger.error("Error eliminarPeriodoAcademico PeriodoAcademicoDAO : " + e.toString(), e);
         }
     }
 
@@ -68,7 +69,7 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
             List<PeriodoAcademico> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarPeriodosAcademicos PeriodoAcademicoDAO : " + e.toString(),e);
+            logger.error("Error consultarPeriodosAcademicos PeriodoAcademicoDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -83,7 +84,7 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
             PeriodoAcademico registro = (PeriodoAcademico) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPeriodoAcademicoPorID PeriodoAcademicoDAO : " + e.toString(),e);
+            logger.error("Error buscarPeriodoAcademicoPorID PeriodoAcademicoDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -99,17 +100,17 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
             PeriodoAcademico registro = (PeriodoAcademico) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPeriodoAcademicoPorID PeriodoAcademicoDAO : " + e.toString(),e);
+            logger.error("Error buscarPeriodoAcademicoPorID PeriodoAcademicoDAO : " + e.toString(), e);
             return null;
         }
     }
 
-    @Override 
+    @Override
     public Integer obtenerCantidadPeriodosAcademicosActivos() {
         try {
             em.clear();
             Date hoy = new Date();
-            Query query = em.createQuery("SELECT p FROM PeriodoAcademico p WHERE p.fechafinal >=:hoy AND p.fechainicial <=:hoy");
+            Query query = em.createQuery("SELECT p FROM PeriodoAcademico p WHERE p.estado = true");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("hoy", hoy);
             List<PeriodoAcademico> lista = query.getResultList();
@@ -119,7 +120,7 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
                 return 0;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerCantidadPeriodosAcademicosActivos PeriodoAcademicoDAO : " + e.toString(),e);
+            logger.error("Error obtenerCantidadPeriodosAcademicosActivos PeriodoAcademicoDAO : " + e.toString(), e);
             return null;
         }
     }

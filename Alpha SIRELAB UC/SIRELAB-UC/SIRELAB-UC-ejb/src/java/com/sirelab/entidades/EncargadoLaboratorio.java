@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,17 +30,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EncargadoLaboratorio.findAll", query = "SELECT e FROM EncargadoLaboratorio e"),
-    @NamedQuery(name = "EncargadoLaboratorio.findByIdencargadolaboratorio", query = "SELECT e FROM EncargadoLaboratorio e WHERE e.idencargadolaboratorio = :idencargadolaboratorio")})
+    @NamedQuery(name = "EncargadoLaboratorio.findByIdencargadolaboratorio", query = "SELECT e FROM EncargadoLaboratorio e WHERE e.idencargadolaboratorio = :idencargadolaboratorio"),
+    @NamedQuery(name = "EncargadoLaboratorio.findByPerfilconsulta", query = "SELECT e FROM EncargadoLaboratorio e WHERE e.perfilconsulta = :perfilconsulta")})
 public class EncargadoLaboratorio implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idencargadolaboratorio")
     private BigInteger idencargadolaboratorio;
-    @JoinColumn(name = "tipoperfil", referencedColumnName = "idtipoperfil")
-    @ManyToOne(optional = false)
-    private TipoPerfil tipoperfil;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "perfilconsulta")
+    private boolean perfilconsulta;
     @JoinColumn(name = "persona", referencedColumnName = "idpersona")
     @ManyToOne(optional = false)
     private Persona persona;
@@ -54,6 +58,11 @@ public class EncargadoLaboratorio implements Serializable {
         this.idencargadolaboratorio = idencargadolaboratorio;
     }
 
+    public EncargadoLaboratorio(BigInteger idencargadolaboratorio, boolean perfilconsulta) {
+        this.idencargadolaboratorio = idencargadolaboratorio;
+        this.perfilconsulta = perfilconsulta;
+    }
+
     public BigInteger getIdencargadolaboratorio() {
         return idencargadolaboratorio;
     }
@@ -62,12 +71,12 @@ public class EncargadoLaboratorio implements Serializable {
         this.idencargadolaboratorio = idencargadolaboratorio;
     }
 
-    public TipoPerfil getTipoperfil() {
-        return tipoperfil;
+    public boolean getPerfilconsulta() {
+        return perfilconsulta;
     }
 
-    public void setTipoperfil(TipoPerfil tipoperfil) {
-        this.tipoperfil = tipoperfil;
+    public void setPerfilconsulta(boolean perfilconsulta) {
+        this.perfilconsulta = perfilconsulta;
     }
 
     public Persona getPersona() {
@@ -110,5 +119,5 @@ public class EncargadoLaboratorio implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.EncargadoLaboratorio[ idencargadolaboratorio=" + idencargadolaboratorio + " ]";
     }
-    
+
 }

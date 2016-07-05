@@ -9,6 +9,7 @@ import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresBOInterface;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Usuario;
+import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -34,10 +35,10 @@ public class ControllerRegistrarAdministrador implements Serializable {
     //
     private String nuevoNombre, nuevoApellido, nuevoDocumento;
     private String nuevoCorreo, nuevoTelefono1, nuevoTelefono2;
-    private String nuevoDireccion, nuevoContrasenia, nuevoContraseniaConfirma, nuevoUsuario;
+    private String nuevoDireccion;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo;
-    private boolean validacionesID, validacionesPassw, validacionesTel1, validacionesTel2;
-    private boolean validacionesDireccion, validacionesPassw2, validacionesUsuario;
+    private boolean validacionesID, validacionesTel1, validacionesTel2;
+    private boolean validacionesDireccion;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean activarCasillas;
@@ -58,27 +59,21 @@ public class ControllerRegistrarAdministrador implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         mensajeFormulario = "N/A";
-        validacionesUsuario = false;
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
         mensajeError = "";
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         nuevoApellido = null;
-        nuevoContrasenia = null;
-        nuevoContraseniaConfirma = null;
         nuevoCorreo = null;
         nuevoDireccion = null;
         nuevoDocumento = null;
         nuevoNombre = null;
         nuevoTelefono1 = null;
         nuevoTelefono2 = null;
-        nuevoUsuario = null;
         BasicConfigurator.configure();
     }
 
@@ -88,17 +83,17 @@ public class ControllerRegistrarAdministrador implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(nuevoNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.USUARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.USUARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.USUARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. "+constantes.USUARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio. " + constantes.USUARIO_NOMBRE));
         }
 
     }
@@ -109,17 +104,17 @@ public class ControllerRegistrarAdministrador implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(nuevoApellido)) {
                     validacionesApellido = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido ingresado es incorrecto. "+constantes.USUARIO_APELLIDO));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido ingresado es incorrecto. " + constantes.USUARIO_APELLIDO));
                 } else {
                     validacionesApellido = true;
                 }
             } else {
                 validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_APELLIDO));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.USUARIO_APELLIDO));
             }
         } else {
             validacionesApellido = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido es obligatorio. "+constantes.USUARIO_APELLIDO));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido es obligatorio. " + constantes.USUARIO_APELLIDO));
         }
     }
 
@@ -138,15 +133,15 @@ public class ControllerRegistrarAdministrador implements Serializable {
                     }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo se encuentra incorrecto. " + constantes.USUARIO_CORREO));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.USUARIO_CORREO));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.USUARIO_CORREO));
             }
         } else {
             validacionesCorreo = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo es obligatorio. "+constantes.USUARIO_CORREO));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo es obligatorio. " + constantes.USUARIO_CORREO));
         }
     }
 
@@ -164,15 +159,15 @@ public class ControllerRegistrarAdministrador implements Serializable {
                     }
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El numero identificación se encuentra incorrecto. "+constantes.USUARIO_ID));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El numero identificación se encuentra incorrecto. " + constantes.USUARIO_ID));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_ID));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El tamaño minimo permitido es 8 caracteres. " + constantes.USUARIO_ID));
             }
         } else {
             validacionesID = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El numero identificación es obligatorio. "+constantes.USUARIO_ID));
+            FacesContext.getCurrentInstance().addMessage("form:nuevoDocumento", new FacesMessage("El numero identificación es obligatorio. " + constantes.USUARIO_ID));
         }
     }
 
@@ -183,13 +178,13 @@ public class ControllerRegistrarAdministrador implements Serializable {
                 if (tam == 7) {
                     if ((Utilidades.isNumber(nuevoTelefono1)) == false) {
                         validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELFIJO));
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
                     } else {
                         validacionesTel1 = true;
                     }
                 } else {
                     validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELFIJO));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
                 }
             }
         } else {
@@ -198,13 +193,13 @@ public class ControllerRegistrarAdministrador implements Serializable {
                 if (tam == 10) {
                     if ((Utilidades.isNumber(nuevoTelefono2)) == false) {
                         validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
                     } else {
                         validacionesTel2 = true;
                     }
                 } else {
                     validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
                 }
             }
         }
@@ -217,64 +212,13 @@ public class ControllerRegistrarAdministrador implements Serializable {
                 if (Utilidades.validarDirecciones(nuevoDireccion)) {
                     validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta. "+constantes.USUARIO_DIRECCION));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta. " + constantes.USUARIO_DIRECCION));
                     validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. " + constantes.USUARIO_DIRECCION));
                 validacionesDireccion = false;
             }
-        }
-    }
-
-    public void validarContraseniaAdministrador() {
-        if ((Utilidades.validarNulo(nuevoContrasenia)) && (!nuevoContrasenia.isEmpty()) && (nuevoContrasenia.trim().length() > 0)) {
-            int tam = nuevoContrasenia.length();
-            if (tam >= 6) {
-                validacionesPassw = true;
-            } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoContrasenia", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
-                validacionesPassw = false;
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:nuevoContrasenia", new FacesMessage("La contraseña es obligatoria."));
-            validacionesPassw = false;
-        }
-    }
-
-    public void validarContraseniaConfirmaAdministrador() {
-        if ((Utilidades.validarNulo(nuevoContrasenia)) && (Utilidades.validarNulo(nuevoContraseniaConfirma))
-                && (!nuevoContrasenia.isEmpty()) && (!nuevoContraseniaConfirma.isEmpty()) && (nuevoContraseniaConfirma.trim().length() > 0)) {
-            if (nuevoContrasenia.equals(nuevoContraseniaConfirma)) {
-                validacionesPassw2 = true;
-            } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoContraseniaConfirma", new FacesMessage("Las contraseñas ingresadas no concuerdan."));
-                validacionesPassw2 = false;
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:nuevoContraseniaConfirma", new FacesMessage("Las contraseñas son obligatorias."));
-            validacionesPassw2 = false;
-        }
-    }
-
-    public void validarUsuarioAdministrador() {
-        if (Utilidades.validarNulo(nuevoUsuario) && (!nuevoUsuario.isEmpty()) && (nuevoUsuario.trim().length() > 0)) {
-            int tam = nuevoUsuario.length();
-            if (tam >= 4) {
-                Persona registro = administrarAdministradoresBO.obtenerAdministradorPorUsuario(nuevoUsuario);
-                if (null == registro) {
-                    validacionesUsuario = true;
-                } else {
-                    validacionesUsuario = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoUsuario", new FacesMessage("El usuario ya se encuentra registrado."));
-                }
-            } else {
-                validacionesUsuario = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoUsuario", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
-            }
-        } else {
-            validacionesUsuario = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoUsuario", new FacesMessage("El usuario es obligatorio."));
         }
     }
 
@@ -301,24 +245,12 @@ public class ControllerRegistrarAdministrador implements Serializable {
             mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
-        if (validacionesPassw == false) {
-            mensajeError = mensajeError + " - Contraseña - ";
-            retorno = false;
-        }
-        if (validacionesPassw2 == false) {
-            mensajeError = mensajeError + " - Contraseña Respaldo - ";
-            retorno = false;
-        }
         if (validacionesTel1 == false) {
             mensajeError = mensajeError + " - Tel. FIjo - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
             mensajeError = mensajeError + " - Tel. Celular - ";
-            retorno = false;
-        }
-        if (validacionesUsuario == false) {
-            mensajeError = mensajeError + " - Usuario - ";
             retorno = false;
         }
         return retorno;
@@ -339,7 +271,7 @@ public class ControllerRegistrarAdministrador implements Serializable {
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -348,8 +280,9 @@ public class ControllerRegistrarAdministrador implements Serializable {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
             usuarioNuevo.setNumeroconexiones(1);
-            usuarioNuevo.setNombreusuario(nuevoUsuario);
-            usuarioNuevo.setPasswordusuario(nuevoContrasenia);
+            usuarioNuevo.setNombreusuario(nuevoCorreo);
+            EncriptarContrasenia obj = new EncriptarContrasenia();
+            usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(nuevoDocumento));
             Persona personaNueva = new Persona();
             personaNueva.setNombrespersona(nuevoNombre);
             personaNueva.setApellidospersona(nuevoApellido);
@@ -361,25 +294,20 @@ public class ControllerRegistrarAdministrador implements Serializable {
             administrarAdministradoresBO.almacenarNuevaPersonaEnSistema(usuarioNuevo, personaNueva);
             cancelarRegistroAdministrador();
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerRegistrarAdministrador almacenarNuevoAdministradorEnSistema : " + e.toString(), e);
         }
     }
 
     public void limpiarFormulario() {
         validacionesNombre = false;
-        validacionesUsuario = false;
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         mensajeFormulario = "";
         nuevoApellido = null;
-        nuevoContrasenia = null;
-        nuevoContraseniaConfirma = null;
         nuevoCorreo = null;
         nuevoDireccion = null;
         nuevoDocumento = null;
@@ -387,7 +315,6 @@ public class ControllerRegistrarAdministrador implements Serializable {
         nuevoTelefono1 = null;
         nuevoTelefono2 = null;
         mensajeError = "";
-        nuevoUsuario = null;
     }
 
     /**
@@ -400,25 +327,19 @@ public class ControllerRegistrarAdministrador implements Serializable {
         activarCasillas = false;
         colorMensaje = "black";
         validacionesNombre = false;
-        validacionesUsuario = false;
         validacionesApellido = false;
         validacionesCorreo = false;
         validacionesID = false;
-        validacionesPassw = false;
         validacionesTel1 = true;
         validacionesTel2 = true;
         validacionesDireccion = true;
-        validacionesPassw2 = false;
         nuevoApellido = null;
-        nuevoContrasenia = null;
-        nuevoContraseniaConfirma = null;
         nuevoCorreo = null;
         nuevoDireccion = null;
         nuevoDocumento = null;
         nuevoNombre = null;
         nuevoTelefono1 = null;
         nuevoTelefono2 = null;
-        nuevoUsuario = null;
         mensajeError = "";
     }
 
@@ -487,30 +408,6 @@ public class ControllerRegistrarAdministrador implements Serializable {
 
     public void setNuevoDireccion(String nuevoDireccion) {
         this.nuevoDireccion = nuevoDireccion;
-    }
-
-    public String getNuevoContrasenia() {
-        return nuevoContrasenia;
-    }
-
-    public void setNuevoContrasenia(String nuevoContrasenia) {
-        this.nuevoContrasenia = nuevoContrasenia;
-    }
-
-    public String getNuevoContraseniaConfirma() {
-        return nuevoContraseniaConfirma;
-    }
-
-    public void setNuevoContraseniaConfirma(String nuevoContraseniaConfirma) {
-        this.nuevoContraseniaConfirma = nuevoContraseniaConfirma;
-    }
-
-    public String getNuevoUsuario() {
-        return nuevoUsuario;
-    }
-
-    public void setNuevoUsuario(String nuevoUsuario) {
-        this.nuevoUsuario = nuevoUsuario;
     }
 
     public String getMensajeFormulario() {

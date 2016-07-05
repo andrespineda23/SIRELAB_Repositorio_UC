@@ -50,6 +50,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     public void editarReservaModuloLaboratorio(ReservaModuloLaboratorio reserva) {
         try {
             em.merge(reserva);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarReservaModuloLaboratorio ReservaModuloLaboratorioDAO : " + e.toString(), e);
         }

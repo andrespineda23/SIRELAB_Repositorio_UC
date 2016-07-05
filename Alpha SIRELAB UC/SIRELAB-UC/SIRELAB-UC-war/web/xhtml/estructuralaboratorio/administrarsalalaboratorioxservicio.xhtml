@@ -171,6 +171,12 @@ and open the template in the editor.
                                                         </f:facet>
                                                         <h:outputText value="#{item.strEstado}"/>
                                                     </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Detalles"/>
+                                                        </f:facet>
+                                                        <h:commandLink value="Ver" action="#{controllerAdministrarSalaLaboratorioXServicio.paginaDetalles()}" actionListener="#{controllerDetallesSalaLaboratorioXServicio.recibirIDSalaLaboratorioxServiciosDetalles(item.idsalalaboratorioxservicios)}"/>
+                                                    </h:column>
                                                     <f:facet name="footer">
                                                         <nav>
                                                             <ul class="pager">
@@ -196,7 +202,10 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Nuevo Registro" class="btn btn-success" action="registrarsalalaboratorioxservicio" actionListener="#{controllerAdministrarSalaLaboratorioXServicio.limpiarProcesoBusqueda()}"/>
+                            </div>
+                            <div class="col-md-10"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atras" action="#{controllerAdministrarSalaLaboratorioXServicio.limpiarProcesoBusqueda()}"  class="btn btn-primary"/>
                             </div>

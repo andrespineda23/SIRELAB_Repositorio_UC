@@ -265,33 +265,11 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
     public void validarDatosNumericosAdministradorEdificio(int tipoTel) {
         if (tipoTel == 1) {
             if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty()) && (inputTelefono1.trim().length() > 0)) {
-                int tam = inputTelefono1.length();
-                if (tam == 7) {
-                    if ((Utilidades.isNumber(inputTelefono1)) == false) {
-                        validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
-                    } else {
-                        validacionesTel1 = true;
-                    }
-                } else {
-                    validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
-                }
+                validacionesTel1 = true;
             }
         } else {
             if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty()) && (inputTelefono2.trim().length() > 0)) {
-                int tam = inputTelefono2.length();
-                if (tam == 10) {
-                    if ((Utilidades.isNumber(inputTelefono2)) == false) {
-                        validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
-                    } else {
-                        validacionesTel2 = true;
-                    }
-                } else {
-                    validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
-                }
+                validacionesTel2 = true;
             }
         }
     }
@@ -461,7 +439,7 @@ public class ControllerRegistrarAdministradorEdificio implements Serializable {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
             usuarioNuevo.setNumeroconexiones(0);
-            usuarioNuevo.setNombreusuario(inputID);
+            usuarioNuevo.setNombreusuario(inputEmail);
             EncriptarContrasenia obj = new EncriptarContrasenia();
             usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
             Persona personaNueva = new Persona();

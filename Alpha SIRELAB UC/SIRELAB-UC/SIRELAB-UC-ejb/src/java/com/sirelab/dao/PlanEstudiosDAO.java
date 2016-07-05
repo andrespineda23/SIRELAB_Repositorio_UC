@@ -41,6 +41,7 @@ public class PlanEstudiosDAO implements PlanEstudiosDAOInterface {
     public void editarPlanEstudios(PlanEstudios planestudios) {
         try {
             em.merge(planestudios);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarPlanEstudios PlanEstudiosDAO : " + e.toString(),e);
         }

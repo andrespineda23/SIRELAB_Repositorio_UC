@@ -44,6 +44,7 @@ public class TipoEventoDAO implements TipoEventoDAOInterface{
     public void editarTipoEvento(TipoEvento tipoEvento) {
         try {
             em.merge(tipoEvento);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarTipoEvento TipoEventoDAO : " + e.toString(),e);
         }

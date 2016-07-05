@@ -44,6 +44,7 @@ public class MovimientoInsumoDAO implements MovimientoInsumoDAOInterface {
     public void editarMovimientoInsumo(MovimientoInsumo movimientoInsumo) {
         try {
             em.merge(movimientoInsumo);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarMovimientoInsumo MovimientoInsumoDAO : " + e.toString(),e);
         }

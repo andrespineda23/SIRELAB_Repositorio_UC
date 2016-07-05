@@ -6,9 +6,7 @@ import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
-import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
-import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
@@ -17,7 +15,6 @@ import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.EncargadoLaboratorio;
-import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
@@ -36,7 +33,7 @@ import org.apache.log4j.Logger;
  */
 @Stateless
 public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface {
-    
+
     static Logger logger = Logger.getLogger(GestionarLoginSistemaBO.class);
 
     @EJB
@@ -56,13 +53,9 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     @EJB
     DocenteDAOInterface docenteDAO;
     @EJB
-    EntidadExternaDAOInterface entidadExternaDAO;
-    @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
     AdministradorEdificioDAOInterface administradorEdificioDAO;
-    @EJB
-    PersonaContactoDAOInterface personaContactoDAO;
 
     private final String NUMEROS = "0123456789";
     private final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -83,18 +76,13 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
                         Estudiante registro = estudianteDAO.buscarEstudiantePorID(secuencia);
                         actualizarUsuario(registro.getPersona().getUsuario());
                     } else {
-                        if (tipoUsuario == 4) {
-                            EntidadExterna registro = entidadExternaDAO.buscarEntidadExternaPorID(secuencia);
-                            //actualizarUsuario(registro.getPersona().getUsuario());
-                        } else {
-                            EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(secuencia);
-                            actualizarUsuario(registro.getPersona().getUsuario());
-                        }
+                        EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(secuencia);
+                        actualizarUsuario(registro.getPersona().getUsuario());
                     }
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO cerrarSesionEnLineaUsuario : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO cerrarSesionEnLineaUsuario : " + e.toString(), e);
         }
     }
 
@@ -103,7 +91,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
         try {
             usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO actualizarUsuario : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO actualizarUsuario : " + e.toString(), e);
         }
     }
 
@@ -113,7 +101,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerListasDepartamentos : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerListasDepartamentos : " + e.toString(), e);
             return null;
         }
     }
@@ -124,7 +112,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             List<Carrera> lista = carreraDAO.consultarCarreras();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerListasCarreras : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerListasCarreras : " + e.toString(), e);
             return null;
         }
     }
@@ -135,7 +123,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             List<Carrera> lista = carreraDAO.consultarCarrerasActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerListasCarreras : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerListasCarreras : " + e.toString(), e);
             return null;
         }
     }
@@ -146,7 +134,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(idCarrera);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerListasPlanesEstudioPorCarrera : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerListasPlanesEstudioPorCarrera : " + e.toString(), e);
             return null;
         }
     }
@@ -157,7 +145,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosActivosPorCarrera(idCarrera);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerListasPlanesEstudioPorCarrera : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerListasPlanesEstudioPorCarrera : " + e.toString(), e);
             return null;
         }
     }
@@ -168,7 +156,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             Estudiante registro = estudianteDAO.buscarEstudiantePorCorreo(correo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerEstudiantePorCorreo : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerEstudiantePorCorreo : " + e.toString(), e);
             return null;
         }
     }
@@ -179,7 +167,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             Estudiante registro = estudianteDAO.buscarEstudiantePorDocumento(documento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerEstudiantePorDocumento : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerEstudiantePorDocumento : " + e.toString(), e);
             return null;
         }
     }
@@ -197,7 +185,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             estudianteNuevo.setPersona(personaRegistrada);
             estudianteDAO.crearEstudiante(estudianteNuevo);
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO almacenarNuevoEstudianteEnSistema : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO almacenarNuevoEstudianteEnSistema : " + e.toString(), e);
         }
     }
 
@@ -207,7 +195,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             Persona registro = personaDAO.buscarPersonaPorCorreoYNumeroIdentificacion(correo, identificacion);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarLoginSistemaBO obtenerPersonaRecuperarContrasenia : " + e.toString(),e);
+            logger.error("Error GestionarLoginSistemaBO obtenerPersonaRecuperarContrasenia : " + e.toString(), e);
             return null;
         }
     }
@@ -229,7 +217,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             Persona registro = personaDAO.buscarPersonaPorID(persona.getIdpersona());
             return registro;
         } catch (Exception e) {
-            logger.error("Error configurarContraseñaPersona GestionarLoginSistemaBO : " + e.toString(),e);
+            logger.error("Error configurarContraseñaPersona GestionarLoginSistemaBO : " + e.toString(), e);
             return null;
         }
     }
@@ -241,7 +229,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             Persona registro = personaDAO.obtenerPersonaLoginUserPassword(usuario, obj.encriptarContrasenia(password));
             return registro;
         } catch (Exception e) {
-            logger.error("Error obtenerPersonaLogin GestionarLoginSistemaBO : " + e.toString(),e);
+            logger.error("Error obtenerPersonaLogin GestionarLoginSistemaBO : " + e.toString(), e);
             return null;
         }
     }
@@ -263,18 +251,13 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
                     if (secuencia.equals(idTipoUsuario)) {
                         registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorIDPersona(idPersona);
                     } else {
-                        secuencia = new BigInteger("5");
-                        if (secuencia.equals(idTipoUsuario)) {
-                            registro = personaContactoDAO.buscarPersonaContactoPorIDPersona(idPersona);
-                        } else {
-                            registro = administradorEdificioDAO.buscarAdministradorEdificioPorIDPersona(idPersona);
-                        }
+                        registro = administradorEdificioDAO.buscarAdministradorEdificioPorIDPersona(idPersona);
                     }
                 }
             }
             return registro;
         } catch (Exception e) {
-            logger.error("Error obtenerUsuarioFinalLogin GestionarLoginSistemaBO : " + e.toString(),e);
+            logger.error("Error obtenerUsuarioFinalLogin GestionarLoginSistemaBO : " + e.toString(), e);
             return null;
         }
     }

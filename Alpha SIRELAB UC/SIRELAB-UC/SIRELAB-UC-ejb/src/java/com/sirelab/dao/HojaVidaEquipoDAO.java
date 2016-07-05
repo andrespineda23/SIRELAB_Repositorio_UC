@@ -44,6 +44,7 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
     public void editarHojaVidaEquipo(HojaVidaEquipo hojavidaequipo) {
         try {
             em.merge(hojavidaequipo);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarHojaVidaEquipo HojaVidaEquipoDAO : " + e.toString(),e);
         }

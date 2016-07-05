@@ -41,6 +41,7 @@ public class CarreraDAO implements CarreraDAOInterface {
     public void editarCarrera(Carrera carrera) {
         try {
             em.merge(carrera);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarCarrera CarreraDAO : " + e.toString(),e);
         }

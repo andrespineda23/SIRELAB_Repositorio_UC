@@ -44,6 +44,7 @@ public class ManualHasEquipoDAO implements ManualHasEquipoDAOInterface {
     public void editarManualHasEquipo(ManualHasEquipo manual) {
         try {
             em.merge(manual);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarManualHasEquipo ManualHasEquipoDAO : " + e.toString(),e);
         }

@@ -13,7 +13,6 @@ import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.Utilidades;
@@ -53,11 +52,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     private List<Laboratorio> listaLaboratorios;
     private Laboratorio inputLaboratorio;
     private boolean activarLaboratorio;
-    private List<TipoPerfil> listaTiposPerfiles;
-    private TipoPerfil inputPerfil;
     private String paginaAnterior;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
-    private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesPerfil;
+    private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -67,6 +64,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     private boolean activarAceptar;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean tipoPerfilConsulta;
 
     public ControllerRegistrarEncargadoLaboratorio() {
     }
@@ -78,9 +76,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         activarLimpiar = true;
         activarAceptar = false;
         colorMensaje = "black";
+        tipoPerfilConsulta = true;
         activarCasillas = false;
         mensajeFormulario = "N/A";
-        validacionesPerfil = false;
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
@@ -101,7 +99,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         inputDireccion = null;
         inputEmail = null;
         inputID = null;
-        inputPerfil = null;
         inputNombre = null;
         inputDepartamento = null;
         listaDepartamentos = null;
@@ -171,15 +168,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         } else {
             validacionesLaboratorio = false;
             FacesContext.getCurrentInstance().addMessage("form:inputLaboratorio", new FacesMessage("El campo Laboratorio es obligatorio."));
-        }
-    }
-
-    public void actualizarTipoPerfil() {
-        if (Utilidades.validarNulo(inputPerfil)) {
-            validacionesPerfil = true;
-        } else {
-            validacionesPerfil = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputPerfil", new FacesMessage("El campo Perfil por Encargado es obligatorio."));
         }
     }
 
@@ -297,33 +285,11 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
     public void validarDatosNumericosEncargadoLaboratorio(int tipoTel) {
         if (tipoTel == 1) {
             if (Utilidades.validarNulo(inputTelefono1) && (!inputTelefono1.isEmpty()) && (inputTelefono1.trim().length() > 0)) {
-                int tam = inputTelefono1.length();
-                if (tam == 4) {
-                    if ((Utilidades.isNumber(inputTelefono1)) == false) {
-                        validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero de extensión se encuentra incorrecto. " + constantes.USUARIO_TELEXT));
-                    } else {
-                        validacionesTel1 = true;
-                    }
-                } else {
-                    validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono1", new FacesMessage("El numero de extensión se encuentra incorrecto. " + constantes.USUARIO_TELEXT));
-                }
+                validacionesTel1 = true;
             }
         } else {
             if (Utilidades.validarNulo(inputTelefono2) && (!inputTelefono2.isEmpty()) && (inputTelefono2.trim().length() > 0)) {
-                int tam = inputTelefono2.length();
-                if (tam == 10) {
-                    if ((Utilidades.isNumber(inputTelefono2)) == false) {
-                        validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
-                    } else {
-                        validacionesTel2 = true;
-                    }
-                } else {
-                    validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputTelefono2", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
-                }
+                validacionesTel2 = true;
             }
         }
     }
@@ -376,10 +342,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             mensajeError = mensajeError + "- Nombre - ";
             retorno = false;
         }
-        if (validacionesPerfil == false) {
-            mensajeError = mensajeError + "- Tipo Perfil - ";
-            retorno = false;
-        }
         if (validacionesFacultad == false) {
             mensajeError = mensajeError + "- Facultad - ";
             retorno = false;
@@ -429,14 +391,13 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         inputTelefono1 = null;
         inputTelefono2 = null;
         inputDireccion = null;
+        tipoPerfilConsulta = true;
         inputEmail = null;
         inputID = null;
         inputNombre = null;
         inputDepartamento = null;
         inputEmailOpcional = null;
         inputLaboratorio = null;
-        inputPerfil = null;
-        validacionesPerfil = false;
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
@@ -459,6 +420,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         activarCasillas = false;
         activarAceptar = false;
         mensajeError = "";
+        tipoPerfilConsulta = true;
         activarLimpiar = true;
         colorMensaje = "black";
         activarDepartamento = true;
@@ -476,9 +438,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         listaFacultades = null;
         listaDepartamentos = null;
         listaLaboratorios = null;
-        listaTiposPerfiles = null;
-        inputPerfil = null;
-        validacionesPerfil = false;
         validacionesNombre = false;
         validacionesApellido = false;
         validacionesCorreo = false;
@@ -500,7 +459,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             Usuario usuarioNuevo = new Usuario();
             usuarioNuevo.setEstado(true);
             usuarioNuevo.setNumeroconexiones(0);
-            usuarioNuevo.setNombreusuario(inputID);
+            usuarioNuevo.setNombreusuario(inputEmail);
             EncriptarContrasenia obj = new EncriptarContrasenia();
             usuarioNuevo.setPasswordusuario(obj.encriptarContrasenia(inputID));
             Persona personaNueva = new Persona();
@@ -530,10 +489,9 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             }
             EncargadoLaboratorio encargadoNueva = new EncargadoLaboratorio();
             encargadoNueva.setLaboratorio(inputLaboratorio);
-            encargadoNueva.setTipoperfil(inputPerfil);
+            encargadoNueva.setPerfilconsulta(tipoPerfilConsulta);
             administrarEncargadosLaboratoriosBO.almacenarNuevoEncargadoLaboratorioEnSistema(usuarioNuevo, personaNueva, encargadoNueva);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema:  " + e.toString(), e);
             logger.error("Error ControllerRegistrarEncargadoLaboratorio almacenarNuevoEncargadoLaboratorioEnSistema : " + e.toString(), e);
         }
     }
@@ -699,25 +657,6 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
         this.mensajeFormulario = mensajeFormulario;
     }
 
-    public List<TipoPerfil> getListaTiposPerfiles() {
-        if (listaTiposPerfiles == null) {
-            listaTiposPerfiles = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
-        }
-        return listaTiposPerfiles;
-    }
-
-    public void setListaTiposPerfiles(List<TipoPerfil> listaTiposPerfiles) {
-        this.listaTiposPerfiles = listaTiposPerfiles;
-    }
-
-    public TipoPerfil getInputPerfil() {
-        return inputPerfil;
-    }
-
-    public void setInputPerfil(TipoPerfil inputPerfil) {
-        this.inputPerfil = inputPerfil;
-    }
-
     public String getInputEmailOpcional() {
         return inputEmailOpcional;
     }
@@ -756,6 +695,14 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public boolean isTipoPerfilConsulta() {
+        return tipoPerfilConsulta;
+    }
+
+    public void setTipoPerfilConsulta(boolean tipoPerfilConsulta) {
+        this.tipoPerfilConsulta = tipoPerfilConsulta;
     }
 
 }

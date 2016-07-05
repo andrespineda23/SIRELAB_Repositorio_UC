@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 @Stateless
 public class SedeDAO implements SedeDAOInterface {
 
-    static Logger logger = Logger.getLogger(SectorEntidadDAO.class);
+    static Logger logger = Logger.getLogger(SedeDAO.class);
     
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
@@ -43,6 +43,7 @@ public class SedeDAO implements SedeDAOInterface {
         try {
             em.clear();
             em.merge(sede);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarSede SedeDAO : " + e.toString(),e);
         }

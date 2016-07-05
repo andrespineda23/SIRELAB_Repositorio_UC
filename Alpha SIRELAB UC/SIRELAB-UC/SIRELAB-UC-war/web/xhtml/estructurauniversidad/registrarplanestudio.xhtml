@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -52,7 +52,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre Plan*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerRegistrarPlanEstudio.nuevoNombre}" disabled="#{controllerRegistrarPlanEstudio.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                            <h:inputText maxlength="90" value="#{controllerRegistrarPlanEstudio.nuevoNombre}" disabled="#{controllerRegistrarPlanEstudio.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarPlanEstudio.validarNombrePlanEstudio()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
@@ -98,24 +98,50 @@ and open the template in the editor.
                                         </div>
                                     </fieldset>
                                     <br></br>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="A continuación seleccione las diferentes asignaturas que tendra asociado el plan de estudio. Por medio del boton ADICIONAR puede agregar la asignatura*"/></strong>
+                                    </div>
+                                    <div class="form-inline">
+                                        <h:selectOneMenu value="#{controllerRegistrarPlanEstudio.asignatura}"
+                                                         class="form-control" disabled="#{controllerRegistrarPlanEstudio.activarCasillas}"
+                                                         id="asignaturasPlan">
+                                            <f:selectItem itemLabel="Seleccione asignatura a adicionar" itemValue="null" />
+                                            <f:selectItems value="#{controllerRegistrarPlanEstudio.listaAsignaturas}" var="asignatura"
+                                                           itemLabel="#{asignatura.strNombreEstado}" itemValue="#{asignatura}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerRegistrarPlanEstudio.validarAsignatura()}" render="@this adicionar"/>
+                                        </h:selectOneMenu>
+                                        <h:commandButton id="adicionar" class="btn btn-success" disabled="#{controllerRegistrarPlanEstudio.activarAdicionar}" value="Adicionar" actionListener="#{controllerRegistrarPlanEstudio.adicionarAsignatura()}">
+                                            <f:ajax execute="dataTable" render="dataTable asignaturasPlan adicionar" />
+                                        </h:commandButton>
+                                    </div>
+                                    <br></br>
                                     <fieldset>
-                                        <legend class="text-info">Asignaturas Registradas (ACTIVAS)</legend>
-                                        <div class="row" >
+                                        <legend class="text-info">Asignaturas asociadas al Plan de Estudio</legend>
+                                        <div class="row">
                                             <h:dataTable id="dataTable" var="item" 
                                                          styleClass="table table-condensed table-responsive"  
                                                          value="#{controllerRegistrarPlanEstudio.listaAsociacionPlanAsignatura}">
                                                 <h:column>
                                                     <f:facet name="header">
-                                                        <h:outputText value="Nombre Asignatura"/>
+                                                        <h:outputText value="Nombre"/>
                                                     </f:facet>
                                                     <h:outputText value="#{item.asignatura.nombreasignatura}"/>
                                                 </h:column>  
                                                 <h:column>
                                                     <f:facet name="header">
-                                                        <h:outputText value="Desea Asociar la Asignatura"/>
+                                                        <h:outputText value="Código"/>
                                                     </f:facet>
-                                                    <h:selectBooleanCheckbox disabled="#{controllerRegistrarPlanEstudio.activarCasillas}" value="#{item.activo}"/>
-                                                </h:column>
+                                                    <h:outputText value="#{item.asignatura.codigoasignatura}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Eliminar"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Eliminar" actionListener="#{controllerRegistrarPlanEstudio.quitarAsignaturaSeleccionado(item)}" immediate="true">
+                                                        <f:ajax execute="@form" render="form" />
+                                                    </h:commandLink>
+                                                </h:column>  
                                             </h:dataTable>
                                         </div>
                                     </fieldset>

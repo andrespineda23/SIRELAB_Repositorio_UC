@@ -9,7 +9,6 @@ import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterf
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstadoEquipoDAOInterface;
-import com.sirelab.dao.interfacedao.HojaVidaEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
@@ -19,7 +18,6 @@ import com.sirelab.dao.interfacedao.TipoEventoDAOInterface;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
-import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.Proveedor;
@@ -59,8 +57,6 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     ProveedorDAOInterface proveedorDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
-    @EJB
-    HojaVidaEquipoDAOInterface hojaVidaEquipoDAO;
     @EJB
     TipoEventoDAOInterface tipoEventoDAO;
 
@@ -200,18 +196,6 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     public void crearNuevoEquipoElemento(EquipoElemento equipoElemento, String usuario) {
         try {
             equipoElementoDAO.crearEquipoElemento(equipoElemento);
-            EquipoElemento nuevo = equipoElementoDAO.obtenerUltimaEquipoElementoRegistrada();
-            HojaVidaEquipo hojaVida = new HojaVidaEquipo();
-            TipoEvento evento = obtenerTipoEventoPorId(new BigInteger("1"));
-            hojaVida.setFechaevento(new Date());
-            hojaVida.setFechafinevento(new Date());
-            hojaVida.setEquipoelemento(nuevo);
-            hojaVida.setFecharegistro(new Date());
-            hojaVida.setTipoevento(evento);
-            hojaVida.setObservaciones("");
-            hojaVida.setCosto(equipoElemento.getCostoadquisicion().toString());
-            hojaVida.setDetalleevento(evento.getObservacion() + ": " + "EQUIPO TECNOLOGICO (" + equipoElemento.getInventarioequipo() + ") / MODULO-BANCO TRABAJO (" + equipoElemento.getModulolaboratorio().getCodigomodulo() + ") / SALA (" + equipoElemento.getModulolaboratorio().getSalalaboratorio().getNombresala() + ")");
-            hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
         } catch (Exception e) {
             logger.error("Error GestionarPlantaElementosEquiposBO crearNuevoEquipoElemento : " + e.toString(), e);
         }
@@ -225,32 +209,6 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     public void modificarInformacionEquipoElemento(EquipoElemento equipoElemento, String usuario, boolean cambioEstado) {
         try {
             equipoElementoDAO.editarEquipoElemento(equipoElemento);
-            HojaVidaEquipo hojaVida = new HojaVidaEquipo();
-            hojaVida.setFechaevento(new Date());
-            hojaVida.setEquipoelemento(equipoElemento);
-            hojaVida.setFecharegistro(new Date());
-            hojaVida.setFechafinevento(new Date());
-            TipoEvento evento = obtenerTipoEventoPorId(new BigInteger("2"));
-            hojaVida.setTipoevento(evento);
-            hojaVida.setCosto("0");
-            hojaVida.setObservaciones("");
-            hojaVida.setUsuariomodificacion(usuario);
-            hojaVida.setDetalleevento(evento.getObservacion() + ": " + "EQUIPO TECNOLOGICO (" + equipoElemento.getInventarioequipo() + ") / MODULO-BANCO TRABAJO (" + equipoElemento.getModulolaboratorio().getCodigomodulo() + ") / SALA (" + equipoElemento.getModulolaboratorio().getSalalaboratorio().getNombresala() + ")");
-            hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
-            if (cambioEstado == true) {
-                HojaVidaEquipo hojaVida2 = new HojaVidaEquipo();
-                hojaVida2.setFechaevento(new Date());
-                hojaVida2.setEquipoelemento(equipoElemento);
-                hojaVida2.setFecharegistro(new Date());
-                hojaVida2.setFechafinevento(new Date());
-                TipoEvento evento2 = obtenerTipoEventoPorId(new BigInteger("3"));
-                hojaVida2.setTipoevento(evento2);
-                hojaVida2.setCosto("0");
-                hojaVida2.setObservaciones("");
-                hojaVida2.setUsuariomodificacion(usuario);
-                hojaVida2.setDetalleevento(evento.getObservacion() + ": " + "EQUIPO TECNOLOGICO (" + equipoElemento.getInventarioequipo() + ") / MODULO-BANCO TRABAJO (" + equipoElemento.getModulolaboratorio().getCodigomodulo() + ") / SALA (" + equipoElemento.getModulolaboratorio().getSalalaboratorio().getNombresala() + ")");
-                hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
-            }
         } catch (Exception e) {
             logger.error("Error GestionarPlantaElementosEquiposBO modificarInformacionEquipoElemento : " + e.toString(), e);
         }

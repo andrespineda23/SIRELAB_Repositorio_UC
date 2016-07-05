@@ -5,20 +5,16 @@
  */
 package com.sirelab.bo.planta;
 
-import com.sirelab.bo.cargue.AdministrarCargueArchivoEstudianteBO;
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaComponentesEquiposBOInterface;
 import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
-import com.sirelab.dao.interfacedao.HojaVidaEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.TipoComponenteDAOInterface;
 import com.sirelab.dao.interfacedao.TipoEventoDAOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
-import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.TipoComponente;
 import com.sirelab.entidades.TipoEvento;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -39,8 +35,6 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
     ComponenteEquipoDAOInterface componenteEquipoDAO;
     @EJB
     TipoComponenteDAOInterface tipoComponenteDAO;
-    @EJB
-    HojaVidaEquipoDAOInterface hojaVidaEquipoDAO;
     @EJB
     TipoEventoDAOInterface tipoEventoDAO;
 
@@ -103,41 +97,15 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
     public void crearComponenteEquipo(ComponenteEquipo componenteEquipo, String usuario) {
         try {
             componenteEquipoDAO.crearComponenteEquipo(componenteEquipo);
-            HojaVidaEquipo hojaVida = new HojaVidaEquipo();
-            TipoEvento evento = obtenerTipoEventoPorId(new BigInteger("7"));
-            hojaVida.setFechaevento(new Date());
-            hojaVida.setEquipoelemento(componenteEquipo.getEquipoelemento());
-            hojaVida.setFecharegistro(new Date());
-            hojaVida.setFechafinevento(new Date());
-            hojaVida.setCosto(componenteEquipo.getCostocomponente());
-            hojaVida.setObservaciones("");
-            hojaVida.setTipoevento(evento);
-            hojaVida.setDetalleevento(evento.getObservacion() + ": COMPONENTE (" + componenteEquipo.getCodigocomponete() + ") / EQUIPO (" + componenteEquipo.getEquipoelemento().getInventarioequipo() + ")");
-            hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
         } catch (Exception e) {
             logger.error("Error GestionarPlantaComponentesEquiposBO crearComponenteEquipo : " + e.toString(), e);
         }
-    }
-
-    private TipoEvento obtenerTipoEventoPorId(BigInteger secuencia) {
-        return tipoEventoDAO.buscarTipoEventoPorID(secuencia);
     }
 
     @Override
     public void editarComponenteEquipo(ComponenteEquipo componenteEquipo, String usuario) {
         try {
             componenteEquipoDAO.editarComponenteEquipo(componenteEquipo);
-            HojaVidaEquipo hojaVida = new HojaVidaEquipo();
-            TipoEvento evento = obtenerTipoEventoPorId(new BigInteger("8"));
-            hojaVida.setFechaevento(new Date());
-            hojaVida.setEquipoelemento(componenteEquipo.getEquipoelemento());
-            hojaVida.setFecharegistro(new Date());
-            hojaVida.setFechafinevento(new Date());
-            hojaVida.setCosto("0");
-            hojaVida.setObservaciones("");
-            hojaVida.setTipoevento(evento);
-            hojaVida.setDetalleevento(evento.getObservacion() + ": COMPONENTE (" + componenteEquipo.getCodigocomponete() + ") / EQUIPO (" + componenteEquipo.getEquipoelemento().getInventarioequipo() + ")");
-            hojaVidaEquipoDAO.crearHojaVidaEquipo(hojaVida);
         } catch (Exception e) {
             logger.error("Error GestionarPlantaComponentesEquiposBO editarComponenteEquipo : " + e.toString(), e);
         }

@@ -121,11 +121,13 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
             //usuarioNuevo.setIdusuario(idUsuario);
             TipoUsuario tipoUsuario = tipoUsuarioDAO.buscarTipoUsuarioPorNombre("ADMINISTRADOR");
             usuarioNuevo.setTipousuario(tipoUsuario);
-            usuarioDAO.crearUsuario(usuarioNuevo);
+            System.out.println("tipoUsuario: "+tipoUsuario);
+            usuarioDAO.crearUsuario(usuarioNuevo); 
             Usuario usuarioRegistrado = usuarioDAO.obtenerUltimoUsuarioRegistrado();
             //personaNuevo.setIdpersona(idPersona);
             personaNuevo.setUsuario(usuarioRegistrado);
             personaDAO.crearPersona(personaNuevo);
+            
         } catch (Exception e) {
             logger.error("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString(),e);
         }

@@ -74,27 +74,6 @@ and open the template in the editor.
                                             </div>
                                             <h6><h:message id="msnCorreo" for="nuevoCorreo" style="color: red"/></h6>
                                         </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Usuario*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerRegistrarAdministrador.nuevoUsuario}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoUsuario" requiredMessage="El campo Usuario es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarUsuarioAdministrador()}" execute="nuevoUsuario" render="nuevoUsuario msnUsuario" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnUsuario" for="nuevoUsuario" style="color: red"/></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Contraseña*"/></strong>
-                                            <h:inputSecret maxlength="45" value="#{controllerRegistrarAdministrador.nuevoContrasenia}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoContrasenia" requiredMessage="El campo Contraseña es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarContraseniaAdministrador()}" execute="nuevoContrasenia" render="msnContrasenia" />
-                                            </h:inputSecret>
-                                            <h6><h:message id="msnContrasenia" for="nuevoContrasenia" style="color: red"/></h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <strong><h:outputText value="Confirmar Contraseña*"/></strong>
-                                            <h:inputSecret maxlength="45" value="#{controllerRegistrarAdministrador.nuevoContraseniaConfirma}" disabled="#{controllerRegistrarAdministrador.activarCasillas}" required="true" class="form-control" id="nuevoContraseniaConfirma" requiredMessage="El campo Contraseña 2 es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarAdministrador.validarContraseniaConfirmaAdministrador()}" execute="nuevoContraseniaConfirma" render="msnContraseniaConfirma" />
-                                            </h:inputSecret>
-                                            <h6><h:message id="msnContraseniaConfirma" for="nuevoContraseniaConfirma" style="color: red"/></h6>
-                                        </div>
                                         <fieldset>
                                             <legend class="h5 text-info">Datos Opcionales</legend>
                                             <div class="form-group">

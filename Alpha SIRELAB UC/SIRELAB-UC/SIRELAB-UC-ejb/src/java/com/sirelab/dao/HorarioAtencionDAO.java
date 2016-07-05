@@ -44,6 +44,7 @@ public class HorarioAtencionDAO implements HorarioAtencionDAOInterface {
     public void editarHorarioAtencion(HorarioAtencion horario) {
         try {
             em.merge(horario);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarHorarioAtencion HorarioAtencionDAO : " + e.toString(),e);
         }

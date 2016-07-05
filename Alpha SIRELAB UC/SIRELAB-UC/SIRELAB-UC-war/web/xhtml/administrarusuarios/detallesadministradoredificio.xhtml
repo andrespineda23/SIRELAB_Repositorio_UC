@@ -91,14 +91,14 @@ and open the template in the editor.
                                             </div>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número Fijo"/></strong>
-                                                <h:inputText maxlength="20"  value="#{controllerDetallesAdministradorEdificio.telefono1AdministradorEdificio}"  class="form-control" id="telefono1AdministradorEdificio"  readonly="#{controllerDetallesAdministradorEdificio.activarEditar}">
+                                                <h:inputText maxlength="50"  value="#{controllerDetallesAdministradorEdificio.telefono1AdministradorEdificio}"  class="form-control" id="telefono1AdministradorEdificio"  readonly="#{controllerDetallesAdministradorEdificio.activarEditar}">
                                                     <f:ajax event="blur" listener="#{controllerDetallesAdministradorEdificio.validarDatosNumericosAdministradorEdificio(1)}" execute="telefono1AdministradorEdificio" render="telefono1AdministradorEdificio msnTelefono1" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono1" for="telefono1AdministradorEdificio" style="color: red"></h:message></h6>
                                             </div>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Número Celular"/></strong>
-                                                <h:inputText maxlength="20"  value="#{controllerDetallesAdministradorEdificio.telefono2AdministradorEdificio}"  class="form-control" id="telefono2AdministradorEdificio" readonly="#{controllerDetallesAdministradorEdificio.activarEditar}">
+                                                <h:inputText maxlength="50"  value="#{controllerDetallesAdministradorEdificio.telefono2AdministradorEdificio}"  class="form-control" id="telefono2AdministradorEdificio" readonly="#{controllerDetallesAdministradorEdificio.activarEditar}">
                                                     <f:ajax event="blur" listener="#{controllerDetallesAdministradorEdificio.validarDatosNumericosAdministradorEdificio(2)}" execute="telefono2AdministradorEdificio" render="telefono2AdministradorEdificio msnTelefono2" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnTelefono2" for="telefono2AdministradorEdificio" style="color: red"></h:message></h6>
@@ -121,7 +121,7 @@ and open the template in the editor.
                                     </fieldset>
                                     <br></br>
                                     <div class="col-md-2">
-                                        <h:commandButton class="btn btn-block" value="Historial de Edificios" action="#{controllerDetallesAdministradorEdificio.paginaHistorialEdificio()}" 
+                                        <h:commandButton class="btn btn-block btn-success" value="Historial de Edificios" action="#{controllerDetallesAdministradorEdificio.paginaHistorialEdificio()}" 
                                                          actionListener="#{controllerHistorialEdificios.recibirIdAdministradorEdificio(controllerDetallesAdministradorEdificio.encargadoPorEdificioDetalles.administradoredificio.idadministradoredificio)}" immediate="true"/>
                                     </div>
                                     <div class="col-md-10">

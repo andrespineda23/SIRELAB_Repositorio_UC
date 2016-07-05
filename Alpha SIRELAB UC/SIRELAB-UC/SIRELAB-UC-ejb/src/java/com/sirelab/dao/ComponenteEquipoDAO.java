@@ -44,6 +44,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
     public void editarComponenteEquipo(ComponenteEquipo componenteEquipo) {
         try {
             em.merge(componenteEquipo);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarComponenteEquipo ComponenteEquipoDAO : " + e.toString(),e);
         }

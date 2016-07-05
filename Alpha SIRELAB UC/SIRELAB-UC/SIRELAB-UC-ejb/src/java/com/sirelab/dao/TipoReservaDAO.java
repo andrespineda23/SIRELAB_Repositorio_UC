@@ -44,6 +44,7 @@ public class TipoReservaDAO implements TipoReservaDAOInterface{
     public void editarTipoReserva(TipoReserva tipoReserva) {
         try {
             em.merge(tipoReserva);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarTipoReserva TipoReservaDAO : " + e.toString(),e);
         }

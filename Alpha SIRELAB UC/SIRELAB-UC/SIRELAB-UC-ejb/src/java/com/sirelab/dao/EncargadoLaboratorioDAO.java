@@ -41,6 +41,7 @@ public class EncargadoLaboratorioDAO implements EncargadoLaboratorioDAOInterface
     public void editarEncargadoLaboratorio(EncargadoLaboratorio encargadolaboratorio) {
         try {
             em.merge(encargadolaboratorio);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarEncargadoLaboratorio EncargadoLaboratorioDAO : " + e.toString(),e);
         }

@@ -7,7 +7,6 @@ import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.SalaLaboratorio;
-import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
@@ -20,8 +19,6 @@ import java.util.Map;
 public interface AdministrarEncargadosLaboratoriosBOInterface {
 
     public Edificio buscarEdificioPorIdEncargadoEdificio(BigInteger idRegistro);
-
-    public List<TipoPerfil> consultarPerfilesPorEncargadoRegistrados();
 
     public List<EncargadoLaboratorio> consultarEncargadoLaboratoriosPorParametro(Map<String, String> filtros);
 
@@ -52,8 +49,6 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorDocumento(String documento);
 
     public List<Departamento> obtenerDepartamentosActivosPorIDFacultad(BigInteger idFacultad);
-
-    public TipoPerfil buscarTipoPerfilPorIDEncargado(BigInteger idRegistro);
 
     public Departamento obtenerDepartamentoPorCodigo(String codigo);
 

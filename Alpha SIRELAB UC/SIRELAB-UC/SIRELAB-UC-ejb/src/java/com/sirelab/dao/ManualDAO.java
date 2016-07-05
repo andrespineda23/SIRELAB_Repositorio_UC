@@ -46,6 +46,7 @@ public class ManualDAO implements ManualDAOInterface {
     public void editarManual(Manual manual) {
         try {
             em.merge(manual);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarManual ManualDAO : " + e.toString(),e);
         }

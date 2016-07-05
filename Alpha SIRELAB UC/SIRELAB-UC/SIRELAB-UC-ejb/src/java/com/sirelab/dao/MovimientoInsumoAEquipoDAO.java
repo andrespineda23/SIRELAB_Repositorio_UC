@@ -44,6 +44,7 @@ public class MovimientoInsumoAEquipoDAO implements MovimientoInsumoAEquipoDAOInt
     public void editarMovimientoInsumoAEquipo(MovimientoInsumoAEquipo movimiento) {
         try {
             em.merge(movimiento);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarMovimientoInsumoAEquipo MovimientoInsumoAEquipoDAO : " + e.toString(),e);
         }

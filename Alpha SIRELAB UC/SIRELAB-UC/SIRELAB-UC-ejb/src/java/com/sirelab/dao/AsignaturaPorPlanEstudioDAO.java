@@ -48,6 +48,7 @@ public class AsignaturaPorPlanEstudioDAO implements AsignaturaPorPlanEstudioDAOI
         try {
             em.clear();
             em.merge(asignatura);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarAsignaturaPorPlanEstudio AsignaturaPorPlanEstudioDAO : " + e.toString(),e);
         }

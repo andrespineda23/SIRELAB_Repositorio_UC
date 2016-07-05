@@ -5,10 +5,8 @@ import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
 import com.sirelab.entidades.AdministradorEdificio;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.EncargadoLaboratorio;
-import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Persona;
-import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.utilidades.EncriptarContrasenia;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
@@ -232,20 +230,11 @@ public class ControllerIndex implements Serializable {
                                         usuarioLoginSistema.setUserUsuario(encargadoLabLogin.getPersona().getUsuario().getNombreusuario());
                                         paginaSiguiente = "iniciolaboratorista";
                                     } else {
-                                        secuenciaLogin = new BigInteger("5");
-                                        if (secuenciaLogin.equals(idTipoUsuario)) {
-                                            PersonaContacto entidadExternaLogin = (PersonaContacto) usuarioFinal;
-                                            usuarioLoginSistema.setNombreTipoUsuario("ENTIDADEXTERNA");
-                                            usuarioLoginSistema.setIdUsuarioLogin(entidadExternaLogin.getIdpersonacontacto());
-                                            usuarioLoginSistema.setUserUsuario(entidadExternaLogin.getPersona().getUsuario().getNombreusuario());
-                                            paginaSiguiente = "inicioentidadexterna";
-                                        } else {
-                                            AdministradorEdificio administradorEdificio = (AdministradorEdificio) usuarioFinal;
-                                            usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOREDIFICIO");
-                                            usuarioLoginSistema.setIdUsuarioLogin(administradorEdificio.getIdadministradoredificio());
-                                            usuarioLoginSistema.setUserUsuario(administradorEdificio.getPersona().getUsuario().getNombreusuario());
-                                            paginaSiguiente = "inicioadministradoredificio";
-                                        }
+                                        AdministradorEdificio administradorEdificio = (AdministradorEdificio) usuarioFinal;
+                                        usuarioLoginSistema.setNombreTipoUsuario("ADMINISTRADOREDIFICIO");
+                                        usuarioLoginSistema.setIdUsuarioLogin(administradorEdificio.getIdadministradoredificio());
+                                        usuarioLoginSistema.setUserUsuario(administradorEdificio.getPersona().getUsuario().getNombreusuario());
+                                        paginaSiguiente = "inicioadministradoredificio";
                                     }
                                 }
                             }

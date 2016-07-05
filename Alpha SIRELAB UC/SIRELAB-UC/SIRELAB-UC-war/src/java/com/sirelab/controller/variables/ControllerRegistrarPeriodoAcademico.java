@@ -331,7 +331,7 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
                     colorMensaje = "#FF0000";
-                    mensajeFormulario = "Existe registrado un periodo academico a la fecha. Cierre el periodo para continuar.";
+                    mensajeFormulario = "Existe registrado un periodo academico ACTIVO a la fecha. Cierre el periodo para continuar.";
                 }
             } else {
                 colorMensaje = "#FF0000";
@@ -359,9 +359,9 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
             Date fecha2 = cal2.getTime();
             periodoNuevo.setFechafinal(fecha2);
             periodoNuevo.setFechainicial(fecha1);
+            periodoNuevo.setEstado(true);
             gestionarVariablePeriodosAcademicosBO.crearPeriodoAcademico(periodoNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo:  " + e.toString(),e);
             logger.error("Error ControllerRegistrarPeriodoAcademico almacenarRegistroNuevo: " + e.toString(),e);
         }
     }

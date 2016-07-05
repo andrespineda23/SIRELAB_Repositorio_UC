@@ -41,6 +41,7 @@ public class ProveedorDAO implements ProveedorDAOInterface {
     public void editarProveedor(Proveedor proveedor) {
         try {
             em.merge(proveedor);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarProveedor ProveedorDAO : " + e.toString(),e);
         }

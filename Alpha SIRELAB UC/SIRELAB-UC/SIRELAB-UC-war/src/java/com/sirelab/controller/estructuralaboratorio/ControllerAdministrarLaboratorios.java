@@ -10,7 +10,6 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOIn
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -64,7 +63,6 @@ public class ControllerAdministrarLaboratorios implements Serializable {
     //
     private Logger logger = Logger.getLogger(getClass().getName());
     private boolean perfilConsulta;
-    private TipoPerfil tipoPerfil;
     private String cantidadRegistros;
     private int parametroEstado;
 
@@ -92,64 +90,18 @@ public class ControllerAdministrarLaboratorios implements Serializable {
         BasicConfigurator.configure();
     }
 
-    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
-        Map<String, Object> lista = new HashMap<String, Object>();
-        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
-            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("DEPARTAMENTO", registro);
-            }
-        }
-        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
-            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("LABORATORIO", registro);
-            }
-        }
-        return lista;
-    }
-
     private void cargarInformacionPerfil() {
         usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             perfilConsulta = true;
-        } else {
-            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                boolean validarPerfilConsulta = validarSesionConsulta();
-                if (validarPerfilConsulta == false) {
-                    perfilConsulta = true;
-                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
-                    if (null != datosPerfil) {
-                        if (datosPerfil.containsKey("DEPARTAMENTO")) {
-                            activarFacultad = true;
-                            activarDepartamento = true;
-                            parametroDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
-                            parametroFacultad = parametroDepartamento.getFacultad();
-                            listaDepartamentos = new ArrayList<Departamento>();
-                            listaFacultades = new ArrayList<Facultad>();
-                            listaDepartamentos.add(parametroDepartamento);
-                            listaFacultades.add(parametroFacultad);
-                        }
-                    } else {
-                        activarFacultad = false;
-                        activarDepartamento = true;
-                    }
-                } else {
-                    perfilConsulta = false;
-                }
+        } else if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            boolean esConsulta = administrarValidadorTipoUsuario.obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio(usuarioLoginSistema.getIdUsuarioLogin()).getPerfilconsulta();
+            if (esConsulta == true) {
+                perfilConsulta = false;
+            } else {
+                perfilConsulta = true;
             }
         }
-    }
-
-    private boolean validarSesionConsulta() {
-        boolean retorno = false;
-        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuarioLoginSistema.getIdUsuarioLogin());
-        if (null != tipoPerfil) {
-            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
-                retorno = true;
-            }
-        }
-        return retorno;
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -224,7 +176,7 @@ public class ControllerAdministrarLaboratorios implements Serializable {
                 cantidadRegistros = String.valueOf(tamTotalLaboratorio);
             }
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaLaboratorios buscarLaboratoriosPorParametros : " + e.toString(), e);
         }
     }
 

@@ -373,33 +373,11 @@ public class ControllerDetallesEstudiante implements Serializable {
     public void validarDatosNumericosEstudiante(int tipoTel) {
         if (tipoTel == 1) {
             if (Utilidades.validarNulo(telefono1Estudiante) && (!telefono1Estudiante.isEmpty()) && (telefono1Estudiante.trim().length() > 0)) {
-                int tam = telefono1Estudiante.length();
-                if (tam == 7) {
-                    if ((Utilidades.isNumber(telefono1Estudiante)) == false) {
-                        validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono1Estudiante", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
-                    } else {
-                        validacionesTel1 = true;
-                    }
-                } else {
-                    validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono1Estudiante", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELFIJO));
-                }
+                validacionesTel1 = true;
             }
         } else {
             if (Utilidades.validarNulo(telefono2Estudiante) && (!telefono2Estudiante.isEmpty()) && (telefono2Estudiante.trim().length() > 0)) {
-                int tam = telefono2Estudiante.length();
-                if (tam == 7) {
-                    if ((Utilidades.isNumber(telefono2Estudiante)) == false) {
-                        validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono2Estudiante", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
-                    } else {
-                        validacionesTel2 = true;
-                    }
-                } else {
-                    validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono2Estudiante", new FacesMessage("El numero telefonico se encuentra incorrecto. " + constantes.USUARIO_TELCEL));
-                }
+                validacionesTel2 = true;
             }
         }
         modificacionesRegistroEstudiante();

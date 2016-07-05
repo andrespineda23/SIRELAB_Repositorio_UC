@@ -74,32 +74,26 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     }
 
     private void cargarListasHoras() {
-        horaApertura = 6;
+        horaApertura = 1;
+        horaAperturaSabado = 1;
         listaHoraApertura = new ArrayList<Integer>();
-        for (int i = horaApertura; i < 8; i++) {
-            listaHoraApertura.add(i);
-        }
         listaHoraCierre = new ArrayList<Integer>();
-        horaCierre = null;
-        for (int i = (horaApertura + 1); i < 22; i++) {
-            listaHoraCierre.add(i);
-        }
-        horaAperturaSabado = 6;
         listaHoraAperturaSabado = new ArrayList<Integer>();
-        for (int i = horaAperturaSabado; i < 8; i++) {
-            listaHoraAperturaSabado.add(i);
-        }
         listaHoraCierreSabado = new ArrayList<Integer>();
-        horaCierreSabado = null;
-        for (int i = (horaAperturaSabado + 1); i < 16; i++) {
+        for (int i = horaApertura; i <= 24; i++) {
+            listaHoraApertura.add(i);
+            listaHoraCierre.add(i);
+            listaHoraAperturaSabado.add(i);
             listaHoraCierreSabado.add(i);
         }
+        horaCierre = null;
+        horaCierreSabado = null;
     }
 
     public void actualizarHoraApertura() {
         listaHoraCierre = new ArrayList<Integer>();
         horaCierre = null;
-        for (int i = (horaApertura + 1); i < 22; i++) {
+        for (int i = (horaApertura + 1); i <= 24; i++) {
             listaHoraCierre.add(i);
         }
         validacionesHoraCierre = false;
@@ -116,7 +110,7 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     public void actualizarHoraAperturaSabado() {
         listaHoraCierreSabado = new ArrayList<Integer>();
         horaCierreSabado = null;
-        for (int i = (horaAperturaSabado + 1); i < 16; i++) {
+        for (int i = (horaAperturaSabado + 1); i <= 24; i++) {
             listaHoraCierreSabado.add(i);
         }
         validacionesHoraCierreSabado = false;
@@ -138,15 +132,15 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
                     validacionesDescripcion = true;
                 } else {
                     validacionesDescripcion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.VARIABLE_DESCR));
+                    FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. " + constantes.VARIABLE_DESCR));
                 }
             } else {
                 validacionesDescripcion = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 3 caracteres. "+constantes.VARIABLE_DESCR));
+                FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("El tamaño minimo permitido es 3 caracteres. " + constantes.VARIABLE_DESCR));
             }
         } else {
             validacionesDescripcion = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. "+constantes.VARIABLE_DESCR));
+            FacesContext.getCurrentInstance().addMessage("form:inputDescripcion", new FacesMessage("La descripción se encuentra incorrecta. " + constantes.VARIABLE_DESCR));
         }
     }
 
@@ -158,15 +152,15 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
                     validacionesCodigo = true;
                 } else {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. "+constantes.VARIABLE_COD));
+                    FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. " + constantes.VARIABLE_COD));
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.VARIABLE_COD));
+                FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.VARIABLE_COD));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. "+constantes.VARIABLE_COD));
+            FacesContext.getCurrentInstance().addMessage("form:inputCodigo", new FacesMessage("El codigo se encuentra incorrecto. " + constantes.VARIABLE_COD));
         }
     }
 
@@ -187,6 +181,20 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
         return retorno;
     }
 
+    private boolean validarHorasHorario() {
+        boolean retorno = true;
+        Integer horaLVApertura = Integer.valueOf(horaApertura);
+        Integer horaLVCierre = Integer.valueOf(horaCierre);
+        Integer horaSApertura = Integer.valueOf(horaAperturaSabado);
+        Integer horaSCierre = Integer.valueOf(horaCierreSabado);
+        if ((horaLVApertura < horaLVCierre) && (horaSApertura < horaSCierre)) {
+            retorno = true;
+        } else {
+            retorno = false;
+        }
+        return retorno;
+    }
+
     public boolean validarCodigoRepetido() {
         boolean retorno = true;
         HorarioAtencion registro = gestionarVariableHorariosAtencionBO.consultarHorarioAtencionPorCodigo(inputCodigo);
@@ -199,13 +207,18 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     public void registrarHorarioAtencion() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenarNuevoRegistro();
-                restaurarFormulario();
-                activarLimpiar = false;
-                activarAceptar = true;
-                activarCasillas = true;
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarHorasHorario() == true) {
+                    almacenarNuevoRegistro();
+                    restaurarFormulario();
+                    activarLimpiar = false;
+                    activarAceptar = true;
+                    activarCasillas = true;
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "Rectifique las horas de ingreso y salida para los días Lunes-Vienes y Sabados..";
+                }
             } else {
                 colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ingresado ya se encuentra registrado.";
@@ -227,8 +240,8 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
             nuevoHorario.setHoracierresabado(horaCierreSabado.toString());
             gestionarVariableHorariosAtencionBO.crearHorarioAtencion(nuevoHorario);
         } catch (Exception e) {
-            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro:  " + e.toString(),e);
-            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString(),e);
+            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro:  " + e.toString(), e);
+            logger.error("Error ControllerRegistrarHorarioAtencion almacenarNuevoRegistro: " + e.toString(), e);
         }
     }
 
@@ -392,7 +405,5 @@ public class ControllerRegistrarHorarioAtencion implements Serializable {
     public void setHoraCierreSabado(Integer horaCierreSabado) {
         this.horaCierreSabado = horaCierreSabado;
     }
-    
-    
 
 }

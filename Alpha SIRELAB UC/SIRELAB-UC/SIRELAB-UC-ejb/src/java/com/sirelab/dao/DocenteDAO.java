@@ -41,6 +41,7 @@ public class DocenteDAO implements DocenteDAOInterface {
     public void editarDocente(Docente docente) {
         try {
             em.merge(docente);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarDocente DocenteDAO : " + e.toString(),e);
         }

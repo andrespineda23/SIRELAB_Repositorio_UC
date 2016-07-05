@@ -44,6 +44,7 @@ public class TipoComponenteDAO implements TipoComponenteDAOInterface {
     public void editarTipoComponente(TipoComponente tipoComponente) {
         try {
             em.merge(tipoComponente);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarTipoComponente TipoComponenteDAO : " + e.toString(),e);
         }

@@ -193,14 +193,20 @@ and open the template in the editor.
                                 </fieldset>
                                 <br></br>
                                 <fieldset>
-                                    <legend class="text-info">Servicios Asociados Activos</legend>
+                                    <legend class="text-info">Servicios Asociados a la Sala</legend>
                                     <div class="row" >
                                         <h:dataTable id="dataTable" var="item" 
-                                                     styleClass="table table-condensed table-responsive"  
-                                                     value="#{controllerDetallesSala.listaServiciosAsociados}">
+                                                     styleClass="table table-striped table-hover table-responsive" 
+                                                     value="#{controllerDetallesSala.listaServiciosAsociadosTabla}">
                                             <h:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="Servicio"/>
+                                                    <h:outputText value="Código Servicio"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.serviciosala.codigoservicio}"/>
+                                            </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Nombre Servicio"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.serviciosala.nombreservicio}"/>
                                             </h:column>  
@@ -208,8 +214,24 @@ and open the template in the editor.
                                                 <f:facet name="header">
                                                     <h:outputText value="Estado"/>
                                                 </f:facet>
-                                                <h:selectBooleanCheckbox value="#{item.estado}"/>
-                                            </h:column>
+                                                <h:outputText value="#{item.strEstado}"/>
+                                            </h:column>  
+                                            <f:facet name="footer">
+                                                <nav>
+                                                    <ul class="pager">
+                                                        <li>
+                                                            <h:commandLink value="Anterior" actionListener="#{controllerDetallesSala.cargarPaginaAnteriorServicios()}" disabled="#{controllerDetallesSala.bloquearPagAntServicios}">
+                                                                <f:ajax execute="@form" render="form" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                            <h:commandLink value="Siguiente" actionListener="#{controllerDetallesSala.cargarPaginaSiguienteServicios()}" disabled="#{controllerDetallesSala.bloquearPagSigServicios}">
+                                                                <f:ajax execute="@form" render="form" />
+                                                            </h:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </f:facet>
                                         </h:dataTable>
                                     </div>
                                     <br></br>
@@ -264,7 +286,7 @@ and open the template in the editor.
                             <div class="col-md-12 row">
                                 <div class="col-md-11"></div>
                                 <div class="col-md-1">
-                                    <h:commandButton value="Atras" class="btn btn-primary" action="#{controllerDetallesSala.restaurarInformacionSalaLaboratorio()}" actionListener="#{controllerAdministrarSalas.limpiarDatos()}" immediate="true"/>
+                                    <h:commandButton value="Atras" class="btn btn-primary" action="#{controllerDetallesSala.restaurarInformacionSalaLaboratorio()}" actionListener="#{controllerDetallesSala.limpiarDatos()}" immediate="true"/>
                                 </div>
                             </div>
                         </div>

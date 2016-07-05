@@ -47,6 +47,7 @@ public class AdministradorEdificioDAO implements AdministradorEdificioDAOInterfa
     public void editarAdministradorEdificio(AdministradorEdificio administradoredificio) {
         try {
             em.merge(administradoredificio);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarAdministradorEdificio AdministradorEdificioDAO : " + e.toString(),e);
         }

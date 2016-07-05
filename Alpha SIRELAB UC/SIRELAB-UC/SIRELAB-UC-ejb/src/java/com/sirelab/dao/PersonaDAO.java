@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 public class PersonaDAO implements PersonaDAOInterface {
 
     static Logger logger = Logger.getLogger(PersonaDAO.class);
-    
+
     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
@@ -32,8 +32,9 @@ public class PersonaDAO implements PersonaDAOInterface {
         try {
             em.persist(persona);
             em.flush();
+            System.out.println("persona creada");
         } catch (Exception e) {
-            logger.error("Error crearPersona PersonaDAO : " + e.toString(),e);
+            logger.error("Error crearPersona PersonaDAO : " + e.toString(), e);
         }
     }
 
@@ -42,8 +43,9 @@ public class PersonaDAO implements PersonaDAOInterface {
         try {
             em.merge(persona);
             em.flush();
+            em.flush();
         } catch (Exception e) {
-            logger.error("Error editarPersona PersonaDAO : " + e.toString(),e);
+            logger.error("Error editarPersona PersonaDAO : " + e.toString(), e);
         }
     }
 
@@ -53,7 +55,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             em.remove(em.merge(persona));
             em.flush();
         } catch (Exception e) {
-            logger.error("Error eliminarPersona PersonaDAO : " + e.toString(),e);
+            logger.error("Error eliminarPersona PersonaDAO : " + e.toString(), e);
         }
     }
 
@@ -66,7 +68,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             List<Persona> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            logger.error("Error consultarPersonas PersonaDAO : " + e.toString(),e);
+            logger.error("Error consultarPersonas PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -81,7 +83,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorID PersonaDAO : " + e.toString(),e);
+            logger.error("Error buscarPersonaPorID PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -101,7 +103,7 @@ public class PersonaDAO implements PersonaDAOInterface {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error obtenerUltimaPersonaRegistrada PersonaDAO : " + e.toString(),e);
+            logger.error("Error obtenerUltimaPersonaRegistrada PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -117,11 +119,11 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorCorreoYNumeroIdentificacion PersonaDAO : " + e.toString(),e);
+            logger.error("Error buscarPersonaPorCorreoYNumeroIdentificacion PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
-    
+
     @Override
     public Persona buscarPersonaPorDocumento(String identificacion) {
         try {
@@ -132,7 +134,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorDocumento PersonaDAO : " + e.toString(),e);
+            logger.error("Error buscarPersonaPorDocumento PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -147,11 +149,11 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorCorreo PersonaDAO : " + e.toString(),e);
+            logger.error("Error buscarPersonaPorCorreo PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
-    
+
     @Override
     public Persona buscarPersonaPorUsuario(String usuario) {
         try {
@@ -162,7 +164,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error buscarPersonaPorUsuario PersonaDAO : " + e.toString(),e);
+            logger.error("Error buscarPersonaPorUsuario PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -178,7 +180,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             Persona registro = (Persona) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            logger.error("Error obtenerPersonaLoginUserPassword PersonaDAO : " + e.toString(),e);
+            logger.error("Error obtenerPersonaLoginUserPassword PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -198,7 +200,7 @@ public class PersonaDAO implements PersonaDAOInterface {
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            logger.error("Error buscarPersonasPorFiltrado PersonaDAO : " + e.toString(),e);
+            logger.error("Error buscarPersonasPorFiltrado PersonaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -217,9 +219,9 @@ public class PersonaDAO implements PersonaDAOInterface {
                         wheres.append(alias).append("." + "usuario.estado");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
-                    }                     
+                    }
                     if ("parametroNombre".equals(entry.getKey())) {
-                       wheres.append("UPPER(").append(alias)
+                        wheres.append("UPPER(").append(alias)
                                 .append(".nombrespersona")
                                 .append(") Like :parametroNombre");
                         camposFiltro++;

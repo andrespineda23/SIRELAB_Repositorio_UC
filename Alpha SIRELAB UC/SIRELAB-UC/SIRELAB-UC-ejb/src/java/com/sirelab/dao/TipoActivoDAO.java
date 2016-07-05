@@ -44,6 +44,7 @@ public class TipoActivoDAO implements TipoActivoDAOInterface {
     public void editarTipoActivo(TipoActivo tipoActivo) {
         try {
             em.merge(tipoActivo);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarTipoActivo TipoActivoDAO : " + e.toString(),e);
         }

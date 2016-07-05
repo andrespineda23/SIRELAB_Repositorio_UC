@@ -35,6 +35,7 @@ public class MensajesConstantes {
     public final String INVENTARIO_CAPACIDAD = "Formato (12) / Tamaño (Max 2)";
     public final String INVENTARIO_UBICACION = "Formato (Piso 4 - INTERNA) / Tamaño (Min 2 - Max 45)";
     public final String U_NOMBRE = "Formato (ejemplo) / Tamaño (Min 6 - Max 45)";
+    public final String U_NOMBRE_PLAN = "Formato (ejemplo) / Tamaño (Min 6 - Max 90)";
     public final String U_DESCRIP = "Formato (este es un ejemplo de una descripción) / Tamaño (Min 20 - Max 200)";
     public final String U_CODIGO = "Formato (1231) / Tamaño (Min 4 - Max 15)";
     public final String U_CODIGO_CARR = "Formato (1231) / Tamaño (Min 4 - Max 10)";

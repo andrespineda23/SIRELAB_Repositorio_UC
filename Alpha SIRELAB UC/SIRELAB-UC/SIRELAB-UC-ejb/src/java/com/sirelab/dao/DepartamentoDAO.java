@@ -41,6 +41,7 @@ public class DepartamentoDAO implements DepartamentoDAOInterface {
     public void editarDepartamento(Departamento departamento) {
         try {
             em.merge(departamento);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarDepartamento DepartamentoDAO : " + e.toString(),e);
         }

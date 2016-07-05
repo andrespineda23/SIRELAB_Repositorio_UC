@@ -14,7 +14,6 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.SalaLaboratorioxServicios;
 import com.sirelab.entidades.Sede;
-import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -76,10 +75,14 @@ public class ControllerDetallesSala implements Serializable {
     private boolean editarTipo;
     private MensajesConstantes constantes;
     private boolean perfilConsulta;
-    private TipoPerfil tipoPerfil;
-    private List<SalaLaboratorioxServicios> listaServiciosAsociados;
     private boolean costoAlquilerDigitado;
     private String mensajeError;
+
+    private List<SalaLaboratorioxServicios> listaServiciosAsociados;
+    private List<SalaLaboratorioxServicios> listaServiciosAsociadosTabla;
+    private int posicionServiciosTabla;
+    private int tamTotalServicios;
+    private boolean bloquearPagSigServicios, bloquearPagAntServicios;
 
     public ControllerDetallesSala() {
     }
@@ -114,6 +117,12 @@ public class ControllerDetallesSala implements Serializable {
         this.idSalaLaboratorio = idSalaLaboratorio;
         salaLaboratorioDetalles = gestionarPlantaSalasBO.obtenerSalaLaboratorioPorIDSalaLaboratorio(idSalaLaboratorio);
         listaServiciosAsociados = gestionarPlantaSalasBO.obtenerSalaLaboratorioxServiciosPorIdSala(this.idSalaLaboratorio);
+        if (null != listaServiciosAsociados) {
+            listaServiciosAsociadosTabla = new ArrayList<SalaLaboratorioxServicios>();
+            tamTotalServicios = listaServiciosAsociados.size();
+        }
+        posicionServiciosTabla = 0;
+        cargarDatosServiciosTabla();
         if (salaLaboratorioDetalles.getEstadosala() == true) {
             disabledActivar = true;
             disabledInactivar = false;
@@ -122,6 +131,60 @@ public class ControllerDetallesSala implements Serializable {
             disabledInactivar = true;
         }
         asignarValoresVariablesSalaLaboratorio();
+    }
+
+    private void cargarDatosServiciosTabla() {
+        if (tamTotalServicios < 10) {
+            for (int i = 0; i < tamTotalServicios; i++) {
+                listaServiciosAsociadosTabla.add(listaServiciosAsociados.get(i));
+            }
+            bloquearPagSigServicios = true;
+            bloquearPagAntServicios = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaServiciosAsociadosTabla.add(listaServiciosAsociados.get(i));
+            }
+            bloquearPagSigServicios = false;
+            bloquearPagAntServicios = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteServicios() {
+        listaServiciosAsociadosTabla = new ArrayList<SalaLaboratorioxServicios>();
+        posicionServiciosTabla = posicionServiciosTabla + 10;
+        int diferencia = tamTotalServicios - posicionServiciosTabla;
+        if (diferencia > 10) {
+            for (int i = posicionServiciosTabla; i < (posicionServiciosTabla + 10); i++) {
+                listaServiciosAsociadosTabla.add(listaServiciosAsociados.get(i));
+            }
+            bloquearPagSigServicios = false;
+            bloquearPagAntServicios = false;
+        } else {
+            for (int i = posicionServiciosTabla; i < (posicionServiciosTabla + diferencia); i++) {
+                listaServiciosAsociadosTabla.add(listaServiciosAsociados.get(i));
+            }
+            bloquearPagSigServicios = true;
+            bloquearPagAntServicios = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorServicios() {
+        listaServiciosAsociadosTabla = new ArrayList<SalaLaboratorioxServicios>();
+        posicionServiciosTabla = posicionServiciosTabla - 10;
+        int diferencia = tamTotalServicios - posicionServiciosTabla;
+        if (diferencia == tamTotalServicios) {
+            for (int i = posicionServiciosTabla; i < (posicionServiciosTabla + 10); i++) {
+                listaServiciosAsociadosTabla.add(listaServiciosAsociados.get(i));
+            }
+            bloquearPagSigServicios = false;
+            bloquearPagAntServicios = true;
+        } else {
+            for (int i = posicionServiciosTabla; i < (posicionServiciosTabla + 10); i++) {
+                listaServiciosAsociadosTabla.add(listaServiciosAsociados.get(i));
+            }
+            bloquearPagSigServicios = false;
+            bloquearPagAntServicios = false;
+        }
     }
 
     public void asignarValoresVariablesSalaLaboratorio() {
@@ -154,80 +217,23 @@ public class ControllerDetallesSala implements Serializable {
         cargarInformacionPerfil();
     }
 
-    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
-        Map<String, Object> lista = new HashMap<String, Object>();
-        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
-            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("DEPARTAMENTO", registro);
-            }
-        }
-        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
-            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("LABORATORIO", registro);
-            }
-        }
-        return lista;
-    }
-
     private void cargarInformacionPerfil() {
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             perfilConsulta = true;
         } else {
-            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                boolean validarPerfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
-                if (validarPerfilConsulta == false) {
-                    perfilConsulta = true;
-                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
-                    if (null != datosPerfil) {
-                        if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
-                            if (datosPerfil.containsKey("DEPARTAMENTO")) {
-                                activarDepartamento = true;
-                                departamentoSalaLaboratorio = (Departamento) datosPerfil.get("DEPARTAMENTO");
-                                listaDepartamentos = new ArrayList<Departamento>();
-                                listaDepartamentos.add(departamentoSalaLaboratorio);
-                            }
-                            if (datosPerfil.containsKey("LABORATORIO")) {
-                                activarLaboratorio = true;
-                                activarDepartamento = true;
-                                laboratorioSalaLaboratorio = (Laboratorio) datosPerfil.get("LABORATORIO");
-                                departamentoSalaLaboratorio = laboratorioSalaLaboratorio.getDepartamento();
-                                listaDepartamentos = new ArrayList<Departamento>();
-                                listaDepartamentos.add(departamentoSalaLaboratorio);
-                                listaLaboratorios = new ArrayList<Laboratorio>();
-                                listaLaboratorios.add(laboratorioSalaLaboratorio);
-                            }
-                        } else {
-                            activarDepartamento = false;
-                            activarLaboratorio = false;
-                            activarSede = false;
-                            activarEdificio = false;
-                        }
-                    } else {
-                        activarDepartamento = false;
-                        activarLaboratorio = false;
-                        activarSede = false;
-                        activarEdificio = false;
-                    }
-                } else {
-                    perfilConsulta = false;
-                }
-            } else {
-                if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                    Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
-                    edificioSalaLaboratorio = edificio;
-                    sedeSalaLaboratorio = edificio.getSede();
-                    activarSede = true;
-                    activarEdificio = true;
-                    activarDepartamento = false;
-                    activarLaboratorio = false;
-                    listaSedes = new ArrayList<Sede>();
-                    listaEdificios = new ArrayList<Edificio>();
-                    listaSedes.add(sedeSalaLaboratorio);
-                    listaEdificios.add(edificioSalaLaboratorio);
-                }
+            if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+                Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
+                edificioSalaLaboratorio = edificio;
+                sedeSalaLaboratorio = edificio.getSede();
+                activarSede = true;
+                activarEdificio = true;
+                activarDepartamento = false;
+                activarLaboratorio = false;
+                listaSedes = new ArrayList<Sede>();
+                listaEdificios = new ArrayList<Edificio>();
+                listaSedes.add(sedeSalaLaboratorio);
+                listaEdificios.add(edificioSalaLaboratorio);
             }
         }
     }
@@ -235,17 +241,6 @@ public class ControllerDetallesSala implements Serializable {
     private Edificio obtenerEdificio(BigInteger usuario) {
         Edificio edificio = administrarValidadorTipoUsuario.buscarEdificioPorIdEncargadoEdificio(usuario);
         return edificio;
-    }
-
-    private boolean validarSesionConsulta(BigInteger usuario) {
-        boolean retorno = false;
-        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuario);
-        if (null != tipoPerfil) {
-            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
-                retorno = true;
-            }
-        }
-        return retorno;
     }
 
     public void activarEditarRegistro() {
@@ -451,7 +446,7 @@ public class ControllerDetallesSala implements Serializable {
             }
             modificacionesRegistroSala();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaSala actualizarSedes : " + e.toString(), e);
         }
     }
 
@@ -560,7 +555,7 @@ public class ControllerDetallesSala implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -580,7 +575,7 @@ public class ControllerDetallesSala implements Serializable {
             gestionarPlantaSalasBO.modificarInformacionSalaLaboratorio(salaLaboratorioDetalles);
             gestionarPlantaSalasBO.almacenarModificacionesSalaServicio(listaServiciosAsociados);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaSalas almacenaModificacionSalaEnSistema:  " + e.toString(), e);
         }
     }
 
@@ -604,8 +599,8 @@ public class ControllerDetallesSala implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -624,8 +619,8 @@ public class ControllerDetallesSala implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -892,6 +887,46 @@ public class ControllerDetallesSala implements Serializable {
 
     public void setCostoAlquilerDigitado(boolean costoAlquilerDigitado) {
         this.costoAlquilerDigitado = costoAlquilerDigitado;
+    }
+
+    public List<SalaLaboratorioxServicios> getListaServiciosAsociadosTabla() {
+        return listaServiciosAsociadosTabla;
+    }
+
+    public void setListaServiciosAsociadosTabla(List<SalaLaboratorioxServicios> listaServiciosAsociadosTabla) {
+        this.listaServiciosAsociadosTabla = listaServiciosAsociadosTabla;
+    }
+
+    public int getPosicionServiciosTabla() {
+        return posicionServiciosTabla;
+    }
+
+    public void setPosicionServiciosTabla(int posicionServiciosTabla) {
+        this.posicionServiciosTabla = posicionServiciosTabla;
+    }
+
+    public int getTamTotalServicios() {
+        return tamTotalServicios;
+    }
+
+    public void setTamTotalServicios(int tamTotalServicios) {
+        this.tamTotalServicios = tamTotalServicios;
+    }
+
+    public boolean isBloquearPagSigServicios() {
+        return bloquearPagSigServicios;
+    }
+
+    public void setBloquearPagSigServicios(boolean bloquearPagSigServicios) {
+        this.bloquearPagSigServicios = bloquearPagSigServicios;
+    }
+
+    public boolean isBloquearPagAntServicios() {
+        return bloquearPagAntServicios;
+    }
+
+    public void setBloquearPagAntServicios(boolean bloquearPagAntServicios) {
+        this.bloquearPagAntServicios = bloquearPagAntServicios;
     }
 
 }

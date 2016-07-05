@@ -41,10 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proveedor.findByVendedorproveedor", query = "SELECT p FROM Proveedor p WHERE p.vendedorproveedor = :vendedorproveedor"),
     @NamedQuery(name = "Proveedor.findByTelefonovendedor", query = "SELECT p FROM Proveedor p WHERE p.telefonovendedor = :telefonovendedor")})
 public class Proveedor implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
     private Collection<EquipoElemento> equipoElementoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
-    private Collection<IngresoInsumo> ingresoInsumoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -191,15 +190,6 @@ public class Proveedor implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Proveedor[ idproveedor=" + idproveedor + " ]";
-    }
-
-    @XmlTransient
-    public Collection<IngresoInsumo> getIngresoInsumoCollection() {
-        return ingresoInsumoCollection;
-    }
-
-    public void setIngresoInsumoCollection(Collection<IngresoInsumo> ingresoInsumoCollection) {
-        this.ingresoInsumoCollection = ingresoInsumoCollection;
     }
 
     @XmlTransient

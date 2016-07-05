@@ -44,6 +44,7 @@ public class TipoMovimientoDAO implements TipoMovimientoDAOInterface {
     public void editarTipoMovimiento(TipoMovimiento tipoMovimiento) {
         try {
             em.merge(tipoMovimiento);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarTipoMovimiento TipoMovimientoDAO : " + e.toString(),e);
         }

@@ -29,11 +29,8 @@ and open the template in the editor.
                                         </h2>
                                         <span></span>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 hidden-sm hidden-xs">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                 <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
-                                            </div>
-                                            <div class="hidden-md hidden-lg col-sm-6 col-xs-6">
-                                                <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-block btn-danger"/>
                                             </div>
                                         </div>
                                     </div>
@@ -43,101 +40,6 @@ and open the template in the editor.
 
                     </div>
                     <!--HOME SECTION END  -->
-                    <!-- ABOUT SECTION START-->
-                    <section id="info">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-                                    <h2 class="head-line">Noticias de tu interes</h2>
-                                    <p>
-
-                                    </p>
-                                    <div class="bs-example">
-                                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                            <!-- Carousel indicators -->
-                                            <ol class="carousel-indicators">
-                                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                                                <li data-target="#myCarousel" data-slide-to="2"></li>
-                                            </ol>   
-                                            <!-- Wrapper for carousel items -->
-                                            <div class="carousel-inner">
-                                                <div class="item slide active">
-                                                    <aside>
-                                                        <img src="../../img/carousel1.jpg" class="img-responsive" alt="First Slide"></img>
-                                                    </aside>
-                                                    <div class="carousel-caption">
-                                                        <h3>Universidades piensan la ciudad</h3>
-                                                        <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
-                                                        <p>
-                                                            <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
-                                                                Leer más...		
-                                                            </a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="item slide">
-                                                    <aside>
-                                                        <img src="../../img/carousel2.jpg" class="img-responsive" alt="Second Slide"></img>
-                                                    </aside>
-                                                    <div class="carousel-caption">
-                                                        <h3>Universidades piensan la ciudad</h3>
-                                                        <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
-                                                        <p>
-                                                            <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
-                                                                Leer más...		
-                                                            </a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="item slide">
-                                                    <aside> 
-                                                        <img src="../../img/carousel3.jpg" class="img-responsive" alt="Third Slide"></img>
-                                                    </aside>
-                                                    <div class="carousel-caption">
-                                                        <h3>Universidades piensan la ciudad</h3>
-                                                        <p class="hidden-xs">Este foro contará con invitados internacionales y tendrá lugar los días 27 y 28 de agosto en las universidades Central y Tadeo Lozano.    </p>
-                                                        <p>
-                                                            <a title="Universidades piensan la ciudad" href="/noticentral-uc/de-la-academia-a-la-renovacion-urbana" class="btn btn-warning btn-sm">
-                                                                Leer más...		
-                                                            </a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Carousel controls -->
-                                            <a class="carousel-control left" href="#myCarousel" data-slide="prev">
-                                                <span class="glyphicon glyphicon-chevron-left"></span>
-                                            </a>
-                                            <a class="carousel-control right" href="#myCarousel" data-slide="next">
-                                                <span class="glyphicon glyphicon-chevron-right"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <script>
-                                        $(function () {
-                                            $('.carousel').carousel({
-                                                interval: 1000
-                                            });
-                                        });
-                                    </script>
-                                </div>
-                                <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
-                                    <h2 class="head-line">Instructivo de reserva</h2>
-                                    <p>
-                                        A continuación se encuentra un video instructivo en el cual se realizao un proceso de 
-                                        solicitud de prestamo de un elemento de laboratorio.x x x x x x x
-                                    </p>
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/wo8V6526Cuc" frameborder="0" allowfullscreen=""></iframe>
-                                    </div>
-                                    <p>
-                                        Recuerda siempre que tengas dudas acerca de como realizar un proceso de reserva o cancelación revisar esta información para que realices tu proceso de una forma rapida y sencilla.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                     <div class="container">
                         <div class="content-section-b">
                             <div class="container">
@@ -149,7 +51,7 @@ and open the template in the editor.
                                         <p> Por medio de esta funcionalidad usted podra registrar una guía de laboratorio que no se encuentre registrada en el sistema para realizar alguna practica academica dentro de los laboratorios de la universidad. Recuerde que las guías de laboratorio son la base para una reserva de una sala de laboratorio, ya que esta guía fundamenta la solicitud del área a solicitar.</p>
                                         <br></br>
                                         <div class="row">    
-                                            <h:commandButton value="Adicionar" action="registrarguialaboratorio" actionListener="#{controllerRegistrarGuiaLaboratorio.recibirPaginaAnterior('iniciodocente')}" class="btn btn-block btn-default"/>
+                                            <h:commandButton value="Adicionar" action="registrarguialaboratorio" actionListener="#{controllerRegistrarGuiaLaboratorio.recibirPaginaAnterior('iniciodocente')}" class="btn btn-block btn-default col-md-6"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -157,6 +59,7 @@ and open the template in the editor.
                                         <div class="clearfix"></div>
                                         <h2 class=" head-line section-heading"><strong>Consulta Laboratorios</strong></h2>
                                         <p> Por medio de esta funcionalidad usted podra consultar información relacionada con la infraestructura de los laboratorios de la universidad. Puede consultar información de salas de laboratorio, modulos de laboratorio y equipos de laboratorio. <strong>ESTA FUNCIONALIDAD TAN SOLO ES DE CONSULTA</strong>.</p>
+                                        <br></br>
                                         <br></br>
                                         <div class="row">    
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"><h:commandButton value="Consultar Sala" action="consultarsalas" class="btn btn-block btn-default"/></div>
@@ -171,31 +74,32 @@ and open the template in the editor.
                         <div class="content-section-a">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 hidden-xs hidden-sm"></div>
-                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
-                                        <hr class="section-heading-spacer"/>
-                                        <div class="clearfix"></div>
-                                        <h2 class=" head-line section-heading">Reservas</h2>
-                                        <p>Por medio de esta funcionalidad usted podra realizar procesos de consulta de alguna reserva realizada, cancelación o solicitar una nueva área de trabajo para realizar alguna practica. Si tiene algunda duda acerca del proceso recuerde que en la parte superior de la pagina se encuentra un instructivo para realizar este proceso.</p>
-                                        <row>
-                                            <h:commandButton class="btn btn-info btn-block" value="Consultar Reservas Reaizadas" action="consultarreservas" actionListener="#{controllerConsultarReservas.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
-                                        </row>
-                                        <br></br>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h:commandButton class="btn btn-success btn-block" value="Realizar Reserva Sala" action="reservasala1" actionListener="#{controllerReservaSala1.cargarInformacionReserva()}"/>
-                                            </div>
-                                            <span></span>
-                                            <div class="col-md-6">
-                                                <h:commandButton class="btn btn-success btn-block" value="Realizar Reserva Modulo" action="reservamodulo1" actionListener="#{controllerReservaModulo1.cargarInformacionReserva()}"/>
-                                            </div>
+                                    <hr class="section-heading-spacer"/>
+                                    <div class="clearfix"></div>
+                                    <h2 class="head-line section-heading">Reservas</h2>
+                                    <p>Por medio de esta funcionalidad usted podra realizar procesos de consulta de alguna reserva realizada, cancelación o solicitar una nueva área de trabajo para realizar alguna practica. Si tiene algunda duda acerca del proceso recuerde que en la parte superior de la pagina se encuentra un instructivo para realizar este proceso.</p>
+                                    <row>
+                                        <div class="col-md-6">
+                                            <h:commandButton class="btn btn-success btn-block" value="Realizar Reserva Sala" action="reservasala1" actionListener="#{controllerReservaSala1.cargarInformacionReserva()}"/>
                                         </div>
-                                        <br></br>
-                                        <row>
-                                            <h:commandButton class="btn btn-warning btn-block" value="Adicionar Equipo a Reserva" action="reservaequipo" />
-                                        </row>
-                                        <br></br>
-                                    </div>
+                                        <span></span>
+                                        <div class="col-md-6">
+                                            <h:commandButton class="btn btn-danger btn-block" value="Realizar Reserva Modulo" action="reservamodulo1" actionListener="#{controllerReservaModulo1.cargarInformacionReserva()}"/>
+                                        </div>
+                                    </row>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <row>
+                                        <div class="col-md-6">
+                                            <h:commandButton class="btn btn-info btn-block" value="Consultar Reservas Realizadas" action="consultarreservas" actionListener="#{controllerConsultarReservas.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
+                                        </div>
+                                        <span></span>
+                                        <div class="col-md-6">
+                                            <h:commandButton class="btn btn-warning btn-block " value="Adicionar Equipo a Reserva" action="reservaequipo" />
+                                        </div>
+                                    </row>
+                                    <br></br>
                                 </div>
                             </div>
                         </div>
@@ -206,3 +110,5 @@ and open the template in the editor.
         </ui:composition>
     </h:body>
 </html>
+
+

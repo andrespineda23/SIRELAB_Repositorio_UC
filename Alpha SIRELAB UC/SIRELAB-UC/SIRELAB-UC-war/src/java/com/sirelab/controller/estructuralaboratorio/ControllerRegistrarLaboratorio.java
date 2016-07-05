@@ -11,7 +11,6 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOIn
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
-import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -61,7 +60,6 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     private boolean activarAceptar;
     private MensajesConstantes constantes;
     private boolean perfilConsulta;
-    private TipoPerfil tipoPerfil;
     private String mensajeError;
 
     public ControllerRegistrarLaboratorio() {
@@ -92,62 +90,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
     }
 
     public void iniciarPagina() {
-        cargarInformacionPerfil();
-    }
-
-    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
-        Map<String, Object> lista = new HashMap<String, Object>();
-        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
-            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("DEPARTAMENTO", registro);
-            }
-        }
-        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
-            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("LABORATORIO", registro);
-            }
-        }
-        return lista;
-    }
-
-    private void cargarInformacionPerfil() {
-        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
-        if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-            perfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
-            if (perfilConsulta == false) {
-                Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
-                if (null != datosPerfil) {
-                    if (datosPerfil.containsKey("DEPARTAMENTO")) {
-                        activarNuevoFacultad = true;
-                        validacionesDepartamento = true;
-                        validacionesFacultad = true;
-                        activarNuevoDepartamento = true;
-                        nuevoDepartamento = (Departamento) datosPerfil.get("DEPARTAMENTO");
-                        nuevoFacultad = nuevoDepartamento.getFacultad();
-                        listaDepartamentos = new ArrayList<Departamento>();
-                        listaFacultades = new ArrayList<Facultad>();
-                        listaDepartamentos.add(nuevoDepartamento);
-                        listaFacultades.add(nuevoFacultad);
-                    }
-                } else {
-                    activarNuevoFacultad = false;
-                    activarNuevoDepartamento = true;
-                }
-            }
-        }
-    }
-
-    private boolean validarSesionConsulta(BigInteger usuario) {
-        boolean retorno = false;
-        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuario);
-        if (null != tipoPerfil) {
-            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
-                retorno = true;
-            }
-        }
-        return retorno;
+        //    cargarInformacionPerfil();
     }
 
     public void actualizarFacultades() {
@@ -262,7 +205,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -276,7 +219,7 @@ public class ControllerRegistrarLaboratorio implements Serializable {
             laboratorioNuevo.setDepartamento(nuevoDepartamento);
             gestionarPlantaLaboratoriosBO.crearNuevoLaboratorio(laboratorioNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString(), e);
 
         }
     }
@@ -295,7 +238,6 @@ public class ControllerRegistrarLaboratorio implements Serializable {
         validacionesFacultad = false;
         validacionesNombre = false;
         mensajeFormulario = "";
-        cargarInformacionPerfil();
     }
 
     public void cancelarRegistroLaboratorio() {

@@ -39,6 +39,7 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
     public void editarTipoUsuario(TipoUsuario tipoUsuario) {
         try {
             em.merge(tipoUsuario);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarTipoUsuario TipoUsuarioDAO : " + e.toString(),e);
         }
@@ -80,15 +81,15 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
             logger.error("Error buscarTipoUsuarioPorID TipoUsuarioDAO : " + e.toString(),e);
             return null;
         }
-    }
+    }   
 
     @Override
     public TipoUsuario buscarTipoUsuarioPorNombre(String nombreTipoUsuario) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoUsuario p WHERE UPPER(p.nombretipousuario) Like :nombreTipoUsuario");
+            Query query = em.createQuery("SELECT p FROM TipoUsuario p WHERE UPPER(p.nombretipousuario) = :nombreTipoUsuario");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("nombreTipoUsuario", "%"+nombreTipoUsuario+"%");
+            query.setParameter("nombreTipoUsuario", nombreTipoUsuario);
             TipoUsuario registro = (TipoUsuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {

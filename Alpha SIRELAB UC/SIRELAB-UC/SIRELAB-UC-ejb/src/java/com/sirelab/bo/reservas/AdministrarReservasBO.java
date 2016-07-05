@@ -7,11 +7,9 @@
 package com.sirelab.bo.reservas;
 
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
-import com.sirelab.bo.recursoslab.GestionarRecursoServiciosSalaBO;
 import com.sirelab.dao.interfacedao.AsignaturaPorPlanEstudioDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
-import com.sirelab.dao.interfacedao.EntidadExternaDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstadoReservaDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
@@ -19,7 +17,6 @@ import com.sirelab.dao.interfacedao.GuiaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
-import com.sirelab.dao.interfacedao.PersonaContactoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaDAOInterface;
@@ -32,7 +29,6 @@ import com.sirelab.dao.interfacedao.ServiciosSalaDAOInterface;
 import com.sirelab.dao.interfacedao.TipoReservaDAOInterface;
 import com.sirelab.entidades.AsignaturaPorPlanEstudio;
 import com.sirelab.entidades.Docente;
-import com.sirelab.entidades.EntidadExterna;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoReserva;
 import com.sirelab.entidades.Estudiante;
@@ -41,7 +37,6 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
-import com.sirelab.entidades.PersonaContacto;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.ReservaEquipoElemento;
@@ -71,8 +66,6 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
     static Logger logger = Logger.getLogger(AdministrarReservasBO.class);
 
     @EJB
-    PersonaContactoDAOInterface personaContactoDAO;
-    @EJB
     ReservaDAOInterface reservaDAO;
     @EJB
     ReservaSalaDAOInterface reservaSalaDAO;
@@ -82,8 +75,6 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
     PersonaDAOInterface personaDAO;
     @EJB
     EstudianteDAOInterface estudianteDAO;
-    @EJB
-    EntidadExternaDAOInterface entidadExternaDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
@@ -157,13 +148,8 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
                 Estudiante estudiante = estudianteDAO.buscarEstudiantePorID(idPersona);
                 registro = estudiante.getPersona();
             } else {
-                if ("DOCENTE".equalsIgnoreCase(tipoUsuario)) {
-                    Docente docente = docenteDAO.buscarDocentePorID(idPersona);
-                    registro = docente.getPersona();
-                } else {
-                    EntidadExterna entidad = entidadExternaDAO.buscarEntidadExternaPorID(idPersona);
-                    //registro = entidad.getPersona();
-                }
+                Docente docente = docenteDAO.buscarDocentePorID(idPersona);
+                registro = docente.getPersona();
             }
             return registro;
         } catch (Exception e) {
@@ -236,11 +222,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             } else if ("DOCENTE".equalsIgnoreCase(tipoUsuario)) {
                 Docente docente = docenteDAO.buscarDocentePorID(usuario);
                 persona = docente.getPersona();
-            } else if ("ENTIDADEXTERNA".equalsIgnoreCase(tipoUsuario)) {
-                PersonaContacto personaContacto = personaContactoDAO.buscarPersonaContactoPorID(usuario);
-                persona = personaContacto.getPersona();
             }
-
             Reserva reserva = reservaDAO.buscarUltimaReservaPersonaConEstado(persona.getIdpersona(), horaInicio, fecha);
             if (null != reserva) {
                 return false;

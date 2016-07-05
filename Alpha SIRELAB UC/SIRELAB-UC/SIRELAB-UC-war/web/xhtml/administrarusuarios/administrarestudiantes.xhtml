@@ -271,7 +271,10 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <h:commandButton value="Nuevo Estudiantes" action="registrarestudiante" actionListener="#{controllerAdministrarEstudiantes.limpiarProcesoBusqueda()}" id="nuevoEstudiante" class="btn btn-success"/>
+                            </div>
+                            <div class="col-md-10"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atras" action="#{controllerAdministrarEstudiantes.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
                             </div>

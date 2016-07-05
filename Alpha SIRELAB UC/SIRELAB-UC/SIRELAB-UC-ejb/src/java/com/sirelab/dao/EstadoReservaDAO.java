@@ -44,6 +44,7 @@ public class EstadoReservaDAO implements EstadoReservaDAOInterface {
     public void editarEstadoReserva(EstadoReserva estadoReserva) {
         try {
             em.merge(estadoReserva);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarEstadoReserva EstadoReservaDAO : " + e.toString(),e);
         }

@@ -11,7 +11,6 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
-import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -55,12 +54,10 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     private List<Laboratorio> listaLaboratorio;
     private Laboratorio laboratorioEncargadoLaboratorio;
     private boolean activoLaboratorio;
-    private List<TipoPerfil> listaTiposPerfiles;
-    private TipoPerfil perfilEncargadoLaboratorio;
     private String nombreEncargadoLaboratorio, apellidoEncargadoLaboratorio, correoEncargadoLaboratorio, correoOpcionalEncargadoLaboratorio, identificacionEncargadoLaboratorio;
     private String telefono1EncargadoLaboratorio, telefono2EncargadoLaboratorio, direccionEncargadoLaboratorio;
     private boolean validacionesNombre, validacionesApellido, validacionesCorreo, validacionesCorreoOpcional;
-    private boolean validacionesID, validacionesTel1, validacionesTel2, validacionesPerfil;
+    private boolean validacionesID, validacionesTel1, validacionesTel2;
     private boolean validacionesDireccion, validacionesFacultad, validacionesDepartamento, validacionesLaboratorio;
     private String mensajeFormulario;
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -102,8 +99,6 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         facultadEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio().getDepartamento().getFacultad();
         departamentoEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio().getDepartamento();
         laboratorioEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio();
-        perfilEncargadoLaboratorio = encargadoLaboratorioDetalles.getTipoperfil();
-        listaTiposPerfiles = administrarEncargadosLaboratoriosBO.consultarPerfilesPorEncargadoRegistrados();
         listaFacultad = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
         if (null != facultadEncargadoLaboratorio) {
             listaDepartamento = administrarEncargadosLaboratoriosBO.obtenerDepartamentosPorIDFacultad(facultadEncargadoLaboratorio.getIdfacultad());
@@ -111,8 +106,6 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         if (departamentoEncargadoLaboratorio != null) {
             listaLaboratorio = administrarEncargadosLaboratoriosBO.obtenerLaboratoriosPorIDDepartamento(departamentoEncargadoLaboratorio.getIddepartamento());
         }
-
-        validacionesPerfil = true;
         validacionesNombre = true;
         validacionesApellido = true;
         validacionesCorreo = true;
@@ -150,6 +143,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             disabledInactivar = true;
         }
         asignarValoresVariablesEncargadoLaboratorio();
+        System.out.println("Llego");
     }
 
     /**
@@ -170,7 +164,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
      * Metodo encargado de restaurar la información del encargado laboratorio
      */
     public String restaurarInformacionEncargadoLaboratorio() {
-        mensajeError = ""; 
+        mensajeError = "";
         encargadoLaboratorioDetalles = new EncargadoLaboratorio();
         encargadoLaboratorioDetalles = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio(idEncargadoLaboratorio);
         if (encargadoLaboratorioDetalles.getPersona().getUsuario().getEstado() == true) {
@@ -191,7 +185,6 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         listaDepartamento = null;
         listaFacultad = null;
         validacionesCorreoOpcional = true;
-        validacionesPerfil = true;
         validacionesNombre = true;
         validacionesApellido = true;
         validacionesCorreo = true;
@@ -236,7 +229,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades : " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades : " + e.toString(), e);
         }
     }
 
@@ -261,7 +254,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             }
             modificacionesRegistroEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos:  " + e.toString(), e);
         }
     }
 
@@ -275,33 +268,23 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         modificacionesRegistroEncargadoLaboratorio();
     }
 
-    public void actualizarTipoPerfil() {
-        if (Utilidades.validarNulo(perfilEncargadoLaboratorio)) {
-            validacionesPerfil = true;
-        } else {
-            validacionesPerfil = false;
-            FacesContext.getCurrentInstance().addMessage("form:perfilEncargadoLaboratorio", new FacesMessage("El campo Perfil por Encargado es obligatorio."));
-        }
-        modificacionesRegistroEncargadoLaboratorio();
-    }
-
     public void validarNombreEncargadoLaboratorio() {
         if (Utilidades.validarNulo(nombreEncargadoLaboratorio) && (!nombreEncargadoLaboratorio.isEmpty()) && (nombreEncargadoLaboratorio.trim().length() > 0)) {
             int tam = nombreEncargadoLaboratorio.length();
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(nombreEncargadoLaboratorio)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.USUARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.USUARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.USUARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre es obligatorio. "+constantes.USUARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nombreEncargadoLaboratorio", new FacesMessage("El nombre es obligatorio. " + constantes.USUARIO_NOMBRE));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -312,17 +295,17 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(apellidoEncargadoLaboratorio)) {
                     validacionesApellido = false;
-                    FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido ingresado es incorrecto. "+constantes.USUARIO_APELLIDO));
+                    FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido ingresado es incorrecto. " + constantes.USUARIO_APELLIDO));
                 } else {
                     validacionesApellido = true;
                 }
             } else {
                 validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_APELLIDO));
+                FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.USUARIO_APELLIDO));
             }
         } else {
             validacionesApellido = false;
-            FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido es obligatorio. "+constantes.USUARIO_APELLIDO));
+            FacesContext.getCurrentInstance().addMessage("form:apellidoEncargadoLaboratorio", new FacesMessage("El apellido es obligatorio. " + constantes.USUARIO_APELLIDO));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -346,15 +329,15 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                     }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO));
+                    FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto. " + constantes.USUARIO_CORREO));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.USUARIO_CORREO));
+                FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.USUARIO_CORREO));
             }
         } else {
             validacionesCorreo = false;
-            FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo es obligatorio. "+constantes.USUARIO_CORREO));
+            FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo es obligatorio. " + constantes.USUARIO_CORREO));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -367,11 +350,11 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                     validacionesCorreoOpcional = true;
                 } else {
                     validacionesCorreoOpcional = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO_OPC));
+                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El correo se encuentra incorrecto. " + constantes.USUARIO_CORREO_OPC));
                 }
             } else {
                 validacionesCorreoOpcional = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 15 caracteres. "+constantes.USUARIO_CORREO_OPC));
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 15 caracteres. " + constantes.USUARIO_CORREO_OPC));
             }
         }
         modificacionesRegistroEncargadoLaboratorio();
@@ -395,15 +378,15 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                     }
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación se encuentra incorrecto. "+constantes.USUARIO_ID));
+                    FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación se encuentra incorrecto. " + constantes.USUARIO_ID));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.USUARIO_ID));
+                FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.USUARIO_ID));
             }
         } else {
             validacionesID = false;
-            FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación es obligatorio. "+constantes.USUARIO_ID));
+            FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El numero identificación es obligatorio. " + constantes.USUARIO_ID));
         }
         modificacionesRegistroEncargadoLaboratorio();
     }
@@ -411,33 +394,11 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     public void validarDatosNumericosEncargadoLaboratorio(int tipoTel) {
         if (tipoTel == 1) {
             if (Utilidades.validarNulo(telefono1EncargadoLaboratorio) && (!telefono1EncargadoLaboratorio.isEmpty()) && (telefono1EncargadoLaboratorio.trim().length() > 0)) {
-                int tam = telefono1EncargadoLaboratorio.length();
-                if (tam == 4) {
-                    if ((Utilidades.isNumber(telefono1EncargadoLaboratorio)) == false) {
-                        validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono1EncargadoLaboratorio", new FacesMessage("El numero de extensión se encuentra incorrecto. "+constantes.USUARIO_TELEXT));
-                    } else {
-                        validacionesTel1 = true;
-                    }
-                } else {
-                    validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono1EncargadoLaboratorio", new FacesMessage("El numero de extensión se encuentra incorrecto. "+constantes.USUARIO_TELEXT));
-                }
+                validacionesTel1 = true;
             }
         } else {
             if (Utilidades.validarNulo(telefono2EncargadoLaboratorio) && (!telefono2EncargadoLaboratorio.isEmpty()) && (telefono2EncargadoLaboratorio.trim().length() > 0)) {
-                int tam = telefono2EncargadoLaboratorio.length();
-                if (tam == 10) {
-                    if ((Utilidades.isNumber(telefono2EncargadoLaboratorio)) == false) {
-                        validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono2EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
-                    } else {
-                        validacionesTel2 = true;
-                    }
-                } else {
-                    validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono2EncargadoLaboratorio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
-                }
+                validacionesTel2 = true;
             }
         }
         modificacionesRegistroEncargadoLaboratorio();
@@ -450,11 +411,11 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 if (Utilidades.validarDirecciones(direccionEncargadoLaboratorio)) {
                     validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("La dirección se encuentra incorrecta. "+constantes.USUARIO_DIRECCION));
+                    FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("La dirección se encuentra incorrecta. " + constantes.USUARIO_DIRECCION));
                     validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("LEl tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
+                FacesContext.getCurrentInstance().addMessage("form:direccionEncargadoLaboratorio", new FacesMessage("LEl tamaño minimo permitido es 8 caracteres. " + constantes.USUARIO_DIRECCION));
                 validacionesDireccion = false;
             }
         }
@@ -465,70 +426,70 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         boolean retorno = true;
         mensajeError = "";
         if (validacionesApellido == false) {
-            mensajeError = mensajeError  + " - Apellido - "; 
+            mensajeError = mensajeError + " - Apellido - ";
             retorno = false;
         }
         if (validacionesDepartamento == false) {
-            mensajeError = mensajeError  + " - Departamento - "; 
+            mensajeError = mensajeError + " - Departamento - ";
             retorno = false;
         }
         if (validacionesCorreo == false) {
-            mensajeError = mensajeError  + " - Correo Inst. - "; 
+            mensajeError = mensajeError + " - Correo Inst. - ";
             retorno = false;
         }
         if (validacionesCorreoOpcional == false) {
-            mensajeError = mensajeError  + " - Correo Pers. - "; 
+            mensajeError = mensajeError + " - Correo Pers. - ";
             retorno = false;
         }
         if (validacionesDireccion == false) {
-            mensajeError = mensajeError  + " - Dirección - "; 
+            mensajeError = mensajeError + " - Dirección - ";
             retorno = false;
         }
         if (validacionesID == false) {
-            mensajeError = mensajeError  + " - Identificación - "; 
+            mensajeError = mensajeError + " - Identificación - ";
             retorno = false;
         }
         if (validacionesNombre == false) {
-            mensajeError = mensajeError  + " - Nombre - "; 
+            mensajeError = mensajeError + " - Nombre - ";
             retorno = false;
         }
         if (validacionesFacultad == false) {
-            mensajeError = mensajeError  + " - Facultad - "; 
+            mensajeError = mensajeError + " - Facultad - ";
             retorno = false;
         }
         if (validacionesLaboratorio == false) {
-            mensajeError = mensajeError  + " - Laboratorio - "; 
+            mensajeError = mensajeError + " - Laboratorio - ";
             retorno = false;
         }
         if (validacionesTel1 == false) {
-            mensajeError = mensajeError  + " - Núm. Extensión - "; 
-            retorno = false;
-        }
-        if (validacionesPerfil == false) {
-            mensajeError = mensajeError  + " - Tipo Perfil - "; 
+            mensajeError = mensajeError + " - Núm. Extensión - ";
             retorno = false;
         }
         if (validacionesTel2 == false) {
-            mensajeError = mensajeError  + " - Telefono Celular - "; 
+            mensajeError = mensajeError + " - Telefono Celular - ";
             retorno = false;
         }
         return retorno;
     }
 
     public void almacenarModificacionesEncargadoLaboratorio() {
+        System.out.println("Llego");
         if (modificacionRegistro == true) {
+            System.out.println("Llego paso 1");
             if (validarResultadosValidacion() == true) {
+                System.out.println("Llego paso 2");
                 modificarInformacionEncargadoLaboratorio();
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "#FF0000";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
             }
         } else {
             colorMensaje = "black";
             mensajeFormulario = "No se presento algun cambio en el registro. No se realizo ningun proceso de almacenamiento.";
         }
+        System.out.println("finalizo");
     }
 
     /**
@@ -545,14 +506,12 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             encargadoLaboratorioDetalles.getPersona().setNombrespersona(nombreEncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setTelefono1persona(telefono1EncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setTelefono2persona(telefono2EncargadoLaboratorio);
-            encargadoLaboratorioDetalles.setTipoperfil(perfilEncargadoLaboratorio);
             encargadoLaboratorioDetalles.setLaboratorio(laboratorioEncargadoLaboratorio);
             administrarEncargadosLaboratoriosBO.actualizarInformacionPersona(encargadoLaboratorioDetalles.getPersona());
             administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
             restaurarInformacionEncargadoLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadoLaboratorio modificarInformacionEncargadoLaboratorio : " + e.toString(), e);
 
         }
     }
@@ -561,9 +520,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
      * Metodo encargado de registrar alguna modificación del registro
      */
     public void modificacionesRegistroEncargadoLaboratorio() {
-        if (modificacionRegistro == false) {
-            modificacionRegistro = true;
-        }
+        modificacionRegistro = true;
     }
 
     /**
@@ -583,8 +540,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio activarEncargadoLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesEncargadosLaboratorios activarEncargadoLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadosLaboratorios activarEncargadoLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -606,8 +562,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEncargadoLaboratorio inactivarEncargadoLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesEncargadosLaboratorios inactivarEncargadoLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesEncargadoLaboratorio inactivarEncargadoLaboratorio:  " + e.toString(), e);
         }
     }
 
@@ -802,22 +757,6 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
 
     public void setMensajeFormulario(String mensajeFormulario) {
         this.mensajeFormulario = mensajeFormulario;
-    }
-
-    public List<TipoPerfil> getListaTiposPerfiles() {
-        return listaTiposPerfiles;
-    }
-
-    public void setListaTiposPerfiles(List<TipoPerfil> listaTiposPerfiles) {
-        this.listaTiposPerfiles = listaTiposPerfiles;
-    }
-
-    public TipoPerfil getPerfilEncargadoLaboratorio() {
-        return perfilEncargadoLaboratorio;
-    }
-
-    public void setPerfilEncargadoLaboratorio(TipoPerfil perfilEncargadoLaboratorio) {
-        this.perfilEncargadoLaboratorio = perfilEncargadoLaboratorio;
     }
 
     public String getCorreoOpcionalEncargadoLaboratorio() {

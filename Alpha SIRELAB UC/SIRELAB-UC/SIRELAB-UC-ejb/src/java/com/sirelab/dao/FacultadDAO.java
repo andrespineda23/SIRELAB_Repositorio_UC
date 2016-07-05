@@ -41,6 +41,7 @@ public class FacultadDAO implements FacultadDAOInterface {
     public void editarFacultad(Facultad facultad) {
         try {
             em.merge(facultad);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarFacultad FacultadDAO : " + e.toString(),e);
         }

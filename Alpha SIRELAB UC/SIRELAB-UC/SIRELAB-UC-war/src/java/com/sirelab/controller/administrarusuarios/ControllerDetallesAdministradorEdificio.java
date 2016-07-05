@@ -68,7 +68,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         mensajeFormulario = "N/A";
         BasicConfigurator.configure();
     }
- 
+
     /**
      * Metodo encargado de asignar los valores del encargado laboratorio que
      * sera visualizado
@@ -169,7 +169,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
         if (Utilidades.validarNulo(numAtencionAdministradorEdificio) && (!numAtencionAdministradorEdificio.isEmpty()) && (numAtencionAdministradorEdificio.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(numAtencionAdministradorEdificio)) {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:numAtencionAdministradorEdificio", new FacesMessage("El Número ingresado es incorrecto. "+constantes.USUARIO_TELEXT));
+                FacesContext.getCurrentInstance().addMessage("form:numAtencionAdministradorEdificio", new FacesMessage("El Número ingresado es incorrecto. " + constantes.USUARIO_TELEXT));
             } else {
                 validacionesNombre = true;
             }
@@ -183,17 +183,17 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(nombreAdministradorEdificio)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nombreAdministradorEdificio", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.USUARIO_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:nombreAdministradorEdificio", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.USUARIO_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:nombreAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:nombreAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.USUARIO_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:nombreAdministradorEdificio", new FacesMessage("El nombre es obligatorio. "+constantes.USUARIO_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:nombreAdministradorEdificio", new FacesMessage("El nombre es obligatorio. " + constantes.USUARIO_NOMBRE));
         }
         modificacionesRegistroAdministradorEdificio();
     }
@@ -204,17 +204,17 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             if (tam >= 2) {
                 if (!Utilidades.validarCaracterString(apellidoAdministradorEdificio)) {
                     validacionesApellido = false;
-                    FacesContext.getCurrentInstance().addMessage("form:apellidoAdministradorEdificio", new FacesMessage("El apellido ingresado es incorrecto. "+constantes.USUARIO_APELLIDO));
+                    FacesContext.getCurrentInstance().addMessage("form:apellidoAdministradorEdificio", new FacesMessage("El apellido ingresado es incorrecto. " + constantes.USUARIO_APELLIDO));
                 } else {
                     validacionesApellido = true;
                 }
             } else {
                 validacionesApellido = false;
-                FacesContext.getCurrentInstance().addMessage("form:apellidoAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. "+constantes.USUARIO_APELLIDO));
+                FacesContext.getCurrentInstance().addMessage("form:apellidoAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 2 caracteres. " + constantes.USUARIO_APELLIDO));
             }
         } else {
             validacionesApellido = false;
-            FacesContext.getCurrentInstance().addMessage("form:apellidoAdministradorEdificio", new FacesMessage("El apellido es obligatorio. "+constantes.USUARIO_APELLIDO));
+            FacesContext.getCurrentInstance().addMessage("form:apellidoAdministradorEdificio", new FacesMessage("El apellido es obligatorio. " + constantes.USUARIO_APELLIDO));
         }
         modificacionesRegistroAdministradorEdificio();
     }
@@ -238,15 +238,15 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                     }
                 } else {
                     validacionesCorreo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoAdministradorEdificio", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO));
+                    FacesContext.getCurrentInstance().addMessage("form:correoAdministradorEdificio", new FacesMessage("El correo se encuentra incorrecto. " + constantes.USUARIO_CORREO));
                 }
             } else {
                 validacionesCorreo = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.USUARIO_CORREO));
+                FacesContext.getCurrentInstance().addMessage("form:correoAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.USUARIO_CORREO));
             }
         } else {
             validacionesCorreo = false;
-            FacesContext.getCurrentInstance().addMessage("form:correoAdministradorEdificio", new FacesMessage("El correo es obligatorio. "+constantes.USUARIO_CORREO));
+            FacesContext.getCurrentInstance().addMessage("form:correoAdministradorEdificio", new FacesMessage("El correo es obligatorio. " + constantes.USUARIO_CORREO));
         }
         modificacionesRegistroAdministradorEdificio();
     }
@@ -259,11 +259,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                     validacionesCorreoOpcional = true;
                 } else {
                     validacionesCorreoOpcional = false;
-                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalAdministradorEdificio", new FacesMessage("El correo se encuentra incorrecto. "+constantes.USUARIO_CORREO_OPC));
+                    FacesContext.getCurrentInstance().addMessage("form:correoOpcionalAdministradorEdificio", new FacesMessage("El correo se encuentra incorrecto. " + constantes.USUARIO_CORREO_OPC));
                 }
             } else {
                 validacionesCorreoOpcional = false;
-                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 15 caracteres. "+constantes.USUARIO_CORREO_OPC));
+                FacesContext.getCurrentInstance().addMessage("form:correoOpcionalAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 15 caracteres. " + constantes.USUARIO_CORREO_OPC));
             }
         }
         modificacionesRegistroAdministradorEdificio();
@@ -287,15 +287,15 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                     }
                 } else {
                     validacionesID = false;
-                    FacesContext.getCurrentInstance().addMessage("form:identificacionAdministradorEdificio", new FacesMessage("El numero identificación se encuentra incorrecto. "+constantes.USUARIO_ID));
+                    FacesContext.getCurrentInstance().addMessage("form:identificacionAdministradorEdificio", new FacesMessage("El numero identificación se encuentra incorrecto. " + constantes.USUARIO_ID));
                 }
             } else {
                 validacionesID = false;
-                FacesContext.getCurrentInstance().addMessage("form:identificacionAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.USUARIO_ID));
+                FacesContext.getCurrentInstance().addMessage("form:identificacionAdministradorEdificio", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.USUARIO_ID));
             }
         } else {
             validacionesID = false;
-            FacesContext.getCurrentInstance().addMessage("form:identificacionAdministradorEdificio", new FacesMessage("El numero identificación es obligatorio. "+constantes.USUARIO_ID));
+            FacesContext.getCurrentInstance().addMessage("form:identificacionAdministradorEdificio", new FacesMessage("El numero identificación es obligatorio. " + constantes.USUARIO_ID));
         }
         modificacionesRegistroAdministradorEdificio();
     }
@@ -303,33 +303,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
     public void validarDatosNumericosAdministradorEdificio(int tipoTel) {
         if (tipoTel == 1) {
             if (Utilidades.validarNulo(telefono1AdministradorEdificio) && (!telefono1AdministradorEdificio.isEmpty()) && (telefono1AdministradorEdificio.trim().length() > 0)) {
-                int tam = telefono1AdministradorEdificio.length();
-                if (tam == 7) {
-                    if ((Utilidades.isNumber(telefono1AdministradorEdificio)) == false) {
-                        validacionesTel1 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono1AdministradorEdificio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELFIJO));
-                    } else {
-                        validacionesTel1 = true;
-                    }
-                } else {
-                    validacionesTel1 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono1AdministradorEdificio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELFIJO));
-                }
+                validacionesTel1 = true;
             }
         } else {
             if (Utilidades.validarNulo(telefono2AdministradorEdificio) && (!telefono2AdministradorEdificio.isEmpty()) && (telefono2AdministradorEdificio.trim().length() > 0)) {
-                int tam = telefono2AdministradorEdificio.length();
-                if (tam == 10) {
-                    if ((Utilidades.isNumber(telefono2AdministradorEdificio)) == false) {
-                        validacionesTel2 = false;
-                        FacesContext.getCurrentInstance().addMessage("form:telefono2AdministradorEdificio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
-                    } else {
-                        validacionesTel2 = true;
-                    }
-                } else {
-                    validacionesTel2 = false;
-                    FacesContext.getCurrentInstance().addMessage("form:telefono2AdministradorEdificio", new FacesMessage("El numero telefonico se encuentra incorrecto. "+constantes.USUARIO_TELCEL));
-                }
+                validacionesTel2 = true;
             }
         }
         modificacionesRegistroAdministradorEdificio();
@@ -342,11 +320,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 if (Utilidades.validarDirecciones(direccionAdministradorEdificio)) {
                     validacionesDireccion = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:direccionAdministradorEdificio", new FacesMessage("La dirección se encuentra incorrecta. "+constantes.USUARIO_DIRECCION));
+                    FacesContext.getCurrentInstance().addMessage("form:direccionAdministradorEdificio", new FacesMessage("La dirección se encuentra incorrecta. " + constantes.USUARIO_DIRECCION));
                     validacionesDireccion = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:direccionAdministradorEdificio", new FacesMessage("LEl tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
+                FacesContext.getCurrentInstance().addMessage("form:direccionAdministradorEdificio", new FacesMessage("LEl tamaño minimo permitido es 8 caracteres. " + constantes.USUARIO_DIRECCION));
                 validacionesDireccion = false;
             }
         }
@@ -404,7 +382,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "#FF0000";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
             }
         } else {
             colorMensaje = "black";
@@ -431,7 +409,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             administrarAdministradoresEdificioBO.actualizarInformacionAdministradorEdificio(encargadoPorEdificioDetalles.getAdministradoredificio());
             restaurarInformacionAdministradorEdificio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradorEdificio modificarInformacionAdministradorEdificio:  " + e.toString(), e);
         }
     }
 
@@ -461,7 +439,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradorEdificio activarAdministradorEdificio:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradorEdificio activarAdministradorEdificio:  " + e.toString(), e);
         }
     }
 
@@ -483,7 +461,7 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesAdministradoresEdificio inactivarAdministradorEdificio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesAdministradoresEdificio inactivarAdministradorEdificio : " + e.toString(), e);
         }
     }
 

@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -52,7 +52,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre Plan*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesPlanEstudio.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                            <h:inputText maxlength="90" value="#{controllerDetallesPlanEstudio.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesPlanEstudio.validarNombrePlanEstudio()}" execute="editarNombre" render="editarNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
@@ -112,8 +112,14 @@ and open the template in the editor.
                                         <legend class="text-info">Asignaturas Registradas (ACTIVAS)</legend>
                                         <div class="row" >
                                             <h:dataTable id="dataTable" var="item" 
-                                                         styleClass="table table-condensed table-responsive"  
-                                                         value="#{controllerDetallesPlanEstudio.listaAsignaturaPorPlanEstudio}">
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerDetallesPlanEstudio.listaAsignaturaPorPlanEstudioTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Código Asignatura"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.asignatura.codigoasignatura}"/>
+                                                </h:column>  
                                                 <h:column>
                                                     <f:facet name="header">
                                                         <h:outputText value="Nombre Asignatura"/>
@@ -122,10 +128,26 @@ and open the template in the editor.
                                                 </h:column>  
                                                 <h:column>
                                                     <f:facet name="header">
-                                                        <h:outputText value="Desea Asociar la Asignatura"/>
+                                                        <h:outputText value="Estado"/>
                                                     </f:facet>
-                                                    <h:selectBooleanCheckbox value="#{item.estado}"/>
-                                                </h:column>
+                                                    <h:outputText value="#{item.strEstado}"/>
+                                                </h:column>  
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerDetallesPlanEstudio.cargarPaginaAnteriorAisgnatura()}" disabled="#{controllerDetallesPlanEstudio.bloquearPagAntAsignatura}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerDetallesPlanEstudio.cargarPaginaSiguienteAsignatura()}" disabled="#{controllerDetallesPlanEstudio.bloquearPagSigAsignatura}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
                                             </h:dataTable>
                                         </div>
                                     </fieldset>

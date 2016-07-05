@@ -329,6 +329,13 @@ public class ControllerRegistrarSala implements Serializable {
         validarServicio();
     }
 
+    public void quitarServicioSeleccionado(AsociacionServicios item) {
+        listaAsociacionServicios.remove(item);
+        listaServiciosSalas.add(item.getServicio());
+        serviciosSala = null;
+        validarServicio();
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
         mensajeError = "";
@@ -476,7 +483,6 @@ public class ControllerRegistrarSala implements Serializable {
             List<ServiciosSala> lista = obtenerServiciosARegistrar();
             gestionarPlantaSalasBO.crearNuevaSalaLaboratorio(salaNuevo, lista);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema:  " + e.toString(), e);
             logger.error("Error ControllerGestionarPlantaSalas almacenaNuevoSalaEnSistema : " + e.toString(), e);
         }
     }

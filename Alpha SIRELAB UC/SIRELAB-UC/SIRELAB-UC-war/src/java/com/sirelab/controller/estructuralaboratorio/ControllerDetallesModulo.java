@@ -13,7 +13,6 @@ import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
-import com.sirelab.entidades.TipoPerfil;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -70,7 +69,6 @@ public class ControllerDetallesModulo implements Serializable {
     private String colorMensaje;
     private MensajesConstantes constantes;
     private boolean perfilConsulta;
-    private TipoPerfil tipoPerfil;
     private String mensajeError;
 
     public ControllerDetallesModulo() {
@@ -134,83 +132,11 @@ public class ControllerDetallesModulo implements Serializable {
         cargarInformacionPerfil();
     }
 
-    private Map<String, Object> validarSesionAdicionales(String nombre, String codigo) {
-        Map<String, Object> lista = new HashMap<String, Object>();
-        if ("DEPARTAMENTO".equalsIgnoreCase(nombre)) {
-            Departamento registro = administrarValidadorTipoUsuario.obtenerDepartamentoPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("DEPARTAMENTO", registro);
-            }
-        }
-        if ("LABORATORIO".equalsIgnoreCase(nombre)) {
-            Laboratorio registro = administrarValidadorTipoUsuario.obtenerLaboratorioPorCodigo(codigo);
-            if (null != registro) {
-                lista.put("LABORATORIO", registro);
-            }
-        }
-        return lista;
-    }
-
     private void cargarInformacionPerfil() {
         UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
         if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
             perfilConsulta = true;
-        } else {
-            if ("ENCARGADOLAB".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                boolean validarPerfilConsulta = validarSesionConsulta(usuarioLoginSistema.getIdUsuarioLogin());
-                if (validarPerfilConsulta == false) {
-                    perfilConsulta = true;
-                    Map<String, Object> datosPerfil = validarSesionAdicionales(tipoPerfil.getNombre(), tipoPerfil.getCodigoregistro());
-                    if (null != datosPerfil) {
-                        if (datosPerfil.containsKey("DEPARTAMENTO") || datosPerfil.containsKey("LABORATORIO")) {
-                            if (datosPerfil.containsKey("DEPARTAMENTO")) {
-                                departamentoModuloLaboratorio = (Departamento) datosPerfil.get("DEPARTAMENTO");
-                                listaDepartamentos = new ArrayList<Departamento>();
-                                listaDepartamentos.add(departamentoModuloLaboratorio);
-                                activarDepartamento = true;
-                            }
-                            if (datosPerfil.containsKey("LABORATORIO")) {
-                                laboratorioModuloLaboratorio  = (Laboratorio) datosPerfil.get("LABORATORIO");
-                                departamentoModuloLaboratorio = laboratorioModuloLaboratorio.getDepartamento();
-                                activarDepartamento = true;
-                                activarLaboratorio = true;
-                                listaDepartamentos = new ArrayList<Departamento>();
-                                listaDepartamentos.add(departamentoModuloLaboratorio);
-                                listaLaboratorios = new ArrayList<Laboratorio>();
-                                listaLaboratorios.add(laboratorioModuloLaboratorio);
-                            } 
-                        }
-                    }
-                } else {
-                    perfilConsulta = false;
-                }
-            } else {
-                /*
-                if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
-                    Edificio edificio = obtenerEdificio(usuarioLoginSistema.getIdUsuarioLogin());
-                    listaSalasLaboratorios = gestionarPlantaModulosBO.consultarSalasLaboratorioPorIDEdificio(edificio.getIdedificio());
-                    parametroLaboratorio = new Laboratorio();
-                    listaLaboratorio = new ArrayList<Laboratorio>();
-                    activarLaboratorio = true;
-                }*/
-            }
         }
-    }
-
-    private Edificio obtenerEdificio(BigInteger usuario) {
-        Edificio edificio = administrarValidadorTipoUsuario.buscarEdificioPorIdEncargadoEdificio(usuario);
-        return edificio;
-    }
-
-    private boolean validarSesionConsulta(BigInteger usuario) {
-        boolean retorno = false;
-        tipoPerfil = administrarValidadorTipoUsuario.buscarTipoPerfilPorIDEncargado(usuario);
-        if (null != tipoPerfil) {
-            if ("CONSULTA".equalsIgnoreCase(tipoPerfil.getNombre())) {
-                retorno = true;
-            }
-        }
-        return retorno;
     }
 
     public void activarEditarRegistro() {
@@ -464,7 +390,7 @@ public class ControllerDetallesModulo implements Serializable {
                 }
             } else {
                 colorMensaje = "#FF0000";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
             }
         } else {
             restaurarInformacionModuloLaboratorio();
@@ -484,7 +410,7 @@ public class ControllerDetallesModulo implements Serializable {
             gestionarPlantaModulosBO.modificarInformacionModuloLaboratorio(moduloLaboratorioDetalles);
             restaurarInformacionModuloLaboratorio();
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlantaModulo almacenarNuevoModuloLaboratorioEnSistema:  " + e.toString(), e);
 
         }
     }
@@ -509,8 +435,8 @@ public class ControllerDetallesModulo implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -529,8 +455,8 @@ public class ControllerDetallesModulo implements Serializable {
                 mensajeFormulario = "Guarde primero los cambios para continuar con este proceso.";
             }
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  " + e.toString(),e);
-            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString(),e);
+            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  " + e.toString(), e);
+            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -734,7 +660,5 @@ public class ControllerDetallesModulo implements Serializable {
     public void setPerfilConsulta(boolean perfilConsulta) {
         this.perfilConsulta = perfilConsulta;
     }
-    
-    
 
 }

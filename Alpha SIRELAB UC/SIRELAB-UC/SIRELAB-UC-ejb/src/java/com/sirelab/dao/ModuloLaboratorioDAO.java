@@ -41,6 +41,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
     public void editarModuloLaboratorio(ModuloLaboratorio modulolaboratorio) {
         try {
             em.merge(modulolaboratorio);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString(),e);
         }

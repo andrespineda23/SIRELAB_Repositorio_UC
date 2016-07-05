@@ -7,11 +7,12 @@ package com.sirelab.controller.estructuralaboratorio;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaSalaLaboratorioxServiciosBOInterface;
 import com.sirelab.entidades.Departamento;
+import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.SalaLaboratorioxServicios;
 import com.sirelab.entidades.ServiciosSala;
-import com.sirelab.entidades.TipoPerfil;
+import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -58,8 +60,6 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
     //
     private String paginaAnterior;
     //
-    private TipoPerfil tipoPerfil;
-    private boolean perfilConsulta;
     private Logger logger = Logger.getLogger(getClass().getName());
     private String cantidadRegistros;
     private int parametroEstado;
@@ -162,8 +162,8 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
                 bloquearPagSigSalaLaboratorioxServicio = true;
             }
         } catch (Exception e) {
-            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros:  " + e.toString(),e);
-            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros : " + e.toString(),e);
+            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros:  " + e.toString(), e);
+            logger.error("Error ControllerAdministrarSalaLaboratorioxServicios buscarLaboratoriosPorParametros : " + e.toString(), e);
         }
     }
 
@@ -242,7 +242,7 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
         bloquearPagSigSalaLaboratorioxServicio = true;
         cantidadRegistros = "N/A";
         return paginaAnterior;
-    } 
+    }
 
     public void limpiarDatos() {
         cantidadRegistros = "N/A";
@@ -262,6 +262,11 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
         tamTotalSalaLaboratorioxServicio = 0;
         bloquearPagAntSalaLaboratorioxServicio = true;
         bloquearPagSigSalaLaboratorioxServicio = true;
+    }
+
+    public String paginaDetalles() {
+        limpiarDatos();
+        return "detallessalalaboratorioxservicio";
     }
 
     public void actualizarDepartamentos() {
@@ -459,22 +464,6 @@ public class ControllerAdministrarSalaLaboratorioXServicio implements Serializab
 
     public void setPaginaAnterior(String paginaAnterior) {
         this.paginaAnterior = paginaAnterior;
-    }
-
-    public TipoPerfil getTipoPerfil() {
-        return tipoPerfil;
-    }
-
-    public void setTipoPerfil(TipoPerfil tipoPerfil) {
-        this.tipoPerfil = tipoPerfil;
-    }
-
-    public boolean isPerfilConsulta() {
-        return perfilConsulta;
-    }
-
-    public void setPerfilConsulta(boolean perfilConsulta) {
-        this.perfilConsulta = perfilConsulta;
     }
 
     public String getCantidadRegistros() {

@@ -47,8 +47,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Persona implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Collection<PersonaContacto> personaContactoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private Collection<AdministradorEdificio> administradorEdificioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private Collection<Reserva> reservaCollection;
@@ -278,15 +276,6 @@ public class Persona implements Serializable {
 
     public void setAdministradorEdificioCollection(Collection<AdministradorEdificio> administradorEdificioCollection) {
         this.administradorEdificioCollection = administradorEdificioCollection;
-    }
-
-    @XmlTransient
-    public Collection<PersonaContacto> getPersonaContactoCollection() {
-        return personaContactoCollection;
-    }
-
-    public void setPersonaContactoCollection(Collection<PersonaContacto> personaContactoCollection) {
-        this.personaContactoCollection = personaContactoCollection;
     }
 
     public String getNombreCompleto() {

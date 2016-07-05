@@ -48,6 +48,7 @@ public class EncargadoPorEdificioDAO implements EncargadoPorEdificioDAOInterface
         try {
             em.clear();
             em.merge(encargado);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarEdificio EncargadoPorEdificioDAO : " + e.toString(),e);
         }

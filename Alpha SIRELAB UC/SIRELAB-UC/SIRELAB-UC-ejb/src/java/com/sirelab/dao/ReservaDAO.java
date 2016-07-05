@@ -46,6 +46,7 @@ public class ReservaDAO implements ReservaDAOInterface {
     public void editarReserva(Reserva reserva) {
         try {
             em.merge(reserva);
+            em.flush();
         } catch (Exception e) {
             logger.error("Error editarReserva ReservaDAO : " + e.toString(), e);
         }

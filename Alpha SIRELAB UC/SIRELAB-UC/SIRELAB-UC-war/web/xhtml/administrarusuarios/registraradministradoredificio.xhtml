@@ -86,14 +86,14 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número Fijo"/></strong>
-                                            <h:inputText maxlength="20"  value="#{controllerRegistrarAdministradorEdificio.inputTelefono1}" disabled="#{controllerRegistrarAdministradorEdificio.activarCasillas}" class="form-control" id="inputTelefono1" >
+                                            <h:inputText maxlength="50"  value="#{controllerRegistrarAdministradorEdificio.inputTelefono1}" disabled="#{controllerRegistrarAdministradorEdificio.activarCasillas}" class="form-control" id="inputTelefono1" >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarAdministradorEdificio.validarDatosNumericosAdministradorEdificio(1)}" execute="inputTelefono1" render="inputTelefono1 msnTelefono1" />
                                             </h:inputText>
                                             <h6><h:message id="msnTelefono1" for="inputTelefono1" style="color: red"></h:message></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Número Celular"/></strong>
-                                            <h:inputText maxlength="20"  value="#{controllerRegistrarAdministradorEdificio.inputTelefono2}" disabled="#{controllerRegistrarAdministradorEdificio.activarCasillas}" class="form-control" id="inputTelefono2" >
+                                            <h:inputText maxlength="50"  value="#{controllerRegistrarAdministradorEdificio.inputTelefono2}" disabled="#{controllerRegistrarAdministradorEdificio.activarCasillas}" class="form-control" id="inputTelefono2" >
                                                 <f:ajax event="blur" listener="#{controllerRegistrarAdministradorEdificio.validarDatosNumericosAdministradorEdificio(2)}" execute="inputTelefono2" render="inputTelefono2 msnTelefono2" />
                                             </h:inputText>
                                             <h6><h:message id="msnTelefono2" for="inputTelefono2" style="color: red"></h:message></h6>

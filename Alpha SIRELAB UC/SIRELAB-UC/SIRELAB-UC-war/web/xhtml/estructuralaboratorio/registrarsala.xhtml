@@ -207,6 +207,14 @@ and open the template in the editor.
                                                 </f:facet>
                                                 <h:outputText value="#{item.servicio.codigoservicio}"/>
                                             </h:column>  
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Eliminar"/>
+                                                </f:facet>
+                                                <h:commandLink value="Eliminar" actionListener="#{controllerRegistrarSala.quitarServicioSeleccionado(item)}" immediate="true">
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandLink>
+                                            </h:column>  
                                         </h:dataTable>
                                     </div>
                                 </fieldset>

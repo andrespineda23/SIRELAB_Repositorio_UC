@@ -63,7 +63,7 @@ and open the template in the editor.
                                                               class="form-control" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}"
                                                               id="horaApertura">
                                                 <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraApertura}" var="aprt"
-                                                               itemLabel="#{aprt}" itemValue="#{aprt}"/>
+                                                               itemLabel="#{aprt}:00" itemValue="#{aprt}"/>
                                                 <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.actualizarHoraApertura()}" execute="horaApertura" render="@this msnApertura"/>
                                             </h:selectOneMenu>
                                             <h6><h:message id="msnApertura" for="horaApertura" style="color: red"/></h6>
@@ -75,7 +75,7 @@ and open the template in the editor.
                                                               id="horaCierre">
                                                 <f:selectItem itemLabel="Seleccione Hora Cierre" itemValue="null" />
                                                 <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraCierre}" var="cierr"
-                                                               itemLabel="#{cierr}" itemValue="#{cierr}"/>
+                                                               itemLabel="#{cierr}:00" itemValue="#{cierr}"/>
                                                 <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.validarHoraCierre()}" execute="horaCierre" render="@this msnCierre"/>
                                             </h:selectOneMenu>
                                             <h6><h:message id="msnCierre" for="horaCierre" style="color: red"/></h6>
@@ -86,7 +86,7 @@ and open the template in the editor.
                                                               class="form-control" disabled="#{controllerRegistrarHorarioAtencion.activarCasillas}"
                                                               id="horaAperturaSabado">
                                                 <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraAperturaSabado}" var="aprt2"
-                                                               itemLabel="#{aprt2}" itemValue="#{aprt2}"/>
+                                                               itemLabel="#{aprt2}:00" itemValue="#{aprt2}"/>
                                                 <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.actualizarHoraAperturaSabado()}" execute="horaAperturaSabado" render="@this msnAperturaS"/>
                                             </h:selectOneMenu>
                                             <h6><h:message id="msnAperturaS" for="horaAperturaSabado" style="color: red"/></h6>
@@ -98,7 +98,7 @@ and open the template in the editor.
                                                               id="horaCierreSabado">
                                                 <f:selectItem itemLabel="Seleccione Hora Cierre" itemValue="null" />
                                                 <f:selectItems value="#{controllerRegistrarHorarioAtencion.listaHoraCierreSabado}" var="cierrS"
-                                                               itemLabel="#{cierrS}" itemValue="#{cierrS}"/>
+                                                               itemLabel="#{cierrS}:00" itemValue="#{cierrS}"/>
                                                 <f:ajax event="change" listener="#{controllerRegistrarHorarioAtencion.validarHoraCierreSabado()}" execute="horaCierreSabado" render="@this msnCierreS"/>
                                             </h:selectOneMenu>
                                             <h6><h:message id="msnCierreS" for="horaCierreSabado" style="color: red"/></h6>
