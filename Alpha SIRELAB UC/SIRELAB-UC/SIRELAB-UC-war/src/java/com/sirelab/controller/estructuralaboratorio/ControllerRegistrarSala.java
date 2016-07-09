@@ -299,7 +299,7 @@ public class ControllerRegistrarSala implements Serializable {
         mensajeFormulario = "N/A";
         activarAdicionar = true;
         listaAsociacionServicios = null;
-        listaServiciosSalas = gestionarPlantaSalasBO.consultarServiciosSalaActivosRegistradas();
+        listaServiciosSalas = null;
         serviciosSala = null;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -456,7 +456,7 @@ public class ControllerRegistrarSala implements Serializable {
         validacionesSede = false;
         mensajeError = "";
         validacionesUbicacion = false;
-        listaServiciosSalas = gestionarPlantaSalasBO.consultarServiciosSalaActivosRegistradas();
+        listaServiciosSalas = null;
         serviciosSala = null;
     }
 

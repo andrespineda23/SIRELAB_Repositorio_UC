@@ -309,6 +309,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         nuevoCarrera = null;
         nuevoCodigo = null;
         nuevoDepartamento = null;
+        asignatura = null;
         nuevoFacultad = null;
         activarAdicionar = true;
         nuevoNombre = null;
@@ -317,7 +318,9 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
-        mensajeFormulario = "";
+        mensajeFormulario = "N/A";
+        listaAsignaturas = null;
+        listaAsociacionPlanAsignatura = null;
     }
 
     public void cancelarRegistroPlanEstudio() {
@@ -333,6 +336,7 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
         validacionesCarrera = false;
         validacionesCodigo = false;
         mensajeError = "";
+        asignatura = null;
         validacionesDepartamento = false;
         validacionesFacultad = false;
         validacionesNombre = false;
