@@ -50,87 +50,20 @@ and open the template in the editor.
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
                                         </div>
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <label for="fechaInicioAnio">
-                                                    Año Fecha Inicio
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaInicioAnio}" class="form-control"  id="fechaInicioAnio">
-                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaAniosInicio}" var="pfechaInicioAnio"
-                                                                   itemLabel="#{pfechaInicioAnio.mensajeMostrar}" itemValue="#{pfechaInicioAnio}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionAnioInicio()}" execute="@this" render="@this fechaInicioMes fechaInicioDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaInicioMes">
-                                                    Mes Fecha Inicio
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaInicioMes}" class="form-control"  id="fechaInicioMes">
-                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaMesesInicio}" var="pfechaInicioMes"
-                                                                   itemLabel="#{pfechaInicioMes.mensajeMostrar}" itemValue="#{pfechaInicioMes}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionInicioDia()}" execute="@this" render="@this fechaInicioDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaInicioDia">
-                                                    Día Fecha Inicio
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaInicioDia}" class="form-control"  id="fechaInicioDia">
-                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaDiasInicio}" var="pfechaInicioDia"
-                                                                   itemLabel="#{pfechaInicioDia.mensajeMostrar}" itemValue="#{pfechaInicioDia}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                </h:selectOneMenu>
-                                            </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Inicio Periodo Academico* (dd/MM/yyyy)"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarPeriodoAcademico.inputFechaInicio}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputFechaInicio" requiredMessage="El campo Fecha Inicio es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarFechaInicio()}" execute="inputFechaInicio" render="inputFechaInicio msnFechaInicio" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnFechaInicio" for="inputFechaInicio" style="color: red"/></h6>
                                         </div>
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <label for="fechaFinAnio">
-                                                    Año Fecha Fin
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaFinAnio}" class="form-control"  id="fechaFinAnio">
-                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaAniosFin}" var="pfechaFinAnio"
-                                                                   itemLabel="#{pfechaFinAnio.mensajeMostrar}" itemValue="#{pfechaFinAnio}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionAnioFin()}" execute="@this" render="@this fechaFinMes fechaFinDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaFinMes">
-                                                    Mes Fecha Fin
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaFinMes}" class="form-control"  id="fechaFinMes">
-                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaMesesFin}" var="pfechaFinMes"
-                                                                   itemLabel="#{pfechaFinMes.mensajeMostrar}" itemValue="#{pfechaFinMes}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarPeriodoAcademico.actualizarInformacionFinDia()}" execute="@this" render="@this fechaFinDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaFinDia">
-                                                    Día Fecha Fin
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarPeriodoAcademico.fechaFinDia}" class="form-control"  id="fechaFinDia">
-                                                    <f:selectItems value="#{controllerRegistrarPeriodoAcademico.listaDiasFin}" var="pfechaFinDia"
-                                                                   itemLabel="#{pfechaFinDia.mensajeMostrar}" itemValue="#{pfechaFinDia}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                </h:selectOneMenu>
-                                            </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Final Periodo Academico* (dd/MM/yyyy)"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarPeriodoAcademico.inputFechaFin}" disabled="#{controllerRegistrarPeriodoAcademico.activarCasillas}" required="true" class="form-control" id="inputFechaFinal" requiredMessage="El campo Fecha Final es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarPeriodoAcademico.validarFechaFin()}" execute="inputFechaFinal" render="inputFechaFinal msnFechaFinal" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnFechaFinal" for="inputFechaFinal" style="color: red"/></h6>
                                         </div>
-
                                     </fieldset>
                                     <br></br>
                                     <br></br>

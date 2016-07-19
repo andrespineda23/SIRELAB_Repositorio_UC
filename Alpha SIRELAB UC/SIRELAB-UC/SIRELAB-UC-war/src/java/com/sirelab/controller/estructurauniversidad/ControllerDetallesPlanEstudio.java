@@ -193,10 +193,10 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             validacionesFacultad = false;
             validacionesCarrera = false;
             editarDepartamento = null;
-            listaDepartamentos = null;
-            activarModificacionDepartamento = true;
             editarCarrera = null;
+            activarModificacionDepartamento = true;
             activarModificacionCarrera = true;
+            listaDepartamentos = null;
             listaCarreras = null;
         }
     }
@@ -211,8 +211,9 @@ public class ControllerDetallesPlanEstudio implements Serializable {
             validacionesCarrera = false;
             validacionesDepartamento = false;
             editarCarrera = null;
-            listaDepartamentos = null;
-            activarModificacionDepartamento = true;
+            listaCarreras = null;
+            activarModificacionCarrera = true;
+
         }
     }
 

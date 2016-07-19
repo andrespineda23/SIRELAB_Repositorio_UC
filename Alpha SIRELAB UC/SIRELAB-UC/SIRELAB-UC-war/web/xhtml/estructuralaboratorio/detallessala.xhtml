@@ -236,7 +236,7 @@ and open the template in the editor.
                                     </div>
                                     <br></br>
                                     <div class="right pull-right">
-                                        <h:commandButton class="btn btn-block btn-success" value="Registrar Asociacion" actionListener="#{controllerRegistrarSalaLaboratorioXServicio.recibirIdSalaLaboratorio(controllerDetallesSala.idSalaLaboratorio)}" action="registrarsalalaboratorioxservicio"/>
+                                        <h:commandButton class="btn btn-block btn-success" value="Registrar Asociacion" actionListener="#{controllerRegistrarSalaLaboratorioXServicio.recibirIdSalaLaboratorio(controllerDetallesSala.idSalaLaboratorio)}" disabled="#{controllerDetallesSala.activarCasillas}" action="registrarsalalaboratorioxservicio"/>
                                     </div>
                                 </fieldset>
                                 <br></br>
@@ -283,10 +283,16 @@ and open the template in the editor.
                                 </div>
                                 <div class="col-md-1"></div>      
                             </div>
-                            <div class="col-md-12 row">
-                                <div class="col-md-11"></div>
-                                <div class="col-md-1">
-                                    <h:commandButton value="Atras" class="btn btn-primary" action="#{controllerDetallesSala.restaurarInformacionSalaLaboratorio()}" actionListener="#{controllerDetallesSala.limpiarDatos()}" immediate="true"/>
+                            <div class="row col-md-12">
+                                <div class="row">
+                                    <div class="left pull-left">
+                                        <h:commandButton value="Eliminar Sala de Laboratorio" disabled="#{controllerDetallesSala.activarCasillas}" actionListener="#{controllerDetallesSala.eliminarSalaLaboratorio()}" class="btn btn-danger" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Atras" class="btn btn-primary" action="#{controllerDetallesSala.restaurarInformacionSalaLaboratorio()}" immediate="true"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>

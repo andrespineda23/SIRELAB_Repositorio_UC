@@ -5,10 +5,12 @@ import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.LaboratorioDAOInterface;
+import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.SalaLaboratorio;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -24,13 +26,15 @@ import org.apache.log4j.Logger;
 public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratoriosBOInterface {
 
     static Logger logger = Logger.getLogger(GestionarPlantaLaboratoriosBO.class);
-    
+
     @EJB
     FacultadDAOInterface facultadDAO;
     @EJB
     DepartamentoDAOInterface departamentoDAO;
     @EJB
     LaboratorioDAOInterface laboratorioDAO;
+    @EJB
+    SalaLaboratorioDAOInterface salaLaboratorioDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
 
@@ -40,7 +44,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString(), e);
             return null;
         }
     }
@@ -51,7 +55,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             Departamento registro = departamentoDAO.buscarDepartamentoPorNombre(nombre);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentoPorNombre : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentoPorNombre : " + e.toString(), e);
             return null;
         }
     }
@@ -62,7 +66,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesRegistradas : " + e.toString(), e);
             return null;
         }
     }
@@ -73,7 +77,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesActivosRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarFacultadesActivosRegistradas : " + e.toString(), e);
             return null;
         }
     }
@@ -84,7 +88,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString(), e);
             return null;
         }
     }
@@ -95,7 +99,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Departamento> lista = departamentoDAO.buscarDepartamentosActivosPorIDFacultad(facultad);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosActivosPorIDFacultad : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosActivosPorIDFacultad : " + e.toString(), e);
             return null;
         }
     }
@@ -106,7 +110,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratoriosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarLaboratoriosPorParametro : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarLaboratoriosPorParametro : " + e.toString(), e);
             return null;
         }
     }
@@ -116,7 +120,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
         try {
             laboratorioDAO.crearLaboratorio(laboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO crearNuevaLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO crearNuevaLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -125,7 +129,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
         try {
             laboratorioDAO.editarLaboratorio(laboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO modificarInformacionLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO modificarInformacionLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -135,7 +139,7 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorID(idLaboratorio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO consultarDepartamentosPorIDFacultad : " + e.toString(), e);
             return null;
         }
     }
@@ -146,8 +150,32 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaLaboratorioBO obtenerLaboratorioPorCodigo : " + e.toString(),e);
+            logger.error("Error GestionarPlantaLaboratorioBO obtenerLaboratorioPorCodigo : " + e.toString(), e);
             return null;
+        }
+    }
+
+    //@Override
+    public Integer obtenerCantidadSalasAsociadas(BigInteger laboratorio) {
+        try {
+            List<SalaLaboratorio> salas = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorio(laboratorio);
+            if (null == salas) {
+                return 0;
+            } else {
+                return salas.size();
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaLaboratorioBO obtenerCantidadSalasAsociadas : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public void eliminarLaboratorio(Laboratorio laboratorio) {
+        try {
+            laboratorioDAO.eliminarLaboratorio(laboratorio);
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaLaboratorioBO eliminarLaboratorio : " + e.toString(), e);
         }
     }
 

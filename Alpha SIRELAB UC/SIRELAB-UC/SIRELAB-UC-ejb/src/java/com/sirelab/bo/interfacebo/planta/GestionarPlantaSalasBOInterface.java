@@ -64,4 +64,10 @@ public interface GestionarPlantaSalasBOInterface {
     public void almacenarModificacionesSalaServicio(List<SalaLaboratorioxServicios> lista);
 
     public String obtenerCostoCalculadoSalaLaboratorio(BigInteger idSala);
+
+    public Integer obtenerServiciosAsociados(BigInteger salaLaboratorio);
+
+    public Integer obtenerModulosAsociados(BigInteger salaLaboratorio);
+
+    public void eliminarSalaLaboratorio(SalaLaboratorio sala);
 }

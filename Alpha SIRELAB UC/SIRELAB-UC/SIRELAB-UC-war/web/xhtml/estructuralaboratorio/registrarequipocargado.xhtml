@@ -149,45 +149,12 @@ and open the template in the editor.
                                             </div>
                                             <h6><h:message id="msnCostoInversionEquipo" for="nuevoCostoInversionEquipo" style="color: red"/></h6>
                                         </div>
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <label for="fechaRegistroAnio">
-                                                    Año Fecha Registro
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarEquipoCargado.fechaRegistroAnio}" class="form-control"  id="fechaRegistroAnio">
-                                                    <f:selectItems value="#{controllerRegistrarEquipoCargado.listaAniosRegistro}" var="pfechaRegistroAnio"
-                                                                   itemLabel="#{pfechaRegistroAnio.mensajeMostrar}" itemValue="#{pfechaRegistroAnio}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarEquipoCargado.actualizarInformacionAnio()}" execute="@this" render="@this fechaRegistroMes fechaRegistroDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaRegistroMes">
-                                                    Mes Fecha Registro
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarEquipoCargado.fechaRegistroMes}" class="form-control"  id="fechaRegistroMes">
-                                                    <f:selectItems value="#{controllerRegistrarEquipoCargado.listaMesesRegistro}" var="pfechaRegistroMes"
-                                                                   itemLabel="#{pfechaRegistroMes.mensajeMostrar}" itemValue="#{pfechaRegistroMes}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                    <f:ajax event="change" listener="#{controllerRegistrarEquipoCargado.actualizarInformacionRegistroDia()}" execute="@this" render="@this fechaRegistroDia"/>
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fechaRegistroDia">
-                                                    Día Fecha Registro
-                                                </label>
-                                                <span></span>
-                                                <span></span>
-                                                <h:selectOneMenu value="#{controllerRegistrarEquipoCargado.fechaRegistroDia}" class="form-control"  id="fechaRegistroDia">
-                                                    <f:selectItems value="#{controllerRegistrarEquipoCargado.listaDiasRegistro}" var="pfechaRegistroDia"
-                                                                   itemLabel="#{pfechaRegistroDia.mensajeMostrar}" itemValue="#{pfechaRegistroDia}"/>
-                                                    <f:converter converterId="ConverterGenerico" />
-                                                </h:selectOneMenu>
-                                            </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Compra Equipo (dd/MM/yyyy)"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarEquipoCargado.nuevoFechaAdquisicionEquipo}" disabled="#{controllerRegistrarEquipoCargado.activarCasillas}" class="form-control" id="nuevoFechaAdquisicionEquipo" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarEquipoCargado.validarFechaEquipo()}" execute="nuevoFechaAdquisicionEquipo" render="nuevoFechaAdquisicionEquipo msnFecha" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnFecha" for="nuevoFechaAdquisicionEquipo" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Descripción Equipo"/></strong>

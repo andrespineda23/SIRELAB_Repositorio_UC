@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "facultad")
@@ -36,11 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Facultad.findAll", query = "SELECT f FROM Facultad f"),
     @NamedQuery(name = "Facultad.findByIdfacultad", query = "SELECT f FROM Facultad f WHERE f.idfacultad = :idfacultad"),
     @NamedQuery(name = "Facultad.findByCodigofacultad", query = "SELECT f FROM Facultad f WHERE f.codigofacultad = :codigofacultad"),
-    @NamedQuery(name = "Facultad.findByNombrefacultad", query = "SELECT f FROM Facultad f WHERE f.nombrefacultad = :nombrefacultad")})
+    @NamedQuery(name = "Facultad.findByNombrefacultad", query = "SELECT f FROM Facultad f WHERE f.nombrefacultad = :nombrefacultad"),
+    @NamedQuery(name = "Facultad.findByEstado", query = "SELECT f FROM Facultad f WHERE f.estado = :estado")})
 public class Facultad implements Serializable {
-
-    @Column(name = "estado")
-    private Boolean estado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,9 +53,11 @@ public class Facultad implements Serializable {
     private String codigofacultad;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "nombrefacultad")
     private String nombrefacultad;
+    @Column(name = "estado")
+    private Boolean estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultad")
     private Collection<Departamento> departamentoCollection;
     @Transient
@@ -108,6 +108,14 @@ public class Facultad implements Serializable {
         this.nombrefacultad = nombrefacultad.toUpperCase();
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     @XmlTransient
     public Collection<Departamento> getDepartamentoCollection() {
         return departamentoCollection;
@@ -140,14 +148,6 @@ public class Facultad implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Facultad[ idfacultad=" + idfacultad + " ]";
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
     }
 
     public String getStrEstado() {

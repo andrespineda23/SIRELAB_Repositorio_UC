@@ -7,9 +7,7 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,17 +15,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ELECTRONICA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "asignatura")
@@ -37,11 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Asignatura.findByIdasignatura", query = "SELECT a FROM Asignatura a WHERE a.idasignatura = :idasignatura"),
     @NamedQuery(name = "Asignatura.findByNombreasignatura", query = "SELECT a FROM Asignatura a WHERE a.nombreasignatura = :nombreasignatura"),
     @NamedQuery(name = "Asignatura.findByCodigoasignatura", query = "SELECT a FROM Asignatura a WHERE a.codigoasignatura = :codigoasignatura"),
-    @NamedQuery(name = "Asignatura.findByNumerocreditos", query = "SELECT a FROM Asignatura a WHERE a.numerocreditos = :numerocreditos")})
+    @NamedQuery(name = "Asignatura.findByNumerocreditos", query = "SELECT a FROM Asignatura a WHERE a.numerocreditos = :numerocreditos"),
+    @NamedQuery(name = "Asignatura.findByEstado", query = "SELECT a FROM Asignatura a WHERE a.estado = :estado")})
 public class Asignatura implements Serializable {
 
-    @Column(name = "estado")
-    private Boolean estado;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +45,7 @@ public class Asignatura implements Serializable {
     private BigInteger idasignatura;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "nombreasignatura")
     private String nombreasignatura;
     @Basic(optional = false)
@@ -62,8 +57,8 @@ public class Asignatura implements Serializable {
     @NotNull
     @Column(name = "numerocreditos")
     private int numerocreditos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
-    private Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection;
+    @Column(name = "estado")
+    private Boolean estado;
     @Transient
     private String strEstado;
     @Transient
@@ -115,13 +110,12 @@ public class Asignatura implements Serializable {
         this.numerocreditos = numerocreditos;
     }
 
-    @XmlTransient
-    public Collection<AsignaturaPorPlanEstudio> getAsignaturaPorPlanEstudioCollection() {
-        return asignaturaPorPlanEstudioCollection;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setAsignaturaPorPlanEstudioCollection(Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection) {
-        this.asignaturaPorPlanEstudioCollection = asignaturaPorPlanEstudioCollection;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -147,14 +141,6 @@ public class Asignatura implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Asignatura[ idasignatura=" + idasignatura + " ]";
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
     }
 
     public String getStrEstado() {

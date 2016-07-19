@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -46,7 +46,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Laboratorio*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesSalaLaboratorioXServicio.editarLaboratorio}"
-                                                             class="form-control" 
+                                                             class="form-control" readonly="#{controllerDetallesSalaLaboratorioXServicio.activarCasillas}"
                                                              id="editarLaboratorio">
                                                 <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesSalaLaboratorioXServicio.listaLaboratorios}" var="laboratorio"
@@ -58,7 +58,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Sala de Laboratorio*"/></strong>
-                                            <h:selectOneMenu value="#{controllerDetallesSalaLaboratorioXServicio.editarSalaLaboratorio}"
+                                            <h:selectOneMenu value="#{controllerDetallesSalaLaboratorioXServicio.editarSalaLaboratorio}" readonly="#{controllerDetallesSalaLaboratorioXServicio.activarCasillas}"
                                                              class="form-control" disabled="#{controllerDetallesSalaLaboratorioXServicio.activarSalaLaboratorio}"
                                                              id="editarLaboratorio">
                                                 <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
@@ -72,7 +72,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Servicio*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesSalaLaboratorioXServicio.editarServicio}"
-                                                             class="form-control"
+                                                             class="form-control" readonly="#{controllerDetallesSalaLaboratorioXServicio.activarCasillas}"
                                                              id="editarServicio">
                                                 <f:selectItems value="#{controllerDetallesSalaLaboratorioXServicio.listaServiciosSala}" var="area"
                                                                itemLabel="#{area.nombreservicio}" itemValue="#{area}"/>
@@ -86,7 +86,7 @@ and open the template in the editor.
                                                 Estado Registro*
                                             </label>
                                             <h:selectOneMenu value="#{controllerDetallesSalaLaboratorioXServicio.editarEstado}"
-                                                             class="form-control"
+                                                             class="form-control" readonly="#{controllerDetallesSalaLaboratorioXServicio.activarCasillas}"
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -114,15 +114,22 @@ and open the template in the editor.
                                 </div>
                                 <hr class="intro-divider"/>
                                 <div class="row col-md-12">
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesSalaLaboratorioXServicio.registrarModificarSalaLaboratorioPorServicio()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesSalaLaboratorioXServicio.restaurarInformacionSalaLaboratorioxServicios()}" actionListener="#{controllerDetallesSala.recibirIDSalasLaboratorioDetalles(controllerDetallesSalaLaboratorioXServicio.idSalaLaboratorio)}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Eliminar Registro" disabled="#{controllerDetallesSalaLaboratorioXServicio.activarCasillas}" actionListener="#{controllerDetallesSalaLaboratorioXServicio.eliminarSalaLaboratorioXServicio()}" class="btn btn-danger" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar" disabled="#{controllerDetallesSalaLaboratorioXServicio.activarCasillas}" actionListener="#{controllerDetallesSalaLaboratorioXServicio.registrarModificarSalaLaboratorioPorServicio()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesSalaLaboratorioXServicio.restaurarInformacionSalaLaboratorioxServicios()}" actionListener="#{controllerDetallesSala.recibirIDSalasLaboratorioDetalles(controllerDetallesSalaLaboratorioXServicio.idSalaLaboratorio)}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

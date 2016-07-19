@@ -35,6 +35,7 @@ public class MensajesConstantes {
     public final String INVENTARIO_CAPACIDAD = "Formato (12) / Tamaño (Max 2)";
     public final String INVENTARIO_UBICACION = "Formato (Piso 4 - INTERNA) / Tamaño (Min 2 - Max 45)";
     public final String U_NOMBRE = "Formato (ejemplo) / Tamaño (Min 6 - Max 45)";
+    public final String U_NOMBRE_ASIG = "Formato (nombre ejemplo) / Tamaño (Min 6 - Max 100)";
     public final String U_NOMBRE_PLAN = "Formato (ejemplo) / Tamaño (Min 6 - Max 90)";
     public final String U_DESCRIP = "Formato (este es un ejemplo de una descripción) / Tamaño (Min 20 - Max 200)";
     public final String U_CODIGO = "Formato (1231) / Tamaño (Min 4 - Max 15)";
@@ -43,6 +44,7 @@ public class MensajesConstantes {
     public final String U_CREDITO = "Formato (3) / Tamaño (1 caract.)";
     public final String U_COSTO = "Formato (12000000) / Tamaño (Max 12 caract.)";
     public final String VARIABLE_NOMBRE = "Formato (ejemplo) / Tam (Min 3 - Max 45)";
+    public final String VARIABLE_PERIODOACA = "Formato (2012-1) / Tam (Min 3 - Max 45)";
     public final String VARIABLE_COD = "Formato (ejemplo) / Tam (Min 2 - Max 45)";
     public final String VARIABLE_DESCR = "Formato (ejemplo) / Tam (Min 3 - Max 100)";
     public final String RECURSO_COD = "Formato (ejemplo) / Tam (Min 4 - Max 20)";

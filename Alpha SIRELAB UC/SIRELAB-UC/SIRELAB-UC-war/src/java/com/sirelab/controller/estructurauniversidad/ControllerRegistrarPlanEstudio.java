@@ -130,11 +130,11 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             validacionesDepartamento = false;
             validacionesFacultad = false;
             validacionesCarrera = false;
-            nuevoDepartamento = null;
-            listaDepartamentos = null;
             activarNuevoDepartamento = true;
-            nuevoCarrera = null;
             activarNuevoCarrera = true;
+            nuevoDepartamento = null;
+            nuevoCarrera = null;
+            listaDepartamentos = null;
             listaCarreras = null;
         }
     }
@@ -149,8 +149,8 @@ public class ControllerRegistrarPlanEstudio implements Serializable {
             validacionesCarrera = false;
             validacionesDepartamento = false;
             nuevoCarrera = null;
-            listaDepartamentos = null;
-            activarNuevoDepartamento = true;
+            listaCarreras = null;
+            activarNuevoCarrera = true;
         }
     }
 

@@ -51,7 +51,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre Asignatura*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerRegistrarAsignatura.nuevoNombre}" disabled="#{controllerRegistrarAsignatura.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                            <h:inputText maxlength="100" value="#{controllerRegistrarAsignatura.nuevoNombre}" disabled="#{controllerRegistrarAsignatura.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarAsignatura.validarNombreAsignatura()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>

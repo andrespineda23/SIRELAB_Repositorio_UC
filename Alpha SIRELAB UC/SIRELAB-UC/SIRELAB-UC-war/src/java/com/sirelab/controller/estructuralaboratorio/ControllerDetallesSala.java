@@ -83,12 +83,14 @@ public class ControllerDetallesSala implements Serializable {
     private int posicionServiciosTabla;
     private int tamTotalServicios;
     private boolean bloquearPagSigServicios, bloquearPagAntServicios;
+    private boolean activarCasillas;
 
     public ControllerDetallesSala() {
     }
 
     @PostConstruct
     public void init() {
+        activarCasillas = false;
         constantes = new MensajesConstantes();
         validacionesCosto = true;
         validacionesCapacidad = true;
@@ -256,7 +258,34 @@ public class ControllerDetallesSala implements Serializable {
 
     public String restaurarInformacionSalaLaboratorio() {
         salaLaboratorioDetalles = new SalaLaboratorio();
-        recibirIDSalasLaboratorioDetalles(this.idSalaLaboratorio);
+        if (activarCasillas == false) {
+            recibirIDSalasLaboratorioDetalles(this.idSalaLaboratorio);
+        } else {
+            activarCasillas = false;
+            mensajeError = "";
+            editarTipo = false;
+            nombreSalaLaboratorio = null;
+            codigoSalaLaboratorio = null;
+            ubicacionSalaLaboratorio = null;
+            descripcionSalaLaboratorio = null;
+            capacidadSalaLaboratorio = null;
+            inversionSalaLaboratorio = null;
+            edificioSalaLaboratorio = null;
+            sedeSalaLaboratorio = null;
+            departamentoSalaLaboratorio = null;
+            laboratorioSalaLaboratorio = null;
+            listaSedes = null;
+            listaEdificios = null;
+            listaDepartamentos = null;
+            listaLaboratorios = null;
+            costoAlquilerDigitado = false;
+            costoSalaLaboratorio = null;
+            salaLaboratorioDetalles = null;
+            idSalaLaboratorio = null;
+            activarEdificio = true;
+            activarLaboratorio = true;
+            visibleGuardar = false;
+        }
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         return "administrarsalas";
@@ -600,7 +629,6 @@ public class ControllerDetallesSala implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesSalasLaboratorio activarSalaLaboratorio : " + e.toString(), e);
         }
     }
 
@@ -620,7 +648,33 @@ public class ControllerDetallesSala implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesSalasLaboratorio inactivarSalaLaboratorio : " + e.toString(), e);
+        }
+    }
+
+    public void eliminarSalaLaboratorio() {
+        Integer modulos = gestionarPlantaSalasBO.obtenerModulosAsociados(idSalaLaboratorio);
+        Integer servicios = gestionarPlantaSalasBO.obtenerServiciosAsociados(idSalaLaboratorio);
+        if (modulos != null && servicios != null) {
+            if (modulos == 0 && servicios == 0) {
+                activarCasillas = true;
+                activarEditar = true;
+                activarLaboratorio = true;
+                activarEdificio = true;
+                disabledActivar = true;
+                disabledInactivar = true;
+                visibleGuardar = true;
+                activarEditar = true;
+                disabledEditar = true;
+                gestionarPlantaSalasBO.eliminarSalaLaboratorio(salaLaboratorioDetalles);
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado modulos y/o servicios.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -927,6 +981,14 @@ public class ControllerDetallesSala implements Serializable {
 
     public void setBloquearPagAntServicios(boolean bloquearPagAntServicios) {
         this.bloquearPagAntServicios = bloquearPagAntServicios;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

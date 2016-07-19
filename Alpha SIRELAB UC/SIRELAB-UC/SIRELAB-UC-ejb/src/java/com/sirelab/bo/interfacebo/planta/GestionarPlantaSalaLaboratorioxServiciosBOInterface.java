@@ -52,4 +52,6 @@ public interface GestionarPlantaSalaLaboratorioxServiciosBOInterface {
     public void eliminarSalaLaboratorioxServicios(SalaLaboratorioxServicios registro);
 
     public SalaLaboratorio obtenerSalaLaboratorioPorId(BigInteger idRegistro);
+
+    public void eliminarSalaLaboratorioXServicio(SalaLaboratorioxServicios registro);
 }

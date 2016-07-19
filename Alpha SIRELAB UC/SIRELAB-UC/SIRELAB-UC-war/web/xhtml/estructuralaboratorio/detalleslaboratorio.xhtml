@@ -46,13 +46,13 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <strong><h:outputText value="Codigo Laboratorio*"/></strong>
-                                                <h:inputText maxlength="10" value="#{controllerDetallesLaboratorio.editarCodigo}" class="form-control" id="editarCodigo" required="true" requiredMessage="El campo Codigo es obligatorio.">
+                                                <h:inputText maxlength="10" value="#{controllerDetallesLaboratorio.editarCodigo}" class="form-control" id="editarCodigo" required="true" requiredMessage="El campo Codigo es obligatorio." readonly="#{controllerDetallesLaboratorio.activarCasillas}">
                                                     <f:ajax event="blur" listener="#{controllerDetallesLaboratorio.validarCodigoLaboratorio()}" execute="editarCodigo" render="editarCodigo msnCodigo" />
                                                 </h:inputText>
                                                 <h6><h:message id="msnCodigo" for="editarCodigo" style="color: red"/></h6>
                                             </div>
                                             <strong><h:outputText value="Nombre Laboratorio*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesLaboratorio.editarNombre}"  required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                            <h:inputText maxlength="45" value="#{controllerDetallesLaboratorio.editarNombre}"  required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio." readonly="#{controllerDetallesLaboratorio.activarCasillas}">
                                                 <f:ajax event="blur" listener="#{controllerDetallesLaboratorio.validarNombreLaboratorio()}" execute="editarNombre" render="editarNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
@@ -61,7 +61,7 @@ and open the template in the editor.
                                             <strong><h:outputText value="Facultad*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesLaboratorio.editarFacultad}"
                                                              class="form-control" disabled="#{controllerDetallesLaboratorio.activarModificaconFacultad}"
-                                                             id="editarFacultad">
+                                                             id="editarFacultad" readonly="#{controllerDetallesLaboratorio.activarCasillas}">
                                                 <f:selectItems value="#{controllerDetallesLaboratorio.listaFacultades}" var="facultad"
                                                                itemLabel="#{facultad.strNombreEstado}" itemValue="#{facultad}"/>
                                                 <f:converter converterId="ConverterGenerico" />
@@ -73,7 +73,7 @@ and open the template in the editor.
                                             <strong><h:outputText value="Departamento*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesLaboratorio.editarDepartamento}"
                                                              class="form-control" disabled="#{controllerDetallesLaboratorio.activarModificacionDepartamento}"
-                                                             id="editarDepartamento">
+                                                             id="editarDepartamento" readonly="#{controllerDetallesLaboratorio.activarCasillas}">
                                                 <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
                                                 <f:selectItems value="#{controllerDetallesLaboratorio.listaDepartamentos}" var="departamento"
                                                                itemLabel="#{departamento.strNombreEstado}" itemValue="#{departamento}"/>
@@ -87,7 +87,7 @@ and open the template in the editor.
                                                 Estado Laboratorio*
                                             </label>
                                             <h:selectOneMenu value="#{controllerDetallesLaboratorio.editarEstado}"
-                                                             class="form-control"
+                                                             class="form-control" readonly="#{controllerDetallesLaboratorio.activarCasillas}"
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -96,14 +96,14 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Número de horas que tendra la reserva para cada sala que pertenezca al laboratorio*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesLaboratorio.laboratorioDetalles.bloquehorareserva}"
-                                                             class="form-control" 
+                                                             class="form-control"  readonly="#{controllerDetallesLaboratorio.activarCasillas}"
                                                              id="editarBloque">
                                                 <f:selectItem itemLabel="1 hora" itemValue="1" />
                                                 <f:selectItem itemLabel="2 horas" itemValue="2" />
                                                 <f:selectItem itemLabel="3 horas" itemValue="3" />
                                                 <f:selectItem itemLabel="4 horas" itemValue="4" />
                                             </h:selectOneMenu>
-                                            <h6><h:message id="msnBloque" for="nuevoBloque" style="color: red"/></h6>
+                                            <h6><h:message id="msnBloque" for="editarBloque" style="color: red"/></h6>
                                         </div>
                                     </fieldset>
                                     <br></br>
@@ -122,15 +122,22 @@ and open the template in the editor.
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesLaboratorio.registrarModificacionLaboratorio()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesLaboratorio.restaurarInformacionLaboratorio()}" actionListener="#{controllerAdministrarLaboratorios.limpiarConsulta()}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Eliminar Laboratorio" disabled="#{controllerDetallesLaboratorio.activarCasillas}" actionListener="#{controllerDetallesLaboratorio.eliminarLaboratorio()}" class="btn btn-danger" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar" disabled="#{controllerDetallesLaboratorio.activarCasillas}" actionListener="#{controllerDetallesLaboratorio.registrarModificacionLaboratorio()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesLaboratorio.restaurarInformacionLaboratorio()}" actionListener="#{controllerAdministrarLaboratorios.limpiarConsulta()}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

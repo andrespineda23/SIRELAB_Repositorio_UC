@@ -33,4 +33,6 @@ public interface EquipoElementoDAOInterface {
     public List<EquipoElemento> consultarEquiposElementosBodegaPublicos(BigInteger sala);
 
     public EquipoElemento obtenerUltimaEquipoElementoRegistrada();
+
+    public List<EquipoElemento> consultarEquiposElementosPorModulo(BigInteger modulo);
 }

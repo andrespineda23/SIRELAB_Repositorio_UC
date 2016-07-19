@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
  */
 @Stateful
 public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlantaSalaLaboratorioxServiciosBOInterface {
-
+    
     static Logger logger = Logger.getLogger(GestionarPlantaSalaLaboratorioxServiciosBO.class);
     
     @EJB
@@ -46,62 +46,61 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
     SalaLaboratorioDAOInterface salaLaboratorioDAO;
-
+    
     @Override
     public SalaLaboratorioxServicios consultarSalaLaboratorioXServicioPorID(BigInteger idRegistro) {
         try {
             SalaLaboratorioxServicios registro = salaLaboratorioXServiciosDAO.buscarSalaLaboratorioxServiciosPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorID : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorID : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
         try {
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerEncargadoLaboratorioPorID : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerEncargadoLaboratorioPorID : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public SalaLaboratorioxServicios consultarSalaLaboratorioXServicioPorSalayServicio(BigInteger sala, BigInteger servicio) {
         try {
             SalaLaboratorioxServicios registro = salaLaboratorioXServiciosDAO.buscarSalaLaboratorioxServiciosPorSalayServicio(sala, servicio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorSalayServicio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioXServicioPorSalayServicio : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<SalaLaboratorioxServicios> consultarSalaLaboratorioxServiciosPorParametro(Map<String, String> filtros) {
         try {
             List<SalaLaboratorioxServicios> lista = salaLaboratorioXServiciosDAO.buscarSalaLaboratorioxServiciosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioxServiciosPorParametro : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratorioxServiciosPorParametro : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Departamento> consultarDepartamentosRegistrados() {
         try {
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString(), e);
             return null;
         }
     }
-    
     
     @Override
     public List<Laboratorio> consultarLaboratoriosRegistrados() {
@@ -109,112 +108,121 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             List<Laboratorio> lista = laboratorioDAO.consultarLaboratorios();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosRegistrados : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosRegistrados : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Departamento> consultarDepartamentosActivosRegistrados() {
         try {
             List<Departamento> lista = departamentoDAO.consultarDepartamentosActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarDepartamentosRegistrados : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento) {
         try {
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosPorIDDepartamento : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<SalaLaboratorio> consultarSalaLaboratorioPorIDLaboratorio(BigInteger laboratorio) {
         try {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorio(laboratorio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboraatorioPorIDLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboraatorioPorIDLaboratorio : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento) {
         try {
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosActivosPorIDDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarLaboratoriosActivosPorIDDepartamento : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<SalaLaboratorio> consultarSalaLaboratoriosActivosPorIDLaboratorio(BigInteger laboratorio) {
         try {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorLaboratorioActivos(laboratorio);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratoriosActivosPorIDLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarSalaLaboratoriosActivosPorIDLaboratorio : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<ServiciosSala> consultarServiciosSalaRegistradas() {
         try {
             List<ServiciosSala> lista = serviciosSalaDAO.consultarServiciosSala();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarServiciosSalaRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO consultarServiciosSalaRegistradas : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public void crearSalaLaboratorioxServicios(SalaLaboratorioxServicios registro) {
         try {
             salaLaboratorioXServiciosDAO.crearSalaLaboratorioxServicios(registro);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO crearSalaLaboratorioxServicios : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO crearSalaLaboratorioxServicios : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public void editarSalaLaboratorioxServicios(SalaLaboratorioxServicios registro) {
         try {
             salaLaboratorioXServiciosDAO.editarSalaLaboratorioxServicios(registro);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO editarSalaLaboratorioxServicios : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO editarSalaLaboratorioxServicios : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public void eliminarSalaLaboratorioxServicios(SalaLaboratorioxServicios registro) {
         try {
             salaLaboratorioXServiciosDAO.eliminarSalaLaboratorioxServicios(registro);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO eliminarSalaLaboratorioxServicios : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO eliminarSalaLaboratorioxServicios : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public SalaLaboratorio obtenerSalaLaboratorioPorId(BigInteger idRegistro) {
         try {
             SalaLaboratorio registro = salaLaboratorioDAO.buscarSalaLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerSalaLaboratorioPorId : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerSalaLaboratorioPorId : " + e.toString(), e);
             return null;
+        }
+    }
+    
+    @Override
+    public void eliminarSalaLaboratorioXServicio(SalaLaboratorioxServicios registro) {
+        try {
+            salaLaboratorioXServiciosDAO.eliminarSalaLaboratorioxServicios(registro);
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO eliminarSalaLaboratorioXServicio : " + e.toString(), e);
         }
     }
 }

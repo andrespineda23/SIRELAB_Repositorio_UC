@@ -32,7 +32,7 @@ import org.apache.log4j.Logger;
  */
 @Stateful
 public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
-
+    
     static Logger logger = Logger.getLogger(GestionarPlantaSalasBO.class);
     
     @EJB
@@ -53,150 +53,150 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
     ServiciosSalaDAOInterface serviciosSalaDAO;
     @EJB
     SalaLaboratorioxServiciosDAOInterface salaLaboratorioxServiciosDAO;
-
+    
     @Override
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
         try {
             EncargadoLaboratorio registro = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarFacultadesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarFacultadesRegistradas : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Laboratorio> consultarLaboratoriosRegistrados() {
         try {
             List<Laboratorio> lista = laboratorioDAO.consultarLaboratorios();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarLaboratoriosRegistrados : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarLaboratoriosRegistrados : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Departamento> consultarDepartamentosRegistrados() {
         try {
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarDepartamentosRegistrados : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarDepartamentosRegistrados : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Departamento> consultarDepartamentosActivosRegistrados() {
         try {
             List<Departamento> lista = departamentoDAO.consultarDepartamentosActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarDepartamentosRegistrados : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarDepartamentosRegistrados : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento) {
         try {
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarLaboratoriosPorIDDepartamento : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento) {
         try {
             List<Laboratorio> lista = laboratorioDAO.buscarLaboratorioActivosPorIDDepartamento(departamento);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarLaboratoriosPorIDDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarLaboratoriosPorIDDepartamento : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<ServiciosSala> consultarServiciosSalaRegistradas() {
         try {
             List<ServiciosSala> lista = serviciosSalaDAO.consultarServiciosSala();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarServiciosSalaRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarServiciosSalaRegistradas : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<ServiciosSala> consultarServiciosSalaActivosRegistradas() {
         try {
             List<ServiciosSala> lista = serviciosSalaDAO.consultarServiciosSalaActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarServiciosSalaRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarServiciosSalaRegistradas : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Sede> consultarSedesRegistradas() {
         try {
             List<Sede> lista = sedeDAO.consultarSedes();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarSedesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarSedesRegistradas : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Sede> consultarSedesActivosRegistradas() {
         try {
             List<Sede> lista = sedeDAO.consultarSedesActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarSedesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarSedesRegistradas : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Edificio> consultarEdificiosPorIDSede(BigInteger sede) {
         try {
             List<Edificio> lista = edificioDAO.buscarEdificiosPorIDSede(sede);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarEdificiosPorIDSede : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarEdificiosPorIDSede : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<Edificio> consultarEdificiosActivosPorIDSede(BigInteger sede) {
         try {
             List<Edificio> lista = edificioDAO.buscarEdificiosActivosPorIDSede(sede);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarEdificiosPorIDSede : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarEdificiosPorIDSede : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<SalaLaboratorio> consultarSalasLaboratoriosPorParametro(Map<String, String> filtros) {
         try {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO consultarSalasLaboratoriosPorParametro : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO consultarSalasLaboratoriosPorParametro : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public void crearNuevaSalaLaboratorio(SalaLaboratorio salaLaboratorio, List<ServiciosSala> listaServicios) {
         try {
@@ -210,19 +210,19 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
                 salaLaboratorioxServiciosDAO.crearSalaLaboratorioxServicios(obj);
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO crearNuevaSalaLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO crearNuevaSalaLaboratorio : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public void modificarInformacionSalaLaboratorio(SalaLaboratorio salaLaboratorio) {
         try {
             salaLaboratorioDAO.editarSalaLaboratorio(salaLaboratorio);
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO modificarInformacionSalaLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO modificarInformacionSalaLaboratorio : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public void almacenarModificacionesSalaServicio(List<SalaLaboratorioxServicios> lista) {
         try {
@@ -230,54 +230,54 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
                 salaLaboratorioxServiciosDAO.editarSalaLaboratorioxServicios(lista.get(i));
             }
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO almacenarModificacionesSalaServicio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO almacenarModificacionesSalaServicio : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public SalaLaboratorio obtenerSalaLaboratorioPorIDSalaLaboratorio(BigInteger idSalaLaboratorio) {
         try {
             SalaLaboratorio registro = salaLaboratorioDAO.buscarSalaLaboratorioPorID(idSalaLaboratorio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO obtenerSalaLaboratorioPorIDSalaLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO obtenerSalaLaboratorioPorIDSalaLaboratorio : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public SalaLaboratorio obtenerSalaLaboratorioPorCodigoEdificioyLaboratorio(String codigo, BigInteger edificio, BigInteger laboratorio) {
         try {
             SalaLaboratorio registro = salaLaboratorioDAO.buscarSalaLaboratorioPorCodigoyEdificioyLaboratorio(codigo, edificio, laboratorio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO obtenerSalaLaboratorioPorCodigoEdificioyLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO obtenerSalaLaboratorioPorCodigoEdificioyLaboratorio : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public Laboratorio obtenerLaboratorioPorId(BigInteger idRegistro) {
         try {
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorID(idRegistro);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO obtenerLaboratorioPorId : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO obtenerLaboratorioPorId : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public List<SalaLaboratorioxServicios> obtenerSalaLaboratorioxServiciosPorIdSala(BigInteger sala) {
         try {
             List<SalaLaboratorioxServicios> lista = salaLaboratorioxServiciosDAO.consultarSalaLaboratorioxServiciosPorSala(sala);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO obtenerSalaLaboratorioxServiciosPorIdSala : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO obtenerSalaLaboratorioxServiciosPorIdSala : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public String obtenerCostoCalculadoSalaLaboratorio(BigInteger idSala) {
         try {
@@ -290,9 +290,48 @@ public class GestionarPlantaSalasBO implements GestionarPlantaSalasBOInterface {
             }
             return valor.toString();
         } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalasBO obtenerCostoCalculadoSalaLaboratorio : " + e.toString(),e);
+            logger.error("Error GestionarPlantaSalasBO obtenerCostoCalculadoSalaLaboratorio : " + e.toString(), e);
             return null;
         }
     }
-
+    
+    @Override
+    public Integer obtenerModulosAsociados(BigInteger salaLaboratorio) {
+        try {
+            Integer cantidad = moduloLaboratorioDAO.buscarModuloLaboratorioPorIDSalaLaboratorio(salaLaboratorio).size();
+            if (null == cantidad) {
+                return 0;
+            } else {
+                return cantidad.intValue();
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaSalasBO obtenerModulosAsociados : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer obtenerServiciosAsociados(BigInteger salaLaboratorio) {
+        try {
+            Integer cantidad = salaLaboratorioxServiciosDAO.consultarSalaLaboratorioxServiciosPorSala(salaLaboratorio).size();
+            if (null == cantidad) {
+                return 0;
+            } else {
+                return cantidad.intValue();
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaSalasBO obtenerModulosAsociados : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public void eliminarSalaLaboratorio(SalaLaboratorio sala) {
+        try {
+            salaLaboratorioDAO.eliminarSalaLaboratorio(sala);
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaSalasBO eliminarSalaLaboratorio : " + e.toString(), e);
+        }
+    }
+    
 }

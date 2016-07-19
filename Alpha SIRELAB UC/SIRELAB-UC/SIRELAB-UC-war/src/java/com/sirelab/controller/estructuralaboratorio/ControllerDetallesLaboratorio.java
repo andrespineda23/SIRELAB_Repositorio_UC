@@ -11,6 +11,7 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOIn
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -61,12 +62,14 @@ public class ControllerDetallesLaboratorio implements Serializable {
     private boolean perfilConsulta;
     private UsuarioLogin usuarioLoginSistema;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesLaboratorio() {
     }
 
     @PostConstruct
     public void init() {
+        activarCasillas = false;
         constantes = new MensajesConstantes();
         activarModificacionDepartamento = true;
         validacionesCodigo = true;
@@ -91,7 +94,20 @@ public class ControllerDetallesLaboratorio implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         laboratorioDetalles = new Laboratorio();
-        recibirIDLaboratoriosDetalles(idLaboratorio);
+        if (activarCasillas == false) {
+            recibirIDLaboratoriosDetalles(idLaboratorio);
+        } else {
+            mensajeError = "";
+            editarCodigo = null;
+            editarDepartamento = null;
+            editarEstado = false;
+            editarNombre = null;
+            editarFacultad = null;
+            activarModificacionDepartamento = false;
+            listaFacultades = null;
+            listaDepartamentos = null;
+            activarCasillas = false;
+        }
         return "administrarlaboratorios";
     }
 
@@ -110,7 +126,7 @@ public class ControllerDetallesLaboratorio implements Serializable {
         editarNombre = laboratorioDetalles.getNombrelaboratorio();
         editarFacultad = laboratorioDetalles.getDepartamento().getFacultad();
         activarModificacionDepartamento = false;
-        listaFacultades = listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
+        listaFacultades = gestionarPlantaLaboratoriosBO.consultarFacultadesRegistradas();
         if (Utilidades.validarNulo(editarFacultad)) {
             listaDepartamentos = gestionarPlantaLaboratoriosBO.consultarDepartamentosPorIDFacultad(editarFacultad.getIdfacultad());
         }
@@ -247,8 +263,24 @@ public class ControllerDetallesLaboratorio implements Serializable {
             restaurarInformacionLaboratorio();
         } catch (Exception e) {
             logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema:  " + e.toString(), e);
-            logger.error("Error ControllerGestionarPlantaLaboratorios almacenarModificacionLaboratorioEnSistema : " + e.toString(), e);
+        }
+    }
 
+    public void eliminarLaboratorio() {
+        Integer cantidadSalas = gestionarPlantaLaboratoriosBO.obtenerCantidadSalasAsociadas(idLaboratorio);
+        if (null != cantidadSalas) {
+            if (cantidadSalas == 0) {
+                gestionarPlantaLaboratoriosBO.eliminarLaboratorio(laboratorioDetalles);
+                activarCasillas = true;
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado al menos una sala de laboratorio.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -355,6 +387,14 @@ public class ControllerDetallesLaboratorio implements Serializable {
 
     public void setActivarModificaconFacultad(boolean activarModificaconFacultad) {
         this.activarModificaconFacultad = activarModificaconFacultad;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

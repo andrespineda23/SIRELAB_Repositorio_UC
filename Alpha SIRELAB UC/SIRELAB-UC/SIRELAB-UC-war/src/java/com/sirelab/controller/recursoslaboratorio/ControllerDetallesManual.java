@@ -39,6 +39,7 @@ public class ControllerDetallesManual implements Serializable {
     private Manual manualDetalle;
     private BigInteger idManual;
     private String editarNombre, editarTipo, editarUbicacion;
+    private String editarCodigo;
     //
     private boolean validacionesNombre, validacionesTipo, validacionesArchivo, validacionesUbicacion;
     private String mensajeFormulario;
@@ -80,6 +81,7 @@ public class ControllerDetallesManual implements Serializable {
     public void asignarValoresVariablesManual() {
         editarTipo = manualDetalle.getTipomanual();
         mensajeError = "";
+        editarCodigo = manualDetalle.getCodigomanual();
         editarNombre = manualDetalle.getNombremanual();
         //
         validacionesTipo = true;
@@ -112,17 +114,17 @@ public class ControllerDetallesManual implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.RECURSO_NOM_MAN));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.RECURSO_NOM_MAN));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. "+constantes.RECURSO_NOM_MAN));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres. " + constantes.RECURSO_NOM_MAN));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio "+constantes.RECURSO_NOM_MAN));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio " + constantes.RECURSO_NOM_MAN));
         }
     }
 
@@ -133,11 +135,11 @@ public class ControllerDetallesManual implements Serializable {
                 validacionesUbicacion = true;
             } else {
                 validacionesUbicacion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El tamaño minimo permitido es 7 caracteres. "+constantes.RECURSO_INS_UBI));
+                FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El tamaño minimo permitido es 7 caracteres. " + constantes.RECURSO_INS_UBI));
             }
         } else {
             validacionesUbicacion = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El campo ubicación es obligatorio. "+constantes.RECURSO_INS_UBI));
+            FacesContext.getCurrentInstance().addMessage("form:editarUbicacion", new FacesMessage("El campo ubicación es obligatorio. " + constantes.RECURSO_INS_UBI));
         }
     }
 
@@ -221,7 +223,7 @@ public class ControllerDetallesManual implements Serializable {
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -237,7 +239,7 @@ public class ControllerDetallesManual implements Serializable {
             }
             gestionarRecursoManualesBO.editarManual(manualDetalle);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarManuales almacenarModificacionManualEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarManuales almacenarModificacionManualEnSistema:  " + e.toString(), e);
         }
     }
 
@@ -360,6 +362,14 @@ public class ControllerDetallesManual implements Serializable {
 
     public void setActivarArchivo(boolean activarArchivo) {
         this.activarArchivo = activarArchivo;
+    }
+
+    public String getEditarCodigo() {
+        return editarCodigo;
+    }
+
+    public void setEditarCodigo(String editarCodigo) {
+        this.editarCodigo = editarCodigo;
     }
 
 }

@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -174,9 +174,15 @@ and open the template in the editor.
                                 <div class="col-md-1"></div>
                             </div>
                             <div class="row col-md-12">
-                                <div class="col-md-11"></div>
-                                <div class="col-md-1">
-                                    <h:commandButton value="Atras" class="btn btn-primary" action="#{controllerDetallesModulo.restaurarInformacionModuloLaboratorio()}" actionListener="#{controllerAdministrarModulos.limpiarDatos()}" immediate="true"/>
+                                <div class="row">
+                                    <div class="left pull-left">
+                                        <h:commandButton value="Eliminar Modulo/Banco" disabled="#{controllerDetallesModulo.activarCasillas}" actionListener="#{controllerDetallesModulo.eliminarModuloLaboratorio()}" class="btn btn-danger" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h:commandButton value="Atras" class="btn btn-primary" action="#{controllerDetallesModulo.restaurarInformacionModuloLaboratorio()}" actionListener="#{controllerAdministrarModulos.limpiarDatos()}" immediate="true"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>

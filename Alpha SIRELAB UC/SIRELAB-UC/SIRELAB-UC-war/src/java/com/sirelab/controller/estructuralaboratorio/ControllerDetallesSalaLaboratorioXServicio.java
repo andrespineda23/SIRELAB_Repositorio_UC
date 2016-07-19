@@ -51,6 +51,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
     private String colorMensaje;
     private boolean editarEstado;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesSalaLaboratorioXServicio() {
     }
@@ -59,6 +60,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
     public void init() {
         activarSalaLaboratorio = true;
         //
+        activarCasillas = false;
         validacionesServicio = true;
         validacionesLaboratorio = true;
         validacionesSalaLaboratorio = true;
@@ -74,8 +76,22 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         salaSalaLaboratorioPorServicioDetalles = new SalaLaboratorioxServicios();
-        recibirIDSalaLaboratorioxServiciosDetalles(this.idSalaLaboratorioPorServicio);
         mensajeError = "";
+        if (activarCasillas == false) {
+            recibirIDSalaLaboratorioxServiciosDetalles(this.idSalaLaboratorioPorServicio);
+        } else {
+            editarServicio = null;
+            editarLaboratorio = null;
+            editarSalaLaboratorio = null;
+            editarEstado = false;
+            activarSalaLaboratorio = false;
+            listaServiciosSala = null;
+            listaLaboratorios = null;
+            listaSalaLaboratorios = null;
+            mensajeError = "";
+            idSalaLaboratorio = null;
+            activarCasillas = false;
+        }
         return "administrarlaboratoriosporareas";
     }
 
@@ -172,7 +188,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
                     mensajeFormulario = "El formulario ha sido ingresado con exito.";
                 } else {
                     colorMensaje = "#FF0000";
-                    mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
+                    mensajeFormulario = "El registro ya se encuentra ingresado en el sistema.";
                 }
             } else {
                 colorMensaje = "#FF0000";
@@ -180,7 +196,7 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -194,6 +210,13 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
             logger.error("Error ControllerDetallesSalaLaboratorioXServicio almacenarModificarSalaLaboratorioPorAreaEnSistema:  " + e.toString(), e);
 
         }
+    }
+
+    public void eliminarSalaLaboratorioXServicio() {
+        activarCasillas = true;
+        gestionarPlantaSalaLaboratorioxServiciosBO.eliminarSalaLaboratorioxServicios(salaSalaLaboratorioPorServicioDetalles);
+        colorMensaje = "#FF0000";
+        mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
     }
 
     //GET-SET
@@ -299,6 +322,14 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
 
     public void setIdSalaLaboratorio(BigInteger idSalaLaboratorio) {
         this.idSalaLaboratorio = idSalaLaboratorio;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

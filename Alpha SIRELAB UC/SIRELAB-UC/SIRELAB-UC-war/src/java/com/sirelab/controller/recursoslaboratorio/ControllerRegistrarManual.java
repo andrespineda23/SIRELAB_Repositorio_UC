@@ -64,7 +64,6 @@ public class ControllerRegistrarManual implements Serializable {
         nuevoUbicacion = null;
         nuevoNombre = null;
         archivo = null;
-        validacionesTipo = false;
         validacionesNombre = false;
         validacionesArchivo = false;
         validacionesUbicacion = false;
@@ -218,16 +217,14 @@ public class ControllerRegistrarManual implements Serializable {
 
     private void almacenarNuevoManualEnSistema() {
         try {
-            Manual guiaNuevo = new Manual();
-            guiaNuevo.setNombremanual(nuevoNombre);
-            guiaNuevo.setTipomanual(nuevoTipo);
-            gestionarRecursoManualBO.crearManual(guiaNuevo);
+            Manual manualNuevo = new Manual();
+            manualNuevo.setNombremanual(nuevoNombre);
+            manualNuevo.setTipomanual(nuevoTipo);
+            manualNuevo.setUbicacionmanual(rutaArchivo);
             if (activarArchivo == false) {
                 cargarGuiaAServidor();
-                guiaNuevo.setUbicacionmanual(rutaArchivo);
-            } else {
-                guiaNuevo.setUbicacionmanual(nuevoUbicacion);
             }
+            gestionarRecursoManualBO.crearManual(manualNuevo);
         } catch (Exception e) {
             logger.error("Error ControllerRegistrarManual almacenarNuevoManualEnSistema : " + e.toString(), e);
         }
@@ -246,6 +243,7 @@ public class ControllerRegistrarManual implements Serializable {
         validacionesArchivo = false;
         validacionesNombre = false;
         validacionesUbicacion = false;
+        colorMensaje = "black";
         mensajeFormulario = "N/A";
     }
 

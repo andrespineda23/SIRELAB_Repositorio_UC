@@ -70,6 +70,7 @@ public class ControllerDetallesModulo implements Serializable {
     private MensajesConstantes constantes;
     private boolean perfilConsulta;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesModulo() {
     }
@@ -78,6 +79,7 @@ public class ControllerDetallesModulo implements Serializable {
     public void init() {
         constantes = new MensajesConstantes();
         activarSala = true;
+        activarCasillas = false;
         activarLaboratorio = true;
         validacionesDetalle = true;
         validacionesCodigo = true;
@@ -152,34 +154,57 @@ public class ControllerDetallesModulo implements Serializable {
 
     public String restaurarInformacionModuloLaboratorio() {
         moduloLaboratorioDetalles = new ModuloLaboratorio();
-        moduloLaboratorioDetalles = gestionarPlantaModulosBO.obtenerModuloLaboratorioPorIDModuloLaboratorio(idModuloLaboratorio);
-        if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
-            disabledActivar = true;
-            disabledInactivar = false;
+        if (activarCasillas == false) {
+            moduloLaboratorioDetalles = gestionarPlantaModulosBO.obtenerModuloLaboratorioPorIDModuloLaboratorio(idModuloLaboratorio);
+            if (moduloLaboratorioDetalles.getEstadomodulo() == true) {
+                disabledActivar = true;
+                disabledInactivar = false;
+            } else {
+                disabledActivar = false;
+                disabledInactivar = true;
+            }
+            activarEditar = true;
+            disabledEditar = false;
+            modificacionRegistro = false;
+            visibleGuardar = false;
+            activarSala = true;
+            activarLaboratorio = true;
+            listaSalasLaboratorio = null;
+            listaDepartamentos = null;
+            listaLaboratorios = null;
+            validacionesDetalle = true;
+            validacionesCodigo = true;
+            validacionesLaboratorio = true;
+            validacionesLaboratorio = true;
+            validacionesSala = true;
+            validacionesCapacidad = true;
+            validacionesCosto = true;
+            validacionesInversion = true;
+            asignarValoresVariablesModuloLaboratorio();
         } else {
-            disabledActivar = false;
+            moduloLaboratorioDetalles = null;
+            disabledActivar = true;
             disabledInactivar = true;
+            activarEditar = true;
+            disabledEditar = false;
+            modificacionRegistro = false;
+            visibleGuardar = false;
+            activarSala = true;
+            activarLaboratorio = true;
+            listaSalasLaboratorio = null;
+            listaDepartamentos = null;
+            listaLaboratorios = null;
+            validacionesDetalle = true;
+            validacionesCodigo = true;
+            validacionesLaboratorio = true;
+            validacionesLaboratorio = true;
+            validacionesSala = true;
+            validacionesCapacidad = true;
+            validacionesCosto = true;
+            validacionesInversion = true;
         }
-        activarEditar = true;
-        disabledEditar = false;
-        modificacionRegistro = false;
-        visibleGuardar = false;
-        activarSala = true;
-        activarLaboratorio = true;
-        listaSalasLaboratorio = null;
-        listaDepartamentos = null;
-        listaLaboratorios = null;
-        validacionesDetalle = true;
-        validacionesCodigo = true;
-        validacionesLaboratorio = true;
-        validacionesLaboratorio = true;
-        validacionesSala = true;
-        validacionesCapacidad = true;
-        validacionesCosto = true;
-        validacionesInversion = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
-        asignarValoresVariablesModuloLaboratorio();
         return "administrarmodulos";
     }
 
@@ -456,7 +481,26 @@ public class ControllerDetallesModulo implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesModulosLaboratorio inactivarModuloLaboratorio : " + e.toString(), e);
+        }
+    }
+
+    public void eliminarModuloLaboratorio() {
+        Integer equipos = gestionarPlantaModulosBO.obtenerEquiposAsociados(idModuloLaboratorio);
+        if (null != equipos) {
+            if (equipos == 0) {
+                activarCasillas = true;
+                gestionarPlantaModulosBO.eliminarModuloLaboratorio(moduloLaboratorioDetalles);
+                disabledActivar = true;
+                disabledInactivar = true;
+                disabledEditar = true;
+                activarEditar = true;
+                visibleGuardar = true;
+                activarSala = true;
+                activarLaboratorio = true;
+                activarEditar = true;
+            } else {
+            }
+        } else {
         }
     }
 
@@ -659,6 +703,14 @@ public class ControllerDetallesModulo implements Serializable {
 
     public void setPerfilConsulta(boolean perfilConsulta) {
         this.perfilConsulta = perfilConsulta;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

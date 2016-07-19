@@ -62,4 +62,8 @@ public interface GestionarPlantaModulosBOInterface {
 
     public List<SalaLaboratorio> consultarSalasLaboratoriosActivosPorIDLaboratorio(BigInteger laboratorio);
 
+    public Integer obtenerEquiposAsociados(BigInteger modulo);
+
+    public void eliminarModuloLaboratorio(ModuloLaboratorio modulo);
+
 }

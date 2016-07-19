@@ -138,7 +138,7 @@ public class ControllerRegistrarPlanAsignatura implements Serializable {
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "#FF0000";
-                mensajeFormulario = "El registro ya se encuentra registrado en el sistema.";
+                mensajeFormulario = "El registro ya se encuentra ingresado en el sistema.";
             }
         } else {
             colorMensaje = "#FF0000";

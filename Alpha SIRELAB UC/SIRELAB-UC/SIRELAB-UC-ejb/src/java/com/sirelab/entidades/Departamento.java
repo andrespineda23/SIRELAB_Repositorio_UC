@@ -7,9 +7,7 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,17 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ANDRES PINEDA
+ * @author AndresPineda
  */
 @Entity
 @Table(name = "departamento")
@@ -37,11 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
     @NamedQuery(name = "Departamento.findByIddepartamento", query = "SELECT d FROM Departamento d WHERE d.iddepartamento = :iddepartamento"),
-    @NamedQuery(name = "Departamento.findByNombredepartamento", query = "SELECT d FROM Departamento d WHERE d.nombredepartamento = :nombredepartamento")})
+    @NamedQuery(name = "Departamento.findByNombredepartamento", query = "SELECT d FROM Departamento d WHERE d.nombredepartamento = :nombredepartamento"),
+    @NamedQuery(name = "Departamento.findByCodigodepartamento", query = "SELECT d FROM Departamento d WHERE d.codigodepartamento = :codigodepartamento"),
+    @NamedQuery(name = "Departamento.findByEstado", query = "SELECT d FROM Departamento d WHERE d.estado = :estado")})
 public class Departamento implements Serializable {
 
-    @Column(name = "estado")
-    private Boolean estado;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +46,7 @@ public class Departamento implements Serializable {
     private BigInteger iddepartamento;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "nombredepartamento")
     private String nombredepartamento;
     @Basic(optional = false)
@@ -58,15 +54,11 @@ public class Departamento implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "codigodepartamento")
     private String codigodepartamento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento")
-    private Collection<Carrera> carreraCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento")
-    private Collection<Laboratorio> laboratorioCollection;
+    @Column(name = "estado")
+    private Boolean estado;
     @JoinColumn(name = "facultad", referencedColumnName = "idfacultad")
     @ManyToOne(optional = false)
     private Facultad facultad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento")
-    private Collection<Docente> docenteCollection;
     @Transient
     private String strEstado;
     @Transient
@@ -79,9 +71,10 @@ public class Departamento implements Serializable {
         this.iddepartamento = iddepartamento;
     }
 
-    public Departamento(BigInteger iddepartamento, String nombredepartamento) {
+    public Departamento(BigInteger iddepartamento, String nombredepartamento, String codigodepartamento) {
         this.iddepartamento = iddepartamento;
         this.nombredepartamento = nombredepartamento;
+        this.codigodepartamento = codigodepartamento;
     }
 
     public BigInteger getIddepartamento() {
@@ -103,22 +96,20 @@ public class Departamento implements Serializable {
         this.nombredepartamento = nombredepartamento.toUpperCase();
     }
 
-    @XmlTransient
-    public Collection<Carrera> getCarreraCollection() {
-        return carreraCollection;
+    public String getCodigodepartamento() {
+        return codigodepartamento;
     }
 
-    public void setCarreraCollection(Collection<Carrera> carreraCollection) {
-        this.carreraCollection = carreraCollection;
+    public void setCodigodepartamento(String codigodepartamento) {
+        this.codigodepartamento = codigodepartamento;
     }
 
-    @XmlTransient
-    public Collection<Laboratorio> getLaboratorioCollection() {
-        return laboratorioCollection;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setLaboratorioCollection(Collection<Laboratorio> laboratorioCollection) {
-        this.laboratorioCollection = laboratorioCollection;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public Facultad getFacultad() {
@@ -127,15 +118,6 @@ public class Departamento implements Serializable {
 
     public void setFacultad(Facultad facultad) {
         this.facultad = facultad;
-    }
-
-    @XmlTransient
-    public Collection<Docente> getDocenteCollection() {
-        return docenteCollection;
-    }
-
-    public void setDocenteCollection(Collection<Docente> docenteCollection) {
-        this.docenteCollection = docenteCollection;
     }
 
     @Override
@@ -161,22 +143,6 @@ public class Departamento implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Departamento[ iddepartamento=" + iddepartamento + " ]";
-    }
-
-    public String getCodigodepartamento() {
-        return codigodepartamento;
-    }
-
-    public void setCodigodepartamento(String codigodepartamento) {
-        this.codigodepartamento = codigodepartamento;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
     }
 
     public String getStrEstado() {

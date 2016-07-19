@@ -40,4 +40,8 @@ public interface GestionarPlantaLaboratoriosBOInterface {
     public List<Facultad> consultarFacultadesActivosRegistradas();
 
     public List<Departamento> consultarDepartamentosActivosPorIDFacultad(BigInteger facultad);
+
+    public Integer obtenerCantidadSalasAsociadas(BigInteger laboratorio);
+
+    public void eliminarLaboratorio(Laboratorio laboratorio);
 }
