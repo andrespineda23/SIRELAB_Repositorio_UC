@@ -64,6 +64,6 @@ public interface GestionarPlantaModulosBOInterface {
 
     public Integer obtenerEquiposAsociados(BigInteger modulo);
 
-    public void eliminarModuloLaboratorio(ModuloLaboratorio modulo);
+    public boolean eliminarModuloLaboratorio(ModuloLaboratorio modulo);
 
 }

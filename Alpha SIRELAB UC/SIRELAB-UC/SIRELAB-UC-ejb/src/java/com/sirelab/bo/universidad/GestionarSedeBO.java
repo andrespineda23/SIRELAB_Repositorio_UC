@@ -18,54 +18,54 @@ import org.apache.log4j.Logger;
  */
 @Stateful
 public class GestionarSedeBO implements GestionarSedeBOInterface {
-
+    
     static Logger logger = Logger.getLogger(GestionarSedeBO.class);
     
     @EJB
     SedeDAOInterface sedeDAO;
     @EJB
     EdificioDAOInterface edificioDAO;
-
+    
     @Override
     public List<Sede> consultarSedesPorParametro(Map<String, String> filtros) {
         try {
             List<Sede> lista = sedeDAO.buscarSedesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO consultarSedesPorParametro : " + e.toString(),e);
+            logger.error("Error GestionarSedeBO consultarSedesPorParametro : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public void crearNuevaSede(Sede sede) {
         try {
             sedeDAO.crearSede(sede);
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString(),e);
+            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public void modificarInformacionSede(Sede sede) {
         try {
             sedeDAO.editarSede(sede);
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString(),e);
+            logger.error("Error GestionarSedeBO crearNuevaSede : " + e.toString(), e);
         }
     }
-
+    
     @Override
     public Sede obtenerSedePorIDSede(BigInteger idSede) {
         try {
             Sede registro = sedeDAO.buscarSedePorID(idSede);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO obtenerSedePorIDSede : " + e.toString(),e);
+            logger.error("Error GestionarSedeBO obtenerSedePorIDSede : " + e.toString(), e);
             return null;
         }
     }
-
+    
     @Override
     public Boolean validarcambioEstadoSede(BigInteger sede) {
         try {
@@ -86,8 +86,34 @@ public class GestionarSedeBO implements GestionarSedeBOInterface {
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarSedeBO validarcambioEstadoSede : " + e.toString(),e);
+            logger.error("Error GestionarSedeBO validarcambioEstadoSede : " + e.toString(), e);
             return null;
+        }
+    }
+    
+    @Override
+    public Integer obtenerEdificiosAsociados(BigInteger sede) {
+        try {
+            List<Edificio> lista = edificioDAO.buscarEdificiosActivosPorIDSede(sede);
+            if (null == lista) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarSedeBO obtenerEdificiosAsociados : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public boolean eliminarSede(Sede sede) {
+        try {
+            sedeDAO.eliminarSede(sede);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error GestionarSedeBO eliminarSede : " + e.toString(), e);
+            return false;
         }
     }
 }

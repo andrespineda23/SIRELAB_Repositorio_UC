@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
 
     static Logger logger = Logger.getLogger(GestionarFacultadesBO.class);
-    
+
     @EJB
     FacultadDAOInterface facultadDAO;
     @EJB
@@ -32,7 +32,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             List<Facultad> lista = facultadDAO.buscarFacultadesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO consultarFacultadesPorParametro : " + e.toString(),e);
+            logger.error("Error GestionarFacultadBO consultarFacultadesPorParametro : " + e.toString(), e);
             return null;
         }
     }
@@ -42,7 +42,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
         try {
             facultadDAO.crearFacultad(facultad);
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString(),e);
+            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString(), e);
         }
     }
 
@@ -51,7 +51,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
         try {
             facultadDAO.editarFacultad(facultad);
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString(),e);
+            logger.error("Error GestionarFacultadBO crearNuevaFacultad : " + e.toString(), e);
         }
     }
 
@@ -61,7 +61,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             Facultad registro = facultadDAO.buscarFacultadPorID(idFacultad);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDFacultad : " + e.toString(),e);
+            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDFacultad : " + e.toString(), e);
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
             Facultad registro = facultadDAO.buscarFacultadPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDCodigo : " + e.toString(),e);
+            logger.error("Error GestionarFacultadBO obtenerFacultadPorIDCodigo : " + e.toString(), e);
             return null;
         }
     }
@@ -97,8 +97,34 @@ public class GestionarFacultadesBO implements GestionarFacultadesBOInterface {
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarFacultadBO Override : " + e.toString(),e);
+            logger.error("Error GestionarFacultadBO validarCambioEstadoFacultad : " + e.toString(), e);
             return null;
+        }
+    }
+
+    @Override
+    public Integer obtenerDepartamentosAsociados(BigInteger facultad) {
+        try {
+            List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(facultad);
+            if (null != lista) {
+                return lista.size();
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarFacultadBO obtenerDepartamentosAsociados : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean eliminarFacultad(Facultad facultad) {
+        try {
+            facultadDAO.eliminarFacultad(facultad);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error GestionarFacultadBO eliminarFacultad : " + e.toString(), e);
+            return false;
         }
     }
 

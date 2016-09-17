@@ -43,6 +43,7 @@ public class ControllerDetallesAsignatura implements Serializable {
     private boolean editarEstado;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesAsignatura() {
     }
@@ -51,6 +52,7 @@ public class ControllerDetallesAsignatura implements Serializable {
     public void init() {
         constantes = new MensajesConstantes();
         mensajeFormulario = "N/A";
+        activarCasillas = false;
         colorMensaje = "black";
         BasicConfigurator.configure();
     }
@@ -62,7 +64,15 @@ public class ControllerDetallesAsignatura implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         asignaturaDetalles = new Asignatura();
-        recibirIDAsignaturasDetalles(idAsignatura);
+        if (activarCasillas == false) {
+            recibirIDAsignaturasDetalles(idAsignatura);
+        } else {
+            activarCasillas = false;
+            editarCodigo = null;
+            editarCredito = null;
+            editarNombre = null;
+            editarEstado = false;
+        }
         return "administrarasignaturas";
     }
 
@@ -75,7 +85,7 @@ public class ControllerDetallesAsignatura implements Serializable {
         validacionesCodigo = true;
         validacionesCredito = true;
         validacionesNombre = true;
-mensajeError = "";
+        mensajeError = "";
     }
 
     public void recibirIDAsignaturasDetalles(BigInteger idDetalle) {
@@ -90,17 +100,17 @@ mensajeError = "";
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.U_NOMBRE_ASIG));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.U_NOMBRE_ASIG));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_NOMBRE_ASIG));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_NOMBRE_ASIG));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. "+constantes.U_NOMBRE_ASIG));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.U_NOMBRE_ASIG));
         }
     }
 
@@ -128,13 +138,13 @@ mensajeError = "";
         if (Utilidades.validarNulo(editarCredito) && (!editarCredito.isEmpty()) && (editarCredito.trim().length() > 0)) {
             if (!Utilidades.isNumber(editarCredito)) {
                 validacionesCredito = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito ingresado es incorrecto. "+constantes.U_CREDITO));
+                FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito ingresado es incorrecto. " + constantes.U_CREDITO));
             } else {
                 validacionesCredito = true;
             }
         } else {
             validacionesCredito = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito es obligatorio. "+constantes.U_CREDITO));
+            FacesContext.getCurrentInstance().addMessage("form:editarCredito", new FacesMessage("El credito es obligatorio. " + constantes.U_CREDITO));
         }
     }
 
@@ -200,7 +210,7 @@ mensajeError = "";
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -213,7 +223,30 @@ mensajeError = "";
             asignaturaDetalles.setNumerocreditos(creditos.intValue());
             gestionarAsignaturasBO.modificarInformacionAsignatura(asignaturaDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerGestionarAsignaturas almacenarModificacionAsignaturaEnSistema:  " + e.toString(), e);
+        }
+    }
+
+    public void eliminarAsignatura() {
+        Integer registro = gestionarAsignaturasBO.obtenerPlanesAsociados(idAsignatura);
+        if (null != registro) {
+            if (registro == 0) {
+                boolean respuesta = gestionarAsignaturasBO.eliminarAsignatura(asignaturaDetalles);
+                if (respuesta == true) {
+                    activarCasillas = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
+                }
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado planes de estudio.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
         }
     }
 
@@ -280,6 +313,14 @@ mensajeError = "";
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

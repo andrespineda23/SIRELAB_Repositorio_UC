@@ -61,12 +61,14 @@ public class ControllerDetallesPlanEstudio implements Serializable {
     private int posicionAsignaturaTabla;
     private int tamTotalAsignatura;
     private boolean bloquearPagSigAsignatura, bloquearPagAntAsignatura;
+    private boolean activarCasillas;
 
     public ControllerDetallesPlanEstudio() {
     }
 
     @PostConstruct
     public void init() {
+        activarCasillas = false;
         constantes = new MensajesConstantes();
         activarModificacionCarrera = true;
         activarModificacionDepartamento = true;
@@ -89,7 +91,24 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         planEstudiosDetalles = new PlanEstudios();
-        recibirIDPlanesEstudioDetalles(idPlanEstudios);
+        if (activarCasillas == false) {
+            recibirIDPlanesEstudioDetalles(idPlanEstudios);
+        } else {
+            activarCasillas = false;
+            mensajeError = "";
+            editarCarrera = null;
+            editarEstado = false;
+            editarCodigo = null;
+            editarDepartamento = null;
+            editarFacultad = null;
+            editarNombre = null;
+            activarModificacionDepartamento = false;
+            listaFacultades = null;
+            listaDepartamentos = null;
+            activarModificacionCarrera = false;
+            listaCarreras = null;
+            listaAsignaturaPorPlanEstudio = null;
+        }
         return "administrarplanesestudio";
     }
 
@@ -384,6 +403,24 @@ public class ControllerDetallesPlanEstudio implements Serializable {
         }
     }
 
+    public void eliminarPlanEstudio() {
+        List<AsignaturaPorPlanEstudio> lista = gestionarPlanesEstudiosBO.obtenerAsignaturaPorPlanEstudioPorIdPlan(idPlanEstudios);
+        if (null == lista) {
+            boolean respuesta = gestionarPlanesEstudiosBO.eliminarPlanEstudio(planEstudiosDetalles);
+            if (respuesta == true) {
+                activarCasillas = true;
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado asignaturas.";
+        }
+    }
+
     //GET-SET
     public PlanEstudios getPlanEstudiosDetalles() {
         return planEstudiosDetalles;
@@ -559,6 +596,14 @@ public class ControllerDetallesPlanEstudio implements Serializable {
 
     public void setBloquearPagAntAsignatura(boolean bloquearPagAntAsignatura) {
         this.bloquearPagAntAsignatura = bloquearPagAntAsignatura;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

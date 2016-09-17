@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -44,14 +44,14 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Descripcion Edificio*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesEdificio.editarDescripcion}" required="true" class="form-control" id="editarDescripcion" requiredMessage="El campo Descripcion es obligatorio.">
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesEdificio.activarCasillas}" value="#{controllerDetallesEdificio.editarDescripcion}" required="true" class="form-control" id="editarDescripcion" requiredMessage="El campo Descripcion es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesEdificio.validarDescripcionEdificio()}" execute="editarDescripcion" render="editarDescripcion msnDescripcion" />
                                             </h:inputText>
                                             <h6><h:message id="msnDescripcion" for="editarDescripcion" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Dirección/Ubicación Edificio"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesEdificio.editarDireccion}" class="form-control" id="editarDireccion">
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesEdificio.activarCasillas}" value="#{controllerDetallesEdificio.editarDireccion}" class="form-control" id="editarDireccion">
                                                 <f:ajax event="blur" listener="#{controllerDetallesEdificio.validarDireccionEdificio()}" execute="editarDireccion" render="editarDireccion msnDireccion" />
                                             </h:inputText>
                                             <h6><h:message id="msnDireccion" for="editarDireccion" style="color: red"/></h6>
@@ -59,7 +59,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Sede*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesEdificio.editarSede}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerDetallesEdificio.activarCasillas}"
                                                              id="editarSede">
                                                 <f:selectItems value="#{controllerDetallesEdificio.listaSedes}" var="sede"
                                                                itemLabel="#{sede.strNombreEstado}" itemValue="#{sede}"/>
@@ -71,7 +71,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Horario Atención*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesEdificio.editarHorario}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerDetallesEdificio.activarCasillas}"
                                                              id="editarHorario">
                                                 <f:selectItems value="#{controllerDetallesEdificio.listaHorariosAtencion}" var="horario"
                                                                itemLabel="#{horario.descripcionhorario}" itemValue="#{horario}"/>
@@ -85,7 +85,7 @@ and open the template in the editor.
                                                 Estado Edificio*
                                             </label>
                                             <h:selectOneMenu value="#{controllerDetallesEdificio.editarEstado}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerDetallesEdificio.activarCasillas}"
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -110,15 +110,22 @@ and open the template in the editor.
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesEdificio.registrarModificacionEdificio()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesEdificio.restaurarInformacionEdificio()}" actionListener="#{controllerAdministrarEdificios.limpiarDatos()}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Eliminar Edificio" disabled="#{controllerDetallesEdificio.activarCasillas}" actionListener="#{controllerDetallesEdificio.eliminarEdificio()}" class="btn btn-danger" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar" actionListener="#{controllerDetallesEdificio.registrarModificacionEdificio()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesEdificio.restaurarInformacionEdificio()}" actionListener="#{controllerAdministrarEdificios.limpiarDatos()}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

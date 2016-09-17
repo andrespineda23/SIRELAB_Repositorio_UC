@@ -656,18 +656,23 @@ public class ControllerDetallesSala implements Serializable {
         Integer servicios = gestionarPlantaSalasBO.obtenerServiciosAsociados(idSalaLaboratorio);
         if (modulos != null && servicios != null) {
             if (modulos == 0 && servicios == 0) {
-                activarCasillas = true;
-                activarEditar = true;
-                activarLaboratorio = true;
-                activarEdificio = true;
-                disabledActivar = true;
-                disabledInactivar = true;
-                visibleGuardar = true;
-                activarEditar = true;
-                disabledEditar = true;
-                gestionarPlantaSalasBO.eliminarSalaLaboratorio(salaLaboratorioDetalles);
-                colorMensaje = "#FF0000";
-                mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                boolean registro = gestionarPlantaSalasBO.eliminarSalaLaboratorio(salaLaboratorioDetalles);
+                if (registro == true) {
+                    activarCasillas = true;
+                    activarEditar = true;
+                    activarLaboratorio = true;
+                    activarEdificio = true;
+                    disabledActivar = true;
+                    disabledInactivar = true;
+                    visibleGuardar = true;
+                    activarEditar = true;
+                    disabledEditar = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
+                }
             } else {
                 colorMensaje = "#FF0000";
                 mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado modulos y/o servicios.";

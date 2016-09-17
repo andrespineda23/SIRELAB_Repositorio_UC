@@ -41,6 +41,7 @@ public class ControllerDetallesFacultad implements Serializable {
     private boolean editarEstado;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesFacultad() {
     }
@@ -48,6 +49,7 @@ public class ControllerDetallesFacultad implements Serializable {
     @PostConstruct
     public void init() {
         constantes = new MensajesConstantes();
+        activarCasillas = false;
         validacionesCodigo = true;
         validacionesNombre = true;
         mensajeFormulario = "N/A";
@@ -61,7 +63,17 @@ public class ControllerDetallesFacultad implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         facultadDetalles = new Facultad();
-        recibirIDFacultadesDetalles(idFacultad);
+        if (activarCasillas == false) {
+            recibirIDFacultadesDetalles(idFacultad);
+        } else {
+            activarCasillas = false;
+            facultadDetalles = null;
+            idFacultad = null;
+            editarEstado = false;
+            editarCodigo = null;
+            editarNombre = null;
+            mensajeError = "";
+        }
         return "administrarfacultades";
     }
 
@@ -171,7 +183,7 @@ public class ControllerDetallesFacultad implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -182,7 +194,30 @@ public class ControllerDetallesFacultad implements Serializable {
             facultadDetalles.setNombrefacultad(editarNombre);
             gestionarFacultadBO.modificarInformacionFacultad(facultadDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerDetallesFacultad almacenarModificacionFacultadEnSistema : " + e.toString(), e);
+        }
+    }
+
+    public void eliminarFacultad() {
+        Integer departamentos = gestionarFacultadBO.obtenerDepartamentosAsociados(idFacultad);
+        if (null != departamentos) {
+            if (departamentos == 0) {
+                boolean respuesta = gestionarFacultadBO.eliminarFacultad(facultadDetalles);
+                if (respuesta == true) {
+                    activarCasillas = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
+                }
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado al menos un departamento.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -233,6 +268,14 @@ public class ControllerDetallesFacultad implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

@@ -43,5 +43,5 @@ public interface GestionarPlantaLaboratoriosBOInterface {
 
     public Integer obtenerCantidadSalasAsociadas(BigInteger laboratorio);
 
-    public void eliminarLaboratorio(Laboratorio laboratorio);
+    public boolean eliminarLaboratorio(Laboratorio laboratorio);
 }

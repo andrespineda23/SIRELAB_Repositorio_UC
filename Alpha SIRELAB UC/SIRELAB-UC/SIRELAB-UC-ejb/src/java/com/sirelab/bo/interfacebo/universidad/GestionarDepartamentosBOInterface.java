@@ -33,4 +33,8 @@ public interface GestionarDepartamentosBOInterface {
     public Boolean validarCambioEstadoDepartamento(BigInteger departamento);
 
     public List<Facultad> consultarFacultadesActivosRegistradas();
+
+    public boolean eliminarDepartamento(Departamento departamento);
+
+    public Integer obtenerCarrerasAsociadas(BigInteger departamento);
 }

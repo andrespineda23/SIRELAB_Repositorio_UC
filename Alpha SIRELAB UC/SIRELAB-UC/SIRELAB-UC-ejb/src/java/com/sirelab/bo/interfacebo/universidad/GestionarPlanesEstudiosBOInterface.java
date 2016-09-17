@@ -50,4 +50,6 @@ public interface GestionarPlanesEstudiosBOInterface {
     public List<AsignaturaPorPlanEstudio> obtenerAsignaturaPorPlanEstudioPorIdPlan(BigInteger plan);
 
     public void modificarInformacionAsignaturaPorPlanEstudio(List<AsignaturaPorPlanEstudio> lista);
+
+    public boolean eliminarPlanEstudio(PlanEstudios plan);
 }

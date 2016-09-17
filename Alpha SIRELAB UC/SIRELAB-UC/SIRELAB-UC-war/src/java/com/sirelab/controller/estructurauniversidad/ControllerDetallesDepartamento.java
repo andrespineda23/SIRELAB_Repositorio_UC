@@ -46,6 +46,7 @@ public class ControllerDetallesDepartamento implements Serializable {
     private boolean editarEstado;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesDepartamento() {
     }
@@ -58,6 +59,7 @@ public class ControllerDetallesDepartamento implements Serializable {
         validacionesNombre = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarCasillas = false;
         BasicConfigurator.configure();
     }
 
@@ -68,7 +70,17 @@ public class ControllerDetallesDepartamento implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         departamentoDetalles = new Departamento();
-        recibirIDDepartamentosDetalles(idDepartamento);
+        if (activarCasillas == false) {
+            recibirIDDepartamentosDetalles(idDepartamento);
+        } else {
+            activarCasillas = false;
+            mensajeError = "";
+            editarFacultad = null;
+            editarCodigo = null;
+            editarNombre = null;
+            editarEstado = false;
+            listaFacultades = null;
+        }
         return "administrardepartamentos";
     }
 
@@ -111,7 +123,7 @@ public class ControllerDetallesDepartamento implements Serializable {
         if (Utilidades.validarNulo(editarCodigo) && (!editarCodigo.isEmpty()) && (editarCodigo.trim().length() > 0)) {
             int tam = editarCodigo.length();
             if (tam >= 4) {
-                if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo)==true) {
+                if (Utilidades.validarCaracteresAlfaNumericos(editarCodigo) == true) {
                     Departamento registro = gestionarDepartamentosBO.obtenerDepartamentoPorCodigo(editarCodigo);
                     if (null != registro) {
                         if (departamentoDetalles.getIddepartamento().equals(registro.getIddepartamento())) {
@@ -190,7 +202,7 @@ public class ControllerDetallesDepartamento implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -202,7 +214,30 @@ public class ControllerDetallesDepartamento implements Serializable {
             departamentoDetalles.setEstado(editarEstado);
             gestionarDepartamentosBO.modificarInformacionDepartamento(departamentoDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesDepartamento almacenarModificacionDepartamentoEnSistema:  " + e.toString(), e);
+        }
+    }
+
+    public void eliminarDepartamento() {
+        Integer carrera = gestionarDepartamentosBO.obtenerCarrerasAsociadas(idDepartamento);
+        if (null != carrera) {
+            if (carrera == 0) {
+                boolean respuesta = gestionarDepartamentosBO.eliminarDepartamento(departamentoDetalles);
+                if (respuesta == true) {
+                    activarCasillas = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
+                }
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado al menos una carrera.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -277,6 +312,14 @@ public class ControllerDetallesDepartamento implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

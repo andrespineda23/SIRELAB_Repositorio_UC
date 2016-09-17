@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -44,14 +44,14 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Codigo Carrera*"/></strong>
-                                            <h:inputText maxlength="10" value="#{controllerDetallesCarrera.editarCodigo}" class="form-control" id="editarCodigo" required="true" requiredMessage="El campo Codigo es obligatorio.">
+                                            <h:inputText disabled="#{controllerDetallesCarrera.activarCasillas}" maxlength="10" value="#{controllerDetallesCarrera.editarCodigo}" class="form-control" id="editarCodigo" required="true" requiredMessage="El campo Codigo es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesCarrera.validarCodigoCarrera()}" execute="editarCodigo" render="editarCodigo msnCodigo" />
                                             </h:inputText>
                                             <h6><h:message id="msnCodigo" for="editarCodigo" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre Carrera*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesCarrera.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                            <h:inputText disabled="#{controllerDetallesCarrera.activarCasillas}" maxlength="45" value="#{controllerDetallesCarrera.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesCarrera.validarNombreCarrera()}" execute="editarNombre" render="editarNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
@@ -59,7 +59,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Facultad*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesCarrera.editarFacultad}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerDetallesCarrera.activarCasillas}"
                                                              id="editarFacultad">
                                                 <f:selectItems value="#{controllerDetallesCarrera.listaFacultades}" var="facultad"
                                                                itemLabel="#{facultad.strNombreEstado}" itemValue="#{facultad}"/>
@@ -70,7 +70,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Departamento*"/></strong>
-                                            <h:selectOneMenu value="#{controllerDetallesCarrera.editarDepartamento}"
+                                            <h:selectOneMenu value="#{controllerDetallesCarrera.editarDepartamento}" readonly="#{controllerDetallesCarrera.activarCasillas}"
                                                              class="form-control" disabled="#{controllerDetallesCarrera.activarModificacionDepartamento}"
                                                              id="editarDepartamento">
                                                 <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
@@ -86,7 +86,7 @@ and open the template in the editor.
                                                 Estado Carrera
                                             </label>
                                             <h:selectOneMenu value="#{controllerDetallesCarrera.editarEstado}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerDetallesCarrera.activarCasillas}"
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -111,15 +111,22 @@ and open the template in the editor.
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesCarrera.registrarModificacionCarrera()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesCarrera.restaurarInformacionCarrera()}" actionListener="#{controllerAdministrarCarreras.limpiarDatos()}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Eliminar Carrera" disabled="#{controllerDetallesCarrera.activarCasillas}" actionListener="#{controllerDetallesCarrera.eliminarCarrera()}" class="btn btn-danger" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar" disabled="#{controllerDetallesCarrera.activarCasillas}" actionListener="#{controllerDetallesCarrera.registrarModificacionCarrera()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesCarrera.restaurarInformacionCarrera()}" actionListener="#{controllerAdministrarCarreras.limpiarDatos()}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

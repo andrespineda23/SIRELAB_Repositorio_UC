@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterface {
 
     static Logger logger = Logger.getLogger(GestionarDepartamentosBO.class);
-    
+
     @EJB
     DepartamentoDAOInterface departamentoDAO;
     @EJB
@@ -36,19 +36,18 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString(), e);
             return null;
         }
     }
 
     //@Override
-
     public List<Facultad> consultarFacultadesActivosRegistradas() {
         try {
             List<Facultad> lista = facultadDAO.consultarFacultadesActivas();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO consultarFacultadesRegistradas : " + e.toString(), e);
             return null;
         }
     }
@@ -59,7 +58,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO consultarDepartamentosPorParametro : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO consultarDepartamentosPorParametro : " + e.toString(), e);
             return null;
         }
     }
@@ -69,7 +68,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
         try {
             departamentoDAO.crearDepartamento(departamento);
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString(), e);
         }
     }
 
@@ -78,7 +77,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
         try {
             departamentoDAO.editarDepartamento(departamento);
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO crearNuevaDepartamento : " + e.toString(), e);
         }
     }
 
@@ -88,7 +87,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             Departamento registro = departamentoDAO.buscarDepartamentoPorID(idDepartamento);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorIDDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorIDDepartamento : " + e.toString(), e);
             return null;
         }
     }
@@ -99,7 +98,7 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
             Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO obtenerDepartamentoPorCodigo : " + e.toString(), e);
             return null;
         }
     }
@@ -124,8 +123,34 @@ public class GestionarDepartamentosBO implements GestionarDepartamentosBOInterfa
                 }
             }
         } catch (Exception e) {
-            logger.error("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString(),e);
+            logger.error("Error GestionarDepartamentosBO validarCambioEstadoDepartamento : " + e.toString(), e);
             return null;
+        }
+    }
+
+    @Override
+    public Integer obtenerCarrerasAsociadas(BigInteger departamento) {
+        try {
+            List<Carrera> carreras = carreraDAO.consultarCarrerasPorDepartamento(departamento);
+            if (null == carreras) {
+                return 0;
+            } else {
+                return carreras.size();
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarDepartamentosBO obtenerCarrerasAsociadas : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean eliminarDepartamento(Departamento departamento) {
+        try {
+            departamentoDAO.eliminarDepartamento(departamento);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error GestionarDepartamentosBO eliminarDepartamento : " + e.toString(), e);
+            return false;
         }
     }
 }

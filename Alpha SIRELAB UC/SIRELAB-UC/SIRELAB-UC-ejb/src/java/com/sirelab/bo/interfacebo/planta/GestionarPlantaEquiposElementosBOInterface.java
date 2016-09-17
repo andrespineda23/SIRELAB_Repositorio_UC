@@ -58,4 +58,8 @@ public interface GestionarPlantaEquiposElementosBOInterface {
     public List<SalaLaboratorio> consultarSalasLaboratorioPorLaboratorio(BigInteger laboratorio);
 
     public List<SalaLaboratorio> consultarSalasLaboratorioActivosIDLaboratorio(BigInteger laboratorio);
+
+    public boolean eliminarEquipo(EquipoElemento equipo);
+
+    public Integer obtenerComponentesAsociados(BigInteger equipo);
 }

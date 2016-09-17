@@ -286,11 +286,13 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
     }
 
     @Override
-    public void eliminarModuloLaboratorio(ModuloLaboratorio modulo) {
+    public boolean eliminarModuloLaboratorio(ModuloLaboratorio modulo) {
         try {
             moduloLaboratorioDAO.eliminarModuloLaboratorio(modulo);
+            return true;
         } catch (Exception e) {
             logger.error("Error GestionarPlantaModulosBO eliminarModuloLaboratorio : " + e.toString(), e);
+            return false;
         }
     }
 }

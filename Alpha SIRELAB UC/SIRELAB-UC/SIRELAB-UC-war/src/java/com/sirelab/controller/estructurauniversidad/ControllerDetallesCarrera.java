@@ -50,6 +50,7 @@ public class ControllerDetallesCarrera implements Serializable {
     private boolean editarEstado;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesCarrera() {
     }
@@ -64,6 +65,7 @@ public class ControllerDetallesCarrera implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         BasicConfigurator.configure();
+        activarCasillas = false;
         constantes = new MensajesConstantes();
     }
 
@@ -75,7 +77,20 @@ public class ControllerDetallesCarrera implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         carreraDetalles = new Carrera();
-        recibirIDCarrerasDetalles(idCarrera);
+        if (activarCasillas == false) {
+            recibirIDCarrerasDetalles(idCarrera);
+        } else {
+            activarCasillas = false;
+            mensajeError = "";
+            editarCodigo = null;
+            editarDepartamento = null;
+            editarFacultad = null;
+            editarNombre = null;
+            editarEstado = false;
+            activarModificacionDepartamento = false;
+            listaFacultades = null;
+            listaDepartamentos = null;
+        }
         return "administrarcarreras";
     }
 
@@ -105,17 +120,17 @@ public class ControllerDetallesCarrera implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.U_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.U_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_NOMBRE));
             }
         } else {
             validacionesNombre = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. "+constantes.U_NOMBRE));
+            FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre es obligatorio. " + constantes.U_NOMBRE));
         }
     }
 
@@ -125,17 +140,17 @@ public class ControllerDetallesCarrera implements Serializable {
             if (tam >= 4) {
                 if (!Utilidades.validarCaracteresAlfaNumericos(editarCodigo)) {
                     validacionesCodigo = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. "+constantes.U_CODIGO_CARR));
+                    FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado es incorrecto. " + constantes.U_CODIGO_CARR));
                 } else {
                     validacionesCodigo = true;
                 }
             } else {
                 validacionesCodigo = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_CODIGO_CARR));
+                FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_CODIGO_CARR));
             }
         } else {
             validacionesCodigo = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. "+constantes.U_CODIGO_CARR));
+            FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo es obligatorio. " + constantes.U_CODIGO_CARR));
         }
     }
 
@@ -234,7 +249,7 @@ public class ControllerDetallesCarrera implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -246,7 +261,30 @@ public class ControllerDetallesCarrera implements Serializable {
             carreraDetalles.setEstado(editarEstado);
             gestionarCarrerasBO.modificarInformacionCarrera(carreraDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarCarreras almacenarModificacionCarreraEnSistema : " + e.toString(), e);
+        }
+    }
+
+    public void eliminarCarrera() {
+        Integer plan = gestionarCarrerasBO.obtenerPlanesEstudioAsociados(idCarrera);
+        if (null != plan) {
+            if (plan == 0) {
+                boolean respuesta = gestionarCarrerasBO.eliminarCarrera(carreraDetalles);
+                if (respuesta == true) {
+                    activarCasillas = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
+                }
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado al menos un plan de estudio.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -345,6 +383,14 @@ public class ControllerDetallesCarrera implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

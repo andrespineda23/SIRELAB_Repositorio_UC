@@ -171,11 +171,13 @@ public class GestionarPlantaLaboratoriosBO implements GestionarPlantaLaboratorio
     }
 
     @Override
-    public void eliminarLaboratorio(Laboratorio laboratorio) {
+    public boolean eliminarLaboratorio(Laboratorio laboratorio) {
         try {
             laboratorioDAO.eliminarLaboratorio(laboratorio);
+            return true;
         } catch (Exception e) {
             logger.error("Error GestionarPlantaLaboratorioBO eliminarLaboratorio : " + e.toString(), e);
+            return false;
         }
     }
 

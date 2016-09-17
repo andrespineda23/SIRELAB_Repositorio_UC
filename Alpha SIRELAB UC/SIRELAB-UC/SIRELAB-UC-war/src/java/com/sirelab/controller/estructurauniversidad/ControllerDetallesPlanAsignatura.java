@@ -50,6 +50,7 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
     private String colorMensaje;
     private boolean editarEstado;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesPlanAsignatura() {
     }
@@ -62,6 +63,7 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
         validacionesCarrera = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarCasillas = false;
         BasicConfigurator.configure();
     }
 
@@ -72,7 +74,20 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         planAsignaturaDetalles = new AsignaturaPorPlanEstudio();
-        recibirIDPlanAsignaturaDetalles(idPlanAsignatura);
+        if (activarCasillas == false) {
+            recibirIDPlanAsignaturaDetalles(idPlanAsignatura);
+        } else {
+            activarCasillas = false;
+            mensajeError = "";
+            editarAsignatura = null;
+            editarEstado = false;
+            editarPlan = null;
+            editarCarrera = null;
+            activarModificacionPlan = false;
+            listaCarreras = null;
+            listaPlanEstudios = null;
+            listaAsignaturas = null;
+        }
         return "administrarplanasignatura";
     }
 
@@ -171,7 +186,7 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -182,7 +197,19 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
             planAsignaturaDetalles.setPlanestudio(editarPlan);
             gestionarPlanAsignaturaBO.editarAsignaturaPorPlanEstudio(planAsignaturaDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema:  " + e.toString(),e);
+            logger.error("Error ControllerDetallesPlanEstudio almacenarModificacionPlanEstudioEnSistema:  " + e.toString(), e);
+        }
+    }
+
+    public void eliminarPlanAsignatura() {
+        boolean registro = gestionarPlanAsignaturaBO.eliminarPlanAsignatura(planAsignaturaDetalles);
+        if (registro == true) {
+            activarCasillas = true;
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
         }
     }
 
@@ -273,6 +300,14 @@ public class ControllerDetallesPlanAsignatura implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

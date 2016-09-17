@@ -37,4 +37,8 @@ public interface GestionarCarrerasBOInterface {
     public List<Facultad> consultarFacultadesActivosRegistradas();
 
     public List<Departamento> consultarDepartamentosActivosPorIDFacultad(BigInteger facultad);
+
+    public boolean eliminarCarrera(Carrera carrera);
+
+    public Integer obtenerPlanesEstudioAsociados(BigInteger carrera);
 }

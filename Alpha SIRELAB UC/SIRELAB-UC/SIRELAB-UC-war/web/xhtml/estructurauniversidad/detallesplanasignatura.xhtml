@@ -46,7 +46,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Carrera*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarCarrera}"
-                                                             class="form-control" 
+                                                             class="form-control" disabled="#{controllerDetallesPlanAsignatura.activarCasillas}"
                                                              id="editarCarrera">
                                                 <f:selectItems value="#{controllerDetallesPlanAsignatura.listaCarreras}" var="carrera"
                                                                itemLabel="#{carrera.strNombreEstado}" itemValue="#{carrera}"/>
@@ -57,7 +57,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Plan Estudio*"/></strong>
-                                            <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarPlan}"
+                                            <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarPlan}" readonly="#{controllerDetallesPlanAsignatura.activarCasillas}"
                                                              class="form-control" disabled="#{controllerDetallesPlanAsignatura.activarModificacionPlan}"
                                                              id="editarPlan">
                                                 <f:selectItem itemLabel="Seleccione Plan Estudio" itemValue="null" />
@@ -71,7 +71,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Asignatura*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarAsignatura}"
-                                                             class="form-control" 
+                                                             class="form-control"  readonly="#{controllerDetallesPlanAsignatura.activarCasillas}"
                                                              id="editarAsignatura">
                                                 <f:selectItems value="#{controllerDetallesPlanAsignatura.listaAsignaturas}" var="carrera"
                                                                itemLabel="#{carrera.strNombreEstado}" itemValue="#{carrera}"/>
@@ -85,7 +85,7 @@ and open the template in the editor.
                                                 Estado Asociacion Plan de Estudio - Asignatura*
                                             </label>
                                             <h:selectOneMenu value="#{controllerDetallesPlanAsignatura.editarEstado}"
-                                                             class="form-control"
+                                                             class="form-control" readonly="#{controllerDetallesPlanAsignatura.activarCasillas}"
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -110,15 +110,22 @@ and open the template in the editor.
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesPlanAsignatura.registrarModificacionPlanEstudio()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesPlanAsignatura.restaurarInformacionPlanEstudio()}" actionListener="#{controllerAdministrarPlanAsignatura.limpiarDatos()}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Eliminar Registro" disabled="#{controllerDetallesPlanAsignatura.activarCasillas}" actionListener="#{controllerDetallesPlanAsignatura.eliminarPlanAsignatura()}" class="btn btn-danger" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar" disabled="#{controllerDetallesPlanAsignatura.activarCasillas}" actionListener="#{controllerDetallesPlanAsignatura.registrarModificacionPlanEstudio()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesPlanAsignatura.restaurarInformacionPlanEstudio()}" actionListener="#{controllerAdministrarPlanAsignatura.limpiarDatos()}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

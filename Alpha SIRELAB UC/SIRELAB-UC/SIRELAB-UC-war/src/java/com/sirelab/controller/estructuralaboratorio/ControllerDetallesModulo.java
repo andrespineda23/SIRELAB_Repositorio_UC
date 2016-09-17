@@ -488,19 +488,30 @@ public class ControllerDetallesModulo implements Serializable {
         Integer equipos = gestionarPlantaModulosBO.obtenerEquiposAsociados(idModuloLaboratorio);
         if (null != equipos) {
             if (equipos == 0) {
-                activarCasillas = true;
-                gestionarPlantaModulosBO.eliminarModuloLaboratorio(moduloLaboratorioDetalles);
-                disabledActivar = true;
-                disabledInactivar = true;
-                disabledEditar = true;
-                activarEditar = true;
-                visibleGuardar = true;
-                activarSala = true;
-                activarLaboratorio = true;
-                activarEditar = true;
+                boolean registro = gestionarPlantaModulosBO.eliminarModuloLaboratorio(moduloLaboratorioDetalles);
+                if (registro == true) {
+                    activarCasillas = true;
+                    disabledActivar = true;
+                    disabledInactivar = true;
+                    disabledEditar = true;
+                    activarEditar = true;
+                    visibleGuardar = true;
+                    activarSala = true;
+                    activarLaboratorio = true;
+                    activarEditar = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
+                }
             } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado equipos.";
             }
         } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 

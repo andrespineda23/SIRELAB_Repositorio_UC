@@ -119,4 +119,15 @@ public class GestionarPlantaComponentesEquiposBO implements GestionarPlantaCompo
             logger.error("Error GestionarPlantaComponentesEquiposBO eliminarComponenteEquipo : " + e.toString(), e);
         }
     }
+
+    @Override
+    public boolean eliminarComponente(ComponenteEquipo componenteEquipo) {
+        try {
+            componenteEquipoDAO.eliminarComponenteEquipo(componenteEquipo);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaComponentesEquiposBO eliminarComponente : " + e.toString(), e);
+            return false;
+        }
+    }
 }

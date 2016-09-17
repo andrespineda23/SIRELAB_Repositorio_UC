@@ -49,6 +49,7 @@ public class ControllerDetallesEdificio implements Serializable {
     private boolean editarEstado;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesEdificio() {
     }
@@ -62,6 +63,7 @@ public class ControllerDetallesEdificio implements Serializable {
         validacionesHorario = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        activarCasillas = false;
         BasicConfigurator.configure();
     }
 
@@ -73,7 +75,19 @@ public class ControllerDetallesEdificio implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         edificioDetalles = new Edificio();
-        recibirIDEdificiosDetalles(idEdificio);
+        if (activarCasillas == false) {
+            recibirIDEdificiosDetalles(idEdificio);
+        } else {
+            activarCasillas = false;
+            mensajeError = "";
+            editarDescripcion = null;
+            editarDireccion = null;
+            editarSede = null;
+            editarEstado = false;
+            editarHorario = null;
+            listaSedes = null;
+            listaHorariosAtencion = null;
+        }
         return "administraredificios";
     }
 
@@ -179,7 +193,7 @@ public class ControllerDetallesEdificio implements Serializable {
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -192,7 +206,30 @@ public class ControllerDetallesEdificio implements Serializable {
             edificioDetalles.setHorarioatencion(editarHorario);
             gestionarEdificiosBO.modificarInformacionEdificio(edificioDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerDetallesEdificio almacenarModificacionEdificioEnSistema : " + e.toString(), e);
+        }
+    }
+
+    public void eliminarEdificio() {
+        Integer sala = gestionarEdificiosBO.obtenerSalasAsociadas(idEdificio);
+        if (null != sala) {
+            if (sala == 0) {
+                boolean respuesta = gestionarEdificiosBO.eliminarEdificio(edificioDetalles);
+                if (respuesta == true) {
+                    activarCasillas = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
+                }
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado una sala de laboratorio.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -275,6 +312,14 @@ public class ControllerDetallesEdificio implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

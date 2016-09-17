@@ -32,4 +32,7 @@ public interface GestionarEdificiosBOInterface {
 
     public List<Sede> consultarSedesActivosRegistradas();
 
+    public boolean eliminarEdificio(Edificio edificio);
+
+    public Integer obtenerSalasAsociadas(BigInteger edificio);
 }

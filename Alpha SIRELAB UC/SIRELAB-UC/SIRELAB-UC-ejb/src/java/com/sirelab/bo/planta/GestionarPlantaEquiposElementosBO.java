@@ -6,6 +6,7 @@
 package com.sirelab.bo.planta;
 
 import com.sirelab.bo.interfacebo.planta.GestionarPlantaEquiposElementosBOInterface;
+import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstadoEquipoDAOInterface;
@@ -15,6 +16,7 @@ import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.TipoActivoDAOInterface;
 import com.sirelab.dao.interfacedao.TipoEventoDAOInterface;
+import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.EstadoEquipo;
@@ -59,6 +61,8 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
     TipoEventoDAOInterface tipoEventoDAO;
+    @EJB
+    ComponenteEquipoDAOInterface componenteEquipoDAO;
 
     @Override
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
@@ -255,6 +259,32 @@ public class GestionarPlantaEquiposElementosBO implements GestionarPlantaEquipos
         } catch (Exception e) {
             logger.error("Error GestionarPlantaElementosEquiposBO consultarSalasLaboratorioPorIDEdificio : " + e.toString(), e);
             return null;
+        }
+    }
+
+    @Override
+    public Integer obtenerComponentesAsociados(BigInteger equipo) {
+        try {
+            List<ComponenteEquipo> lista = componenteEquipoDAO.consultarComponentesEquiposPorEquipo(equipo);
+            if (null == lista) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaElementosEquiposBO obtenerComponentesAsociados : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean eliminarEquipo(EquipoElemento equipo) {
+        try {
+            equipoElementoDAO.eliminarEquipoElemento(equipo);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaElementosEquiposBO eliminarEquipo : " + e.toString(), e);
+            return false;
         }
     }
 }

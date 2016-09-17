@@ -213,10 +213,15 @@ public class ControllerDetallesSalaLaboratorioXServicio implements Serializable 
     }
 
     public void eliminarSalaLaboratorioXServicio() {
-        activarCasillas = true;
-        gestionarPlantaSalaLaboratorioxServiciosBO.eliminarSalaLaboratorioxServicios(salaSalaLaboratorioPorServicioDetalles);
-        colorMensaje = "#FF0000";
-        mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+        boolean registro = gestionarPlantaSalaLaboratorioxServiciosBO.eliminarSalaLaboratorioxServicios(salaSalaLaboratorioPorServicioDetalles);
+        if (registro == true) {
+            activarCasillas = true;
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
+        }
     }
 
     //GET-SET

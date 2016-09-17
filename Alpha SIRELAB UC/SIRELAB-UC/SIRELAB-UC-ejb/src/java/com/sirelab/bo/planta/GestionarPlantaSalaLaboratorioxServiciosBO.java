@@ -31,9 +31,9 @@ import org.apache.log4j.Logger;
  */
 @Stateful
 public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlantaSalaLaboratorioxServiciosBOInterface {
-    
+
     static Logger logger = Logger.getLogger(GestionarPlantaSalaLaboratorioxServiciosBO.class);
-    
+
     @EJB
     DepartamentoDAOInterface departamentoDAO;
     @EJB
@@ -46,7 +46,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
     SalaLaboratorioDAOInterface salaLaboratorioDAO;
-    
+
     @Override
     public SalaLaboratorioxServicios consultarSalaLaboratorioXServicioPorID(BigInteger idRegistro) {
         try {
@@ -57,7 +57,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public EncargadoLaboratorio obtenerEncargadoLaboratorioPorID(BigInteger idRegistro) {
         try {
@@ -68,7 +68,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public SalaLaboratorioxServicios consultarSalaLaboratorioXServicioPorSalayServicio(BigInteger sala, BigInteger servicio) {
         try {
@@ -79,7 +79,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<SalaLaboratorioxServicios> consultarSalaLaboratorioxServiciosPorParametro(Map<String, String> filtros) {
         try {
@@ -90,7 +90,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<Departamento> consultarDepartamentosRegistrados() {
         try {
@@ -101,7 +101,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<Laboratorio> consultarLaboratoriosRegistrados() {
         try {
@@ -112,7 +112,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<Departamento> consultarDepartamentosActivosRegistrados() {
         try {
@@ -123,7 +123,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento) {
         try {
@@ -134,7 +134,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<SalaLaboratorio> consultarSalaLaboratorioPorIDLaboratorio(BigInteger laboratorio) {
         try {
@@ -145,7 +145,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<Laboratorio> consultarLaboratoriosActivosPorIDDepartamento(BigInteger departamento) {
         try {
@@ -156,7 +156,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<SalaLaboratorio> consultarSalaLaboratoriosActivosPorIDLaboratorio(BigInteger laboratorio) {
         try {
@@ -167,7 +167,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public List<ServiciosSala> consultarServiciosSalaRegistradas() {
         try {
@@ -178,7 +178,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             return null;
         }
     }
-    
+
     @Override
     public void crearSalaLaboratorioxServicios(SalaLaboratorioxServicios registro) {
         try {
@@ -187,7 +187,7 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO crearSalaLaboratorioxServicios : " + e.toString(), e);
         }
     }
-    
+
     @Override
     public void editarSalaLaboratorioxServicios(SalaLaboratorioxServicios registro) {
         try {
@@ -196,16 +196,18 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
             logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO editarSalaLaboratorioxServicios : " + e.toString(), e);
         }
     }
-    
-    @Override
-    public void eliminarSalaLaboratorioxServicios(SalaLaboratorioxServicios registro) {
+
+    @Override 
+    public boolean eliminarSalaLaboratorioxServicios(SalaLaboratorioxServicios registro) { 
         try {
             salaLaboratorioXServiciosDAO.eliminarSalaLaboratorioxServicios(registro);
+            return true;
         } catch (Exception e) {
             logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO eliminarSalaLaboratorioxServicios : " + e.toString(), e);
+            return false;
         }
     }
-    
+
     @Override
     public SalaLaboratorio obtenerSalaLaboratorioPorId(BigInteger idRegistro) {
         try {
@@ -214,15 +216,6 @@ public class GestionarPlantaSalaLaboratorioxServiciosBO implements GestionarPlan
         } catch (Exception e) {
             logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO obtenerSalaLaboratorioPorId : " + e.toString(), e);
             return null;
-        }
-    }
-    
-    @Override
-    public void eliminarSalaLaboratorioXServicio(SalaLaboratorioxServicios registro) {
-        try {
-            salaLaboratorioXServiciosDAO.eliminarSalaLaboratorioxServicios(registro);
-        } catch (Exception e) {
-            logger.error("Error GestionarPlantaSalaLaboratorioxServiciosBO eliminarSalaLaboratorioXServicio : " + e.toString(), e);
         }
     }
 }

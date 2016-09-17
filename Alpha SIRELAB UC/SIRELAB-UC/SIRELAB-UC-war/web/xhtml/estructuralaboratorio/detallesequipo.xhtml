@@ -44,28 +44,28 @@ and open the template in the editor.
                                     <legend class="text-info">Datos Basicos</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Codigo Inventario Equipo*"/></strong>
-                                        <h:inputText maxlength="20" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.inventarioEquipoElemento}" required="true" class="form-control" id="inventarioEquipoElemento" requiredMessage="El campo Inventario es obligatorio.">
+                                        <h:inputText maxlength="20" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.inventarioEquipoElemento}" required="true" class="form-control" id="inventarioEquipoElemento" requiredMessage="El campo Inventario es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarInventarioEquipo()}" execute="inventarioEquipoElemento" render="inventarioEquipoElemento msnInventarioEquipo" />
                                         </h:inputText>
                                         <h6><h:message id="msnInventarioEquipo" for="inventarioEquipoElemento" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Nombre Equipo*"/></strong>
-                                        <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.nombreEquipoElemento}" required="true" class="form-control" id="nombreEquipoElemento" requiredMessage="El campo Nombre es obligatorio.">
+                                        <h:inputText maxlength="45" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.nombreEquipoElemento}" required="true" class="form-control" id="nombreEquipoElemento" requiredMessage="El campo Nombre es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarNombreEquipo()}" execute="nombreEquipoElemento" render="nombreEquipoElemento msnDetalleEquipo" />
                                         </h:inputText>
                                         <h6><h:message id="msnDetalleEquipo" for="nombreEquipoElemento" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Marca Equipo*"/></strong>
-                                        <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.marcaEquipoElemento}" required="true" class="form-control" id="marcaEquipoElemento" requiredMessage="El campo Marca es obligatorio.">
+                                        <h:inputText maxlength="45" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.marcaEquipoElemento}" required="true" class="form-control" id="marcaEquipoElemento" requiredMessage="El campo Marca es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarMarcaEquipo()}" execute="marcaEquipoElemento" render="marcaEquipoElemento msnMarcaEquipo" />
                                         </h:inputText>
                                         <h6><h:message id="msnMarcaEquipo" for="marcaEquipoElemento" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Estado de Equipo*"/></strong>
-                                        <h:selectOneMenu  value="#{controllerDetallesEquipo.estadoEquipoElemento}"
+                                        <h:selectOneMenu  value="#{controllerDetallesEquipo.estadoEquipoElemento}" disabled="#{controllerDetallesEquipo.activarCasillas}"
                                                           class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
                                                           id="estadoEquipoElemento">
                                             <f:selectItems value="#{controllerDetallesEquipo.listaEstadosEquipos}" var="estado"
@@ -77,7 +77,7 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Tipo Activo*"/></strong>
-                                        <h:selectOneMenu  value="#{controllerDetallesEquipo.tipoActivoEquipoElemento}"
+                                        <h:selectOneMenu  value="#{controllerDetallesEquipo.tipoActivoEquipoElemento}" disabled="#{controllerDetallesEquipo.activarCasillas}"
                                                           class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
                                                           id="tipoActivoEquipoElemento">
                                             <f:selectItems value="#{controllerDetallesEquipo.listaTiposActivos}" var="tipo"
@@ -89,7 +89,7 @@ and open the template in the editor.
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Proveedor*"/></strong>
-                                        <h:selectOneMenu  value="#{controllerDetallesEquipo.proveedorEquipoElemento}"
+                                        <h:selectOneMenu  value="#{controllerDetallesEquipo.proveedorEquipoElemento}" disabled="#{controllerDetallesEquipo.activarCasillas}"
                                                           class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
                                                           id="proveedorEquipoElemento">
                                             <f:selectItems value="#{controllerDetallesEquipo.listaProveedores}" var="proveedor"
@@ -103,7 +103,7 @@ and open the template in the editor.
                                         <label for="editarTipo">
                                             Tipo de Equipo*
                                         </label>
-                                        <h:selectOneMenu value="#{controllerDetallesEquipo.editarTipo}"
+                                        <h:selectOneMenu value="#{controllerDetallesEquipo.editarTipo}" disabled="#{controllerDetallesEquipo.activarCasillas}"
                                                          class="form-control" readonly="#{controllerDetallesEquipo.activarEditar}"
                                                          id="editarTipo">
                                             <f:selectItem itemLabel="PUBLICO" itemValue="false" />
@@ -115,14 +115,14 @@ and open the template in the editor.
                                         <legend class="h5 text-info">Datos Opcionales</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Modelo Equipo"/></strong>
-                                            <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.modeloEquipoElemento}" class="form-control" id="modeloEquipoElemento" >
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.modeloEquipoElemento}" class="form-control" id="modeloEquipoElemento" >
                                                 <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarModeloEquipo()}" execute="modeloEquipoElemento" render="modeloEquipoElemento msnModeloEquipo" />
                                             </h:inputText>
                                             <h6><h:message id="msnModeloEquipo" for="modeloEquipoElemento" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Serie Equipo"/></strong>
-                                            <h:inputText maxlength="45" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.serieEquipoElemento}" class="form-control" id="serieEquipoElemento" >
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.serieEquipoElemento}" class="form-control" id="serieEquipoElemento" >
                                                 <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarSerieEquipo()}" execute="serieEquipoElemento" render="serieEquipoElemento msnSerieEquipo" />
                                             </h:inputText>
                                             <h6><h:message id="msnSerieEquipo" for="serieEquipoElemento" style="color: red"/></h6>
@@ -130,7 +130,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Costo Alquiler"/></strong>
                                             <div class="input-group">
-                                                <h:inputText maxlength="10" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.alquilerEquipoElemento}"  class="form-control" id="alquilerEquipoElemento" >
+                                                <h:inputText maxlength="10" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.alquilerEquipoElemento}"  class="form-control" id="alquilerEquipoElemento" >
                                                     <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarCostoAlquilerEquipo()}" execute="alquilerEquipoElemento" render="alquilerEquipoElemento msnCostoAlquilerEquipo" />
                                                 </h:inputText>
                                                 <span class="input-group-addon">$</span>
@@ -140,7 +140,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Costo Inversión"/></strong>
                                             <div class="input-group">
-                                                <h:inputText maxlength="12" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.inversionEquipoElemento}" class="form-control" id="inversionEquipoElemento" >
+                                                <h:inputText maxlength="12" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.inversionEquipoElemento}" class="form-control" id="inversionEquipoElemento" >
                                                     <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarInversionEquipo()}" execute="inversionEquipoElemento" render="inversionEquipoElemento msnCostoInversionEquipo" />
                                                 </h:inputText>
                                                 <span class="input-group-addon">$</span>
@@ -149,14 +149,14 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Compra Equipo (dd/MM/yyyy)"/></strong>
-                                            <h:inputText maxlength="10" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.fechaEquipoElemento}" class="form-control" id="fechaEquipoElemento" >
+                                            <h:inputText maxlength="10" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.fechaEquipoElemento}" class="form-control" id="fechaEquipoElemento" >
                                                 <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarFechaEquipo()}" execute="fechaEquipoElemento" render="fechaEquipoElemento msnFecha" />
                                             </h:inputText>
                                             <h6><h:message id="msnFecha" for="fechaEquipoElemento" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Descripción Equipo"/></strong>
-                                            <h:inputText  maxlength="500" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.especificacionEquipoElemento}" class="form-control" id="especificacionEquipoElemento" >
+                                            <h:inputText  maxlength="500" disabled="#{controllerDetallesEquipo.activarCasillas}" readonly="#{controllerDetallesEquipo.activarEditar}" value="#{controllerDetallesEquipo.especificacionEquipoElemento}" class="form-control" id="especificacionEquipoElemento" >
                                                 <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarEspecificacionEquipo()}" execute="especificacionEquipoElemento" render="especificacionEquipoElemento msnEspecificacionEquipo" />
                                             </h:inputText>
                                             <h6><h:message id="msnEspecificacionEquipo" for="especificacionEquipoElemento" style="color: red"/></h6>
@@ -221,12 +221,12 @@ and open the template in the editor.
                             <div class="row col-md-12">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-2">
-                                    <h:commandButton id="buttonHojaVida" value="HOJA DE VIDA" action="hojadevida" actionListener="#{controllerHojaVidaEquipo.recibirIDEquipoElemento(controllerDetallesEquipo.idEquipoElemento)}" class="btn btn-primary" >
+                                    <h:commandButton id="buttonHojaVida" disabled="#{controllerDetallesEquipo.activarCasillas}" value="HOJA DE VIDA" action="hojadevida" actionListener="#{controllerHojaVidaEquipo.recibirIDEquipoElemento(controllerDetallesEquipo.idEquipoElemento)}" class="btn btn-primary" >
                                         <f:ajax execute="@form" render="form" />
                                     </h:commandButton>
                                 </div>
                                 <div class="col-md-2">
-                                    <h:commandButton id="buttonComponentes" value="COMPONENTES" action="administrarcomponentes" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerDetallesEquipo.idEquipoElemento)}" class="btn btn-default" >
+                                    <h:commandButton id="buttonComponentes" disabled="#{controllerDetallesEquipo.activarCasillas}" value="COMPONENTES" action="administrarcomponentes" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerDetallesEquipo.idEquipoElemento)}" class="btn btn-default" >
                                         <f:ajax execute="@form" render="form" />
                                     </h:commandButton>
                                 </div>
@@ -248,8 +248,13 @@ and open the template in the editor.
                                 <div class="col-md-1"></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-11"></div>
-                                <div class="col-md-1">
+                                <div class="left pull-left">
+                                    <h:commandButton value="Eliminar Equipo" disabled="#{controllerDetallesEquipo.activarCasillas}" actionListener="#{controllerDetallesEquipo.eliminarEquipoElemento()}" class="btn btn-danger" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
+                                </div>
+                                <span></span>
+                                <div class="right pull-right">
                                     <h:commandButton value="Atras" action="#{controllerDetallesEquipo.restaurarInformacionEquipoElemento()}" actionListener="#{controllerAdministrarEquipos.limpiarDatos()}" class="btn btn-primary" immediate="true"/>
                                 </div>
                             </div>

@@ -1,11 +1,14 @@
 package com.sirelab.bo.universidad;
 
 import com.sirelab.bo.interfacebo.universidad.GestionarEdificiosBOInterface;
+import com.sirelab.dao.SalaLaboratorioDAO;
 import com.sirelab.dao.interfacedao.EdificioDAOInterface;
 import com.sirelab.dao.interfacedao.HorarioAtencionDAOInterface;
+import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.SedeDAOInterface;
 import com.sirelab.entidades.Edificio;
 import com.sirelab.entidades.HorarioAtencion;
+import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.Sede;
 import java.math.BigInteger;
 import java.util.List;
@@ -22,13 +25,15 @@ import org.apache.log4j.Logger;
 public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
 
     static Logger logger = Logger.getLogger(GestionarEdificiosBO.class);
-    
+
     @EJB
     EdificioDAOInterface edificioDAO;
     @EJB
     SedeDAOInterface sedeDAO;
     @EJB
     HorarioAtencionDAOInterface horarioAtencionDAO;
+    @EJB
+    SalaLaboratorioDAOInterface salaLaboratorioDAO;
 
     //@Override
     public List<Sede> consultarSedesRegistradas() {
@@ -36,17 +41,18 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
             List<Sede> lista = sedeDAO.consultarSedes();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarEdificioBO consultarSedesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarEdificioBO consultarSedesRegistradas : " + e.toString(), e);
             return null;
         }
     }
+
     //@Override
     public List<Sede> consultarSedesActivosRegistradas() {
         try {
             List<Sede> lista = sedeDAO.consultarSedesActivos();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarEdificioBO consultarSedesRegistradas : " + e.toString(),e);
+            logger.error("Error GestionarEdificioBO consultarSedesRegistradas : " + e.toString(), e);
             return null;
         }
     }
@@ -57,7 +63,7 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
             List<HorarioAtencion> lista = horarioAtencionDAO.consultarHorariosAtencion();
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarEdificioBO consultarHorariosAtencionRegistrados : " + e.toString(),e);
+            logger.error("Error GestionarEdificioBO consultarHorariosAtencionRegistrados : " + e.toString(), e);
             return null;
         }
     }
@@ -68,7 +74,7 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
             List<Edificio> lista = edificioDAO.buscarEdificiosPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            logger.error("Error GestionarEdificioBO consultarEdificiosPorParametro : " + e.toString(),e);
+            logger.error("Error GestionarEdificioBO consultarEdificiosPorParametro : " + e.toString(), e);
             return null;
         }
     }
@@ -78,7 +84,7 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
         try {
             edificioDAO.crearEdificio(edificio);
         } catch (Exception e) {
-            logger.error("Error GestionarEdificioBO crearNuevaEdificio : " + e.toString(),e);
+            logger.error("Error GestionarEdificioBO crearNuevaEdificio : " + e.toString(), e);
         }
     }
 
@@ -87,7 +93,7 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
         try {
             edificioDAO.editarEdificio(edificio);
         } catch (Exception e) {
-            logger.error("Error GestionarEdificioBO crearNuevaEdificio : " + e.toString(),e);
+            logger.error("Error GestionarEdificioBO crearNuevaEdificio : " + e.toString(), e);
         }
     }
 
@@ -97,8 +103,34 @@ public class GestionarEdificiosBO implements GestionarEdificiosBOInterface {
             Edificio registro = edificioDAO.buscarEdificioPorID(idEdificio);
             return registro;
         } catch (Exception e) {
-            logger.error("Error GestionarEdificioBO obtenerEdificioPorIDEdificio : " + e.toString(),e);
+            logger.error("Error GestionarEdificioBO obtenerEdificioPorIDEdificio : " + e.toString(), e);
             return null;
+        }
+    }
+
+    @Override
+    public Integer obtenerSalasAsociadas(BigInteger edificio) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorEdificio(edificio);
+            if (null != lista) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            logger.error("Error GestionarEdificioBO obtenerSalasAsociadas : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean eliminarEdificio(Edificio edificio) {
+        try {
+            edificioDAO.eliminarEdificio(edificio);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error GestionarEdificioBO eliminarEdificio : " + e.toString(), e);
+            return false;
         }
     }
 }

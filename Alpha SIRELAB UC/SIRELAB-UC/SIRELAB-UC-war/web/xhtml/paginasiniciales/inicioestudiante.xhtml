@@ -49,14 +49,29 @@ and open the template in the editor.
                                     <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
                                         <hr class="section-heading-spacer"/>
                                         <div class="clearfix"></div>
-                                        <h2 class=" head-line section-heading">Reservas</h2>
-                                        <p>Por medio de esta funcionalidad usted podra realizar procesos de consulta de alguna reserva realizada, cancelación o solicitar una nueva área de trabajo para realizar alguna practica. Si tiene algunda duda acerca del proceso recuerde que en la parte superior de la pagina se encuentra un instructivo para realizar este proceso.</p>
-                                        <row>
-                                            <h:commandButton class="btn btn-danger btn-block" value="Consultar Reservas Realizadas" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservas.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
-                                        </row>
+                                        <h2 class=" head-line section-heading">Generación de Reservas</h2>
+                                        <p>Por medio de la siguiente funcionalidad usted podra realizar una reserva de MODULO/BANCO DE LABORATORIO. Recuerde que estas reservas son automaticas y se asignara el espacio según la disponibilidad del sistema.</p>
                                         <br></br>
                                         <row>
                                             <h:commandButton class="btn btn-warning btn-block" value="Realizar Reserva Modulo" action="reservamodulo1" actionListener="#{controllerReservaModulo1.cargarInformacionReserva()}"/>
+                                        </row>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="content-section-a">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 hidden-xs hidden-sm"></div>
+                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+                                        <hr class="section-heading-spacer"/>
+                                        <div class="clearfix"></div>
+                                        <h2 class=" head-line section-heading">Consulta de Reservas</h2>
+                                        <p>Por medio de la siguiente funcionalidad usted puede consultar las reservas realizadas, tanto reservas historicas como reservas a ser efectivas.</p>
+                                        <row>
+                                            <h:commandButton class="btn btn-danger btn-block" value="Consultar Reservas Realizadas" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservas.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
                                         </row>
                                     </div>
                                 </div>

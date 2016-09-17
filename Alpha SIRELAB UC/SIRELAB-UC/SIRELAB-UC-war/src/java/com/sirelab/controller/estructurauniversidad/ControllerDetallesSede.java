@@ -42,6 +42,7 @@ public class ControllerDetallesSede implements Serializable {
     private boolean editarEstado;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesSede() {
     }
@@ -53,6 +54,7 @@ public class ControllerDetallesSede implements Serializable {
         validacionesNombre = true;
         validacionesTelefono = true;
         mensajeFormulario = "N/A";
+        activarCasillas = false;
         colorMensaje = "black";
         BasicConfigurator.configure();
     }
@@ -64,7 +66,16 @@ public class ControllerDetallesSede implements Serializable {
         mensajeFormulario = "N/A";
         colorMensaje = "black";
         sedeDetalles = new Sede();
-        recibirIDSedesDetalles(idSede);
+        if (activarCasillas == false) {
+            recibirIDSedesDetalles(idSede);
+        } else {
+            activarCasillas = false;
+            editarDireccion = null;
+            editarNombre = null;
+            mensajeError = "";
+            editarEstado = false;
+            editarTelefono = null;
+        }
         return "administrarsedes";
     }
 
@@ -88,13 +99,13 @@ public class ControllerDetallesSede implements Serializable {
             if (tam >= 6) {
                 if (!Utilidades.validarCaracterString(editarNombre)) {
                     validacionesNombre = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.U_NOMBRE));
+                    FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.U_NOMBRE));
                 } else {
                     validacionesNombre = true;
                 }
             } else {
                 validacionesNombre = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. "+constantes.U_NOMBRE));
+                FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El tamaño minimo permitido es 6 caracteres. " + constantes.U_NOMBRE));
             }
         } else {
             validacionesNombre = false;
@@ -109,17 +120,17 @@ public class ControllerDetallesSede implements Serializable {
             if (tam >= 8) {
                 if (!Utilidades.validarDirecciones(editarDireccion)) {
                     validacionesDireccion = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta. "+constantes.USUARIO_DIRECCION));
+                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección ingresada es incorrecta. " + constantes.USUARIO_DIRECCION));
                 } else {
                     validacionesDireccion = true;
                 }
             } else {
                 validacionesDireccion = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. "+constantes.USUARIO_DIRECCION));
+                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres. " + constantes.USUARIO_DIRECCION));
             }
         } else {
             validacionesDireccion = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección es obligatoria. "+constantes.USUARIO_DIRECCION));
+            FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección es obligatoria. " + constantes.USUARIO_DIRECCION));
         }
     }
 
@@ -127,13 +138,13 @@ public class ControllerDetallesSede implements Serializable {
         if (Utilidades.validarNulo(editarTelefono) && (!editarTelefono.isEmpty()) && (editarTelefono.trim().length() > 0)) {
             if (!Utilidades.validarCaracteresAlfaNumericos(editarTelefono)) {
                 validacionesTelefono = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono ingresado es incorrecto. "+constantes.ENTIDAD_TELEFONO));
+                FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono ingresado es incorrecto. " + constantes.ENTIDAD_TELEFONO));
             } else {
                 validacionesTelefono = true;
             }
         } else {
             validacionesTelefono = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono es obligatorio. "+constantes.ENTIDAD_TELEFONO));
+            FacesContext.getCurrentInstance().addMessage("form:editarTelefono", new FacesMessage("El telefono es obligatorio. " + constantes.ENTIDAD_TELEFONO));
         }
     }
 
@@ -183,7 +194,7 @@ public class ControllerDetallesSede implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -195,7 +206,30 @@ public class ControllerDetallesSede implements Serializable {
             sedeDetalles.setEstado(editarEstado);
             gestionarSedeBO.modificarInformacionSede(sedeDetalles);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesSede almacenarModificacionSedeEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerDetallesSede almacenarModificacionSedeEnSistema : " + e.toString(), e);
+        }
+    }
+
+    public void eliminarSede() {
+        Integer edificio = gestionarSedeBO.obtenerEdificiosAsociados(idSede);
+        if (null != edificio) {
+            if (edificio == 0) {
+                boolean respuesta = gestionarSedeBO.eliminarSede(sedeDetalles);
+                if (respuesta == true) {
+                    activarCasillas = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro no pudo ser eliminado. Intente más tarde.";
+                }
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado edificios.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -262,6 +296,14 @@ public class ControllerDetallesSede implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

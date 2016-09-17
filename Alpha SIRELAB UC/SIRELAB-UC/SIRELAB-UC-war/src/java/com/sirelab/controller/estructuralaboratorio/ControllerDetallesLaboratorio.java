@@ -270,10 +270,15 @@ public class ControllerDetallesLaboratorio implements Serializable {
         Integer cantidadSalas = gestionarPlantaLaboratoriosBO.obtenerCantidadSalasAsociadas(idLaboratorio);
         if (null != cantidadSalas) {
             if (cantidadSalas == 0) {
-                gestionarPlantaLaboratoriosBO.eliminarLaboratorio(laboratorioDetalles);
-                activarCasillas = true;
-                colorMensaje = "#FF0000";
-                mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                boolean registro = gestionarPlantaLaboratoriosBO.eliminarLaboratorio(laboratorioDetalles);
+                if (registro == true) {
+                    activarCasillas = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
+                }
             } else {
                 colorMensaje = "#FF0000";
                 mensajeFormulario = "El registro no puede ser eliminado dado que tiene asociado al menos una sala de laboratorio.";

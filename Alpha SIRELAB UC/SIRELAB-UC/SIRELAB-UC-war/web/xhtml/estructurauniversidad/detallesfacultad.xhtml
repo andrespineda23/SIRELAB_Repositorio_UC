@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -45,14 +45,14 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Codigo Facultad*"/></strong>
-                                            <h:inputText maxlength="15" value="#{controllerDetallesFacultad.editarCodigo}" required="true" class="form-control" id="editarCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                            <h:inputText maxlength="15" disabled="#{controllerDetallesFacultad.activarCasillas}" value="#{controllerDetallesFacultad.editarCodigo}" required="true" class="form-control" id="editarCodigo" requiredMessage="El campo Codigo es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesFacultad.validarCodigoFacultad()}" execute="editarCodigo" render="editarCodigo msnCodigo" />
                                             </h:inputText>
                                             <h6><h:message id="msnCodigo" for="editarCodigo" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre(s) Facultad*"/></strong>
-                                            <h:inputText maxlength="100" value="#{controllerDetallesFacultad.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                            <h:inputText maxlength="100" disabled="#{controllerDetallesFacultad.activarCasillas}" value="#{controllerDetallesFacultad.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesFacultad.validarNombreFacultad()}" execute="editarNombre" render="editarNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
@@ -62,7 +62,7 @@ and open the template in the editor.
                                                 Estado Facultad*
                                             </label>
                                             <h:selectOneMenu value="#{controllerDetallesFacultad.editarEstado}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerDetallesFacultad.activarCasillas}"
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -90,15 +90,22 @@ and open the template in the editor.
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesFacultad.registrarModificacionFacultad()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesFacultad.restaurarInformacionFacultad()}" actionListener="#{controllerAdministrarFacultades.limpiarProcesoBusqueda()}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Eliminar Facultad" disabled="#{controllerDetallesFacultad.activarCasillas}" actionListener="#{controllerDetallesFacultad.eliminarFacultad()}" class="btn btn-danger" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar" disabled="#{controllerDetallesFacultad.activarCasillas}" actionListener="#{controllerDetallesFacultad.registrarModificacionFacultad()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesFacultad.restaurarInformacionFacultad()}" actionListener="#{controllerAdministrarFacultades.limpiarProcesoBusqueda()}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

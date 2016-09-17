@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -44,21 +44,21 @@ and open the template in the editor.
                                     <legend class="text-info">Datos Basicos</legend>
                                     <div class="form-group">
                                         <strong><h:outputText value="Nombre Componente*"/></strong>
-                                        <h:inputText maxlength="45" value="#{controllerDetallesComponente.editarNombreComponente}" required="true" class="form-control" id="editarNombreComponente"  requiredMessage="El campo Nombre es obligatorio.">
+                                        <h:inputText disabled="#{controllerDetallesComponente.activarCasillas}" maxlength="45" value="#{controllerDetallesComponente.editarNombreComponente}" required="true" class="form-control" id="editarNombreComponente"  requiredMessage="El campo Nombre es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerDetallesComponente.validarNombreComponente()}" execute="editarNombreComponente" render="editarNombreComponente msnNombreComponente" />
                                         </h:inputText>
                                         <h6><h:message id="msnNombreComponente" for="editarNombreComponente" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Codigo Componente*"/></strong>
-                                        <h:inputText maxlength="20"  value="#{controllerDetallesComponente.editarCodigoComponente}" required="true" class="form-control" id="editarCodigoComponente" requiredMessage="El campo Codigo es obligatorio-">
+                                        <h:inputText maxlength="20" disabled="#{controllerDetallesComponente.activarCasillas}" value="#{controllerDetallesComponente.editarCodigoComponente}" required="true" class="form-control" id="editarCodigoComponente" requiredMessage="El campo Codigo es obligatorio-">
                                             <f:ajax event="blur" listener="#{controllerDetallesComponente.validarCodigoComponente()}" execute="editarCodigoComponente" render="editarCodigoComponente msnCodigoComponente" />
                                         </h:inputText>
                                         <h6><h:message id="msnCodigoComponente" for="editarCodigoComponente" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Descripción Componente*"/></strong>
-                                        <h:inputText maxlength="500"  value="#{controllerDetallesComponente.editarDescripcionComponente}" required="true" class="form-control" id="editarDescripcionComponente" requiredMessage="El campo Descripción es obligatorio.">
+                                        <h:inputText maxlength="500" disabled="#{controllerDetallesComponente.activarCasillas}" value="#{controllerDetallesComponente.editarDescripcionComponente}" required="true" class="form-control" id="editarDescripcionComponente" requiredMessage="El campo Descripción es obligatorio.">
                                             <f:ajax event="blur" listener="#{controllerDetallesComponente.validarDescripcionComponente()}" execute="editarDescripcionComponente" render="editarDescripcionComponente msnDescripcionComponente" />
                                         </h:inputText>
                                         <h6><h:message id="msnDescripcionComponente" for="editarDescripcionComponente" style="color: red"/></h6>
@@ -70,7 +70,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Estado Componente*"/></strong>
                                         <h:selectOneMenu value="#{controllerDetallesComponente.componenteEquipoDetalle.estadocomponente}"
-                                                         class="form-control"
+                                                         class="form-control" disabled="#{controllerDetallesComponente.activarCasillas}"
                                                          id="estadoComponente">
                                             <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                             <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -80,7 +80,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <strong><h:outputText value="Tipo Componente*"/></strong>
                                         <h:selectOneMenu value="#{controllerDetallesComponente.editarTipoComponente}"
-                                                         class="form-control"
+                                                         class="form-control" disabled="#{controllerDetallesComponente.activarCasillas}"
                                                          id="editarTipoComponente">
                                             <f:selectItems value="#{controllerDetallesComponente.listaTiposComponentes}" var="tipo"
                                                            itemLabel="#{tipo.nombretipo}" itemValue="#{tipo}"/>
@@ -93,29 +93,29 @@ and open the template in the editor.
                                         <legend class="h5 text-info">Datos Opcionales</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Marca Componente"/></strong>
-                                            <h:inputText maxlength="45"  value="#{controllerDetallesComponente.editarMarcaComponente}" class="form-control" id="editarMarcaComponente" >
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesComponente.activarCasillas}"  value="#{controllerDetallesComponente.editarMarcaComponente}" class="form-control" id="editarMarcaComponente" >
                                                 <f:ajax event="blur" listener="#{controllerDetallesComponente.validarMarcaComponente()}" execute="editarMarcaComponente" render="editarMarcaComponente msnMarcaComponente" />
                                             </h:inputText>
                                             <h6><h:message id="msnMarcaComponente" for="editarMarcaComponente" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Modelo Componente"/></strong>
-                                            <h:inputText maxlength="45"  value="#{controllerDetallesComponente.editarModeloComponente}" class="form-control" id="editarModeloComponente" >
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesComponente.activarCasillas}" value="#{controllerDetallesComponente.editarModeloComponente}" class="form-control" id="editarModeloComponente" >
                                                 <f:ajax event="blur" listener="#{controllerDetallesComponente.validarModeloComponente()}" execute="editarModeloComponente" render="editarModeloComponente msnModeloComponente" />
                                             </h:inputText>
                                             <h6><h:message id="msnModeloComponente" for="editarModeloComponente" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Serial Componente"/></strong>
-                                            <h:inputText maxlength="45"  value="#{controllerDetallesComponente.editarSerialComponente}" class="form-control" id="editarSerialComponente" >
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesComponente.activarCasillas}" value="#{controllerDetallesComponente.editarSerialComponente}" class="form-control" id="editarSerialComponente" >
                                                 <f:ajax event="blur" listener="#{controllerDetallesComponente.validarSerialComponente()}" execute="editarSerialComponente" render="editarSerialComponente msnSerialComponente" />
                                             </h:inputText>
                                             <h6><h:message id="msnSerialComponente" for="editarSerialComponente" style="color: red"/></h6>
                                         </div>
-                                      <div class="form-group">
+                                        <div class="form-group">
                                             <strong><h:outputText value="Costo Adquisición"/></strong>
                                             <div class="input-group">
-                                                <h:inputText maxlength="10"  value="#{controllerDetallesComponente.editarCostoComponente}" class="form-control" id="editarCostoComponente" >
+                                                <h:inputText maxlength="10" disabled="#{controllerDetallesComponente.activarCasillas}" value="#{controllerDetallesComponente.editarCostoComponente}" class="form-control" id="editarCostoComponente" >
                                                     <f:ajax event="blur" listener="#{controllerDetallesComponente.validarCostoComponente()}" execute="editarCostoComponente" render="editarCostoComponente msnCostoComponente" />
                                                 </h:inputText>
                                                 <span class="input-group-addon">$</span>
@@ -137,8 +137,15 @@ and open the template in the editor.
                                     <br></br>
                                 </div>
                                 <hr class="intro-divider"/>
-                                <div class="right pull-right">
-                                    <h:commandButton class="btn btn-success" value="Modificar" actionListener="#{controllerDetallesComponente.registrarModificarComponente()}">
+
+                                <div class="row">
+                                    <div class="left pull-left">
+                                        <h:commandButton value="Eliminar Componente" disabled="#{controllerDetallesComponente.activarCasillas}" actionListener="#{controllerDetallesComponente.eliminarComponente()}" class="btn btn-danger" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                    <div class="right pull-right">
+                                        <h:commandButton disabled="#{controllerDetallesComponente.activarCasillas}"  class="btn btn-success" value="Modificar" actionListener="#{controllerDetallesComponente.registrarModificarComponente()}">
                                         <f:ajax execute="@form" render="form" />
                                     </h:commandButton>
                                     <span></span>
@@ -146,6 +153,7 @@ and open the template in the editor.
                                     <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesComponente.limpiarRegistroComponenteLaboratorio()}" actionListener="#{controllerAdministrarComponentes.recibirIDEquipoElemento(controllerDetallesComponente.componenteEquipoDetalle.equipoelemento.idequipoelemento)}" immediate="true">
                                         <f:ajax execute="@form" render="form" />
                                     </h:commandButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>

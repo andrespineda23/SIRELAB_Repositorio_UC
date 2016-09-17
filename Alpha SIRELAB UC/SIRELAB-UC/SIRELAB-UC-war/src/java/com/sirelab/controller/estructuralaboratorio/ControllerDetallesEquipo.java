@@ -87,6 +87,7 @@ public class ControllerDetallesEquipo implements Serializable {
     private MensajesConstantes constantes;
     private boolean perfilConsulta, activarLaboratorio;
     private EstadoEquipo estadoEquipoRespaldo;
+    private boolean activarCasillas;
 
     public ControllerDetallesEquipo() {
     }
@@ -117,6 +118,7 @@ public class ControllerDetallesEquipo implements Serializable {
         //
         activarEditar = true;
         disabledEditar = false;
+        activarCasillas = false;
         modificacionRegistro = false;
         visibleGuardar = false;
         FacesContext faceContext = FacesContext.getCurrentInstance();
@@ -213,9 +215,42 @@ public class ControllerDetallesEquipo implements Serializable {
     }
 
     public String restaurarInformacionEquipoElemento() {
-        equipoElementoDetalles = new EquipoElemento();
-        equipoElementoDetalles = gestionarPlantaEquiposElementosBO.obtenerEquipoElementoPorIDEquipoElemento(idEquipoElemento);
-        asignarValoresVariablesEquipoElemento();
+        if (activarCasillas = false) {
+            equipoElementoDetalles = new EquipoElemento();
+            equipoElementoDetalles = gestionarPlantaEquiposElementosBO.obtenerEquipoElementoPorIDEquipoElemento(idEquipoElemento);
+            asignarValoresVariablesEquipoElemento();
+        } else {
+            activarCasillas = false;
+            nombreEquipoElemento = null;
+            inventarioEquipoElemento = null;
+            alquilerEquipoElemento = null;
+            cantidadEquipoElemento = null;
+            inversionEquipoElemento = null;
+            editarTipo = false;
+            marcaEquipoElemento = null;
+            modeloEquipoElemento = null;
+            serieEquipoElemento = null;
+            mensajeError = "";
+            especificacionEquipoElemento = null;
+            fechaEquipoElemento = null;
+            laboratorioEquipoElemento = null;
+            salaEquipoElemento = null;
+            moduloEquipoElemento = null;
+
+            listaLaboratorio = null;
+            listaSalasLaboratorio = null;
+            listaModulosLaboratorio = null;
+
+            tipoActivoEquipoElemento = null;
+            estadoEquipoElemento = null;
+            estadoEquipoRespaldo = null;
+            proveedorEquipoElemento = null;
+
+            listaTiposActivos = null;
+            listaEstadosEquipos = null;
+            listaProveedores = null;
+            fechaDiferida = true;
+        }
         activarEditar = true;
         disabledEditar = false;
         modificacionRegistro = false;
@@ -475,7 +510,7 @@ public class ControllerDetallesEquipo implements Serializable {
                 SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
                 fechaEquipoElemento = formateador.format(new Date());
             }
-        } 
+        }
         modificacionesRegistroEquipoElemento();
     }
 
@@ -643,6 +678,34 @@ public class ControllerDetallesEquipo implements Serializable {
             restaurarInformacionEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo modificarInformacionEquipoElemento:  " + e.toString(), e);
+        }
+    }
+
+    public void eliminarEquipoElemento() {
+        Integer componente = gestionarPlantaEquiposElementosBO.obtenerComponentesAsociados(idEquipoElemento);
+        if (null != componente) {
+            if (componente == 0) {
+                boolean registro = gestionarPlantaEquiposElementosBO.eliminarEquipo(equipoElementoDetalles);
+                if (registro == true) {
+                    activarCasillas = true;
+                    disabledEditar = true;
+                    activarEditar = true;
+                    visibleGuardar = true;
+                    activarLaboratorio = true;
+                    activarEditar = true;
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
+                }
+            } else {
+                colorMensaje = "#FF0000";
+                mensajeFormulario = "El registro no puede ser eliminado dado que tiene componentes asociados.";
+            }
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -929,6 +992,14 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void setEditarTipo(boolean editarTipo) {
         this.editarTipo = editarTipo;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }

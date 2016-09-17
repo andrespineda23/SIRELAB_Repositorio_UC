@@ -40,4 +40,6 @@ public interface GestionarPlanAsignaturaBOInterface {
     public List<PlanEstudios> obtenerPlanEstudiosActivosPorCarrera(BigInteger carrera);
 
     public List<Asignatura> consultarAsignaturasActivosRegistradas();
+
+    public boolean eliminarPlanAsignatura(AsignaturaPorPlanEstudio registro);
 }

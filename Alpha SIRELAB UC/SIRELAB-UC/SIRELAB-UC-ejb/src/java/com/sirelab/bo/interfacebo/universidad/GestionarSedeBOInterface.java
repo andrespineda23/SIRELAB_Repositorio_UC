@@ -19,5 +19,9 @@ public interface GestionarSedeBOInterface {
 
     public Sede obtenerSedePorIDSede(BigInteger idSede);
 
+    public boolean eliminarSede(Sede sede);
+
+    public Integer obtenerEdificiosAsociados(BigInteger sede);
+
     public Boolean validarcambioEstadoSede(BigInteger sede);
 }

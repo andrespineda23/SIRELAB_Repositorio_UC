@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="body">
                 <h:form id="form">
                     <div class="container">
-                         <br></br>
+                        <br></br>
                         <br></br>
                         <br></br>
                         <div class="row">
@@ -45,21 +45,21 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Nombre(s) Sede*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesSede.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesSede.activarCasillas}" value="#{controllerDetallesSede.editarNombre}" required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesSede.validarNombreSede()}" execute="editarNombre" render="editarNombre msnNombre" />
                                             </h:inputText>
                                             <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Dirección Sede*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesSede.editarDireccion}" required="true" class="form-control" id="editarDireccion" requiredMessage="El campo Dirección es obligatorio.">
+                                            <h:inputText maxlength="45" disabled="#{controllerDetallesSede.activarCasillas}" value="#{controllerDetallesSede.editarDireccion}" required="true" class="form-control" id="editarDireccion" requiredMessage="El campo Dirección es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesSede.validarDireccionSede()}" execute="editarDireccion" render="editarDireccion msnDireccion" />
                                             </h:inputText>
                                             <h6><h:message id="msnDireccion" for="editarDireccion" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Telefono Sede*"/></strong>
-                                            <h:inputText maxlength="20" value="#{controllerDetallesSede.editarTelefono}" required="true" class="form-control" id="editarTelefono" requiredMessage="El campo Telefono es obligatorio.">
+                                            <h:inputText maxlength="20" disabled="#{controllerDetallesSede.activarCasillas}" value="#{controllerDetallesSede.editarTelefono}" required="true" class="form-control" id="editarTelefono" requiredMessage="El campo Telefono es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerDetallesSede.validarTelefonoSede()}" execute="editarTelefono" render="editarTelefono msnTelefono" />
                                             </h:inputText>
                                             <h6><h:message id="msnTelefono" for="editarTelefono" style="color: red"/></h6>
@@ -69,7 +69,7 @@ and open the template in the editor.
                                                 Estado Sede*
                                             </label>
                                             <h:selectOneMenu value="#{controllerDetallesSede.editarEstado}"
-                                                             class="form-control"
+                                                             class="form-control" disabled="#{controllerDetallesSede.activarCasillas}"
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
@@ -96,15 +96,22 @@ and open the template in the editor.
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesSede.registrarModificacionSede()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesSede.restaurarInformacionSede()}" actionListener="#{controllerAdministrarSedes.limpiarProcesoBusqueda()}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Eliminar Sede" disabled="#{controllerDetallesSede.activarCasillas}" actionListener="#{controllerDetallesSede.eliminarSede()}" class="btn btn-danger" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar" actionListener="#{controllerDetallesSede.registrarModificacionSede()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesSede.restaurarInformacionSede()}" actionListener="#{controllerAdministrarSedes.limpiarProcesoBusqueda()}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

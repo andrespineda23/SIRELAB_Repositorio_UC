@@ -34,6 +34,10 @@ public interface GestionarAsignaturasBOInterface {
     public Asignatura obtenerAsignaturaPorCodigo(String codigo);
 
     public void crearAsignatura(Asignatura asignatura);
-    
+
     public Boolean validarCambioEstadoAsignatura(BigInteger asignatura);
+
+    public boolean eliminarAsignatura(Asignatura asignatura);
+
+    public Integer obtenerPlanesAsociados(BigInteger asignatura);
 }

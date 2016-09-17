@@ -49,6 +49,7 @@ public class ControllerDetallesComponente implements Serializable {
     private String colorMensaje;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private boolean activarCasillas;
 
     public ControllerDetallesComponente() {
     }
@@ -63,31 +64,45 @@ public class ControllerDetallesComponente implements Serializable {
         cargarInformacionRegistro();
         colorMensaje = "black";
         mensajeFormulario = "N/A";
+        activarCasillas = false;
         BasicConfigurator.configure();
     }
 
     private void cargarInformacionRegistro() {
-        componenteEquipoDetalle = gestionarPlantaComponentesEquiposBO.consultarComponenteEquipoPorID(idComponenteEquipo);
-        if (null != componenteEquipoDetalle) {
-            editarCodigoComponente = componenteEquipoDetalle.getCodigocomponete();
-            editarDescripcionComponente = componenteEquipoDetalle.getDescripcioncomponente();
-            editarMarcaComponente = componenteEquipoDetalle.getMarcacomponente();
-            editarModeloComponente = componenteEquipoDetalle.getModelocomponente();
-            editarNombreComponente = componenteEquipoDetalle.getNombrecomponente();
-            editarSerialComponente = componenteEquipoDetalle.getSerialcomponente();
-            editarCostoComponente = componenteEquipoDetalle.getCostocomponente();
-            editarEquipoElemento = componenteEquipoDetalle.getEquipoelemento();
-            editarTipoComponente = componenteEquipoDetalle.getTipocomponente();
-            listaTiposComponentes = gestionarPlantaComponentesEquiposBO.consultarTiposComponentesRegistrados();
-            //
-            validacionesSerial = true;
-            validacionesModelo = true;
-            validacionesCodigo = true;
-            validacionesDescripcion = true;
-            validacionesNombre = true;
-            validacionesCosto = true;
-            validacionesMarca = true;
-            validacionesTipo = true;
+        if (false == activarCasillas) {
+            componenteEquipoDetalle = gestionarPlantaComponentesEquiposBO.consultarComponenteEquipoPorID(idComponenteEquipo);
+            if (null != componenteEquipoDetalle) {
+                editarCodigoComponente = componenteEquipoDetalle.getCodigocomponete();
+                editarDescripcionComponente = componenteEquipoDetalle.getDescripcioncomponente();
+                editarMarcaComponente = componenteEquipoDetalle.getMarcacomponente();
+                editarModeloComponente = componenteEquipoDetalle.getModelocomponente();
+                editarNombreComponente = componenteEquipoDetalle.getNombrecomponente();
+                editarSerialComponente = componenteEquipoDetalle.getSerialcomponente();
+                editarCostoComponente = componenteEquipoDetalle.getCostocomponente();
+                editarEquipoElemento = componenteEquipoDetalle.getEquipoelemento();
+                editarTipoComponente = componenteEquipoDetalle.getTipocomponente();
+                listaTiposComponentes = gestionarPlantaComponentesEquiposBO.consultarTiposComponentesRegistrados();
+                //
+                validacionesSerial = true;
+                validacionesModelo = true;
+                validacionesCodigo = true;
+                validacionesDescripcion = true;
+                validacionesNombre = true;
+                validacionesCosto = true;
+                validacionesMarca = true;
+                validacionesTipo = true;
+            }
+        } else {
+            editarCodigoComponente = null;
+            editarDescripcionComponente = null;
+            editarMarcaComponente = null;
+            editarModeloComponente = null;
+            editarNombreComponente = null;
+            editarSerialComponente = null;
+            editarCostoComponente = null;
+            editarEquipoElemento = null;
+            editarTipoComponente = null;
+            listaTiposComponentes = null;
         }
         mensajeError = "";
         modificacionesRegistro = false;
@@ -260,6 +275,7 @@ public class ControllerDetallesComponente implements Serializable {
         editarCostoComponente = "0";
         editarDescripcionComponente = null;
         editarSerialComponente = null;
+        activarCasillas = false;
         editarModeloComponente = null;
         editarEquipoElemento = null;
         editarTipoComponente = null;
@@ -348,7 +364,7 @@ public class ControllerDetallesComponente implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -366,6 +382,18 @@ public class ControllerDetallesComponente implements Serializable {
             gestionarPlantaComponentesEquiposBO.editarComponenteEquipo(componenteEquipoDetalle, usuarioLoginSistema.getUserUsuario());
         } catch (Exception e) {
             logger.error("Error ControllerDetallesComponente almacenaModificacionComponente:  " + e.toString(), e);
+        }
+    }
+
+    public void eliminarComponente() {
+        boolean respuesta = gestionarPlantaComponentesEquiposBO.eliminarComponente(componenteEquipoDetalle);
+        if (respuesta == true) {
+            activarCasillas = true;
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
+        } else {
+            colorMensaje = "#FF0000";
+            mensajeFormulario = "Ocurrio un error en la eliminación del registro. Intente más tarde.";
         }
     }
 
@@ -480,6 +508,14 @@ public class ControllerDetallesComponente implements Serializable {
 
     public void setEditarCostoComponente(String editarCostoComponente) {
         this.editarCostoComponente = editarCostoComponente;
+    }
+
+    public boolean isActivarCasillas() {
+        return activarCasillas;
+    }
+
+    public void setActivarCasillas(boolean activarCasillas) {
+        this.activarCasillas = activarCasillas;
     }
 
 }
