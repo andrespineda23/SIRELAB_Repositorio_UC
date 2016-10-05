@@ -647,8 +647,7 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setEspecificacionestecnicas(especificacionEquipoElemento);
             if (Utilidades.validarNulo(fechaEquipoElemento)) {
                 SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-                Date fecha = new Date(fechaEquipoElemento);
-                formateador.format(fecha);
+                Date fecha = formateador.parse(fechaEquipoElemento);
                 equipoElementoDetalles.setFechaadquisicion(fecha);
             } else {
                 equipoElementoDetalles.setFechaadquisicion(null);

@@ -109,10 +109,8 @@ public class PeriodoAcademicoDAO implements PeriodoAcademicoDAOInterface {
     public Integer obtenerCantidadPeriodosAcademicosActivos() {
         try {
             em.clear();
-            Date hoy = new Date();
             Query query = em.createQuery("SELECT p FROM PeriodoAcademico p WHERE p.estado = true");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("hoy", hoy);
             List<PeriodoAcademico> lista = query.getResultList();
             if (null != lista) {
                 return lista.size();

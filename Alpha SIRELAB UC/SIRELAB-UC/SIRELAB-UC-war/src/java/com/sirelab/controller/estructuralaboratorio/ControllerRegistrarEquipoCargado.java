@@ -402,7 +402,7 @@ public class ControllerRegistrarEquipoCargado implements Serializable {
             }
             if (Utilidades.validarNulo(nuevoFechaAdquisicionEquipo)) {
                 SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-                Date fecha = new Date(nuevoFechaAdquisicionEquipo);
+                Date fecha = formateador.parse(nuevoFechaAdquisicionEquipo);
                 formateador.format(fecha);
                 equipoNuevo.setFechaadquisicion(fecha);
             } else {

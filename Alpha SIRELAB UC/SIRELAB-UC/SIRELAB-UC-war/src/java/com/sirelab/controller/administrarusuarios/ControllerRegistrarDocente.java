@@ -390,6 +390,7 @@ public class ControllerRegistrarDocente implements Serializable {
         inputID = null;
         inputNombre = null;
         inputDepartamento = null;
+        listaTiposCargos = null;
         inputCargo = null;
         listaFacultades = null;
         listaDepartamentos = null;

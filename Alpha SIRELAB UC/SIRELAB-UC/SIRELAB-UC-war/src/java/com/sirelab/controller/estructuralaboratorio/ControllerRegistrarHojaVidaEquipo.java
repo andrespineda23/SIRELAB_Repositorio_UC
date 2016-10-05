@@ -219,12 +219,10 @@ public class ControllerRegistrarHojaVidaEquipo implements Serializable {
         try {
             HojaVidaEquipo reggNuevo = new HojaVidaEquipo();
             reggNuevo.setDetalleevento(inputDetalle);
-            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-
-            Date fecha1 = new Date(inputFechaRegistro);
-            Date fecha2 = new Date(inputFechaEvento);
-            Date fecha3 = new Date(inputFechaFinEvento);
-            formateador.format(new Date());
+            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");            
+            Date fecha1 = formateador.parse(inputFechaRegistro);
+            Date fecha2 = formateador.parse(inputFechaEvento);
+            Date fecha3 = formateador.parse(inputFechaFinEvento);
             reggNuevo.setFecharegistro(fecha1);
             reggNuevo.setFechaevento(fecha2);
             reggNuevo.setFechafinevento(fecha3);

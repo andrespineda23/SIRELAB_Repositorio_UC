@@ -10,6 +10,7 @@ import com.sirelab.bo.interfacebo.variables.GestionarVariablePeriodosAcademicosB
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -142,8 +143,15 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
     public void registrarPeriodoAcademico() {
         if (validarValidacionesRegistro() == true) {
             int comparacion = 1;
-            Date date1 = new Date(inputFechaInicio);
-            Date date2 = new Date(inputFechaFin);
+            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+            Date date1 = null;
+            Date date2 = null;
+            try {
+                date1 = formateador.parse(inputFechaInicio);
+                date2 = formateador.parse(inputFechaFin);
+            } catch (ParseException e) {
+                // Error, la cadena de texto no se puede convertir en fecha.
+            }
             comparacion = date1.compareTo(date2);
             if (comparacion < 0) {
                 if (validarPeriodosAcademicosExistentes() == true) {
@@ -172,12 +180,15 @@ public class ControllerRegistrarPeriodoAcademico implements Serializable {
         try {
             PeriodoAcademico periodoNuevo = new PeriodoAcademico();
             periodoNuevo.setDetalleperiodo(inputDetalle);
-            Calendar cal = Calendar.getInstance();
             SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-            Date date1 = new Date(inputFechaInicio);
-            Date date2 = new Date(inputFechaFin);
-            formateador.format(date1);
-            formateador.format(date2);
+            Date date1 = null;
+            Date date2 = null;
+            try {
+                date1 = formateador.parse(inputFechaInicio);
+                date2 = formateador.parse(inputFechaFin);
+            } catch (ParseException e) {
+                // Error, la cadena de texto no se puede convertir en fecha.
+            }
             periodoNuevo.setFechainicial(date1);
             periodoNuevo.setFechafinal(date2);
             periodoNuevo.setEstado(true);
