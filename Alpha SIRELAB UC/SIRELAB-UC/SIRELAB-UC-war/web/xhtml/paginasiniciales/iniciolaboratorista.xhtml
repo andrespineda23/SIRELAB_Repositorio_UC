@@ -32,6 +32,9 @@ and open the template in the editor.
                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                 <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
                                             </div>
+                                            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4">
+                                                <h:commandButton value="Cambiar Contraseña" action="cambiarcontrasena" actionListener="#{controllerCambiarContrasenia.recibirPaginaAnterior('iniciolaboratorista')}" class="btn btn-custom btn-two"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +48,7 @@ and open the template in the editor.
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
-                                    <img src="../../assets/img/imagenprueba.jpg" class="img-side img-responsive center-block " style="border: #101010" alt="" />
+                                    <img src="../../assets/img/reserva_i.jpg" class="img-side img-responsive center-block " style="border: #101010" alt="" />
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h2 class="head-line">Control de <strong>Reservas</strong></h2> 
@@ -60,7 +63,7 @@ and open the template in the editor.
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <h:commandButton value="Administrar Reservas Sala" actionListener="#{controllerConsultarReservasUsuarios.recibirPaginaAnterior('iniciolaboratorista')}" action="consultarreservasusuario" class="btn btn-block btn-info"/>
                                                 <h:commandButton value="Administrar Reservas Modulo/Banco" actionListener="#{controllerConsultarReservasUsuarios2.recibirPaginaAnterior('iniciolaboratorista')}" action="consultarreservasusuario2" class="btn btn-block btn-danger"/>
-                                                <h:commandButton value="Realizar Reserva Modulo/Banco" actionListener="#{controllerAdministrarAdministradoresEdificio.recibirPaginaAnterior('iniciolaboratorista')}"  class="btn btn-block btn-success"/>
+                                                <!--h:commandButton value="Realizar Reserva Modulo/Banco" actionListener="#{controllerAdministrarAdministradoresEdificio.recibirPaginaAnterior('iniciolaboratorista')}"  class="btn btn-block btn-success"/ -->
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +111,7 @@ and open the template in the editor.
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
-                                    <img src="../../assets/img/imagenprueba.jpg" class="img-side img-responsive center-block " style="border: #101010" alt="" />
+                                    <img src="../../assets/img/usuarios_i.png" class="img-side img-responsive center-block " style="border: #101010" alt="" />
                                 </div>
                             </div>
                         </div>
@@ -184,8 +187,6 @@ and open the template in the editor.
                                                         <h:commandButton value="Insumo" actionListener="#{controllerAdministrarInsumos.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarinsumos" class="btn btn-block btn-info"/>
                                                         <br></br>
                                                         <h:commandButton value="Proveedor" actionListener="#{controllerAdministrarProveedores.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarproveedores" class="btn btn-block btn-info"/>
-                                                        <br></br>
-                                                        <h:commandButton value="Ingreso Compra Insumo" actionListener="#{controllerRegistrarIngresoInsumo.recibirPaginaAnterior('iniciolaboratorista')}" action="registraringresoinsumo" class="btn btn-block btn-info"/>
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                         <div class="icon-wrapper">
@@ -193,9 +194,9 @@ and open the template in the editor.
                                                         </div>                   
                                                     </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                                        <h:commandButton disabled="true" value="Manual de Equipo" actionListener="#{controllerAdministrarManuales.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarmanuales" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Manual de Equipo" actionListener="#{controllerAdministrarManuales.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarmanuales" class="btn btn-block btn-danger"/>
                                                         <br></br>
-                                                        <h:commandButton disabled="true" value="Guía de Laboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarguiaslaboratorio" class="btn btn-block btn-danger"/>
+                                                        <h:commandButton value="Guía de Laboratorio" actionListener="#{controllerAdministrarGuiasLaboratorio.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarguiaslaboratorio" class="btn btn-block btn-danger"/>
                                                         <br></br>
                                                         <h:commandButton value="Servicios prestados por Salas" actionListener="#{controllerAdministrarServiciosSala.recibirPaginaAnterior('iniciolaboratorista')}" action="administrarserviciossala" class="btn btn-block btn-danger"/>
                                                     </div>
@@ -207,7 +208,7 @@ and open the template in the editor.
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
-                                    <img src="../../assets/img/objetivoclientereporte.jpg" class="img-side img-responsive" alt="" />
+                                    <img src="../../assets/img/proveedor_i.png" class="img-side img-responsive" alt="" />
                                 </div>
                             </div>
                         </div>

@@ -62,7 +62,7 @@ public class ControllerRegistrarTipoEvento implements Serializable {
         if (Utilidades.validarNulo(inputDetalle) && (!inputDetalle.isEmpty()) && (inputDetalle.trim().length() > 0)) {
             int tam = inputDetalle.length();
             if (tam >= 3) {
-                if (Utilidades.validarCaracterString(inputDetalle)) {
+                if (Utilidades.validarCaracteresAlfaNumericos(inputDetalle)) {
                     validacionesDetalle = true;
                 } else {
                     validacionesDetalle = false;

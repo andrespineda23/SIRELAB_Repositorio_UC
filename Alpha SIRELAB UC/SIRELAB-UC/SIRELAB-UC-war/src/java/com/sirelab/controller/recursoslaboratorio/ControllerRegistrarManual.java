@@ -14,6 +14,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -49,12 +53,14 @@ public class ControllerRegistrarManual implements Serializable {
     private boolean activarUbicacion, activarArchivo;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private String visibleCargue;
 
     public ControllerRegistrarManual() {
     }
 
     @PostConstruct
     public void init() {
+        visibleCargue = "hidden";
         constantes = new MensajesConstantes();
         activarArchivo = true;
         activarUbicacion = false;
@@ -119,6 +125,7 @@ public class ControllerRegistrarManual implements Serializable {
             nuevoUbicacion = null;
             validacionesArchivo = false;
             archivo = null;
+            visibleCargue = "visible";
         } else {
             validacionesArchivo = true;
             archivo = null;
@@ -126,6 +133,7 @@ public class ControllerRegistrarManual implements Serializable {
             activarArchivo = true;
             activarUbicacion = false;
             nuevoUbicacion = null;
+            visibleCargue = "hidden";
         }
     }
 
@@ -139,19 +147,13 @@ public class ControllerRegistrarManual implements Serializable {
                 extension = rutaArchivoInicial.substring(i + 1);
             }
             if ("pdf".equals(extension)) {
-                Manual registro = gestionarRecursoManualBO.consultarManualPorUbicacion(rutaArchivoInicial);
-                if (null == registro) {
-                    validacionesArchivo = true;
-                } else {
-                    FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("El archivo ya se encuentra almacenado en el sistema."));
-                    validacionesArchivo = false;
-                }
+                validacionesArchivo = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("Formato incorrecto. Solo se permite archivos PDF."));
                 validacionesArchivo = false;
             }
         } else {
-            FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("El archivo de guía laboratorio es obligatorio."));
+            FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("El archivo del manual de equipo es obligatorio."));
             validacionesArchivo = false;
         }
     }
@@ -196,7 +198,11 @@ public class ControllerRegistrarManual implements Serializable {
     private void cargarGuiaAServidor() throws FileNotFoundException, IOException {
         if (Utilidades.validarNulo(archivo)) {
             String filename = getFilename(archivo);
-            rutaArchivo = pathArchivo + filename;
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            formatter = new SimpleDateFormat("dd MMMM yyyy, hh:mm:ss a");
+            Date date = Calendar.getInstance().getTime();
+            String today = formatter.format(date);
+            rutaArchivo = pathArchivo + filename + "-" + today;
             String extension = "";
             int i = rutaArchivo.lastIndexOf('.');
             if (i > 0) {
@@ -234,6 +240,7 @@ public class ControllerRegistrarManual implements Serializable {
         rutaArchivo = "";
         mensajeError = "";
         activarArchivo = true;
+        visibleCargue = "hidden";
         activarUbicacion = false;
         nuevoTipo = "FISICO";
         archivo = null;
@@ -262,6 +269,7 @@ public class ControllerRegistrarManual implements Serializable {
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         activarAceptar = false;
+        visibleCargue = "hidden";
         mensajeError = "";
         colorMensaje = "black";
         activarCasillas = false;
@@ -382,6 +390,14 @@ public class ControllerRegistrarManual implements Serializable {
 
     public void setActivarArchivo(boolean activarArchivo) {
         this.activarArchivo = activarArchivo;
+    }
+
+    public String getVisibleCargue() {
+        return visibleCargue;
+    }
+
+    public void setVisibleCargue(String visibleCargue) {
+        this.visibleCargue = visibleCargue;
     }
 
 }

@@ -59,14 +59,14 @@ and open the template in the editor.
                                         <strong><h:outputText value="Sala de Laboratorio*"/></strong>
                                         <h:selectOneMenu value="#{controllerDetallesSalaLaboratorioXServicio.editarSalaLaboratorio}" readonly="#{controllerDetallesSalaLaboratorioXServicio.activarCasillas}"
                                                          class="form-control" disabled="#{controllerDetallesSalaLaboratorioXServicio.activarSalaLaboratorio}"
-                                                         id="editarLaboratorio">
+                                                         id="editarSalaLaboratorio">
                                             <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
                                             <f:selectItems value="#{controllerDetallesSalaLaboratorioXServicio.listaSalaLaboratorios}" var="sala"
                                                            itemLabel="#{sala.strNombreEstado}" itemValue="#{sala}"/>
                                             <f:converter converterId="ConverterGenerico" />
-                                            <f:ajax event="change" listener="#{controllerDetallesSalaLaboratorioXServicio.actualizarLaboratorios()}" execute="editarLaboratorio" render="msnLaboratorio"/>
+                                            <f:ajax event="change" listener="#{controllerDetallesSalaLaboratorioXServicio.actualizarLaboratorios()}" execute="editarSalaLaboratorio" render="msnSalaLaboratorio"/>
                                         </h:selectOneMenu>
-                                        <h6><h:message id="msnLaboratorio" for="editarLaboratorio" style="color: red"/></h6>
+                                        <h6><h:message id="msnSalaLaboratorio" for="editarSalaLaboratorio" style="color: red"/></h6>
                                     </div>
                                     <div class="form-group">
                                         <strong><h:outputText value="Servicio*"/></strong>

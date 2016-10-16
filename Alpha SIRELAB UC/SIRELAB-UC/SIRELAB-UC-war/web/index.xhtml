@@ -65,13 +65,13 @@
                                     Universidad Central - Bogotá, Colombia.
                                 </h4>
                                 <div class="form-group">
-                                    <label for="usuario" style="color:white">User</label>
+                                    <label for="usuario" style="color:white">User/Correo</label>
                                     <h:inputText class="form-control" value="#{controllerIndex.usuarioLogin}" id="usuarioLogin">
                                         <f:ajax event="blur" listener="#{controllerIndex.validarUsuario()}" execute="usuarioLogin"  />
                                     </h:inputText>
                                 </div>
                                 <div class="form-group">
-                                    <label for="contrasenia" style="color:white">Password</label>
+                                    <label for="contrasenia" style="color:white">Password/N# Identificación</label>
                                     <h:inputSecret class="form-control" value="#{controllerIndex.passwordLogin}" id="passwordLogin">
                                         <f:ajax event="blur" listener="#{controllerIndex.validarContrasenia()}" />
                                     </h:inputSecret>
@@ -87,18 +87,10 @@
                                         <h:outputText value="#{controllerIndex.mensajeFormulario}"/>    
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <h:commandLink value="Recuperar Contraseña" action="recuperarcontrasena" actionListener="#{controllerIndex.limpiarProcesoControlador()}">
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandLink>
-                                </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-
             </div>
             <!--HOME SECTION END  -->
             <!-- ABOUT SECTION START-->
@@ -106,11 +98,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <h2 class="head-line">Que es <strong>SIRELAB</strong>?</h2>
+                            <h2 class="head-line">¿Qué es <strong>SIRELAB</strong>?</h2>
                             <p >
-                                Morbi mollis lectus et ipsum sollicitudin varius.
-                                Aliquam tempus ante placerat, consectetur tellus nec, porttitor nulla.
-                                Maecenas a quam erat. Praesent vehicula ut magna sit amet ultrices.
+                                Es un sistema de información que permite la administración y control de reservas de los laboratorios de la facultad de ingeníeria y ciencias basicas de la Universidad Central. Permite a su vez, controlar el inventario presente en los laboratorios, acceso a usuarios, entre otra funcionalidad.
                             </p>
                             <div class="row text-center">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -120,34 +110,25 @@
                                                 <i class="ion-tshirt-outline"></i>
                                             </div>                   
                                             <h4>Control de Usuarios</h4>
-                                            Algo relacionado con persnal humano.
-
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                             <div class="icon-wrapper">
                                                 <i class="ion-monitor"></i>
                                             </div>
                                             <h4>Control de Inventario</h4>
-                                            Algo de uso de tecnologia.
-
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                             <div class="icon-wrapper">
                                                 <i class="ion-clipboard"></i>
                                             </div>
                                             <h4>Control de Reservas</h4>
-                                            Algo relacionado con solución de problemas
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
-                            <img src="assets/img/phone.png" class="img-side" alt="" />
+                            <img src="assets/img/universidad_central_nuevo_edificio.jpg" class="img-side" alt="" />
                         </div>
                     </div>
                 </div>
@@ -160,30 +141,25 @@
                     <div class="row text-center">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                             <div class="icon-wrapper">
-
-
-                                <i class="ion-chatboxes"></i>
+                                <i class="ion-sad-outline"></i>
                             </div>
-                            <h4>Stable relaese  </h4>
-                            Consectetur adipiscing elit felis dolor .
-
-
+                            <h4>¿Olvidaste tu contraseña?</h4>
+                            Ingresa en la siguiente <h:commandLink value="opción" action="recuperarcontrasena" actionListener="#{controllerIndex.limpiarProcesoControlador()}">
+                                <f:ajax execute="@form" render="form" />
+                            </h:commandLink> y restaura tu contraseña:
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                            <h2 class="head-line">Great Resource Found</h2>
+                            <h2 class="head-line">SIRELAB</h2>
                             <p>
-                                Integer vehicula efficitur dictum. Integer pharetra venenatis enim non porta.
-
+                                Sistema de Información de Recursos de Laboratorios - Universidad Central
                             </p>
-                            <a href="#header" class="btn btn-custom btn-three" >Nothing To Hide Here</a>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <div class="icon-wrapper">
-                                <i class="ion-email-unread"></i>
+                                <i class="ion-ios-locked"></i>
                             </div>
-                            <h4>Stable relaese  </h4>
-                            Consectetur adipiscing elit felis dolor .
-
+                            <h4>Acceso a Usuarios Registrados</h4>
+                            Recuerda, necesitas estar registrado en el sistema para poder acceder.
                         </div>
 
                     </div>
@@ -195,7 +171,7 @@
                 <div class="container">
                     <div class="row text-center">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                            &#169; 2015 - Andrés Pineda | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Pineda Software </a> 
+                            &#169; <strong id="anioActual"></strong> - Andrés Pineda | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Pineda Software </a> 
                         </div>
                     </div>
                 </div>
@@ -211,6 +187,12 @@
             <script src="assets/js/jquery.easing.min.js"></script>
             <!-- CUSTOM SCRIPTS   -->
             <script src="assets/js/custom.js"></script>
+            <script>
+        var ano = (new Date).getFullYear();
+        $(document).ready(function () {
+            $("#anioActual").text(ano);
+        });
+            </script>
         </h:form>
 
     </h:body>

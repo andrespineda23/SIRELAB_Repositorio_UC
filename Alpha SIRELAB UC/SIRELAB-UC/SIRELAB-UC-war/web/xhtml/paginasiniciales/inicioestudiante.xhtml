@@ -14,7 +14,7 @@ and open the template in the editor.
         <ui:composition template="/xhtml/template/templatepaginauser.xhtml">
             <ui:define name="body">
                 <h:form id="form">
-                                        <!--HOME SECTION START  -->
+                    <!--HOME SECTION START  -->
                     <div id="home">
                         <div class="overlay">
                             <div class="container">
@@ -29,8 +29,11 @@ and open the template in the editor.
                                         </h2>
                                         <span></span>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4">
                                                 <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4">
+                                                <h:commandButton value="Cambiar Contraseña" action="cambiarcontrasena" actionListener="#{controllerCambiarContrasenia.recibirPaginaAnterior('inicioestudiante')}" class="btn btn-custom btn-two"/>
                                             </div>
                                         </div>
                                     </div>
@@ -42,11 +45,10 @@ and open the template in the editor.
                     <!--HOME SECTION END  -->
                     <!-- ABOUT SECTION START-->
                     <div class="container">
-                        <div class="content-section-a">
+                        <div class="content-section-b">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 hidden-xs hidden-sm"></div>
-                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <hr class="section-heading-spacer"/>
                                         <div class="clearfix"></div>
                                         <h2 class=" head-line section-heading">Generación de Reservas</h2>
@@ -56,16 +58,7 @@ and open the template in the editor.
                                             <h:commandButton class="btn btn-warning btn-block" value="Realizar Reserva Modulo" action="reservamodulo1" actionListener="#{controllerReservaModulo1.cargarInformacionReserva()}"/>
                                         </row>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <div class="content-section-a">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3 hidden-xs hidden-sm"></div>
-                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <hr class="section-heading-spacer"/>
                                         <div class="clearfix"></div>
                                         <h2 class=" head-line section-heading">Consulta de Reservas</h2>
@@ -77,8 +70,16 @@ and open the template in the editor.
                                 </div>
                             </div>
                         </div>
+                        <!-- ABOUT SECTION END-->
                     </div>
-                    <!-- ABOUT SECTION END-->
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
                 </h:form>
             </ui:define>  
         </ui:composition>

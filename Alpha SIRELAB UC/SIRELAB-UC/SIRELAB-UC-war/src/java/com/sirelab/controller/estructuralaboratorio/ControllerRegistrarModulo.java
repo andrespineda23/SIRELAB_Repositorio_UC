@@ -298,6 +298,8 @@ public class ControllerRegistrarModulo implements Serializable {
             } else {
                 retorno = false;
             }
+        } else {
+            retorno = false;
         }
         return retorno;
     }
@@ -327,7 +329,7 @@ public class ControllerRegistrarModulo implements Serializable {
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -343,8 +345,8 @@ public class ControllerRegistrarModulo implements Serializable {
             salaNuevo.setSalalaboratorio(nuevoSalaLaboratorioModulo);
             gestionarPlantaModulosBO.crearNuevoModuloLaboratorio(salaNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString(), e);
         }
     }
 
@@ -355,7 +357,7 @@ public class ControllerRegistrarModulo implements Serializable {
         validacionesDepartamento = false;
         validacionesSala = false;
         validacionesCapacidad = true;
-        mensajeError ="";
+        mensajeError = "";
         validacionesCosto = true;
         validacionesInversion = true;
         mensajeFormulario = "";

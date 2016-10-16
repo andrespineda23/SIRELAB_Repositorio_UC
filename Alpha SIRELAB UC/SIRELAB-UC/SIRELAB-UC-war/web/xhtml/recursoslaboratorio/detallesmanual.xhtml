@@ -61,7 +61,7 @@ and open the template in the editor.
                                                              id="parametroTipo">
                                                 <f:selectItem itemLabel="FISICO" itemValue="FISICO" />
                                                 <f:selectItem itemLabel="DIGITAL" itemValue="DIGITAL" />
-                                                <f:ajax event="change" listener="#{controllerDetallesManual.actualizarTipo()}" execute="parametroTipo" render="parametroUbicacion archivo" />
+                                                <f:ajax event="change" listener="#{controllerDetallesManual.actualizarTipo()}" execute="parametroTipo" render="editarUbicacion archivo" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="form-group">
@@ -72,8 +72,8 @@ and open the template in the editor.
                                             <h6><h:message id="msnUbicacion" for="editarUbicacion" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Archivo Manual*"/></strong>
-                                            <h:inputFile disabled="#{controllerDetallesManual.activarArchivo}" value="#{controllerDetallesManual.archivo}" class="form-control" id="archivo"  >
+                                            <strong><h:outputText style="visibility: #{controllerDetallesManual.visibleCargue}" value="Archivo Manual*"/></strong>
+                                            <h:inputFile disabled="#{controllerDetallesManual.activarArchivo}" value="#{controllerDetallesManual.archivo}" class="form-control" id="archivo" style="visibility: #{controllerDetallesManual.visibleCargue}" >
                                                 <f:ajax event="change" listener="#{controllerDetallesManual.actualizarArchivoSeleccionado()}" render="msnArchivo" />
                                             </h:inputFile>
                                             <h6><h:message id="msnArchivo" for="archivo" style="color: red"/></h6>

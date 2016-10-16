@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -52,6 +56,7 @@ public class ControllerDetallesManual implements Serializable {
     private boolean activarUbicacion, activarArchivo;
     private MensajesConstantes constantes;
     private String mensajeError;
+    private String visibleCargue;
 
     public ControllerDetallesManual() {
     }
@@ -62,6 +67,7 @@ public class ControllerDetallesManual implements Serializable {
         modificacionArchivo = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
+        visibleCargue = "hidden";
         BasicConfigurator.configure();
     }
 
@@ -94,11 +100,13 @@ public class ControllerDetallesManual implements Serializable {
             activarArchivo = false;
             editarUbicacion = null;
             archivo = null;
+            visibleCargue = "visible";
         } else {
             activarUbicacion = false;
             activarArchivo = true;
             archivo = null;
             editarUbicacion = manualDetalle.getUbicacionmanual();
+            visibleCargue = "hidden";
         }
     }
 
@@ -151,9 +159,11 @@ public class ControllerDetallesManual implements Serializable {
             editarUbicacion = null;
             validacionesArchivo = false;
             archivo = null;
+            visibleCargue = "visible";
         } else {
             validacionesArchivo = true;
             archivo = null;
+            visibleCargue = "hidden";
             validacionesUbicacion = false;
             activarArchivo = true;
             activarUbicacion = false;
@@ -171,17 +181,7 @@ public class ControllerDetallesManual implements Serializable {
                 extension = rutaArchivoInicial.substring(i + 1);
             }
             if ("pdf".equals(extension)) {
-                Manual registro = gestionarRecursoManualesBO.consultarManualPorUbicacion(rutaArchivoInicial);
-                if (null == registro) {
-                    validacionesArchivo = true;
-                } else {
-                    if (!registro.getIdmanual().equals(manualDetalle.getIdmanual())) {
-                        FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("El manual ya se encuentra almacenado en el sistema."));
-                        validacionesArchivo = false;
-                    } else {
-                        validacionesArchivo = true;
-                    }
-                }
+                validacionesArchivo = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("Formato incorrecto. Solo se permite archivos PDF."));
                 validacionesArchivo = false;
@@ -246,7 +246,10 @@ public class ControllerDetallesManual implements Serializable {
     private void cargarGuiaAServidor() throws FileNotFoundException, IOException {
         if (Utilidades.validarNulo(archivo)) {
             String filename = getFilename(archivo);
-            rutaArchivo = pathArchivo + filename;
+            DateFormat formatter = new SimpleDateFormat("dd MMMM yyyy, hh:mm:ss a");
+            Date date = Calendar.getInstance().getTime();
+            String today = formatter.format(date);
+            rutaArchivo = pathArchivo + filename + "-" + today;
             String extension = "";
             int i = rutaArchivo.lastIndexOf('.');
             if (i > 0) {
@@ -370,6 +373,14 @@ public class ControllerDetallesManual implements Serializable {
 
     public void setEditarCodigo(String editarCodigo) {
         this.editarCodigo = editarCodigo;
+    }
+
+    public String getVisibleCargue() {
+        return visibleCargue;
+    }
+
+    public void setVisibleCargue(String visibleCargue) {
+        this.visibleCargue = visibleCargue;
     }
 
 }

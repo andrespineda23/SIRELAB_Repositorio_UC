@@ -15,24 +15,18 @@ and open the template in the editor.
         <ui:composition template="/xhtml/template/templaterecupera.xhtml">
             <ui:define name="body">
                 <h:form id="form">
-                    <div class="row">
+                    <div class="container">
                         <br></br>
                         <br></br>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12"> 
-                            <div class="container">
-                                <!-- /.content-section-a -->
-
-                                <div class="content-section-a">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                                                <hr class="section-heading-spacer"/>
-                                                <div class="clearfix"></div>
-                                                <h2 class="section-heading">Recupera tu contraseña</h2>
-                                                <p class="lead">Si has olvidado la contraseña de tu cuenta ingresa los siguientes datos y a vuelta de correo te enviaremos la nueva contraseña para ingresar.</p>
+                        <br></br>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <fieldset style="border: black;border-radius: 10px">
+                                            <h3><legend style="color: darkblue"><strong>Restablecimiento de contraseña</strong></legend></h3>
+                                            <div class="row col-md-12">
+                                                <p class="lead">Si has olvidado la contraseña de tu cuenta ingresa los siguientes datos y a vuelta de correo te enviaremos la nueva contraseña para ingresar de nuevo al sistema de información.</p>
                                                 <p class="lead">No se te olvide al ingresar cambiar la contraseña para una mayor seguridad.</p>
                                                 <div class="form-group">
                                                     <strong><h:outputText value="Número Identificación*"/></strong>
@@ -51,45 +45,34 @@ and open the template in the editor.
                                                     </div>
                                                     <h6><h:message id="msnEmail" for="correoRecuperacion" style="color: red"/></h6>
                                                 </div>
+                                                <br></br>
+                                                <br></br>
                                                 <div class="row">
                                                     <div class="left pull-left">
                                                         <strong><h:outputText id="mensajeFormularioRecupera" class="text-uppercase" value="#{controllerIndex.mensajeFormularioRecupera}"/></strong>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="right pull-right">
-                                                        <h:commandButton value="Recuperar" action="#{controllerIndex.retornarPaginaRecuperacion()}" class="btn btn-success" >
-                                                            <f:ajax execute="@form" render="form" />
-                                                        </h:commandButton>
-                                                    </div>
+                                                <hr class="intro-divider"/>
+                                                <div class="left pull-left">
+                                                    <h:commandButton value="Recuperar Contraseña" action="#{controllerIndex.retornarPaginaRecuperacion()}" class="btn btn-success" >
+                                                        <f:ajax execute="@form" render="form" />
+                                                    </h:commandButton>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:commandButton value="Pagina Inicial" action="index" actionListener="#{controllerIndex.cancelarRecuperarContrasenia()}" class="btn btn-info" immediate="true">
+                                                        <f:ajax execute="@form" render="form" />
+                                                    </h:commandButton>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                                                <br></br>
-                                                <br></br>
-                                                <img class="img-responsive" src="../../img/correorecuperacion.jpg" alt=""/>
-                                            </div>
-                                        </div>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <div class="row">
-                                            <div class="right pull-right">
-                                                <h:commandButton value="Pagina Inicial" action="index" actionListener="#{controllerIndex.cancelarRecuperarContrasenia()}" class="btn btn-info" immediate="true">
-                                                    <f:ajax execute="@form" render="form" />
-                                                </h:commandButton>
-                                            </div>
-                                        </div>
+                                            </div> 
+                                            <br></br>
+                                        </fieldset>
                                     </div>
-                                    <!-- /.container -->
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </h:form>
-            </ui:define>  
+            </ui:define>        
         </ui:composition>
     </h:body>
 </html>

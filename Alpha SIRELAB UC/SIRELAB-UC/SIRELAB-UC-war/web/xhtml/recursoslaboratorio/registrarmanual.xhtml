@@ -51,13 +51,13 @@ and open the template in the editor.
                                             <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Descripción Manual*"/></strong>
+                                            <strong><h:outputText value="Tipo Manual*"/></strong>
                                             <h:selectOneMenu value="#{controllerRegistrarManual.nuevoTipo}"
                                                              class="form-control"
                                                              id="parametroTipo">
                                                 <f:selectItem itemLabel="FISICO" itemValue="FISICO" />
                                                 <f:selectItem itemLabel="DIGITAL" itemValue="DIGITAL" />
-                                                <f:ajax event="change" listener="#{controllerRegistrarManual.actualizarTipo()}" execute="parametroTipo" render="parametroUbicacion archivo" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarManual.actualizarTipo()}" execute="parametroTipo" render="nuevoUbicacion archivo" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="form-group">
@@ -68,8 +68,8 @@ and open the template in the editor.
                                             <h6><h:message id="msnUbicacion" for="nuevoUbicacion" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Archivo Manual*"/></strong>
-                                            <h:inputFile disabled="#{controllerRegistrarManual.activarCasillas}" readonly="#{controllerRegistrarManual.activarArchivo}" value="#{controllerRegistrarManual.archivo}" class="form-control" id="archivo"  >
+                                            <strong><h:outputText style="visibility: #{controllerRegistrarManual.visibleCargue}" value="Archivo Manual*"/></strong>
+                                            <h:inputFile disabled="#{controllerRegistrarManual.activarCasillas}" readonly="#{controllerRegistrarManual.activarArchivo}" value="#{controllerRegistrarManual.archivo}" class="form-control" id="archivo" style="visibility: #{controllerRegistrarManual.visibleCargue}" >
                                                 <f:ajax event="change" listener="#{controllerRegistrarManual.actualizarArchivoSeleccionado()}" render="msnArchivo" />
                                             </h:inputFile>
                                             <h6><h:message id="msnArchivo" for="archivo" style="color: red"/></h6>

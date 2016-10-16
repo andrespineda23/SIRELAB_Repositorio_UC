@@ -79,37 +79,8 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
         }
     }
 
-    public void validarDetalle() {
-        if (Utilidades.validarNulo(inputDetalle) && (!inputDetalle.isEmpty()) && (inputDetalle.trim().length() > 0)) {
-            int tam = inputDetalle.length();
-            if (tam >= 3) {
-                if (Utilidades.validarCaracteresAlfaNumericos(inputDetalle)) {
-                    validacionesDetalle = true;
-                } else {
-                    validacionesDetalle = false;
-                    FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.VARIABLE_PERIODOACA));
-                }
-            } else {
-                validacionesDetalle = false;
-                FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El tamaño minimo permitido es 3 caracteres. " + constantes.VARIABLE_PERIODOACA));
-            }
-        } else {
-            validacionesDetalle = false;
-            FacesContext.getCurrentInstance().addMessage("form:inputDetalle", new FacesMessage("El nombre se encuentra incorrecto. " + constantes.VARIABLE_PERIODOACA));
-        }
-        modificacionesRegistro = true;
-    }
-
     public void actualizarEstado() {
         modificacionesRegistro = true;
-    }
-
-    private boolean validarValidacionesRegistro() {
-        boolean retorno = true;
-        if (validacionesDetalle == false) {
-            retorno = false;
-        }
-        return retorno;
     }
 
     private boolean validarPeriodosAcademicosExistentes() {
@@ -125,19 +96,14 @@ public class ControllerDetallesPeriodoAcademico implements Serializable {
 
     public void registrarModificacionPeriodoAcademico() {
         if (modificacionesRegistro == true) {
-            if (validarValidacionesRegistro() == true) {
-                if (validarPeriodosAcademicosExistentes() == true) {
-                    almacenarModificacionRegistro();
-                    cargarInformacionRegistro();
-                    colorMensaje = "green";
-                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
-                } else {
-                    colorMensaje = "#FF0000";
-                    mensajeFormulario = "Existe registrado un periodo academico ACTIVO a la fecha. Cierre el periodo academico ACTIVO para realizar el registro.";
-                }
+            if (validarPeriodosAcademicosExistentes() == true) {
+                almacenarModificacionRegistro();
+                cargarInformacionRegistro();
+                colorMensaje = "green";
+                mensajeFormulario = "El formulario ha sido ingresado con exito.";
             } else {
                 colorMensaje = "#FF0000";
-                mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+                mensajeFormulario = "Existe registrado un periodo academico ACTIVO a la fecha. Cierre el periodo academico ACTIVO para realizar el registro.";
             }
         } else {
             colorMensaje = "black";

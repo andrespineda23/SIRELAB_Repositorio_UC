@@ -11,6 +11,7 @@ import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
+import com.sirelab.entidades.AdministradorEdificio;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
@@ -49,13 +50,13 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
     @EJB
     EstudianteDAOInterface estudianteDAO;
     @EJB
+    AdministradorEdificioDAOInterface administradorEdificioDAO;
+    @EJB
     TipoUsuarioDAOInterface tipoUsuarioDAO;
     @EJB
     DocenteDAOInterface docenteDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
-    @EJB
-    AdministradorEdificioDAOInterface administradorEdificioDAO;
 
     private final String NUMEROS = "0123456789";
     private final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -256,6 +257,33 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
                 }
             }
             return registro;
+        } catch (Exception e) {
+            logger.error("Error obtenerUsuarioFinalLogin GestionarLoginSistemaBO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override 
+    public Usuario obtenerUsuarioCambioContrasenia(String usuario, BigInteger identificacion) {
+        try {
+            Usuario user = null;
+            if ("ADMINISTRADOR".equalsIgnoreCase(usuario)) {
+                Persona admi = personaDAO.buscarPersonaPorID(identificacion);
+                user = admi.getUsuario();
+            } else if ("ESTUDIANTE".equalsIgnoreCase(usuario)) {
+                Estudiante estu = estudianteDAO.buscarEstudiantePorID(identificacion);
+                user = estu.getPersona().getUsuario();
+            } else if ("DOCENTE".equalsIgnoreCase(usuario)) {
+                Docente doce = docenteDAO.buscarDocentePorID(identificacion);
+                user = doce.getPersona().getUsuario();
+            } else if ("ADMINISTRADOREDIFICIO".equalsIgnoreCase(usuario)) {
+                AdministradorEdificio admini = administradorEdificioDAO.buscarAdministradorEdificioPorID(identificacion);
+                user = admini.getPersona().getUsuario();
+            } else if ("ENCARGADOLAB".equalsIgnoreCase(usuario)) {
+                EncargadoLaboratorio enc = encargadoLaboratorioDAO.buscarEncargadoLaboratorioPorID(identificacion);
+                user = enc.getPersona().getUsuario();
+            }
+            return user;
         } catch (Exception e) {
             logger.error("Error obtenerUsuarioFinalLogin GestionarLoginSistemaBO : " + e.toString(), e);
             return null;

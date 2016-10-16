@@ -27,20 +27,20 @@ and open the template in the editor.
                         </div>
                         <div class="row col-md-12 col-lg-12">
                             <div class="row">
-                                <div class="col-md-5 col-lg-5 hidden-sm hidden-xs">
-                                    <img src="../../assets/img/reserva.jpg" class="img-responsive" alt="Reserva"/>
+                                <div class="col-md-7 col-lg-7">
+                                    Por medio de la siguiente pagina usted puede consultar las reservas realizadas en el transcurso del tiempo. Puede consultar información de reservas historicas, es decir, reservas que ya se encuentran anterior a la fecha de hoy. A su vez, puede consultar reservas que esten proximas a realizarse.
+                                    En esta pagina encontrara las reservas de sala de laboratorio y de modulos de sala que han sido realizadas.
                                 </div>
-                                <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-                                    informacion de lo que se trata la pagina y opcion del tipo de reserva a solicitar
+                                <div class="col-md-5 col-lg-5">
                                     <div class="form-group">
                                         <label for="tipoConsulta">
-                                            Tipo de Consulta
+                                            Seleccione el tipo de consulta de reserva a realizar.
                                         </label>
                                         <h:selectOneMenu value="#{controllerConsultarReservasSala.tipoConsulta}"
                                                          class="form-control"
                                                          id="tipoConsulta">
-                                            <f:selectItem itemLabel="EN PROCESO DE" itemValue="1" />
-                                            <f:selectItem itemLabel="HISTORIAL" itemValue="2" />
+                                            <f:selectItem itemLabel="RESERVAS EN PROCESO" itemValue="1" />
+                                            <f:selectItem itemLabel="RESERVAS EFECTIVAS" itemValue="2" />
                                             <f:ajax event="change" listener="#{controllerConsultarReservasSala.cambiarTipoConsulta()}" execute="tipoConsulta" render="form"/>
                                         </h:selectOneMenu>
                                     </div>

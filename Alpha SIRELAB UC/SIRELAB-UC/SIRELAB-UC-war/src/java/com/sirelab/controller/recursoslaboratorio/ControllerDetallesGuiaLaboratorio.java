@@ -18,6 +18,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -219,17 +223,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
                 extension = rutaArchivoInicial.substring(i + 1);
             }
             if ("pdf".equals(extension)) {
-                GuiaLaboratorio registro = gestionarRecursoGuiasLaboratorioBO.consultarGuiaLaboratorioPorUbicacion(rutaArchivoInicial);
-                if (null == registro) {
-                    validacionesArchivo = true;
-                } else {
-                    if (!registro.getIdguialaboratorio().equals(guiaLaboratorioDetalle.getIdguialaboratorio())) {
-                        FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("El archivo ya se encuentra almacenado en el sistema."));
-                        validacionesArchivo = false;
-                    } else {
-                        validacionesArchivo = true;
-                    }
-                }
+                validacionesArchivo = true;
             } else {
                 FacesContext.getCurrentInstance().addMessage("form:archivo", new FacesMessage("Formato incorrecto. Solo se permite archivos PDF."));
                 validacionesArchivo = false;
@@ -279,7 +273,7 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -302,7 +296,10 @@ public class ControllerDetallesGuiaLaboratorio implements Serializable {
     private void cargarGuiaAServidor() throws FileNotFoundException, IOException {
         if (Utilidades.validarNulo(archivo)) {
             String filename = getFilename(archivo);
-            rutaArchivo = pathArchivo + filename;
+            DateFormat formatter = new SimpleDateFormat("dd MMMM yyyy, hh:mm:ss a");
+            Date date = Calendar.getInstance().getTime();
+            String today = formatter.format(date);
+            rutaArchivo = pathArchivo + filename + "-" + today;
             String extension = "";
             int i = rutaArchivo.lastIndexOf('.');
             if (i > 0) {

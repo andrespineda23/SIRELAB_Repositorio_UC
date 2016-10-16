@@ -39,7 +39,7 @@
                 <div class="container">
                     <div class="row text-center">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                            &#169; 2015 - SIRELAB | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Andrés Pineda </a> 
+                            &#169; <strong id="anioActual"></strong> - SIRELAB | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Andrés Pineda </a> 
                         </div>
                     </div>
                 </div>
@@ -55,6 +55,12 @@
             <script src="../../assets/js/jquery.easing.min.js"></script>
             <!-- CUSTOM SCRIPTS   -->
             <script src="../../assets/js/custom.js"></script>
+            <script>
+                var ano = (new Date).getFullYear();
+                $(document).ready(function () {
+                    $("#anioActual").text(ano);
+                });
+            </script>
         </ui:composition>
     </body>
 </html>

@@ -31,7 +31,10 @@ and open the template in the editor.
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                 <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
-                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4">
+                                                <h:commandButton value="Cambiar Contraseña" action="cambiarcontrasena" actionListener="#{controllerCambiarContrasenia.recibirPaginaAnterior('inicioadministrador')}" class="btn btn-custom btn-two"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +66,6 @@ and open the template in the editor.
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                         <div class="icon-wrapper">
                                                             <i class="ion-person"></i>
-                                                            <h4>Usuarios</h4>
                                                         </div>                   
                                                     </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
@@ -81,7 +83,7 @@ and open the template in the editor.
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
-                                    <img src="../../assets/img/imagenprueba.jpg" class="img-side img-responsive center-block " style="border: #101010" alt="" />
+                                    <img src="../../assets/img/usuarios_i.png" class="img-side img-responsive center-block " style="border: #101010" alt="" />
                                 </div>
                             </div>
                         </div>
@@ -189,7 +191,7 @@ and open the template in the editor.
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
-                                    <img src="../../assets/img/objetivoclientereporte.jpg" class="img-side img-responsive" alt="" />
+                                    <img src="../../assets/img/proveedor_i.png" class="img-side img-responsive" alt="" />
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h2 class="head-line">Control de <strong>Recursos de Laboratorio</strong></h2>
@@ -221,7 +223,7 @@ and open the template in the editor.
                                                         <h:commandButton value="Servicios prestados por Salas" actionListener="#{controllerAdministrarServiciosSala.recibirPaginaAnterior('inicioadministrador')}" action="administrarserviciossala" class="btn btn-block btn-danger"/>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                             <br></br>
                                         </div>

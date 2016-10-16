@@ -640,9 +640,9 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoElementoDetalles.setPrivado(editarTipo);
             equipoElementoDetalles.setNombreequipo(nombreEquipoElemento);
             equipoElementoDetalles.setInventarioequipo(inventarioEquipoElemento);
-            equipoElementoDetalles.setMarcaequipo(nombreEquipoElemento);
-            equipoElementoDetalles.setModeloequipo(nombreEquipoElemento);
-            equipoElementoDetalles.setSeriequipo(nombreEquipoElemento);
+            equipoElementoDetalles.setMarcaequipo(marcaEquipoElemento);
+            equipoElementoDetalles.setModeloequipo(modeloEquipoElemento);
+            equipoElementoDetalles.setSeriequipo(serieEquipoElemento);
 
             equipoElementoDetalles.setEspecificacionestecnicas(especificacionEquipoElemento);
             if (Utilidades.validarNulo(fechaEquipoElemento)) {
@@ -674,7 +674,9 @@ public class ControllerDetallesEquipo implements Serializable {
             } else {
                 gestionarPlantaEquiposElementosBO.modificarInformacionEquipoElemento(equipoElementoDetalles, usuarioLoginSistema.getUserUsuario(), true);
             }
-            restaurarInformacionEquipoElemento();
+            equipoElementoDetalles = new EquipoElemento();
+            equipoElementoDetalles = gestionarPlantaEquiposElementosBO.obtenerEquipoElementoPorIDEquipoElemento(idEquipoElemento);
+            asignarValoresVariablesEquipoElemento();
         } catch (Exception e) {
             logger.error("Error ControllerDetallesPlantaEquipo modificarInformacionEquipoElemento:  " + e.toString(), e);
         }

@@ -10,7 +10,7 @@ import java.util.Map;
  * @author ANDRES PINEDA
  */
 public interface PersonaDAOInterface {
- 
+
     public void crearPersona(Persona persona);
 
     public void editarPersona(Persona persona);

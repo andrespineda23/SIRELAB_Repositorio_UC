@@ -45,18 +45,19 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Basicos</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Detalle Periodo Academico*"/></strong>
-                                            <h:inputText maxlength="45" value="#{controllerDetallesPeriodoAcademico.inputDetalle}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerDetallesPeriodoAcademico.validarDetalle()}" execute="inputDetalle" render="inputDetalle msnNombre" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnNombre" for="inputDetalle" style="color: red"/></h6>
+                                            <h:inputText maxlength="45" value="#{controllerDetallesPeriodoAcademico.inputDetalle}" required="true" class="form-control" id="inputDetalle" requiredMessage="El campo Detalle es obligatorio." readonly="true"/>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Inicio Periodo Academico*"/></strong>
-                                            <h:inputText value="#{controllerDetallesPeriodoAcademico.inputFechaInicio}" readonly="true" class="form-control" id="inputFechaInicio"/>
+                                            <h:inputText value="#{controllerDetallesPeriodoAcademico.inputFechaInicio}" readonly="true" class="form-control" id="inputFechaInicio">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </h:inputText>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Final Periodo Academico*"/></strong>
-                                            <h:inputText value="#{controllerDetallesPeriodoAcademico.inputFechaFin}" readonly="true" class="form-control" id="inputFechaFin"/>
+                                            <h:inputText value="#{controllerDetallesPeriodoAcademico.inputFechaFin}" readonly="true" class="form-control" id="inputFechaFin">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </h:inputText>
                                         </div>
                                         <div class="form-group">
                                             <label for="parametroEstado">

@@ -7,65 +7,75 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"   
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>        
     </h:head>
     <h:body  onload="nobackbutton();">
-        <ui:composition template="/xhtml/template/templatepaginauser.xhtml">
+        <ui:composition template="/xhtml/template/templaterecupera.xhtml">
             <ui:define name="body">
                 <h:form id="form">
-                                        <!--HOME SECTION START  -->
-                    <div id="home">
-                        <div class="overlay">
+                    <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="row col-md-12">
                             <div class="container">
-                                <div class="row " >
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <h1>SIRELAB</h1>
-                                        <h4>
-                                            Universidad Central - Bogotá, Colombia.
-                                        </h4>
-                                        <h2 style="color: white">
-                                            Bienvenido Usuario: <strong>#{controllerPaginasIniciales.usuarioLoginSistema.userUsuario}</strong>
-                                        </h2>
-                                        <span></span>
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <h:commandButton value="Cerrar Sesión" action="#{controllerPaginasIniciales.cerrarSession()}" class="btn btn-custom btn-two"/>
+                                <div class="row col-md-12">
+                                    <fieldset style="border: black;border-radius: 10px">
+                                        <h3><legend style="color: darkblue"><strong>Cambio de Contraseña de Usuario</strong></legend></h3>
+                                        <div class="row col-md-12">
+                                            <p class="lead">Por medio del siguiente formulario usted puede realizar el cambio de la contraseña de su cuenta. Ingrese los datos del formulario y al finalizar seleccione la opcion "Cambiar contraseña".</p>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Digite su contraseña actual*"/></strong>
+                                                <h:inputSecret maxlength="20" value="#{controllerCambiarContrasenia.contraseniaAntigua}" required="true" class="form-control" id="contraseniaAntigua" requiredMessage="El campo es obligatorio."/>
+                                                <h6><h:message id="msnContraseniaAntigua" for="contraseniaAntigua" style="color: red"/></h6>
                                             </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Digite su contraseña nueva*"/></strong>
+                                                <h:inputSecret maxlength="20" value="#{controllerCambiarContrasenia.contraseniaNueva}" required="true" class="form-control" id="contraseniaNueva" requiredMessage="El campo es obligatorio."/>
+                                                <h6><h:message id="msnContraseniaNueva" for="contraseniaNueva" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Ingrese nuevamente su nueva contraseña*"/></strong>
+                                                <h:inputSecret maxlength="20" value="#{controllerCambiarContrasenia.contraseniaNueva2}" required="true" class="form-control" id="contraseniaNueva2" requiredMessage="El campo es obligatorio."/>
+                                                <h6><h:message id="msnContraseniaNueva2" for="contraseniaNueva2" style="color: red"/></h6>
+                                            </div>
+                                        </div> 
+                                        <br></br>
+                                    </fieldset>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerCambiarContrasenia.mensajeFormulario}" style="color: #{controllerCambiarContrasenia.colorMensaje}; resize: none; text-align: center; "/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="row">
+                                        <div class="col-md-9"></div>
+                                        <div class="col-md-2">
+                                            <h:commandButton value="Cambiar Contraseña" actionListener="#{controllerCambiarContrasenia.cambiarContrasenia()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <h:commandButton value="Cancelar" action="#{controllerCambiarContrasenia.cancelarProceso()}"  class="btn btn-danger" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!--HOME SECTION END  -->
-                    <!-- ABOUT SECTION START-->
-                    <div class="container">
-                        <div class="content-section-a">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3 hidden-xs hidden-sm"></div>
-                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
-                                        <hr class="section-heading-spacer"/>
-                                        <div class="clearfix"></div>
-                                        <h2 class=" head-line section-heading">Reservas</h2>
-                                        <p>Por medio de esta funcionalidad usted podra realizar procesos de consulta de alguna reserva realizada, cancelación o solicitar una nueva área de trabajo para realizar alguna practica. Si tiene algunda duda acerca del proceso recuerde que en la parte superior de la pagina se encuentra un instructivo para realizar este proceso.</p>
-                                        <row>
-                                            <h:commandButton class="btn btn-danger btn-block" value="Consultar Reservas Realizadas" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservas.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
-                                        </row>
-                                        <br></br>
-                                        <row>
-                                            <h:commandButton class="btn btn-warning btn-block" value="Realizar Reserva Modulo" action="reservamodulo1" actionListener="#{controllerReservaModulo1.cargarInformacionReserva()}"/>
-                                        </row>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ABOUT SECTION END-->
                 </h:form>
-            </ui:define>  
+            </ui:define>        
         </ui:composition>
     </h:body>
 </html>
