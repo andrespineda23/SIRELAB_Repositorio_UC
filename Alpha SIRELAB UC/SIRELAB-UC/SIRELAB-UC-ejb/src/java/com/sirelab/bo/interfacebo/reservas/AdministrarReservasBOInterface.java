@@ -20,7 +20,6 @@ import com.sirelab.entidades.ReservaEquipoElemento;
 import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
-import com.sirelab.entidades.SalaLaboratorioxServicios;
 import com.sirelab.entidades.ServiciosSala;
 import com.sirelab.entidades.TipoReserva;
 import java.math.BigInteger;
@@ -112,4 +111,6 @@ public interface AdministrarReservasBOInterface {
     public EstadoReserva obtenerEstadoCancelacionReserva();
 
     public Boolean validarReservasPersonaSegunHoraFecha(BigInteger usuario, String tipoUsuario, String horaInicio, Date fecha);
+    
+    public void cambiarEstadoReserva(Reserva reserva);
 }

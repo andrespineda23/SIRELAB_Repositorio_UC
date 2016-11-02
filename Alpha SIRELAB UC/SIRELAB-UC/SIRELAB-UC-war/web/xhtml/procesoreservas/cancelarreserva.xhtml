@@ -26,26 +26,46 @@ and open the template in the editor.
                                     <br></br>
                                     <p>
                                         <strong>
-                                        Recuerde que para cancelar una reserva se debe realizar con un día como minimo de antelación.
-                                        En caso contrario el sistema no permitira realizar este proceso de cancelación de reserva. 
+                                            Recuerde que para cancelar una reserva se debe realizar con un día como minimo de antelación.
+                                            En caso contrario el sistema no permitira realizar este proceso de cancelación de reserva. 
                                         </strong>
                                     </p>
                                     <div class="form-group">
                                         <p class="text-uppercase">
                                             ¿Esta seguro de cancelar la reserva asignada para el dia <strong><h:outputText value="#{controllerCancelarReserva.reservaCancelar.fechareserva}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" /></h:outputText></strong> a la hora <strong><h:outputText value="#{controllerCancelarReserva.reservaCancelar.horainicio}:00 - #{controllerCancelarReserva.reservaCancelar.horafin}:00"/></strong> ?
                                         </p>
-                                        <h:commandButton value="Aceptar" class="btn btn-danger btn-block"/>
                                     </div>
                                 </fieldset>
                                 <br></br>
-                                <br></br>
-                                <div class="right pull-right">
-                                    <h:commandButton value="Atras" class="btn btn-primary" action="iniciodocente" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}">
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
+                                <hr class="intro-divider"/>
+                                <div class="row col-md-12">
+                                    <div class="text-center">
+                                        <h5>
+                                            Resultados del Formulario
+                                        </h5>
+                                        <strong>
+                                            <h:inputTextarea readonly="true" id="mensajeFormulario" styleClass="resizableArea" class="text-uppercase form-control" rows="3" value="#{controllerCancelarReserva.mensajeFormulario}" style="color: #{controllerCancelarReserva.colorMensaje}; resize: none; text-align: center; "/>
+                                        </strong>
+                                    </div>
+                                    <br></br>
                                 </div>
+                                <hr class="intro-divider"/>
+                                <row>
+                                    <div class="left pull-left">
+                                        <h:commandButton value="Cancelar Reserva" disabled="#{controllerCancelarReserva.bloquearBotones}" actionListener="#{controllerCancelarReserva.cancelarReserva()}" class="btn btn-danger btn-block"/>
+                                    </div>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Atrás" class="btn btn-primary" action="#{controllerCancelarReserva.cancelarProceso()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </row>
                             </div>
                         </div>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
                     </div>
                 </h:form>
             </ui:define>  

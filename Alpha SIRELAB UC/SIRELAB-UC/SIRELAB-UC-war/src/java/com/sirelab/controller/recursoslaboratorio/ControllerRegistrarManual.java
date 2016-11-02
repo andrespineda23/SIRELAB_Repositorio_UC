@@ -191,7 +191,7 @@ public class ControllerRegistrarManual implements Serializable {
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "El codigo ingresado ya se encuentra registrado. Errores: " + mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 

@@ -531,7 +531,6 @@ public class ControllerDetallesDocente implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesDocente inactivarDocente:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesDocentes inactivarDocente : " + e.toString(), e);
         }
     }
 

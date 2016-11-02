@@ -349,7 +349,6 @@ public class ControllerRegistrarDocente implements Serializable {
             activarAceptar = true;
             activarCasillas = true;
             colorMensaje = "green";
-            logger.error("Funciona sin problema");
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "#FF0000";

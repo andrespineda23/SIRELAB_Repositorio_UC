@@ -461,7 +461,6 @@ public class ControllerDetallesModulo implements Serializable {
             }
         } catch (Exception e) {
             logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio:  " + e.toString(), e);
-            logger.error("Error ControllerDetallesModulosLaboratorio activarModuloLaboratorio : " + e.toString(), e);
         }
     }
 

@@ -220,7 +220,6 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-
                     if ("parametroTipoActivo".equals(entry.getKey())) {
                         wheres.append(alias).append("." + "tipoactivo.idtipoactivo");
                         wheres.append("= :").append(entry.getKey());
@@ -251,7 +250,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
                 if (("parametroTipoActivo".equals(entry.getKey()))
                         || ("parametroModuloLaboratorio".equals(entry.getKey()))
                         || ("parametroSalaLaboratorio".equals(entry.getKey()))
-                        || ("parametroLaboratorioPorArea".equals(entry.getKey()))
+                        || ("parametroLaboratorio".equals(entry.getKey()))
                         || ("parametroTipoActivo".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));

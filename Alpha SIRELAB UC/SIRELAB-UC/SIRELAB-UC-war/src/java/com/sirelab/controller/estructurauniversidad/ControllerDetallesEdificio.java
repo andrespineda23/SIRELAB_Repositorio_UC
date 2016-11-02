@@ -217,7 +217,7 @@ public class ControllerDetallesEdificio implements Serializable {
                 boolean respuesta = gestionarEdificiosBO.eliminarEdificio(edificioDetalles);
                 if (respuesta == true) {
                     activarCasillas = true;
-                    colorMensaje = "#FF0000";
+                    colorMensaje = "green";
                     mensajeFormulario = "El registro ha sido eliminado con éxito. Regrese nuevamente a la pagina de consulta.";
                 } else {
                     colorMensaje = "#FF0000";

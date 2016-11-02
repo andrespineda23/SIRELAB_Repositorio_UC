@@ -251,8 +251,6 @@ public class ControllerIndex implements Serializable {
                 mensajeFormulario = "Existen errores en el proceso de ingreso.";
                 paginaSiguiente = "";
             }
-        } catch (NoResultException nre) {
-            logger.error("NoResultException loginUsuario ControllerIndex : " + nre.toString());
         } catch (Exception e) {
             logger.error("Error ControllerIndex loginUsuario: " + e.toString(), e);
         }

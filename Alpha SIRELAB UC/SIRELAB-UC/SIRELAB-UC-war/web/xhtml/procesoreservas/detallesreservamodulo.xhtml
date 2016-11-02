@@ -52,18 +52,19 @@ and open the template in the editor.
                                         <strong><h:outputText value="Estado Reserva"/></strong>
                                         <h:inputText  value="#{controllerDetallesReservaModulo.reservaModuloLaboratorio.reserva.estadoreserva.nombreestadoreserva}" readonly="true" class="form-control"/>
                                     </div>
-                                    <div class="form-inline">
-                                        <strong><h:outputText value="¿Desea cancelar la reserva actual?"/></strong>
-                                        <h:commandButton value="Aceptar" action="cancelarreserva" actionListener="#{controllerCancelarReserva.recibirIdReservaCancelar(controllerDetallesReservaModulo.reservaModuloLaboratorio.reserva.idreserva)}" class="btn btn-danger btn-block"/>
-                                    </div>
                                 </fieldset>
                                 <br></br>
                                 <br></br>
-                                <div class="right pull-right">
-                                    <h:commandButton value="Atras" class="btn btn-primary" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}">
-                                        <f:ajax execute="@form" render="form" />
-                                    </h:commandButton>
-                                </div>
+                                <row>
+                                    <div class="left pull-left">
+                                        <h:commandButton value="Cancelar Reserva" action="cancelarreserva" actionListener="#{controllerCancelarReserva.recibirIdReservaCancelar(controllerDetallesReservaModulo.reservaModuloLaboratorio.reserva.idreserva)}" class="btn btn-danger btn-block"/>
+                                    </div>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Atrás" class="btn btn-primary" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </row>
                             </div>
                         </div>
                     </div>

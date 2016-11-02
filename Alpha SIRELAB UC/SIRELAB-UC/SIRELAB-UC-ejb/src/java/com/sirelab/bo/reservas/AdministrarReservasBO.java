@@ -559,4 +559,14 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             return null;
         }
     }
+
+    public void cambiarEstadoReserva(Reserva reserva) {
+        try {
+            EstadoReserva cancelada = obtenerEstadoCancelacionReserva();
+            reserva.setEstadoreserva(cancelada);
+            actualizarInformacionReserva(reserva);
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO administrarReservasBO: " + e.toString(), e);
+        }
+    }
 }
