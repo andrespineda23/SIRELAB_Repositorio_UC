@@ -3109,13 +3109,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>cambiarcontrasenia</from-outcome>
-            <to-view-id>/xhtml/seguridad/cambiarcontrasenia.xhtml</to-view-id>
+            <from-outcome>cambiarcontrasena</from-outcome>
+            <to-view-id>/xhtml/seguridad/cambiarcontrasena.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/seguridad/cambiarcontrasenia.xhtml</from-view-id>
+        <from-view-id>/xhtml/seguridad/cambiarcontrasena.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>iniciolaboratorista</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
@@ -3126,7 +3126,7 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>cambiarcontrasenia</from-outcome>
+            <from-outcome>cambiarcontrasena</from-outcome>
             <to-view-id>/xhtml/seguridad/cambiarcontrasenia.xhtml</to-view-id>
             <redirect />
         </navigation-case>
@@ -3143,7 +3143,7 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>cambiarcontrasenia</from-outcome>
+            <from-outcome>cambiarcontrasena</from-outcome>
             <to-view-id>/xhtml/seguridad/cambiarcontrasenia.xhtml</to-view-id>
             <redirect />
         </navigation-case>
@@ -3160,7 +3160,7 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/inicioestudiante.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>cambiarcontrasenia</from-outcome>
+            <from-outcome>cambiarcontrasena</from-outcome>
             <to-view-id>/xhtml/seguridad/cambiarcontrasenia.xhtml</to-view-id>
             <redirect />
         </navigation-case>
@@ -3177,7 +3177,7 @@
         <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>cambiarcontrasenia</from-outcome>
+            <from-outcome>cambiarcontrasena</from-outcome>
             <to-view-id>/xhtml/seguridad/cambiarcontrasenia.xhtml</to-view-id>
             <redirect />
         </navigation-case>

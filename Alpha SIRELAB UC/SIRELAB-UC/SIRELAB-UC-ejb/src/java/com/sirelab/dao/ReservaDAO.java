@@ -107,7 +107,7 @@ public class ReservaDAO implements ReservaDAOInterface {
         }
     }
 
-    @Override
+    //@Override
     public Reserva buscarUltimaReservaPersona(BigInteger persona, String horaInicio, Date fecha) {
         try {
             em.clear();
@@ -117,6 +117,7 @@ public class ReservaDAO implements ReservaDAOInterface {
             query.setParameter("horaInicio", horaInicio);
             query.setParameter("fecha", fecha);
             Reserva registro = (Reserva) query.getSingleResult();
+            System.out.println("registro: "+registro);
             return registro;
         } catch (Exception e) {
             logger.error("Error buscarUltimaReservaPersona ReservaDAO : " + e.toString(), e);

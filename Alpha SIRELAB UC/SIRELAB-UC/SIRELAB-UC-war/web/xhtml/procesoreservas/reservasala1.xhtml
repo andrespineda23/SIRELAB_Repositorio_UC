@@ -86,28 +86,12 @@ and open the template in the editor.
                                                             <f:selectItems value="#{controllerReservaSala1.listaLaboratorios}" var="laboratorio"
                                                                            itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
                                                             <f:converter converterId="ConverterGenerico" />
-                                                            <f:ajax event="change" listener="#{controllerReservaSala1.actualizarLaboratorioYServicio()}" execute="@this" render="@this parametroSala horaIngreso horaIngresoSalida"/>
+                                                            <f:ajax event="change" listener="#{controllerReservaSala1.actualizarLaboratorio()}" execute="@this" render="@this parametroSala horaIngreso parametroServicio horaIngresoSalida"/>
                                                         </h:selectOneMenu>
                                                     </div>
                                                 </div>
                                             </div> 
                                             <div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="parametroServicio">
-                                                            Servicio Prestado
-                                                        </label>
-                                                        <h:selectOneMenu value="#{controllerReservaSala1.parametroServicio}"
-                                                                         class="form-control" 
-                                                                         id="parametroServicio">
-                                                            <f:selectItem itemLabel="TODOS" itemValue="null" />
-                                                            <f:selectItems value="#{controllerReservaSala1.listaServicios}" var="servicio"
-                                                                           itemLabel="#{servicio.nombreservicio}" itemValue="#{servicio}"/>
-                                                            <f:converter converterId="ConverterGenerico" />
-                                                            <f:ajax event="change" listener="#{controllerReservaSala1.actualizarLaboratorioYServicio()}" execute="@this" render="@this parametroSala horaIngreso horaIngresoSalida"/>
-                                                        </h:selectOneMenu>
-                                                    </div>
-                                                </div>
                                                 <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="parametroSala">
@@ -119,6 +103,22 @@ and open the template in the editor.
                                                             <f:selectItem itemLabel="Seleccione Sala de Laboratorio" itemValue="null" />
                                                             <f:selectItems value="#{controllerReservaSala1.listaSalaLaboratorio}" var="sala"
                                                                            itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                                            <f:converter converterId="ConverterGenerico" />
+                                                            <f:ajax event="change" listener="#{controllerReservaSala1.actualizarServicioSala()}" execute="@this" render="@this parametroServicio horaIngreso horaIngresoSalida"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="parametroServicio">
+                                                            Servicio Prestado
+                                                        </label>
+                                                        <h:selectOneMenu value="#{controllerReservaSala1.parametroServicio}"
+                                                                         class="form-control" disabled="#{controllerReservaSala1.activarServicio}"
+                                                                         id="parametroServicio">
+                                                            <f:selectItem itemLabel="Seleccione un servicio" itemValue="null" />
+                                                            <f:selectItems value="#{controllerReservaSala1.listaServicios}" var="servicio"
+                                                                           itemLabel="#{servicio.serviciosala.nombreservicio}" itemValue="#{servicio}"/>
                                                             <f:converter converterId="ConverterGenerico" />
                                                             <f:ajax event="change" listener="#{controllerReservaSala1.activarHoraReserva()}" execute="@this" render="@this horaIngreso horaIngresoSalida"/>
                                                         </h:selectOneMenu>

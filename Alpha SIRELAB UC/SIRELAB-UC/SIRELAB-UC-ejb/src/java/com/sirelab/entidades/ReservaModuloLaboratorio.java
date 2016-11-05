@@ -6,7 +6,6 @@
 package com.sirelab.entidades;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ELECTRONICA
+ * @author Administrator
  */
 @Entity
 @Table(name = "reservamodulolaboratorio")
@@ -36,7 +35,7 @@ public class ReservaModuloLaboratorio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idreservamodulolaboratorio")
-    private BigInteger idreservamodulolaboratorio;
+    private Long idreservamodulolaboratorio;
     @JoinColumn(name = "reserva", referencedColumnName = "idreserva")
     @ManyToOne(optional = false)
     private Reserva reserva;
@@ -47,15 +46,15 @@ public class ReservaModuloLaboratorio implements Serializable {
     public ReservaModuloLaboratorio() {
     }
 
-    public ReservaModuloLaboratorio(BigInteger idreservamodulolaboratorio) {
+    public ReservaModuloLaboratorio(Long idreservamodulolaboratorio) {
         this.idreservamodulolaboratorio = idreservamodulolaboratorio;
     }
 
-    public BigInteger getIdreservamodulolaboratorio() {
+    public Long getIdreservamodulolaboratorio() {
         return idreservamodulolaboratorio;
     }
 
-    public void setIdreservamodulolaboratorio(BigInteger idreservamodulolaboratorio) {
+    public void setIdreservamodulolaboratorio(Long idreservamodulolaboratorio) {
         this.idreservamodulolaboratorio = idreservamodulolaboratorio;
     }
 

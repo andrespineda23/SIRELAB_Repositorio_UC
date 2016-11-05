@@ -569,4 +569,14 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             logger.error("Error AdministrarReservasBO administrarReservasBO: " + e.toString(), e);
         }
     }
+
+    public List<SalaLaboratorioxServicios> obtenerServiciosPorSala(BigInteger servicio) {
+        try {
+            List<SalaLaboratorioxServicios> servicios = salaLaboratorioxServiciosDAO.consultarSalaLaboratorioxServiciosPorSala(servicio);
+            return servicios;
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO obtenerServiciosPorSala: " + e.toString(), e);
+            return null;
+        }
+    }
 }

@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ServiciosSala.findByCostoservicio", query = "SELECT s FROM ServiciosSala s WHERE s.costoservicio = :costoservicio"),
     @NamedQuery(name = "ServiciosSala.findByEstado", query = "SELECT s FROM ServiciosSala s WHERE s.estado = :estado")})
 public class ServiciosSala implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviciosala")
     private Collection<Reserva> reservaCollection;
 

@@ -130,7 +130,7 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     public List<ReservaModuloLaboratorio> buscarCantidadReservaModuloLaboratorioPorParametros(Date fecha, String horaInicio, BigInteger sala) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio =:sala AND p.reserva.fechareserva =:fecha AND p.reserva.horainicio=:horaInicio AND p.reserva.estadoreserva != 1 ORDER BY p.reserva.fechareserva ASC");
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio =:sala AND p.reserva.fechareserva =:fecha AND p.reserva.horainicio=:horaInicio AND p.reserva.estadoreserva.idestadoreserva != 1 ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("fecha", fecha);
             query.setParameter("horaInicio", horaInicio);
