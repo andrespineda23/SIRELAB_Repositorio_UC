@@ -61,21 +61,25 @@ public class ControllerDetallesReservaUsuario implements Serializable {
                 activarCerrar = true;
                 activarIniciar = true;
             } else {
-                activarCancelar = false;
+                if (reservaSala.getReserva().getHorainicioefectiva() != null && reservaSala.getReserva().getHorafinefectiva() != null) {
+                    activarCancelar = true;
+                    activarCerrar = true;
+                    activarIniciar = true;
+                } else {
+                    if (reservaSala.getReserva().getHorainicioefectiva() != null) {
+                        activarCancelar = true;
+                        activarCerrar = true;
+                    } else if (reservaSala.getReserva().getHorafinefectiva() != null) {
+                        activarCancelar = true;
+                        activarCerrar = true;
+                        activarIniciar = true;
+                    } else {
+                        activarCancelar = false;
+                        activarCerrar = false;
+                        activarIniciar = false;
+                    }
+                }
             }
-            if (reservaSala.getReserva().getHorainicioefectiva() != null) {
-                activarCerrar = true;
-                activarCancelar = true;
-            } else {
-                activarCerrar = false;
-            }
-            if (reservaSala.getReserva().getHorainicio() != null) {
-                activarIniciar = true;
-                activarCerrar = true;
-            } else {
-                activarIniciar = false;
-            }
-
         }
     }
 
@@ -83,22 +87,24 @@ public class ControllerDetallesReservaUsuario implements Serializable {
         GregorianCalendar hora = new GregorianCalendar();
         int horaInicio = hora.get(Calendar.HOUR);
         int minutoInicio = hora.get(Calendar.MINUTE);
-        String inicio = horaInicio + ": " + minutoInicio;
+        String inicio = horaInicio + ":" + minutoInicio;
         reservaSala.getReserva().setHorainicio(inicio);
         administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva());
         reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
-        cargarBotonesPagina();
+        activarCancelar = true;
+        activarIniciar = true;
     }
 
     public void terminarReserva() {
         GregorianCalendar hora = new GregorianCalendar();
         int horaInicio = hora.get(Calendar.HOUR);
         int minutoInicio = hora.get(Calendar.MINUTE);
-        String inicio = horaInicio + ": " + minutoInicio;
+        String inicio = horaInicio + ":" + minutoInicio;
         reservaSala.getReserva().setHorafin(inicio);
         administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva());
         reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
-        cargarBotonesPagina();
+        activarCerrar = true;
+        activarIniciar = true;
     }
 
     public void cancelarReserva() {
@@ -106,7 +112,9 @@ public class ControllerDetallesReservaUsuario implements Serializable {
         reservaSala.getReserva().setEstadoreserva(cancelacion);
         administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva());
         reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
-        cargarBotonesPagina();
+        activarCancelar = true;
+        activarCerrar = true;
+        activarIniciar = true;
     }
 
     public ReservaSala getReservaSala() {

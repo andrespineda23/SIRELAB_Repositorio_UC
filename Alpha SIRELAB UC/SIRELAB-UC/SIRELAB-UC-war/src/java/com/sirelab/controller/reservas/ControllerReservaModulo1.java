@@ -301,6 +301,7 @@ public class ControllerReservaModulo1 implements Serializable {
                     parametroTipoReserva = administrarReservasBO.obtenerTipoReservaPorId(new BigInteger("3"));
                 }
             }
+            reservaRegistro.setServiciosala(parametroServicio.getServiciosala());
             reservaRegistro.setTiporeserva(parametroTipoReserva);
             //
             ReservaModuloLaboratorio reservaModuloRegistro = new ReservaModuloLaboratorio();

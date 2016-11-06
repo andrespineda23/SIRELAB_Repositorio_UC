@@ -47,7 +47,7 @@ and open the template in the editor.
                                                             <label for="parametroFecha">
                                                                 Fecha Reserva (dd/mm/yyyy)
                                                             </label>
-                                                            <h:inputText maxlength="45" value="#{controllerConsultarReservasUsuarios2.parametroFecha}" class="form-control" id="parametroFecha" />
+                                                            <h:inputText maxlength="10" value="#{controllerConsultarReservasUsuarios2.parametroFecha}" class="form-control" id="parametroFecha" />
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -85,7 +85,9 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Fecha"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.reserva.fechareserva}"/>
+                                                        <h:outputText value="#{item.reserva.fechareserva}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                        </h:outputText>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
@@ -109,7 +111,7 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
-                                                        <h:commandLink value="Ver" action="detallesreservausuario2" actionListener="#{controllerDetallesReservaUsuario2.recibirIdReservaSala(item.idreservamodulolaboratorio)}"/>
+                                                        <h:commandLink value="Ver" action="#{controllerConsultarReservasUsuarios2.paginaDetalles()}" actionListener="#{controllerDetallesReservaUsuario2.recibirIdReservaSala(item.idreservamodulolaboratorio)}"/>
                                                     </h:column>
                                                     <f:facet name="footer">
                                                         <nav>
@@ -136,10 +138,7 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-1">
-                                <h:commandButton class="btn btn-success" value="Cerrar Reserva" action="#{controllerConsultarReservasUsuarios2.dirigirPaginaNuevoRegistro()}"/>
-                            </div>
-                            <div class="col-md-10"></div>
+                            <div class="col-md-11"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atrás" action="#{controllerConsultarReservasUsuarios2.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
                             </div>

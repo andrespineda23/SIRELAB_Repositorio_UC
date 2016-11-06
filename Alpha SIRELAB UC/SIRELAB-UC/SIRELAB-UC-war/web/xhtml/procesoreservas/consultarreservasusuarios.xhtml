@@ -85,7 +85,9 @@ and open the template in the editor.
                                                         <f:facet name="header">
                                                             <h:outputText value="Fecha"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.reserva.fechareserva}"/>
+                                                        <h:outputText value="#{item.reserva.fechareserva}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                        </h:outputText>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
@@ -136,10 +138,7 @@ and open the template in the editor.
                         </div>
                         <br></br>
                         <div class="row">
-                            <div class="col-md-1">
-                                <h:commandButton class="btn btn-success" value="Cerrar Reserva" action="#{controllerConsultarReservasUsuarios.dirigirPaginaNuevoRegistro()}"/>
-                            </div>
-                            <div class="col-md-10"></div>
+                            <div class="col-md-11"></div>
                             <div class="col-md-1">
                                 <h:commandButton value="Atrás" action="#{controllerConsultarReservasUsuarios.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
                             </div>

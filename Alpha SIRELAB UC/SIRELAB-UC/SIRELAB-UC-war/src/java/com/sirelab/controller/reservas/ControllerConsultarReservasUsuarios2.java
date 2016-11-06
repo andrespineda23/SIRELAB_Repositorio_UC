@@ -73,6 +73,12 @@ public class ControllerConsultarReservasUsuarios2 implements Serializable {
         buscarReservasPorParametros();
     }
 
+    public void buscarInfo() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        parametroFecha = sdf.format(new Date());
+        buscarReservasPorParametros();
+    }
+
     /**
      * Metodo encargado de inicializar los filtros de busqueda para el proceso
      * de consulta de encargados
@@ -222,9 +228,9 @@ public class ControllerConsultarReservasUsuarios2 implements Serializable {
         return paginaAnterior;
     }
 
-    public String dirigirPaginaNuevoRegistro() {
-        limpiarProcesoBusqueda();
-        return "registraradministradoredificio";
+    public String paginaDetalles() {
+        limpiarDatos();
+        return "detallesreservausuario2";
     }
 
     public void limpiarDatos() {
@@ -239,8 +245,6 @@ public class ControllerConsultarReservasUsuarios2 implements Serializable {
         bloquearPagSigReservaModuloLaboratorio = true;
         cantidadRegistros = "N/A";
     }
-
-    
 
     /*
      //EXPORTAR

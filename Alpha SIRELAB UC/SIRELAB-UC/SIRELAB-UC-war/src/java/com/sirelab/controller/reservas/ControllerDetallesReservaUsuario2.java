@@ -7,6 +7,7 @@ package com.sirelab.controller.reservas;
 
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.entidades.EstadoReserva;
+import com.sirelab.entidades.Reserva;
 import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import java.io.Serializable;
@@ -47,12 +48,13 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
         cargarBotonesPagina();
     }
 
-    public void limpiarInformacion() {
+    public String limpiarInformacion() {
         activarIniciar = true;
         activarCerrar = true;
         activarCancelar = true;
         reservaModulo = null;
         idReserva = null;
+        return "consultarreservasusuario";
     }
 
     private void cargarBotonesPagina() {
@@ -62,21 +64,25 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
                 activarCerrar = true;
                 activarIniciar = true;
             } else {
-                activarCancelar = false;
+                if (reservaModulo.getReserva().getHorainicioefectiva() != null && reservaModulo.getReserva().getHorafinefectiva() != null) {
+                    activarCancelar = true;
+                    activarCerrar = true;
+                    activarIniciar = true;
+                } else {
+                    if (reservaModulo.getReserva().getHorainicioefectiva() != null) {
+                        activarCancelar = true;
+                        activarCerrar = true;
+                    } else if (reservaModulo.getReserva().getHorafinefectiva() != null) {
+                        activarCancelar = true;
+                        activarCerrar = true;
+                        activarIniciar = true;
+                    } else {
+                        activarCancelar = false;
+                        activarCerrar = false;
+                        activarIniciar = false;
+                    }
+                }
             }
-            if (reservaModulo.getReserva().getHorainicioefectiva() != null) {
-                activarCerrar = true;
-                activarCancelar = true;
-            } else {
-                activarCerrar = false;
-            }
-            if (reservaModulo.getReserva().getHorainicio() != null) {
-                activarIniciar = true;
-                activarCerrar = true;
-            } else {
-                activarIniciar = false;
-            }
-
         }
     }
 
@@ -84,22 +90,27 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
         GregorianCalendar hora = new GregorianCalendar();
         int horaInicio = hora.get(Calendar.HOUR);
         int minutoInicio = hora.get(Calendar.MINUTE);
-        String inicio = horaInicio + ": " + minutoInicio;
-        reservaModulo.getReserva().setHorainicio(inicio);
-        administrarReservasBO.actualizarInformacionReserva(reservaModulo.getReserva());
+        Reserva reserva = reservaModulo.getReserva();
+        String inicio = horaInicio + ":" + minutoInicio;
+        reserva.setHorainicioefectiva(inicio);
+        administrarReservasBO.actualizarInformacionReserva(reserva);
         reservaModulo = administrarReservasBO.obtenerReservaModuloLaboratorioPorId(idReserva);
-        cargarBotonesPagina();
+        activarCancelar = true;
+        activarIniciar = true;
     }
 
     public void terminarReserva() {
         GregorianCalendar hora = new GregorianCalendar();
         int horaInicio = hora.get(Calendar.HOUR);
         int minutoInicio = hora.get(Calendar.MINUTE);
-        String inicio = horaInicio + ": " + minutoInicio;
-        reservaModulo.getReserva().setHorafin(inicio);
-        administrarReservasBO.actualizarInformacionReserva(reservaModulo.getReserva());
+        Reserva reserva = reservaModulo.getReserva();
+        String inicio = horaInicio + ":" + minutoInicio;
+        reserva.setHorafinefectiva(inicio);
+        administrarReservasBO.actualizarInformacionReserva(reserva);
         reservaModulo = administrarReservasBO.obtenerReservaModuloLaboratorioPorId(idReserva);
-        cargarBotonesPagina();
+        activarCancelar = true;
+        activarCerrar = true;
+        activarIniciar = true;
     }
 
     public void cancelarReserva() {
@@ -107,7 +118,9 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
         reservaModulo.getReserva().setEstadoreserva(cancelacion);
         administrarReservasBO.actualizarInformacionReserva(reservaModulo.getReserva());
         reservaModulo = administrarReservasBO.obtenerReservaModuloLaboratorioPorId(idReserva);
-        cargarBotonesPagina();
+        activarCancelar = true;
+        activarCerrar = true;
+        activarIniciar = true;
     }
 
     public ReservaModuloLaboratorio getReservaModulo() {
