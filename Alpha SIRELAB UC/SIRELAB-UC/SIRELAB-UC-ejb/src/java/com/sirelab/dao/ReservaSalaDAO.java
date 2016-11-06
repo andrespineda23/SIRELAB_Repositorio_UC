@@ -66,12 +66,42 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
     public List<ReservaSala> consultarReservaSalasSala() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaSala p");
+            Query query = em.createQuery("SELECT p FROM ReservaSala p ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ReservaSala> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
             logger.error("Error consultarReservaSalasSala ReservaSalaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<ReservaSala> consultarReservaSalasSala(BigInteger periodo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.reserva.periodoacademico.idperiodoacademico=:periodo     ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("periodo", periodo);
+            List<ReservaSala> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error consultarReservaSalasSala ReservaSalaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public List<ReservaSala> consultarReservaSalasPorIdSala(BigInteger sala) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio=:sala  ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("sala", sala);
+            List<ReservaSala> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error consultarReservaSalasPorIdSala ReservaSalaDAO : " + e.toString(), e);
             return null;
         }
     }
@@ -90,7 +120,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public ReservaSala buscarReservaSalaPorIdReserva(BigInteger reserva) {
         try {
@@ -170,8 +200,8 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             return null;
         }
     }
-    
-     @Override
+
+    @Override
     public List<ReservaSala> buscarReservaSalaPorFiltrado(Map<String, String> filters) {
         try {
             final String alias = "a";

@@ -89,7 +89,7 @@ public class ControllerDetallesReservaUsuario implements Serializable {
         int minutoInicio = hora.get(Calendar.MINUTE);
         String inicio = horaInicio + ":" + minutoInicio;
         reservaSala.getReserva().setHorainicio(inicio);
-        administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva());
+        administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva(),1);
         reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
         activarCancelar = true;
         activarIniciar = true;
@@ -101,7 +101,7 @@ public class ControllerDetallesReservaUsuario implements Serializable {
         int minutoInicio = hora.get(Calendar.MINUTE);
         String inicio = horaInicio + ":" + minutoInicio;
         reservaSala.getReserva().setHorafin(inicio);
-        administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva());
+        administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva(),2);
         reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
         activarCerrar = true;
         activarIniciar = true;
@@ -110,7 +110,7 @@ public class ControllerDetallesReservaUsuario implements Serializable {
     public void cancelarReserva() {
         EstadoReserva cancelacion = administrarReservasBO.obtenerEstadoCancelacionReserva();
         reservaSala.getReserva().setEstadoreserva(cancelacion);
-        administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva());
+        administrarReservasBO.actualizarInformacionReserva(reservaSala.getReserva(),0);
         reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
         activarCancelar = true;
         activarCerrar = true;

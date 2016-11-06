@@ -67,7 +67,7 @@ public class EquipoElementoDAO implements EquipoElementoDAOInterface {
     public List<EquipoElemento> consultarEquiposElementos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM EquipoElemento p ORDER BY p.inventarioequipo ASC");
+            Query query = em.createQuery("SELECT p FROM EquipoElemento p ORDER BY p.modulolaboratorio.salalaboratorio.laboratorio.idlaboratorio ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<EquipoElemento> lista = query.getResultList();
             return lista;

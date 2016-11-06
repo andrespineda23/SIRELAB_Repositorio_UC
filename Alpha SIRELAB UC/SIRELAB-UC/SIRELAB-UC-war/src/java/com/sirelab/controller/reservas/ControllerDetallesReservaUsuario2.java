@@ -54,7 +54,7 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
         activarCancelar = true;
         reservaModulo = null;
         idReserva = null;
-        return "consultarreservasusuario";
+        return "consultarreservasusuario2";
     }
 
     private void cargarBotonesPagina() {
@@ -93,7 +93,7 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
         Reserva reserva = reservaModulo.getReserva();
         String inicio = horaInicio + ":" + minutoInicio;
         reserva.setHorainicioefectiva(inicio);
-        administrarReservasBO.actualizarInformacionReserva(reserva);
+        administrarReservasBO.actualizarInformacionReserva(reserva, 1);
         reservaModulo = administrarReservasBO.obtenerReservaModuloLaboratorioPorId(idReserva);
         activarCancelar = true;
         activarIniciar = true;
@@ -106,7 +106,7 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
         Reserva reserva = reservaModulo.getReserva();
         String inicio = horaInicio + ":" + minutoInicio;
         reserva.setHorafinefectiva(inicio);
-        administrarReservasBO.actualizarInformacionReserva(reserva);
+        administrarReservasBO.actualizarInformacionReserva(reserva, 2);
         reservaModulo = administrarReservasBO.obtenerReservaModuloLaboratorioPorId(idReserva);
         activarCancelar = true;
         activarCerrar = true;
@@ -116,7 +116,7 @@ public class ControllerDetallesReservaUsuario2 implements Serializable {
     public void cancelarReserva() {
         EstadoReserva cancelacion = administrarReservasBO.obtenerEstadoCancelacionReserva();
         reservaModulo.getReserva().setEstadoreserva(cancelacion);
-        administrarReservasBO.actualizarInformacionReserva(reservaModulo.getReserva());
+        administrarReservasBO.actualizarInformacionReserva(reservaModulo.getReserva(), 0);
         reservaModulo = administrarReservasBO.obtenerReservaModuloLaboratorioPorId(idReserva);
         activarCancelar = true;
         activarCerrar = true;

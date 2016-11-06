@@ -3091,13 +3091,13 @@
     <navigation-rule>
         <from-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>detallesreservausuario2</from-outcome>
-            <to-view-id>/xhtml/procesoreservas/detallesreservausuario2.xhtml</to-view-id>
+            <from-outcome>detallesreservausuario</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/detallesreservausuario.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/xhtml/procesoreservas/detallesreservausuario2.xhtml</from-view-id>
+        <from-view-id>/xhtml/procesoreservas/detallesreservausuario.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>consultarreservasusuario</from-outcome>
             <to-view-id>/xhtml/procesoreservas/consultarreservasusuarios.xhtml</to-view-id>

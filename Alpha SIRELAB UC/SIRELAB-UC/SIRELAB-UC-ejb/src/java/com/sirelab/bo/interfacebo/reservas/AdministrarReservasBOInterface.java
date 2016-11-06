@@ -107,7 +107,7 @@ public interface AdministrarReservasBOInterface {
 
     public List<EquipoElemento> obtenerEquiposBodega(BigInteger bodega);
 
-    public void actualizarInformacionReserva(Reserva reserva);
+    public void actualizarInformacionReserva(Reserva reserva, int operacion);
 
     public EstadoReserva obtenerEstadoCancelacionReserva();
 

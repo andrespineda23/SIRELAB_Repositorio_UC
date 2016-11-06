@@ -229,7 +229,6 @@ public class ControllerConsultarReservasUsuarios2 implements Serializable {
     }
 
     public String paginaDetalles() {
-        limpiarDatos();
         return "detallesreservausuario2";
     }
 

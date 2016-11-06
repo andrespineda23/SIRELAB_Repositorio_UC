@@ -17,6 +17,10 @@ import java.util.Map;
  */
 public interface ReservaModuloLaboratorioDAOInterface {
 
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorIdSala(BigInteger sala);
+
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorIdPeriodoAcademico(BigInteger periodo);
+
     public void crearReservaModuloLaboratorio(ReservaModuloLaboratorio reserva);
 
     public void editarReservaModuloLaboratorio(ReservaModuloLaboratorio reserva);

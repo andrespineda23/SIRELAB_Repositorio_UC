@@ -109,6 +109,12 @@ and open the template in the editor.
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
+                                                            <h:outputText value="Estado"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.reserva.estadoreserva.nombreestadoreserva}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header">
                                                             <h:outputText value="Detalles"/>
                                                         </f:facet>
                                                         <h:commandLink value="Ver" action="detallesreservausuario" actionListener="#{controllerDetallesReservaUsuario.recibirIdReservaSala(item.idreservasala)}"/>

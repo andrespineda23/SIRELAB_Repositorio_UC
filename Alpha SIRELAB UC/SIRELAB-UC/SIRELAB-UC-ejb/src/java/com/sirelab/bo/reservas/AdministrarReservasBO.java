@@ -543,8 +543,15 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
         }
     }
 
-    public void actualizarInformacionReserva(Reserva reserva) {
+    public void actualizarInformacionReserva(Reserva reserva, int operacion) {
         try {
+            if (1 == operacion) {
+                EstadoReserva estado = estadoReservaDAO.buscarEstadoReservaPorID(new BigInteger("5"));
+                reserva.setEstadoreserva(estado);
+            } else if (operacion == 2) {
+                EstadoReserva estado = estadoReservaDAO.buscarEstadoReservaPorID(new BigInteger("4"));
+                reserva.setEstadoreserva(estado);
+            }
             reservaDAO.editarReserva(reserva);
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO actualizarInformacionReserva: " + e.toString(), e);
@@ -564,7 +571,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
         try {
             EstadoReserva cancelada = obtenerEstadoCancelacionReserva();
             reserva.setEstadoreserva(cancelada);
-            actualizarInformacionReserva(reserva);
+            actualizarInformacionReserva(reserva,0);
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO administrarReservasBO: " + e.toString(), e);
         }

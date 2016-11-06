@@ -19,6 +19,8 @@ public interface ReservaSalaDAOInterface {
 
     public void crearReservaSala(ReservaSala reserva);
 
+    public List<ReservaSala> consultarReservaSalasSala(BigInteger periodo);
+
     public void editarReservaSala(ReservaSala reserva);
 
     public void eliminarReservaSala(ReservaSala reserva);
@@ -38,4 +40,6 @@ public interface ReservaSalaDAOInterface {
     public ReservaSala buscarReservaSalaPorIdReserva(BigInteger reserva);
 
     public List<ReservaSala> buscarReservaSalaPorFiltrado(Map<String, String> filters);
+
+    public List<ReservaSala> consultarReservaSalasPorIdSala(BigInteger sala);
 }

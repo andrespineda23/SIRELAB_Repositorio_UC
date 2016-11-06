@@ -161,6 +161,36 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     }
 
     @Override
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorIdPeriodoAcademico(BigInteger periodo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.periodoacademico.idperiodoacademico=:periodo  ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("periodo", periodo);
+            List<ReservaModuloLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaModuloLaboratorioPorIdPeriodoAcademico ReservaModuloLaboratorioDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorIdSala(BigInteger sala) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio=:sala ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("sala", sala);
+            List<ReservaModuloLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaModuloLaboratorioPorIdSala ReservaModuloLaboratorioDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
     public List<ReservaModuloLaboratorio> buscarReservaModuloPorPersona(BigInteger persona) {
         try {
             em.clear();
@@ -237,12 +267,12 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
                 }
                 if ("parametroFecha".equals(entry.getKey())) {
                     Date fecha = new Date(entry.getValue());
-                    System.out.println("entry.getValue(): "+entry.getValue());
+                    System.out.println("entry.getValue(): " + entry.getValue());
                     String pattern = "dd/MM/yyyy";
                     SimpleDateFormat format = new SimpleDateFormat(pattern);
                     try {
                         fecha = format.parse(entry.getValue());
-    //                    System.out.println(fecha);
+                        //                    System.out.println(fecha);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }

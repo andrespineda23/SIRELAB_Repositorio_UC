@@ -6,7 +6,6 @@
 package com.sirelab.controller.reservas;
 
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasUsuarioBOInterface;
-import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -17,7 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -59,7 +57,7 @@ public class ControllerConsultarReservasUsuarios implements Serializable {
         activarExport = true;
         parametroNumero = null;
         inicializarFiltros();
-        listaReservaSala = null; 
+        listaReservaSala = null;
         listaReservaSalaTabla = null;
         posicionReservaSalaTabla = 0;
         tamTotalReservaSala = 0;
@@ -72,7 +70,7 @@ public class ControllerConsultarReservasUsuarios implements Serializable {
         paginaAnterior = pagina;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         parametroFecha = sdf.format(new Date());
-        buscarReservasPorParametros();
+//        buscarReservasPorParametros();
     }
 
     /**
@@ -100,11 +98,8 @@ public class ControllerConsultarReservasUsuarios implements Serializable {
                 String date2 = "";
                 try {
                     date = sdf.parse(parametroFecha);
-
-                    SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-                    date2 = sdf2.format(date);
+                    date2 = sdf.format(date);
                 } catch (ParseException ex) {
-
                 }
                 filtros.put("parametroFecha", date2);
             } else {
