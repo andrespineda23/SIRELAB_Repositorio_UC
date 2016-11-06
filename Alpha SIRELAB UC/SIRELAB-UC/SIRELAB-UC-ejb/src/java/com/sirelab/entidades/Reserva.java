@@ -49,6 +49,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reserva.findByObservaciones", query = "SELECT r FROM Reserva r WHERE r.observaciones = :observaciones"),
     @NamedQuery(name = "Reserva.findByCobroefectivo", query = "SELECT r FROM Reserva r WHERE r.cobroefectivo = :cobroefectivo")})
 public class Reserva implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reserva")
+    private Collection<ReservaSala> reservaSalaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reserva")
+    private Collection<ReservaEquipoElemento> reservaEquipoElementoCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reserva")
     private Collection<ReservaModuloLaboratorio> reservaModuloLaboratorioCollection;
@@ -274,6 +278,24 @@ public class Reserva implements Serializable {
 
     public void setReservaModuloLaboratorioCollection(Collection<ReservaModuloLaboratorio> reservaModuloLaboratorioCollection) {
         this.reservaModuloLaboratorioCollection = reservaModuloLaboratorioCollection;
+    }
+
+    @XmlTransient
+    public Collection<ReservaSala> getReservaSalaCollection() {
+        return reservaSalaCollection;
+    }
+
+    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
+        this.reservaSalaCollection = reservaSalaCollection;
+    }
+
+    @XmlTransient
+    public Collection<ReservaEquipoElemento> getReservaEquipoElementoCollection() {
+        return reservaEquipoElementoCollection;
+    }
+
+    public void setReservaEquipoElementoCollection(Collection<ReservaEquipoElemento> reservaEquipoElementoCollection) {
+        this.reservaEquipoElementoCollection = reservaEquipoElementoCollection;
     }
 
 }

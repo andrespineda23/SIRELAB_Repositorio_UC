@@ -7,7 +7,9 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +17,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Asignatura.findByNumerocreditos", query = "SELECT a FROM Asignatura a WHERE a.numerocreditos = :numerocreditos"),
     @NamedQuery(name = "Asignatura.findByEstado", query = "SELECT a FROM Asignatura a WHERE a.estado = :estado")})
 public class Asignatura implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
+    private Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -168,6 +174,15 @@ public class Asignatura implements Serializable {
 
     public void setStrNombreEstado(String strNombreEstado) {
         this.strNombreEstado = strNombreEstado;
+    }
+
+    @XmlTransient
+    public Collection<AsignaturaPorPlanEstudio> getAsignaturaPorPlanEstudioCollection() {
+        return asignaturaPorPlanEstudioCollection;
+    }
+
+    public void setAsignaturaPorPlanEstudioCollection(Collection<AsignaturaPorPlanEstudio> asignaturaPorPlanEstudioCollection) {
+        this.asignaturaPorPlanEstudioCollection = asignaturaPorPlanEstudioCollection;
     }
 
 }

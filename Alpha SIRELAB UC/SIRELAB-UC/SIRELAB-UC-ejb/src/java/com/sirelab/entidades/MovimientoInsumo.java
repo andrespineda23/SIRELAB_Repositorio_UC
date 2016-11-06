@@ -7,8 +7,10 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,11 +20,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +42,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MovimientoInsumo.findByCantidadmovimiento", query = "SELECT m FROM MovimientoInsumo m WHERE m.cantidadmovimiento = :cantidadmovimiento"),
     @NamedQuery(name = "MovimientoInsumo.findByCostomovimiento", query = "SELECT m FROM MovimientoInsumo m WHERE m.costomovimiento = :costomovimiento")})
 public class MovimientoInsumo implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoinsumo")
+    private Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -149,6 +155,15 @@ public class MovimientoInsumo implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.MovimientoInsumo[ idmovimientoinsumo=" + idmovimientoinsumo + " ]";
+    }
+
+    @XmlTransient
+    public Collection<MovimientoInsumoAEquipo> getMovimientoInsumoAEquipoCollection() {
+        return movimientoInsumoAEquipoCollection;
+    }
+
+    public void setMovimientoInsumoAEquipoCollection(Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection) {
+        this.movimientoInsumoAEquipoCollection = movimientoInsumoAEquipoCollection;
     }
     
 }

@@ -52,6 +52,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EquipoElemento.findByPrivado", query = "SELECT e FROM EquipoElemento e WHERE e.privado = :privado")})
 public class EquipoElemento implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
+    private Collection<ManualHasEquipo> manualHasEquipoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipo")
+    private Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
+    private Collection<ReservaEquipoElemento> reservaEquipoElementoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
     private Collection<ComponenteEquipo> componenteEquipoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipoelemento")
     private Collection<HojaVidaEquipo> hojaVidaEquipoCollection;
@@ -313,6 +319,33 @@ public class EquipoElemento implements Serializable {
 
     public void setComponenteEquipoCollection(Collection<ComponenteEquipo> componenteEquipoCollection) {
         this.componenteEquipoCollection = componenteEquipoCollection;
+    }
+
+    @XmlTransient
+    public Collection<ManualHasEquipo> getManualHasEquipoCollection() {
+        return manualHasEquipoCollection;
+    }
+
+    public void setManualHasEquipoCollection(Collection<ManualHasEquipo> manualHasEquipoCollection) {
+        this.manualHasEquipoCollection = manualHasEquipoCollection;
+    }
+
+    @XmlTransient
+    public Collection<MovimientoInsumoAEquipo> getMovimientoInsumoAEquipoCollection() {
+        return movimientoInsumoAEquipoCollection;
+    }
+
+    public void setMovimientoInsumoAEquipoCollection(Collection<MovimientoInsumoAEquipo> movimientoInsumoAEquipoCollection) {
+        this.movimientoInsumoAEquipoCollection = movimientoInsumoAEquipoCollection;
+    }
+
+    @XmlTransient
+    public Collection<ReservaEquipoElemento> getReservaEquipoElementoCollection() {
+        return reservaEquipoElementoCollection;
+    }
+
+    public void setReservaEquipoElementoCollection(Collection<ReservaEquipoElemento> reservaEquipoElementoCollection) {
+        this.reservaEquipoElementoCollection = reservaEquipoElementoCollection;
     }
     
 }

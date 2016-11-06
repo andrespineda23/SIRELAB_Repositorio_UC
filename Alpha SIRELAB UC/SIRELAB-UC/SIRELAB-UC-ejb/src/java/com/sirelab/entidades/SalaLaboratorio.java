@@ -50,6 +50,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SalaLaboratorio.findByCostosaladigitado", query = "SELECT s FROM SalaLaboratorio s WHERE s.costosaladigitado = :costosaladigitado"),
     @NamedQuery(name = "SalaLaboratorio.findByEsbodega", query = "SELECT s FROM SalaLaboratorio s WHERE s.esbodega = :esbodega")})
 public class SalaLaboratorio implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
+    private Collection<ReservaSala> reservaSalaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
+    private Collection<SalaLaboratorioxServicios> salaLaboratorioxServiciosCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salalaboratorio")
     private Collection<ModuloLaboratorio> moduloLaboratorioCollection;
@@ -328,6 +332,24 @@ public class SalaLaboratorio implements Serializable {
 
     public void setModuloLaboratorioCollection(Collection<ModuloLaboratorio> moduloLaboratorioCollection) {
         this.moduloLaboratorioCollection = moduloLaboratorioCollection;
+    }
+
+    @XmlTransient
+    public Collection<ReservaSala> getReservaSalaCollection() {
+        return reservaSalaCollection;
+    }
+
+    public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
+        this.reservaSalaCollection = reservaSalaCollection;
+    }
+
+    @XmlTransient
+    public Collection<SalaLaboratorioxServicios> getSalaLaboratorioxServiciosCollection() {
+        return salaLaboratorioxServiciosCollection;
+    }
+
+    public void setSalaLaboratorioxServiciosCollection(Collection<SalaLaboratorioxServicios> salaLaboratorioxServiciosCollection) {
+        this.salaLaboratorioxServiciosCollection = salaLaboratorioxServiciosCollection;
     }
 
 }
