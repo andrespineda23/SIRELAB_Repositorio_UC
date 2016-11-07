@@ -61,7 +61,12 @@ public class ControllerGeneradorReportes implements Serializable {
 
     @PostConstruct
     public void init() {
+        nombreReporte = "";
+        tipoUsuarioReserva = "";
+        listaPeriodosAcademicos = null;
         periodo = null;
+        listaSalasLaboratorio = null;
+        salaLaboratorio = null;
     }
 
     public void recibirPaginaAnterior(String pagina) {
@@ -70,6 +75,11 @@ public class ControllerGeneradorReportes implements Serializable {
 
     public String paginaAnterior() {
         nombreReporte = "";
+        tipoUsuarioReserva = "";
+        listaPeriodosAcademicos = null;
+        periodo = null;
+        listaSalasLaboratorio = null;
+        salaLaboratorio = null;
         return paginaAnterior;
     }
 

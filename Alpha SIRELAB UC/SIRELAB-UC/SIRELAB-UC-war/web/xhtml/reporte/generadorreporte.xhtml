@@ -118,6 +118,8 @@ and open the template in the editor.
                                     Reporte de equipos registrados por los laboratorios.
                                 </p>
                                 <br></br>
+                                <br></br>
+                                <br></br>
                                 <p>
                                     <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteEquiposdeTrabajo()}" />
                                 </p>
@@ -136,7 +138,7 @@ and open the template in the editor.
                         <div class="row">
                             <div class="col-md-11"></div>
                             <div class="col-md-1">
-                                <h:commandButton value="Atrás" action="#{controllerAdministrarDocentes.limpiarProcesoBusqueda()}" class="btn btn-primary"/>
+                                <h:commandButton value="Atrás" action="#{controllerGeneradorReportes.paginaAnterior()}" class="btn btn-primary"/>
                             </div>
                         </div>
                     </div>

@@ -117,7 +117,7 @@
     
     
     <navigation-rule>
-        <from-view-id>/xhtml/carguearchivos/carguearchivos.xhtml</from-view-id>
+        <from-view-id>/xhtml/reporte/generadorreporte.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicioadministrador</from-outcome>
             <to-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</to-view-id>
@@ -127,12 +127,45 @@
     <navigation-rule>
         <from-view-id>/xhtml/paginasadministrador/inicioadministrador.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>carguearchivo</from-outcome>
-            <to-view-id>/xhtml/carguearchivos/carguearchivos.xhtml</to-view-id>
+            <from-outcome>reportes</from-outcome>
+            <to-view-id>/xhtml/reporte/generadorreporte.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/xhtml/reporte/generadorreporte.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioadministradoredificio</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioadministradoredificio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>reportes</from-outcome>
+            <to-view-id>/xhtml/reporte/generadorreporte.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/reporte/generadorreporte.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciolaboratorista</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>reportes</from-outcome>
+            <to-view-id>/xhtml/reporte/generadorreporte.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     <navigation-rule>
         <from-view-id>/xhtml/variablesentorno/variablesinventario.xhtml</from-view-id>
@@ -3174,7 +3207,7 @@
         </navigation-case>
     </navigation-rule>
     
-        <navigation-rule>
+    <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciolaboratorista.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>cambiarcontrasena</from-outcome>
