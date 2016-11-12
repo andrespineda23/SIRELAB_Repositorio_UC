@@ -20,6 +20,10 @@ import java.util.List;
  */
 public interface AdministradorGeneradorReportesBOInterface {
 
+    public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorTipoUsuario(Integer usuario);
+
+    public List<ReservaSala> obtenerReservasSalaPorTipoUsuario(Integer usuario);
+
     public List<Persona> obtenerPersonasDelSistema();
 
     public List<EquipoElemento> consultarEquiposdeTrabajoRegistrados();

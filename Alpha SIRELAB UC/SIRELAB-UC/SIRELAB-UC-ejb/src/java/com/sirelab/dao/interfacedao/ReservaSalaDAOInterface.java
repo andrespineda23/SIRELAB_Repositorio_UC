@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public interface ReservaSalaDAOInterface {
 
+    public List<ReservaSala> consultarReservaSalasPorTipoUsuarioYPeriodo(BigInteger tipoUsuario, BigInteger periodo);
+
     public void crearReservaSala(ReservaSala reserva);
 
     public List<ReservaSala> consultarReservaSalasSala(BigInteger periodo);
@@ -41,5 +43,5 @@ public interface ReservaSalaDAOInterface {
 
     public List<ReservaSala> buscarReservaSalaPorFiltrado(Map<String, String> filters);
 
-    public List<ReservaSala> consultarReservaSalasPorIdSala(BigInteger sala);
+    public List<ReservaSala> consultarReservaSalasPorIdSalaYPeriodo(BigInteger sala, BigInteger periodo);
 }

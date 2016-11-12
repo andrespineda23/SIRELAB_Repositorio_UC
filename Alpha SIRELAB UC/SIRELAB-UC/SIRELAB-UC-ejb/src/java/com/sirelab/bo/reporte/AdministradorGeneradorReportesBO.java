@@ -88,6 +88,46 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
         }
     }
 
+    public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorTipoUsuario(Integer usuario) {
+        try {
+            List<ReservaModuloLaboratorio> lista = null;
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
+            if (null != usuario) {
+                if (usuario == 1) {
+                    lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorPeriodoYTipoUsuario(new BigInteger("3"), periodo.getIdperiodoacademico());
+                } else {
+                    lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorPeriodoYTipoUsuario(new BigInteger("2"), periodo.getIdperiodoacademico());
+                }
+            } else {
+                lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorIdPeriodoAcademico(periodo.getIdperiodoacademico());
+            }
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO obtenerReservasModuloLaboratorioPorTipoUsuario : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<ReservaSala> obtenerReservasSalaPorTipoUsuario(Integer usuario) {
+        try {
+            List<ReservaSala> lista = null;
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
+            if (null != usuario) {
+                if (usuario == 1) {
+                    lista = reservaSalaDAO.consultarReservaSalasPorTipoUsuarioYPeriodo(new BigInteger("3"), periodo.getIdperiodoacademico());
+                } else {
+                    lista = reservaSalaDAO.consultarReservaSalasPorTipoUsuarioYPeriodo(new BigInteger("2"), periodo.getIdperiodoacademico());
+                }
+            } else {
+                lista = reservaSalaDAO.consultarReservaSalasSala(periodo.getIdperiodoacademico());
+            }
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO obtenerReservasSalaPorPeriodoAcademico : " + e.toString(), e);
+            return null;
+        }
+    }
+
     public List<SalaLaboratorio> obtenerSalasLaboratorio() {
         try {
             List<SalaLaboratorio> sala = salaLaboratorioDAO.consultarSalasLaboratorios();
@@ -119,8 +159,9 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
 
     public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorSala(BigInteger sala) {
         try {
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
             List<ReservaModuloLaboratorio> lista = null;
-            lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorIdSala(sala);
+            lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorIdSalaYPeriodo(sala, periodo.getIdperiodoacademico());
             return lista;
         } catch (Exception e) {
             logger.error("Error AdministradorGeneradorReportesBO obtenerReservasModuloLaboratorioPorSala : " + e.toString(), e);
@@ -130,8 +171,9 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
 
     public List<ReservaSala> obtenerReservasSalaPorSala(BigInteger sala) {
         try {
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
             List<ReservaSala> lista = null;
-            lista = reservaSalaDAO.consultarReservaSalasPorIdSala(sala);
+            lista = reservaSalaDAO.consultarReservaSalasPorIdSalaYPeriodo(sala, periodo.getIdperiodoacademico());
             return lista;
         } catch (Exception e) {
             logger.error("Error AdministradorGeneradorReportesBO obtenerReservasSalaPorSala : " + e.toString(), e);

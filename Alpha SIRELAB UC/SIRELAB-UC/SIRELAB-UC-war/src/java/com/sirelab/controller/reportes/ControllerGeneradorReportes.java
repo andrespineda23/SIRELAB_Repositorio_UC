@@ -5,6 +5,7 @@
  */
 package com.sirelab.controller.reportes;
 
+import com.sirelab.ayuda.ReservasGenerador;
 import com.sirelab.bo.interfacebo.reporte.AdministradorGeneradorReportesBOInterface;
 import com.sirelab.entidades.EquipoElemento;
 import com.sirelab.entidades.PeriodoAcademico;
@@ -19,12 +20,11 @@ import javax.faces.bean.SessionScoped;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -55,6 +55,8 @@ public class ControllerGeneradorReportes implements Serializable {
     private PeriodoAcademico periodo;
     private List<SalaLaboratorio> listaSalasLaboratorio;
     private SalaLaboratorio salaLaboratorio;
+    private Integer tipoUsuario;
+    private List<ReservasGenerador> listaReservasGenerador;
 
     public ControllerGeneradorReportes() {
     }
@@ -62,10 +64,12 @@ public class ControllerGeneradorReportes implements Serializable {
     @PostConstruct
     public void init() {
         nombreReporte = "";
+        listaReservasGenerador = null;
         tipoUsuarioReserva = "";
         listaPeriodosAcademicos = null;
         periodo = null;
         listaSalasLaboratorio = null;
+        tipoUsuario = null;
         salaLaboratorio = null;
     }
 
@@ -79,6 +83,7 @@ public class ControllerGeneradorReportes implements Serializable {
         listaPeriodosAcademicos = null;
         periodo = null;
         listaSalasLaboratorio = null;
+        tipoUsuario = null;
         salaLaboratorio = null;
         return paginaAnterior;
     }
@@ -238,6 +243,7 @@ public class ControllerGeneradorReportes implements Serializable {
     }
 
     public void reporteReservasPorPeriodo() throws Exception {
+        listaReservasGenerador = null;
         String rutaArchivo = "";
         if (validarNombreReporte()) {
             rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
@@ -257,12 +263,14 @@ public class ControllerGeneradorReportes implements Serializable {
             idPeriodo = periodo.getIdperiodoacademico();
         }
         List<ReservaModuloLaboratorio> reservamodulo = administradorGeneradorReportesBO.obtenerReservasModuloLaboratorioPorPeriodoAcademico(idPeriodo);
+        convertirReservasModulo(reservamodulo);
         List<ReservaSala> reservasala = administradorGeneradorReportesBO.obtenerReservasSalaPorPeriodoAcademico(idPeriodo);
-        int tamtotal = reservamodulo.size() + reservasala.size();
-        for (int f = 0; f < reservamodulo.size(); f++) {
+        convertirReservasSala(reservasala);
+        int tamtotal = listaReservasGenerador.size();
+        for (int f = 0; f < tamtotal; f++) {
             Row fila = hoja.createRow(f);
-            ReservaModuloLaboratorio reserva = reservamodulo.get(f);
-            for (int c = 0; c < 12; c++) {
+            ReservasGenerador reserva = listaReservasGenerador.get(f);
+            for (int c = 0; c < 13; c++) {
                 Cell celda = fila.createCell(c);
                 if (f == 0) {
                     if (c == 0) {
@@ -282,78 +290,134 @@ public class ControllerGeneradorReportes implements Serializable {
                     } else if (c == 7) {
                         celda.setCellValue("LABORATORIO");
                     } else if (c == 8) {
-                        celda.setCellValue("SALA LABORATORIO");
+                        celda.setCellValue("SALA_LABORATORIO");
                     } else if (c == 9) {
                         celda.setCellValue("ESTADO");
                     } else if (c == 10) {
                         celda.setCellValue("TIPO_USUARIO");
                     } else if (c == 11) {
-                        celda.setCellValue("IDENTIFICACION_PERSONA");
+                        celda.setCellValue("USUARIO");
+                    } else if (c == 12) {
+                        celda.setCellValue("ID_USUARIO");
                     }
                 } else {
                     if (c == 0) {
-                        celda.setCellValue(reserva.getReserva().getNumeroreserva());
+                        celda.setCellValue(reserva.getID_RESERVA());
                     } else if (c == 1) {
-                        celda.setCellValue("RESERVA SALA LABORATORIO");
+                        celda.setCellValue(reserva.getRESERVA());
                     } else if (c == 2) {
-                        String pattern = "dd/MM/yyyy";
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                        String date = simpleDateFormat.format(reserva.getReserva().getFechareserva());
-                        celda.setCellValue(date);
+                        celda.setCellValue(reserva.getFECHA_RESERVA());
                     } else if (c == 3) {
-                        celda.setCellValue(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
+                        celda.setCellValue(reserva.getHORA_RESERVA());
                     } else if (c == 4) {
-                        celda.setCellValue(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
+                        celda.setCellValue(reserva.getHORA_REAL());
                     } else if (c == 5) {
-                        celda.setCellValue(reserva.getReserva().getTiporeserva().getNombretiporeserva());
+                        celda.setCellValue(reserva.getTIPO_RESERVA());
                     } else if (c == 6) {
-                        celda.setCellValue(reserva.getReserva().getServiciosala().getNombreservicio());
+                        celda.setCellValue(reserva.getSERVICIO());
                     } else if (c == 7) {
-                        celda.setCellValue(reserva.getModulolaboratorio().getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
+                        celda.setCellValue(reserva.getLABORATORIO());
                     } else if (c == 8) {
-                        celda.setCellValue(reserva.getModulolaboratorio().getSalalaboratorio().getNombresala());
+                        celda.setCellValue(reserva.getSALA_LABORATORIO());
                     } else if (c == 9) {
-                        celda.setCellValue(reserva.getReserva().getEstadoreserva().getNombreestadoreserva());
+                        celda.setCellValue(reserva.getESTADO());
                     } else if (c == 10) {
-                        celda.setCellValue(reserva.getReserva().getPersona().getNombreCompleto());
+                        celda.setCellValue(reserva.getTIPO_USUARIO());
                     } else if (c == 11) {
-                        celda.setCellValue(reserva.getReserva().getPersona().getIdentificacionpersona());
+                        celda.setCellValue(reserva.getUSUARIO());
+                    } else if (c == 12) {
+                        celda.setCellValue(reserva.getID_USUARIO());
                     }
                 }
             }
         }
-        for (int f = reservamodulo.size() + 1; f < tamtotal; f++) {
+        libro.write(archivo);
+        archivo.close();
+        descargarArchivo(rutaArchivo);
+    }
+
+    public void reporteReservasPorTipoUsuario() throws Exception {
+        listaReservasGenerador = null;
+        String rutaArchivo = "";
+        if (validarNombreReporte()) {
+            rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
+        } else {
+            rutaArchivo = System.getProperty("user.home") + "/" + "RESERVAS_POR_TIPO_USUARIO" + ".xls";
+        }
+        File archivoXLS = new File(rutaArchivo);
+        if (archivoXLS.exists()) {
+            archivoXLS.delete();
+        }
+        archivoXLS.createNewFile();
+        Workbook libro = new HSSFWorkbook();
+        FileOutputStream archivo = new FileOutputStream(archivoXLS);
+        Sheet hoja = libro.createSheet("RESERVAS");
+        List<ReservaModuloLaboratorio> reservamodulo = administradorGeneradorReportesBO.obtenerReservasModuloLaboratorioPorTipoUsuario(tipoUsuario);
+        convertirReservasModulo(reservamodulo);
+        List<ReservaSala> reservasala = administradorGeneradorReportesBO.obtenerReservasSalaPorTipoUsuario(tipoUsuario);
+        convertirReservasSala(reservasala);
+        int tamtotal = listaReservasGenerador.size();
+        for (int f = 0; f < tamtotal; f++) {
             Row fila = hoja.createRow(f);
-            ReservaSala reserva = reservasala.get(f);
-            for (int c = 0; c < 12; c++) {
+            ReservasGenerador reserva = listaReservasGenerador.get(f);
+            for (int c = 0; c < 13; c++) {
                 Cell celda = fila.createCell(c);
-                if (c == 0) {
-                    celda.setCellValue(reserva.getReserva().getNumeroreserva());
-                } else if (c == 1) {
-                    celda.setCellValue("RESERVA MODULO LABORATORIO");
-                } else if (c == 2) {
-                    String pattern = "dd/MM/yyyy";
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                    String date = simpleDateFormat.format(reserva.getReserva().getFechareserva());
-                    celda.setCellValue(date);
-                } else if (c == 3) {
-                    celda.setCellValue(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
-                } else if (c == 4) {
-                    celda.setCellValue(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
-                } else if (c == 5) {
-                    celda.setCellValue(reserva.getReserva().getTiporeserva().getNombretiporeserva());
-                } else if (c == 6) {
-                    celda.setCellValue(reserva.getReserva().getServiciosala().getNombreservicio());
-                } else if (c == 7) {
-                    celda.setCellValue(reserva.getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
-                } else if (c == 8) {
-                    celda.setCellValue(reserva.getSalalaboratorio().getNombresala());
-                } else if (c == 9) {
-                    celda.setCellValue(reserva.getReserva().getEstadoreserva().getNombreestadoreserva());
-                } else if (c == 10) {
-                    celda.setCellValue(reserva.getReserva().getPersona().getNombreCompleto());
-                } else if (c == 11) {
-                    celda.setCellValue(reserva.getReserva().getPersona().getIdentificacionpersona());
+                if (f == 0) {
+                    if (c == 0) {
+                        celda.setCellValue("ID_RESERVA");
+                    } else if (c == 1) {
+                        celda.setCellValue("RESERVA");
+                    } else if (c == 2) {
+                        celda.setCellValue("FECHA_RESERVA");
+                    } else if (c == 3) {
+                        celda.setCellValue("HORA_RESERVA");
+                    } else if (c == 4) {
+                        celda.setCellValue("HORA_REAL");
+                    } else if (c == 5) {
+                        celda.setCellValue("TIPO_RESERVA");
+                    } else if (c == 6) {
+                        celda.setCellValue("SERVICIO");
+                    } else if (c == 7) {
+                        celda.setCellValue("LABORATORIO");
+                    } else if (c == 8) {
+                        celda.setCellValue("SALA_LABORATORIO");
+                    } else if (c == 9) {
+                        celda.setCellValue("ESTADO");
+                    } else if (c == 10) {
+                        celda.setCellValue("TIPO_USUARIO");
+                    } else if (c == 11) {
+                        celda.setCellValue("USUARIO");
+                    } else if (c == 12) {
+                        celda.setCellValue("ID_USUARIO");
+                    }
+                } else {
+                    if (c == 0) {
+                        celda.setCellValue(reserva.getID_RESERVA());
+                    } else if (c == 1) {
+                        celda.setCellValue(reserva.getRESERVA());
+                    } else if (c == 2) {
+                        celda.setCellValue(reserva.getFECHA_RESERVA());
+                    } else if (c == 3) {
+                        celda.setCellValue(reserva.getHORA_RESERVA());
+                    } else if (c == 4) {
+                        celda.setCellValue(reserva.getHORA_REAL());
+                    } else if (c == 5) {
+                        celda.setCellValue(reserva.getTIPO_RESERVA());
+                    } else if (c == 6) {
+                        celda.setCellValue(reserva.getSERVICIO());
+                    } else if (c == 7) {
+                        celda.setCellValue(reserva.getLABORATORIO());
+                    } else if (c == 8) {
+                        celda.setCellValue(reserva.getSALA_LABORATORIO());
+                    } else if (c == 9) {
+                        celda.setCellValue(reserva.getESTADO());
+                    } else if (c == 10) {
+                        celda.setCellValue(reserva.getTIPO_USUARIO());
+                    } else if (c == 11) {
+                        celda.setCellValue(reserva.getUSUARIO());
+                    } else if (c == 12) {
+                        celda.setCellValue(reserva.getID_USUARIO());
+                    }
                 }
             }
         }
@@ -363,6 +427,7 @@ public class ControllerGeneradorReportes implements Serializable {
     }
 
     public void reporteReservasPorSala() throws Exception {
+        listaReservasGenerador = null;
         String rutaArchivo = "";
         if (validarNombreReporte()) {
             rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
@@ -382,12 +447,14 @@ public class ControllerGeneradorReportes implements Serializable {
             idSala = salaLaboratorio.getIdsalalaboratorio();
         }
         List<ReservaModuloLaboratorio> reservamodulo = administradorGeneradorReportesBO.obtenerReservasModuloLaboratorioPorSala(idSala);
+        convertirReservasModulo(reservamodulo);
         List<ReservaSala> reservasala = administradorGeneradorReportesBO.obtenerReservasSalaPorSala(idSala);
-        int tamtotal = reservamodulo.size() + reservasala.size();
-        for (int f = 0; f < reservamodulo.size(); f++) {
+        convertirReservasSala(reservasala);
+        int tamtotal = listaReservasGenerador.size();
+        for (int f = 0; f < tamtotal; f++) {
             Row fila = hoja.createRow(f);
-            ReservaModuloLaboratorio reserva = reservamodulo.get(f);
-            for (int c = 0; c < 12; c++) {
+            ReservasGenerador reserva = listaReservasGenerador.get(f);
+            for (int c = 0; c < 13; c++) {
                 Cell celda = fila.createCell(c);
                 if (f == 0) {
                     if (c == 0) {
@@ -407,78 +474,44 @@ public class ControllerGeneradorReportes implements Serializable {
                     } else if (c == 7) {
                         celda.setCellValue("LABORATORIO");
                     } else if (c == 8) {
-                        celda.setCellValue("SALA LABORATORIO");
+                        celda.setCellValue("SALA_LABORATORIO");
                     } else if (c == 9) {
                         celda.setCellValue("ESTADO");
                     } else if (c == 10) {
                         celda.setCellValue("TIPO_USUARIO");
                     } else if (c == 11) {
-                        celda.setCellValue("IDENTIFICACION_PERSONA");
+                        celda.setCellValue("USUARIO");
+                    } else if (c == 12) {
+                        celda.setCellValue("ID_USUARIO");
                     }
                 } else {
                     if (c == 0) {
-                        celda.setCellValue(reserva.getReserva().getNumeroreserva());
+                        celda.setCellValue(reserva.getID_RESERVA());
                     } else if (c == 1) {
-                        celda.setCellValue("RESERVA SALA LABORATORIO");
+                        celda.setCellValue(reserva.getRESERVA());
                     } else if (c == 2) {
-                        String pattern = "dd/MM/yyyy";
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                        String date = simpleDateFormat.format(reserva.getReserva().getFechareserva());
-                        celda.setCellValue(date);
+                        celda.setCellValue(reserva.getFECHA_RESERVA());
                     } else if (c == 3) {
-                        celda.setCellValue(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
+                        celda.setCellValue(reserva.getHORA_RESERVA());
                     } else if (c == 4) {
-                        celda.setCellValue(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
+                        celda.setCellValue(reserva.getHORA_REAL());
                     } else if (c == 5) {
-                        celda.setCellValue(reserva.getReserva().getTiporeserva().getNombretiporeserva());
+                        celda.setCellValue(reserva.getTIPO_RESERVA());
                     } else if (c == 6) {
-                        celda.setCellValue(reserva.getReserva().getServiciosala().getNombreservicio());
+                        celda.setCellValue(reserva.getSERVICIO());
                     } else if (c == 7) {
-                        celda.setCellValue(reserva.getModulolaboratorio().getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
+                        celda.setCellValue(reserva.getLABORATORIO());
                     } else if (c == 8) {
-                        celda.setCellValue(reserva.getModulolaboratorio().getSalalaboratorio().getNombresala());
+                        celda.setCellValue(reserva.getSALA_LABORATORIO());
                     } else if (c == 9) {
-                        celda.setCellValue(reserva.getReserva().getEstadoreserva().getNombreestadoreserva());
+                        celda.setCellValue(reserva.getESTADO());
                     } else if (c == 10) {
-                        celda.setCellValue(reserva.getReserva().getPersona().getNombreCompleto());
+                        celda.setCellValue(reserva.getTIPO_USUARIO());
                     } else if (c == 11) {
-                        celda.setCellValue(reserva.getReserva().getPersona().getIdentificacionpersona());
+                        celda.setCellValue(reserva.getUSUARIO());
+                    } else if (c == 12) {
+                        celda.setCellValue(reserva.getID_USUARIO());
                     }
-                }
-            }
-        }
-        for (int f = reservamodulo.size() + 1; f < tamtotal; f++) {
-            Row fila = hoja.createRow(f);
-            ReservaSala reserva = reservasala.get(f);
-            for (int c = 0; c < 12; c++) {
-                Cell celda = fila.createCell(c);
-                if (c == 0) {
-                    celda.setCellValue(reserva.getReserva().getNumeroreserva());
-                } else if (c == 1) {
-                    celda.setCellValue("RESERVA MODULO LABORATORIO");
-                } else if (c == 2) {
-                    String pattern = "dd/MM/yyyy";
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                    String date = simpleDateFormat.format(reserva.getReserva().getFechareserva());
-                    celda.setCellValue(date);
-                } else if (c == 3) {
-                    celda.setCellValue(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
-                } else if (c == 4) {
-                    celda.setCellValue(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
-                } else if (c == 5) {
-                    celda.setCellValue(reserva.getReserva().getTiporeserva().getNombretiporeserva());
-                } else if (c == 6) {
-                    celda.setCellValue(reserva.getReserva().getServiciosala().getNombreservicio());
-                } else if (c == 7) {
-                    celda.setCellValue(reserva.getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
-                } else if (c == 8) {
-                    celda.setCellValue(reserva.getSalalaboratorio().getNombresala());
-                } else if (c == 9) {
-                    celda.setCellValue(reserva.getReserva().getEstadoreserva().getNombreestadoreserva());
-                } else if (c == 10) {
-                    celda.setCellValue(reserva.getReserva().getPersona().getNombreCompleto());
-                } else if (c == 11) {
-                    celda.setCellValue(reserva.getReserva().getPersona().getIdentificacionpersona());
                 }
             }
         }
@@ -518,54 +551,81 @@ public class ControllerGeneradorReportes implements Serializable {
         }
     }
 
-    public String getNombreReporte() {
-        return nombreReporte;
-    }
-
-    public void setNombreReporte(String nombreReporte) {
-        this.nombreReporte = nombreReporte;
-    }
-
-    public String getTipoUsuarioReserva() {
-        return tipoUsuarioReserva;
-    }
-
-    public void setTipoUsuarioReserva(String tipoUsuarioReserva) {
-        this.tipoUsuarioReserva = tipoUsuarioReserva;
-    }
-
-    public String getPaginaAnterior() {
-        return paginaAnterior;
-    }
-
-    public void setPaginaAnterior(String paginaAnterior) {
-        this.paginaAnterior = paginaAnterior;
-    }
-
-    public List<PeriodoAcademico> getListaPeriodosAcademicos() {
-        if (null == listaPeriodosAcademicos) {
-            listaPeriodosAcademicos = administradorGeneradorReportesBO.obtenerPeriodosAcademicos();
+    private void convertirReservasSala(List<ReservaSala> reservasala) {
+        if (null == listaReservasGenerador) {
+            listaReservasGenerador = new ArrayList<ReservasGenerador>();
         }
-        return listaPeriodosAcademicos;
-    }
+        if (null != reservasala) {
+            for (ReservaSala reserva : reservasala) {
+                ReservasGenerador reservasGenerador = new ReservasGenerador();
+                reservasGenerador.setID_RESERVA(reserva.getReserva().getNumeroreserva());
+                reservasGenerador.setRESERVA("RESERVA SALA LABORATORIO");
+                String pattern = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String date = simpleDateFormat.format(reserva.getReserva().getFechareserva());
+                reservasGenerador.setFECHA_RESERVA(date);
+                reservasGenerador.setHORA_RESERVA(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
+                if (null != reserva.getReserva().getHorainicioefectiva() && null != reserva.getReserva().getHorafinefectiva()) {
+                    reservasGenerador.setHORA_REAL(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
+                } else {
+                    String horaInicio = "NN";
+                    String horaFin = "NN";
+                    if (null == reserva.getReserva().getHorainicioefectiva()) {
+                        reservasGenerador.setHORA_REAL(horaInicio + ":" + horaFin);
+                    } else {
+                        reservasGenerador.setHORA_REAL(reserva.getReserva().getHorainicioefectiva() + ":" + horaFin);
+                    }
+                }
 
-    public void setListaPeriodosAcademicos(List<PeriodoAcademico> listaPeriodosAcademicos) {
-        this.listaPeriodosAcademicos = listaPeriodosAcademicos;
-    }
-
-    public PeriodoAcademico getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(PeriodoAcademico periodo) {
-        this.periodo = periodo;
-    }
-
-    public List<SalaLaboratorio> getListaSalasLaboratorio() {
-        if (null == listaSalasLaboratorio) {
-            listaSalasLaboratorio = administradorGeneradorReportesBO.obtenerSalasLaboratorio();
+                reservasGenerador.setTIPO_RESERVA(reserva.getReserva().getTiporeserva().getNombretiporeserva());
+                reservasGenerador.setSERVICIO(reserva.getReserva().getServiciosala().getNombreservicio());
+                reservasGenerador.setLABORATORIO(reserva.getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
+                reservasGenerador.setSALA_LABORATORIO(reserva.getSalalaboratorio().getNombresala());
+                reservasGenerador.setESTADO(reserva.getReserva().getEstadoreserva().getNombreestadoreserva());
+                reservasGenerador.setUSUARIO(reserva.getReserva().getPersona().getUsuario().getNombreusuario());
+                reservasGenerador.setID_USUARIO(reserva.getReserva().getPersona().getIdentificacionpersona());
+                reservasGenerador.setTIPO_USUARIO(reserva.getReserva().getPersona().getUsuario().getTipousuario().getNombretipousuario());
+                listaReservasGenerador.add(reservasGenerador);
+            }
         }
-        return listaSalasLaboratorio;
+    }
+
+    private void convertirReservasModulo(List<ReservaModuloLaboratorio> reservamodulo) {
+        if (null == listaReservasGenerador) {
+            listaReservasGenerador = new ArrayList<ReservasGenerador>();
+        }
+        if (null != reservamodulo) {
+            for (ReservaModuloLaboratorio reserva : reservamodulo) {
+                ReservasGenerador reservasGenerador = new ReservasGenerador();
+                reservasGenerador.setID_RESERVA(reserva.getReserva().getNumeroreserva());
+                reservasGenerador.setRESERVA("RESERVA MÓDULO LABORATORIO");
+                String pattern = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String date = simpleDateFormat.format(reserva.getReserva().getFechareserva());
+                reservasGenerador.setFECHA_RESERVA(date);
+                reservasGenerador.setHORA_RESERVA(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
+                if (null != reserva.getReserva().getHorainicioefectiva() && null != reserva.getReserva().getHorafinefectiva()) {
+                    reservasGenerador.setHORA_REAL(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
+                } else {
+                    String horaInicio = "NN";
+                    String horaFin = "NN";
+                    if (null == reserva.getReserva().getHorainicioefectiva()) {
+                        reservasGenerador.setHORA_REAL(horaInicio + ":" + horaFin);
+                    } else {
+                        reservasGenerador.setHORA_REAL(reserva.getReserva().getHorainicioefectiva() + ":" + horaFin);
+                    }
+                }
+                reservasGenerador.setTIPO_RESERVA(reserva.getReserva().getTiporeserva().getNombretiporeserva());
+                reservasGenerador.setSERVICIO(reserva.getReserva().getServiciosala().getNombreservicio());
+                reservasGenerador.setLABORATORIO(reserva.getModulolaboratorio().getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
+                reservasGenerador.setSALA_LABORATORIO(reserva.getModulolaboratorio().getSalalaboratorio().getNombresala());
+                reservasGenerador.setESTADO(reserva.getReserva().getEstadoreserva().getNombreestadoreserva());
+                reservasGenerador.setUSUARIO(reserva.getReserva().getPersona().getUsuario().getNombreusuario());
+                reservasGenerador.setID_USUARIO(reserva.getReserva().getPersona().getIdentificacionpersona());
+                reservasGenerador.setTIPO_USUARIO(reserva.getReserva().getPersona().getUsuario().getTipousuario().getNombretipousuario());
+                listaReservasGenerador.add(reservasGenerador);
+            }
+        }
     }
 
     public void reporteEquiposdeTrabajo() throws Exception {
@@ -664,6 +724,64 @@ public class ControllerGeneradorReportes implements Serializable {
 
     public void setSalaLaboratorio(SalaLaboratorio salaLaboratorio) {
         this.salaLaboratorio = salaLaboratorio;
+    }
+
+    public Integer getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(Integer tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getNombreReporte() {
+        return nombreReporte;
+    }
+
+    public void setNombreReporte(String nombreReporte) {
+        this.nombreReporte = nombreReporte;
+    }
+
+    public String getTipoUsuarioReserva() {
+        return tipoUsuarioReserva;
+    }
+
+    public void setTipoUsuarioReserva(String tipoUsuarioReserva) {
+        this.tipoUsuarioReserva = tipoUsuarioReserva;
+    }
+
+    public String getPaginaAnterior() {
+        return paginaAnterior;
+    }
+
+    public void setPaginaAnterior(String paginaAnterior) {
+        this.paginaAnterior = paginaAnterior;
+    }
+
+    public List<PeriodoAcademico> getListaPeriodosAcademicos() {
+        if (null == listaPeriodosAcademicos) {
+            listaPeriodosAcademicos = administradorGeneradorReportesBO.obtenerPeriodosAcademicos();
+        }
+        return listaPeriodosAcademicos;
+    }
+
+    public void setListaPeriodosAcademicos(List<PeriodoAcademico> listaPeriodosAcademicos) {
+        this.listaPeriodosAcademicos = listaPeriodosAcademicos;
+    }
+
+    public PeriodoAcademico getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(PeriodoAcademico periodo) {
+        this.periodo = periodo;
+    }
+
+    public List<SalaLaboratorio> getListaSalasLaboratorio() {
+        if (null == listaSalasLaboratorio) {
+            listaSalasLaboratorio = administradorGeneradorReportesBO.obtenerSalasLaboratorio();
+        }
+        return listaSalasLaboratorio;
     }
 
 }

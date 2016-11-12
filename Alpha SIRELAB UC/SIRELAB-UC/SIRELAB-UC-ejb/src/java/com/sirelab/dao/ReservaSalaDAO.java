@@ -92,12 +92,29 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
     }
     
     @Override
-    public List<ReservaSala> consultarReservaSalasPorIdSala(BigInteger sala) {
+    public List<ReservaSala> consultarReservaSalasPorTipoUsuarioYPeriodo(BigInteger tipoUsuario, BigInteger periodo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio=:sala  ORDER BY p.reserva.fechareserva ASC");
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.reserva.persona.usuario.tipousuario.idtipousuario=:tipoUsuario AND p.reserva.periodoacademico.idperiodoacademico=:periodo  ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("tipoUsuario", tipoUsuario);
+            query.setParameter("periodo", periodo);
+            List<ReservaSala> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error consultarReservaSalasPorTipoUsuarioYPeriodo ReservaSalaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public List<ReservaSala> consultarReservaSalasPorIdSalaYPeriodo(BigInteger sala, BigInteger periodo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.salalaboratorio.idsalalaboratorio=:sala AND p.reserva.periodoacademico.idperiodoacademico=:periodo ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("sala", sala);
+            query.setParameter("periodo", periodo);
             List<ReservaSala> lista = query.getResultList();
             return lista;
         } catch (Exception e) {

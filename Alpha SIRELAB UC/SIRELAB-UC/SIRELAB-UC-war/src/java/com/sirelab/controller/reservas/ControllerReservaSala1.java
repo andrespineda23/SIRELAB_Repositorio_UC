@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -390,50 +391,68 @@ public class ControllerReservaSala1 implements Serializable {
         return retorno;
     }
 
+    private boolean validarHoraReserva() {
+        boolean retorno = false;
+        GregorianCalendar hora = new GregorianCalendar();
+        int horaInicio = hora.get(Calendar.HOUR);
+        int minutoInicio = hora.get(Calendar.MINUTE);
+        int horaActual = (horaInicio * 100) + minutoInicio;
+        int horaR = horaReserva.getHora() * 100;
+        if (horaActual < horaR) {
+            retorno = true;
+        }
+        return retorno;
+    }
+
     public String consultarReservaARealizar() {
         String paso2 = "";
         if (validarCamposReserva() == true) {
-            Date fechaReserva = null;
-            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.YEAR, fechaAnio);
-            cal.set(Calendar.MONTH, fechaMes.getParametro());
-            cal.set(Calendar.DATE, fechaDia.getParametro());
-            fechaReserva = cal.getTime();
-            formateador.format(fechaReserva);
-            long dias = calcularDiferenciaFechas(cal);
-            if (dias != -1) {
-                if (dias > 0 && dias <= 15) {
-                    Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(fechaReserva, String.valueOf(horaReserva.getHora()), parametroSala.getIdsalalaboratorio());
-                    if (null != respuestaReserva) {
-                        if (respuestaReserva == true) {
-                            UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
-                            Boolean respuestaValidacion = administrarReservasBO.validarReservasPersonaSegunHoraFecha(usuarioLoginSistema.getIdUsuarioLogin(), usuarioLoginSistema.getNombreTipoUsuario(), String.valueOf(horaReserva.getHora()), fechaReserva);
-                            if (null != respuestaValidacion) {
-                                if (true == respuestaValidacion) {
-                                    AyudaReservaSala.getInstance().setFechaReserva(fechaReserva);
-                                    AyudaReservaSala.getInstance().setSalaLaboratorio(parametroSala);
-                                    AyudaReservaSala.getInstance().setHoraInicio(String.valueOf(horaReserva.getHora()));
-                                    AyudaReservaSala.getInstance().setHoraFin(String.valueOf(horaReservaSalida.getHora()));
-                                    AyudaReservaSala.getInstance().setServicioSala(parametroServicio.getServiciosala());
-                                    paso2 = "reservasala2";
-                                    limpiarInformacion();
-                                } else {
-                                    mensajeFormulario = "Recuerde que no puede tener dos reservas asginadas a la misma hora. El usuario ya tiene asociada otra reserva a la misma hora.";
-                                    colorMensaje = "#FF0000";
+            if (validarHoraReserva() == true) {
+                Date fechaReserva = null;
+                SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, fechaAnio);
+                cal.set(Calendar.MONTH, fechaMes.getParametro());
+                cal.set(Calendar.DATE, fechaDia.getParametro());
+                fechaReserva = cal.getTime();
+                formateador.format(fechaReserva);
+                long dias = calcularDiferenciaFechas(cal);
+                if (dias != -1) {
+                    if (dias > 0 && dias <= 15) {
+                        Boolean respuestaReserva = administrarReservasBO.validarReservaSalaDisposible(fechaReserva, String.valueOf(horaReserva.getHora()), parametroSala.getIdsalalaboratorio());
+                        if (null != respuestaReserva) {
+                            if (respuestaReserva == true) {
+                                UsuarioLogin usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+                                Boolean respuestaValidacion = administrarReservasBO.validarReservasPersonaSegunHoraFecha(usuarioLoginSistema.getIdUsuarioLogin(), usuarioLoginSistema.getNombreTipoUsuario(), String.valueOf(horaReserva.getHora()), fechaReserva);
+                                if (null != respuestaValidacion) {
+                                    if (true == respuestaValidacion) {
+                                        AyudaReservaSala.getInstance().setFechaReserva(fechaReserva);
+                                        AyudaReservaSala.getInstance().setSalaLaboratorio(parametroSala);
+                                        AyudaReservaSala.getInstance().setHoraInicio(String.valueOf(horaReserva.getHora()));
+                                        AyudaReservaSala.getInstance().setHoraFin(String.valueOf(horaReservaSalida.getHora()));
+                                        AyudaReservaSala.getInstance().setServicioSala(parametroServicio.getServiciosala());
+                                        paso2 = "reservasala2";
+                                        limpiarInformacion();
+                                    } else {
+                                        mensajeFormulario = "Recuerde que no puede tener dos reservas asginadas a la misma hora. El usuario ya tiene asociada otra reserva a la misma hora.";
+                                        colorMensaje = "#FF0000";
+                                    }
                                 }
+                            } else {
+                                mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
+                                colorMensaje = "#FF0000";
                             }
-                        } else {
-                            mensajeFormulario = "Existe una reserva solicitada en el tiempo y sala de laboratorio asignado.";
-                            colorMensaje = "#FF0000";
                         }
+                    } else {
+                        mensajeFormulario = "Recuerde que tiene un maximo de 15 días para asignar la reserva. Rectfique la información para continuar.";
+                        colorMensaje = "#FF0000";
                     }
                 } else {
-                    mensajeFormulario = "Recuerde que tiene un maximo de 15 días para asignar la reserva. Rectfique la información para continuar.";
+                    mensajeFormulario = "La fecha ingresada es menor a la del día. Solo se realizan reservas para tiempo futuro no mayor a 15 días.";
                     colorMensaje = "#FF0000";
                 }
             } else {
-                mensajeFormulario = "La fecha ingresada es menor a la del día. Solo se realizan reservas para tiempo futuro no mayor a 15 días.";
+                mensajeFormulario = "La hora de reserva es menor a la fecha del sistema.";
                 colorMensaje = "#FF0000";
             }
         } else {

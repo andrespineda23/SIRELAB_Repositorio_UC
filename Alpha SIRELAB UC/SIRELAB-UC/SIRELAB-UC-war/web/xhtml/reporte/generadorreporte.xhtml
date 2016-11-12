@@ -97,13 +97,13 @@ and open the template in the editor.
                                 <div class="form-group">
                                     <strong><h:outputText value="Reservas del periodo academico actual por sala de laboratorio"/></strong>
                                     <h:selectOneMenu value="#{controllerGeneradorReportes.salaLaboratorio}"
-                                                 class="form-control" 
-                                                 id="salalaboratorio">
-                                    <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
-                                    <f:selectItems value="#{controllerGeneradorReportes.listaSalasLaboratorio}" var="sal"
-                                                   itemLabel="#{sal.nombresala}" itemValue="#{sal}"/>
-                                    <f:converter converterId="ConverterGenerico" />
-                                </h:selectOneMenu>
+                                                     class="form-control" 
+                                                     id="salalaboratorio">
+                                        <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
+                                        <f:selectItems value="#{controllerGeneradorReportes.listaSalasLaboratorio}" var="sal"
+                                                       itemLabel="#{sal.nombresala}" itemValue="#{sal}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                    </h:selectOneMenu>
                                 </div>
                                 <br></br>
                                 <p>
@@ -126,11 +126,21 @@ and open the template in the editor.
                             </div>
                             <div class="col-md-4">
                                 <h3>
-                                    
+                                    Reservas por Tipo de Usuario
                                 </h3>
-                                
+                                <p>Reporte de reservas realizadas según tipo de usuario en el periodo academico actual</p>
+                                <h:selectOneMenu value="#{controllerGeneradorReportes.tipoUsuario}"
+                                                 class="form-control" disabled="#{controllerDetallesSede.activarCasillas}"
+                                                 id="tipoUsuario">
+                                    <f:selectItem itemLabel="TODOS" itemValue="null" />
+                                    <f:selectItem itemLabel="ESTUDIANTE" itemValue="1" />
+                                    <f:selectItem itemLabel="DOCENTE" itemValue="2" />
+                                </h:selectOneMenu>
+                                <br></br>
+                                <br></br>
+                                <br></br>
                                 <p>
-                                    <h:commandButton value="Generar Reporte" class="btn btn-success" />
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteReservasPorTipoUsuario()}"/>
                                 </p>
                             </div>
                         </div>

@@ -176,12 +176,44 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
     }
     
     @Override
-    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorIdSala(BigInteger sala) {
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorPeriodoYTipoUsuario(BigInteger usuario, BigInteger periodo) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio=:sala ORDER BY p.reserva.fechareserva ASC");
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.periodoacademico.idperiodoacademico=:periodo AND p.reserva.persona.usuario.tipousuario.idtipousuario=usuario ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("usuario", usuario);
+            query.setParameter("periodo", periodo);
+            List<ReservaModuloLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaModuloLaboratorioPorPeriodoYTipoUsuario ReservaModuloLaboratorioDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorTipoUsuario(BigInteger tipoUsuario) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.persona.usuario.tipousuario.idtipousuario=:tipoUsuario  ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("tipoUsuario", tipoUsuario);
+            List<ReservaModuloLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaModuloLaboratorioPorTipoUsuario ReservaModuloLaboratorioDAO : " + e.toString(), e);
+            return null;
+        }
+    }
+    
+    @Override
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorIdSalaYPeriodo(BigInteger sala, BigInteger periodo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.modulolaboratorio.salalaboratorio.idsalalaboratorio=:sala AND p.reserva.periodoacademico.idperiodoacademico=:periodo ORDER BY p.reserva.fechareserva ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("sala", sala);
+            query.setParameter("periodo", periodo);
             List<ReservaModuloLaboratorio> registro = query.getResultList();
             return registro;
         } catch (Exception e) {
