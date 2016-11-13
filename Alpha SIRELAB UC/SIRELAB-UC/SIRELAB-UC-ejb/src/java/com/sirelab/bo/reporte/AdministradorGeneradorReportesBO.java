@@ -23,6 +23,9 @@ import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -177,6 +180,60 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
             return lista;
         } catch (Exception e) {
             logger.error("Error AdministradorGeneradorReportesBO obtenerReservasSalaPorSala : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorFechas(String fechaInicio, String fechaFin) {
+        try {
+            List<ReservaModuloLaboratorio> lista = null;
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
+            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+            Date date1 = null;
+            Date date2 = null;
+            try {
+                date1 = formateador.parse(fechaInicio);
+            } catch (ParseException e) {
+                date1 = new Date();
+                formateador.format(date1);
+            }
+            try {
+                date2 = formateador.parse(fechaFin);
+            } catch (ParseException e) {
+                date2 = new Date();
+                formateador.format(date2);
+            }
+            lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorFechasYPeriodo(date1, date2, periodo.getIdperiodoacademico());
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO obtenerReservasModuloLaboratorioPorFechas : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<ReservaSala> obtenerReservasSalaPorFechas(String fechaInicio, String fechaFin) {
+        try {
+            List<ReservaSala> lista = null;
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
+            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+            Date date1 = null;
+            Date date2 = null;
+            try {
+                date1 = formateador.parse(fechaInicio);
+            } catch (ParseException e) {
+                date1 = new Date();
+                formateador.format(date1);
+            }
+            try {
+                date2 = formateador.parse(fechaFin);
+            } catch (ParseException e) {
+                date2 = new Date();
+                formateador.format(date2);
+            }
+            lista = reservaSalaDAO.consultarReservaSalasPorFechasYPeriodo(date1, date2, periodo.getIdperiodoacademico());
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO obtenerReservasSalaPorFechas : " + e.toString(), e);
             return null;
         }
     }

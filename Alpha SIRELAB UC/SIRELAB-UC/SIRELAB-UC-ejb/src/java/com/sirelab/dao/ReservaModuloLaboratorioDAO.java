@@ -221,6 +221,22 @@ public class ReservaModuloLaboratorioDAO implements ReservaModuloLaboratorioDAOI
             return null;
         }
     }
+    @Override
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorFechasYPeriodo(Date fechaInicio, Date fechaFin, BigInteger periodo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaModuloLaboratorio p WHERE p.reserva.fechareserva<=:fechaFin AND p.reserva.fechareserva>=:fechaInicio AND p.reserva.periodoacademico.idperiodoacademico=:periodo ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("fechaFin", fechaFin);
+            query.setParameter("fechaInicio", fechaInicio);
+            query.setParameter("periodo", periodo);
+            List<ReservaModuloLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaModuloLaboratorioPorFechasYPeriodo ReservaModuloLaboratorioDAO : " + e.toString(), e);
+            return null;
+        }
+    }
 
     @Override
     public List<ReservaModuloLaboratorio> buscarReservaModuloPorPersona(BigInteger persona) {

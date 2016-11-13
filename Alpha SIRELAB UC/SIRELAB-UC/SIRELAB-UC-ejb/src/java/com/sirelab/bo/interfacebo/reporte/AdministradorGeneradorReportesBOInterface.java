@@ -20,6 +20,10 @@ import java.util.List;
  */
 public interface AdministradorGeneradorReportesBOInterface {
 
+    public List<ReservaSala> obtenerReservasSalaPorFechas(String fechaInicio, String fechaFin);
+
+    public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorFechas(String fechaInicio, String fechaFin);
+
     public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorTipoUsuario(Integer usuario);
 
     public List<ReservaSala> obtenerReservasSalaPorTipoUsuario(Integer usuario);

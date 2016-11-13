@@ -19,6 +19,8 @@ public interface ReservaSalaDAOInterface {
 
     public List<ReservaSala> consultarReservaSalasPorTipoUsuarioYPeriodo(BigInteger tipoUsuario, BigInteger periodo);
 
+    public List<ReservaSala> consultarReservaSalasPorFechasYPeriodo(Date fechaInicio, Date fechaFin, BigInteger periodo);
+
     public void crearReservaSala(ReservaSala reserva);
 
     public List<ReservaSala> consultarReservaSalasSala(BigInteger periodo);

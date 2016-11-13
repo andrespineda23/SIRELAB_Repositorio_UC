@@ -130,21 +130,54 @@ and open the template in the editor.
                                 </h3>
                                 <p>Reporte de reservas realizadas según tipo de usuario en el periodo academico actual</p>
                                 <h:selectOneMenu value="#{controllerGeneradorReportes.tipoUsuario}"
-                                                 class="form-control" disabled="#{controllerDetallesSede.activarCasillas}"
+                                                 class="form-control" 
                                                  id="tipoUsuario">
                                     <f:selectItem itemLabel="TODOS" itemValue="null" />
                                     <f:selectItem itemLabel="ESTUDIANTE" itemValue="1" />
                                     <f:selectItem itemLabel="DOCENTE" itemValue="2" />
                                 </h:selectOneMenu>
                                 <br></br>
-                                <br></br>
-                                <br></br>
                                 <p>
                                     <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteReservasPorTipoUsuario()}"/>
                                 </p>
                             </div>
                         </div>
-                        <br></br>
+                        <div class="row col-md-12">
+                            <div class="col-md-12">
+                                <h3>
+                                    Reservas según fechas y tipo de reserva
+                                </h3>
+                                <p>Reporte de reservas realizadas según el tipo de reserva y rango de fechas en el periodo academico actual</p>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="fechaInicio">Fecha Inicial (dd/mm/yyyy)</label>
+                                        <h:inputText class="form-control" id="fechaInicio" value="#{controllerGeneradorReportes.fechaInicio}" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaFinal">Fecha Final (dd/mm/yyyy)</label>
+                                        <h:inputText class="form-control" id="fechaFinal" value="#{controllerGeneradorReportes.fechaFin}" />
+                                    </div>
+                                </form>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="tipoReserva">Tipo de Reserva</label>
+                                        <h:selectOneMenu value="#{controllerGeneradorReportes.tipoReserva}"
+                                                         class="form-control" 
+                                                         id="tipoReserva">
+                                            <f:selectItem itemLabel="TODOS" itemValue="null" />
+                                            <f:selectItem itemLabel="MODULO LABORATORIO" itemValue="1" />
+                                            <f:selectItem itemLabel="SALA DE LABORATORIO" itemValue="2" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </form>
+                                <div class="row right pull-right">
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteReservasPorParametros()}"/>
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-11"></div>
                             <div class="col-md-1">
