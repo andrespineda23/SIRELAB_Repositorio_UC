@@ -7,18 +7,24 @@ package com.sirelab.bo.reporte;
 
 import com.sirelab.bo.interfacebo.reporte.AdministradorGeneradorReportesBOInterface;
 import com.sirelab.dao.interfacedao.AdministradorEdificioDAOInterface;
+import com.sirelab.dao.interfacedao.ComponenteEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
+import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
+import com.sirelab.dao.interfacedao.ProveedorDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.ReservaSalaDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
+import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
@@ -44,6 +50,12 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
     EstudianteDAOInterface estudianteDAO;
     @EJB
     DocenteDAOInterface docenteDAO;
+    @EJB
+    ModuloLaboratorioDAOInterface moduloLaboratorioDAO;
+    @EJB
+    ComponenteEquipoDAOInterface componenteEquipoDAO;
+    @EJB
+    ProveedorDAOInterface proveedorDAO;
     @EJB
     EncargadoLaboratorioDAOInterface encargadoLaboratorioDAO;
     @EJB
@@ -95,7 +107,7 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
         try {
             List<ReservaModuloLaboratorio> lista = null;
             PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
-            if (null != usuario) {
+            if (0 != usuario) {
                 if (usuario == 1) {
                     lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorPeriodoYTipoUsuario(new BigInteger("3"), periodo.getIdperiodoacademico());
                 } else {
@@ -115,7 +127,7 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
         try {
             List<ReservaSala> lista = null;
             PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
-            if (null != usuario) {
+            if (0 != usuario) {
                 if (usuario == 1) {
                     lista = reservaSalaDAO.consultarReservaSalasPorTipoUsuarioYPeriodo(new BigInteger("3"), periodo.getIdperiodoacademico());
                 } else {
@@ -184,6 +196,34 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
         }
     }
 
+    public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorUsuario(String usuario) {
+        try {
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
+            List<ReservaModuloLaboratorio> lista = null;
+            if (null != usuario && !usuario.isEmpty()) {
+                lista = reservaModuloLaboratorioDAO.buscarReservaModuloLaboratorioPorUsuarioYPeriodo(usuario, periodo.getIdperiodoacademico());
+            }
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO obtenerReservasModuloLaboratorioPorUsuario : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<ReservaSala> obtenerReservasSalaPorUsuario(String usuario) {
+        try {
+            PeriodoAcademico periodo = periodoAcademicoDAO.buscarPeriodoAcademicoActual();
+            List<ReservaSala> lista = null;
+            if (null != usuario && !usuario.isEmpty()) {
+                lista = reservaSalaDAO.consultarReservaSalasPorUsuarioYPeriodo(usuario, periodo.getIdperiodoacademico());
+            }
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO obtenerReservasSalaPorUsuario : " + e.toString(), e);
+            return null;
+        }
+    }
+
     public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorFechas(String fechaInicio, String fechaFin) {
         try {
             List<ReservaModuloLaboratorio> lista = null;
@@ -244,6 +284,36 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
             return lista;
         } catch (Exception e) {
             logger.error("Error AdministradorGeneradorReportesBO consultarEquiposdeTrabajoRegistrados : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<ModuloLaboratorio> consultarModuloLaboratorioRegistrados() {
+        try {
+            List<ModuloLaboratorio> lista = moduloLaboratorioDAO.consultarModulosLaboratorios();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO consultarModuloLaboratorioRegistrados : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<ComponenteEquipo> consultarComponentesRegistrados() {
+        try {
+            List<ComponenteEquipo> lista = componenteEquipoDAO.consultarComponentesEquipos();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO consultarComponentesRegistrados : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public List<Proveedor> consultarProveedoresRegistrados() {
+        try {
+            List<Proveedor> lista = proveedorDAO.consultarProveedores();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO consultarProveedoresRegistrados : " + e.toString(), e);
             return null;
         }
     }

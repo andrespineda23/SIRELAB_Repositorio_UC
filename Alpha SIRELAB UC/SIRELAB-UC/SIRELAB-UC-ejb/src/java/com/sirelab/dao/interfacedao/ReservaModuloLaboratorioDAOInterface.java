@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public interface ReservaModuloLaboratorioDAOInterface {
 
+    public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorUsuarioYPeriodo(String usuario, BigInteger periodo);
+
     public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorFechasYPeriodo(Date fechaInicio, Date fechaFin, BigInteger periodo);
 
     public List<ReservaModuloLaboratorio> buscarReservaModuloLaboratorioPorPeriodoYTipoUsuario(BigInteger usuario, BigInteger periodo);

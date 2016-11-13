@@ -5,9 +5,12 @@
  */
 package com.sirelab.bo.interfacebo.reporte;
 
+import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
@@ -19,6 +22,12 @@ import java.util.List;
  * @author Administrator
  */
 public interface AdministradorGeneradorReportesBOInterface {
+
+    public List<Proveedor> consultarProveedoresRegistrados();
+
+    public List<ReservaSala> obtenerReservasSalaPorUsuario(String usuario);
+
+    public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorUsuario(String usuario);
 
     public List<ReservaSala> obtenerReservasSalaPorFechas(String fechaInicio, String fechaFin);
 
@@ -44,4 +53,7 @@ public interface AdministradorGeneradorReportesBOInterface {
 
     public List<ReservaSala> obtenerReservasSalaPorSala(BigInteger sala);
 
+    public List<ModuloLaboratorio> consultarModuloLaboratorioRegistrados();
+
+    public List<ComponenteEquipo> consultarComponentesRegistrados();
 }

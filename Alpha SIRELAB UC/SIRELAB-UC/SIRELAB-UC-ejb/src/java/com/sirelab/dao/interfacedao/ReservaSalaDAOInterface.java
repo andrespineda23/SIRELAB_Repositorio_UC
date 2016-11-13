@@ -23,6 +23,8 @@ public interface ReservaSalaDAOInterface {
 
     public void crearReservaSala(ReservaSala reserva);
 
+    public List<ReservaSala> consultarReservaSalasPorUsuarioYPeriodo(String usuario, BigInteger periodo);
+
     public List<ReservaSala> consultarReservaSalasSala(BigInteger periodo);
 
     public void editarReservaSala(ReservaSala reserva);

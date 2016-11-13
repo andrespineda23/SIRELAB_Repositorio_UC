@@ -63,7 +63,7 @@ public class ComponenteEquipoDAO implements ComponenteEquipoDAOInterface {
     public List<ComponenteEquipo> consultarComponentesEquipos() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ComponenteEquipo p ORDER BY p.codigocomponete ASC");
+            Query query = em.createQuery("SELECT p FROM ComponenteEquipo p ORDER BY p.equipoelemento.inventarioequipo ASC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<ComponenteEquipo> lista = query.getResultList();
             return lista;

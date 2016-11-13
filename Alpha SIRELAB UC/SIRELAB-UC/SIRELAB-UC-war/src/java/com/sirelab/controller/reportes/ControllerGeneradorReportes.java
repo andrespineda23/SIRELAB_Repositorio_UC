@@ -7,9 +7,12 @@ package com.sirelab.controller.reportes;
 
 import com.sirelab.ayuda.ReservasGenerador;
 import com.sirelab.bo.interfacebo.reporte.AdministradorGeneradorReportesBOInterface;
+import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
+import com.sirelab.entidades.Proveedor;
 import com.sirelab.entidades.ReservaModuloLaboratorio;
 import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
@@ -59,14 +62,16 @@ public class ControllerGeneradorReportes implements Serializable {
     private List<ReservasGenerador> listaReservasGenerador;
     private String fechaInicio, fechaFin;
     private Integer tipoReserva;
+    private String idUsuario;
 
     public ControllerGeneradorReportes() {
     }
 
     @PostConstruct
     public void init() {
-        tipoReserva = 1;
+        tipoReserva = 0;
         nombreReporte = "";
+        idUsuario = null;
         listaReservasGenerador = null;
         tipoUsuarioReserva = "";
         listaPeriodosAcademicos = null;
@@ -74,7 +79,7 @@ public class ControllerGeneradorReportes implements Serializable {
         fechaFin = null;
         fechaInicio = null;
         listaSalasLaboratorio = null;
-        tipoUsuario = null;
+        tipoUsuario = 0;
         salaLaboratorio = null;
     }
 
@@ -85,13 +90,14 @@ public class ControllerGeneradorReportes implements Serializable {
     public String paginaAnterior() {
         nombreReporte = "";
         tipoUsuarioReserva = "";
+        idUsuario = null;
         listaPeriodosAcademicos = null;
         fechaFin = null;
         fechaInicio = null;
         periodo = null;
         listaSalasLaboratorio = null;
-        tipoReserva = 1;
-        tipoUsuario = null;
+        tipoReserva = 0;
+        tipoUsuario = 0;
         salaLaboratorio = null;
         return paginaAnterior;
     }
@@ -111,11 +117,11 @@ public class ControllerGeneradorReportes implements Serializable {
         Workbook libro = new HSSFWorkbook();
         FileOutputStream archivo = new FileOutputStream(archivoXLS);
         Sheet hoja = libro.createSheet("USUARIOS REGISTRADOS");
-        List<Persona> equipos = administradorGeneradorReportesBO.obtenerPersonasDelSistema();
-        int tamtotal = equipos.size();
+        List<Persona> personas = administradorGeneradorReportesBO.obtenerPersonasDelSistema();
+        int tamtotal = personas.size();
         for (int f = 0; f < tamtotal; f++) {
             Row fila = hoja.createRow(f);
-            Persona equipo = equipos.get(f);
+            Persona persona = personas.get(f);
             for (int c = 0; c < 10; c++) {
                 Cell celda = fila.createCell(c);
                 if (f == 0) {
@@ -142,25 +148,78 @@ public class ControllerGeneradorReportes implements Serializable {
                     }
                 } else {
                     if (c == 0) {
-                        celda.setCellValue(equipo.getNombrespersona());
+                        celda.setCellValue(persona.getNombrespersona());
                     } else if (c == 1) {
-                        celda.setCellValue(equipo.getApellidospersona());
+                        celda.setCellValue(persona.getApellidospersona());
                     } else if (c == 2) {
-                        celda.setCellValue(equipo.getIdentificacionpersona());
+                        celda.setCellValue(persona.getIdentificacionpersona());
                     } else if (c == 3) {
-                        celda.setCellValue(equipo.getEmailpersona());
+                        celda.setCellValue(persona.getEmailpersona());
                     } else if (c == 4) {
-                        celda.setCellValue(equipo.getTelefono1persona());
+                        celda.setCellValue(persona.getTelefono1persona());
                     } else if (c == 5) {
-                        celda.setCellValue(equipo.getTelefono2persona());
+                        celda.setCellValue(persona.getTelefono2persona());
                     } else if (c == 6) {
-                        celda.setCellValue(equipo.getDireccionpersona());
+                        celda.setCellValue(persona.getDireccionpersona());
                     } else if (c == 7) {
-                        celda.setCellValue(equipo.getUsuario().getNombreusuario());
+                        celda.setCellValue(persona.getUsuario().getNombreusuario());
                     } else if (c == 8) {
-                        celda.setCellValue(equipo.getUsuario().getTipousuario().getNombretipousuario());
+                        celda.setCellValue(persona.getUsuario().getTipousuario().getNombretipousuario());
                     } else if (c == 9) {
-                        celda.setCellValue(equipo.getUsuario().getStrEstado());
+                        celda.setCellValue(persona.getUsuario().getStrEstado());
+                    }
+                }
+            }
+        }
+        libro.write(archivo);
+        archivo.close();
+        descargarArchivo(rutaArchivo);
+    }
+
+    public void reporteProveedoresSistema() throws Exception {
+        String rutaArchivo = "";
+        if (validarNombreReporte()) {
+            rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
+        } else {
+            rutaArchivo = System.getProperty("user.home") + "/" + "PROVEEDORES" + ".xls";
+        }
+        File archivoXLS = new File(rutaArchivo);
+        if (archivoXLS.exists()) {
+            archivoXLS.delete();
+        }
+        archivoXLS.createNewFile();
+        Workbook libro = new HSSFWorkbook();
+        FileOutputStream archivo = new FileOutputStream(archivoXLS);
+        Sheet hoja = libro.createSheet("PROVEEDORES");
+        List<Proveedor> proveedores = administradorGeneradorReportesBO.consultarProveedoresRegistrados();
+        int tamtotal = 0;
+        if (null != proveedores) {
+            tamtotal = proveedores.size();
+        }
+        for (int f = 0; f < tamtotal; f++) {
+            Row fila = hoja.createRow(f);
+            Proveedor proveedor = proveedores.get(f);
+            for (int c = 0; c < 4; c++) {
+                Cell celda = fila.createCell(c);
+                if (f == 0) {
+                    if (c == 0) {
+                        celda.setCellValue("NIT_PROVEEDOR");
+                    } else if (c == 1) {
+                        celda.setCellValue("NOMBRE_PROVEEDOR");
+                    } else if (c == 2) {
+                        celda.setCellValue("DIRECCION");
+                    } else if (c == 3) {
+                        celda.setCellValue("TELEFONO");
+                    }
+                } else {
+                    if (c == 0) {
+                        celda.setCellValue(proveedor.getNitproveedor());
+                    } else if (c == 1) {
+                        celda.setCellValue(proveedor.getNombreproveedor());
+                    } else if (c == 2) {
+                        celda.setCellValue(proveedor.getDireccionproveedor());
+                    } else if (c == 3) {
+                        celda.setCellValue(proveedor.getTelefonoproveedor());
                     }
                 }
             }
@@ -198,9 +257,12 @@ public class ControllerGeneradorReportes implements Serializable {
         archivoXLS.createNewFile();
         Workbook libro = new HSSFWorkbook();
         FileOutputStream archivo = new FileOutputStream(archivoXLS);
-        Sheet hoja = libro.createSheet("SALAS LABORATORIO");
+        Sheet hoja = libro.createSheet("SALAS_LABORATORIO");
         List<SalaLaboratorio> salas = administradorGeneradorReportesBO.obtenerSalasLaboratorio();
-        int tamtotal = salas.size();
+        int tamtotal = 0;
+        if (null != salas) {
+            tamtotal = salas.size();
+        }
         for (int f = 0; f < tamtotal; f++) {
             Row fila = hoja.createRow(f);
             SalaLaboratorio sala = salas.get(f);
@@ -544,7 +606,7 @@ public class ControllerGeneradorReportes implements Serializable {
         Workbook libro = new HSSFWorkbook();
         FileOutputStream archivo = new FileOutputStream(archivoXLS);
         Sheet hoja = libro.createSheet("RESERVAS");
-        if (null == tipoReserva) {
+        if (0 == tipoReserva) {
             List<ReservaModuloLaboratorio> reservamodulo = administradorGeneradorReportesBO.obtenerReservasModuloLaboratorioPorFechas(fechaInicio, fechaFin);
             convertirReservasModulo(reservamodulo);
             List<ReservaSala> reservasala = administradorGeneradorReportesBO.obtenerReservasSalaPorFechas(fechaInicio, fechaFin);
@@ -558,6 +620,96 @@ public class ControllerGeneradorReportes implements Serializable {
                 convertirReservasSala(reservasala);
             }
         }
+        int tamtotal = listaReservasGenerador.size();
+        for (int f = 0; f < tamtotal; f++) {
+            Row fila = hoja.createRow(f);
+            ReservasGenerador reserva = listaReservasGenerador.get(f);
+            for (int c = 0; c < 13; c++) {
+                Cell celda = fila.createCell(c);
+                if (f == 0) {
+                    if (c == 0) {
+                        celda.setCellValue("ID_RESERVA");
+                    } else if (c == 1) {
+                        celda.setCellValue("RESERVA");
+                    } else if (c == 2) {
+                        celda.setCellValue("FECHA_RESERVA");
+                    } else if (c == 3) {
+                        celda.setCellValue("HORA_RESERVA");
+                    } else if (c == 4) {
+                        celda.setCellValue("HORA_REAL");
+                    } else if (c == 5) {
+                        celda.setCellValue("TIPO_RESERVA");
+                    } else if (c == 6) {
+                        celda.setCellValue("SERVICIO");
+                    } else if (c == 7) {
+                        celda.setCellValue("LABORATORIO");
+                    } else if (c == 8) {
+                        celda.setCellValue("SALA_LABORATORIO");
+                    } else if (c == 9) {
+                        celda.setCellValue("ESTADO");
+                    } else if (c == 10) {
+                        celda.setCellValue("TIPO_USUARIO");
+                    } else if (c == 11) {
+                        celda.setCellValue("USUARIO");
+                    } else if (c == 12) {
+                        celda.setCellValue("ID_USUARIO");
+                    }
+                } else {
+                    if (c == 0) {
+                        celda.setCellValue(reserva.getID_RESERVA());
+                    } else if (c == 1) {
+                        celda.setCellValue(reserva.getRESERVA());
+                    } else if (c == 2) {
+                        celda.setCellValue(reserva.getFECHA_RESERVA());
+                    } else if (c == 3) {
+                        celda.setCellValue(reserva.getHORA_RESERVA());
+                    } else if (c == 4) {
+                        celda.setCellValue(reserva.getHORA_REAL());
+                    } else if (c == 5) {
+                        celda.setCellValue(reserva.getTIPO_RESERVA());
+                    } else if (c == 6) {
+                        celda.setCellValue(reserva.getSERVICIO());
+                    } else if (c == 7) {
+                        celda.setCellValue(reserva.getLABORATORIO());
+                    } else if (c == 8) {
+                        celda.setCellValue(reserva.getSALA_LABORATORIO());
+                    } else if (c == 9) {
+                        celda.setCellValue(reserva.getESTADO());
+                    } else if (c == 10) {
+                        celda.setCellValue(reserva.getTIPO_USUARIO());
+                    } else if (c == 11) {
+                        celda.setCellValue(reserva.getUSUARIO());
+                    } else if (c == 12) {
+                        celda.setCellValue(reserva.getID_USUARIO());
+                    }
+                }
+            }
+        }
+        libro.write(archivo);
+        archivo.close();
+        descargarArchivo(rutaArchivo);
+    }
+
+    public void reporteReservasPorIdUsuario() throws Exception {
+        listaReservasGenerador = null;
+        String rutaArchivo = "";
+        if (validarNombreReporte()) {
+            rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
+        } else {
+            rutaArchivo = System.getProperty("user.home") + "/" + "RESERVAS_POR_USUARIO" + ".xls";
+        }
+        File archivoXLS = new File(rutaArchivo);
+        if (archivoXLS.exists()) {
+            archivoXLS.delete();
+        }
+        archivoXLS.createNewFile();
+        Workbook libro = new HSSFWorkbook();
+        FileOutputStream archivo = new FileOutputStream(archivoXLS);
+        Sheet hoja = libro.createSheet("RESERVAS");
+        List<ReservaModuloLaboratorio> reservamodulo = administradorGeneradorReportesBO.obtenerReservasModuloLaboratorioPorUsuario(idUsuario);
+        convertirReservasModulo(reservamodulo);
+        List<ReservaSala> reservasala = administradorGeneradorReportesBO.obtenerReservasSalaPorUsuario(idUsuario);
+        convertirReservasSala(reservasala);
         int tamtotal = listaReservasGenerador.size();
         for (int f = 0; f < tamtotal; f++) {
             Row fila = hoja.createRow(f);
@@ -752,11 +904,14 @@ public class ControllerGeneradorReportes implements Serializable {
         FileOutputStream archivo = new FileOutputStream(archivoXLS);
         Sheet hoja = libro.createSheet("EQUIPOS DE TRABAJO");
         List<EquipoElemento> equipos = administradorGeneradorReportesBO.consultarEquiposdeTrabajoRegistrados();
-        int tamtotal = equipos.size();
+        int tamtotal = 0;
+        if (null != equipos) {
+            tamtotal = equipos.size();
+        }
         for (int f = 0; f < tamtotal; f++) {
             Row fila = hoja.createRow(f);
             EquipoElemento equipo = equipos.get(f);
-            for (int c = 0; c < 10; c++) {
+            for (int c = 0; c < 13; c++) {
                 Cell celda = fila.createCell(c);
                 if (f == 0) {
                     if (c == 0) {
@@ -813,6 +968,156 @@ public class ControllerGeneradorReportes implements Serializable {
                         celda.setCellValue(equipo.getModulolaboratorio().getDetallemodulo());
                     } else if (c == 12) {
                         celda.setCellValue(equipo.getEstadoequipo().getNombreestadoequipo());
+                    }
+                }
+            }
+        }
+        libro.write(archivo);
+        archivo.close();
+        descargarArchivo(rutaArchivo);
+    }
+
+    public void reporteModulosLaboratorio() throws Exception {
+        String rutaArchivo = "";
+        if (validarNombreReporte()) {
+            rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
+        } else {
+            rutaArchivo = System.getProperty("user.home") + "/" + "MODULOS_LABORATORIO_REGISTRADOS" + ".xls";
+        }
+        File archivoXLS = new File(rutaArchivo);
+        if (archivoXLS.exists()) {
+            archivoXLS.delete();
+        }
+        archivoXLS.createNewFile();
+        Workbook libro = new HSSFWorkbook();
+        FileOutputStream archivo = new FileOutputStream(archivoXLS);
+        Sheet hoja = libro.createSheet("MODULOS_REGISTRADOS");
+        List<ModuloLaboratorio> modulos = administradorGeneradorReportesBO.consultarModuloLaboratorioRegistrados();
+        int tamtotal = 0;
+        if (null != modulos) {
+            tamtotal = modulos.size();
+        }
+        for (int f = 0; f < tamtotal; f++) {
+            Row fila = hoja.createRow(f);
+            ModuloLaboratorio modulo = modulos.get(f);
+            for (int c = 0; c < 7; c++) {
+                Cell celda = fila.createCell(c);
+                if (f == 0) {
+                    if (c == 0) {
+                        celda.setCellValue("CODIGO_MODULO");
+                    } else if (c == 1) {
+                        celda.setCellValue("NOMBRE");
+                    } else if (c == 2) {
+                        celda.setCellValue("ESTADO");
+                    } else if (c == 3) {
+                        celda.setCellValue("CAPACIDAD");
+                    } else if (c == 4) {
+                        celda.setCellValue("COSTO_ALQUILER");
+                    } else if (c == 5) {
+                        celda.setCellValue("SALA_LABORATORIO");
+                    } else if (c == 6) {
+                        celda.setCellValue("LABORATORIO");
+                    }
+                } else {
+                    if (c == 0) {
+                        celda.setCellValue(modulo.getCodigomodulo());
+                    } else if (c == 1) {
+                        celda.setCellValue(modulo.getDetallemodulo());
+                    } else if (c == 2) {
+                        celda.setCellValue(modulo.getStrEstado());
+                    } else if (c == 3) {
+                        celda.setCellValue(modulo.getCapacidadmodulo());
+                    } else if (c == 4) {
+                        celda.setCellValue(modulo.getCostoalquiler().toString());
+                    } else if (c == 5) {
+                        celda.setCellValue(modulo.getSalalaboratorio().getNombresala());
+                    } else if (c == 6) {
+                        celda.setCellValue(modulo.getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
+                    }
+                }
+            }
+        }
+        libro.write(archivo);
+        archivo.close();
+        descargarArchivo(rutaArchivo);
+    }
+
+    public void reporteComponentes() throws Exception {
+        String rutaArchivo = "";
+        if (validarNombreReporte()) {
+            rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
+        } else {
+            rutaArchivo = System.getProperty("user.home") + "/" + "COMPONENTES_REGISTRADOS" + ".xls";
+        }
+        File archivoXLS = new File(rutaArchivo);
+        if (archivoXLS.exists()) {
+            archivoXLS.delete();
+        }
+        archivoXLS.createNewFile();
+        Workbook libro = new HSSFWorkbook();
+        FileOutputStream archivo = new FileOutputStream(archivoXLS);
+        Sheet hoja = libro.createSheet("COMPONENTES");
+        List<ComponenteEquipo> componentes = administradorGeneradorReportesBO.consultarComponentesRegistrados();
+        int tamtotal = 0;
+        if (null != componentes) {
+            tamtotal = componentes.size();
+        }
+        for (int f = 0; f < tamtotal; f++) {
+            Row fila = hoja.createRow(f);
+            ComponenteEquipo componente = componentes.get(f);
+            for (int c = 0; c < 12; c++) {
+                Cell celda = fila.createCell(c);
+                if (f == 0) {
+                    if (c == 0) {
+                        celda.setCellValue("CODIGO");
+                    } else if (c == 1) {
+                        celda.setCellValue("NOMBRE");
+                    } else if (c == 2) {
+                        celda.setCellValue("DESCRIPCION");
+                    } else if (c == 3) {
+                        celda.setCellValue("MARCA");
+                    } else if (c == 4) {
+                        celda.setCellValue("MODELO");
+                    } else if (c == 5) {
+                        celda.setCellValue("SERIAL");
+                    } else if (c == 6) {
+                        celda.setCellValue("TIPO_COMPONENTE");
+                    } else if (c == 7) {
+                        celda.setCellValue("ESTADO");
+                    } else if (c == 8) {
+                        celda.setCellValue("EQUIPO_TRABAJO");
+                    } else if (c == 9) {
+                        celda.setCellValue("MODULO_LABORATORIO");
+                    } else if (c == 10) {
+                        celda.setCellValue("SALA_LABORATORIO");
+                    } else if (c == 11) {
+                        celda.setCellValue("LABORATORIO");
+                    }
+                } else {
+                    if (c == 0) {
+                        celda.setCellValue(componente.getCodigocomponete());
+                    } else if (c == 1) {
+                        celda.setCellValue(componente.getNombrecomponente());
+                    } else if (c == 2) {
+                        celda.setCellValue(componente.getDescripcioncomponente());
+                    } else if (c == 3) {
+                        celda.setCellValue(componente.getMarcacomponente());
+                    } else if (c == 4) {
+                        celda.setCellValue(componente.getModelocomponente());
+                    } else if (c == 5) {
+                        celda.setCellValue(componente.getSerialcomponente());
+                    } else if (c == 6) {
+                        celda.setCellValue(componente.getTipocomponente().getNombretipo());
+                    } else if (c == 7) {
+                        celda.setCellValue(componente.getStrEstado());
+                    } else if (c == 8) {
+                        celda.setCellValue(componente.getEquipoelemento().getNombreequipo());
+                    } else if (c == 9) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getDetallemodulo());
+                    } else if (c == 10) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getNombresala());
+                    } else if (c == 11) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
                     }
                 }
             }
@@ -914,6 +1219,14 @@ public class ControllerGeneradorReportes implements Serializable {
 
     public void setTipoReserva(Integer tipoReserva) {
         this.tipoReserva = tipoReserva;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
 }

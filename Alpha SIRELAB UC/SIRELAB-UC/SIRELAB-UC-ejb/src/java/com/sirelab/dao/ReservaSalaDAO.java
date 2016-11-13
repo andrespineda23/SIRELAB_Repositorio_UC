@@ -139,6 +139,22 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             return null;
         }
     }
+    
+    @Override
+    public List<ReservaSala> consultarReservaSalasPorUsuarioYPeriodo(String usuario, BigInteger periodo) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.reserva.persona.identificacionpersona=:usuario AND p.reserva.periodoacademico.idperiodoacademico=:periodo ORDER BY p.reserva.fechareserva ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("usuario", usuario);
+            query.setParameter("periodo", periodo);
+            List<ReservaSala> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error consultarReservaSalasPorUsuarioYPeriodo ReservaSalaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
 
     @Override
     public ReservaSala buscarReservaSalaPorID(BigInteger idRegistro) {

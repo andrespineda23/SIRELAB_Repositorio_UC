@@ -37,65 +37,18 @@ and open the template in the editor.
                         </div>
                         <div class="row col-md-12">
                             <div class="form-group">
-                                <strong><h:outputText value="Nombre del Reporte: "/></strong>
-                                <h:inputText maxlength="45" value="#{controllerGeneradorReportes.nombreReporte}"   class="form-control" />
-                            </div>
-                        </div>
-                        <div class="row col-md-12">
-                            <div class="col-md-4">
-                                <h3>
-                                    Usuarios
-                                </h3>
-                                <p>
-                                    Reporte de usuarios registrados en el sistema.
-                                </p>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <p>
-                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteUsuariosSistema()}"/>
-                                </p>
-                            </div>
-                            <div class="col-md-4">
-                                <h3>
-                                    Salas de Laboratorio
-                                </h3>
-                                <p>
-                                    Reporte de salas de laboratorio registradas en el sistema.
-                                </p>
-                                <br></br>
-                                <p>
-                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteSalasLaboratorio()}"/>
-                                </p>
-                            </div>
-                            <div class="col-md-4">
-                                <h3>
-                                    Reservas Por Periodo Academico
-                                </h3>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Seleccione el periodo academico al cual desea consultar las reservas realizadas: "/></strong>
-                                    <h:selectOneMenu value="#{controllerGeneradorReportes.periodo}"
-                                                     class="form-control" 
-                                                     id="periodoAcademico">
-                                        <f:selectItem itemLabel="Seleccione Periodo" itemValue="null" />
-                                        <f:selectItems value="#{controllerGeneradorReportes.listaPeriodosAcademicos}" var="per"
-                                                       itemLabel="#{per.detalleperiodo}" itemValue="#{per}"/>
-                                        <f:converter converterId="ConverterGenerico" />
-                                    </h:selectOneMenu>
-                                </div>
-                                <p>
-                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteReservasPorPeriodo()}"/>
-                                </p>
+                                <strong><h:outputText value="Nombre del Reporte (Max. 100 caracteres): "/></strong>
+                                <h:inputText maxlength="100" value="#{controllerGeneradorReportes.nombreReporte}"   class="form-control" />
                             </div>
                         </div>
                         <hr/>
                         <div class="row col-md-12">
                             <div class="col-md-4">
                                 <h3>
-                                    Reservas Por Sala Laboratorio
+                                    Reservas por sala laboratorio.
                                 </h3>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Reservas del periodo academico actual por sala de laboratorio"/></strong>
+                                    <strong><h:outputText value="Reservas del periodo académico actual por sala de laboratorio"/></strong>
                                     <h:selectOneMenu value="#{controllerGeneradorReportes.salaLaboratorio}"
                                                      class="form-control" 
                                                      id="salalaboratorio">
@@ -112,27 +65,32 @@ and open the template in the editor.
                             </div>
                             <div class="col-md-4">
                                 <h3>
-                                    Equipos de Trabajo
+                                    Reservas por periodo académico.
                                 </h3>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Seleccione el periodo académico al cual desea consultar las reservas realizadas: "/></strong>
+                                    <h:selectOneMenu value="#{controllerGeneradorReportes.periodo}"
+                                                     class="form-control" 
+                                                     id="periodoAcademico">
+                                        <f:selectItem itemLabel="Seleccione Periodo" itemValue="null" />
+                                        <f:selectItems value="#{controllerGeneradorReportes.listaPeriodosAcademicos}" var="per"
+                                                       itemLabel="#{per.detalleperiodo}" itemValue="#{per}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                    </h:selectOneMenu>
+                                </div>
                                 <p>
-                                    Reporte de equipos registrados por los laboratorios.
-                                </p>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <p>
-                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteEquiposdeTrabajo()}" />
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteReservasPorPeriodo()}"/>
                                 </p>
                             </div>
                             <div class="col-md-4">
                                 <h3>
-                                    Reservas por Tipo de Usuario
+                                    Reservas por tipo de usuario.
                                 </h3>
-                                <p>Reporte de reservas realizadas según tipo de usuario en el periodo academico actual</p>
+                                <p>Reporte de reservas realizadas según tipo de usuario en el periodo académico actual</p>
                                 <h:selectOneMenu value="#{controllerGeneradorReportes.tipoUsuario}"
                                                  class="form-control" 
                                                  id="tipoUsuario">
-                                    <f:selectItem itemLabel="TODOS" itemValue="null" />
+                                    <f:selectItem itemLabel="TODOS" itemValue="0" />
                                     <f:selectItem itemLabel="ESTUDIANTE" itemValue="1" />
                                     <f:selectItem itemLabel="DOCENTE" itemValue="2" />
                                 </h:selectOneMenu>
@@ -145,31 +103,29 @@ and open the template in the editor.
                         <div class="row col-md-12">
                             <div class="col-md-12">
                                 <h3>
-                                    Reservas según fechas y tipo de reserva
+                                    Reservas según fechas y tipo de reserva.
                                 </h3>
-                                <p>Reporte de reservas realizadas según el tipo de reserva y rango de fechas en el periodo academico actual</p>
-                                <form class="form-inline">
-                                    <div class="form-group">
-                                        <label for="fechaInicio">Fecha Inicial (dd/mm/yyyy)</label>
-                                        <h:inputText class="form-control" id="fechaInicio" value="#{controllerGeneradorReportes.fechaInicio}" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fechaFinal">Fecha Final (dd/mm/yyyy)</label>
-                                        <h:inputText class="form-control" id="fechaFinal" value="#{controllerGeneradorReportes.fechaFin}" />
-                                    </div>
-                                </form>
-                                <form class="form-inline">
-                                    <div class="form-group">
-                                        <label for="tipoReserva">Tipo de Reserva</label>
-                                        <h:selectOneMenu value="#{controllerGeneradorReportes.tipoReserva}"
-                                                         class="form-control" 
-                                                         id="tipoReserva">
-                                            <f:selectItem itemLabel="TODOS" itemValue="null" />
-                                            <f:selectItem itemLabel="MODULO LABORATORIO" itemValue="1" />
-                                            <f:selectItem itemLabel="SALA DE LABORATORIO" itemValue="2" />
-                                        </h:selectOneMenu>
-                                    </div>
-                                </form>
+                                <p>Reporte de reservas realizadas según el tipo de reserva y rango de fechas en el periodo ácademico actual</p>
+                                <div class="form-group">
+                                    <label for="fechaInicio">Fecha Inicial (dd/mm/yyyy)</label>
+                                    <h:inputText class="form-control" id="fechaInicio" value="#{controllerGeneradorReportes.fechaInicio}" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaFinal">Fecha Final (dd/mm/yyyy)</label>
+                                    <h:inputText class="form-control" id="fechaFinal" value="#{controllerGeneradorReportes.fechaFin}" />
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="tipoReserva">Tipo de Reserva</label>
+                                    <h:selectOneMenu value="#{controllerGeneradorReportes.tipoReserva}"
+                                                     class="form-control" 
+                                                     id="tipoReserva">
+                                        <f:selectItem itemLabel="TODOS" itemValue="0" />
+                                        <f:selectItem itemLabel="MODULO LABORATORIO" itemValue="1" />
+                                        <f:selectItem itemLabel="SALA DE LABORATORIO" itemValue="2" />
+                                    </h:selectOneMenu>
+                                </div>
                                 <div class="row right pull-right">
                                     <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteReservasPorParametros()}"/>
                                 </div>
@@ -177,6 +133,109 @@ and open the template in the editor.
                                 <br></br>
                                 <br></br>
                             </div>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="col-md-12">
+                                <h3>
+                                    Reservas por identificación de usuario.
+                                </h3>
+                                <p>Reporte de reservas por un usuario en el periodo académico actual</p>
+                                <div class="form-group">
+                                    <label for="idUsuario">Identificación de Usuario</label>
+                                    <h:inputText class="form-control" id="idUsuario" value="#{controllerGeneradorReportes.idUsuario}" />
+                                </div>
+                                <div class="row right pull-right">
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteReservasPorIdUsuario()}"/>
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                            </div>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="col-md-4">
+                                <h3>
+                                    Módulos de laboratorio registrados.
+                                </h3>
+                                <p>
+                                    Reporte de módulos de laboratorio registrados en el sistema.
+                                </p>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteModulosLaboratorio()}"/>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>
+                                    Salas de laboratorio registradas.
+                                </h3>
+                                <p>
+                                    Reporte de salas de laboratorio registradas en el sistema.
+                                </p>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteSalasLaboratorio()}"/>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>
+                                    Equipos de trabajo registrados.
+                                </h3>
+                                <p>
+                                    Reporte de equipos registrados por los laboratorios.
+                                </p>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteEquiposdeTrabajo()}" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="col-md-4">
+                                <h3>
+                                    Proveedores registrados.
+                                </h3>
+                                <p>
+                                    Reporte de proveedores registrados en el sistema.
+                                </p>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteUsuariosSistema()}"/>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>
+                                    Usuarios registrados.
+                                </h3>
+                                <p>
+                                    Reporte de usuarios registrados en el sistema.
+                                </p>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteUsuariosSistema()}"/>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>
+                                    Componentes de equipo registrados.
+                                </h3>
+                                <p>
+                                    Reporte de componentes de equipos de trabajo registrados en el sistema.
+                                </p>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteComponentes()}"/>
+                                </p>
+                            </div>
+                            <br></br>
+                            <br></br>
+                            <br></br>
                         </div>
                         <div class="row">
                             <div class="col-md-11"></div>
