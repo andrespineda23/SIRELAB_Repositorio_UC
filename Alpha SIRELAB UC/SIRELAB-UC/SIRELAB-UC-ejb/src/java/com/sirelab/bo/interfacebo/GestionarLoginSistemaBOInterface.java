@@ -51,4 +51,8 @@ public interface GestionarLoginSistemaBOInterface {
     public List<PlanEstudios> obtenerListasPlanesEstudioActivosPorCarrera(BigInteger idCarrera);
 
     public Usuario obtenerUsuarioCambioContrasenia(String usuario, BigInteger identificacion);
+
+    public Persona obtenerPersonaSistemaPorIdentificacion(String identificacion);
+
+    public Persona obtenerPersonaSistemaPorCorreo(String correo);
 }

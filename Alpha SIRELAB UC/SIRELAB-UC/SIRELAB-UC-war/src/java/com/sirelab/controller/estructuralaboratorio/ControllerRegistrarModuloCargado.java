@@ -14,6 +14,7 @@ import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -66,9 +67,9 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         validacionesInversion = true;
         nuevoCodigoModulo = null;
         nuevoDetalleModulo = null;
-        nuevoCostoModulo = null;
-        nuevoCapacidadModulo = null;
-        nuevoInversionModulo = null;
+        nuevoCostoModulo = "0";
+        nuevoCapacidadModulo = "0";
+        nuevoInversionModulo = "0";
         mensajeError = "";
         constantes = new MensajesConstantes();
         BasicConfigurator.configure();
@@ -96,9 +97,9 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         nuevoCodigoModulo = null;
         nuevoDetalleModulo = null;
         mensajeError = "";
-        nuevoCostoModulo = null;
-        nuevoCapacidadModulo = null;
-        nuevoInversionModulo = null;
+        nuevoCostoModulo = "0";
+        nuevoCapacidadModulo = "0";
+        nuevoInversionModulo = "0";
     }
 
     public void validarDetalleModulo() {
@@ -210,6 +211,21 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         return retorno;
     }
 
+    private boolean validarCapacidadSala() {
+        boolean retorno = true;
+        List<ModuloLaboratorio> modulos = gestionarPlantaModulosBO.consultarModulosLaboratorioPorIdSala(nuevoSalaLaboratorioModulo.getIdsalalaboratorio());
+        int capacidad = 0;
+        if (null != modulos) {
+            capacidad = modulos.size();
+        }
+        if (nuevoSalaLaboratorioModulo.getCapacidadsala() > capacidad) {
+            retorno = true;
+        } else {
+            retorno = false;
+        }
+        return retorno;
+    }
+
     /**
      * Metodo encargado de realizar el registro y validaciones de la información
      * del nuevo docente
@@ -217,20 +233,25 @@ public class ControllerRegistrarModuloCargado implements Serializable {
     public void registrarNuevoModulo() {
         if (validarResultadosValidacion() == true) {
             if (validarCodigoRepetido() == true) {
-                almacenaNuevoModuloEnSistema();
-                limpiarFormulario();
-                activarLimpiar = false;
-                activarAceptar = true;
-                activarCasillas = true;
-                colorMensaje = "green";
-                mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                if (validarCapacidadSala() == true) {
+                    almacenaNuevoModuloEnSistema();
+                    limpiarFormulario();
+                    activarLimpiar = false;
+                    activarAceptar = true;
+                    activarCasillas = true;
+                    colorMensaje = "green";
+                    mensajeFormulario = "El formulario ha sido ingresado con exito.";
+                } else {
+                    colorMensaje = "#FF0000";
+                    mensajeFormulario = "La capacidad de la sala de laboratorio se encuentra completa.";
+                }
             } else {
                 colorMensaje = "#FF0000";
                 mensajeFormulario = "El codigo ya esta registrado en el sistema.";
             }
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: "+mensajeError;
+            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar. Errores: " + mensajeError;
         }
     }
 
@@ -239,15 +260,39 @@ public class ControllerRegistrarModuloCargado implements Serializable {
             ModuloLaboratorio salaNuevo = new ModuloLaboratorio();
             salaNuevo.setCodigomodulo(nuevoCodigoModulo);
             salaNuevo.setDetallemodulo(nuevoDetalleModulo);
-            salaNuevo.setCostoalquiler(new BigInteger(nuevoCostoModulo));
-            salaNuevo.setCostomodulo(new BigInteger(nuevoInversionModulo));
-            salaNuevo.setCapacidadmodulo(Integer.valueOf(nuevoCapacidadModulo));
+            try {
+                if (Utilidades.validarNulo(nuevoCostoModulo) && (!nuevoCostoModulo.isEmpty()) && (nuevoCostoModulo.trim().length() > 0)) {
+                    salaNuevo.setCostoalquiler(new BigInteger(nuevoCostoModulo));
+                } else {
+                    salaNuevo.setCostoalquiler(new BigInteger("0"));
+                }
+            } catch (Exception e) {
+                salaNuevo.setCostoalquiler(new BigInteger("0"));
+            }
+            try {
+                if (Utilidades.validarNulo(nuevoInversionModulo) && (!nuevoInversionModulo.isEmpty()) && (nuevoInversionModulo.trim().length() > 0)) {
+                    salaNuevo.setCostomodulo(new BigInteger(nuevoInversionModulo));
+                } else {
+                    salaNuevo.setCostomodulo(new BigInteger("0"));
+                }
+            } catch (Exception e) {
+                salaNuevo.setCostomodulo(new BigInteger("0"));
+            }
+            try {
+                if (Utilidades.validarNulo(nuevoCapacidadModulo) && (!nuevoCapacidadModulo.isEmpty()) && (nuevoCapacidadModulo.trim().length() > 0)) {
+                    salaNuevo.setCapacidadmodulo(Integer.valueOf(nuevoCapacidadModulo));
+                } else {
+                    salaNuevo.setCapacidadmodulo(Integer.valueOf("0"));
+                }
+            } catch (Exception e) {
+                salaNuevo.setCapacidadmodulo(Integer.valueOf("0"));
+            }
             salaNuevo.setEstadomodulo(true);
             salaNuevo.setSalalaboratorio(nuevoSalaLaboratorioModulo);
             gestionarPlantaModulosBO.crearNuevoModuloLaboratorio(salaNuevo);
         } catch (Exception e) {
-            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema:  " + e.toString(),e);
-            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString(),e);
+            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema:  " + e.toString(), e);
+            logger.error("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString(), e);
         }
     }
 
@@ -261,9 +306,9 @@ public class ControllerRegistrarModuloCargado implements Serializable {
         mensajeError = "";
         nuevoCodigoModulo = null;
         nuevoDetalleModulo = null;
-        nuevoCostoModulo = null;
-        nuevoCapacidadModulo = null;
-        nuevoInversionModulo = null;
+        nuevoCostoModulo = "0";
+        nuevoCapacidadModulo = "0";
+        nuevoInversionModulo = "0";
     }
 
     public void cambiarActivarCasillas() {

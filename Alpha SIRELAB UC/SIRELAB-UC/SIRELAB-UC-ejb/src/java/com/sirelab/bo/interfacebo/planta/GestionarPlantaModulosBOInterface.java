@@ -22,6 +22,8 @@ import java.util.Map;
  */
 public interface GestionarPlantaModulosBOInterface {
 
+    public List<ModuloLaboratorio> consultarModulosLaboratorioPorIdSala(BigInteger idSala);
+
     public List<Departamento> consultarDepartamentosRegistrados();
 
     public List<Laboratorio> consultarLaboratoriosPorIDDepartamento(BigInteger departamento);

@@ -52,4 +52,8 @@ public interface AdministrarAdministradoresEdificioBOInterface {
     public void editarAsocioEncargadoEdificio(EncargadoPorEdificio encargadoPorEdificio);
 
     public EncargadoPorEdificio obtenerEncargadoPorEdificioPorIDEncargadoPorEdificio(BigInteger idEncargadoPorEdificio);
+
+    public Persona obtenerPersonaSistemaPorCorreo(String correo);
+
+    public Persona obtenerPersonaSistemaPorIdentificacion(String identificacion);
 }

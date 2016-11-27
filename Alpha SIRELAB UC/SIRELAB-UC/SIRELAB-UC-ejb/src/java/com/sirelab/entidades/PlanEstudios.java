@@ -103,7 +103,7 @@ public class PlanEstudios implements Serializable {
     }
 
     public void setCodigoplanestudio(String codigoplanestudio) {
-        this.codigoplanestudio = codigoplanestudio;
+        this.codigoplanestudio = codigoplanestudio.toUpperCase();
     }
 
     public String getNombreplanestudio() {
@@ -114,7 +114,7 @@ public class PlanEstudios implements Serializable {
     }
 
     public void setNombreplanestudio(String nombreplanestudio) {
-        this.nombreplanestudio = nombreplanestudio;
+        this.nombreplanestudio = nombreplanestudio.toUpperCase();
     }
 
     public Boolean getEstado() {
@@ -178,7 +178,7 @@ public class PlanEstudios implements Serializable {
         getStrEstado();
         getCodigoplanestudio();
         strNombreEstado = codigoplanestudio + " - " + strEstado;
-        return strNombreEstado;
+        return strNombreEstado.toUpperCase();
     }
 
     public void setStrNombreEstado(String strNombreEstado) {
@@ -189,7 +189,7 @@ public class PlanEstudios implements Serializable {
         getCodigoplanestudio();
         getNombreplanestudio();
         strNombreCodigo = nombreplanestudio + " - " + codigoplanestudio;
-        return strNombreCodigo;
+        return strNombreCodigo.toUpperCase();
     }
 
     public void setStrNombreCodigo(String strNombreCodigo) {

@@ -457,6 +457,7 @@ public class ControllerRegistrarSala implements Serializable {
         mensajeError = "";
         validacionesUbicacion = false;
         listaServiciosSalas = null;
+        listaAsociacionServicios = null;
         serviciosSala = null;
     }
 

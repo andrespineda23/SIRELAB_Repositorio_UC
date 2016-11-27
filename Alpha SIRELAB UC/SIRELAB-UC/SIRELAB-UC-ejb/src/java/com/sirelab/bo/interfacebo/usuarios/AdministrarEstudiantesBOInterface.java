@@ -35,6 +35,8 @@ public interface AdministrarEstudiantesBOInterface {
 
     public Estudiante obtenerEstudiantePorCorreoNumDocumento(String correo, String documento);
 
+    public Persona consultarPersonaPorIdentificacion(String identificacion);
+
     public void actualizarInformacionEstudiante(Estudiante estudiante);
 
     public void actualizarInformacionPersona(Persona persona);
@@ -44,4 +46,6 @@ public interface AdministrarEstudiantesBOInterface {
     public Estudiante obtenerEstudiantePorCorreo(String correo);
 
     public Estudiante obtenerEstudianteDocumento(String documento);
+
+    public Persona consultarPersonaPorCorreo(String correo);
 }

@@ -228,7 +228,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             Departamento registro = departamentoDAO.buscarDepartamentoPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarValidadorTipoUsuario obtenerDepartamentoPorCodigo: " + e.toString(), e);
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerDepartamentoPorCodigo: " + e.toString(), e);
             return null;
         }
     }
@@ -239,7 +239,7 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             Laboratorio registro = laboratorioDAO.buscarLaboratorioPorCodigo(codigo);
             return registro;
         } catch (Exception e) {
-            logger.error("Error AdministrarValidadorTipoUsuario obtenerLaboratorioPorCodigo: " + e.toString(), e);
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerLaboratorioPorCodigo: " + e.toString(), e);
             return null;
         }
     }
@@ -260,6 +260,24 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorEdificio(edificio);
             return lista;
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Persona obtenerPersonaSistemaPorCorreo(String correo) {
+        try {
+            return personaDAO.buscarPersonaPorCorreo(correo);
+        } catch (Exception e) {
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerPersonaSistemaPorCorreo : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public Persona obtenerPersonaSistemaPorIdentificacion(String identificacion) {
+        try {
+            return personaDAO.buscarPersonaPorDocumento(identificacion);
+        } catch (Exception e) {
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerPersonaSistemaPorIdentificacion : " + e.toString(), e);
             return null;
         }
     }

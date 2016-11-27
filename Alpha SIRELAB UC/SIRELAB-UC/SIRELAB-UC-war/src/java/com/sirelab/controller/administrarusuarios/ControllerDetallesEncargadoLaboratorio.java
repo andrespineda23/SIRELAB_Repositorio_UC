@@ -11,6 +11,7 @@ import com.sirelab.entidades.Laboratorio;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.Persona;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -316,11 +317,11 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             if (tam >= 4) {
                 String correo = correoEncargadoLaboratorio + "@ucentral.edu.co";
                 if (Utilidades.validarCorreoElectronico(correo)) {
-                    EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorCorreo(correoEncargadoLaboratorio);
+                    Persona registro = administrarEncargadosLaboratoriosBO.obtenerPersonaSistemaPorCorreo(correoEncargadoLaboratorio);
                     if (null == registro) {
                         validacionesCorreo = true;
                     } else {
-                        if (!encargadoLaboratorioDetalles.getIdencargadolaboratorio().equals(registro.getIdencargadolaboratorio())) {
+                        if (!encargadoLaboratorioDetalles.getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesCorreo = false;
                             FacesContext.getCurrentInstance().addMessage("form:correoEncargadoLaboratorio", new FacesMessage("El correo ya se encuentra registrado."));
                         } else {
@@ -365,11 +366,11 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             int tam = identificacionEncargadoLaboratorio.length();
             if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(identificacionEncargadoLaboratorio)) {
-                    EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorDocumento(identificacionEncargadoLaboratorio);
+                    Persona registro = administrarEncargadosLaboratoriosBO.obtenerPersonaSistemaPorIdentificacion(identificacionEncargadoLaboratorio);
                     if (null == registro) {
                         validacionesID = true;
                     } else {
-                        if (!encargadoLaboratorioDetalles.getIdencargadolaboratorio().equals(registro.getIdencargadolaboratorio())) {
+                        if (!encargadoLaboratorioDetalles.getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesID = false;
                             FacesContext.getCurrentInstance().addMessage("form:identificacionEncargadoLaboratorio", new FacesMessage("El documento ya se encuentra registrado."));
                         } else {

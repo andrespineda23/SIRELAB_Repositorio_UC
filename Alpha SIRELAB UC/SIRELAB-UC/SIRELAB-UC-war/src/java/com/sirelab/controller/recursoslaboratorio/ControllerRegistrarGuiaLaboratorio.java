@@ -257,18 +257,17 @@ public class ControllerRegistrarGuiaLaboratorio implements Serializable {
             mensajeFormulario = "El formulario ha sido ingresado con exito.";
         } else {
             colorMensaje = "#FF0000";
-            mensajeFormulario = "El codigo ingresado ya se encuentra registrado. Errores: " + mensajeError;
+            mensajeFormulario = "Errores en el formulario ingresado. Errores: " + mensajeError;
         }
     }
 
     private void cargarGuiaAServidor() throws FileNotFoundException, IOException {
         if (Utilidades.validarNulo(archivo)) {
             String filename = getFilename(archivo);
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            formatter = new SimpleDateFormat("dd MMMM yyyy, hh:mm:ss a");
+            DateFormat formatter = new SimpleDateFormat("ddMMMMyyyy-hhmmss");
             Date date = Calendar.getInstance().getTime();
             String today = formatter.format(date);
-            rutaArchivo = pathArchivo + filename + "-" + today;
+            rutaArchivo = pathArchivo + today + "-" + filename;
             String extension = "";
             int i = rutaArchivo.lastIndexOf('.');
             if (i > 0) {

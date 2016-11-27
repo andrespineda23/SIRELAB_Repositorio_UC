@@ -76,7 +76,7 @@ public class ControllerRegistrarProveedor implements Serializable {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
             int tam = nuevoNombre.length();
             if (tam >= 4) {
-                if (!Utilidades.validarCaracterString(nuevoNombre)) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
                     validacionesNombre = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto. " + constantes.RECURSO_NOM));
                 } else {

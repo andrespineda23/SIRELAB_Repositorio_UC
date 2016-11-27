@@ -182,6 +182,17 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
     }
 
     @Override
+    public List<ModuloLaboratorio> consultarModulosLaboratorioPorIdSala(BigInteger idSala) {
+        try {
+            List<ModuloLaboratorio> lista = moduloLaboratorioDAO.buscarModuloLaboratorioPorIDSalaLaboratorio(idSala);
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error GestionarPlantaModulosBO consultarModulosLaboratorioPorIdSala : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    @Override
     public void crearNuevoModuloLaboratorio(ModuloLaboratorio moduloLaboratorio) {
         try {
             moduloLaboratorioDAO.crearModuloLaboratorio(moduloLaboratorio);

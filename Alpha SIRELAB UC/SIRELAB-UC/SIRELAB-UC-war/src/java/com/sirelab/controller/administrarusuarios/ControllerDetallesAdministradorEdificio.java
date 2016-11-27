@@ -9,6 +9,7 @@ import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarAdministradoresEdificioBOInterface;
 import com.sirelab.entidades.AdministradorEdificio;
 import com.sirelab.entidades.EncargadoPorEdificio;
+import com.sirelab.entidades.Persona;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -225,11 +226,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             if (tam >= 4) {
                 String correo = correoAdministradorEdificio + "@ucentral.edu.co";
                 if (Utilidades.validarCorreoElectronico(correo)) {
-                    AdministradorEdificio registro = administrarAdministradoresEdificioBO.obtenerAdministradorEdificioPorCorreo(correoAdministradorEdificio);
+                    Persona registro = administrarAdministradoresEdificioBO.obtenerPersonaSistemaPorCorreo(correoAdministradorEdificio);
                     if (null == registro) {
                         validacionesCorreo = true;
                     } else {
-                        if (!encargadoPorEdificioDetalles.getAdministradoredificio().getIdadministradoredificio().equals(registro.getIdadministradoredificio())) {
+                        if (!encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesCorreo = false;
                             FacesContext.getCurrentInstance().addMessage("form:correoAdministradorEdificio", new FacesMessage("El correo ya se encuentra registrado."));
                         } else {
@@ -274,11 +275,11 @@ public class ControllerDetallesAdministradorEdificio implements Serializable {
             int tam = identificacionAdministradorEdificio.length();
             if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(identificacionAdministradorEdificio)) {
-                    AdministradorEdificio registro = administrarAdministradoresEdificioBO.obtenerAdministradorEdificioPorDocumento(identificacionAdministradorEdificio);
+                    Persona registro = administrarAdministradoresEdificioBO.obtenerPersonaSistemaPorIdentificacion(identificacionAdministradorEdificio);
                     if (null == registro) {
                         validacionesID = true;
                     } else {
-                        if (!encargadoPorEdificioDetalles.getAdministradoredificio().getIdadministradoredificio().equals(registro.getIdadministradoredificio())) {
+                        if (!encargadoPorEdificioDetalles.getAdministradoredificio().getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesID = false;
                             FacesContext.getCurrentInstance().addMessage("form:identificacionAdministradorEdificio", new FacesMessage("El documento ya se encuentra registrado."));
                         } else {

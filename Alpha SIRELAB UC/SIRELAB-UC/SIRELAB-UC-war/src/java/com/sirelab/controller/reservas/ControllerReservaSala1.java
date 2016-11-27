@@ -376,13 +376,13 @@ public class ControllerReservaSala1 implements Serializable {
 
     private boolean validarCamposReserva() {
         boolean retorno = true;
-        if (validarSala() == false) {
+        if (!Utilidades.validarNulo(parametroSala)) {
             retorno = false;
         }
-        if (validarLaboratorio() == false) {
+        if (!Utilidades.validarNulo(parametroLaboratorio)) {
             retorno = false;
         }
-        if (validarHora() == false) {
+        if (!Utilidades.validarNulo(parametroServicio)) {
             retorno = false;
         }
         if (null == horaReservaSalida) {
@@ -393,13 +393,31 @@ public class ControllerReservaSala1 implements Serializable {
 
     private boolean validarHoraReserva() {
         boolean retorno = false;
-        GregorianCalendar hora = new GregorianCalendar();
-        int horaInicio = hora.get(Calendar.HOUR);
-        int minutoInicio = hora.get(Calendar.MINUTE);
-        int horaActual = (horaInicio * 100) + minutoInicio;
-        int horaR = horaReserva.getHora() * 100;
-        if (horaActual < horaR) {
-            retorno = true;
+        Date fechaReserva = null;
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaAnio);
+        cal.set(Calendar.MONTH, fechaMes.getParametro());
+        cal.set(Calendar.DATE, fechaDia.getParametro());
+        fechaReserva = cal.getTime();
+        formateador.format(fechaReserva);
+        Date fechaHoy = new Date();
+        formateador.format(fechaHoy);
+        if (fechaHoy.equals(fechaReserva)) {
+            GregorianCalendar hora = new GregorianCalendar();
+            int horaInicio = hora.get(Calendar.HOUR);
+            int minutoInicio = hora.get(Calendar.MINUTE);
+            int horaActual = (horaInicio * 100) + minutoInicio;
+            int horaR = horaReserva.getHora() * 100;
+            if (horaActual < horaR) {
+                retorno = true;
+            }
+        } else {
+            if (fechaHoy.before(fechaReserva)) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
         }
         return retorno;
     }

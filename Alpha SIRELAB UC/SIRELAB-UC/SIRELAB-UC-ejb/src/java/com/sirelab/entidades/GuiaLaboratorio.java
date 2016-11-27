@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "GuiaLaboratorio.findByUbicacionguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.ubicacionguia = :ubicacionguia"),
     @NamedQuery(name = "GuiaLaboratorio.findByCodigoguia", query = "SELECT g FROM GuiaLaboratorio g WHERE g.codigoguia = :codigoguia")})
 public class GuiaLaboratorio implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "guialaboratorio")
     private Collection<ReservaSala> reservaSalaCollection;
     private static final long serialVersionUID = 1L;
@@ -70,6 +72,8 @@ public class GuiaLaboratorio implements Serializable {
     @JoinColumn(name = "asignaturaporplanestudio", referencedColumnName = "idasignaturaporplanestudio")
     @ManyToOne(optional = false)
     private AsignaturaPorPlanEstudio asignaturaporplanestudio;
+    @Transient
+    private String nombreCodigo;
 
     public GuiaLaboratorio() {
     }
@@ -94,7 +98,7 @@ public class GuiaLaboratorio implements Serializable {
     }
 
     public String getNombreguia() {
-        if(null != nombreguia){
+        if (null != nombreguia) {
             return nombreguia.toUpperCase();
         }
         return nombreguia;
@@ -105,7 +109,7 @@ public class GuiaLaboratorio implements Serializable {
     }
 
     public String getDescripcion() {
-         if(null != descripcion){
+        if (null != descripcion) {
             return descripcion.toUpperCase();
         }
         return descripcion;
@@ -172,5 +176,16 @@ public class GuiaLaboratorio implements Serializable {
     public void setReservaSalaCollection(Collection<ReservaSala> reservaSalaCollection) {
         this.reservaSalaCollection = reservaSalaCollection;
     }
-    
+
+    public String getNombreCodigo() {
+        getNombreguia();
+        getCodigoguia();
+        nombreCodigo = nombreguia + " - " + codigoguia;
+        return nombreCodigo.toUpperCase();
+    }
+
+    public void setNombreCodigo(String nombreCodigo) {
+        this.nombreCodigo = nombreCodigo;
+    }
+
 }

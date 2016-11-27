@@ -263,7 +263,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
         }
     }
 
-    @Override 
+    @Override
     public Usuario obtenerUsuarioCambioContrasenia(String usuario, BigInteger identificacion) {
         try {
             Usuario user = null;
@@ -286,6 +286,24 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             return user;
         } catch (Exception e) {
             logger.error("Error obtenerUsuarioFinalLogin GestionarLoginSistemaBO : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public Persona obtenerPersonaSistemaPorCorreo(String correo) {
+        try {
+            return personaDAO.buscarPersonaPorCorreo(correo);
+        } catch (Exception e) {
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerPersonaSistemaPorCorreo : " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public Persona obtenerPersonaSistemaPorIdentificacion(String identificacion) {
+        try {
+            return personaDAO.buscarPersonaPorDocumento(identificacion);
+        } catch (Exception e) {
+            logger.error("Error AdministrarEncargadosLaboratoriosBO obtenerPersonaSistemaPorIdentificacion : " + e.toString(), e);
             return null;
         }
     }

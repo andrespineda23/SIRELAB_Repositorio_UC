@@ -56,4 +56,8 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
 
     public List<SalaLaboratorio> obtenerSalaLaboratorioPorEdificio(BigInteger edificio);
 
+    public Persona obtenerPersonaSistemaPorIdentificacion(String identificacion);
+
+    public Persona obtenerPersonaSistemaPorCorreo(String correo);
+
 }

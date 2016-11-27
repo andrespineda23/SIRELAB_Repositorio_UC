@@ -218,7 +218,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             if (tam >= 4) {
                 String correoEncargadoLaboratorio = inputEmail + "@ucentral.edu.co";
                 if (Utilidades.validarCorreoElectronico(correoEncargadoLaboratorio)) {
-                    EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorCorreo(inputEmail);
+                    Persona registro = administrarEncargadosLaboratoriosBO.obtenerPersonaSistemaPorCorreo(inputEmail);
                     if (null == registro) {
                         validacionesCorreo = true;
                     } else {
@@ -261,7 +261,7 @@ public class ControllerRegistrarEncargadoLaboratorio implements Serializable {
             int tam = inputID.length();
             if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(inputID)) {
-                    EncargadoLaboratorio registro = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorDocumento(inputID);
+                    Persona registro = administrarEncargadosLaboratoriosBO.obtenerPersonaSistemaPorIdentificacion(inputID);
                     if (null == registro) {
                         validacionesID = true;
                     } else {

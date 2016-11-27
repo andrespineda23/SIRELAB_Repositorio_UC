@@ -192,13 +192,13 @@ public class ControllerReservaModulo1 implements Serializable {
 
     private boolean validarCamposReserva() {
         boolean retorno = true;
-        if (validarServicio() == false) {
+        if (!Utilidades.validarNulo(parametroServicio)) {
             retorno = false;
         }
-        if (validarLaboratorio() == false) {
+        if (!Utilidades.validarNulo(parametroLaboratorio)) {
             retorno = false;
         }
-        if (validarHora() == false) {
+        if (!Utilidades.validarNulo(horaReserva)) {
             retorno = false;
         }
         return retorno;

@@ -95,7 +95,7 @@ public class ControllerDetallesProveedor implements Serializable {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             int tam = editarNombre.length();
             if (tam >= 4) {
-                if (!Utilidades.validarCaracterString(editarNombre)) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(editarNombre)) {
                     validacionesNombre = false;
                     FacesContext.getCurrentInstance().addMessage("form:editarNombre", new FacesMessage("El nombre ingresado es incorrecto. "+constantes.RECURSO_NOM));
                 } else {

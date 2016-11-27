@@ -194,7 +194,7 @@ public class ControllerRegistrarDocente implements Serializable {
             if (tam >= 4) {
                 String correoDocente = inputEmail + "@ucentral.edu.co";
                 if (Utilidades.validarCorreoElectronico(correoDocente)) {
-                    Docente registro = administrarDocentesBO.obtenerDocentePorCorreo(inputEmail);
+                    Persona registro = administrarDocentesBO.obtenerPersonaSistemaPorCorreo(inputEmail);
                     if (null == registro) {
                         validacionesCorreo = true;
                     } else {
@@ -235,7 +235,7 @@ public class ControllerRegistrarDocente implements Serializable {
             int tam = inputID.length();
             if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(inputID)) {
-                    Docente registro = administrarDocentesBO.obtenerDocentePorDocumento(inputID);
+                    Persona registro = administrarDocentesBO.obtenerPersonaSistemaPorIdentificacion(inputID);
                     if (null == registro) {
                         validacionesID = true;
                     } else {

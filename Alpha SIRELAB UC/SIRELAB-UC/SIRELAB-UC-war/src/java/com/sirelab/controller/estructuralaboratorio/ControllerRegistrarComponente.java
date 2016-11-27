@@ -67,6 +67,7 @@ public class ControllerRegistrarComponente implements Serializable {
         validacionesModelo = true;
         validacionesModelo = true;
         validacionesCodigo = false;
+        validacionesCosto = true;
         validacionesDescripcion = false;
         validacionesNombre = false;
         validacionesMarca = true;

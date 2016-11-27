@@ -48,4 +48,8 @@ public interface AdministrarDocentesBOInterface {
     public List<TipoCargo> obtenerListaTiposCargos();
 
     public List<Departamento> obtenerDepartamentosActivosPorIDFacultad(BigInteger idFacultad);
+
+    public Persona obtenerPersonaSistemaPorIdentificacion(String identificacion);
+
+    public Persona obtenerPersonaSistemaPorCorreo(String correo);
 }

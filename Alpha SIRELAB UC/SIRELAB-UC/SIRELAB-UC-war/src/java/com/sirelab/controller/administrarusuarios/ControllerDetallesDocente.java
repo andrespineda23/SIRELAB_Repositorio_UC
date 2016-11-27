@@ -10,6 +10,7 @@ import com.sirelab.bo.interfacebo.usuarios.AdministrarDocentesBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.TipoCargo;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
@@ -284,11 +285,11 @@ public class ControllerDetallesDocente implements Serializable {
             if (tam >= 4) {
                 String correoDoc = correoDocente + "@ucentral.edu.co";
                 if (Utilidades.validarCorreoElectronico(correoDoc)) {
-                    Docente registro = administrarDocentesBO.obtenerDocentePorCorreo(correoDocente);
+                    Persona registro = administrarDocentesBO.obtenerPersonaSistemaPorCorreo(correoDocente);
                     if (null == registro) {
                         validacionesCorreo = true;
                     } else {
-                        if (!docenteDetalles.getIddocente().equals(registro.getIddocente())) {
+                        if (!docenteDetalles.getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesCorreo = false;
                             FacesContext.getCurrentInstance().addMessage("form:correoDocente", new FacesMessage("El correo ya se encuentra registrado."));
                         } else {
@@ -333,11 +334,11 @@ public class ControllerDetallesDocente implements Serializable {
             int tam = identificacionDocente.length();
             if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(identificacionDocente)) {
-                    Docente registro = administrarDocentesBO.obtenerDocentePorDocumento(identificacionDocente);
+                    Persona registro = administrarDocentesBO.obtenerPersonaSistemaPorIdentificacion(identificacionDocente);
                     if (null == registro) {
                         validacionesID = true;
                     } else {
-                        if (!docenteDetalles.getIddocente().equals(registro.getIddocente())) {
+                        if (!docenteDetalles.getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesID = false;
                             FacesContext.getCurrentInstance().addMessage("form:identificacionDocente", new FacesMessage("El documento ya se encuentra registrado."));
                         } else {

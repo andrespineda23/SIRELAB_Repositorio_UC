@@ -9,6 +9,7 @@ import com.sirelab.ayuda.MensajesConstantes;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEstudiantesBOInterface;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Estudiante;
+import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
@@ -295,11 +296,11 @@ public class ControllerDetallesEstudiante implements Serializable {
             if (tam >= 4) {
                 String correo = correoEstudiante + "@ucentral.edu.co";
                 if (Utilidades.validarCorreoElectronico(correo)) {
-                    Estudiante registro = administrarEstudiantesBO.obtenerEstudiantePorCorreo(correoEstudiante);
+                    Persona registro = administrarEstudiantesBO.consultarPersonaPorCorreo(correoEstudiante);
                     if (null == registro) {
                         validacionesCorreo = true;
                     } else {
-                        if (!estudianteDetalles.getIdestudiante().equals(registro.getIdestudiante())) {
+                        if (!estudianteDetalles.getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesCorreo = false;
                             FacesContext.getCurrentInstance().addMessage("form:correoEstudiante", new FacesMessage("El correo ya se encuentra registrado."));
                         } else {
@@ -344,11 +345,11 @@ public class ControllerDetallesEstudiante implements Serializable {
             int tam = identificacionEstudiante.length();
             if (tam >= 6) {
                 if (Utilidades.validarNumeroIdentificacion(identificacionEstudiante)) {
-                    Estudiante registro = administrarEstudiantesBO.obtenerEstudianteDocumento(identificacionEstudiante);
+                    Persona registro = administrarEstudiantesBO.consultarPersonaPorIdentificacion(identificacionEstudiante);
                     if (null == registro) {
                         validacionesID = true;
                     } else {
-                        if (!estudianteDetalles.getIdestudiante().equals(registro.getIdestudiante())) {
+                        if (!estudianteDetalles.getPersona().getIdpersona().equals(registro.getIdpersona())) {
                             validacionesID = false;
                             FacesContext.getCurrentInstance().addMessage("form:identificacionEstudiante", new FacesMessage("El documento ya se encuentra registrado."));
                         } else {
