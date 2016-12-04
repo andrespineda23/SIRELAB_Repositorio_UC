@@ -102,6 +102,12 @@ and open the template in the editor.
                                                     </f:facet>
                                                     <h:outputText value="#{itemRS.salalaboratorio.nombresala}"/>
                                                 </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="detallesreservasala" actionListener="#{controllerDetallesReservaSala.recibirIdReservaSala(itemRS.idreservasala)}"/>
+                                                </h:column>
                                             </h:dataTable>
                                             <h:dataTable id="dataTableRS2" var="itemRS2" 
                                                          styleClass="table table-striped table-hover table-responsive hidden-lg hidden-md" 
@@ -125,6 +131,12 @@ and open the template in the editor.
                                                         <h:outputText value="Sala"/>
                                                     </f:facet>
                                                     <h:outputText value="#{itemRS2.salalaboratorio.nombresala}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="detallesreservasala" actionListener="#{controllerDetallesReservaSala.recibirIdReservaSala(itemRS2.idreservasala)}"/>
                                                 </h:column>
                                             </h:dataTable>
                                         </div>
@@ -189,6 +201,12 @@ and open the template in the editor.
                                                     </f:facet>
                                                     <h:outputText value="#{itemRM.modulolaboratorio.codigomodulo}"/>
                                                 </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="detallesreservamodulo" actionListener="#{controllerDetallesReservaModulo.recibirIdReservaModuloLaboratorio(itemRM.idreservamodulolaboratorio)}"/>
+                                                </h:column>
                                             </h:dataTable>
                                             <h:dataTable id="dataTableRM2" var="itemRM2" 
                                                          styleClass="table table-striped table-hover table-responsive hidden-lg hidden-md" 
@@ -211,14 +229,20 @@ and open the template in the editor.
                                                     <f:facet name="header">
                                                         <h:outputText value="Sala"/>
                                                     </f:facet>
-                                                    <h:outputText value="#{itemRM.modulolaboratorio.salalaboratorio.nombresala}"/>
+                                                    <h:outputText value="#{itemRM2.modulolaboratorio.salalaboratorio.nombresala}"/>
                                                 </h:column>  
                                                 <h:column>
                                                     <f:facet name="header">
                                                         <h:outputText value="Cod. Modulo"/>
                                                     </f:facet>
-                                                    <h:outputText value="#{itemRM.modulolaboratorio.codigomodulo}"/>
+                                                    <h:outputText value="#{itemRM2.modulolaboratorio.codigomodulo}"/>
                                                 </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="detallesreservamodulo" actionListener="#{controllerDetallesReservaModulo.recibirIdReservaModuloLaboratorio(itemRM2.idreservamodulolaboratorio)}"/>
+                                                </h:column>
                                             </h:dataTable>
                                         </div>
                                     </fieldset>

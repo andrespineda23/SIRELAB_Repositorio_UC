@@ -8,6 +8,8 @@ package com.sirelab.dao;
 import com.sirelab.dao.interfacedao.ReservaSalaDAOInterface;
 import com.sirelab.entidades.ReservaSala;
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -139,7 +141,7 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             return null;
         }
     }
-    
+
     @Override
     public List<ReservaSala> consultarReservaSalasPorUsuarioYPeriodo(String usuario, BigInteger periodo) {
         try {
@@ -312,7 +314,18 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
                 if ("parametroFecha".equals(entry.getKey())) {
-                    tq.setParameter(entry.getKey(), new Date(entry.getValue()));
+                    Date fecha = new Date(entry.getValue());
+                    System.out.println("entry.getValue(): " + entry.getValue());
+                    String pattern = "dd/MM/yyyy";
+                    SimpleDateFormat format = new SimpleDateFormat(pattern);
+                    try {
+                        fecha = format.parse(entry.getValue());
+                        //                    System.out.println(fecha);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("new Date(entry.getValue(): " + fecha);
+                    tq.setParameter(entry.getKey(), fecha);
                 }
             }
         }

@@ -12,6 +12,7 @@ import com.sirelab.dao.interfacedao.DocenteDAOInterface;
 import com.sirelab.dao.interfacedao.EncargadoLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.EquipoElementoDAOInterface;
 import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
+import com.sirelab.dao.interfacedao.HojaVidaEquipoDAOInterface;
 import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
 import com.sirelab.dao.interfacedao.PeriodoAcademicoDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
@@ -21,6 +22,7 @@ import com.sirelab.dao.interfacedao.ReservaSalaDAOInterface;
 import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
@@ -72,6 +74,8 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
     ReservaSalaDAOInterface reservaSalaDAO;
     @EJB
     EquipoElementoDAOInterface equipoElementoDAO;
+    @EJB
+    HojaVidaEquipoDAOInterface hojaVidaEquipoDAO;
 
     public List<ReservaModuloLaboratorio> obtenerReservasModuloLaboratorioPorPeriodoAcademico(BigInteger periodo) {
         try {
@@ -318,4 +322,12 @@ public class AdministradorGeneradorReportesBO implements AdministradorGeneradorR
         }
     }
 
+    public List<HojaVidaEquipo> consultarHojaVidaEquipos() {
+        try {
+            return hojaVidaEquipoDAO.consultarHojasVidaEquipoReporte();
+        } catch (Exception e) {
+            logger.error("Error AdministradorGeneradorReportesBO consultarHojaVidaEquipos : " + e.toString(), e);
+            return null;
+        }
+    }
 }

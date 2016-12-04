@@ -9,6 +9,7 @@ import com.sirelab.ayuda.ReservasGenerador;
 import com.sirelab.bo.interfacebo.reporte.AdministradorGeneradorReportesBOInterface;
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
@@ -826,7 +827,7 @@ public class ControllerGeneradorReportes implements Serializable {
                 reservasGenerador.setFECHA_RESERVA(date);
                 reservasGenerador.setHORA_RESERVA(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
                 if (null != reserva.getReserva().getHorainicioefectiva() && null != reserva.getReserva().getHorafinefectiva()) {
-                    reservasGenerador.setHORA_REAL(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
+                    reservasGenerador.setHORA_REAL(reserva.getReserva().getHorainicioefectiva() + "00:" + reserva.getReserva().getHorafinefectiva() + "00");
                 } else {
                     String horaInicio = "NN";
                     String horaFin = "NN";
@@ -863,7 +864,7 @@ public class ControllerGeneradorReportes implements Serializable {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 String date = simpleDateFormat.format(reserva.getReserva().getFechareserva());
                 reservasGenerador.setFECHA_RESERVA(date);
-                reservasGenerador.setHORA_RESERVA(reserva.getReserva().getHorainicio() + ":" + reserva.getReserva().getHorafin());
+                reservasGenerador.setHORA_RESERVA(reserva.getReserva().getHorainicio() + "00:" + reserva.getReserva().getHorafin() + "00");
                 if (null != reserva.getReserva().getHorainicioefectiva() && null != reserva.getReserva().getHorafinefectiva()) {
                     reservasGenerador.setHORA_REAL(reserva.getReserva().getHorainicioefectiva() + ":" + reserva.getReserva().getHorafinefectiva());
                 } else {
@@ -1069,28 +1070,32 @@ public class ControllerGeneradorReportes implements Serializable {
                 Cell celda = fila.createCell(c);
                 if (f == 0) {
                     if (c == 0) {
-                        celda.setCellValue("CODIGO");
+                        celda.setCellValue("CODIGO_COMPONENTE");
                     } else if (c == 1) {
-                        celda.setCellValue("NOMBRE");
+                        celda.setCellValue("NOMBRE_COMPONENTE");
                     } else if (c == 2) {
-                        celda.setCellValue("DESCRIPCION");
+                        celda.setCellValue("DESCRIPCION_COMPONENTE");
                     } else if (c == 3) {
-                        celda.setCellValue("MARCA");
+                        celda.setCellValue("MARCA_COMPONENTE");
                     } else if (c == 4) {
-                        celda.setCellValue("MODELO");
+                        celda.setCellValue("MODELO_COMPONENTE");
                     } else if (c == 5) {
-                        celda.setCellValue("SERIAL");
+                        celda.setCellValue("SERIAL_COMPONENTE");
                     } else if (c == 6) {
-                        celda.setCellValue("TIPO_COMPONENTE");
+                        celda.setCellValue("TIPO_COMPONENTE_COMPONENTE");
                     } else if (c == 7) {
-                        celda.setCellValue("ESTADO");
+                        celda.setCellValue("ESTADO_COMPONENTE");
                     } else if (c == 8) {
-                        celda.setCellValue("EQUIPO_TRABAJO");
+                        celda.setCellValue("CODIGO_EQUIPO_TRABAJO");
                     } else if (c == 9) {
-                        celda.setCellValue("MODULO_LABORATORIO");
+                        celda.setCellValue("EQUIPO_TRABAJO");
                     } else if (c == 10) {
-                        celda.setCellValue("SALA_LABORATORIO");
+                        celda.setCellValue("CODIGO_MODULO_LABORATORIO");
                     } else if (c == 11) {
+                        celda.setCellValue("MODULO_LABORATORIO");
+                    } else if (c == 12) {
+                        celda.setCellValue("SALA_LABORATORIO");
+                    } else if (c == 13) {
                         celda.setCellValue("LABORATORIO");
                     }
                 } else {
@@ -1111,13 +1116,244 @@ public class ControllerGeneradorReportes implements Serializable {
                     } else if (c == 7) {
                         celda.setCellValue(componente.getStrEstado());
                     } else if (c == 8) {
+                        celda.setCellValue(componente.getEquipoelemento().getInventarioequipo());
+                    } else if (c == 9) {
+                        celda.setCellValue(componente.getEquipoelemento().getNombreequipo());
+                    } else if (c == 10) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getCodigomodulo());
+                    } else if (c == 11) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getDetallemodulo());
+                    } else if (c == 12) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getNombresala());
+                    } else if (c == 13) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
+                    }
+                }
+            }
+        }
+        libro.write(archivo);
+        archivo.close();
+        descargarArchivo(rutaArchivo);
+    }
+
+    public void reporteIntegracionInventario() throws Exception {
+        String rutaArchivo = "";
+        if (validarNombreReporte()) {
+            rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
+        } else {
+            rutaArchivo = System.getProperty("user.home") + "/" + "INTEGRACION_INVENTARIO" + ".xls";
+        }
+        File archivoXLS = new File(rutaArchivo);
+        if (archivoXLS.exists()) {
+            archivoXLS.delete();
+        }
+        archivoXLS.createNewFile();
+        Workbook libro = new HSSFWorkbook();
+        FileOutputStream archivo = new FileOutputStream(archivoXLS);
+        Sheet hoja = libro.createSheet("INVENTARIO");
+        List<ComponenteEquipo> componentes = administradorGeneradorReportesBO.consultarComponentesRegistrados();
+        int tamtotal = 0;
+        if (null != componentes) {
+            tamtotal = componentes.size();
+        }
+        for (int f = 0; f < tamtotal; f++) {
+            Row fila = hoja.createRow(f);
+            ComponenteEquipo componente = componentes.get(f);
+            for (int c = 0; c < 18; c++) {
+                Cell celda = fila.createCell(c);
+                if (f == 0) {
+                    if (c == 0) {
+                        celda.setCellValue("CODIGO_COMPONENTE");
+                    } else if (c == 1) {
+                        celda.setCellValue("NOMBRE_COMPONENTE");
+                    } else if (c == 2) {
+                        celda.setCellValue("DESCRIPCION_COMPONENTE");
+                    } else if (c == 3) {
+                        celda.setCellValue("MARCA_COMPONENTE");
+                    } else if (c == 4) {
+                        celda.setCellValue("MODELO_COMPONENTE");
+                    } else if (c == 5) {
+                        celda.setCellValue("TIPO_COMPONENTE");
+                    } else if (c == 6) {
+                        celda.setCellValue("ESTADO_COMPONENTE");
+                    } else if (c == 7) {
+                        celda.setCellValue("CODIGO_EQUIPO");
+                    } else if (c == 8) {
+                        celda.setCellValue("NOMBRE_EQUIPO");
+                    } else if (c == 9) {
+                        celda.setCellValue("MODELO_EQUIPO");
+                    } else if (c == 10) {
+                        celda.setCellValue("SERIE_EQUIPO");
+                    } else if (c == 11) {
+                        celda.setCellValue("PROVEEDOR_EQUIPO");
+                    } else if (c == 12) {
+                        celda.setCellValue("ESTADO_EQUIPO");
+                    } else if (c == 13) {
+                        celda.setCellValue("TIPO_ACTIVO_EQUIPO");
+                    } else if (c == 14) {
+                        celda.setCellValue("CODIGO_MODULO_LABORATORIO");
+                    } else if (c == 15) {
+                        celda.setCellValue("MODULO_LABORATORIO");
+                    } else if (c == 16) {
+                        celda.setCellValue("SALA_LABORATORIO");
+                    } else if (c == 17) {
+                        celda.setCellValue("LABORATORIO");
+                    }
+                } else {
+                    if (c == 0) {
+                        celda.setCellValue(componente.getCodigocomponete());
+                    } else if (c == 1) {
+                        celda.setCellValue(componente.getNombrecomponente());
+                    } else if (c == 2) {
+                        celda.setCellValue(componente.getDescripcioncomponente());
+                    } else if (c == 3) {
+                        celda.setCellValue(componente.getMarcacomponente());
+                    } else if (c == 4) {
+                        celda.setCellValue(componente.getModelocomponente());
+                    } else if (c == 5) {
+                        celda.setCellValue(componente.getTipocomponente().getNombretipo());
+                    } else if (c == 6) {
+                        celda.setCellValue(componente.getStrEstado());
+                    } else if (c == 7) {
+                        celda.setCellValue(componente.getEquipoelemento().getInventarioequipo());
+                    } else if (c == 8) {
                         celda.setCellValue(componente.getEquipoelemento().getNombreequipo());
                     } else if (c == 9) {
-                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getDetallemodulo());
+                        celda.setCellValue(componente.getEquipoelemento().getModeloequipo());
                     } else if (c == 10) {
-                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getNombresala());
+                        celda.setCellValue(componente.getEquipoelemento().getSeriequipo());
                     } else if (c == 11) {
+                        celda.setCellValue(componente.getEquipoelemento().getProveedor().getNombreproveedor());
+                    } else if (c == 12) {
+                        celda.setCellValue(componente.getEquipoelemento().getEstadoequipo().getNombreestadoequipo());
+                    } else if (c == 13) {
+                        celda.setCellValue(componente.getEquipoelemento().getTipoactivo().getNombretipoactivo());
+                    } else if (c == 14) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getCodigomodulo());
+                    } else if (c == 15) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getDetallemodulo());
+                    } else if (c == 16) {
+                        celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getNombresala());
+                    } else if (c == 17) {
                         celda.setCellValue(componente.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
+                    }
+                }
+            }
+        }
+        libro.write(archivo);
+        archivo.close();
+        descargarArchivo(rutaArchivo);
+    }
+
+    public void reporteHojaVidaEquipos() throws Exception {
+        String rutaArchivo = "";
+        if (validarNombreReporte()) {
+            rutaArchivo = System.getProperty("user.home") + "/" + nombreReporte + ".xls";
+        } else {
+            rutaArchivo = System.getProperty("user.home") + "/" + "HOJA_VIDA_EQUIPOS" + ".xls";
+        }
+        File archivoXLS = new File(rutaArchivo);
+        if (archivoXLS.exists()) {
+            archivoXLS.delete();
+        }
+        archivoXLS.createNewFile();
+        Workbook libro = new HSSFWorkbook();
+        FileOutputStream archivo = new FileOutputStream(archivoXLS);
+        Sheet hoja = libro.createSheet("HOJA_VIDA_EQUIPOS");
+        List<HojaVidaEquipo> hojavidaequipos = administradorGeneradorReportesBO.consultarHojaVidaEquipos();
+        int tamtotal = 0;
+        if (null != hojavidaequipos) {
+            tamtotal = hojavidaequipos.size();
+        }
+        for (int f = 0; f < tamtotal; f++) {
+            Row fila = hoja.createRow(f);
+            HojaVidaEquipo hojavida = hojavidaequipos.get(f);
+            for (int c = 0; c < 19; c++) {
+                Cell celda = fila.createCell(c);
+                if (f == 0) {
+                    if (c == 0) {
+                        celda.setCellValue("FECHA_REGISTRO");
+                    } else if (c == 1) {
+                        celda.setCellValue("FECHA_EVENTO");
+                    } else if (c == 2) {
+                        celda.setCellValue("FECHA_FIN_EVENTO");
+                    } else if (c == 3) {
+                        celda.setCellValue("DETALLE_EVENTO");
+                    } else if (c == 4) {
+                        celda.setCellValue("OBSERVACIONES");
+                    } else if (c == 5) {
+                        celda.setCellValue("COSTO");
+                    } else if (c == 6) {
+                        celda.setCellValue("USUARIO");
+                    } else if (c == 7) {
+                        celda.setCellValue("TIPO_EVENTO");
+                    } else if (c == 8) {
+                        celda.setCellValue("CODIGO_EQUIPO");
+                    } else if (c == 9) {
+                        celda.setCellValue("NOMBRE_EQUIPO");
+                    } else if (c == 10) {
+                        celda.setCellValue("MODELO_EQUIPO");
+                    } else if (c == 11) {
+                        celda.setCellValue("SERIE_EQUIPO");
+                    } else if (c == 12) {
+                        celda.setCellValue("PROVEEDOR_EQUIPO");
+                    } else if (c == 13) {
+                        celda.setCellValue("ESTADO_EQUIPO");
+                    } else if (c == 14) {
+                        celda.setCellValue("TIPO_ACTIVO_EQUIPO");
+                    } else if (c == 15) {
+                        celda.setCellValue("CODIGO_MODULO_LABORATORIO");
+                    } else if (c == 16) {
+                        celda.setCellValue("MODULO_LABORATORIO");
+                    } else if (c == 17) {
+                        celda.setCellValue("SALA_LABORATORIO");
+                    } else if (c == 18) {
+                        celda.setCellValue("LABORATORIO");
+                    }
+                } else {
+                    String pattern = "dd/MM/yyyy";
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                    if (c == 0) {
+                        String date = simpleDateFormat.format(hojavida.getFecharegistro());
+                        celda.setCellValue(date);
+                    } else if (c == 1) {
+                        String date = simpleDateFormat.format(hojavida.getFechaevento());
+                        celda.setCellValue(date);
+                    } else if (c == 2) {
+                        String date = simpleDateFormat.format(hojavida.getFechafinevento());
+                        celda.setCellValue(date);
+                    } else if (c == 3) {
+                        celda.setCellValue(hojavida.getDetalleevento());
+                    } else if (c == 4) {
+                        celda.setCellValue(hojavida.getObservaciones());
+                    } else if (c == 5) {
+                        celda.setCellValue(hojavida.getCosto());
+                    } else if (c == 6) {
+                        celda.setCellValue(hojavida.getUsuariomodificacion());
+                    } else if (c == 7) {
+                        celda.setCellValue(hojavida.getTipoevento().getDetalleevento());
+                    } else if (c == 8) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getInventarioequipo());
+                    } else if (c == 9) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getNombreequipo());
+                    } else if (c == 10) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getModeloequipo());
+                    } else if (c == 11) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getSeriequipo());
+                    } else if (c == 12) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getProveedor().getNombreproveedor());
+                    } else if (c == 13) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getEstadoequipo().getNombreestadoequipo());
+                    } else if (c == 14) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getTipoactivo().getNombretipoactivo());
+                    } else if (c == 15) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getModulolaboratorio().getCodigomodulo());
+                    } else if (c == 16) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getModulolaboratorio().getDetallemodulo());
+                    } else if (c == 17) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getNombresala());
+                    } else if (c == 18) {
+                        celda.setCellValue(hojavida.getEquipoelemento().getModulolaboratorio().getSalalaboratorio().getLaboratorio().getNombrelaboratorio());
                     }
                 }
             }

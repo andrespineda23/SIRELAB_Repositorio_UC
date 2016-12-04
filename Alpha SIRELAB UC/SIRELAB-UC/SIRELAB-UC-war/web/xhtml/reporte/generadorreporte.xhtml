@@ -237,6 +237,39 @@ and open the template in the editor.
                             <br></br>
                             <br></br>
                         </div>
+                        <div class="row col-md-12">
+                            <div class="col-md-6">
+                                <h3>
+                                    Integración inventario.
+                                </h3>
+                                <p>
+                                    Reporte de los equipos de trabajo registrados con sus respectivos componentes.
+                                </p>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteIntegracionInventario()}"/>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h3>
+                                    Hoja de vida de equipos registrados.
+                                </h3>
+                                <p>
+                                    Reporte de la hoja de vida de todos los equipos registrados en la aplicación.
+                                </p>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <p>
+                                    <h:commandButton value="Generar Reporte" class="btn btn-success" actionListener="#{controllerGeneradorReportes.reporteHojaVidaEquipos()}"/>
+                                </p>
+                            </div>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                        </div>
                         <div class="row">
                             <div class="col-md-11"></div>
                             <div class="col-md-1">

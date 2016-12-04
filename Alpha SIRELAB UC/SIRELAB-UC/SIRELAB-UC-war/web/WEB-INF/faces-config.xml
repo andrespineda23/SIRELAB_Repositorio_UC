@@ -621,6 +621,7 @@
         </navigation-case>
     </navigation-rule>
     
+    
     <navigation-rule>
         <from-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</from-view-id>
         <navigation-case>
@@ -634,6 +635,40 @@
         <navigation-case>
             <from-outcome>iniciodocente</from-outcome>
             <to-view-id>/xhtml/paginasiniciales/iniciodocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/detallesreservasala.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservas</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesreservasala</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/detallesreservasala.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/detallesreservamodulo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarreservas</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/consultarreservas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/consultarreservas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesreservamodulo</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/detallesreservamodulo.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

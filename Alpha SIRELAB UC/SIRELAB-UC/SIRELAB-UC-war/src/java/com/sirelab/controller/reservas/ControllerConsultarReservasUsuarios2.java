@@ -110,6 +110,7 @@ public class ControllerConsultarReservasUsuarios2 implements Serializable {
                 } catch (ParseException ex) {
 
                 }
+                System.out.println("date2: "+date2);
                 filtros.put("parametroFecha", date2);
             } else {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

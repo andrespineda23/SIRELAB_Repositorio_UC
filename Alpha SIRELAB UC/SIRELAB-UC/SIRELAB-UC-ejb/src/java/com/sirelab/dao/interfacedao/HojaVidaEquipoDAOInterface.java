@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface HojaVidaEquipoDAOInterface {
 
+    public List<HojaVidaEquipo> consultarHojasVidaEquipoReporte();
+
     public void crearHojaVidaEquipo(HojaVidaEquipo hojavidaequipo);
 
     public void editarHojaVidaEquipo(HojaVidaEquipo hojavidaequipo);

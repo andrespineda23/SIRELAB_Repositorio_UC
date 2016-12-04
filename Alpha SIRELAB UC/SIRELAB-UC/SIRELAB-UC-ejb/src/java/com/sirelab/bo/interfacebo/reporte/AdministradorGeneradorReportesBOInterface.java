@@ -7,6 +7,7 @@ package com.sirelab.bo.interfacebo.reporte;
 
 import com.sirelab.entidades.ComponenteEquipo;
 import com.sirelab.entidades.EquipoElemento;
+import com.sirelab.entidades.HojaVidaEquipo;
 import com.sirelab.entidades.ModuloLaboratorio;
 import com.sirelab.entidades.PeriodoAcademico;
 import com.sirelab.entidades.Persona;
@@ -22,6 +23,8 @@ import java.util.List;
  * @author Administrator
  */
 public interface AdministradorGeneradorReportesBOInterface {
+
+    public List<HojaVidaEquipo> consultarHojaVidaEquipos();
 
     public List<Proveedor> consultarProveedoresRegistrados();
 

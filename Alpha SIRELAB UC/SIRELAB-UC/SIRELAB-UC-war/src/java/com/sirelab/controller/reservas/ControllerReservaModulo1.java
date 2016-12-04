@@ -245,24 +245,29 @@ public class ControllerReservaModulo1 implements Serializable {
                     Boolean respuestaValidacion = administrarReservasBO.validarReservasPersonaSegunHoraFecha(usuarioLoginSistema.getIdUsuarioLogin(), usuarioLoginSistema.getNombreTipoUsuario(), String.valueOf(horaReserva.getHora()), fechaReserva);
                     if (null != respuestaValidacion) {
                         if (true == respuestaValidacion) {
-                            if (cantidadReserva < cantidadModulo) {
-                                for (int i = 0; i < cantidadModulo; i++) {
-                                    for (int j = 0; j < cantidadReserva; j++) {
-                                        if (moduloLaboratorio.get(i).getIdmodulolaboratorio().equals(reservaModuloLaboratorio.get(j).getModulolaboratorio().getIdmodulolaboratorio())) {
-                                            moduloLaboratorio.remove(i);
+                            if (cantidadModulo > 0) {
+                                if (cantidadReserva < cantidadModulo) {
+                                    for (int i = 0; i < cantidadModulo; i++) {
+                                        for (int j = 0; j < cantidadReserva; j++) {
+                                            if (moduloLaboratorio.get(i).getIdmodulolaboratorio().equals(reservaModuloLaboratorio.get(j).getModulolaboratorio().getIdmodulolaboratorio())) {
+                                                moduloLaboratorio.remove(i);
+                                            }
                                         }
                                     }
+                                    AyudaReservaModulo.getInstance().setFechaReserva(fechaReserva);
+                                    AyudaReservaModulo.getInstance().setModuloLaboratorio(moduloLaboratorio.get(0));
+                                    AyudaReservaModulo.getInstance().setHoraInicio(String.valueOf(horaReserva.getHoraModuloInicio()));
+                                    AyudaReservaModulo.getInstance().setHoraFin(String.valueOf(horaReserva.getHoraModuloFin()));
+                                    AyudaReservaModulo.getInstance().setServicioSala(parametroServicio.getServiciosala());
+                                    paso2 = "reservamodulo3";
+                                    registrarReservaEnSistema();
+                                    limpiarInformacion();
+                                } else {
+                                    mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad. Intente en otro horario";
+                                    colorMensaje = "#FF0000";
                                 }
-                                AyudaReservaModulo.getInstance().setFechaReserva(fechaReserva);
-                                AyudaReservaModulo.getInstance().setModuloLaboratorio(moduloLaboratorio.get(0));
-                                AyudaReservaModulo.getInstance().setHoraInicio(String.valueOf(horaReserva.getHoraModuloInicio()));
-                                AyudaReservaModulo.getInstance().setHoraFin(String.valueOf(horaReserva.getHoraModuloFin()));
-                                AyudaReservaModulo.getInstance().setServicioSala(parametroServicio.getServiciosala());
-                                paso2 = "reservamodulo3";
-                                registrarReservaEnSistema();
-                                limpiarInformacion();
                             } else {
-                                mensajeFormulario = "Los modulos de la sala asignada ya se encuentran asignados en su totalidad. Intente en otro horario";
+                                mensajeFormulario = "No existen módulos asignados a la sala de laboratorio. Comuniquese con el personal de laboratorio.";
                                 colorMensaje = "#FF0000";
                             }
                         } else {

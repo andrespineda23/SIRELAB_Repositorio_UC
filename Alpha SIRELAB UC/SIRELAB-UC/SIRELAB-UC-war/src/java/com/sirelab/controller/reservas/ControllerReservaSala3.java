@@ -51,12 +51,11 @@ public class ControllerReservaSala3 implements Serializable {
 
     @PostConstruct
     public void init() {
-        reservaSala = AyudaReservaSala.getInstance();
-        nombreAsignatura = AyudaReservaSala.getInstance().getNombreAsignatura();
-        rutaGuia = AyudaReservaSala.getInstance().getRutaGuia();
-        reservaPersona = AyudaReservaSala.getInstance().getReserva();
-        valorReserva = 0;
-        obtenerCostoFinalReserva();
+
+    }
+
+    public void cargarInfoReserva() {
+
     }
 
     private void obtenerCostoFinalReserva() {
@@ -108,6 +107,14 @@ public class ControllerReservaSala3 implements Serializable {
     }
 
     public AyudaReservaSala getReservaSala() {
+        if (null == reservaSala) {
+            reservaSala = AyudaReservaSala.getInstance();
+            nombreAsignatura = AyudaReservaSala.getInstance().getNombreAsignatura();
+            rutaGuia = AyudaReservaSala.getInstance().getRutaGuia();
+            reservaPersona = AyudaReservaSala.getInstance().getReserva();
+            valorReserva = 0;
+            obtenerCostoFinalReserva();
+        }
         return reservaSala;
     }
 
@@ -116,6 +123,9 @@ public class ControllerReservaSala3 implements Serializable {
     }
 
     public Reserva getReservaPersona() {
+        if (null == reservaPersona) {
+            getReservaSala();
+        }
         return reservaPersona;
     }
 

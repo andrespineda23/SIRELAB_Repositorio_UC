@@ -52,6 +52,18 @@ and open the template in the editor.
                                         <strong><h:outputText value="Estado Reserva"/></strong>
                                         <h:inputText  value="#{controllerDetallesReservaModulo.reservaModuloLaboratorio.reserva.estadoreserva.nombreestadoreserva}" readonly="true" class="form-control"/>
                                     </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Módulo de Laboratorio"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaModulo.reservaModuloLaboratorio.modulolaboratorio.detallemodulo}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Sala de Laboratorio"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaModulo.reservaModuloLaboratorio.modulolaboratorio.salalaboratorio.nombresala}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Laboratorio"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaModulo.reservaModuloLaboratorio.modulolaboratorio.salalaboratorio.laboratorio.nombrelaboratorio}" readonly="true" class="form-control"/>
+                                    </div>
                                 </fieldset>
                                 <br></br>
                                 <br></br>
@@ -60,7 +72,7 @@ and open the template in the editor.
                                         <h:commandButton value="Cancelar Reserva" action="cancelarreserva" actionListener="#{controllerCancelarReserva.recibirIdReservaCancelar(controllerDetallesReservaModulo.reservaModuloLaboratorio.reserva.idreserva)}" class="btn btn-danger btn-block"/>
                                     </div>
                                     <div class="right pull-right">
-                                        <h:commandButton value="Atrás" class="btn btn-primary" action="consultarreservasmodulo" actionListener="#{controllerConsultarReservasSala.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}">
+                                        <h:commandButton value="Atrás" class="btn btn-primary" action="consultarreservasmodulo" >
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                     </div>

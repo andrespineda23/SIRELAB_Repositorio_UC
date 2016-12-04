@@ -72,6 +72,20 @@ public class HojaVidaEquipoDAO implements HojaVidaEquipoDAOInterface {
             return null;
         }
     }
+    
+    @Override 
+    public List<HojaVidaEquipo> consultarHojasVidaEquipoReporte() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM HojaVidaEquipo p ORDER BY p.equipoelemento.idequipoelemento ASC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<HojaVidaEquipo> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            logger.error("Error consultarHojasVidaEquipoReporte HojaVidaEquipoDAO : " + e.toString(),e);
+            return null;
+        }
+    }
 
     @Override
     public List<HojaVidaEquipo> consultarHojaVidaPorIDEquipo(BigInteger idRegistro) {
