@@ -184,6 +184,22 @@
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/xhtml/paginasiniciales/inicioestudiante.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesreservasala2</from-outcome>
+            <to-view-id>/xhtml/procesoreservas/detallesreservasala2.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/procesoreservas/detallesreservasala2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicioestudiante</from-outcome>
+            <to-view-id>/xhtml/paginasiniciales/inicioestudiante.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     <navigation-rule>
         <from-view-id>/xhtml/variablesentorno/variablesreserva.xhtml</from-view-id>

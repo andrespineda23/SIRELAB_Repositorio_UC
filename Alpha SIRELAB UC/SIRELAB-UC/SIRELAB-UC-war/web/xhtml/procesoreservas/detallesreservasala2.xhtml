@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body  onload="nobackbutton();">
+        <ui:composition template="/xhtml/template/templateresponsive.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <div class="container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="row">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Inicio</a></li>
+                                <li class="active">Detalles Reserva Sala</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <fieldset>
+                                    <legend class="text-info">Información de la Reserva</legend>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Fecha Reserva"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.reserva.fechareserva}" readonly="true" class="form-control">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Lapso de la Reserva"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.reserva.horainicio}:00 - #{controllerDetallesReservaSala2.reservaSala.reserva.horafin}:00" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Número Reserva"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.reserva.numeroreserva}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Tipo Reserva"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.reserva.tiporeserva.nombretiporeserva}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Estado Reserva"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.reserva.estadoreserva.nombreestadoreserva}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Asignatura"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.asignaturaporplanestudio.asignatura.nombreasignatura}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Laboratorio"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.salalaboratorio.laboratorio.nombrelaboratorio}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Sala de Laboratorio"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala2.reservaSala.salalaboratorio.nombresala}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Guia de Laboratorio"/></strong>
+                                        <h:commandButton id="btnGuia" value="Descargar Guía de Laboratorio" actionListener="#{controllerDetallesReservaSala2.descargarGuiaLaboratorio()}" class="btn btn-info btn-block"/>
+                                    </div>
+                                </fieldset>
+                                <br></br>
+                                <br></br>
+                                <row>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Atrás" class="btn btn-primary" action="#{controllerDetallesReservaSala2.cerrarPagina()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </row>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

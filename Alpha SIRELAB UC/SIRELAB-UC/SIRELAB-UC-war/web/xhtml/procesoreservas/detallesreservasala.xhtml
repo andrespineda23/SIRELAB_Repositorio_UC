@@ -57,6 +57,14 @@ and open the template in the editor.
                                         <h:inputText  value="#{controllerDetallesReservaSala.reservaSala.asignaturaporplanestudio.asignatura.nombreasignatura}" readonly="true" class="form-control"/>
                                     </div>
                                     <div class="form-group">
+                                        <strong><h:outputText value="Laboratorio"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala.reservaSala.salalaboratorio.laboratorio.nombrelaboratorio}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Sala de Laboratorio"/></strong>
+                                        <h:inputText  value="#{controllerDetallesReservaSala.reservaSala.salalaboratorio.nombresala}" readonly="true" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
                                         <strong><h:outputText value="Guia de Laboratorio"/></strong>
                                         <h:commandButton id="btnGuia" value="Descargar Guía de Laboratorio" disabled="#{controllerDetallesReservaSala.activarGuia}" actionListener="#{controllerDetallesReservaSala.descargarGuiaLaboratorio()}" class="btn btn-info btn-block"/>
                                     </div>

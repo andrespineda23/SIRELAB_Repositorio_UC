@@ -187,6 +187,21 @@ public class ReservaSalaDAO implements ReservaSalaDAOInterface {
             return null;
         }
     }
+    
+    
+    public ReservaSala buscarReservaSalaPorCodigoReserva(String reserva) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ReservaSala p WHERE p.reserva.numeroreserva=:reserva");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("reserva", reserva);
+            ReservaSala registro = (ReservaSala) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            logger.error("Error buscarReservaSalaPorCodigoReserva ReservaSalaDAO : " + e.toString(), e);
+            return null;
+        }
+    }
 
     @Override
     public ReservaSala buscarReservaSalaPorFechaHoraSala(Date fecha, String horaInicio, BigInteger sala) {

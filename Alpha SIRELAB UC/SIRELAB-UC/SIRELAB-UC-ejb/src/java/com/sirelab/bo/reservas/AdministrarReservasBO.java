@@ -571,7 +571,7 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
         try {
             EstadoReserva cancelada = obtenerEstadoCancelacionReserva();
             reserva.setEstadoreserva(cancelada);
-            actualizarInformacionReserva(reserva,0);
+            actualizarInformacionReserva(reserva, 0);
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO administrarReservasBO: " + e.toString(), e);
         }
@@ -583,6 +583,16 @@ public class AdministrarReservasBO implements AdministrarReservasBOInterface {
             return servicios;
         } catch (Exception e) {
             logger.error("Error AdministrarReservasBO obtenerServiciosPorSala: " + e.toString(), e);
+            return null;
+        }
+    }
+
+    public ReservaSala consultarReservaSalaPorCodigo(String codigo) {
+        try {
+            ReservaSala reserva = reservaSalaDAO.buscarReservaSalaPorCodigoReserva(codigo);
+            return reserva;
+        } catch (Exception e) {
+            logger.error("Error AdministrarReservasBO consultarReservaSalaPorCodigo: " + e.toString(), e);
             return null;
         }
     }

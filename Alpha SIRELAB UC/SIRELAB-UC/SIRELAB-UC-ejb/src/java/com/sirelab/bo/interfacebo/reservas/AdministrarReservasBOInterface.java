@@ -116,4 +116,6 @@ public interface AdministrarReservasBOInterface {
     public void cambiarEstadoReserva(Reserva reserva);
 
     public List<SalaLaboratorioxServicios> obtenerServiciosPorSala(BigInteger servicio);
+
+    public ReservaSala consultarReservaSalaPorCodigo(String codigo);
 }

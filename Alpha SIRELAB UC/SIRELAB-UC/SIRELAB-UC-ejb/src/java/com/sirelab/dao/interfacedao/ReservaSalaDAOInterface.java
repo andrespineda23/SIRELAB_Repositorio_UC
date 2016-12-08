@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public interface ReservaSalaDAOInterface {
 
+    public ReservaSala buscarReservaSalaPorCodigoReserva(String reserva);
+
     public List<ReservaSala> consultarReservaSalasPorTipoUsuarioYPeriodo(BigInteger tipoUsuario, BigInteger periodo);
 
     public List<ReservaSala> consultarReservaSalasPorFechasYPeriodo(Date fechaInicio, Date fechaFin, BigInteger periodo);

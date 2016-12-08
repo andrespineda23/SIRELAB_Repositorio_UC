@@ -6,6 +6,7 @@
 package com.sirelab.ayuda;
 
 import com.sirelab.entidades.Reserva;
+import com.sirelab.entidades.ReservaSala;
 import com.sirelab.entidades.SalaLaboratorio;
 import com.sirelab.entidades.ServiciosSala;
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class AyudaReservaSala implements Serializable {
     private String nombreAsignatura;
     private String rutaGuia;
     private ServiciosSala servicioSala;
+    private ReservaSala reservaSala;
 
     private static AyudaReservaSala instance = null;
 
@@ -101,6 +103,14 @@ public class AyudaReservaSala implements Serializable {
 
     public void setHoraFin(String horaFin) {
         this.horaFin = horaFin;
+    }
+
+    public ReservaSala getReservaSala() {
+        return reservaSala;
+    }
+
+    public void setReservaSala(ReservaSala reservaSala) {
+        this.reservaSala = reservaSala;
     }
 
 }

@@ -7,6 +7,7 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>        
     </h:head>
@@ -63,10 +64,33 @@ and open the template in the editor.
                                         <div class="clearfix"></div>
                                         <h2 class=" head-line section-heading">Consulta de Reservas</h2>
                                         <p>Por medio de la siguiente funcionalidad usted puede consultar las reservas realizadas, tanto reservas historicas como reservas a ser efectivas.</p>
+                                        <br></br>
+                                        <br></br>
                                         <row>
                                             <h:commandButton class="btn btn-danger btn-block" value="Consultar Reservas Realizadas" action="consultarreservas" actionListener="#{controllerConsultarReservas.obtenerInformacionReservasUsuario(controllerPaginasIniciales.usuarioLoginSistema.nombreTipoUsuario, controllerPaginasIniciales.usuarioLoginSistema.idUsuarioLogin)}"/>
                                         </row>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="row col-md-12">
+                                <h2 class="info">
+                                    Consulta de Reserva
+                                </h2>
+                                <p>
+                                    Ingrese en el campo de texto el número de reserva de sala de laboratorio que desea consultar. Posterior a ello indique la opción "Consultar" para visualizar la información de esta.
+                                </p>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Número de Reserva*"/></strong>
+                                    <h:inputText value="#{controllerPaginasIniciales.numeroReserva}" class="form-control" id="numeroReserva" />
+                                    <h6><h:message id="msnNumeroReserva" for="numeroReserva" style="color: red"/></h6>
+                                </div>
+                                <div class="right pull-right">
+                                    <h:commandButton value="Consultar"  action="#{controllerPaginasIniciales.paginaConsultaReserva()}" class="btn btn-success" >
+                                        <f:ajax execute="@form" render="form" />
+                                    </h:commandButton>
                                 </div>
                             </div>
                         </div>
@@ -77,9 +101,6 @@ and open the template in the editor.
                     <br></br>
                     <br></br>
                     <br></br>
-                    <br></br>
-                    <br></br>
-
                 </h:form>
             </ui:define>  
         </ui:composition>

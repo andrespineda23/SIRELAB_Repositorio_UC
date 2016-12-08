@@ -5,17 +5,19 @@
  */
 package com.sirelab.controller.paginasiniciales;
 
+import com.sirelab.ayuda.AyudaReservaSala;
 import com.sirelab.bo.interfacebo.GestionarLoginSistemaBOInterface;
+import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.bo.interfacebo.usuarios.AdministrarEncargadosLaboratoriosBOInterface;
-import com.sirelab.entidades.Departamento;
-import com.sirelab.entidades.Laboratorio;
+import com.sirelab.entidades.ReservaSala;
 import com.sirelab.utilidades.UsuarioLogin;
+import com.sirelab.utilidades.Utilidades;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigInteger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -37,17 +39,48 @@ public class ControllerPaginasIniciales implements Serializable {
     GestionarLoginSistemaBOInterface gestionarLoginSistemaBO;
     @EJB
     AdministrarEncargadosLaboratoriosBOInterface administrarValidadorTipoUsuario;
+    @EJB
+    AdministrarReservasBOInterface administrarReservasBO;
 
     private UsuarioLogin usuarioLoginSistema;
-
+    private BigInteger idReserva;
     static Logger logger = Logger.getLogger(ControllerPaginasIniciales.class);
+    private String numeroReserva;
 
     public ControllerPaginasIniciales() {
     }
 
     @PostConstruct
     public void init() {
+        numeroReserva = null;
         usuarioLoginSistema = (UsuarioLogin) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUsuario");
+    }
+
+    private void consultarReservaPorCodigo() {
+        if (Utilidades.validarNulo(numeroReserva) && !numeroReserva.isEmpty() && numeroReserva.trim().length() > 0) {
+            ReservaSala reserva = administrarReservasBO.consultarReservaSalaPorCodigo(numeroReserva);
+            if (null != reserva) {
+                idReserva = reserva.getIdreservasala();
+                AyudaReservaSala.getInstance().setReservaSala(reserva);
+                numeroReserva = "";
+            } else {
+                idReserva = null;
+                FacesContext.getCurrentInstance().addMessage("form:numeroReserva", new FacesMessage("La reserva consultada no existe."));
+            }
+        } else {
+            idReserva = null;
+            FacesContext.getCurrentInstance().addMessage("form:numeroReserva", new FacesMessage("El campo es obligatorio."));
+        }
+    }
+
+    public String paginaConsultaReserva() {
+        String pagina = "";
+        consultarReservaPorCodigo();
+        if (null != idReserva) {
+            pagina = "detallesreservasala2";
+        }
+        idReserva = null;
+        return pagina;
     }
 
     /**
@@ -87,6 +120,14 @@ public class ControllerPaginasIniciales implements Serializable {
 
     public void setUsuarioLoginSistema(UsuarioLogin usuarioLoginSistema) {
         this.usuarioLoginSistema = usuarioLoginSistema;
+    }
+
+    public String getNumeroReserva() {
+        return numeroReserva;
+    }
+
+    public void setNumeroReserva(String numeroReserva) {
+        this.numeroReserva = numeroReserva;
     }
 
 }
