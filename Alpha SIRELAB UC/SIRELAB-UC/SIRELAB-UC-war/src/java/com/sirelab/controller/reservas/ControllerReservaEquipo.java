@@ -38,6 +38,7 @@ public class ControllerReservaEquipo implements Serializable {
 
     private String numeroReserva;
     private String mensajeFormulario;
+    private String colorMensaje;
     private Reserva reservaPorNumero;
     private List<AyudaReservaEquipo> listaEquipos;
     private List<AyudaReservaEquipo> listaEquiposTabla;
@@ -79,21 +80,24 @@ public class ControllerReservaEquipo implements Serializable {
                             cargarInformacionBodegaSala(laboratorio);
                         }
                     } else {
-                        mensajeFormulario = "La reserva ingresada es menoor a la fecha del día de hoy.";
+                        mensajeFormulario = "La reserva ingresada es menor a la fecha del día de hoy.";
+                        colorMensaje = "red";
                     }
                 } else {
                     mensajeFormulario = "El número de reserva ingresado no se encuentra registrado en el sistema.";
+                    colorMensaje = "red";
                 }
             } else {
                 mensajeFormulario = "El número de reserva es obligatorio.";
+                colorMensaje = "red";
             }
         } else {
             mensajeFormulario = "El número de reserva es obligatorio.";
+            colorMensaje = "red";
         }
     }
 
     public void adicionarEquipoReserva(AyudaReservaEquipo registro) {
-        System.out.println("entro aqui");
         listaEquipos.remove(registro);
         if (null == listaEquiposReserva) {
             listaEquiposReserva = new ArrayList<AyudaReservaEquipo>();
@@ -117,16 +121,20 @@ public class ControllerReservaEquipo implements Serializable {
                 guardarReservasEquiposEnSistema();
                 limpiarInformacionReserva();
                 mensajeFormulario = "Las reservas fueron almacenadas con éxito. Recuerde que los equipos se entregaran según disponibilidad del laboratorio.";
+                colorMensaje = "green";
             } else {
                 mensajeFormulario = "No se ha seleccionado algun equipo para la reserva";
+                colorMensaje = "red";
             }
         } else {
             mensajeFormulario = "No se ha seleccionado algun equipo para la reserva";
+            colorMensaje = "red";
         }
     }
 
     private void limpiarInformacionReserva() {
         numeroReserva = "";
+        colorMensaje = "black";
         reservaPorNumero = null;
         disabledTablas = false;
         listaEquipos = null;
@@ -165,6 +173,7 @@ public class ControllerReservaEquipo implements Serializable {
             cargarInformacionAyudaReservaEquipo(listaEquipos);
         } else {
             mensajeFormulario = "No se encontro la bodega asociada al laboratorio de la sala. Pongase en contacto con el laboratorio para mas informacion";
+            colorMensaje = "red";
         }
     }
 
@@ -180,10 +189,12 @@ public class ControllerReservaEquipo implements Serializable {
             if (listaEquipos.size() > 0) {
                 cargarTablas();
             } else {
-                mensajeFormulario = "No se encontraron posibles para ser asociados a la reserva. Pongase en contacto con el laboratorio para mas informacion";
+                mensajeFormulario = "No se encontraron posibles equipos para ser asociados a la reserva. Pongase en contacto con el laboratorio para mas informacion";
+                colorMensaje = "red";
             }
         } else {
-            mensajeFormulario = "No se encontraron posibles para ser asociados a la reserva. Pongase en contacto con el laboratorio para mas informacion";
+            mensajeFormulario = "No se encontraron posibles equipos para ser asociados a la reserva. Pongase en contacto con el laboratorio para mas informacion";
+            colorMensaje = "red";
         }
 
     }
@@ -458,6 +469,14 @@ public class ControllerReservaEquipo implements Serializable {
 
     public void setDisabledTablas(boolean disabledTablas) {
         this.disabledTablas = disabledTablas;
+    }
+
+    public String getColorMensaje() {
+        return colorMensaje;
+    }
+
+    public void setColorMensaje(String colorMensaje) {
+        this.colorMensaje = colorMensaje;
     }
 
 }

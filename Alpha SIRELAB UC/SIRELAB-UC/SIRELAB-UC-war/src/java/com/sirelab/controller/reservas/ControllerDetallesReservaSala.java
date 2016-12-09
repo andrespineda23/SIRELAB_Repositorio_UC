@@ -7,6 +7,7 @@ package com.sirelab.controller.reservas;
 
 import com.sirelab.bo.interfacebo.reservas.AdministrarReservasBOInterface;
 import com.sirelab.entidades.GuiaLaboratorio;
+import com.sirelab.entidades.ReservaEquipoElemento;
 import com.sirelab.entidades.ReservaSala;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -30,9 +32,9 @@ import org.apache.log4j.Logger;
 @ManagedBean
 @SessionScoped
 public class ControllerDetallesReservaSala implements Serializable {
-    
+
     static Logger logger = Logger.getLogger(ControllerDetallesReservaSala.class);
-    
+
     @EJB
     AdministrarReservasBOInterface administrarReservasBO;
 
@@ -42,17 +44,90 @@ public class ControllerDetallesReservaSala implements Serializable {
     private List<GuiaLaboratorio> listaGuiaLaboratorios;
     private GuiaLaboratorio parametrioGuia;
     private BigInteger idReserva;
+    private List<ReservaEquipoElemento> listaEquiposReservados;
+    private List<ReservaEquipoElemento> listaEquiposReservadosTabla;
+    private int posicionEquiposTabla;
+    private int tamTotalEquipos;
+    private boolean bloquearPagSigEquipos, bloquearPagAntEquipos;
 
     public ControllerDetallesReservaSala() {
     }
 
     public void recibirIdReservaSala(BigInteger idRegistro) {
+        listaEquiposReservados = null;
+        listaEquiposReservadosTabla = null;
+        posicionEquiposTabla = 0;
+        tamTotalEquipos = 0;
+        bloquearPagAntEquipos = true;
+        bloquearPagSigEquipos = true;
         this.idReserva = idRegistro;
         activarGuiaNueva = true;
         activarGuia = false;
         parametrioGuia = null;
         listaGuiaLaboratorios = null;
         reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idRegistro);
+        if (null != reservaSala) {
+            listaEquiposReservados = administrarReservasBO.obtenerReservasEquipoPorIdReserva(reservaSala.getReserva().getIdreserva());
+            listaEquiposReservadosTabla = new ArrayList<ReservaEquipoElemento>();
+            tamTotalEquipos = listaEquiposReservados.size();
+            posicionEquiposTabla = 0;
+            cargarDatosTablaEquipos();
+
+        }
+    }
+
+    private void cargarDatosTablaEquipos() {
+        if (tamTotalEquipos < 10) {
+            for (int i = 0; i < tamTotalEquipos; i++) {
+                listaEquiposReservadosTabla.add(listaEquiposReservados.get(i));
+            }
+            bloquearPagSigEquipos = true;
+            bloquearPagAntEquipos = true;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                listaEquiposReservadosTabla.add(listaEquiposReservados.get(i));
+            }
+            bloquearPagSigEquipos = false;
+            bloquearPagAntEquipos = true;
+        }
+    }
+
+    public void cargarPaginaSiguienteEquipos() {
+        listaEquiposReservadosTabla = new ArrayList<ReservaEquipoElemento>();
+        posicionEquiposTabla = posicionEquiposTabla + 10;
+        int diferencia = tamTotalEquipos - posicionEquiposTabla;
+        if (diferencia > 10) {
+            for (int i = posicionEquiposTabla; i < (posicionEquiposTabla + 10); i++) {
+                listaEquiposReservadosTabla.add(listaEquiposReservados.get(i));
+            }
+            bloquearPagSigEquipos = false;
+            bloquearPagAntEquipos = false;
+        } else {
+            for (int i = posicionEquiposTabla; i < (posicionEquiposTabla + diferencia); i++) {
+                listaEquiposReservadosTabla.add(listaEquiposReservados.get(i));
+            }
+            bloquearPagSigEquipos = true;
+            bloquearPagAntEquipos = false;
+        }
+    }
+
+    public void cargarPaginaAnteriorEquipos() {
+        listaEquiposReservadosTabla = new ArrayList<ReservaEquipoElemento>();
+        posicionEquiposTabla = posicionEquiposTabla - 10;
+        int diferencia = tamTotalEquipos - posicionEquiposTabla;
+        if (diferencia == tamTotalEquipos) {
+            for (int i = posicionEquiposTabla; i < (posicionEquiposTabla + 10); i++) {
+                listaEquiposReservadosTabla.add(listaEquiposReservados.get(i));
+            }
+            bloquearPagSigEquipos = false;
+            bloquearPagAntEquipos = true;
+        } else {
+            for (int i = posicionEquiposTabla; i < (posicionEquiposTabla + 10); i++) {
+                listaEquiposReservadosTabla.add(listaEquiposReservados.get(i));
+            }
+            bloquearPagSigEquipos = false;
+            bloquearPagAntEquipos = false;
+        }
     }
 
     public void activarCambiarGuia() {
@@ -72,7 +147,7 @@ public class ControllerDetallesReservaSala implements Serializable {
             listaGuiaLaboratorios = null;
             reservaSala = administrarReservasBO.obtenerReservaSalaPorId(idReserva);
         } catch (Exception e) {
-            logger.error("Error ControllerDetallesReservaSala guardarNuevaGuiaLaboratorio: " + e.toString(),e);
+            logger.error("Error ControllerDetallesReservaSala guardarNuevaGuiaLaboratorio: " + e.toString(), e);
         }
     }
 
@@ -136,6 +211,54 @@ public class ControllerDetallesReservaSala implements Serializable {
 
     public void setParametrioGuia(GuiaLaboratorio parametrioGuia) {
         this.parametrioGuia = parametrioGuia;
+    }
+
+    public List<ReservaEquipoElemento> getListaEquiposReservados() {
+        return listaEquiposReservados;
+    }
+
+    public void setListaEquiposReservados(List<ReservaEquipoElemento> listaEquiposReservados) {
+        this.listaEquiposReservados = listaEquiposReservados;
+    }
+
+    public List<ReservaEquipoElemento> getListaEquiposReservadosTabla() {
+        return listaEquiposReservadosTabla;
+    }
+
+    public void setListaEquiposReservadosTabla(List<ReservaEquipoElemento> listaEquiposReservadosTabla) {
+        this.listaEquiposReservadosTabla = listaEquiposReservadosTabla;
+    }
+
+    public int getPosicionEquiposTabla() {
+        return posicionEquiposTabla;
+    }
+
+    public void setPosicionEquiposTabla(int posicionEquiposTabla) {
+        this.posicionEquiposTabla = posicionEquiposTabla;
+    }
+
+    public int getTamTotalEquipos() {
+        return tamTotalEquipos;
+    }
+
+    public void setTamTotalEquipos(int tamTotalEquipos) {
+        this.tamTotalEquipos = tamTotalEquipos;
+    }
+
+    public boolean isBloquearPagSigEquipos() {
+        return bloquearPagSigEquipos;
+    }
+
+    public void setBloquearPagSigEquipos(boolean bloquearPagSigEquipos) {
+        this.bloquearPagSigEquipos = bloquearPagSigEquipos;
+    }
+
+    public boolean isBloquearPagAntEquipos() {
+        return bloquearPagAntEquipos;
+    }
+
+    public void setBloquearPagAntEquipos(boolean bloquearPagAntEquipos) {
+        this.bloquearPagAntEquipos = bloquearPagAntEquipos;
     }
 
 }

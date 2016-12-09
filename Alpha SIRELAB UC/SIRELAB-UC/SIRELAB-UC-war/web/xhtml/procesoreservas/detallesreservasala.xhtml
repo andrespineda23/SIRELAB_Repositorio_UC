@@ -98,6 +98,66 @@ and open the template in the editor.
                                 </fieldset>
                                 <br></br>
                                 <br></br>
+                                <div id="resultadosBusqueda" class="row clearfix">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>RESERVAS DE EQUIPOS DE TRABAJO ASOCIADAS</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTable" var="item" 
+                                                         styleClass="table table-striped table-hover table-responsive" 
+                                                         value="#{controllerDetallesReservaSala.listaEquiposReservadosTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre Equipo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipoelemento.nombreequipo}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Código Equipo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipoelemento.inventarioequipo}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Marca"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipoelemento.marcaequipo}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Modelo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipoelemento.modeloequipo}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Serie"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipoelemento.seriequipo}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerDetallesReservaSala.cargarPaginaAnteriorEquipos()}" disabled="#{controllerDetallesReservaSala.bloquearPagAntEquipos}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerDetallesReservaSala.cargarPaginaSiguienteEquipos()}" disabled="#{controllerDetallesReservaSala.bloquearPagSigEquipos}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                                <br></br>
+                                <br></br>
+
                                 <row>
                                     <div class="left pull-left">
                                         <h:commandButton value="Cancelar Reserva" action="cancelarreserva" actionListener="#{controllerCancelarReserva.recibirIdReservaCancelar(controllerDetallesReservaSala.reservaSala.reserva.idreserva)}" class="btn btn-danger btn-block"/>
