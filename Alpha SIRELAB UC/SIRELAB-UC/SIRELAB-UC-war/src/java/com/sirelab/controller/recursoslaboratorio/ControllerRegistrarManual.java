@@ -72,6 +72,8 @@ public class ControllerRegistrarManual implements Serializable {
         archivo = null;
         validacionesNombre = false;
         validacionesArchivo = false;
+        validacionesTipo = true;
+        validacionesArchivo = true;
         validacionesUbicacion = false;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -135,6 +137,7 @@ public class ControllerRegistrarManual implements Serializable {
             nuevoUbicacion = null;
             visibleCargue = "hidden";
         }
+        validacionesTipo = true;
     }
 
     public void actualizarArchivoSeleccionado() {
@@ -226,9 +229,11 @@ public class ControllerRegistrarManual implements Serializable {
             Manual manualNuevo = new Manual();
             manualNuevo.setNombremanual(nuevoNombre);
             manualNuevo.setTipomanual(nuevoTipo);
-            manualNuevo.setUbicacionmanual(rutaArchivo);
             if (activarArchivo == false) {
                 cargarGuiaAServidor();
+                manualNuevo.setUbicacionmanual(rutaArchivo);
+            } else {
+                manualNuevo.setUbicacionmanual(nuevoUbicacion);
             }
             gestionarRecursoManualBO.crearManual(manualNuevo);
         } catch (Exception e) {
@@ -246,9 +251,10 @@ public class ControllerRegistrarManual implements Serializable {
         archivo = null;
         nuevoNombre = null;
         nuevoUbicacion = null;
-        validacionesTipo = false;
-        validacionesArchivo = false;
         validacionesNombre = false;
+        validacionesArchivo = false;
+        validacionesTipo = true;
+        validacionesArchivo = true;
         validacionesUbicacion = false;
         colorMensaje = "black";
         mensajeFormulario = "N/A";
@@ -262,9 +268,10 @@ public class ControllerRegistrarManual implements Serializable {
         archivo = null;
         nuevoNombre = null;
         nuevoUbicacion = null;
-        validacionesTipo = false;
         validacionesNombre = false;
         validacionesArchivo = false;
+        validacionesTipo = true;
+        validacionesArchivo = true;
         validacionesUbicacion = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;

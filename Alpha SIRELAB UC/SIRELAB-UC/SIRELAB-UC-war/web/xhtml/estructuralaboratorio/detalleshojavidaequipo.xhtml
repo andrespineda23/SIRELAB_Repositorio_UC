@@ -61,24 +61,25 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Fecha Fin Evento*"/></strong>
-                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputFechaFinEvento}" readonly="true"  class="form-control" id="inputDetalle" />
-                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputFechaFinEvento}" readonly="true"  class="form-control" id="inputFechaFinEvento" >
+                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            </h:inputText>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Tipo Evento*"/></strong>
-                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputTipoEvento.detalleevento}" readonly="true"  class="form-control" id="inputDetalle" />
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputTipoEvento.detalleevento}" readonly="true"  class="form-control" id="inputTipoEvento" />
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Observación Evento*"/></strong>
-                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputObservacion}" readonly="true"  class="form-control" id="inputDetalle" />
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputObservacion}" readonly="true"  class="form-control" id="inputObservacion" />
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Usuario*"/></strong>
-                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputUsuario}" readonly="true"  class="form-control" id="inputDetalle" />
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputUsuario}" readonly="true"  class="form-control" id="inputUsuario" />
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Costo*"/></strong>
-                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputCosto}" readonly="true"  class="form-control" id="inputDetalle" />
+                                            <h:inputText value="#{controllerDetallesHojaVidaEquipo.inputCosto}" readonly="true"  class="form-control" id="inputCosto" />
                                         </div>
                                     </fieldset>
                                     <br></br>

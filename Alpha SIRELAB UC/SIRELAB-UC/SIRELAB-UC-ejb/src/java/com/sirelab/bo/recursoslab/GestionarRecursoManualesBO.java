@@ -63,9 +63,14 @@ public class GestionarRecursoManualesBO implements GestionarRecursoManualesBOInt
     @Override
     public void crearManual(Manual manual) {
         try {
-            Integer ultimoCodigo = manualDAO.consultarManuales().size();
-            Integer codigoManual = ultimoCodigo + 1;
-            manual.setCodigomanual("MANUAL - "+codigoManual.toString());
+            List<Manual> lista = manualDAO.consultarManuales();
+            if (null != lista) {
+                Integer codigoManual = lista.size() + 1;
+                manual.setCodigomanual("MANUAL - " + codigoManual.toString());
+            } else {
+                Integer codigoManual =  1;
+                manual.setCodigomanual("MANUAL - " + codigoManual.toString());
+            }
             manualDAO.crearManual(manual);
         } catch (Exception e) {
             logger.error("Error GestionarRecursoManualesBO crearManual : " + e.toString(), e);

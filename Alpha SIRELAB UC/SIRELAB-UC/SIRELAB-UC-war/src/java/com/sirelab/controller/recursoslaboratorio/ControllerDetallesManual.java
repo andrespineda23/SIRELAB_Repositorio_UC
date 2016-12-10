@@ -233,9 +233,9 @@ public class ControllerDetallesManual implements Serializable {
             manualDetalle.setTipomanual(editarTipo);
             if (modificacionArchivo == true) {
                 cargarGuiaAServidor();
-                manualDetalle.setTipomanual(rutaArchivo);
+                manualDetalle.setUbicacionmanual(rutaArchivo);
             } else {
-                manualDetalle.setTipomanual(editarUbicacion);
+                manualDetalle.setUbicacionmanual(editarUbicacion);
             }
             gestionarRecursoManualesBO.editarManual(manualDetalle);
         } catch (Exception e) {
