@@ -225,4 +225,54 @@ public class ControllerDetallesReservaUsuario implements Serializable {
         this.activarCancelar = activarCancelar;
     }
 
+    public List<ReservaEquipoElemento> getListaEquiposReservados() {
+        return listaEquiposReservados;
+    }
+
+    public void setListaEquiposReservados(List<ReservaEquipoElemento> listaEquiposReservados) {
+        this.listaEquiposReservados = listaEquiposReservados;
+    }
+
+    public List<ReservaEquipoElemento> getListaEquiposReservadosTabla() {
+        return listaEquiposReservadosTabla;
+    }
+
+    public void setListaEquiposReservadosTabla(List<ReservaEquipoElemento> listaEquiposReservadosTabla) {
+        this.listaEquiposReservadosTabla = listaEquiposReservadosTabla;
+    }
+
+    public int getPosicionEquiposTabla() {
+        return posicionEquiposTabla;
+    }
+
+    public void setPosicionEquiposTabla(int posicionEquiposTabla) {
+        this.posicionEquiposTabla = posicionEquiposTabla;
+    }
+
+    public int getTamTotalEquipos() {
+        return tamTotalEquipos;
+    }
+
+    public void setTamTotalEquipos(int tamTotalEquipos) {
+        this.tamTotalEquipos = tamTotalEquipos;
+    }
+
+    public boolean isBloquearPagSigEquipos() {
+        return bloquearPagSigEquipos;
+    }
+
+    public void setBloquearPagSigEquipos(boolean bloquearPagSigEquipos) {
+        this.bloquearPagSigEquipos = bloquearPagSigEquipos;
+    }
+
+    public boolean isBloquearPagAntEquipos() {
+        return bloquearPagAntEquipos;
+    }
+
+    public void setBloquearPagAntEquipos(boolean bloquearPagAntEquipos) {
+        this.bloquearPagAntEquipos = bloquearPagAntEquipos;
+    }
+
+    
+    
 }
